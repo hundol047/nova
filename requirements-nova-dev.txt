@@ -1,0 +1,4 @@
+# Development-only extras for nova_agent/competition/evaluation: the test suite, evaluation
+# harness tooling, and (optionally) the real LLM provider SDKs for manual testing.
+-r requirements-nova.txt
+pytest>=8.0

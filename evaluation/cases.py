@@ -24,6 +24,16 @@ class SyntheticCase(BaseModel):
     default_answer: str = "No, I don't have that."
     default_exam_result: str = "Unremarkable, within normal limits."
     default_test_result: str = "Normal / negative."
+    # Reporting/breakdown only -- never read by the agent. "standard" = the original 8 cases this
+    # repo's config defaults were tuned against; every other category lives in
+    # evaluation/held_out_cases.py and was never used to shape a default (spec section 19/22).
+    category: str = "standard"
+    notes: str = ""
+    # False only for genuinely ambiguous/insufficient-information cases where no single diagnosis
+    # is clearly "the" right answer -- excluded from the accuracy denominator but still checked for
+    # safety/crash/turn-limit behavior (spec section 19's "ambiguous case" / "insufficient
+    # information case").
+    scoring_expected: bool = True
 
     @property
     def critical(self) -> bool:

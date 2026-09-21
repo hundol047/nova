@@ -1,0 +1,16 @@
+{
+  "critical_diagnosis_ids": [
+    "acute_coronary_syndrome", "aortic_dissection", "pulmonary_embolism", "tension_pneumothorax",
+    "ischemic_stroke", "subarachnoid_hemorrhage", "meningitis", "sepsis", "anaphylaxis",
+    "ectopic_pregnancy", "diabetic_ketoacidosis", "severe_electrolyte_disorder", "gi_bleeding",
+    "acute_abdomen"
+  ],
+  "vital_sign_red_flags": [
+    {"field": "heart_rate", "op": ">=", "value": 120, "reason": "Marked tachycardia", "suggests": ["sepsis", "pulmonary_embolism", "gi_bleeding", "anaphylaxis"]},
+    {"field": "sbp", "op": "<=", "value": 90, "reason": "Hypotension / shock", "suggests": ["sepsis", "gi_bleeding", "ectopic_pregnancy", "tension_pneumothorax", "anaphylaxis", "aortic_dissection"]},
+    {"field": "respiratory_rate", "op": ">=", "value": 24, "reason": "Tachypnea", "suggests": ["pulmonary_embolism", "sepsis", "diabetic_ketoacidosis", "tension_pneumothorax"]},
+    {"field": "spo2", "op": "<=", "value": 92, "reason": "Hypoxia", "suggests": ["pulmonary_embolism", "tension_pneumothorax", "anaphylaxis", "sepsis"]},
+    {"field": "temperature_c", "op": ">=", "value": 39.0, "reason": "High fever", "suggests": ["sepsis", "meningitis"]}
+  ],
+  "note": "vital_sign_red_flags are deliberately generic (apply regardless of chief complaint) so a\n    dangerous vital sign is never missed just because the presenting complaint didn't obviously\n    point at it; per-disease `red_flag_keywords` in knowledge/diseases/*.json stay chief-complaint-\n    and symptom-scoped so safety.py only raises a disease-specific flag when the current case is\n    actually plausible for that disease (per spec section 5's 'never blanket-test' requirement)."
+}

@@ -42,10 +42,15 @@ class PatientSimulator:
 
 class CaseResult(BaseModel):
     case_id: str
+    category: str = "standard"
+    scoring_expected: bool = True
     ground_truth: str
     final_diagnosis: Optional[str]
     correct: bool
     turns: int
+    ask_count: int = 0
+    exam_count: int = 0
+    test_count: int = 0
     duplicate_actions: int
     unnecessary_tests: int
     critical: bool
@@ -79,6 +84,7 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
     duplicate_actions = 0
     malformed_turns = 0
     tests_performed: List[str] = []
+    ask_count = exam_count = test_count = 0
     failed_to_diagnose = True
 
     for _ in range(state.max_turns):
@@ -92,6 +98,11 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
         seen_keys.append(key_sig)
         if action.action_type == "TEST":
             tests_performed.append(action.key)
+            test_count += 1
+        elif action.action_type == "ASK":
+            ask_count += 1
+        elif action.action_type == "EXAM":
+            exam_count += 1
 
         if logger is not None:
             logger.log_turn(state, action, differential, [f.condition for f in getattr(state, "red_flags", [])])
@@ -108,8 +119,10 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
 
     correct = bool(state.final_diagnosis) and same_diagnosis(state.final_diagnosis, case.ground_truth_diagnosis)
     result_obj = CaseResult(
-        case_id=case.case_id, ground_truth=case.ground_truth_diagnosis, final_diagnosis=state.final_diagnosis,
-        correct=correct, turns=state.turn_count, duplicate_actions=duplicate_actions,
+        case_id=case.case_id, category=case.category, scoring_expected=case.scoring_expected,
+        ground_truth=case.ground_truth_diagnosis, final_diagnosis=state.final_diagnosis,
+        correct=correct, turns=state.turn_count, ask_count=ask_count, exam_count=exam_count,
+        test_count=test_count, duplicate_actions=duplicate_actions,
         unnecessary_tests=unnecessary_tests, critical=case.critical,
         critical_miss=case.critical and not correct, malformed_turns=malformed_turns,
         failed_to_diagnose=failed_to_diagnose,

@@ -1,13 +1,20 @@
-# N.O.V.A. Doctor Agent (nova_agent/ + competition/ + evaluation/) runtime dependencies.
+# N.O.V.A. Doctor Agent (nova_agent/ + competition/) RUNTIME dependencies only.
 #
-# Deliberately separate from backend/requirements*.txt: nova_agent only reuses a few pure-Python
-# modules from the vendored SynexAgent backend (app.schemas, app.services.audit/vitals/
-# terminology_mapper -- see nova_agent/_synex.py), none of which need FastAPI, ONNX Runtime,
-# Redis, or any of the other backend/requirements-core.txt packages. Competition submission and
-# local evaluation/benchmarking therefore never need to install the full backend stack.
+# Deliberately separate from backend/requirements*.txt: nova_agent has no required dependency on
+# the vendored SynexAgent backend at all (nova_agent/models.py defines its own standalone
+# Medication/Allergy/VitalSigns; nova_agent/_synex.py's optional reuse of backend's AuditStore/
+# terminology_mapper degrades to a harmless no-op when backend/ is absent -- see
+# submission/requirements.txt, which is this same file minus pytest, for the minimal competition
+# runtime footprint). For running the test suite / evaluation harness / dev tooling, also install
+# requirements-nova-dev.txt.
 pydantic>=2.6,<3
-pytest>=8.0
 
 # Optional: only required when NOVA_LLM_PROVIDER=anthropic (see nova_agent/config.py and
-# nova_agent/llm_client.py). The default NOVA_LLM_PROVIDER=mock runs fully offline without it.
+# nova_agent/llm_client.py).
 # anthropic>=0.40
+
+# Optional: only required when NOVA_LLM_PROVIDER is openai_compatible / local / competition (a
+# real reasoning call to a local or hosted OpenAI Chat Completions-compatible server).
+# openai>=1.40
+
+# The default NOVA_LLM_PROVIDER=mock needs none of the above and runs fully offline.
