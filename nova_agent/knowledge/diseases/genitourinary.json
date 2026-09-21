@@ -1,0 +1,48 @@
+[
+  {
+    "id": "uncomplicated_cystitis",
+    "name": "Uncomplicated Cystitis (Lower UTI)",
+    "aliases": ["UTI", "urinary tract infection", "cystitis", "방광염", "요로감염"],
+    "chief_complaint_tags": ["urinary_symptoms"],
+    "category": "genitourinary",
+    "dangerous": false,
+    "urgency": "LOW",
+    "typical_features": ["dysuria", "urinary frequency", "urinary urgency", "suprapubic discomfort", "no fever", "no flank pain"],
+    "risk_factors": ["female sex", "sexual activity", "prior UTI"],
+    "discriminating_questions": ["associated_symptoms", "onset", "past_medical_history"],
+    "discriminating_exams": ["abdominal_exam", "vital_signs", "costovertebral_tenderness"],
+    "discriminating_tests": ["urinalysis", "urine_culture"],
+    "confirmatory_findings": ["positive leukocyte esterase", "positive nitrites"],
+    "red_flag_keywords": []
+  },
+  {
+    "id": "pyelonephritis",
+    "name": "Acute Pyelonephritis",
+    "aliases": ["pyelonephritis", "upper UTI", "kidney infection", "신우신염"],
+    "chief_complaint_tags": ["urinary_symptoms", "fever"],
+    "category": "genitourinary",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": ["flank pain", "fever", "costovertebral angle tenderness", "dysuria", "nausea and vomiting"],
+    "risk_factors": ["female sex", "diabetes", "urinary obstruction", "pregnancy"],
+    "discriminating_questions": ["location", "associated_symptoms", "onset"],
+    "discriminating_exams": ["costovertebral_tenderness", "vital_signs", "abdominal_exam"],
+    "discriminating_tests": ["urinalysis", "urine_culture", "cbc", "bmp"],
+    "red_flag_keywords": ["fever with flank pain", "hypotension", "confusion"]
+  },
+  {
+    "id": "nephrolithiasis",
+    "name": "Nephrolithiasis (Kidney Stone)",
+    "aliases": ["kidney stone", "renal colic", "nephrolithiasis", "요로결석"],
+    "chief_complaint_tags": ["urinary_symptoms", "abdominal_pain"],
+    "category": "genitourinary",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": ["colicky flank pain", "pain radiates to groin", "hematuria", "nausea", "unable to find comfortable position"],
+    "risk_factors": ["prior kidney stones", "dehydration", "family history"],
+    "discriminating_questions": ["location", "character", "family_history"],
+    "discriminating_exams": ["costovertebral_tenderness", "vital_signs"],
+    "discriminating_tests": ["urinalysis", "ct_abdomen"],
+    "red_flag_keywords": []
+  }
+]

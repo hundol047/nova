@@ -69,8 +69,8 @@ class UtilityWeights:
 
 @dataclass(frozen=True)
 class StopPolicyConfig:
-    diagnose_threshold: float = field(default_factory=lambda: _float_env("NOVA_DIAGNOSE_THRESHOLD", 0.72))
-    min_gap_rank1_rank2: float = field(default_factory=lambda: _float_env("NOVA_MIN_GAP_RANK1_RANK2", 0.22))
+    diagnose_threshold: float = field(default_factory=lambda: _float_env("NOVA_DIAGNOSE_THRESHOLD", 0.60))
+    min_gap_rank1_rank2: float = field(default_factory=lambda: _float_env("NOVA_MIN_GAP_RANK1_RANK2", 0.18))
     forced_diagnose_remaining_turns: int = field(
         default_factory=lambda: _int_env("NOVA_FORCED_DIAGNOSE_REMAINING_TURNS", 3)
     )
