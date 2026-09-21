@@ -1,0 +1,6 @@
+# Standard (CPU / generic PC) install: requirements-core.txt plus the plain PyPI CPU build of
+# ONNX Runtime. A Jetson deployment does NOT use this file directly -- scripts/deploy_jetson_agx.sh
+# installs requirements-core.txt, then installs a JetPack-matched ONNX Runtime build separately
+# (see docs/JETSON_DEPLOYMENT.md) -- never this pinned x86/manylinux `onnxruntime` wheel on ARM64.
+-r requirements-core.txt
+onnxruntime==1.30.0

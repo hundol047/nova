@@ -1,0 +1,26 @@
+# CPU-only ONNX Runtime pin for the JetPack 5 / Python 3.8 (cp38) path specifically. This is NOT
+# the same pin as requirements.txt's onnxruntime==1.30.0 -- that release ships wheels only for
+# cp311-cp314 (checked against its real PyPI file listing; no cp38 wheel exists at all), so
+# installing it on a cp38 interpreter would fail outright.
+#
+# onnxruntime==1.19.2 is the LAST onnxruntime release with a real cp38 wheel for aarch64
+# (onnxruntime-1.19.2-cp38-cp38-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl on PyPI -- Ubuntu
+# 20.04's glibc 2.31 satisfies manylinux_2_28's glibc>=2.28 requirement), and its own metadata pins
+# numpy>=1.21.6, which backend/requirements-jetpack5.txt's numpy==1.24.4 satisfies.
+#
+# This is a CPU-only build (no CUDA/TensorRT execution provider). Installing it is intended to
+# prove the backend/model pipeline runs end-to-end on this exact device via a real CPU smoke test
+# (SYN-001..005 inference) -- but "generic PyPI ARM64 CPU wheel" is NOT, by itself, treated as a
+# guaranteed-safe fallback: on a real Jetson AGX Orin + JetPack 5.1.2 device, THIS EXACT WHEEL
+# native-crashed during session/inference use (a C++ `Assertion '__n < this->size()' failed` inside
+# libstdc++'s std::vector::operator[] -> SIGABRT -> "Aborted (core dumped)", not a Python
+# exception). deploy_jetson_agx.sh/verify_jetson_agx_gpu.py never trust an installed ORT package
+# (this one included) without first running it through scripts/ort_smoke_test.py in an ISOLATED
+# subprocess -- see that script and jetson_common.classify_ort_smoke_test for how a native crash
+# here is detected and reported as ORT_NATIVE_RUNTIME_CRASH, never silently treated as a working
+# CPU fallback. If this wheel keeps crashing on your specific device, a Jetson-specific ARM64 ORT
+# build (via --ort-wheel /path/to/verified.whl, or a device-side source build) is the path forward
+# -- a real CUDA/TensorRT execution provider was always going to need one of those anyway, see
+# scripts/install_jetson_ort.py and config/jetson_ort_candidates.json, which this file does not
+# attempt to replace.
+onnxruntime==1.19.2
