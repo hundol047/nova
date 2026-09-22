@@ -1,0 +1,10 @@
+[
+  {"chief_complaint_tag": "chest_pain", "guideline": "For any chest pain, first exclude ACS, aortic dissection, and PE before considering benign causes (GERD, musculoskeletal). Obtain vital signs and ECG early."},
+  {"chief_complaint_tag": "abdominal_pain", "guideline": "Assess for peritoneal signs (acute abdomen) first. In any female of childbearing age, exclude ectopic pregnancy before other workup. Consider GI bleeding if hemodynamic instability or PR bleeding history."},
+  {"chief_complaint_tag": "headache", "guideline": "A sudden severe ('thunderclap') headache is subarachnoid hemorrhage until proven otherwise. Fever plus headache plus neck stiffness raises meningitis. Most headaches are benign (tension, migraine) but red flags change the workup entirely."},
+  {"chief_complaint_tag": "fever", "guideline": "Screen for sepsis using vital signs (tachycardia, hypotension, tachypnea) before assuming a benign viral source. Identify a likely infectious source (urinary, respiratory, skin, CNS) to target further workup."},
+  {"chief_complaint_tag": "dyspnea", "guideline": "Consider PE, tension pneumothorax, and cardiac causes early, especially with sudden onset or pleuritic pain. Pulse oximetry and lung auscultation guide the next step."},
+  {"chief_complaint_tag": "dizziness", "guideline": "Distinguish true vertigo (peripheral, e.g. BPPV) from presyncope/disequilibrium; new focal neurologic signs with dizziness suggest stroke and change the whole workup."},
+  {"chief_complaint_tag": "altered_mental_status", "guideline": "Use a broad differential (stroke, sepsis, DKA, electrolyte disorder, meningitis, hypoglycemia) and check point-of-care glucose immediately -- a rapidly reversible cause should never be missed."},
+  {"chief_complaint_tag": "urinary_symptoms", "guideline": "Distinguish uncomplicated cystitis from pyelonephritis (fever, flank pain, systemic signs) since the latter needs broader workup and closer follow-up; consider nephrolithiasis if colicky flank pain."}
+]

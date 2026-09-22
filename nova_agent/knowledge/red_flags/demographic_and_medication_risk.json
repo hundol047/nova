@@ -1,0 +1,37 @@
+{
+  "demographic_risk_rules": [
+    {
+      "id": "reproductive_age_female_abdominal_pain",
+      "diagnosis_id": "ectopic_pregnancy",
+      "chief_complaint_tags": ["abdominal_pain"],
+      "requires_sex": "female",
+      "age_min": 12,
+      "age_max": 55,
+      "reason": "Reproductive-age female with abdominal pain -- pregnancy/ectopic pregnancy must be considered regardless of whether it has been explicitly mentioned yet."
+    }
+  ],
+  "medication_risk_rules": [
+    {
+      "id": "anticoagulant_headache_ich_risk",
+      "trigger_keywords": ["warfarin", "anticoagulant", "apixaban", "rivaroxaban", "dabigatran", "heparin", "coumadin"],
+      "diagnosis_id": "subarachnoid_hemorrhage",
+      "chief_complaint_tags": ["headache", "altered_mental_status"],
+      "reason": "Anticoagulant use substantially raises the risk and severity of intracranial hemorrhage presenting as headache."
+    },
+    {
+      "id": "antiplatelet_anticoagulant_gi_bleed_risk",
+      "trigger_keywords": ["warfarin", "anticoagulant", "apixaban", "rivaroxaban", "aspirin", "clopidogrel", "nsaid", "ibuprofen"],
+      "diagnosis_id": "gi_bleeding",
+      "chief_complaint_tags": ["abdominal_pain"],
+      "reason": "Antiplatelet/anticoagulant/NSAID use raises the risk of gastrointestinal bleeding."
+    },
+    {
+      "id": "insulin_hypoglycemia_or_dka_risk",
+      "trigger_keywords": ["insulin", "metformin", "sulfonylurea", "glipizide", "glyburide"],
+      "diagnosis_id": "diabetic_ketoacidosis",
+      "chief_complaint_tags": ["altered_mental_status", "abdominal_pain", "dyspnea", "weakness"],
+      "reason": "Known diabetes on glucose-lowering medication raises the prior for a glucose-related emergency (DKA or hypoglycemia) in this presentation."
+    }
+  ],
+  "note": "These rules only ever ADD a safety finding when the case is already plausible for that diagnosis (chief-complaint-tag-gated, same as the symptom/vital-sign red flags in critical_conditions.json) -- never a blanket check across unrelated presentations (spec section 5's 'never blanket-test' requirement applies here too)."
+}

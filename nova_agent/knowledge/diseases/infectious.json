@@ -1,0 +1,159 @@
+[
+  {
+    "id": "sepsis",
+    "name": "Sepsis",
+    "aliases": [
+      "sepsis",
+      "septic shock",
+      "패혈증"
+    ],
+    "chief_complaint_tags": [
+      "fever",
+      "altered_mental_status",
+      "dyspnea",
+      "urinary_symptoms",
+      "weakness",
+      "leg_swelling"
+    ],
+    "category": "infectious",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "fever",
+      "tachycardia",
+      "hypotension",
+      "altered mental status",
+      "tachypnea",
+      "suspected infection source"
+    ],
+    "risk_factors": [
+      "immunosuppression",
+      "recent infection",
+      "indwelling catheter",
+      "advanced age",
+      "diabetes"
+    ],
+    "discriminating_questions": [
+      "associated_symptoms",
+      "onset",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "mental_status_exam",
+      "skin_exam"
+    ],
+    "discriminating_tests": [
+      "lactate",
+      "blood_culture",
+      "cbc",
+      "bmp"
+    ],
+    "confirmatory_findings": [
+      "elevated lactate",
+      "positive blood culture",
+      "gram-negative rods",
+      "gram-positive cocci",
+      "gram-negative diplococci"
+    ],
+    "red_flag_keywords": [
+      "hypotension",
+      "tachycardia",
+      "altered mental status",
+      "tachypnea",
+      "fever with confusion"
+    ],
+    "minimum_workup": [
+      "lactate",
+      "blood_culture"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "anaphylaxis",
+    "name": "Anaphylaxis",
+    "aliases": [
+      "anaphylaxis",
+      "anaphylactic reaction",
+      "아나필락시스"
+    ],
+    "chief_complaint_tags": [
+      "dyspnea",
+      "fever"
+    ],
+    "category": "infectious",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "sudden onset urticaria",
+      "facial swelling",
+      "wheeze",
+      "throat tightness",
+      "hypotension",
+      "recent allergen exposure"
+    ],
+    "risk_factors": [
+      "known allergy",
+      "recent new medication",
+      "insect sting",
+      "food exposure"
+    ],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "allergy"
+    ],
+    "discriminating_exams": [
+      "skin_exam",
+      "lung_auscultation",
+      "vital_signs"
+    ],
+    "discriminating_tests": [],
+    "red_flag_keywords": [
+      "urticaria",
+      "facial swelling",
+      "throat tightness",
+      "wheeze after exposure",
+      "hypotension"
+    ],
+    "minimum_workup": [],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "viral_uri",
+    "name": "Viral Upper Respiratory Infection",
+    "aliases": [
+      "common cold",
+      "viral URI",
+      "상기도감염"
+    ],
+    "chief_complaint_tags": [
+      "fever"
+    ],
+    "category": "infectious",
+    "dangerous": false,
+    "urgency": "LOW",
+    "typical_features": [
+      "low grade fever",
+      "rhinorrhea",
+      "sore throat",
+      "cough",
+      "mild symptoms"
+    ],
+    "risk_factors": [
+      "sick contacts",
+      "seasonal exposure"
+    ],
+    "discriminating_questions": [
+      "associated_symptoms",
+      "duration"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "lung_auscultation"
+    ],
+    "discriminating_tests": [],
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
+  }
+]

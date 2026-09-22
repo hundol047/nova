@@ -1,0 +1,386 @@
+[
+  {
+    "id": "acute_coronary_syndrome",
+    "name": "Acute Coronary Syndrome",
+    "aliases": [
+      "MI",
+      "myocardial infarction",
+      "acute myocardial infarction",
+      "AMI",
+      "STEMI",
+      "NSTEMI",
+      "heart attack",
+      "ACS",
+      "unstable angina",
+      "급성 관상동맥증후군",
+      "심근경색"
+    ],
+    "chief_complaint_tags": [
+      "chest_pain",
+      "dyspnea",
+      "syncope",
+      "palpitations",
+      "vomiting"
+    ],
+    "category": "cardiac",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "exertional chest pain",
+      "substernal pressure",
+      "radiates to arm or jaw",
+      "diaphoresis",
+      "nausea",
+      "dyspnea on exertion",
+      "left arm pain"
+    ],
+    "risk_factors": [
+      "hypertension",
+      "diabetes",
+      "smoking",
+      "hyperlipidemia",
+      "family history",
+      "male over 45",
+      "female over 55",
+      "prior coronary disease"
+    ],
+    "discriminating_questions": [
+      "character",
+      "aggravating",
+      "associated_symptoms",
+      "past_medical_history",
+      "family_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "cardiac_auscultation",
+      "general_appearance"
+    ],
+    "discriminating_tests": [
+      "ecg",
+      "troponin",
+      "cxr"
+    ],
+    "confirmatory_findings": [
+      "ST elevation",
+      "ST depression",
+      "elevated troponin",
+      "troponin elevated"
+    ],
+    "red_flag_keywords": [
+      "diaphoresis",
+      "radiating pain",
+      "crushing",
+      "pressure",
+      "hypotension",
+      "sweating"
+    ],
+    "minimum_workup": [
+      "ecg",
+      "troponin"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "aortic_dissection",
+    "name": "Aortic Dissection",
+    "aliases": [
+      "dissecting aortic aneurysm",
+      "aortic tear",
+      "대동맥 박리"
+    ],
+    "chief_complaint_tags": [
+      "chest_pain",
+      "abdominal_pain",
+      "syncope",
+      "back_pain"
+    ],
+    "category": "cardiac",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "tearing chest pain",
+      "ripping pain",
+      "pain radiates to back",
+      "sudden onset severe pain",
+      "pulse differential",
+      "unequal blood pressure between arms"
+    ],
+    "risk_factors": [
+      "hypertension",
+      "marfan syndrome",
+      "bicuspid aortic valve",
+      "cocaine use",
+      "connective tissue disease"
+    ],
+    "discriminating_questions": [
+      "onset",
+      "character",
+      "location",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "extremity_exam",
+      "cardiac_auscultation"
+    ],
+    "discriminating_tests": [
+      "ct_aorta",
+      "cxr",
+      "ecg"
+    ],
+    "confirmatory_findings": [
+      "widened mediastinum",
+      "dissection flap",
+      "intimal flap"
+    ],
+    "red_flag_keywords": [
+      "tearing",
+      "ripping",
+      "sudden onset",
+      "radiates to back",
+      "pulse differential",
+      "unequal blood pressure"
+    ],
+    "minimum_workup": [
+      "ct_aorta"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "gerd",
+    "name": "Gastroesophageal Reflux Disease",
+    "aliases": [
+      "GERD",
+      "acid reflux",
+      "heartburn",
+      "위식도역류질환"
+    ],
+    "chief_complaint_tags": [
+      "chest_pain",
+      "abdominal_pain"
+    ],
+    "category": "cardiac",
+    "dangerous": false,
+    "urgency": "LOW",
+    "typical_features": [
+      "burning chest pain",
+      "worse after meals",
+      "worse lying down",
+      "relieved by antacids",
+      "sour taste"
+    ],
+    "risk_factors": [
+      "obesity",
+      "hiatal hernia",
+      "smoking"
+    ],
+    "discriminating_questions": [
+      "character",
+      "aggravating",
+      "relieving",
+      "associated_symptoms"
+    ],
+    "discriminating_exams": [
+      "abdominal_exam",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "ecg",
+      "troponin"
+    ],
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "musculoskeletal_chest_pain",
+    "name": "Musculoskeletal Chest Pain (Costochondritis)",
+    "aliases": [
+      "costochondritis",
+      "chest wall pain",
+      "근골격계 흉통"
+    ],
+    "chief_complaint_tags": [
+      "chest_pain"
+    ],
+    "category": "cardiac",
+    "dangerous": false,
+    "urgency": "LOW",
+    "typical_features": [
+      "reproducible with palpation",
+      "worse with movement",
+      "localized tenderness",
+      "sharp pain"
+    ],
+    "risk_factors": [
+      "recent physical strain",
+      "recent trauma"
+    ],
+    "discriminating_questions": [
+      "character",
+      "aggravating",
+      "location"
+    ],
+    "discriminating_exams": [
+      "abdominal_exam",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "ecg"
+    ],
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "vasovagal_syncope",
+    "name": "Vasovagal (Reflex) Syncope",
+    "aliases": [
+      "vasovagal syncope",
+      "reflex syncope",
+      "neurocardiogenic syncope",
+      "미주신경성 실신"
+    ],
+    "chief_complaint_tags": [
+      "syncope",
+      "dizziness"
+    ],
+    "category": "cardiac",
+    "dangerous": false,
+    "urgency": "LOW",
+    "typical_features": [
+      "prodrome of lightheadedness",
+      "triggered by standing or pain or fear",
+      "brief loss of consciousness",
+      "rapid spontaneous recovery",
+      "no chest pain",
+      "no palpitations before the episode"
+    ],
+    "risk_factors": [
+      "prolonged standing",
+      "dehydration",
+      "emotional stress",
+      "young age"
+    ],
+    "discriminating_questions": [
+      "onset",
+      "aggravating",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "cardiac_auscultation"
+    ],
+    "discriminating_tests": [
+      "ecg"
+    ],
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "cardiac_arrhythmia",
+    "name": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+    "aliases": [
+      "arrhythmia",
+      "atrial fibrillation",
+      "afib",
+      "svt",
+      "supraventricular tachycardia",
+      "부정맥"
+    ],
+    "chief_complaint_tags": [
+      "palpitations",
+      "syncope",
+      "dizziness",
+      "chest_pain"
+    ],
+    "category": "cardiac",
+    "dangerous": true,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "sudden onset palpitations",
+      "irregular heartbeat",
+      "racing heart",
+      "associated lightheadedness",
+      "known history of arrhythmia"
+    ],
+    "risk_factors": [
+      "hypertension",
+      "structural heart disease",
+      "hyperthyroidism",
+      "excessive caffeine or stimulant use",
+      "advanced age"
+    ],
+    "discriminating_questions": [
+      "onset",
+      "duration",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "cardiac_auscultation"
+    ],
+    "discriminating_tests": [
+      "ecg",
+      "bmp"
+    ],
+    "confirmatory_findings": [
+      "irregularly irregular rhythm",
+      "narrow complex tachycardia",
+      "atrial fibrillation on ecg"
+    ],
+    "red_flag_keywords": [
+      "hypotension",
+      "syncope with palpitations",
+      "chest pain with palpitations"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "panic_attack",
+    "name": "Panic Attack",
+    "aliases": [
+      "panic attack",
+      "anxiety attack",
+      "공황발작"
+    ],
+    "chief_complaint_tags": [
+      "chest_pain",
+      "dyspnea",
+      "palpitations"
+    ],
+    "category": "cardiac",
+    "dangerous": false,
+    "urgency": "LOW",
+    "typical_features": [
+      "sudden onset intense anxiety or fear",
+      "hyperventilation",
+      "tingling around the mouth or fingers",
+      "fear of dying or losing control",
+      "chest tightness",
+      "palpitations",
+      "symptoms peak within minutes then improve",
+      "resolves with calming down or reassurance"
+    ],
+    "risk_factors": [
+      "history of anxiety or panic disorder",
+      "recent significant stressor"
+    ],
+    "discriminating_questions": [
+      "onset",
+      "duration",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "general_appearance"
+    ],
+    "discriminating_tests": [
+      "ecg"
+    ],
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
+  }
+]

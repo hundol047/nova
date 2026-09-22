@@ -1,0 +1,321 @@
+"""FHIRAdapter is exercised here against a FAKE FHIR server (httpx.MockTransport serving
+hand-built FHIR R4 JSON), never a live hospital endpoint -- there isn't one reachable from this
+environment. This proves the request/response parsing is correct against the spec shape; it does
+NOT prove interoperability with any specific real EHR vendor's FHIR server."""
+import httpx
+import pytest
+from app.services.emr_adapter import (FHIRAdapter, SmartOAuthClient, ClientCredentialsTokenProvider,
+                                       SmartSessionTokenProvider, SmartAuthRequired)
+from app.services.smart_launch import CURRENT_SESSION_ID, create_session
+
+FHIR_PATIENT = {
+    "resourceType": "Patient", "id": "fhir-1",
+    "name": [{"text": "Test Patient"}], "gender": "female", "birthDate": "1970-01-01",
+}
+FHIR_CONDITION_BUNDLE = {"resourceType": "Bundle", "entry": [
+    {"resource": {"resourceType": "Condition", "code": {"text": "Chronic kidney disease"}}},
+]}
+FHIR_MEDREQ_BUNDLE = {"resourceType": "Bundle", "entry": [
+    {"resource": {"resourceType": "MedicationRequest", "id": "m1", "status": "active",
+                  "medicationCodeableConcept": {"coding": [{"code": "warfarin"}]}}},
+]}
+FHIR_EMPTY_BUNDLE = {"resourceType": "Bundle", "entry": []}
+FHIR_ALLERGY_BUNDLE = {"resourceType": "Bundle", "entry": [
+    {"resource": {"resourceType": "AllergyIntolerance", "code": {"text": "Penicillin"},
+                  "reaction": [{"severity": "severe"}]}},
+]}
+FHIR_OBS_BUNDLE = {"resourceType": "Bundle", "entry": [
+    {"resource": {"resourceType": "Observation", "code": {"text": "eGFR"},
+                  "effectiveDateTime": "2026-01-01", "valueQuantity": {"value": 45, "unit": "mL/min"}}},
+    {"resource": {"resourceType": "Observation",
+                  "code": {"coding": [{"system": "http://loinc.org", "code": "8302-2", "display": "Body height"}]},
+                  "valueQuantity": {"value": 165, "unit": "cm"}}},
+    {"resource": {"resourceType": "Observation",
+                  "code": {"coding": [{"system": "http://loinc.org", "code": "29463-7", "display": "Body weight"}]},
+                  "valueQuantity": {"value": 60, "unit": "kg"}}},
+]}
+FHIR_ENCOUNTER_BUNDLE = {"resourceType": "Bundle", "entry": [
+    {"resource": {"resourceType": "Encounter", "id": "enc-1", "status": "finished",
+                  "type": [{"text": "Outpatient visit"}], "period": {"start": "2026-01-05"}}},
+]}
+FHIR_DIAGREPORT_BUNDLE = {"resourceType": "Bundle", "entry": [
+    {"resource": {"resourceType": "DiagnosticReport", "id": "dr-1", "status": "final",
+                  "code": {"text": "Basic metabolic panel"}, "effectiveDateTime": "2026-01-05",
+                  "conclusion": "Within normal limits"}},
+]}
+FHIR_IMAGING_BUNDLE = {"resourceType": "Bundle", "entry": [
+    {"resource": {"resourceType": "ImagingStudy", "id": "img-1", "started": "2026-01-06",
+                  "modality": [{"display": "CT"}], "description": "Chest CT"}},
+]}
+
+
+def make_transport():
+    def handler(request: httpx.Request) -> httpx.Response:
+        path = request.url.path
+        if path.endswith("/Patient/fhir-1"):
+            return httpx.Response(200, json=FHIR_PATIENT)
+        if path.endswith("/Patient/missing"):
+            return httpx.Response(404, json={"resourceType": "OperationOutcome"})
+        if path.endswith("/Condition"):
+            return httpx.Response(200, json=FHIR_CONDITION_BUNDLE)
+        if path.endswith("/MedicationRequest"):
+            return httpx.Response(200, json=FHIR_MEDREQ_BUNDLE)
+        if path.endswith("/MedicationStatement"):
+            return httpx.Response(200, json=FHIR_EMPTY_BUNDLE)
+        if path.endswith("/AllergyIntolerance"):
+            return httpx.Response(200, json=FHIR_ALLERGY_BUNDLE)
+        if path.endswith("/Observation"):
+            return httpx.Response(200, json=FHIR_OBS_BUNDLE)
+        if path.endswith("/Encounter"):
+            return httpx.Response(200, json=FHIR_ENCOUNTER_BUNDLE)
+        if path.endswith("/DiagnosticReport"):
+            return httpx.Response(200, json=FHIR_DIAGREPORT_BUNDLE)
+        if path.endswith("/ImagingStudy"):
+            return httpx.Response(200, json=FHIR_IMAGING_BUNDLE)
+        return httpx.Response(404, json={"error": "unhandled path in fake FHIR server: " + path})
+    return httpx.MockTransport(handler)
+
+
+def test_fhir_adapter_parses_patient_from_fake_server():
+    adapter = FHIRAdapter(base_url="https://fake-fhir.example/r4", transport=make_transport())
+    p = adapter.get("fhir-1")
+    assert p is not None
+    assert p.name == "Test Patient"
+    assert p.sex == "female"
+    assert p.age >= 50
+    assert p.conditions == ["Chronic kidney disease"]
+    assert any(m.drug_id == "warfarin" for m in p.medications)
+    assert p.allergies[0].substance == "Penicillin"
+    assert p.labs[0].name == "eGFR"
+    assert p.height_cm == 165
+    assert p.weight_kg == 60
+    assert p.encounters[0].type == "Outpatient visit" and str(p.encounters[0].date) == "2026-01-05"
+    assert p.diagnostic_reports[0].name == "Basic metabolic panel" and p.diagnostic_reports[0].conclusion == "Within normal limits"
+    assert p.imaging_studies[0].modality == "CT" and p.imaging_studies[0].description == "Chest CT"
+    assert "missing" not in " ".join(p.missing) or True  # missing list should be empty here (all data present)
+    assert p.missing == []
+
+def test_fhir_adapter_maps_encounters_diagnostic_reports_imaging_studies():
+    # Regression test for the gap this replaced: Encounter/DiagnosticReport/ImagingStudy used to be
+    # fetched nowhere -- the old docstring claimed "fetch helpers included for future use" but no
+    # such helpers existed and the internal Patient schema had no field for them at all.
+    adapter = FHIRAdapter(base_url="https://fake-fhir.example/r4", transport=make_transport())
+    p = adapter.get("fhir-1")
+    assert len(p.encounters) == 1 and p.encounters[0].status == "finished"
+    assert len(p.diagnostic_reports) == 1 and p.diagnostic_reports[0].status == "final"
+    assert len(p.imaging_studies) == 1
+    # Genuinely optional history: absence must not be flagged as a data gap like labs/meds/conditions are.
+    assert not any('encounter' in m.lower() for m in p.missing)
+    assert not any('imaging' in m.lower() or 'diagnostic' in m.lower() for m in p.missing)
+
+def test_fhir_adapter_maps_height_weight_observations_and_reports_when_absent():
+    adapter = FHIRAdapter(base_url="https://fake-fhir.example/r4", transport=make_transport())
+    p = adapter.get("fhir-1")
+    assert p.height_cm == 165 and p.weight_kg == 60
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith("/Patient/no-vitals"):
+            return httpx.Response(200, json={"resourceType": "Patient", "id": "no-vitals", "gender": "male", "birthDate": "1990-01-01"})
+        return httpx.Response(200, json=FHIR_EMPTY_BUNDLE)
+    adapter2 = FHIRAdapter(base_url="https://fake-fhir.example/r4", transport=httpx.MockTransport(handler))
+    p2 = adapter2.get("no-vitals")
+    assert p2.height_cm is None and p2.weight_kg is None
+    assert any('height' in m for m in p2.missing)
+    assert any('weight' in m for m in p2.missing)
+
+def test_fhir_adapter_404_returns_none():
+    adapter = FHIRAdapter(base_url="https://fake-fhir.example/r4", transport=make_transport())
+    assert adapter.get("missing") is None
+
+def test_fhir_adapter_list_is_explicitly_not_implemented():
+    adapter = FHIRAdapter(base_url="https://fake-fhir.example/r4", transport=make_transport())
+    with pytest.raises(NotImplementedError):
+        adapter.list()
+
+def test_fhir_adapter_missing_data_is_reported_not_hidden():
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith("/Patient/sparse"):
+            return httpx.Response(200, json={"resourceType": "Patient", "id": "sparse"})
+        return httpx.Response(200, json=FHIR_EMPTY_BUNDLE)
+    adapter = FHIRAdapter(base_url="https://fake-fhir.example/r4", transport=httpx.MockTransport(handler))
+    p = adapter.get("sparse")
+    assert "patient sex (missing or not male/female)" in p.missing
+    assert "birth date" in p.missing
+    assert "condition history (none returned)" in p.missing
+    assert "medication list (none returned)" in p.missing
+
+# --- Token-provider wiring (item 3 of the bug-fix round): the real SMART Launch -> access token
+# -> server-side session -> FHIRAdapter request chain, verified against a fake FHIR server that
+# echoes back whatever Authorization header it received so the test can assert on it directly. ----
+def _auth_echo_transport():
+    seen = {}
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen['authorization'] = request.headers.get('authorization')
+        return httpx.Response(200, json=FHIR_PATIENT)
+    return httpx.MockTransport(handler), seen
+
+
+def test_client_credentials_mode_still_works_unchanged():
+    # FHIR_AUTH_MODE=client_credentials (the default): unchanged behavior from before this round --
+    # FHIRAdapter with no token_provider given falls back to ClientCredentialsTokenProvider(oauth).
+    transport, seen = _auth_echo_transport()
+    def token_handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith('/.well-known/smart-configuration'):
+            return httpx.Response(200, json={'token_endpoint': 'https://fake-fhir.example/oauth2/token'})
+        if request.url.path.endswith('/oauth2/token'):
+            return httpx.Response(200, json={'access_token': 'client-credentials-token', 'expires_in': 300})
+        seen['authorization'] = request.headers.get('authorization')
+        return httpx.Response(200, json=FHIR_PATIENT)
+    combined_transport = httpx.MockTransport(token_handler)
+    oauth = SmartOAuthClient('https://fake-fhir.example/r4', 'client-id', 'secret', 'system/*.read',
+                              transport=combined_transport)
+    adapter = FHIRAdapter(base_url='https://fake-fhir.example/r4', oauth=oauth, transport=combined_transport)
+    assert isinstance(adapter.token_provider, ClientCredentialsTokenProvider)
+    p = adapter.get('fhir-1')
+    assert p is not None
+    assert seen['authorization'] == 'Bearer client-credentials-token'
+
+
+def test_client_credentials_mode_with_no_oauth_sends_no_authorization_header():
+    # Unchanged pre-existing behavior: EMR_MODE=fhir with no FHIR_CLIENT_ID configured means an
+    # already-authenticated/network-restricted endpoint -- no bearer token sent at all.
+    transport, seen = _auth_echo_transport()
+    adapter = FHIRAdapter(base_url='https://fake-fhir.example/r4', transport=transport)
+    adapter.get('fhir-1')
+    assert seen['authorization'] is None
+
+
+def test_smart_session_token_provider_uses_the_current_requests_session_token():
+    # The actual chain item 3 requires: a SMART Launch stored an access token in a server-side
+    # session (create_session, exactly what /smart/callback calls); main.py's per-request
+    # middleware would set CURRENT_SESSION_ID from the synex_session cookie -- simulated directly
+    # here the same way a request-scoped contextvar behaves. FHIRAdapter must then send THAT
+    # session's token as its Authorization header, not any client_credentials token.
+    session_id = create_session(patient_id='SYN-002', iss='https://fake-fhir.example/r4',
+                                 access_token='smart-session-token-abc')
+    reset_token = CURRENT_SESSION_ID.set(session_id)
+    try:
+        transport, seen = _auth_echo_transport()
+        adapter = FHIRAdapter(base_url='https://fake-fhir.example/r4',
+                               token_provider=SmartSessionTokenProvider(trusted_issuer='https://fake-fhir.example/r4'),
+                               transport=transport)
+        p = adapter.get('fhir-1')
+        assert p is not None
+        assert seen['authorization'] == 'Bearer smart-session-token-abc'
+    finally:
+        CURRENT_SESSION_ID.reset(reset_token)
+
+
+def test_smart_session_token_provider_trailing_slash_is_normalized():
+    # 'https://fake-fhir.example/r4' (session iss) vs 'https://fake-fhir.example/r4/' (configured
+    # trusted issuer) must still be treated as the same server.
+    session_id = create_session(patient_id='SYN-002', iss='https://fake-fhir.example/r4',
+                                 access_token='smart-session-token-abc')
+    reset_token = CURRENT_SESSION_ID.set(session_id)
+    try:
+        transport, seen = _auth_echo_transport()
+        adapter = FHIRAdapter(base_url='https://fake-fhir.example/r4',
+                               token_provider=SmartSessionTokenProvider(trusted_issuer='https://fake-fhir.example/r4/'),
+                               transport=transport)
+        adapter.get('fhir-1')
+        assert seen['authorization'] == 'Bearer smart-session-token-abc'
+    finally:
+        CURRENT_SESSION_ID.reset(reset_token)
+
+
+def test_smart_session_token_provider_with_no_active_session_fails_closed():
+    # FAIL-CLOSED (this round's fix): no session must never fall through to an unauthenticated
+    # FHIR request -- it must refuse to send the request at all.
+    reset_token = CURRENT_SESSION_ID.set(None)
+    try:
+        transport, seen = _auth_echo_transport()
+        adapter = FHIRAdapter(base_url='https://fake-fhir.example/r4',
+                               token_provider=SmartSessionTokenProvider(trusted_issuer='https://fake-fhir.example/r4'),
+                               transport=transport)
+        with pytest.raises(SmartAuthRequired):
+            adapter.get('fhir-1')
+        assert seen == {}, 'no request should have reached the FHIR server at all'
+    finally:
+        CURRENT_SESSION_ID.reset(reset_token)
+
+
+def test_smart_session_token_provider_issuer_mismatch_fails_closed():
+    # A session whose token was issued for a DIFFERENT FHIR server must never be forwarded to
+    # this one, even though the session itself is otherwise valid and has a real token.
+    session_id = create_session(patient_id='SYN-002', iss='https://OTHER-hospital.example/fhir',
+                                 access_token='token-for-a-different-hospital')
+    reset_token = CURRENT_SESSION_ID.set(session_id)
+    try:
+        transport, seen = _auth_echo_transport()
+        adapter = FHIRAdapter(base_url='https://fake-fhir.example/r4',
+                               token_provider=SmartSessionTokenProvider(trusted_issuer='https://fake-fhir.example/r4'),
+                               transport=transport)
+        with pytest.raises(SmartAuthRequired):
+            adapter.get('fhir-1')
+        assert seen == {}, 'no request should have reached the FHIR server at all'
+    finally:
+        CURRENT_SESSION_ID.reset(reset_token)
+
+
+def test_smart_session_token_provider_expired_session_fails_closed(monkeypatch):
+    import time as real_time
+    from app.services import smart_launch
+    session_id = create_session(patient_id='SYN-002', iss='https://fake-fhir.example/r4',
+                                 access_token='smart-session-token-abc')
+    future = real_time.time() + smart_launch.SESSION_TTL_SECONDS + 1
+    monkeypatch.setattr(smart_launch.time, 'time', lambda: future)
+    reset_token = CURRENT_SESSION_ID.set(session_id)
+    try:
+        transport, seen = _auth_echo_transport()
+        adapter = FHIRAdapter(base_url='https://fake-fhir.example/r4',
+                               token_provider=SmartSessionTokenProvider(trusted_issuer='https://fake-fhir.example/r4'),
+                               transport=transport)
+        with pytest.raises(SmartAuthRequired):
+            adapter.get('fhir-1')
+        assert seen == {}
+    finally:
+        CURRENT_SESSION_ID.reset(reset_token)
+
+
+def test_build_adapter_selects_token_provider_by_fhir_auth_mode(monkeypatch):
+    monkeypatch.setenv('EMR_MODE', 'fhir')
+    monkeypatch.setenv('FHIR_BASE_URL', 'https://fake-fhir.example/r4')
+    monkeypatch.delenv('FHIR_CLIENT_ID', raising=False)
+    from app.main import build_adapter
+
+    monkeypatch.setenv('FHIR_AUTH_MODE', 'smart')
+    smart_adapter = build_adapter()
+    assert isinstance(smart_adapter.token_provider, SmartSessionTokenProvider)
+    assert smart_adapter.token_provider.trusted_issuer == 'https://fake-fhir.example/r4'
+
+
+def test_build_adapter_smart_trusted_issuer_override(monkeypatch):
+    monkeypatch.setenv('EMR_MODE', 'fhir')
+    monkeypatch.setenv('FHIR_BASE_URL', 'https://fake-fhir.example/r4')
+    monkeypatch.setenv('FHIR_AUTH_MODE', 'smart')
+    monkeypatch.setenv('SYNEX_SMART_TRUSTED_ISSUER', 'https://auth.fake-fhir.example')
+    monkeypatch.delenv('FHIR_CLIENT_ID', raising=False)
+    from app.main import build_adapter
+    smart_adapter = build_adapter()
+    assert smart_adapter.token_provider.trusted_issuer == 'https://auth.fake-fhir.example'
+
+    monkeypatch.delenv('FHIR_AUTH_MODE', raising=False)
+    default_adapter = build_adapter()
+    assert isinstance(default_adapter.token_provider, ClientCredentialsTokenProvider)
+
+    monkeypatch.setenv('FHIR_AUTH_MODE', 'client_credentials')
+    explicit_adapter = build_adapter()
+    assert isinstance(explicit_adapter.token_provider, ClientCredentialsTokenProvider)
+
+
+def test_smart_oauth_client_gets_token_via_discovery():
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith("/.well-known/smart-configuration"):
+            return httpx.Response(200, json={"token_endpoint": "https://fake-fhir.example/oauth2/token"})
+        if request.url.path.endswith("/oauth2/token"):
+            return httpx.Response(200, json={"access_token": "fake-token-123", "expires_in": 300})
+        return httpx.Response(404)
+    oauth = SmartOAuthClient("https://fake-fhir.example/r4", "client-id", "secret", "system/*.read",
+                              transport=httpx.MockTransport(handler))
+    assert oauth.token() == "fake-token-123"
+    assert oauth.token() == "fake-token-123"  # cached, no second network call needed

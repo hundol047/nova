@@ -1,0 +1,14 @@
+[
+  {"test_id": "ecg", "note": "First-line for any chest pain or syncope; look for ST elevation/depression, new T-wave inversion, or signs of right heart strain (PE)."},
+  {"test_id": "troponin", "note": "Elevated in myocardial injury; a single normal troponin early after symptom onset does not exclude ACS."},
+  {"test_id": "d_dimer", "note": "High sensitivity, low specificity for PE/DVT; most useful to rule out PE in a low pre-test-probability patient, not to rule it in."},
+  {"test_id": "ct_chest_angio", "note": "Definitive imaging for suspected pulmonary embolism when D-dimer is positive or pre-test probability is high."},
+  {"test_id": "ct_aorta", "note": "Definitive imaging for suspected aortic dissection; order emergently if tearing pain with pulse/BP differential."},
+  {"test_id": "lactate", "note": "Elevated lactate suggests tissue hypoperfusion; used to risk-stratify suspected sepsis severity."},
+  {"test_id": "lumbar_puncture", "note": "Confirms meningitis (CSF pleocytosis) or subarachnoid hemorrhage (xanthochromia) when CT head is negative but suspicion remains high."},
+  {"test_id": "ct_head", "note": "First-line for suspected stroke, subarachnoid hemorrhage, or altered mental status of unclear cause."},
+  {"test_id": "beta_hcg", "note": "Mandatory in any female of childbearing age with abdominal pain before further imaging or medication decisions."},
+  {"test_id": "ketones", "note": "Combined with glucose and ABG to confirm diabetic ketoacidosis (ketosis + metabolic acidosis + hyperglycemia)."},
+  {"test_id": "lipase", "note": "Elevated 3x upper limit supports acute pancreatitis; imaging still needed to assess severity/complications."},
+  {"test_id": "urinalysis", "note": "Pyuria/nitrites support UTI; also screens for hematuria (stone) and glucose/ketones (metabolic causes)."}
+]

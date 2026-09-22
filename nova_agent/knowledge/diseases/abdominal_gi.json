@@ -1,0 +1,313 @@
+[
+  {
+    "id": "acute_abdomen",
+    "name": "Acute Abdomen (Surgical Abdomen)",
+    "aliases": [
+      "acute abdomen",
+      "surgical abdomen",
+      "peritonitis",
+      "급성복증"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "vomiting"
+    ],
+    "category": "abdominal_gi",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "severe abdominal pain",
+      "rebound tenderness",
+      "guarding",
+      "rigid abdomen",
+      "fever"
+    ],
+    "risk_factors": [
+      "prior abdominal surgery",
+      "elderly age"
+    ],
+    "discriminating_questions": [
+      "onset",
+      "severity",
+      "location",
+      "character"
+    ],
+    "discriminating_exams": [
+      "abdominal_exam",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "cbc",
+      "lipase",
+      "ct_abdomen"
+    ],
+    "confirmatory_findings": [
+      "free air",
+      "peritoneal signs on imaging",
+      "perforation"
+    ],
+    "red_flag_keywords": [
+      "rebound tenderness",
+      "guarding",
+      "rigid abdomen",
+      "peritoneal signs"
+    ],
+    "minimum_workup": [
+      "ct_abdomen"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "gi_bleeding",
+    "name": "Gastrointestinal Bleeding",
+    "aliases": [
+      "GI bleed",
+      "upper GI bleeding",
+      "lower GI bleeding",
+      "위장관출혈"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "vomiting",
+      "weakness"
+    ],
+    "category": "abdominal_gi",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "hematemesis",
+      "melena",
+      "hematochezia",
+      "lightheadedness",
+      "pallor",
+      "tachycardia"
+    ],
+    "risk_factors": [
+      "NSAID use",
+      "anticoagulant use",
+      "liver disease",
+      "peptic ulcer disease",
+      "alcohol use"
+    ],
+    "discriminating_questions": [
+      "associated_symptoms",
+      "medication",
+      "past_medical_history",
+      "social_history"
+    ],
+    "discriminating_exams": [
+      "abdominal_exam",
+      "vital_signs",
+      "fecal_occult_blood"
+    ],
+    "discriminating_tests": [
+      "cbc",
+      "fecal_occult_blood"
+    ],
+    "confirmatory_findings": [
+      "positive fecal occult blood",
+      "hemoglobin drop",
+      "low hemoglobin"
+    ],
+    "red_flag_keywords": [
+      "hematemesis",
+      "melena",
+      "hematochezia",
+      "hypotension",
+      "tachycardia",
+      "pallor"
+    ],
+    "minimum_workup": [
+      "cbc"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "ectopic_pregnancy",
+    "name": "Ectopic Pregnancy",
+    "aliases": [
+      "ectopic pregnancy",
+      "tubal pregnancy",
+      "자궁외임신"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "syncope"
+    ],
+    "category": "abdominal_gi",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "lower abdominal pain",
+      "vaginal bleeding",
+      "missed period",
+      "unilateral pelvic pain",
+      "dizziness"
+    ],
+    "risk_factors": [
+      "prior ectopic pregnancy",
+      "pelvic inflammatory disease",
+      "IUD use",
+      "tubal surgery",
+      "childbearing age female"
+    ],
+    "discriminating_questions": [
+      "onset",
+      "location",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "pelvic_exam",
+      "abdominal_exam",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "beta_hcg",
+      "pelvic_ultrasound"
+    ],
+    "confirmatory_findings": [
+      "positive beta-hCG",
+      "no intrauterine pregnancy",
+      "adnexal mass"
+    ],
+    "red_flag_keywords": [
+      "vaginal bleeding",
+      "missed period",
+      "unilateral pelvic pain",
+      "hypotension",
+      "syncope"
+    ],
+    "minimum_workup": [
+      "beta_hcg",
+      "pelvic_ultrasound"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "acute_pancreatitis",
+    "name": "Acute Pancreatitis",
+    "aliases": [
+      "pancreatitis",
+      "급성췌장염"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "vomiting",
+      "back_pain"
+    ],
+    "category": "abdominal_gi",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "epigastric pain radiating to back",
+      "nausea",
+      "vomiting",
+      "worse after eating fatty food"
+    ],
+    "risk_factors": [
+      "alcohol use",
+      "gallstones",
+      "hypertriglyceridemia"
+    ],
+    "discriminating_questions": [
+      "location",
+      "character",
+      "social_history",
+      "aggravating"
+    ],
+    "discriminating_exams": [
+      "abdominal_exam",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "lipase",
+      "abdominal_ultrasound"
+    ],
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "appendicitis",
+    "name": "Acute Appendicitis",
+    "aliases": [
+      "appendicitis",
+      "충수염"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain"
+    ],
+    "category": "abdominal_gi",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "periumbilical pain migrating to right lower quadrant",
+      "anorexia",
+      "low grade fever",
+      "nausea"
+    ],
+    "risk_factors": [
+      "young age"
+    ],
+    "discriminating_questions": [
+      "location",
+      "onset",
+      "associated_symptoms"
+    ],
+    "discriminating_exams": [
+      "abdominal_exam",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "cbc",
+      "ct_abdomen"
+    ],
+    "red_flag_keywords": [
+      "rebound tenderness",
+      "guarding"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "gastroenteritis",
+    "name": "Acute Gastroenteritis",
+    "aliases": [
+      "gastroenteritis",
+      "stomach flu",
+      "급성위장염"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "fever",
+      "vomiting"
+    ],
+    "category": "abdominal_gi",
+    "dangerous": false,
+    "urgency": "LOW",
+    "typical_features": [
+      "diffuse crampy abdominal pain",
+      "diarrhea",
+      "vomiting",
+      "recent similar illness contact"
+    ],
+    "risk_factors": [
+      "recent travel",
+      "sick contacts",
+      "food exposure"
+    ],
+    "discriminating_questions": [
+      "associated_symptoms",
+      "onset",
+      "social_history"
+    ],
+    "discriminating_exams": [
+      "abdominal_exam",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "cbc"
+    ],
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
+  }
+]

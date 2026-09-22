@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+"""Competition readiness gate (spec sections 4/22/30): `python scripts/preflight_competition.py`
+
+A hard pass/fail check meant to run BEFORE submitting (locally or in CI) -- separate from
+submission/run.py's own runtime preflight, which logs a loud warning but keeps running on the
+deterministic fallback so a live competition run never just stops. This script's job is the
+opposite: tell a human/CI truthfully whether a real competition run would actually use a real LLM,
+and refuse to say READY if it wouldn't.
+
+Exit code 0 + "READY" only when every check below passes. Otherwise exit code 1 + "NOT READY" and
+the specific reasons.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+FAIL_CHECKS: list[str] = []
+WARN_CHECKS: list[str] = []
+PASS_CHECKS: list[str] = []
+
+
+def check(name: str, ok: bool, detail: str, *, severity: str = "fail") -> None:
+    line = f"{name}: {detail}"
+    if ok:
+        PASS_CHECKS.append(line)
+    elif severity == "warn":
+        WARN_CHECKS.append(line)
+    else:
+        FAIL_CHECKS.append(line)
+
+
+def main() -> int:
+    # --- Python version ---------------------------------------------------------------------
+    check("python_version", sys.version_info >= (3, 9),
+          f"{sys.version.split()[0]} (requires >= 3.9)")
+
+    # --- required packages -------------------------------------------------------------------
+    try:
+        import pydantic  # noqa: F401
+        check("package_pydantic", True, f"pydantic {pydantic.VERSION} importable")
+    except Exception as exc:
+        check("package_pydantic", False, f"pydantic not importable: {exc}")
+
+    # --- submission imports ------------------------------------------------------------------
+    try:
+        from nova_agent.orchestrator import DoctorAgent  # noqa: F401
+        from nova_agent.config import get_config
+        check("nova_agent_imports", True, "nova_agent.orchestrator.DoctorAgent imports cleanly")
+    except Exception as exc:
+        check("nova_agent_imports", False, f"import failed: {exc}")
+        print_summary()
+        return 1
+
+    try:
+        from competition.adapter import NovaCompetitionAgent  # noqa: F401
+        check("competition_adapter_imports", True, "competition.adapter.NovaCompetitionAgent imports cleanly")
+    except Exception as exc:
+        check("competition_adapter_imports", False, f"import failed: {exc}")
+
+    cfg = get_config()
+
+    # --- model provider / endpoint / name -----------------------------------------------------
+    provider = cfg.llm_provider
+    check("llm_provider_configured", provider != "mock",
+          f"NOVA_LLM_PROVIDER={provider!r} -- a competition run needs a real provider "
+          f"(competition/openai_compatible/local/anthropic), not the offline mock stand-in.")
+
+    # --- LLM health (real network check) ------------------------------------------------------
+    from nova_agent.llm_client import get_llm_client
+    client = get_llm_client()
+    endpoint = getattr(client, "base_url", "n/a (SDK-based client, no HTTP base_url)")
+    model = getattr(client, "model", cfg.llm_model)
+    if provider == "mock":
+        check("llm_health", False, "skipped (provider=mock has no real endpoint to check)")
+    else:
+        ok, reason = client.preflight()
+        check("llm_health", ok, f"provider={provider} model={model!r} endpoint={endpoint} -- {reason}")
+
+    # --- structured JSON output + legal action validation --------------------------------------
+    if provider != "mock":
+        try:
+            from nova_agent.orchestrator import DoctorAgent
+            agent = DoctorAgent(llm_client=client)
+            state = agent.new_case("preflight_smoke", "chest pain", {"age": 55, "sex": "male"})
+            action, llm_output, differential = agent.decide(state)
+            valid_action = action.action_type in {"ASK", "EXAM", "TEST", "DIAGNOSE"} and bool(action.content)
+            check("structured_output_and_action_validation", valid_action,
+                  f"one live turn produced action_type={action.action_type!r}, "
+                  f"used_real_llm_output={'yes' if llm_output is not None else 'no (fell back)'}")
+        except Exception as exc:
+            check("structured_output_and_action_validation", False, f"live turn raised: {exc}")
+    else:
+        check("structured_output_and_action_validation", False, "skipped (provider=mock)")
+
+    # --- RAG / knowledge files ------------------------------------------------------------------
+    knowledge_dir = Path(cfg.knowledge_dir)
+    disease_files = list((knowledge_dir / "diseases").glob("*.json")) if knowledge_dir.is_dir() else []
+    check("knowledge_files", len(disease_files) > 0, f"{len(disease_files)} disease knowledge file(s) found in {knowledge_dir}")
+
+    # --- run.py present -----------------------------------------------------------------------
+    submission_run = ROOT / "submission" / "run.py"
+    check("submission_run_py", submission_run.exists(), str(submission_run))
+
+    # --- turn limit -----------------------------------------------------------------------------
+    check("turn_limit_configured", 1 <= cfg.max_turns <= 60, f"NOVA_MAX_TURNS={cfg.max_turns}")
+
+    # --- official adapter status (informational, never blocks) --------------------------------
+    check("official_competition_schema", False,
+          "competition/schema.py is a documented PLACEHOLDER -- no official N.O.V.A. 2026 API was "
+          "available at implementation time. Update competition/schema.py + adapter.py once published.",
+          severity="warn")
+
+    # --- submission size ------------------------------------------------------------------------
+    submission_dir = ROOT / "submission"
+    if submission_dir.is_dir():
+        total_bytes = sum(f.stat().st_size for f in submission_dir.rglob("*") if f.is_file())
+        mb = total_bytes / (1024 * 1024)
+        check("submission_size", mb < 50, f"{mb:.1f} MB (submission/ directory)")
+    else:
+        check("submission_size", False, "submission/ directory does not exist -- run scripts/build_nova_submission.py")
+
+    # --- internet dependency (informational) ---------------------------------------------------
+    if provider == "mock":
+        check("endpoint_locality", True, "skipped (provider=mock has no endpoint)", severity="warn")
+    else:
+        is_local = any(host in endpoint for host in ("localhost", "127.0.0.1", "0.0.0.0")) if isinstance(endpoint, str) else True
+        check("endpoint_locality", is_local,
+              f"endpoint={endpoint} is "
+              f"{'local/offline' if is_local else 'NOT localhost -- verify this is the official, authorized endpoint before submitting'}",
+              severity="warn")
+
+    # --- secret leakage (light static scan) -----------------------------------------------------
+    suspicious = []
+    patterns = ("sk-", "-----BEGIN", "AKIA")
+    for path in list((ROOT / "nova_agent").rglob("*.py")) + list((ROOT / "competition").rglob("*.py")):
+        try:
+            text = path.read_text(encoding="utf-8", errors="ignore")
+        except Exception:
+            continue
+        for pat in patterns:
+            if pat in text:
+                suspicious.append(f"{path.relative_to(ROOT)} contains {pat!r}")
+    check("secret_scan", not suspicious, "no suspicious credential-shaped strings found in nova_agent/competition"
+          if not suspicious else "; ".join(suspicious))
+
+    return print_summary()
+
+
+def print_summary() -> int:
+    print("=== Competition Preflight ===\n")
+    for line in PASS_CHECKS:
+        print(f"  PASS  {line}")
+    for line in WARN_CHECKS:
+        print(f"  WARN  {line}")
+    for line in FAIL_CHECKS:
+        print(f"  FAIL  {line}")
+
+    ready = not FAIL_CHECKS
+    print()
+    if ready:
+        print("READY")
+        return 0
+    print("NOT READY")
+    for line in FAIL_CHECKS:
+        print(f"  - {line}")
+    return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

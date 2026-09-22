@@ -1,0 +1,168 @@
+[
+  {
+    "id": "diabetic_ketoacidosis",
+    "name": "Diabetic Ketoacidosis",
+    "aliases": [
+      "DKA",
+      "diabetic ketoacidosis",
+      "당뇨병성 케톤산증"
+    ],
+    "chief_complaint_tags": [
+      "altered_mental_status",
+      "abdominal_pain",
+      "dyspnea",
+      "vomiting",
+      "weakness"
+    ],
+    "category": "endocrine_metabolic",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "polyuria",
+      "polydipsia",
+      "nausea and vomiting",
+      "abdominal pain",
+      "fruity breath odor",
+      "kussmaul breathing",
+      "confusion"
+    ],
+    "risk_factors": [
+      "known diabetes",
+      "missed insulin doses",
+      "recent infection"
+    ],
+    "discriminating_questions": [
+      "past_medical_history",
+      "medication",
+      "associated_symptoms",
+      "onset"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "mental_status_exam",
+      "abdominal_exam"
+    ],
+    "discriminating_tests": [
+      "glucose_point_of_care",
+      "ketones",
+      "abg",
+      "bmp"
+    ],
+    "confirmatory_findings": [
+      "large ketones",
+      "metabolic acidosis",
+      "blood glucose 4",
+      "blood glucose 3",
+      "kussmaul breathing"
+    ],
+    "red_flag_keywords": [
+      "kussmaul breathing",
+      "fruity breath",
+      "confusion with known diabetes",
+      "polyuria polydipsia"
+    ],
+    "minimum_workup": [
+      "glucose_point_of_care",
+      "ketones"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "severe_electrolyte_disorder",
+    "name": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+    "aliases": [
+      "hyperkalemia",
+      "hyponatremia",
+      "severe electrolyte disturbance",
+      "중증 전해질이상"
+    ],
+    "chief_complaint_tags": [
+      "altered_mental_status",
+      "dizziness",
+      "palpitations",
+      "weakness"
+    ],
+    "category": "endocrine_metabolic",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "muscle weakness",
+      "palpitations",
+      "confusion",
+      "arrhythmia",
+      "seizure"
+    ],
+    "risk_factors": [
+      "chronic kidney disease",
+      "diuretic use",
+      "vomiting or diarrhea",
+      "renin-angiotensin system inhibitor use"
+    ],
+    "discriminating_questions": [
+      "past_medical_history",
+      "medication",
+      "associated_symptoms"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "cardiac_auscultation",
+      "mental_status_exam"
+    ],
+    "discriminating_tests": [
+      "bmp",
+      "ecg"
+    ],
+    "red_flag_keywords": [
+      "arrhythmia",
+      "muscle weakness with renal disease",
+      "confusion with renal disease"
+    ],
+    "minimum_workup": [
+      "bmp"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "hypoglycemia",
+    "name": "Hypoglycemia",
+    "aliases": [
+      "low blood sugar",
+      "hypoglycemia",
+      "저혈당"
+    ],
+    "chief_complaint_tags": [
+      "altered_mental_status",
+      "dizziness",
+      "weakness"
+    ],
+    "category": "endocrine_metabolic",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "diaphoresis",
+      "confusion",
+      "tremor",
+      "known diabetes on insulin",
+      "resolves with glucose"
+    ],
+    "risk_factors": [
+      "insulin use",
+      "sulfonylurea use",
+      "missed meal"
+    ],
+    "discriminating_questions": [
+      "past_medical_history",
+      "medication",
+      "onset"
+    ],
+    "discriminating_exams": [
+      "mental_status_exam",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "glucose_point_of_care"
+    ],
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
+  }
+]

@@ -1,0 +1,268 @@
+[
+  {
+    "id": "pulmonary_embolism",
+    "name": "Pulmonary Embolism",
+    "aliases": [
+      "PE",
+      "pulmonary thromboembolism",
+      "폐색전증"
+    ],
+    "chief_complaint_tags": [
+      "dyspnea",
+      "chest_pain",
+      "syncope",
+      "palpitations",
+      "cough",
+      "leg_swelling"
+    ],
+    "category": "pulmonary",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "sudden onset dyspnea",
+      "pleuritic chest pain",
+      "tachycardia",
+      "hemoptysis",
+      "calf swelling",
+      "unilateral leg pain"
+    ],
+    "risk_factors": [
+      "recent surgery",
+      "immobilization",
+      "long travel",
+      "malignancy",
+      "oral contraceptive use",
+      "prior DVT or PE",
+      "pregnancy"
+    ],
+    "discriminating_questions": [
+      "onset",
+      "character",
+      "associated_symptoms",
+      "past_medical_history",
+      "social_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "extremity_exam",
+      "lung_auscultation"
+    ],
+    "discriminating_tests": [
+      "d_dimer",
+      "ct_chest_angio",
+      "ecg"
+    ],
+    "confirmatory_findings": [
+      "filling defect in the pulmonary artery",
+      "elevated D-dimer"
+    ],
+    "red_flag_keywords": [
+      "sudden onset dyspnea",
+      "pleuritic",
+      "calf swelling",
+      "hemoptysis",
+      "tachycardia",
+      "hypoxia"
+    ],
+    "minimum_workup": [
+      "d_dimer",
+      "ct_chest_angio"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "tension_pneumothorax",
+    "name": "Tension Pneumothorax",
+    "aliases": [
+      "tension pneumo",
+      "긴장성 기흉"
+    ],
+    "chief_complaint_tags": [
+      "dyspnea",
+      "chest_pain",
+      "cough"
+    ],
+    "category": "pulmonary",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "sudden onset dyspnea",
+      "unilateral absent breath sounds",
+      "tracheal deviation",
+      "hypotension",
+      "chest pain after trauma"
+    ],
+    "risk_factors": [
+      "chest trauma",
+      "tall thin body habitus",
+      "COPD",
+      "mechanical ventilation"
+    ],
+    "discriminating_questions": [
+      "onset",
+      "character",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "lung_auscultation",
+      "vital_signs",
+      "general_appearance"
+    ],
+    "discriminating_tests": [
+      "cxr"
+    ],
+    "confirmatory_findings": [
+      "absent breath sounds",
+      "tracheal deviation"
+    ],
+    "red_flag_keywords": [
+      "absent breath sounds",
+      "tracheal deviation",
+      "hypotension",
+      "sudden onset dyspnea",
+      "distended neck veins"
+    ],
+    "minimum_workup": [
+      "lung_auscultation",
+      "cxr"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "pneumonia",
+    "name": "Community-Acquired Pneumonia",
+    "aliases": [
+      "pneumonia",
+      "폐렴"
+    ],
+    "chief_complaint_tags": [
+      "dyspnea",
+      "fever",
+      "chest_pain",
+      "cough"
+    ],
+    "category": "pulmonary",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "productive cough",
+      "fever",
+      "pleuritic chest pain",
+      "crackles on auscultation",
+      "dyspnea"
+    ],
+    "risk_factors": [
+      "elderly age",
+      "smoking",
+      "COPD",
+      "immunosuppression"
+    ],
+    "discriminating_questions": [
+      "associated_symptoms",
+      "onset",
+      "duration"
+    ],
+    "discriminating_exams": [
+      "lung_auscultation",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "cxr",
+      "cbc"
+    ],
+    "red_flag_keywords": [
+      "hypoxia",
+      "confusion",
+      "hypotension"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "asthma_copd_exacerbation",
+    "name": "Asthma / COPD Exacerbation",
+    "aliases": [
+      "asthma exacerbation",
+      "COPD exacerbation",
+      "천식 악화",
+      "만성폐쇄성폐질환 악화"
+    ],
+    "chief_complaint_tags": [
+      "dyspnea",
+      "cough"
+    ],
+    "category": "pulmonary",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "wheeze",
+      "known asthma or COPD",
+      "worse with triggers",
+      "prolonged expiration"
+    ],
+    "risk_factors": [
+      "smoking",
+      "known reactive airway disease",
+      "allergen exposure"
+    ],
+    "discriminating_questions": [
+      "past_medical_history",
+      "aggravating",
+      "associated_symptoms"
+    ],
+    "discriminating_exams": [
+      "lung_auscultation",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "cxr",
+      "abg"
+    ],
+    "red_flag_keywords": [
+      "silent chest",
+      "unable to speak in full sentences",
+      "hypoxia"
+    ],
+    "evidence_level": "internally_authored_heuristic"
+  },
+  {
+    "id": "acute_bronchitis",
+    "name": "Acute Bronchitis",
+    "aliases": [
+      "bronchitis",
+      "chest cold",
+      "급성기관지염"
+    ],
+    "chief_complaint_tags": [
+      "cough",
+      "fever"
+    ],
+    "category": "pulmonary",
+    "dangerous": false,
+    "urgency": "LOW",
+    "typical_features": [
+      "productive cough",
+      "mild fever",
+      "no focal consolidation",
+      "recent viral illness",
+      "chest wall soreness from coughing"
+    ],
+    "risk_factors": [
+      "smoking",
+      "recent viral upper respiratory infection"
+    ],
+    "discriminating_questions": [
+      "duration",
+      "associated_symptoms",
+      "social_history"
+    ],
+    "discriminating_exams": [
+      "lung_auscultation",
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "cxr"
+    ],
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
+  }
+]
