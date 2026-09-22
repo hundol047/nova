@@ -8,6 +8,7 @@ no dependency on the vendored SynexAgent backend (spec section 17).
 from __future__ import annotations
 
 import re
+import time
 from datetime import datetime, timezone
 from typing import Dict, List, Literal, Optional
 
@@ -155,6 +156,15 @@ class PatientState(BaseModel):
     max_turns: int = 60
     final_diagnosis: Optional[str] = None
     final_diagnosis_rationale: Optional[str] = None
+
+    # Wall-clock case start (spec: graceful degradation as a per-case time budget runs out).
+    # time.time()-based (not perf_counter) since it must be meaningful even if PatientState is
+    # constructed and later resumed across separate calls, not just within one process lifetime.
+    case_started_at_unix: float = Field(default_factory=time.time)
+
+    @property
+    def case_elapsed_seconds(self) -> float:
+        return time.time() - self.case_started_at_unix
 
     # LLM call reliability (spec: an evaluation run must never look "normal" while the real LLM is
     # actually failing every turn and the agent is silently riding the deterministic fallback).

@@ -115,6 +115,18 @@ class NovaConfig:
     )
     competition_api_key: str = field(default_factory=lambda: _str_env("NOVA_COMPETITION_API_KEY", ""))
 
+    # Case-level budget (spec: graceful degradation, not a crash, as a case's time/call budget
+    # runs out). Off by default (None) -- no official per-case timeout or call cap has been
+    # published, so nothing is enforced unless explicitly configured. When set, orchestrator.py
+    # skips RAG retrieval and the real LLM call (using the deterministic action/stop-decision
+    # directly) once the budget is exhausted, rather than exceeding it or crashing.
+    case_timeout_seconds: float | None = field(
+        default_factory=lambda: _float_env("NOVA_CASE_TIMEOUT_SECONDS", 0.0) or None
+    )
+    max_llm_calls_per_case: int | None = field(
+        default_factory=lambda: _int_env("NOVA_MAX_LLM_CALLS", 0) or None
+    )
+
     random_seed: int = field(default_factory=lambda: _int_env("NOVA_RANDOM_SEED", 42))
 
     weights: UtilityWeights = field(default_factory=UtilityWeights)

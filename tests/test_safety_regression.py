@@ -343,6 +343,140 @@ def test_novel_diagnosis_to_discriminative_action_flow():
     assert "Boerhaave Syndrome" in [d.diagnosis for d in differential]
 
 
+def test_novel_diagnosis_pipeline_across_long_tail_conditions():
+    """The novel-diagnosis -> discriminative-action -> canonicalization -> safety-validation flow
+    must hold for a genuinely diverse set of long-tail diagnoses (spec: not just the one Boerhaave
+    example), never hardcoding any case's expected final answer. Two things are checked for each:
+    the novel diagnosis always survives into the merged differential (open-world reasoning is
+    preserved), and the executed action is ALWAYS either a legitimately canonicalized real
+    taxonomy entry, or -- when the proposed workup genuinely has no catalog match (e.g. tonometry,
+    an ESR/CRP lab, an acetylcholine receptor antibody test -- none of which this repo's 34-disease
+    catalog was built to cover) -- a safe deterministic fallback, never a crash and never a
+    hallucinated action key executed as if it were real."""
+    from nova_agent.orchestrator import DoctorAgent
+
+    long_tail_cases = [
+        ("Myasthenia Gravis", "EXAM", "neuro_exam_novel", "Perform a neurologic exam to check for fatigable ptosis"),
+        ("Adrenal Crisis", "TEST", "electrolytes", "Order a basic metabolic panel to check electrolytes"),
+        ("Thyroid Storm", "EXAM", "vitals", "Obtain vital signs to assess for tachycardia and fever"),
+        ("Pericarditis", "TEST", "ecg_pericarditis", "Order a 12-lead ECG to look for diffuse ST elevation"),
+        ("Temporal Arteritis", "TEST", "esr", "Check ESR and CRP"),
+        ("Acute Angle-Closure Glaucoma", "TEST", "tonometry", "Measure intraocular pressure with tonometry"),
+        ("Cauda Equina Syndrome", "EXAM", "saddle_anesthesia", "Perform a neurologic exam to check for saddle anesthesia"),
+    ]
+
+    def _make_client(diagnosis_name, action_type, key, content):
+        class _Client:
+            def generate_turn_output(self, ctx):
+                differential = [DifferentialItemOutput(
+                    diagnosis=diagnosis_name, diagnosis_id=None, rank=1,
+                    supporting_evidence=["clinical suspicion"], confidence="MEDIUM", dangerous_if_missed=True,
+                )]
+                return AgentTurnOutput(
+                    summary="novel", differential=differential, red_flags=[], candidate_actions=[],
+                    selected_action=SelectedActionOutput(type=action_type, key=key, content=content),
+                    ready_to_diagnose=False,
+                )
+        return _Client()
+
+    known_catalog_keys = set()
+    from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG, QUESTION_CATALOG
+    known_catalog_keys |= set(EXAM_CATALOG) | set(TEST_CATALOG) | set(QUESTION_CATALOG)
+
+    for diagnosis_name, action_type, key, content in long_tail_cases:
+        agent = DoctorAgent(llm_client=_make_client(diagnosis_name, action_type, key, content))
+        state = agent.new_case("c", "generic complaint", {"age": 40, "sex": "female"})
+        action, _llm_output, differential = agent.decide(state)
+
+        assert diagnosis_name in [d.diagnosis for d in differential], \
+            f"{diagnosis_name} must survive into the differential even though it's outside the local KB"
+        assert action.action_type in {"ASK", "EXAM", "TEST", "DIAGNOSE"}
+        assert action.key in known_catalog_keys, \
+            f"{diagnosis_name}: executed action key {action.key!r} must be a real catalog entry, never a hallucinated one"
+
+
+def test_compact_prompt_and_backward_compatible_schema():
+    """build_reasoning_prompt() only requires differential/selected_action (spec section 6: don't
+    make a small open-weight model regenerate a full echo of the candidate list, or fields nothing
+    downstream reads) -- verified two ways: the prompt text itself doesn't ask for the dropped
+    fields, and AgentTurnOutput still accepts BOTH a compact response and a full old-shape
+    response (a real model trained on the old schema shape isn't broken by the prompt change)."""
+    from nova_agent.llm_client import build_reasoning_prompt, parse_agent_turn_output
+    from nova_agent.orchestrator import DoctorAgent
+
+    agent = DoctorAgent()
+    state = agent.new_case("c", "chest pain", {"age": 58, "sex": "male"})
+    captured = {}
+
+    class _CapturingClient:
+        def generate_turn_output(self, ctx):
+            captured["prompt"] = build_reasoning_prompt(ctx)
+            return AgentTurnOutput(
+                differential=[], red_flags=[], candidate_actions=[],
+                selected_action=SelectedActionOutput(type=ctx.candidates[0].action_type,
+                                                      key=ctx.candidates[0].key, content=ctx.candidates[0].content),
+                ready_to_diagnose=False,
+            )
+
+    DoctorAgent(llm_client=_CapturingClient()).decide(state)
+    prompt = captured["prompt"]
+    assert '"summary": str' not in prompt
+    assert '"red_flags"' not in prompt
+    assert '"candidate_actions"' not in prompt
+    assert '"ready_to_diagnose"' not in prompt
+    assert '"differential"' in prompt and '"selected_action"' in prompt
+
+    compact = '{"differential": [], "selected_action": {"type": "ASK", "key": "onset", "content": "x"}}'
+    full_old_shape = ('{"summary": "s", "differential": [], "red_flags": [], "candidate_actions": [], '
+                       '"selected_action": {"type": "ASK", "key": "onset", "content": "x"}, "ready_to_diagnose": false}')
+    assert parse_agent_turn_output(compact) is not None
+    assert parse_agent_turn_output(full_old_shape) is not None
+
+
+def test_case_budget_graceful_degradation():
+    """Spec section 20: NOVA_MAX_LLM_CALLS and NOVA_CASE_TIMEOUT_SECONDS must actually cap real
+    LLM usage once exhausted -- never a crash, never a silent overrun -- by falling back to the
+    already-computed deterministic action for every subsequent turn. Off by default (unset ==
+    unlimited), verified separately here to not regress the default (no-budget) benchmark path."""
+    from nova_agent.llm_client import BaseLLMClient
+    from nova_agent.orchestrator import DoctorAgent
+
+    class _RealClient(BaseLLMClient):
+        def generate_turn_output(self, ctx):
+            self._last_call_was_real = True
+            self._last_call_succeeded = True
+            return AgentTurnOutput(
+                differential=[], selected_action=SelectedActionOutput(
+                    type=ctx.candidates[0].action_type, key=ctx.candidates[0].key, content=ctx.candidates[0].content),
+            )
+
+    restore = _reload_config_with_env(NOVA_MAX_LLM_CALLS="2")
+    try:
+        agent = DoctorAgent(llm_client=_RealClient())
+        state = agent.new_case("c", "chest pain", {"age": 50, "sex": "male"})
+        for _ in range(6):
+            action, _llm_output, _diff = agent.decide(state)
+            if action.action_type == "DIAGNOSE":
+                break
+            agent.observe(state, action, "yes")
+        assert state.llm_call_count == 2, "llm_call_count must never exceed the configured cap"
+    finally:
+        restore()
+
+    restore = _reload_config_with_env(NOVA_CASE_TIMEOUT_SECONDS="0.001")
+    try:
+        import time as _time
+
+        agent = DoctorAgent(llm_client=_RealClient())
+        state = agent.new_case("c2", "chest pain", {"age": 50, "sex": "male"})
+        _time.sleep(0.01)
+        action, _llm_output, _diff = agent.decide(state)
+        assert state.llm_call_count == 0, "an already-exhausted time budget must skip the LLM call entirely"
+        assert action.action_type in {"ASK", "EXAM", "TEST", "DIAGNOSE"}
+    finally:
+        restore()
+
+
 # --- test_submission_dependency_real_llm ----------------------------------------------------------
 
 def test_submission_dependency_real_llm():

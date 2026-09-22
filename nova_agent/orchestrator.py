@@ -64,40 +64,61 @@ class DoctorAgent:
             # 2. Clinical Summary (structured, not raw transcript).
             summary = build_clinical_summary(state, deterministic_differential, safety_findings)
 
-            # 3. Local RAG: only the current chief complaint / top differential / candidate tests.
-            tag = classify_chief_complaint(state.chief_complaint)
-            candidate_test_ids = [c.key for c in candidates if c.action_type == "TEST"]
-            retrieved_context = retrieve_turn_context(
-                tag, [d.diagnosis_id for d in deterministic_differential], candidate_test_ids,
+            # Case budget (spec section 20): graceful degradation, never a crash or a silent
+            # overrun, as a configured per-case time/LLM-call budget runs out -- off by default
+            # (NOVA_CASE_TIMEOUT_SECONDS/NOVA_MAX_LLM_CALLS unset) since no official limit is
+            # published. When exhausted, skip RAG retrieval and the real LLM call and go straight
+            # to the deterministic action/stop-decision already computed above; the existing
+            # turn-count-based forced-diagnose mechanism (stop_policy.py) still independently
+            # guarantees a DIAGNOSE within the turn limit regardless of this budget.
+            cfg = get_config()
+            budget_exhausted = (
+                (cfg.case_timeout_seconds is not None and state.case_elapsed_seconds >= cfg.case_timeout_seconds)
+                or (cfg.max_llm_calls_per_case is not None and state.llm_call_count >= cfg.max_llm_calls_per_case)
             )
 
-            # 4/5. LLM Differential Reasoning + LLM Candidate Actions (one combined call).
-            ctx = TurnContext(summary=summary, differential=deterministic_differential,
-                               safety_findings=safety_findings, candidates=candidates,
-                               chosen_action=deterministic_action, stop_decision=stop_decision,
-                               retrieved_context=retrieved_context)
-            llm_output = self.llm_client.generate_turn_output(ctx)
+            if budget_exhausted:
+                retrieved_context: List[dict] = []
+                llm_output = None
+            else:
+                # 3. Local RAG: only the current chief complaint / top differential / candidate tests.
+                tag = classify_chief_complaint(state.chief_complaint)
+                candidate_test_ids = [c.key for c in candidates if c.action_type == "TEST"]
+                retrieved_context = retrieve_turn_context(
+                    tag, [d.diagnosis_id for d in deterministic_differential], candidate_test_ids,
+                )
 
-            # LLM reliability metrics (spec: a failing real LLM must never be invisible behind a
-            # healthy-looking deterministic fallback) -- folded into this CASE's PatientState right
-            # after the call, not accumulated on the (possibly cross-case-shared) client itself.
-            if getattr(self.llm_client, "_last_call_was_real", False):
-                state.llm_call_count += 1
-                if getattr(self.llm_client, "_last_call_succeeded", False):
-                    state.llm_success_count += 1
-                else:
-                    state.llm_failure_count += 1
-                    state.llm_fallback_count += 1
-                latency = getattr(self.llm_client, "_last_call_latency_seconds", None)
-                if latency is not None:
-                    state.llm_total_latency_seconds += latency
-                    state.llm_latency_sample_count += 1
-                input_tokens = getattr(self.llm_client, "_last_call_input_tokens", None)
-                output_tokens = getattr(self.llm_client, "_last_call_output_tokens", None)
-                if input_tokens is not None and output_tokens is not None:
-                    state.llm_total_input_tokens += input_tokens
-                    state.llm_total_output_tokens += output_tokens
-                    state.llm_token_usage_available = True
+                # 4/5. LLM Differential Reasoning + LLM Candidate Actions (one combined call).
+                ctx = TurnContext(summary=summary, differential=deterministic_differential,
+                                   safety_findings=safety_findings, candidates=candidates,
+                                   chosen_action=deterministic_action, stop_decision=stop_decision,
+                                   retrieved_context=retrieved_context)
+                llm_output = self.llm_client.generate_turn_output(ctx)
+
+                # LLM reliability metrics (spec: a failing real LLM must never be invisible behind
+                # a healthy-looking deterministic fallback) -- folded into this CASE's
+                # PatientState right after the call, not accumulated on the (possibly
+                # cross-case-shared) client itself. Deliberately INSIDE this branch: when the
+                # budget check above skipped the call entirely, self.llm_client._last_call_was_real
+                # still holds whatever a PRIOR turn's real call last set it to, so reading it
+                # outside this branch would double-count a call that was never made this turn.
+                if getattr(self.llm_client, "_last_call_was_real", False):
+                    state.llm_call_count += 1
+                    if getattr(self.llm_client, "_last_call_succeeded", False):
+                        state.llm_success_count += 1
+                    else:
+                        state.llm_failure_count += 1
+                        state.llm_fallback_count += 1
+                    latency = getattr(self.llm_client, "_last_call_latency_seconds", None)
+                    if latency is not None:
+                        state.llm_total_latency_seconds += latency
+                        state.llm_latency_sample_count += 1
+                    input_tokens = getattr(self.llm_client, "_last_call_input_tokens", None)
+                    output_tokens = getattr(self.llm_client, "_last_call_output_tokens", None)
+                    if input_tokens is not None and output_tokens is not None:
+                        state.llm_total_input_tokens += input_tokens
+                        state.llm_total_output_tokens += output_tokens
+                        state.llm_token_usage_available = True
 
             # 6/7. Deterministic Safety Validation + Structured Action Validation.
             merged_differential = self.safety_validator.merge_differential(

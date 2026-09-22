@@ -48,7 +48,12 @@ class SelectedActionOutput(BaseModel):
 
 
 class AgentTurnOutput(BaseModel):
-    summary: str
+    # Only `differential` and `selected_action` are ever read downstream (safety_validator.py) --
+    # summary/red_flags/candidate_actions/ready_to_diagnose are optional so a real LLM's prompt
+    # (llm_client.build_reasoning_prompt) can ask for a compact response that omits them entirely,
+    # without a schema-validation failure (spec section 6: don't make a small open-weight model
+    # regenerate output nothing downstream consumes).
+    summary: str = ""
     differential: List[DifferentialItemOutput] = Field(default_factory=list)
     red_flags: List[str] = Field(default_factory=list)
     candidate_actions: List[CandidateActionOutput] = Field(default_factory=list)
