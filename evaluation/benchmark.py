@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import random
 import statistics
+from pathlib import Path
 
 from nova_agent.config import get_config
 from nova_agent.orchestrator import DoctorAgent
@@ -122,25 +123,40 @@ def main() -> None:
     parser.add_argument("--generalization-v2", action="store_true",
                          help="Also run evaluation/generalization_cases_v2.py (a second, "
                               "independent held-out-style set -- never used to tune any default).")
+    parser.add_argument("--save-json", default=None,
+                         help="Write each run set's compute_summary() output to this path (spec "
+                              "section 25: a single generated source of truth for benchmark "
+                              "numbers, so README.md never carries a stale hand-typed figure). "
+                              "Implies --generalization-v2.")
     args = parser.parse_args()
+    results_for_json: dict = {}
 
     if not args.held_out_only:
         tuning_results = run_all(CASES)
         print("=== Tuning set (evaluation/cases.py) ===")
         print_case_table(tuning_results)
         print_summary("Tuning set summary", tuning_results)
+        results_for_json["tuning"] = compute_summary(tuning_results)
 
     if not args.tuning_only:
         held_out_results = run_all(HELD_OUT_CASES)
         print("\n=== Held-out set (evaluation/held_out_cases.py -- never used to tune defaults) ===")
         print_case_table(held_out_results)
         print_summary("Held-out set summary", held_out_results)
+        results_for_json["held_out"] = compute_summary(held_out_results)
 
-    if args.generalization_v2:
+    if args.generalization_v2 or args.save_json:
         v2_results = run_all(GENERALIZATION_CASES_V2)
         print("\n=== Generalization v2 set (evaluation/generalization_cases_v2.py -- never used to tune defaults) ===")
         print_case_table(v2_results)
         print_summary("Generalization v2 summary", v2_results)
+        results_for_json["generalization_v2"] = compute_summary(v2_results)
+
+    if args.save_json:
+        import json
+
+        Path(args.save_json).write_text(json.dumps(results_for_json, indent=2), encoding="utf-8")
+        print(f"\nWrote {args.save_json}")
 
 
 if __name__ == "__main__":
