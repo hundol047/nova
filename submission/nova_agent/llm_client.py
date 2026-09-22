@@ -105,25 +105,84 @@ def _deterministic_turn_output(ctx: TurnContext) -> AgentTurnOutput:
     )
 
 
-def parse_agent_turn_output(raw: str) -> Optional[AgentTurnOutput]:
-    """Validator/repair for LLM output (spec section 12): tolerates markdown code fences and
-    leading/trailing prose around the JSON object; returns None (never raises) on any failure so
-    callers can fall back to the deterministic path."""
-    if not raw or not raw.strip():
-        return None
-    text = raw.strip()
+_VALID_ACTION_TYPES = {"ask": "ASK", "exam": "EXAM", "test": "TEST", "diagnose": "DIAGNOSE"}
+
+
+def _extract_json_candidate_text(text: str) -> str:
+    """Strips markdown fences / leading-trailing prose down to the (probable) JSON object -- pure
+    text slicing, no content interpretation."""
     fence_match = re.search(r"```(?:json)?\s*(\{.*\})\s*```", text, re.DOTALL)
     if fence_match:
-        text = fence_match.group(1)
-    else:
-        brace_match = re.search(r"\{.*\}", text, re.DOTALL)
-        if brace_match:
-            text = brace_match.group(0)
+        return fence_match.group(1)
+    brace_match = re.search(r"\{.*\}", text, re.DOTALL)
+    return brace_match.group(0) if brace_match else text
+
+
+def _strip_trailing_commas(text: str) -> str:
+    return re.sub(r",(\s*[}\]])", r"\1", text)
+
+
+def _normalize_action_type_casing(data: dict) -> dict:
+    """A small open-weight model frequently emits the right enum value with the wrong casing
+    ("test"/"Ask") -- fixing that is a pure syntax/schema repair (the value's MEANING is
+    unchanged, only its casing), never a guess about what action was actually meant. Anything that
+    doesn't cleanly map to a known action type is left as-is so schema validation still rejects it."""
+    def fix(action: object) -> None:
+        if isinstance(action, dict) and isinstance(action.get("type"), str):
+            mapped = _VALID_ACTION_TYPES.get(action["type"].strip().lower())
+            if mapped:
+                action["type"] = mapped
+
+    fix(data.get("selected_action"))
+    for candidate in data.get("candidate_actions") or []:
+        fix(candidate)
+    return data
+
+
+def _best_effort_json_parse(text: str) -> Optional[dict]:
+    """Tries, in order: (1) plain JSON, (2) JSON with trailing commas removed, (3) a Python-dict-
+    literal repair (single-quoted keys/strings, Python True/False/None) for a model that emitted
+    valid Python but not valid JSON. Every step is pure SYNTAX repair -- no field value is ever
+    invented or clinically reinterpreted; if none of these parse to a dict, returns None and the
+    caller falls back to the deterministic path (spec section 6/12)."""
+    for candidate_text in (text, _strip_trailing_commas(text)):
+        try:
+            data = json.loads(candidate_text)
+            if isinstance(data, dict):
+                return data
+        except json.JSONDecodeError:
+            continue
     try:
-        data = json.loads(text)
-        return AgentTurnOutput.model_validate(data)
-    except (json.JSONDecodeError, ValidationError, TypeError) as exc:
-        log.warning("Failed to parse/validate LLM structured output: %s", exc)
+        import ast
+
+        python_literal_text = re.sub(r"\btrue\b", "True", text)
+        python_literal_text = re.sub(r"\bfalse\b", "False", python_literal_text)
+        python_literal_text = re.sub(r"\bnull\b", "None", python_literal_text)
+        data = ast.literal_eval(python_literal_text)
+        if isinstance(data, dict):
+            return data
+    except (ValueError, SyntaxError, TypeError):
+        pass
+    return None
+
+
+def parse_agent_turn_output(raw: str) -> Optional[AgentTurnOutput]:
+    """Validator/repair for LLM output (spec section 6/12): tolerates markdown code fences,
+    leading/trailing prose, trailing commas, single-quoted/Python-dict-style output, and wrong
+    enum casing -- all pure syntax/schema repair, never a correction of clinical content (an
+    unknown test/diagnosis name is never invented or substituted here). Returns None (never
+    raises) on any failure so callers can fall back to the deterministic path."""
+    if not raw or not raw.strip():
+        return None
+    candidate_text = _extract_json_candidate_text(raw.strip())
+    data = _best_effort_json_parse(candidate_text)
+    if data is None:
+        log.warning("Failed to parse LLM structured output as JSON (or a repairable variant of it).")
+        return None
+    try:
+        return AgentTurnOutput.model_validate(_normalize_action_type_casing(data))
+    except (ValidationError, TypeError) as exc:
+        log.warning("Failed to validate LLM structured output against the schema: %s", exc)
         return None
 
 
@@ -165,6 +224,21 @@ def build_reasoning_prompt(ctx: TurnContext) -> str:
 
 
 class BaseLLMClient(ABC):
+    # Per-call reliability signal (spec: LLM failures must never be invisible behind a healthy-
+    # looking deterministic fallback). Reset by each generate_turn_output() call, read by
+    # orchestrator.decide() immediately afterward and folded into the per-CASE PatientState
+    # counters (never accumulated on the client itself, since one client instance can be reused
+    # across many cases -- e.g. evaluation/benchmark.py's run_all()). False/None here (the default)
+    # means "not a real LLM attempt at all" -- true for MockLLMClient, which never overrides this.
+    _last_call_was_real: bool = False
+    _last_call_succeeded: Optional[bool] = None
+    # Latency/token instrumentation (spec: LLM latency/token/call-count optimization needs real
+    # numbers, never an estimate). None means "not observed this call" -- e.g. an endpoint that
+    # doesn't return a `usage` block, or a call that never actually reached the network.
+    _last_call_latency_seconds: Optional[float] = None
+    _last_call_input_tokens: Optional[int] = None
+    _last_call_output_tokens: Optional[int] = None
+
     @abstractmethod
     def generate_turn_output(self, ctx: TurnContext) -> AgentTurnOutput:
         raise NotImplementedError
@@ -216,20 +290,33 @@ class AnthropicLLMClient(BaseLLMClient):
 
     def generate_turn_output(self, ctx: TurnContext) -> AgentTurnOutput:
         fallback = _deterministic_turn_output(ctx)
+        self._last_call_was_real = True
+        self._last_call_succeeded = False
+        self._last_call_latency_seconds = None
+        self._last_call_input_tokens = None
+        self._last_call_output_tokens = None
         if not self._available:
             return fallback
         prompt = build_reasoning_prompt(ctx)
         for attempt in range(self.max_retries + 1):
+            start = time.perf_counter()
             try:
                 response = self._client.messages.create(
                     model=self.model, max_tokens=get_config().llm_max_tokens, temperature=self.temperature,
                     messages=[{"role": "user", "content": prompt}], timeout=self.timeout,
                 )
+                self._last_call_latency_seconds = time.perf_counter() - start
+                usage = getattr(response, "usage", None)
+                if usage is not None:
+                    self._last_call_input_tokens = getattr(usage, "input_tokens", None)
+                    self._last_call_output_tokens = getattr(usage, "output_tokens", None)
                 raw = "".join(block.text for block in response.content if getattr(block, "type", "") == "text")
                 parsed = parse_agent_turn_output(raw)
                 if parsed is not None:
+                    self._last_call_succeeded = True
                     return parsed
             except Exception as exc:  # network error, timeout, SDK error, etc.
+                self._last_call_latency_seconds = time.perf_counter() - start
                 log.warning("Anthropic call failed (attempt %d/%d): %s", attempt + 1, self.max_retries + 1, exc)
         log.warning("Falling back to deterministic turn output after %d failed attempt(s).", self.max_retries + 1)
         return fallback
@@ -307,14 +394,29 @@ class OpenAICompatibleLLMClient(BaseLLMClient):
 
     def generate_turn_output(self, ctx: TurnContext) -> AgentTurnOutput:
         fallback = _deterministic_turn_output(ctx)
+        self._last_call_was_real = True
+        self._last_call_succeeded = False
+        self._last_call_latency_seconds = None
+        self._last_call_input_tokens = None
+        self._last_call_output_tokens = None
         prompt = build_reasoning_prompt(ctx)
         for attempt in range(self.max_retries + 1):
+            start = time.perf_counter()
             try:
-                content, _raw = self._post_chat_completion([{"role": "user", "content": prompt}])
+                content, raw = self._post_chat_completion([{"role": "user", "content": prompt}])
+                self._last_call_latency_seconds = time.perf_counter() - start
+                usage = raw.get("usage") if isinstance(raw, dict) else None
+                if isinstance(usage, dict):
+                    # OpenAI Chat Completions naming; not every OpenAI-compatible server returns
+                    # this block at all -- left None (never estimated) when absent.
+                    self._last_call_input_tokens = usage.get("prompt_tokens")
+                    self._last_call_output_tokens = usage.get("completion_tokens")
                 parsed = parse_agent_turn_output(content)
                 if parsed is not None:
+                    self._last_call_succeeded = True
                     return parsed
             except Exception as exc:
+                self._last_call_latency_seconds = time.perf_counter() - start
                 log.warning("%s call failed (attempt %d/%d): %s", type(self).__name__, attempt + 1,
                             self.max_retries + 1, exc)
         log.warning("Falling back to deterministic turn output after %d failed attempt(s).", self.max_retries + 1)

@@ -1,0 +1,56 @@
+{
+  "commit": "5740315e426db1e2cda45747ec2b6ef0f05e0d8c",
+  "branch": "main",
+  "pytest": {
+    "passed": true,
+    "summary_line": "51 passed in 0.54s"
+  },
+  "tuning_set": {
+    "scored_diagnostic_accuracy": 1.0,
+    "all_case_diagnostic_accuracy": 1.0,
+    "unscored_case_names": [],
+    "unsupported_case_success_rate": null,
+    "critical_diagnosis_recall": 1.0,
+    "critical_miss_rate": 0.0,
+    "average_turns": 12.125,
+    "median_turns": 9.5,
+    "duplicate_action_rate": 0.0,
+    "unnecessary_test_rate": 0.375,
+    "malformed_output_rate": 0.0,
+    "failed_diagnosis_rate": 0.0,
+    "fallback_rate": 0.0,
+    "average_ask_count": 4.125,
+    "average_exam_count": 3.125,
+    "average_test_count": 3.875,
+    "utility_score_proxy": 0.86,
+    "n_cases": 8,
+    "n_scored_cases": 8,
+    "n_critical_cases": 6
+  },
+  "held_out_set": {
+    "scored_diagnostic_accuracy": 0.9333333333333333,
+    "all_case_diagnostic_accuracy": 0.8333333333333334,
+    "unscored_case_names": [
+      "ChestPain03_Ambiguous",
+      "Headache02_InsufficientInfo",
+      "Unknown01_UnmappedComplaint"
+    ],
+    "unsupported_case_success_rate": 0.6666666666666666,
+    "critical_diagnosis_recall": 0.9230769230769231,
+    "critical_miss_rate": 0.07692307692307693,
+    "average_turns": 18.11111111111111,
+    "median_turns": 18.5,
+    "duplicate_action_rate": 0.0,
+    "unnecessary_test_rate": 0.5,
+    "malformed_output_rate": 0.0,
+    "failed_diagnosis_rate": 0.0,
+    "fallback_rate": 0.0,
+    "average_ask_count": 6.888888888888889,
+    "average_exam_count": 4.611111111111111,
+    "average_test_count": 5.611111111111111,
+    "utility_score_proxy": 0.5994444444444444,
+    "n_cases": 18,
+    "n_scored_cases": 15,
+    "n_critical_cases": 13
+  }
+}

@@ -57,6 +57,13 @@ class CaseResult(BaseModel):
     critical_miss: bool
     malformed_turns: int
     failed_to_diagnose: bool
+    llm_call_count: int = 0
+    llm_success_count: int = 0
+    llm_failure_count: int = 0
+    llm_fallback_count: int = 0
+    # Populated only when run_case(..., capture_trajectory=True) -- structured evidence summary
+    # (never private chain-of-thought) for evaluation/failure_analysis.py's root-cause classifier.
+    differential_trajectory: List[dict] = []
 
 
 def _relevant_test_ids(case: SyntheticCase) -> set:
@@ -76,7 +83,8 @@ def _relevant_test_ids(case: SyntheticCase) -> set:
     return relevant
 
 
-def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseLogger] = None) -> CaseResult:
+def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseLogger] = None,
+             capture_trajectory: bool = False) -> CaseResult:
     state: PatientState = agent.new_case(case.case_id, case.chief_complaint, case.demographics)
     simulator = PatientSimulator(case)
 
@@ -86,11 +94,18 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
     tests_performed: List[str] = []
     ask_count = exam_count = test_count = 0
     failed_to_diagnose = True
+    trajectory: List[dict] = []
 
     for _ in range(state.max_turns):
         action, llm_output, differential = agent.decide(state)
         if llm_output is None:
             malformed_turns += 1
+        if capture_trajectory:
+            trajectory.append({
+                "turn": state.turn_count + 1,
+                "action": f"{action.action_type}:{action.key}",
+                "top5_differential": [d.diagnosis for d in differential[:5]],
+            })
 
         key_sig = (action.action_type, action.key)
         if action.action_type != "DIAGNOSE" and key_sig in seen_keys:
@@ -126,6 +141,9 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
         unnecessary_tests=unnecessary_tests, critical=case.critical,
         critical_miss=case.critical and not correct, malformed_turns=malformed_turns,
         failed_to_diagnose=failed_to_diagnose,
+        llm_call_count=state.llm_call_count, llm_success_count=state.llm_success_count,
+        llm_failure_count=state.llm_failure_count, llm_fallback_count=state.llm_fallback_count,
+        differential_trajectory=trajectory,
     )
     if logger is not None:
         logger.log_final(state, "correct" if correct else "incorrect")

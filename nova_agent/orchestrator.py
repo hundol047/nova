@@ -78,6 +78,27 @@ class DoctorAgent:
                                retrieved_context=retrieved_context)
             llm_output = self.llm_client.generate_turn_output(ctx)
 
+            # LLM reliability metrics (spec: a failing real LLM must never be invisible behind a
+            # healthy-looking deterministic fallback) -- folded into this CASE's PatientState right
+            # after the call, not accumulated on the (possibly cross-case-shared) client itself.
+            if getattr(self.llm_client, "_last_call_was_real", False):
+                state.llm_call_count += 1
+                if getattr(self.llm_client, "_last_call_succeeded", False):
+                    state.llm_success_count += 1
+                else:
+                    state.llm_failure_count += 1
+                    state.llm_fallback_count += 1
+                latency = getattr(self.llm_client, "_last_call_latency_seconds", None)
+                if latency is not None:
+                    state.llm_total_latency_seconds += latency
+                    state.llm_latency_sample_count += 1
+                input_tokens = getattr(self.llm_client, "_last_call_input_tokens", None)
+                output_tokens = getattr(self.llm_client, "_last_call_output_tokens", None)
+                if input_tokens is not None and output_tokens is not None:
+                    state.llm_total_input_tokens += input_tokens
+                    state.llm_total_output_tokens += output_tokens
+                    state.llm_token_usage_available = True
+
             # 6/7. Deterministic Safety Validation + Structured Action Validation.
             merged_differential = self.safety_validator.merge_differential(
                 llm_output, deterministic_differential, safety_findings,

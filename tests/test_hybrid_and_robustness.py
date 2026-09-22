@@ -344,3 +344,41 @@ def test_submission_run_entrypoint():
     )
     assert proc.returncode == 0, f"submission/run.py failed: {proc.stderr}"
     assert '"action_type"' in proc.stdout
+
+
+def test_submission_stdout_contains_only_protocol_json():
+    """A harness reading stdout as a JSON-lines protocol must never see anything else on it --
+    not a log line, not a warning, not the preflight diagnostic -- or it breaks. Runs multiple
+    observations (including forcing the preflight-unavailable warning path, via an unreachable
+    competition endpoint) and asserts EVERY stdout line parses as the expected JSON action shape,
+    with every non-protocol message landing on stderr instead."""
+    import json as _json
+
+    submission_dir = REPO_ROOT / "submission"
+    observations = [
+        {"case_id": "stdout_test", "observation_type": "initial", "chief_complaint": "fever",
+         "demographics": {"age": 40, "sex": "female"}},
+        {"case_id": "stdout_test", "observation_type": "ask_response", "content": "started yesterday"},
+        {"case_id": "stdout_test", "observation_type": "ask_response", "content": "yes"},
+    ]
+    stdin_text = "\n".join(_json.dumps(o) for o in observations) + "\n"
+
+    proc = subprocess.run(
+        [sys.executable, "run.py"],
+        input=stdin_text, cwd=str(submission_dir), capture_output=True, text=True, timeout=30,
+        env={"PATH": "/usr/bin:/bin",
+             "NOVA_LLM_PROVIDER": "competition", "NOVA_COMPETITION_BASE_URL": "http://127.0.0.1:1/v1"},
+    )
+    assert proc.returncode == 0, f"submission/run.py failed: {proc.stderr}"
+
+    stdout_lines = [line for line in proc.stdout.splitlines() if line.strip()]
+    assert len(stdout_lines) == len(observations), \
+        f"expected exactly one protocol line per observation, got {len(stdout_lines)}: {stdout_lines!r}"
+    for line in stdout_lines:
+        parsed = _json.loads(line)  # raises if stdout carried anything non-JSON
+        assert "action_type" in parsed or "error" in parsed
+
+    # The preflight-unavailable diagnostic this run should have triggered (unreachable endpoint)
+    # must have landed on stderr, never mixed into stdout.
+    assert "Competition LLM unavailable" in proc.stderr
+    assert "Competition LLM unavailable" not in proc.stdout
