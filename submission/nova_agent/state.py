@@ -15,7 +15,7 @@ from pydantic import BaseModel, Field
 
 from nova_agent.models import Allergy, Medication, VitalSigns
 from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG
-from nova_agent.vitals_parser import parse_vital_signs
+from nova_agent.vitals_parser import describe_vital_sign_abnormalities, parse_vital_signs
 
 ActionType = Literal["ASK", "EXAM", "TEST", "DIAGNOSE"]
 
@@ -134,6 +134,11 @@ class PatientState(BaseModel):
 
     physical_examinations: Dict[str, str] = Field(default_factory=dict)
     vital_signs: List[VitalSigns] = Field(default_factory=list)
+    # Descriptive labels (e.g. "Marked tachycardia") derived from the latest structured vital
+    # signs via the same thresholds safety.py's vital_sign_red_flags uses -- lets the differential
+    # engine's keyword matcher credit a disease's vital-sign-phrased typical_features from
+    # structured numbers, not only from literal prose (see vitals_parser.describe_vital_sign_abnormalities).
+    vital_sign_findings: List[str] = Field(default_factory=list)
     laboratory_tests: Dict[str, str] = Field(default_factory=dict)
     imaging: Dict[str, str] = Field(default_factory=dict)
 
@@ -201,6 +206,9 @@ class PatientState(BaseModel):
             parsed = parse_vital_signs(result)
             if parsed is not None:
                 self.vital_signs.append(parsed)
+                for finding in describe_vital_sign_abnormalities(parsed):
+                    if finding not in self.vital_sign_findings:
+                        self.vital_sign_findings.append(finding)
 
     def record_test(self, test_id: str, result: str) -> None:
         self.turn_count += 1
@@ -304,6 +312,7 @@ class PatientState(BaseModel):
         out += list(self.past_medical_history) + list(self.social_history) + list(self.family_history)
         out += [self.chief_complaint, self.symptom_onset or "", self.severity or "", self.duration or ""]
         out += list(self.physical_examinations.values()) + list(self.imaging.values())
+        out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
         out += list(self.medication_text) + list(self.allergy_text)
         out += [m.name for m in self.medications] + [a.substance for a in self.allergies]

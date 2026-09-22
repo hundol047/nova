@@ -61,7 +61,12 @@
       "unilateral weakness",
       "sudden onset",
       "focal deficit"
-    ]
+    ],
+    "minimum_workup": [
+      "ct_head",
+      "glucose_point_of_care"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "subarachnoid_hemorrhage",
@@ -116,7 +121,11 @@
       "worst headache of life",
       "sudden onset severe",
       "neck stiffness"
-    ]
+    ],
+    "minimum_workup": [
+      "ct_head"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "meningitis",
@@ -175,7 +184,11 @@
       "petechial rash",
       "fever with headache",
       "altered mental status"
-    ]
+    ],
+    "minimum_workup": [
+      "lumbar_puncture"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "migraine",
@@ -218,7 +231,8 @@
     "discriminating_tests": [
       "ct_head"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "tension_headache",
@@ -254,7 +268,8 @@
       "vital_signs"
     ],
     "discriminating_tests": [],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "bppv",
@@ -292,7 +307,8 @@
       "vital_signs"
     ],
     "discriminating_tests": [],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "orthostatic_hypotension",
@@ -333,6 +349,7 @@
       "neuro_exam"
     ],
     "discriminating_tests": [],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   }
 ]

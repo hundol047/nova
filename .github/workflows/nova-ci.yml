@@ -1,0 +1,69 @@
+name: N.O.V.A. Doctor Agent CI
+
+# Covers spec section 25: install -> pytest -> benchmark smoke -> adversarial -> build submission
+# -> standalone smoke -> source-sync verification. Scoped to nova_agent/competition/evaluation/
+# submission/tests -- never touches frontend/3D-anatomy/Jetson assets (out of scope for this
+# competition agent; see README.md's Directory structure section).
+#
+# Real-LLM checks (scripts/smoke_real_llm.py) are opt-in: they SKIP (not fail) unless a real
+# provider's secrets are configured as repository secrets, per NOVA_LLM_PROVIDER's own
+# dev-fallback-vs-competition-preflight split documented in nova_agent/llm_client.py.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  nova-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install nova_agent runtime + dev dependencies
+        run: |
+          pip install -r requirements-nova.txt
+          pip install -r requirements-nova-dev.txt
+
+      - name: pytest (nova_agent + competition adapter + safety regression)
+        run: pytest tests/ -v
+
+      - name: Benchmark (tuning + held-out sets)
+        run: python -m evaluation.benchmark
+
+      - name: Ablation
+        run: python -m evaluation.ablation
+
+      - name: Adversarial / reliability checks
+        run: python -m evaluation.adversarial
+
+      - name: Build submission (validates requirements, secret scan, standalone smoke test, zip+manifest)
+        run: python scripts/build_nova_submission.py
+
+      - name: Verify submission/ is in sync with nova_agent/ + competition/ (fails on drift)
+        run: pytest tests/test_safety_regression.py::test_submission_source_sync -v
+
+      - name: Competition preflight (expected NOT READY under default mock provider in CI)
+        run: python scripts/preflight_competition.py || true
+
+      - name: Real-LLM smoke test (skips cleanly if no provider secrets configured)
+        env:
+          NOVA_LLM_PROVIDER: ${{ secrets.NOVA_LLM_PROVIDER }}
+          NOVA_LLM_BASE_URL: ${{ secrets.NOVA_LLM_BASE_URL }}
+          NOVA_LLM_MODEL: ${{ secrets.NOVA_LLM_MODEL }}
+          NOVA_LLM_API_KEY: ${{ secrets.NOVA_LLM_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/smoke_real_llm.py
+
+      - name: Upload submission.zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: nova-submission
+          path: submission/submission.zip
+          retention-days: 14

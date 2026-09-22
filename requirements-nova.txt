@@ -13,8 +13,9 @@ pydantic>=2.6,<3
 # nova_agent/llm_client.py).
 # anthropic>=0.40
 
-# Optional: only required when NOVA_LLM_PROVIDER is openai_compatible / local / competition (a
-# real reasoning call to a local or hosted OpenAI Chat Completions-compatible server).
-# openai>=1.40
+# NOVA_LLM_PROVIDER=openai_compatible / local / competition need NOTHING beyond pydantic --
+# OpenAICompatibleLLMClient talks to the model server over stdlib `urllib`, deliberately avoiding
+# a dependency on the `openai` package (a constrained competition environment must not silently
+# fall back to mock just because a third-party SDK wasn't installed).
 
 # The default NOVA_LLM_PROVIDER=mock needs none of the above and runs fully offline.

@@ -3,7 +3,14 @@ nova_agent/config.py (unlike evaluation/cases.py's original 8, which the current
 utility-weight defaults were iterated against during development). These exist specifically to
 check generalization: paraphrases, demographic variation, ambiguity, misleading presentations,
 negative-finding-centric cases, mimics in both directions, insufficient information, noisy
-free text, an unmapped chief complaint, and a Korean-language case.
+free text, an unmapped chief complaint, a Korean-language case, a pregnancy risk-factor case, a
+medication-risk case, a multi-system comorbidity case, and three long-tail critical diagnoses
+(anaphylaxis, aortic dissection via back pain, tension pneumothorax) never exercised as a ground
+truth anywhere in evaluation/cases.py's tuning set.
+
+Deliberately a moderate expansion (18 cases), not padding toward a round number: each case below
+covers a genuinely distinct clinical scenario/category, not a reworded duplicate of an existing
+one (spec section 15/29 explicitly warns against same-template-different-wording padding).
 
 Still hand-authored synthetic vignettes, never real patient data.
 """
@@ -241,6 +248,141 @@ HELD_OUT_CASES = [
         },
         test_results={"lumbar_puncture": "CSF pleocytosis, low glucose", "blood_culture": "gram-positive cocci",
                       "cbc": "elevated white blood cell count"},
+    ),
+    SyntheticCase(
+        case_id="Dyspnea03_PregnancyRiskFactor", category="pregnancy_risk_factor",
+        chief_complaint="short of breath", demographics={"age": 31, "sex": "female"},
+        ground_truth_diagnosis="pulmonary_embolism",
+        notes="Pregnancy itself is a major, independent VTE risk factor (distinct from Dyspnea02's "
+              "post-surgical elderly-male presentation) -- checks the agent weighs a risk factor "
+              "that is a demographic/history fact rather than a dramatic symptom.",
+        answers={
+            "onset": "sudden, about two hours ago",
+            "character": "sharp pain on the right side of my chest, worse when I breathe in",
+            "associated_symptoms": "my right leg has been swollen for a few days; "
+                                    "denies fever, denies wheeze, denies cough",
+            "past_medical_history": "currently 28 weeks pregnant, otherwise healthy",
+            "social_history": "denies smoking, denies recent travel",
+        },
+        exam_results={
+            "vital_signs": "BP 112/70, HR 118, RR 26, Temp 37.0, SpO2 91%",
+            "extremity_exam": "right calf swelling and tenderness",
+            "lung_auscultation": "clear bilaterally",
+        },
+        test_results={"d_dimer": "elevated D-dimer",
+                      "ct_chest_angio": "filling defect in the right pulmonary artery",
+                      "ecg": "sinus tachycardia"},
+    ),
+    SyntheticCase(
+        case_id="Headache03_AnticoagulantRisk", category="medication_risk",
+        chief_complaint="bad headache", demographics={"age": 76, "sex": "male"},
+        ground_truth_diagnosis="subarachnoid_hemorrhage",
+        notes="Anticoagulant use (warfarin) is itself a documented medication-risk trigger in "
+              "red_flags/demographic_and_medication_risk.json for headache presentations -- tests "
+              "that the agent weighs that risk factor together with, not instead of, the classic "
+              "thunderclap-headache features.",
+        answers={
+            "onset": "sudden, about thirty minutes ago, worst headache I've ever had",
+            "character": "explosive, thunderclap quality",
+            "severity": "10 out of 10",
+            "associated_symptoms": "neck stiffness and one episode of vomiting; "
+                                    "denies fever, denies focal weakness",
+            "past_medical_history": "atrial fibrillation, takes warfarin daily",
+            "medication": "warfarin for atrial fibrillation",
+        },
+        exam_results={
+            "meningeal_signs": "positive neck stiffness",
+            "neuro_exam": "no focal neurological deficit",
+            "vital_signs": "BP 172/98, HR 92, RR 16, Temp 37.0, SpO2 98%",
+        },
+        test_results={"ct_head": "subarachnoid blood seen on non-contrast CT"},
+    ),
+    SyntheticCase(
+        case_id="Fever03_DiabeticUrosepsis", category="comorbidity",
+        chief_complaint="fever and feeling confused", demographics={"age": 79, "sex": "female"},
+        ground_truth_diagnosis="sepsis",
+        notes="Multi-system comorbidity case: diabetes (infection risk) + an untreated urinary "
+              "source progressing to systemic sepsis with altered mental status and hypotension -- "
+              "tests whether the agent connects a urinary-symptom history to a fever/confusion "
+              "chief complaint rather than treating them as unrelated.",
+        answers={
+            "onset": "fever started two days ago, confusion since this morning",
+            "associated_symptoms": "burning with urination for the past three days, chills; "
+                                    "denies neck stiffness, denies severe headache, denies rash",
+            "past_medical_history": "type 2 diabetes, poorly controlled",
+            "social_history": "lives alone, family says she seemed 'not herself' today",
+        },
+        exam_results={
+            "vital_signs": "BP 84/52, HR 128, RR 26, Temp 39.4, SpO2 93%",
+            "mental_status_exam": "confused, oriented to person only",
+            "skin_exam": "warm, flushed, no rash",
+        },
+        test_results={"lactate": "elevated lactate", "blood_culture": "gram-negative rods",
+                      "urinalysis": "positive leukocyte esterase and nitrites",
+                      "cbc": "elevated white blood cell count"},
+    ),
+    SyntheticCase(
+        case_id="Dyspnea04_Anaphylaxis", category="long_tail",
+        chief_complaint="trouble breathing after a bee sting", demographics={"age": 26, "sex": "male"},
+        ground_truth_diagnosis="anaphylaxis",
+        notes="Long-tail critical diagnosis never exercised as a held-out ground truth before, and "
+              "the only critical disease in the catalog with an EMPTY minimum_workup/discriminating_"
+              "tests list -- tests that the agent can still recognize and act on a clinical "
+              "diagnosis made entirely from history/exam, with no confirmatory lab required.",
+        answers={
+            "onset": "sudden, within minutes of being stung on the arm",
+            "associated_symptoms": "my lips and face are swelling up and my throat feels tight, "
+                                    "and I'm covered in hives; denies chest pain, denies fever",
+            "allergy": "I think I'm allergic to bee stings, never confirmed",
+            "past_medical_history": "none",
+        },
+        exam_results={
+            "skin_exam": "diffuse urticaria, facial and lip swelling",
+            "lung_auscultation": "bilateral wheeze",
+            "vital_signs": "BP 82/50, HR 130, RR 28, Temp 36.9, SpO2 92%",
+        },
+        test_results={},
+    ),
+    SyntheticCase(
+        case_id="BackPain01_AorticDissection", category="long_tail",
+        chief_complaint="sudden severe back pain", demographics={"age": 67, "sex": "male"},
+        ground_truth_diagnosis="aortic_dissection",
+        notes="Aortic dissection appears in the tuning set only as a chest-pain differential "
+              "candidate to be ruled out, never as a held-out ground truth reached via a different "
+              "chief-complaint tag (back_pain) -- tests generalization of the same disease entry "
+              "across chief complaints, not just across phrasing of the same complaint.",
+        answers={
+            "onset": "sudden onset ten minutes ago",
+            "character": "tearing, ripping pain between my shoulder blades",
+            "location": "upper back, between the shoulder blades",
+            "past_medical_history": "poorly controlled high blood pressure",
+        },
+        exam_results={
+            "vital_signs": "BP 190/110, HR 96, RR 18, Temp 36.8, SpO2 97%",
+            "extremity_exam": "diminished pulse in the left arm compared to the right",
+            "cardiac_auscultation": "new diastolic murmur",
+        },
+        test_results={"ct_aorta": "intimal flap seen in the descending aorta",
+                      "cxr": "widened mediastinum", "ecg": "normal sinus rhythm, no ST changes"},
+    ),
+    SyntheticCase(
+        case_id="Dyspnea05_TensionPneumothorax", category="long_tail",
+        chief_complaint="can't breathe after a car accident", demographics={"age": 34, "sex": "male"},
+        ground_truth_diagnosis="tension_pneumothorax",
+        notes="Another long-tail critical diagnosis never exercised as a held-out ground truth --  "
+              "post-trauma presentation with classic unilateral absent breath sounds, testing exam-"
+              "finding-driven (not history-driven) recognition.",
+        answers={
+            "onset": "sudden, right after the car accident about 20 minutes ago",
+            "character": "sharp right-sided chest pain, worse with breathing",
+            "past_medical_history": "none",
+        },
+        exam_results={
+            "lung_auscultation": "absent breath sounds on the right side",
+            "vital_signs": "BP 88/58, HR 132, RR 34, Temp 36.9, SpO2 85%",
+            "general_appearance": "in severe respiratory distress, tracheal deviation to the left",
+        },
+        test_results={"cxr": "large right-sided pneumothorax with mediastinal shift"},
     ),
     SyntheticCase(
         case_id="Urinary02_Pyelonephritis", category="paraphrase",

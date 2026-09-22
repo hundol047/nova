@@ -107,19 +107,25 @@ def retrieve_test_notes(test_ids: List[str]) -> List[str]:
     return [notes[t] for t in test_ids[:top_k] if t in notes]
 
 
+_PROVENANCE_NOTE = "internally_authored_heuristic; see nova_agent/knowledge/PROVENANCE.md"
+
+
 def retrieve_turn_context(chief_complaint_tag: str, top_diagnosis_ids: List[str],
                            candidate_test_ids: List[str]) -> List[dict]:
     """One call that assembles everything a single turn's LLM reasoning call should see from the
     knowledge base (spec section 13): the chief-complaint guideline sentence, plus notes for only
     the tests actually under consideration this turn -- never the whole knowledge base, and only
-    when NOVA_RAG_ENABLED is true. Each entry carries `source` so provenance is traceable
-    (spec section 13's "retrieval 결과에는 source metadata를 유지한다")."""
+    when NOVA_RAG_ENABLED is true. Each entry carries `source` (which JSON entry it came from) AND
+    `evidence_level` (spec section 11/13: never just "guideline:chest_pain" with no indication of
+    how trustworthy that guideline actually is -- see PROVENANCE.md for why every entry here is
+    honestly labeled an internally-authored heuristic, not a certified external source)."""
     if not get_config().rag_enabled:
         return []
     snippets: List[dict] = []
     guideline = retrieve_guideline(chief_complaint_tag)
     if guideline:
-        snippets.append({"source": f"guideline:{chief_complaint_tag}", "text": guideline})
+        snippets.append({"source": f"guideline:{chief_complaint_tag}", "text": guideline,
+                          "evidence_level": _PROVENANCE_NOTE})
     for diagnosis_id in top_diagnosis_ids[:3]:
         entry = disease_by_id(diagnosis_id)
         if entry and entry.get("urgency") in {"CRITICAL", "MEDIUM"} and entry.get("dangerous"):
@@ -128,7 +134,8 @@ def retrieve_turn_context(chief_complaint_tag: str, top_diagnosis_ids: List[str]
                 "text": f"{entry['name']} is {entry.get('urgency', 'LOW').lower()} urgency; "
                         f"dangerous if missed. Key discriminators: "
                         f"{', '.join(entry.get('typical_features', [])[:3]) or 'none listed'}.",
+                "evidence_level": entry.get("evidence_level", _PROVENANCE_NOTE),
             })
     for note in retrieve_test_notes(candidate_test_ids):
-        snippets.append({"source": "diagnostic_tests", "text": note})
+        snippets.append({"source": "diagnostic_tests", "text": note, "evidence_level": _PROVENANCE_NOTE})
     return snippets[: get_config().rag_top_k]

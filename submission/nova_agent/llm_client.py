@@ -21,15 +21,21 @@ Providers (spec section 3), selected via NOVA_LLM_PROVIDER:
 - ``anthropic``: a real Claude call (optional `anthropic` package + ANTHROPIC_API_KEY).
 - ``openai_compatible``: any OpenAI Chat Completions-compatible HTTP endpoint (local vLLM /
   llama.cpp / ollama server, or a hosted API) -- base_url/model/api_key from config, so a
-  locally-hosted model (e.g. openai/gpt-oss-20b) works with no internet access.
+  locally-hosted model (e.g. openai/gpt-oss-20b) works with no internet access. Implemented with
+  stdlib `urllib` (no `openai` package needed at all -- see OpenAICompatibleLLMClient).
 - ``local``: alias of ``openai_compatible`` for a local-only deployment (no API key required).
 - ``competition``: alias of ``openai_compatible`` reading the separate NOVA_COMPETITION_*
   variables, so the official competition runtime can be pointed to without touching any other
-  provider's configuration.
+  provider's configuration. This is the provider `submission/run.py` selects by default -- see
+  its module docstring and `scripts/preflight_competition.py` for the startup-time check that
+  stops a competition run from silently spending the whole case on the `mock` fallback just
+  because the real endpoint was never reachable.
 
 Any JSON parsing failure, timeout, empty response, or missing SDK/API key/local server falls back
-to the deterministic mock output rather than raising -- a single LLM error must never end the
-whole evaluation run (spec section 20).
+to the deterministic mock output PER TURN rather than raising (spec section 20) -- that per-turn
+dev/runtime fallback policy is intentionally separate from the competition STARTUP preflight
+policy (`preflight()` on each real client, and `scripts/preflight_competition.py`), which must
+fail loudly rather than silently let an entire competition run happen on mock.
 """
 
 from __future__ import annotations
@@ -37,8 +43,11 @@ from __future__ import annotations
 import json
 import logging
 import re
+import time
+import urllib.error
+import urllib.request
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from pydantic import BaseModel, ValidationError
 
@@ -160,6 +169,12 @@ class BaseLLMClient(ABC):
     def generate_turn_output(self, ctx: TurnContext) -> AgentTurnOutput:
         raise NotImplementedError
 
+    def preflight(self) -> Tuple[bool, str]:
+        """Startup-time readiness check. Default: always ready (true for mock, and a safe default
+        for any client that doesn't override this) -- real network-backed clients override it with
+        an actual reachability check. Returns (ok, reason)."""
+        return True, f"{type(self).__name__} requires no external readiness check."
+
 
 # Backwards-compatible alias (pre-existing code/tests may still import `LLMClient`).
 LLMClient = BaseLLMClient
@@ -173,6 +188,9 @@ class MockLLMClient(BaseLLMClient):
 
     def generate_turn_output(self, ctx: TurnContext) -> AgentTurnOutput:
         return _deterministic_turn_output(ctx)
+
+    def preflight(self) -> Tuple[bool, str]:
+        return True, "mock provider: fully offline, always ready (not a real LLM)."
 
 
 class AnthropicLLMClient(BaseLLMClient):
@@ -216,53 +234,84 @@ class AnthropicLLMClient(BaseLLMClient):
         log.warning("Falling back to deterministic turn output after %d failed attempt(s).", self.max_retries + 1)
         return fallback
 
+    def preflight(self) -> Tuple[bool, str]:
+        if not self._available:
+            return False, "anthropic package not installed or ANTHROPIC_API_KEY not set/invalid."
+        try:
+            response = self._client.messages.create(
+                model=self.model, max_tokens=8, temperature=self.temperature,
+                messages=[{"role": "user", "content": "Reply with the single word: ready"}], timeout=self.timeout,
+            )
+            text = "".join(block.text for block in response.content if getattr(block, "type", "") == "text")
+            if not text.strip():
+                return False, "Anthropic API responded but returned an empty completion."
+            return True, f"Anthropic API reachable, model={self.model!r}."
+        except Exception as exc:
+            return False, f"{type(exc).__name__}: {exc}"
+
 
 class OpenAICompatibleLLMClient(BaseLLMClient):
     """Real-LLM path via any OpenAI Chat Completions-compatible HTTP endpoint: a locally-hosted
     server (vLLM / llama.cpp / ollama / text-generation-inference) serving an open-weight model
     such as openai/gpt-oss-20b with no internet access required, or a hosted OpenAI-compatible API.
 
-    Uses the `openai` Python package's generic client pointed at a configurable `base_url`, so it
-    works against any server implementing that HTTP contract -- never assumes OpenAI's own hosted
-    service specifically. Falls back to the deterministic output on any SDK/network/parsing
-    failure (never raises); a missing `openai` package or unreachable server is treated exactly
-    like an Anthropic SDK/key failure.
+    Deliberately implemented with the stdlib `urllib` (POST to `{base_url}/chat/completions`)
+    instead of the `openai` package: a competition submission environment may not have that (or
+    any) third-party package pre-installed, and the OpenAI Chat Completions HTTP contract is
+    simple enough not to need an SDK. This is what lets `submission/requirements.txt` ship with
+    only `pydantic` and still have `competition`/`local`/`openai_compatible` actually reach a real
+    model -- no missing-package failure mode exists for this provider at all. Falls back to the
+    deterministic output on any network/HTTP/parsing failure per turn (never raises -- spec
+    section 20); `preflight()` below is the separate, stricter startup-time check (spec section 2:
+    a competition run must not silently spend the whole case on mock just because the endpoint
+    was never reachable to begin with).
     """
 
     def __init__(self, *, base_url: Optional[str] = None, model: Optional[str] = None,
                  api_key: Optional[str] = None) -> None:
         cfg = get_config()
-        self.base_url = base_url or cfg.llm_base_url
+        self.base_url = (base_url or cfg.llm_base_url).rstrip("/")
         self.model = model or cfg.llm_model
         self.api_key = api_key if api_key is not None else cfg.llm_api_key
         self.temperature = cfg.llm_temperature
         self.max_retries = cfg.llm_max_retries
         self.timeout = cfg.llm_timeout_seconds
-        try:
-            import openai  # type: ignore
+        self.max_tokens = cfg.llm_max_tokens
+        # Always "available" architecturally (no SDK import can fail) -- reachability is a
+        # per-call/per-preflight network fact, not a constructor-time one. Kept for interface
+        # parity with AnthropicLLMClient.
+        self._available = True
 
-            self._client = openai.OpenAI(base_url=self.base_url, api_key=self.api_key or "not-needed",
-                                          timeout=self.timeout)
-            self._available = True
-        except Exception as exc:  # pragma: no cover - exercised only when SDK is present
-            log.warning("%s unavailable (%s); falling back to deterministic output.",
-                        type(self).__name__, exc)
-            self._client = None
-            self._available = False
+    def _headers(self) -> dict:
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        return headers
+
+    def _post_chat_completion(self, messages: list, *, max_tokens: Optional[int] = None) -> Tuple[str, dict]:
+        """POSTs one Chat Completions request. Returns (content_text, raw_response_dict). Raises
+        on any failure (network, HTTP status, JSON decode, unexpected shape) -- callers handle
+        that; this method never swallows an error itself, so preflight() sees the real reason."""
+        body = json.dumps({
+            "model": self.model, "temperature": self.temperature,
+            "max_tokens": max_tokens if max_tokens is not None else self.max_tokens,
+            "messages": messages,
+        }).encode("utf-8")
+        request = urllib.request.Request(
+            f"{self.base_url}/chat/completions", data=body, headers=self._headers(), method="POST",
+        )
+        with urllib.request.urlopen(request, timeout=self.timeout) as response:
+            raw = json.loads(response.read().decode("utf-8"))
+        content = raw["choices"][0]["message"]["content"] or ""
+        return content, raw
 
     def generate_turn_output(self, ctx: TurnContext) -> AgentTurnOutput:
         fallback = _deterministic_turn_output(ctx)
-        if not self._available:
-            return fallback
         prompt = build_reasoning_prompt(ctx)
         for attempt in range(self.max_retries + 1):
             try:
-                response = self._client.chat.completions.create(
-                    model=self.model, temperature=self.temperature, max_tokens=get_config().llm_max_tokens,
-                    messages=[{"role": "user", "content": prompt}],
-                )
-                raw = response.choices[0].message.content or ""
-                parsed = parse_agent_turn_output(raw)
+                content, _raw = self._post_chat_completion([{"role": "user", "content": prompt}])
+                parsed = parse_agent_turn_output(content)
                 if parsed is not None:
                     return parsed
             except Exception as exc:
@@ -270,6 +319,24 @@ class OpenAICompatibleLLMClient(BaseLLMClient):
                             self.max_retries + 1, exc)
         log.warning("Falling back to deterministic turn output after %d failed attempt(s).", self.max_retries + 1)
         return fallback
+
+    def preflight(self) -> Tuple[bool, str]:
+        """Startup-time reachability check (spec section 2/22) -- a minimal real request, not just
+        a socket check, so a server that accepts TCP connections but 404s/500s on this route is
+        still correctly reported as NOT ready. Returns (ok, reason)."""
+        try:
+            content, _raw = self._post_chat_completion(
+                [{"role": "user", "content": "Reply with the single word: ready"}], max_tokens=8,
+            )
+            if not content.strip():
+                return False, "Endpoint responded but returned an empty completion."
+            return True, f"Endpoint reachable at {self.base_url}, model={self.model!r}."
+        except urllib.error.HTTPError as exc:
+            return False, f"HTTP {exc.code} from {self.base_url}/chat/completions: {exc.reason}"
+        except urllib.error.URLError as exc:
+            return False, f"Cannot reach {self.base_url}: {exc.reason}"
+        except Exception as exc:  # noqa: BLE001 - preflight must report every failure mode, not raise
+            return False, f"{type(exc).__name__}: {exc}"
 
 
 class LocalLLMClient(OpenAICompatibleLLMClient):

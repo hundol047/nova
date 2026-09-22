@@ -12,7 +12,7 @@ CHIEF_COMPLAINT_KEYWORDS = {
     "headache": ["headache", "head pain", "head hurts", "my head is killing me", "두통", "머리가 아프"],
     "fever": ["fever", "chills", "high temperature", "burning up", "running a temperature",
               "열", "발열", "오한"],
-    "dyspnea": ["shortness of breath", "difficulty breathing", "dyspnea", "breathless",
+    "dyspnea": ["shortness of breath", "difficulty breathing", "trouble breathing", "dyspnea", "breathless",
                 "can't breathe", "cant breathe", "can't catch my breath", "out of breath", "winded",
                 "숨이 차", "호흡곤란"],
     "dizziness": ["dizziness", "dizzy", "vertigo", "lightheaded", "light-headed", "room spinning",

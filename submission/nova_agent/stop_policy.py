@@ -4,6 +4,15 @@ Decides whether the agent should DIAGNOSE now instead of asking/examining/testin
 Combines top-diagnosis confidence, the rank-1/rank-2 gap, contradictory evidence, whether a
 dangerous alternative is still unresolved, and remaining turns. A hard forced-diagnose fallback
 guarantees the agent NEVER runs out the clock without submitting a final diagnosis.
+
+Hybrid-architecture note (spec section 8): `evaluate()` is called by action_selector.py with the
+DETERMINISTIC differential only (never the LLM-merged one -- see orchestrator.py's turn pipeline).
+This is deliberate: it means `should_diagnose`/`readiness_score` can never be skewed by an
+arbitrary confidence/proxy score the LLM assigned to a novel diagnosis it introduced -- those
+numbers simply never reach this module. safety_validator.py's `validate_action` is the one place
+that reasons about the LLM's own chosen diagnosis, and it does so via `is_resolved()` (evidence-
+and workup-based, not score-based) plus an explicit minimum-evidence/turn-count gate, never by
+trusting a score.
 """
 
 from __future__ import annotations
@@ -14,25 +23,9 @@ from pydantic import BaseModel
 
 from nova_agent.config import get_config
 from nova_agent.differential import DifferentialItem
-from nova_agent.knowledge.retrieval import disease_by_id
+from nova_agent.resolution import is_resolved
 from nova_agent.safety import SafetyFinding
 from nova_agent.state import PatientState
-
-
-def _fully_worked_up(diagnosis_id: str, state: PatientState) -> bool:
-    """True once every discriminating exam/test the knowledge base lists for this diagnosis has
-    already been performed. A dangerous alternative that has been fully investigated and still
-    shows no supporting evidence should stop blocking DIAGNOSE -- otherwise a stale keyword-based
-    safety flag (raised once, early, before the workup happened) can block the agent forever even
-    after it has done exactly the workup that should resolve it."""
-    entry = disease_by_id(diagnosis_id)
-    if not entry:
-        return True
-    required = set(entry.get("discriminating_exams", [])) | set(entry.get("discriminating_tests", []))
-    if not required:
-        return True
-    done = set(state.completed_examinations) | set(state.completed_tests)
-    return required.issubset(done)
 
 
 class StopDecision(BaseModel):
@@ -69,11 +62,14 @@ class StopPolicy:
             d for d in differential[1:]
             if d.dangerous_if_missed and not d.contradictory_evidence and d.confidence_band != "LOW"
         ]
+        differential_by_id = {d.diagnosis_id: d for d in differential}
         active_safety_flags = [
             f for f in safety_findings
-            if f.diagnosis_id != top.diagnosis_id and not _fully_worked_up(f.diagnosis_id, state)
+            if f.diagnosis_id != top.diagnosis_id
+            and not is_resolved(f.diagnosis_id, differential_by_id[f.diagnosis_id].contradictory_evidence
+                                 if f.diagnosis_id in differential_by_id else [], state)
         ]
-        unresolved_dangerous = [d for d in unresolved_dangerous if not _fully_worked_up(d.diagnosis_id, state)]
+        unresolved_dangerous = [d for d in unresolved_dangerous if not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)]
 
         dangerous_alternative_exists = bool(unresolved_dangerous or active_safety_flags)
 

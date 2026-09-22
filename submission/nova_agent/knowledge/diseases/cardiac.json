@@ -74,7 +74,12 @@
       "pressure",
       "hypotension",
       "sweating"
-    ]
+    ],
+    "minimum_workup": [
+      "ecg",
+      "troponin"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "aortic_dissection",
@@ -136,7 +141,11 @@
       "radiates to back",
       "pulse differential",
       "unequal blood pressure"
-    ]
+    ],
+    "minimum_workup": [
+      "ct_aorta"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "gerd",
@@ -180,7 +189,8 @@
       "ecg",
       "troponin"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "musculoskeletal_chest_pain",
@@ -218,7 +228,8 @@
     "discriminating_tests": [
       "ecg"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "vasovagal_syncope",
@@ -263,7 +274,8 @@
     "discriminating_tests": [
       "ecg"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "cardiac_arrhythmia",
@@ -322,7 +334,8 @@
       "hypotension",
       "syncope with palpitations",
       "chest pain with palpitations"
-    ]
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "panic_attack",
@@ -367,6 +380,7 @@
     "discriminating_tests": [
       "ecg"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   }
 ]

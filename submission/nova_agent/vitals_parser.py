@@ -11,9 +11,12 @@ mock/competition-generated ones) without needing an LLM call just to extract num
 from __future__ import annotations
 
 import re
-from typing import Optional
+from typing import List, Optional
 
+from nova_agent.knowledge.retrieval import vital_sign_red_flags
 from nova_agent.models import VitalSigns
+
+_OPS = {">=": lambda v, t: v >= t, "<=": lambda v, t: v <= t, ">": lambda v, t: v > t, "<": lambda v, t: v < t}
 
 _BP = re.compile(r"\b(?:bp|blood pressure)\s*[:\s]*?(\d{2,3})\s*/\s*(\d{2,3})", re.IGNORECASE)
 _HR = re.compile(r"\b(?:hr|heart rate|pulse)\s*[:\s]*?(\d{2,3})\b", re.IGNORECASE)
@@ -68,3 +71,25 @@ def parse_vital_signs(text: str) -> Optional[VitalSigns]:
         # observation) -- keep the raw text available elsewhere (physical_examinations) but don't
         # let a single malformed vital crash the turn (spec section 20).
         return None
+
+
+def describe_vital_sign_abnormalities(vitals: VitalSigns) -> List[str]:
+    """Turns structured vital-sign values into short descriptive clinical findings (e.g. "Marked
+    tachycardia", "Hypotension / shock") using the SAME threshold table safety.py's
+    vital_sign_red_flags rules use -- a single source of truth for what counts as abnormal.
+
+    Without this, a disease's vital-sign-phrased typical_features (e.g. sepsis's "tachycardia",
+    "hypotension", "tachypnea") could never be credited by differential.py's keyword matcher: the
+    only thing vital_signs EXAM results ever contributed to the evidence corpus was the raw numeric
+    string ("BP 84/52, HR 128..."), which no typical_feature phrase keyword-matches. safety.py's
+    vital_sign_red_flags already computed these same abnormalities for safety-flag purposes; this
+    just also surfaces them as plain-text findings so ranking (not only safety flagging) benefits."""
+    values = vitals.model_dump()
+    findings: List[str] = []
+    for rule in vital_sign_red_flags():
+        value = values.get(rule["field"])
+        if value is None:
+            continue
+        if _OPS[rule["op"]](value, rule["value"]):
+            findings.append(rule["reason"])
+    return findings

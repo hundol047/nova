@@ -60,7 +60,12 @@
       "fruity breath",
       "confusion with known diabetes",
       "polyuria polydipsia"
-    ]
+    ],
+    "minimum_workup": [
+      "glucose_point_of_care",
+      "ketones"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "severe_electrolyte_disorder",
@@ -111,7 +116,11 @@
       "arrhythmia",
       "muscle weakness with renal disease",
       "confusion with renal disease"
-    ]
+    ],
+    "minimum_workup": [
+      "bmp"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "hypoglycemia",
@@ -153,6 +162,7 @@
     "discriminating_tests": [
       "glucose_point_of_care"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   }
 ]

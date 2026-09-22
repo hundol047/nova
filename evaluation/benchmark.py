@@ -17,6 +17,7 @@ from nova_agent.orchestrator import DoctorAgent
 
 from evaluation.cases import CASES
 from evaluation.held_out_cases import HELD_OUT_CASES
+from evaluation.scoring import score_case
 from evaluation.simulator import CaseResult, run_case
 
 
@@ -37,8 +38,12 @@ def print_case_table(results: list[CaseResult]) -> None:
 
 
 def compute_summary(results: list[CaseResult]) -> dict:
+    """Spec section 17: every metric is reported together, and which cases are excluded from which
+    denominator is always named explicitly -- never silently drop hard cases just to inflate one
+    headline accuracy number."""
     n = len(results) or 1
     scored = [r for r in results if r.scoring_expected]
+    unsupported = [r for r in results if not r.scoring_expected]
     scored_n = len(scored) or 1
     critical_cases = [r for r in results if r.critical]
     turns_list = [r.turns for r in results]
@@ -47,17 +52,22 @@ def compute_summary(results: list[CaseResult]) -> dict:
     exam_total = sum(r.exam_count for r in results)
     test_total = sum(r.test_count for r in results)
 
-    # Utility score proxy ONLY (spec section 21: not an official scoring formula -- none has been
-    # published at implementation time; replace this the moment one is). Rewards correctness,
-    # penalizes turns/unnecessary tests/critical misses.
-    utility_proxy = statistics.mean(
-        (1.0 if r.correct else 0.0) - 0.01 * r.turns - 0.05 * r.unnecessary_tests
-        - (0.5 if r.critical_miss else 0.0)
-        for r in results
-    )
+    utility_proxy = statistics.mean(score_case(r) for r in results)
 
     return {
-        "diagnostic_accuracy": sum(r.correct for r in scored) / scored_n,
+        # Scored: only cases with a well-defined single right answer (excludes ambiguous/
+        # insufficient-info/unmapped-complaint stress cases -- see each case's `scoring_expected`).
+        "scored_diagnostic_accuracy": sum(r.correct for r in scored) / scored_n,
+        # All-case: the SAME correctness check applied to every case, unscored ones included, so
+        # inflating the headline number by excluding hard cases is never possible to hide.
+        "all_case_diagnostic_accuracy": sum(r.correct for r in results) / n,
+        "unscored_case_names": [r.case_id for r in unsupported],
+        # Unsupported (excluded-from-scoring) cases: not "correct/incorrect" (no single right
+        # answer), but still checked for safe handling -- reached a diagnosis, no critical miss.
+        "unsupported_case_success_rate": (
+            sum(1 for r in unsupported if not r.failed_to_diagnose and not r.critical_miss) / len(unsupported)
+            if unsupported else None
+        ),
         "critical_diagnosis_recall": (
             sum(1 for r in critical_cases if r.correct) / len(critical_cases) if critical_cases else None
         ),
@@ -84,19 +94,24 @@ def compute_summary(results: list[CaseResult]) -> dict:
 def print_summary(title: str, results: list[CaseResult]) -> None:
     s = compute_summary(results)
     print(f"\n{title} ({s['n_cases']} cases, {s['n_scored_cases']} scored, {s['n_critical_cases']} critical)")
-    print(f"  Diagnostic Accuracy:      {s['diagnostic_accuracy'] * 100:.1f}%")
+    print(f"  Scored Diagnostic Accuracy:   {s['scored_diagnostic_accuracy'] * 100:.1f}%  "
+          f"(excludes: {', '.join(s['unscored_case_names']) or 'none'})")
+    print(f"  All-Case Diagnostic Accuracy: {s['all_case_diagnostic_accuracy'] * 100:.1f}%  (every case, no exclusions)")
+    if s["unsupported_case_success_rate"] is not None:
+        print(f"  Unsupported-Case Success Rate:{s['unsupported_case_success_rate'] * 100:.1f}%  "
+              f"(safe handling of excluded cases: diagnosed, no critical miss)")
     if s["critical_diagnosis_recall"] is not None:
-        print(f"  Critical Diagnosis Recall:{s['critical_diagnosis_recall'] * 100:.1f}%")
-    print(f"  Critical Miss Rate:       {s['critical_miss_rate'] * 100:.1f}%")
-    print(f"  Average / Median Turns:   {s['average_turns']:.1f} / {s['median_turns']:.1f}")
-    print(f"  Duplicate Action Rate:    {s['duplicate_action_rate']:.2f} per case")
-    print(f"  Unnecessary Test Rate:    {s['unnecessary_test_rate']:.2f} per case")
-    print(f"  Malformed Output Rate:    {s['malformed_output_rate']:.2f} per case")
-    print(f"  Failed Diagnosis Rate:    {s['failed_diagnosis_rate'] * 100:.1f}%")
-    print(f"  Avg ASK / EXAM / TEST:    {s['average_ask_count']:.1f} / {s['average_exam_count']:.1f} / "
+        print(f"  Critical Diagnosis Recall:    {s['critical_diagnosis_recall'] * 100:.1f}%")
+    print(f"  Critical Miss Rate:           {s['critical_miss_rate'] * 100:.1f}%")
+    print(f"  Average / Median Turns:       {s['average_turns']:.1f} / {s['median_turns']:.1f}")
+    print(f"  Duplicate Action Rate:        {s['duplicate_action_rate']:.2f} per case")
+    print(f"  Unnecessary Test Rate:        {s['unnecessary_test_rate']:.2f} per case")
+    print(f"  Malformed Output Rate:        {s['malformed_output_rate']:.2f} per case")
+    print(f"  Failed Diagnosis Rate:        {s['failed_diagnosis_rate'] * 100:.1f}%")
+    print(f"  Avg ASK / EXAM / TEST:        {s['average_ask_count']:.1f} / {s['average_exam_count']:.1f} / "
           f"{s['average_test_count']:.1f}")
-    print(f"  Utility Score Proxy:      {s['utility_score_proxy']:.3f}  "
-          f"(informal local metric -- see module docstring; not an official competition score)")
+    print(f"  Utility Score Proxy:          {s['utility_score_proxy']:.3f}  "
+          f"(informal local metric, evaluation/scoring.py -- not an official competition score)")
 
 
 def main() -> None:

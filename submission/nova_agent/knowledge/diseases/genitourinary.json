@@ -46,7 +46,8 @@
       "positive leukocyte esterase",
       "positive nitrites"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "pyelonephritis",
@@ -103,7 +104,8 @@
       "positive leukocyte esterase",
       "positive nitrites",
       "elevated white blood cell count"
-    ]
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "nephrolithiasis",
@@ -147,6 +149,7 @@
       "urinalysis",
       "ct_abdomen"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   }
 ]

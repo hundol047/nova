@@ -51,7 +51,10 @@
     ],
     "confirmatory_findings": [
       "elevated lactate",
-      "positive blood culture"
+      "positive blood culture",
+      "gram-negative rods",
+      "gram-positive cocci",
+      "gram-negative diplococci"
     ],
     "red_flag_keywords": [
       "hypotension",
@@ -59,7 +62,12 @@
       "altered mental status",
       "tachypnea",
       "fever with confusion"
-    ]
+    ],
+    "minimum_workup": [
+      "lactate",
+      "blood_culture"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "anaphylaxis",
@@ -107,7 +115,9 @@
       "throat tightness",
       "wheeze after exposure",
       "hypotension"
-    ]
+    ],
+    "minimum_workup": [],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "viral_uri",
@@ -143,6 +153,7 @@
       "lung_auscultation"
     ],
     "discriminating_tests": [],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   }
 ]

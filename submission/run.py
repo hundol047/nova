@@ -2,10 +2,26 @@
 """N.O.V.A. 2026 Doctor Agent -- standalone submission entrypoint (spec section 16/24I).
 
 This file, plus the nova_agent/ and competition/ packages copied alongside it by
-scripts/build_submission.py, are everything needed to run the Doctor Agent: no backend/,
+scripts/build_nova_submission.py, are everything needed to run the Doctor Agent: no backend/,
 frontend/, docs/, tests/, or any other part of the source repository is required. Only
-`requirements.txt` in this directory needs to be installed (pydantic; `openai` only if
-NOVA_LLM_PROVIDER selects an OpenAI-compatible/local/competition runtime).
+`requirements.txt` in this directory needs to be installed (pydantic only -- the real-LLM
+providers use stdlib `urllib`, not a third-party SDK; see nova_agent/llm_client.py).
+
+Provider selection: unlike local development (where NOVA_LLM_PROVIDER defaults to `mock`), THIS
+entrypoint defaults to `competition` when NOVA_LLM_PROVIDER is not explicitly set, so a submission
+run actually attempts real LLM clinical reasoning by default rather than silently reasoning
+entirely on the deterministic mock fallback. `competition` (nova_agent/config.py's
+`competition_base_url`) defaults to `http://localhost:8000/v1` -- localhost only, never an
+arbitrary remote/internet endpoint guessed on your behalf -- override every NOVA_COMPETITION_*
+variable via the environment once the official competition runtime contract is known; nothing in
+this file needs to change.
+
+Before serving any observation, this script runs `preflight()` on the configured LLM client. If it
+is not reachable, a loud, structured warning is printed to **stderr** (never stdout, which carries
+the JSON-lines protocol) and the run *continues* using nova_agent's existing per-turn deterministic
+fallback -- a crashed/exited submission produces zero diagnoses, which is worse than a degraded but
+still-safe run. This is the RUNTIME policy; for a hard pass/fail gate to check BEFORE submitting
+(e.g. in CI), use `scripts/preflight_competition.py` instead, which does fail loudly.
 
 Two modes:
 
@@ -28,6 +44,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -36,7 +53,38 @@ from pathlib import Path
 # its own, copied anywhere, with nothing else from the source repository present.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from nova_agent.config import get_config  # noqa: E402
+from nova_agent.llm_client import get_llm_client  # noqa: E402
+from nova_agent.orchestrator import DoctorAgent  # noqa: E402
+
 from competition.adapter import NovaCompetitionAgent  # noqa: E402
+
+# Local development explicitly opts into NOVA_LLM_PROVIDER=mock; a submission run that never set
+# it at all should default to attempting the real competition LLM, not silently reasoning on mock
+# for the entire run.
+if not os.environ.get("NOVA_LLM_PROVIDER"):
+    os.environ["NOVA_LLM_PROVIDER"] = "competition"
+
+
+def _build_agent() -> DoctorAgent:
+    client = get_llm_client()
+    ok, reason = client.preflight()
+    provider = get_config().llm_provider
+    if not ok:
+        print(
+            "Competition LLM unavailable\n"
+            f"Provider: {provider}\n"
+            f"Model: {getattr(client, 'model', '?')}\n"
+            f"Endpoint: {getattr(client, 'base_url', 'n/a')}\n"
+            f"Reason: {reason}\n"
+            "Continuing with nova_agent's per-turn deterministic fallback -- clinical reasoning "
+            "for this run will NOT use a real LLM. Run `python scripts/preflight_competition.py` "
+            "before submitting to catch this ahead of time.",
+            file=sys.stderr,
+        )
+    else:
+        print(f"LLM provider ready: {provider} ({reason})", file=sys.stderr)
+    return DoctorAgent(llm_client=client)
 
 
 def run_jsonlines(agent: NovaCompetitionAgent) -> None:
@@ -54,8 +102,7 @@ def run_jsonlines(agent: NovaCompetitionAgent) -> None:
         sys.stdout.flush()
 
 
-def run_interactive() -> None:
-    agent = NovaCompetitionAgent()
+def run_interactive(agent: NovaCompetitionAgent) -> None:
     case_id = input("case_id [demo]: ").strip() or "demo"
     chief_complaint = input("chief complaint: ").strip()
     age_raw = input("age (optional): ").strip()
@@ -84,10 +131,11 @@ def main() -> None:
                          help="Run an interactive terminal demo instead of reading JSON lines from stdin.")
     args = parser.parse_args()
 
+    competition_agent = NovaCompetitionAgent(agent=_build_agent())
     if args.interactive:
-        run_interactive()
+        run_interactive(competition_agent)
     else:
-        run_jsonlines(NovaCompetitionAgent())
+        run_jsonlines(competition_agent)
 
 
 if __name__ == "__main__":

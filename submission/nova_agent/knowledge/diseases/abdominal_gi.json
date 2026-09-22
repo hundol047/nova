@@ -51,7 +51,11 @@
       "guarding",
       "rigid abdomen",
       "peritoneal signs"
-    ]
+    ],
+    "minimum_workup": [
+      "ct_abdomen"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "gi_bleeding",
@@ -112,7 +116,11 @@
       "hypotension",
       "tachycardia",
       "pallor"
-    ]
+    ],
+    "minimum_workup": [
+      "cbc"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "ectopic_pregnancy",
@@ -169,7 +177,12 @@
       "unilateral pelvic pain",
       "hypotension",
       "syncope"
-    ]
+    ],
+    "minimum_workup": [
+      "beta_hcg",
+      "pelvic_ultrasound"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "acute_pancreatitis",
@@ -211,7 +224,8 @@
       "lipase",
       "abdominal_ultrasound"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "appendicitis",
@@ -251,7 +265,8 @@
     "red_flag_keywords": [
       "rebound tenderness",
       "guarding"
-    ]
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "gastroenteritis",
@@ -292,6 +307,7 @@
     "discriminating_tests": [
       "cbc"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   }
 ]

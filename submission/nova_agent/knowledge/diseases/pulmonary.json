@@ -63,7 +63,12 @@
       "hemoptysis",
       "tachycardia",
       "hypoxia"
-    ]
+    ],
+    "minimum_workup": [
+      "d_dimer",
+      "ct_chest_angio"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "tension_pneumothorax",
@@ -116,7 +121,12 @@
       "hypotension",
       "sudden onset dyspnea",
       "distended neck veins"
-    ]
+    ],
+    "minimum_workup": [
+      "lung_auscultation",
+      "cxr"
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "pneumonia",
@@ -164,7 +174,8 @@
       "hypoxia",
       "confusion",
       "hypotension"
-    ]
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "asthma_copd_exacerbation",
@@ -210,7 +221,8 @@
       "silent chest",
       "unable to speak in full sentences",
       "hypoxia"
-    ]
+    ],
+    "evidence_level": "internally_authored_heuristic"
   },
   {
     "id": "acute_bronchitis",
@@ -250,6 +262,7 @@
     "discriminating_tests": [
       "cxr"
     ],
-    "red_flag_keywords": []
+    "red_flag_keywords": [],
+    "evidence_level": "internally_authored_heuristic"
   }
 ]

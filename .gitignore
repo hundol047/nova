@@ -28,3 +28,8 @@ onnxruntime_profile__*.json
 /anatomy.glb
 /extras.glb
 bp3d_repo
+
+# Generated build artifacts from scripts/build_nova_submission.py -- reproducible from
+# nova_agent/ + competition/ + submission/run.py, never hand-edited, not committed.
+/submission/submission.zip
+/submission/MANIFEST.json

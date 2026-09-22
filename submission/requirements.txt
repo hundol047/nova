@@ -1,12 +1,12 @@
 # Minimal runtime dependencies for the standalone N.O.V.A. Doctor Agent submission. No FastAPI,
 # ONNX Runtime, Redis, or any other backend/frontend dependency is required -- see
 # nova_agent/_synex.py (optional-only backend reuse) and nova_agent/models.py (standalone models).
+#
+# NOVA_LLM_PROVIDER=mock (dev/offline) / openai_compatible / local / competition all need NOTHING
+# beyond pydantic: OpenAICompatibleLLMClient (nova_agent/llm_client.py) talks to the model server
+# over stdlib `urllib`, deliberately avoiding a dependency on the `openai` package -- a competition
+# environment cannot silently fall back to mock just because a third-party SDK wasn't installed.
 pydantic>=2.6,<3
-
-# Optional: only required if NOVA_LLM_PROVIDER is set to openai_compatible / local / competition
-# (a real reasoning call to a local or hosted OpenAI-compatible server). The default
-# NOVA_LLM_PROVIDER=mock needs none of this and runs fully offline.
-# openai>=1.40
 
 # Optional: only required if NOVA_LLM_PROVIDER=anthropic.
 # anthropic>=0.40
