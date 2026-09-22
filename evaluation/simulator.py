@@ -66,10 +66,17 @@ class CaseResult(BaseModel):
     differential_trajectory: List[dict] = []
 
 
-def _relevant_test_ids(case: SyntheticCase) -> set:
+def _relevant_test_ids(case: SyntheticCase, seen_diagnosis_ids: Optional[set] = None) -> set:
     """Tests considered 'necessary' for scoring purposes: those tied to the ground-truth disease,
-    or to any critical condition relevant to this case's chief complaint (since ruling a dangerous
-    diagnosis out is legitimate, not wasteful, testing)."""
+    to any critical condition relevant to this case's chief complaint (since ruling a dangerous
+    diagnosis out is legitimate, not wasteful, testing), or to any diagnosis the agent's OWN
+    differential engine actually surfaced in its top-K ranking at some point during the case
+    (`seen_diagnosis_ids`, spec section 12). That last set matters because the first two only ever
+    look at CRITICAL/dangerous diseases -- a plausible, evidence-driven alternative that happens to
+    be non-dangerous (e.g. investigating a urinary source in an elderly patient with weakness or
+    dyspnea, the way the existing Fever03_DiabeticUrosepsis tuning case expects) was previously
+    always counted as 'unnecessary' purely because of that KB metadata flag, not because the test
+    was actually unjustified by the evidence gathered so far."""
     relevant = set()
     gt = disease_by_id(case.ground_truth_diagnosis)
     if gt:
@@ -79,6 +86,10 @@ def _relevant_test_ids(case: SyntheticCase) -> set:
         entry = disease_by_id(cid)
         if entry and set(entry.get("chief_complaint_tags", [])) & set(
                 disease_by_id(case.ground_truth_diagnosis).get("chief_complaint_tags", []) if gt else []):
+            relevant.update(entry.get("discriminating_tests", []))
+    for diagnosis_id in (seen_diagnosis_ids or ()):
+        entry = disease_by_id(diagnosis_id)
+        if entry:
             relevant.update(entry.get("discriminating_tests", []))
     return relevant
 
@@ -95,9 +106,16 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
     ask_count = exam_count = test_count = 0
     failed_to_diagnose = True
     trajectory: List[dict] = []
+    seen_diagnosis_ids: set = set()
 
     for _ in range(state.max_turns):
         action, llm_output, differential = agent.decide(state)
+        # rank<=2 only (not the whole top-5): with sparse early evidence almost every candidate in
+        # a disease pool cycles through SOME top-5 slot at some point, which would make this set --
+        # and therefore what counts as a justified test -- nearly everything. Reaching rank 1/2 is
+        # a much stronger signal that the agent's own reasoning seriously considered the diagnosis,
+        # not just that it was present in a large candidate pool.
+        seen_diagnosis_ids.update(d.diagnosis_id for d in differential if d.rank <= 2)
         if llm_output is None:
             malformed_turns += 1
         if capture_trajectory:
@@ -129,7 +147,7 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
             failed_to_diagnose = False
             break
 
-    relevant_tests = _relevant_test_ids(case)
+    relevant_tests = _relevant_test_ids(case, seen_diagnosis_ids)
     unnecessary_tests = sum(1 for t in tests_performed if t not in relevant_tests)
 
     correct = bool(state.final_diagnosis) and same_diagnosis(state.final_diagnosis, case.ground_truth_diagnosis)

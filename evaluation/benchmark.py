@@ -18,6 +18,7 @@ from nova_agent.orchestrator import DoctorAgent
 
 from evaluation.cases import CASES
 from evaluation.generalization_cases_v2 import GENERALIZATION_CASES_V2
+from evaluation.generalization_stress_cases import GENERALIZATION_STRESS_CASES
 from evaluation.held_out_cases import HELD_OUT_CASES
 from evaluation.scoring import score_case
 from evaluation.simulator import CaseResult, run_case
@@ -123,6 +124,11 @@ def main() -> None:
     parser.add_argument("--generalization-v2", action="store_true",
                          help="Also run evaluation/generalization_cases_v2.py (a second, "
                               "independent held-out-style set -- never used to tune any default).")
+    parser.add_argument("--stress", action="store_true",
+                         help="Also run evaluation/generalization_stress_cases.py (spec section "
+                              "17-18: a small, targeted set probing the two known generalization "
+                              "miss patterns from both directions -- run only after held-out and "
+                              "generalization-v2 both stay clean).")
     parser.add_argument("--save-json", default=None,
                          help="Write each run set's compute_summary() output to this path (spec "
                               "section 25: a single generated source of truth for benchmark "
@@ -151,6 +157,14 @@ def main() -> None:
         print_case_table(v2_results)
         print_summary("Generalization v2 summary", v2_results)
         results_for_json["generalization_v2"] = compute_summary(v2_results)
+
+    if args.stress:
+        stress_results = run_all(GENERALIZATION_STRESS_CASES)
+        print("\n=== Stress set (evaluation/generalization_stress_cases.py -- targeted probes of the "
+              "two known miss patterns) ===")
+        print_case_table(stress_results)
+        print_summary("Stress set summary", stress_results)
+        results_for_json["stress"] = compute_summary(stress_results)
 
     if args.save_json:
         import json

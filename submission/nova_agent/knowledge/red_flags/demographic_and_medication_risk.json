@@ -31,6 +31,13 @@
       "diagnosis_id": "diabetic_ketoacidosis",
       "chief_complaint_tags": ["altered_mental_status", "abdominal_pain", "dyspnea", "weakness"],
       "reason": "Known diabetes on glucose-lowering medication raises the prior for a glucose-related emergency (DKA or hypoglycemia) in this presentation."
+    },
+    {
+      "id": "sulfonylurea_insulin_hypoglycemia_risk",
+      "trigger_keywords": ["insulin", "sulfonylurea", "glipizide", "glyburide", "glimepiride"],
+      "diagnosis_id": "hypoglycemia",
+      "chief_complaint_tags": ["altered_mental_status", "dizziness", "weakness"],
+      "reason": "Glucose-lowering medication (insulin or a sulfonylurea) known to cause hypoglycemia raises the prior for a hypoglycemic episode in this presentation, especially with reduced oral intake."
     }
   ],
   "note": "These rules only ever ADD a safety finding when the case is already plausible for that diagnosis (chief-complaint-tag-gated, same as the symptom/vital-sign red flags in critical_conditions.json) -- never a blanket check across unrelated presentations (spec section 5's 'never blanket-test' requirement applies here too)."
