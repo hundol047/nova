@@ -215,6 +215,39 @@ def test_confirmatory_finding_negation_not_spuriously_matched():
         "clear breath sounds must never be scored as supporting 'absent breath sounds'"
 
 
+def test_plain_feature_embedded_in_negated_clause_not_matched():
+    """A second, distinct negation bug (found the same way -- a real held-out/generalization
+    miss, not speculation): a PLAIN (non-negatively-phrased) feature/confirmatory_finding phrase
+    like pneumonia's 'focal consolidation' must not be scored as supporting when the only place it
+    appears in the findings is inside an EXPLICITLY NEGATED clause of the SAME exam/test result
+    string (e.g. a CXR read as "hyperinflated lungs, no focal consolidation") -- unlike the
+    negative-prefix case above, this is a plain phrase whose literal words happen to sit right
+    after a "no"/"denies" in the same finding. matching.feature_present(..., scrub_negated_spans=
+    True) strips the local negated clause before matching; verified both at the matching.py unit
+    level and through the full differential scoring pipeline (root cause: this exact bug made a
+    mild, common respiratory case (Cough01_CommonBronchitis) misdiagnose as a critical emergency,
+    and separately made Fever06_ElderlyPneumonia and Dyspnea06_YoungAdultAsthmaExacerbation each
+    diagnose as the OTHER disease)."""
+    from nova_agent.differential import _score_disease
+    from nova_agent.knowledge.retrieval import disease_by_id
+    from nova_agent.matching import feature_present
+    from nova_agent.state import PatientState
+
+    assert feature_present("focal consolidation", ["hyperinflated lungs, no focal consolidation"],
+                            scrub_negated_spans=True) is False
+    assert feature_present("focal consolidation", ["right lower lobe consolidation, focal consolidation seen"],
+                            scrub_negated_spans=True) is True
+
+    state = PatientState(case_id="c", chief_complaint="wheezing and can't catch my breath")
+    state.record_exam("lung_auscultation", "diffuse expiratory wheeze, prolonged expiration")
+    state.record_test("cxr", "hyperinflated lungs, no focal consolidation")
+
+    pneumonia = disease_by_id("pneumonia")
+    score, _mp, supporting, _contradictory, _missing = _score_disease(pneumonia, state)
+    assert "focal consolidation" not in supporting and "consolidation" not in supporting, \
+        "an explicitly negated CXR reading must never count as supporting pneumonia's own confirmatory finding"
+
+
 def test_dangerous_workup_does_not_require_every_optional_test():
     """A dangerous diagnosis with a minimum_workup subset (e.g. ACS: ECG + troponin) must be
     considered resolved once that subset is done, even if OTHER optional discriminating tests

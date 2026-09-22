@@ -175,6 +175,12 @@
       "confusion",
       "hypotension"
     ],
+    "confirmatory_findings": [
+      "consolidation",
+      "infiltrate",
+      "focal consolidation",
+      "crackles"
+    ],
     "evidence_level": "internally_authored_heuristic"
   },
   {

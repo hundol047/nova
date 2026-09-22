@@ -77,7 +77,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         if feature_present(underlying, negatives):
             supporting.append(phrase)
             return weight
-        if feature_present(underlying, findings):
+        if feature_present(underlying, findings, scrub_negated_spans=True):
             contradictory.append(phrase)
             return -CONTRADICTION_PENALTY
         missing.append(phrase)
@@ -85,7 +85,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
     if feature_denied(phrase, negatives):
         contradictory.append(phrase)
         return -CONTRADICTION_PENALTY
-    if feature_present(phrase, findings):
+    if feature_present(phrase, findings, scrub_negated_spans=True):
         supporting.append(phrase)
         return weight
     missing.append(phrase)
@@ -108,7 +108,7 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
-        if feature_present(risk_factor, findings):
+        if feature_present(risk_factor, findings, scrub_negated_spans=True):
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 

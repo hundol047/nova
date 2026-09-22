@@ -9,9 +9,12 @@ evaluation files never use as a ground truth, so the whole set adds real, non-re
 rather than rewording an existing case (spec: never inflate the count with same-template-different-
 wording padding).
 
-Honest count: 14 cases, not the 50-100 stretch target named in the task spec -- see
+Honest count: 18 cases, not the 50-100 stretch target named in the task spec -- see
 README.md's Known Limitations and the session's final report for why (case-authoring at this
-level of care is the bottleneck, not a decision to under-deliver quietly).
+level of care is the bottleneck, not a decision to under-deliver quietly). The last 4 cases use
+the only 4 of this repo's 34 knowledge-base diagnoses that no case anywhere (tuning, held-out, or
+this file) had used as a ground truth before -- every diagnosis in the local KB is now exercised
+by at least one evaluation case.
 
 Still hand-authored synthetic vignettes, never real patient data.
 """
@@ -285,5 +288,89 @@ GENERALIZATION_CASES_V2 = [
         exam_results={"neuro_exam": "no focal neurological deficit",
                       "vital_signs": "BP 118/76, HR 74, RR 14, Temp 36.8, SpO2 99%"},
         test_results={},
+    ),
+    SyntheticCase(
+        case_id="AbdominalPain06_ElderlyAcuteAbdomen", category="rare_dangerous",
+        chief_complaint="sudden severe stomach pain", demographics={"age": 79, "sex": "male"},
+        ground_truth_diagnosis="acute_abdomen",
+        notes="Rare-but-dangerous surgical emergency (perforated viscus) in an elderly patient "
+              "with a prior surgical history -- the last of this repo's 34 diagnoses never used "
+              "as any case's ground truth. Rigid, board-like abdomen and free air on imaging are "
+              "unambiguous, testing recognition of a true surgical abdomen rather than a routine "
+              "medical cause of abdominal pain.",
+        answers={
+            "onset": "sudden, about two hours ago, came on all at once",
+            "severity": "the worst pain I've ever had, 10 out of 10",
+            "location": "all over my belly now, started near my stomach",
+            "character": "constant, sharp, unbearable",
+            "past_medical_history": "had my gallbladder removed years ago",
+        },
+        exam_results={
+            "abdominal_exam": "rigid, board-like abdomen with diffuse rebound and guarding",
+            "vital_signs": "BP 96/60, HR 122, RR 24, Temp 38.4, SpO2 96%",
+        },
+        test_results={"cbc": "elevated white blood cell count", "ct_abdomen": "free air under the diaphragm, perforation"},
+    ),
+    SyntheticCase(
+        case_id="Dyspnea06_YoungAdultAsthmaExacerbation", category="common_disease",
+        chief_complaint="wheezing and can't catch my breath", demographics={"age": 21, "sex": "female"},
+        ground_truth_diagnosis="asthma_copd_exacerbation",
+        notes="A second common, moderate-acuity respiratory case distinct from both the viral-URI "
+              "and acute-bronchitis common-disease cases already in this suite -- a known asthmatic "
+              "having a typical trigger-provoked exacerbation, testing that the agent recognizes a "
+              "known chronic condition flaring rather than treating every dyspnea case as novel.",
+        answers={
+            "onset": "started about an hour ago after I went for a run in the cold",
+            "aggravating": "cold air and exercise always set it off; my inhaler usually helps but "
+                           "it's not working as well this time",
+            "past_medical_history": "diagnosed with asthma as a kid, use an albuterol inhaler",
+            "associated_symptoms": "wheezing and chest tightness; denies fever, denies productive cough",
+        },
+        exam_results={"lung_auscultation": "diffuse expiratory wheeze, prolonged expiration",
+                      "vital_signs": "BP 122/78, HR 104, RR 26, Temp 36.9, SpO2 94%"},
+        test_results={"cxr": "hyperinflated lungs, no focal consolidation"},
+    ),
+    SyntheticCase(
+        case_id="AbdominalPain07_TravelersGastroenteritis", category="negative_finding_centric",
+        chief_complaint="diarrhea and stomach cramps", demographics={"age": 33, "sex": "male"},
+        ground_truth_diagnosis="gastroenteritis",
+        notes="A second negative-finding-centric case (distinct from the dizziness one in "
+              "held_out_cases.py): the diagnosis rests heavily on the ABSENCE of peritoneal signs "
+              "and a benign abdominal exam ruling out the surgical-abdomen differential, not on any "
+              "single strongly positive finding -- checks the agent doesn't over-call a dangerous "
+              "cause just because the chief complaint overlaps with acute_abdomen's.",
+        answers={
+            "onset": "started yesterday, several episodes of watery diarrhea",
+            "associated_symptoms": "crampy diffuse belly pain that comes and goes, some vomiting; "
+                                    "denies blood in stool, denies severe constant pain",
+            "social_history": "just got back from a trip abroad, drank tap water",
+        },
+        exam_results={
+            "abdominal_exam": "diffusely mildly tender, soft, no rebound, no guarding, no rigidity",
+            "vital_signs": "BP 114/72, HR 92, RR 16, Temp 37.8, SpO2 99%",
+        },
+        test_results={"cbc": "mildly elevated white blood cell count"},
+    ),
+    SyntheticCase(
+        case_id="Fever06_ElderlyPneumonia", category="elderly",
+        chief_complaint="cough and fever", demographics={"age": 84, "sex": "female"},
+        ground_truth_diagnosis="pneumonia",
+        notes="Elderly patient with a focal consolidative pneumonia -- deliberately distinguished "
+              "from the existing acute_bronchitis common-disease case by a genuinely focal exam "
+              "finding (crackles, not clear breath sounds) and a positive CXR, testing whether the "
+              "agent can tell the two apart on objective findings rather than defaulting to the "
+              "'common and benign' answer just because both present with cough and fever.",
+        answers={
+            "onset": "three days of worsening cough and fever",
+            "duration": "getting worse each day, not better",
+            "associated_symptoms": "bringing up thick yellow-green mucus, sharp pain when I take a "
+                                    "deep breath, feeling more short of breath than usual",
+            "past_medical_history": "COPD, lives in an assisted living facility",
+        },
+        exam_results={
+            "lung_auscultation": "focal crackles and decreased breath sounds at the right lower lobe",
+            "vital_signs": "BP 108/66, HR 108, RR 24, Temp 38.7, SpO2 91%",
+        },
+        test_results={"cxr": "right lower lobe consolidation", "cbc": "elevated white blood cell count"},
     ),
 ]

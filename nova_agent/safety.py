@@ -50,7 +50,8 @@ class SafetyLayer:
             relevant = tag in entry.get("chief_complaint_tags", []) or diagnosis_id in differential_ids
             if not relevant:
                 continue
-            matched_keywords = [kw for kw in entry.get("red_flag_keywords", []) if feature_present(kw, findings_text)]
+            matched_keywords = [kw for kw in entry.get("red_flag_keywords", [])
+                                 if feature_present(kw, findings_text, scrub_negated_spans=True)]
             if matched_keywords:
                 findings.append(SafetyFinding(
                     diagnosis_id=diagnosis_id, condition=entry["name"],
