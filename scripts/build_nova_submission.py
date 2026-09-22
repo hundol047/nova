@@ -32,8 +32,25 @@ SUBMISSION = ROOT / "submission"
 IGNORE = shutil.ignore_patterns("__pycache__", "*.pyc", ".pytest_cache")
 
 # Same shape/spirit as scripts/preflight_competition.py's secret_scan, applied here to the exact
-# files about to be shipped rather than the whole repo.
-_SECRET_PATTERNS = [re.compile(p) for p in (r"sk-[A-Za-z0-9]{16,}", r"-----BEGIN [A-Z ]*PRIVATE KEY-----", r"AKIA[0-9A-Z]{16}")]
+# files about to be shipped rather than the whole repo. Covers known credential-shaped prefixes
+# (OpenAI/Anthropic API keys, AWS access keys, PEM private keys, GitHub/Slack tokens) PLUS a
+# generic fallback for an api_key/secret/token/password variable assigned a real-looking (not
+# placeholder/env-var-reference) string literal -- since a competition submission is exactly the
+# kind of thing someone might accidentally leave a real key hardcoded in during local testing.
+_SECRET_PATTERNS = [re.compile(p) for p in (
+    r"sk-[A-Za-z0-9]{16,}",
+    r"sk-ant-[A-Za-z0-9\-_]{16,}",
+    r"-----BEGIN [A-Z ]*PRIVATE KEY-----",
+    r"AKIA[0-9A-Z]{16}",
+    r"gh[pousr]_[A-Za-z0-9]{20,}",
+    r"github_pat_[A-Za-z0-9_]{20,}",
+    r"xox[baprs]-[A-Za-z0-9\-]{10,}",
+    r"(?i)\b(api_key|apikey|secret_key|access_token|password)\s*[:=]\s*[\"'][A-Za-z0-9/+_\-]{12,}[\"']",
+)]
+# A quoted literal that's obviously a placeholder/config-reference, not a real secret -- excluded
+# from the generic fallback pattern above so this scan doesn't cry wolf on the codebase's own
+# legitimate, already-safe patterns (env var names, "" defaults, os.environ.get(...) calls).
+_PLACEHOLDER_HINTS = ("your_", "changeme", "example", "xxxx", "<", "${", "os.environ")
 
 
 def _copy_package(name: str) -> None:
@@ -70,7 +87,12 @@ def _secret_scan() -> None:
             continue
         text = path.read_text(encoding="utf-8", errors="ignore")
         for pattern in _SECRET_PATTERNS:
-            if pattern.search(text):
+            for match in pattern.finditer(text):
+                line_start = text.rfind("\n", 0, match.start()) + 1
+                line_end = text.find("\n", match.end())
+                line = text[line_start: line_end if line_end != -1 else None]
+                if any(hint in line for hint in _PLACEHOLDER_HINTS):
+                    continue
                 hits.append(f"{path.relative_to(SUBMISSION)}: matches {pattern.pattern}")
     if hits:
         raise SystemExit("secret-shaped string(s) found in submission/, refusing to build:\n" + "\n".join(hits))

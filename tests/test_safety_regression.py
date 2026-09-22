@@ -424,6 +424,27 @@ def _read_py_files(root: Path) -> dict:
     return files
 
 
+def test_build_script_aborts_on_leaked_secret():
+    """scripts/build_nova_submission.py's secret scan must actually abort the build (never just
+    warn) when a real-looking credential is present in what's about to be shipped -- verified by
+    injecting a fake-but-realistic secret into a real submission build, not just unit-testing the
+    regex in isolation."""
+    leaked_file = REPO_ROOT / "nova_agent" / "_leaked_secret_test_tmp.py"
+    leaked_file.write_text('api_key = "sk-ant-abc123def456ghi789jklmnop"\n', encoding="utf-8")
+    try:
+        proc = subprocess.run(
+            [sys.executable, "scripts/build_nova_submission.py"],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60,
+        )
+        assert proc.returncode != 0, "build script must exit non-zero when a secret is present"
+        assert "secret-shaped string" in proc.stdout or "secret-shaped string" in proc.stderr
+    finally:
+        leaked_file.unlink(missing_ok=True)
+        # Restore submission/ to a real, non-leaked state for every other test in this session.
+        subprocess.run([sys.executable, "scripts/build_nova_submission.py"], cwd=str(REPO_ROOT),
+                        capture_output=True, text=True, timeout=60)
+
+
 def test_submission_source_sync():
     """submission/nova_agent and submission/competition must be byte-identical copies of the root
     nova_agent/ and competition/ packages (spec sections 16/23/24): submission/ is never

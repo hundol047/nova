@@ -32,7 +32,7 @@ jobs:
           pip install -r requirements-nova-dev.txt
 
       - name: pytest (nova_agent + competition adapter + safety regression)
-        run: pytest tests/ -v
+        run: python -m pytest tests/ -v
 
       - name: Benchmark (tuning + held-out sets)
         run: python -m evaluation.benchmark
@@ -47,7 +47,7 @@ jobs:
         run: python scripts/build_nova_submission.py
 
       - name: Verify submission/ is in sync with nova_agent/ + competition/ (fails on drift)
-        run: pytest tests/test_safety_regression.py::test_submission_source_sync -v
+        run: python -m pytest tests/test_safety_regression.py::test_submission_source_sync -v
 
       - name: Competition preflight (expected NOT READY under default mock provider in CI)
         run: python scripts/preflight_competition.py || true
