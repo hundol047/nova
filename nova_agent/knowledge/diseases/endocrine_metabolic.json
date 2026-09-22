@@ -117,6 +117,14 @@
       "muscle weakness with renal disease",
       "confusion with renal disease"
     ],
+    "confirmatory_findings": [
+      "peaked t waves",
+      "hyperkalemia",
+      "elevated potassium",
+      "hyponatremia",
+      "low sodium",
+      "widened qrs"
+    ],
     "minimum_workup": [
       "bmp"
     ],

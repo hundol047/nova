@@ -7,6 +7,8 @@ regression is actually covered -- not just described in a docstring elsewhere.
 from __future__ import annotations
 
 import os
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -191,6 +193,28 @@ def test_duplicate_diagnosis_alias_merge():
 
 # --- test_dangerous_workup_does_not_require_every_optional_test ---------------------------------
 
+def test_confirmatory_finding_negation_not_spuriously_matched():
+    """differential.py's confirmatory_findings scoring must be negation-aware, exactly like
+    typical_features already is (spec section 32 root-cause fix, found via
+    evaluation/generalization_cases_v2.py's Cough01_CommonBronchitis case): a negatively-phrased
+    confirmatory finding like tension_pneumothorax's 'absent breath sounds' must NOT be scored as
+    supporting evidence when the actual exam finding literally says the opposite ('clear breath
+    sounds') -- word-overlap alone (sharing 'breath sounds') previously produced a false positive
+    match regardless of the opposite polarity."""
+    from nova_agent.differential import _score_disease
+    from nova_agent.knowledge.retrieval import disease_by_id
+    from nova_agent.state import PatientState
+
+    state = PatientState(case_id="c", chief_complaint="cough that won't go away")
+    state.record_exam("lung_auscultation", "clear to mildly coarse breath sounds, no focal consolidation")
+    state.record_exam("vital_signs", "BP 116/74, HR 82, RR 16, Temp 37.3, SpO2 98%")
+
+    entry = disease_by_id("tension_pneumothorax")
+    score, _max_possible, supporting, contradictory, _missing = _score_disease(entry, state)
+    assert "absent breath sounds" not in supporting, \
+        "clear breath sounds must never be scored as supporting 'absent breath sounds'"
+
+
 def test_dangerous_workup_does_not_require_every_optional_test():
     """A dangerous diagnosis with a minimum_workup subset (e.g. ACS: ECG + troponin) must be
     considered resolved once that subset is done, even if OTHER optional discriminating tests
@@ -275,6 +299,50 @@ def test_dynamic_test_canonicalization():
     assert canonicalize_action("TEST", "mri_full_body_scan_deluxe", "A test that does not exist", state) is None
 
 
+def test_canonicalization_handles_realistic_clinical_synonyms():
+    """Real-world phrasing variants for the SAME test/exam must all resolve to the same catalog
+    entry -- confirmed here for CT pulmonary angiography's common synonyms/abbreviations and a
+    neuro-exam phrasing variant that were previously falling through to NO MATCH."""
+    state = PatientState(case_id="c", chief_complaint="shortness of breath")
+    for content in ("CT pulmonary angiography", "CTPA", "CTA chest"):
+        action = canonicalize_action("TEST", "novel_key", f"Order {content}", state)
+        assert action is not None and action.key == "ct_chest_angio", f"{content!r} should map to ct_chest_angio"
+
+    state2 = PatientState(case_id="c2", chief_complaint="headache")
+    action = canonicalize_action("EXAM", "novel_key", "Perform a neurologic exam", state2)
+    assert action is not None and action.key == "neuro_exam"
+
+
+def test_novel_diagnosis_to_discriminative_action_flow():
+    """Full pipeline (spec section 8): a novel LLM-introduced diagnosis must be able to lead to a
+    discriminative action, not just sit in the differential unactionable. The LLM proposes a
+    novel diagnosis (Boerhaave syndrome, not in the KB) AND a workup action for it phrased in
+    realistic free text -- the action must canonicalize onto the real taxonomy and execute,
+    proving novel diagnosis -> discriminative action -> canonicalization -> safety validation
+    actually works end to end. Not a hardcoded expected final diagnosis for any scored case."""
+    from nova_agent.orchestrator import DoctorAgent
+
+    class _NovelDiagnosisWorkupClient:
+        def generate_turn_output(self, ctx):
+            differential = [DifferentialItemOutput(
+                diagnosis="Boerhaave Syndrome", diagnosis_id=None, rank=1,
+                supporting_evidence=["severe chest pain after forceful vomiting"], confidence="MEDIUM",
+                dangerous_if_missed=True,
+            )]
+            selected = SelectedActionOutput(type="TEST", key="novel_key",
+                                             content="Order a CTA chest to further evaluate")
+            return AgentTurnOutput(summary="novel", differential=differential, red_flags=[],
+                                    candidate_actions=[], selected_action=selected, ready_to_diagnose=False)
+
+    agent = DoctorAgent(llm_client=_NovelDiagnosisWorkupClient())
+    state = agent.new_case("c", "chest pain", {"age": 45, "sex": "male"})
+    action, _llm_output, differential = agent.decide(state)
+
+    assert action.action_type == "TEST"
+    assert action.key == "ct_chest_angio", "the novel-diagnosis workup proposal should have canonicalized onto a real taxonomy test"
+    assert "Boerhaave Syndrome" in [d.diagnosis for d in differential]
+
+
 # --- test_submission_dependency_real_llm ----------------------------------------------------------
 
 def test_submission_dependency_real_llm():
@@ -356,6 +424,27 @@ def _read_py_files(root: Path) -> dict:
     return files
 
 
+def test_build_script_aborts_on_leaked_secret():
+    """scripts/build_nova_submission.py's secret scan must actually abort the build (never just
+    warn) when a real-looking credential is present in what's about to be shipped -- verified by
+    injecting a fake-but-realistic secret into a real submission build, not just unit-testing the
+    regex in isolation."""
+    leaked_file = REPO_ROOT / "nova_agent" / "_leaked_secret_test_tmp.py"
+    leaked_file.write_text('api_key = "sk-ant-abc123def456ghi789jklmnop"\n', encoding="utf-8")
+    try:
+        proc = subprocess.run(
+            [sys.executable, "scripts/build_nova_submission.py"],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60,
+        )
+        assert proc.returncode != 0, "build script must exit non-zero when a secret is present"
+        assert "secret-shaped string" in proc.stdout or "secret-shaped string" in proc.stderr
+    finally:
+        leaked_file.unlink(missing_ok=True)
+        # Restore submission/ to a real, non-leaked state for every other test in this session.
+        subprocess.run([sys.executable, "scripts/build_nova_submission.py"], cwd=str(REPO_ROOT),
+                        capture_output=True, text=True, timeout=60)
+
+
 def test_submission_source_sync():
     """submission/nova_agent and submission/competition must be byte-identical copies of the root
     nova_agent/ and competition/ packages (spec sections 16/23/24): submission/ is never
@@ -381,3 +470,168 @@ def test_submission_source_sync():
             f"submission/{package} has drifted from root {package}/ in: {differing}. "
             "Run `python scripts/build_nova_submission.py`."
         )
+
+
+# --- test_llm_reliability_metrics_tracked_per_case -----------------------------------------------
+
+def test_llm_reliability_metrics_tracked_per_case():
+    """PatientState's llm_call_count/success/failure/fallback counters must reflect a REAL LLM
+    provider's actual per-call success/failure (not just 'was llm_output None'), and MockLLMClient
+    -- which makes no real call at all -- must never touch them (spec: a failing real LLM must
+    never be invisible behind a healthy-looking deterministic fallback)."""
+    from nova_agent.llm_client import BaseLLMClient
+    from nova_agent.orchestrator import DoctorAgent
+
+    class _FlakyRealClient(BaseLLMClient):
+        """Alternates success/failure -- a REAL provider attempt every call, even when it falls
+        back internally to the deterministic shape (unlike a genuine parse/network exception,
+        which orchestrator.decide() catches as llm_output=None)."""
+
+        def __init__(self) -> None:
+            self.n = 0
+
+        def generate_turn_output(self, ctx):
+            self.n += 1
+            self._last_call_was_real = True
+            self._last_call_succeeded = self.n % 2 == 1
+            return AgentTurnOutput(
+                summary="s", differential=[], red_flags=[], candidate_actions=[],
+                selected_action=SelectedActionOutput(type=ctx.candidates[0].action_type,
+                                                      key=ctx.candidates[0].key, content=ctx.candidates[0].content),
+                ready_to_diagnose=False,
+            )
+
+    agent = DoctorAgent(llm_client=_FlakyRealClient())
+    state = agent.new_case("c", "chest pain", {"age": 50, "sex": "male"})
+    for _ in range(6):
+        action, _llm, _diff = agent.decide(state)
+        if action.action_type == "DIAGNOSE":
+            break
+        agent.observe(state, action, "yes")
+
+    assert state.llm_call_count == 6
+    assert state.llm_success_count == 3
+    assert state.llm_failure_count == 3
+    assert state.llm_fallback_count == 3
+    assert state.llm_success_rate == pytest.approx(0.5)
+    assert state.llm_fallback_rate == pytest.approx(0.5)
+
+    mock_agent = DoctorAgent()  # default provider is MockLLMClient
+    mock_state = mock_agent.new_case("c2", "fever", {"age": 30, "sex": "male"})
+    mock_agent.decide(mock_state)
+    assert mock_state.llm_call_count == 0
+    assert mock_state.llm_success_rate is None
+    assert mock_state.llm_fallback_rate is None
+
+
+def test_llm_latency_and_token_metrics_tracked_per_case():
+    """Latency and token-usage counters must accumulate from whatever a real client actually
+    reports per call -- never estimated when the endpoint doesn't report usage (spec: null, not a
+    guessed number)."""
+    from nova_agent.llm_client import BaseLLMClient
+    from nova_agent.orchestrator import DoctorAgent
+
+    class _InstrumentedClient(BaseLLMClient):
+        def generate_turn_output(self, ctx):
+            self._last_call_was_real = True
+            self._last_call_succeeded = True
+            self._last_call_latency_seconds = 0.25
+            self._last_call_input_tokens = 500
+            self._last_call_output_tokens = 120
+            return AgentTurnOutput(
+                summary="s", differential=[], red_flags=[], candidate_actions=[],
+                selected_action=SelectedActionOutput(type=ctx.candidates[0].action_type,
+                                                      key=ctx.candidates[0].key, content=ctx.candidates[0].content),
+                ready_to_diagnose=False,
+            )
+
+    agent = DoctorAgent(llm_client=_InstrumentedClient())
+    state = agent.new_case("c", "chest pain", {"age": 50, "sex": "male"})
+    for _ in range(3):
+        action, _llm, _diff = agent.decide(state)
+        if action.action_type == "DIAGNOSE":
+            break
+        agent.observe(state, action, "yes")
+
+    assert state.llm_avg_latency_seconds == pytest.approx(0.25)
+    assert state.llm_total_input_tokens == 3 * 500
+    assert state.llm_total_output_tokens == 3 * 120
+    assert state.llm_token_usage_available is True
+
+    mock_state = DoctorAgent().new_case("c2", "fever", {"age": 30, "sex": "male"})
+    DoctorAgent().decide(mock_state)
+    assert mock_state.llm_avg_latency_seconds is None
+    assert mock_state.llm_token_usage_available is False
+
+
+# --- test_real_llm_benchmark_harness_runs_under_mock ----------------------------------------------
+
+def test_real_llm_benchmark_harness_runs_under_mock():
+    """evaluation.real_llm_benchmark's own plumbing (case loop, metric collection, --save-json)
+    must run cleanly end to end even with no real provider configured -- it just labels the run
+    provider_is_real=false rather than fabricating results, so this test always runs in CI without
+    needing a live endpoint (a real-provider run is exercised manually / in scripts/smoke_real_llm.py)."""
+    import json as _json
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        save_path = f"{tmp}/rlb.json"
+        proc = subprocess.run(
+            [sys.executable, "-m", "evaluation.real_llm_benchmark", "--max-cases", "2", "--save-json", save_path],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60,
+        )
+        assert proc.returncode == 0, proc.stderr
+        assert "NOTICE" in proc.stderr and "NOT a real-LLM" in proc.stderr
+        data = _json.loads(Path(save_path).read_text(encoding="utf-8"))
+        assert data["provider_is_real"] is False
+        assert len(data["cases"]) == 2
+        for case_record in data["cases"]:
+            assert case_record["llm_calls"] == 0  # mock never makes a real call
+            assert case_record["input_tokens"] is None  # never estimated
+            assert case_record["output_tokens"] is None
+
+
+# --- test_structured_output_repair_handles_malformed_llm_json -----------------------------------
+
+def test_structured_output_repair_handles_malformed_llm_json():
+    """parse_agent_turn_output() must repair the syntax-shaped malformations a real open-weight
+    model commonly emits (spec section 6): markdown fences, surrounding prose, trailing commas,
+    single-quoted/Python-dict-style output, and wrong enum casing -- all pure syntax repair, never
+    a correction of clinical content. Genuinely invalid input must still be rejected (None)."""
+    from nova_agent.llm_client import parse_agent_turn_output
+
+    valid_min = ('{"summary": "s", "differential": [], "red_flags": [], "candidate_actions": [], '
+                 '"selected_action": {"type": "ASK", "key": "onset", "content": "When did it start?"}, '
+                 '"ready_to_diagnose": false}')
+
+    repairable = {
+        "markdown_fence": f"Here you go:\n```json\n{valid_min}\n```",
+        "leading_trailing_prose": f"Sure, here is my answer: {valid_min} Let me know if you need more.",
+        "trailing_comma": valid_min.replace('"ready_to_diagnose": false}', '"ready_to_diagnose": false,}'),
+        "single_quotes_python_dict": (
+            "{'summary': 's', 'differential': [], 'red_flags': [], 'candidate_actions': [], "
+            "'selected_action': {'type': 'ASK', 'key': 'onset', 'content': \"When did it start?\"}, "
+            "'ready_to_diagnose': False}"
+        ),
+        "wrong_enum_casing_lower": valid_min.replace('"type": "ASK"', '"type": "ask"'),
+        "wrong_enum_casing_title": valid_min.replace('"type": "ASK"', '"type": "Ask"'),
+    }
+    for name, text in repairable.items():
+        result = parse_agent_turn_output(text)
+        assert result is not None, f"expected {name!r} to be repaired and parsed"
+        assert result.selected_action.type == "ASK"
+
+    irreparable = {
+        "empty": "",
+        "not_json_at_all": "not json at all",
+        "missing_required_field": '{"summary": "ok"}',
+    }
+    for name, text in irreparable.items():
+        assert parse_agent_turn_output(text) is None, f"expected {name!r} to be rejected, not guessed at"
+
+    # Never invents/repairs clinical content: a hallucinated test name must survive verbatim into
+    # the parsed schema (unchanged) -- rejecting/mapping it is safety_validator's job, not the parser's.
+    hallucinated = valid_min.replace('"key": "onset"', '"key": "mri_full_body_scan_deluxe"')
+    parsed = parse_agent_turn_output(hallucinated)
+    assert parsed is not None
+    assert parsed.selected_action.key == "mri_full_body_scan_deluxe"

@@ -156,9 +156,38 @@ class PatientState(BaseModel):
     final_diagnosis: Optional[str] = None
     final_diagnosis_rationale: Optional[str] = None
 
+    # LLM call reliability (spec: an evaluation run must never look "normal" while the real LLM is
+    # actually failing every turn and the agent is silently riding the deterministic fallback).
+    # Only incremented for a REAL LLM provider attempt -- MockLLMClient never touches these, since
+    # it makes no real call at all (see orchestrator.decide() / llm_client.BaseLLMClient).
+    llm_call_count: int = 0
+    llm_success_count: int = 0
+    llm_failure_count: int = 0
+    llm_fallback_count: int = 0
+    llm_total_latency_seconds: float = 0.0
+    llm_latency_sample_count: int = 0
+    llm_total_input_tokens: int = 0
+    llm_total_output_tokens: int = 0
+    # True only once at least one real call actually reported a usage block -- distinguishes
+    # "token usage unavailable from this endpoint" (stay None/0, never estimated) from "zero
+    # tokens used", per spec: never display an estimate as if it were a real reported value.
+    llm_token_usage_available: bool = False
+
     @property
     def remaining_turns(self) -> int:
         return max(0, self.max_turns - self.turn_count)
+
+    @property
+    def llm_success_rate(self) -> Optional[float]:
+        return (self.llm_success_count / self.llm_call_count) if self.llm_call_count else None
+
+    @property
+    def llm_fallback_rate(self) -> Optional[float]:
+        return (self.llm_fallback_count / self.llm_call_count) if self.llm_call_count else None
+
+    @property
+    def llm_avg_latency_seconds(self) -> Optional[float]:
+        return (self.llm_total_latency_seconds / self.llm_latency_sample_count) if self.llm_latency_sample_count else None
 
     # --- duplicate-detection helpers -----------------------------------------------------------
 

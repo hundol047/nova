@@ -15,6 +15,7 @@ touching anything else in the repository.
 from __future__ import annotations
 
 import logging
+import sys
 from typing import Dict, Optional
 
 from nova_agent.action_selector import AgentAction
@@ -24,6 +25,11 @@ from nova_agent.state import PatientState
 from competition.schema import CompetitionAction, CompetitionObservation
 
 log = logging.getLogger("competition.adapter")
+
+# Heuristic, not an official threshold -- just a loud, honest signal that a real-LLM run's
+# clinical reasoning quietly spent most of its turns on the deterministic fallback rather than
+# the real model (spec: LLM failure must never be invisible behind a healthy-looking run).
+_HIGH_FALLBACK_RATE_THRESHOLD = 0.3
 
 
 def observation_to_state(obs: CompetitionObservation, agent: DoctorAgent,
@@ -75,5 +81,14 @@ class NovaCompetitionAgent:
         self._pending_actions[obs.case_id] = action
         if action.action_type == "DIAGNOSE":
             self._pending_actions.pop(obs.case_id, None)
+            fallback_rate = state.llm_fallback_rate
+            if fallback_rate is not None and fallback_rate >= _HIGH_FALLBACK_RATE_THRESHOLD:
+                print(
+                    f"WARNING: {state.llm_fallback_count}/{state.llm_call_count} turns used "
+                    f"deterministic fallback for case={obs.case_id} (fallback rate "
+                    f"{fallback_rate:.0%}) -- the configured LLM provider may not be reliably "
+                    "reachable; run scripts/preflight_competition.py before submitting.",
+                    file=sys.stderr,
+                )
 
         return action_to_competition(obs.case_id, action).model_dump()

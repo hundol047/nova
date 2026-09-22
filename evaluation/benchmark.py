@@ -16,6 +16,7 @@ from nova_agent.config import get_config
 from nova_agent.orchestrator import DoctorAgent
 
 from evaluation.cases import CASES
+from evaluation.generalization_cases_v2 import GENERALIZATION_CASES_V2
 from evaluation.held_out_cases import HELD_OUT_CASES
 from evaluation.scoring import score_case
 from evaluation.simulator import CaseResult, run_case
@@ -118,6 +119,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run the N.O.V.A. Doctor Agent local benchmark.")
     parser.add_argument("--held-out-only", action="store_true", help="Skip the tuning set.")
     parser.add_argument("--tuning-only", action="store_true", help="Skip the held-out set.")
+    parser.add_argument("--generalization-v2", action="store_true",
+                         help="Also run evaluation/generalization_cases_v2.py (a second, "
+                              "independent held-out-style set -- never used to tune any default).")
     args = parser.parse_args()
 
     if not args.held_out_only:
@@ -131,6 +135,12 @@ def main() -> None:
         print("\n=== Held-out set (evaluation/held_out_cases.py -- never used to tune defaults) ===")
         print_case_table(held_out_results)
         print_summary("Held-out set summary", held_out_results)
+
+    if args.generalization_v2:
+        v2_results = run_all(GENERALIZATION_CASES_V2)
+        print("\n=== Generalization v2 set (evaluation/generalization_cases_v2.py -- never used to tune defaults) ===")
+        print_case_table(v2_results)
+        print_summary("Generalization v2 summary", v2_results)
 
 
 if __name__ == "__main__":
