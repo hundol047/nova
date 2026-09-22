@@ -60,6 +60,38 @@ class DifferentialItem(BaseModel):
     confidence_band: ConfidenceBand
 
 
+def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: List[str],
+                   supporting: List[str], contradictory: List[str], missing: List[str]) -> float:
+    """Negation-aware scoring for ONE typical_feature or confirmatory_finding phrase. Shared by
+    both loops in _score_disease() below -- confirmatory_findings previously used a naive
+    present-or-not check with no negation awareness at all, which let a phrase like "absent breath
+    sounds" spuriously MATCH (as support!) an exam finding that literally says the opposite
+    ("clear breath sounds") -- "absent"/"breath"/"sounds" word-overlaps with "clear breath sounds"
+    at 2/3 content words, over the match threshold, despite the two being clinically opposite.
+    Returns the score delta; appends the phrase to exactly one of supporting/contradictory/missing."""
+    underlying = _strip_negative_prefix(phrase)
+    if underlying is not None:
+        # The phrase itself describes an ABSENCE (e.g. "no chest pain", "absent breath sounds").
+        # The patient/exam explicitly denying that underlying thing SUPPORTS this phrase; the
+        # underlying thing being explicitly PRESENT instead CONTRADICTS it.
+        if feature_present(underlying, negatives):
+            supporting.append(phrase)
+            return weight
+        if feature_present(underlying, findings):
+            contradictory.append(phrase)
+            return -CONTRADICTION_PENALTY
+        missing.append(phrase)
+        return 0.0
+    if feature_denied(phrase, negatives):
+        contradictory.append(phrase)
+        return -CONTRADICTION_PENALTY
+    if feature_present(phrase, findings):
+        supporting.append(phrase)
+        return weight
+    missing.append(phrase)
+    return 0.0
+
+
 def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List[str], List[str], List[str]]:
     findings = state.all_findings_text()
     negatives = state.pertinent_negatives
@@ -72,32 +104,7 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
 
     for feature in entry.get("typical_features", []):
         max_possible += FEATURE_WEIGHT
-        underlying = _strip_negative_prefix(feature)
-        if underlying is not None:
-            # A handful of knowledge-base entries phrase a typical feature negatively (e.g.
-            # orthostatic_hypotension's "no chest pain", bppv's "no hearing loss") to describe a
-            # symptom that is TYPICALLY ABSENT in that diagnosis. The patient denying that
-            # underlying symptom therefore SUPPORTS the diagnosis, and the patient affirming it
-            # CONTRADICTS the diagnosis -- the opposite of the plain-feature logic below. Without
-            # this branch, a denied negatively-phrased feature was scored as a contradiction
-            # (exactly backwards), silently punishing the diagnosis its own knowledge-base entry
-            # said the denial should support.
-            if feature_present(underlying, negatives):
-                supporting.append(feature)
-                score += FEATURE_WEIGHT
-            elif feature_present(underlying, findings):
-                contradictory.append(feature)
-                score -= CONTRADICTION_PENALTY
-            else:
-                missing.append(feature)
-        elif feature_denied(feature, negatives):
-            contradictory.append(feature)
-            score -= CONTRADICTION_PENALTY
-        elif feature_present(feature, findings):
-            supporting.append(feature)
-            score += FEATURE_WEIGHT
-        else:
-            missing.append(feature)
+        score += _score_phrase(feature, FEATURE_WEIGHT, findings, negatives, supporting, contradictory, missing)
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
@@ -107,9 +114,7 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
 
     for finding in entry.get("confirmatory_findings", []):
         max_possible += CONFIRMATORY_WEIGHT
-        if feature_present(finding, findings):
-            supporting.append(finding)
-            score += CONFIRMATORY_WEIGHT
+        score += _score_phrase(finding, CONFIRMATORY_WEIGHT, findings, negatives, supporting, contradictory, missing)
 
     return score, max(max_possible, 1.0), supporting, contradictory, missing
 

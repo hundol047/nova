@@ -193,6 +193,28 @@ def test_duplicate_diagnosis_alias_merge():
 
 # --- test_dangerous_workup_does_not_require_every_optional_test ---------------------------------
 
+def test_confirmatory_finding_negation_not_spuriously_matched():
+    """differential.py's confirmatory_findings scoring must be negation-aware, exactly like
+    typical_features already is (spec section 32 root-cause fix, found via
+    evaluation/generalization_cases_v2.py's Cough01_CommonBronchitis case): a negatively-phrased
+    confirmatory finding like tension_pneumothorax's 'absent breath sounds' must NOT be scored as
+    supporting evidence when the actual exam finding literally says the opposite ('clear breath
+    sounds') -- word-overlap alone (sharing 'breath sounds') previously produced a false positive
+    match regardless of the opposite polarity."""
+    from nova_agent.differential import _score_disease
+    from nova_agent.knowledge.retrieval import disease_by_id
+    from nova_agent.state import PatientState
+
+    state = PatientState(case_id="c", chief_complaint="cough that won't go away")
+    state.record_exam("lung_auscultation", "clear to mildly coarse breath sounds, no focal consolidation")
+    state.record_exam("vital_signs", "BP 116/74, HR 82, RR 16, Temp 37.3, SpO2 98%")
+
+    entry = disease_by_id("tension_pneumothorax")
+    score, _max_possible, supporting, contradictory, _missing = _score_disease(entry, state)
+    assert "absent breath sounds" not in supporting, \
+        "clear breath sounds must never be scored as supporting 'absent breath sounds'"
+
+
 def test_dangerous_workup_does_not_require_every_optional_test():
     """A dangerous diagnosis with a minimum_workup subset (e.g. ACS: ECG + troponin) must be
     considered resolved once that subset is done, even if OTHER optional discriminating tests
