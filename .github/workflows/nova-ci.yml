@@ -34,14 +34,25 @@ jobs:
       - name: pytest (nova_agent + competition adapter + safety regression)
         run: python -m pytest tests/ -v
 
-      - name: Benchmark (tuning + held-out sets)
-        run: python -m evaluation.benchmark
+      - name: Benchmark (tuning + held-out + generalization-v2 sets)
+        run: python -m evaluation.benchmark --generalization-v2
+
+      - name: Generalization benchmark
+        run: python -m evaluation.generalization_benchmark
 
       - name: Ablation
         run: python -m evaluation.ablation
 
       - name: Adversarial / reliability checks
         run: python -m evaluation.adversarial
+
+      - name: Stability (run-to-run determinism)
+        run: python -m evaluation.stability --runs 3 --cases 4
+
+      - name: Verify README.md benchmark numbers are not stale
+        run: |
+          python -m evaluation.benchmark --save-json evaluation/latest_results.json
+          python scripts/check_readme_numbers.py
 
       - name: Build submission (validates requirements, secret scan, standalone smoke test, zip+manifest)
         run: python scripts/build_nova_submission.py

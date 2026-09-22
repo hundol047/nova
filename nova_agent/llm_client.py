@@ -190,7 +190,16 @@ def build_reasoning_prompt(ctx: TurnContext) -> str:
     """Shared prompt builder for every real-LLM provider below. Includes the RAG-retrieved
     knowledge snippets (spec section 13) and the full legal candidate pool (not just one
     pre-selected "correct" choice) so the model has both the clinical context and the actual
-    decision space to reason over."""
+    decision space to reason over.
+
+    Deliberately asks for a COMPACT response (spec section 6): only `differential` and
+    `selected_action` are ever read downstream (safety_validator.py merges/validates those two;
+    nothing consumes `summary`/`red_flags`/`candidate_actions`/`ready_to_diagnose` -- the
+    "red flags" shown anywhere in this app come from the deterministic SafetyLayer, never from
+    the LLM's own text). A smaller open-weight model asked to regenerate a full echo of the
+    candidate list it was just given, plus free-text fields nothing reads, has more surface area
+    to produce a malformed response for no benefit -- so the prompt only requires the two fields
+    that matter and explicitly tells the model to omit the rest."""
     candidate_lines = [f"- key={c.key!r} type={c.action_type} content={c.content!r} (utility={c.utility})"
                         for c in ctx.candidates if c.action_type != "DIAGNOSE"]
     candidates_text = "\n".join(candidate_lines) or "(no ASK/EXAM/TEST candidates remain)"
@@ -201,15 +210,11 @@ def build_reasoning_prompt(ctx: TurnContext) -> str:
         "You are the clinical reasoning component of a conversational diagnosis agent. You will "
         "see the current structured patient summary, relevant retrieved medical knowledge, and "
         "the legal action candidates for this turn. Respond with ONLY a single JSON object with "
-        "this exact shape (no prose outside the JSON):\n"
-        '{"summary": str, '
-        '"differential": [{"diagnosis": str, "diagnosis_id": str|null, "rank": int, '
+        "this exact shape (no prose outside the JSON, no other fields needed):\n"
+        '{"differential": [{"diagnosis": str, "diagnosis_id": str|null, "rank": int, '
         '"supporting_evidence": [str], "contradictory_evidence": [str], "missing_information": [str], '
         '"dangerous_if_missed": bool, "confidence": "LOW"|"MEDIUM"|"HIGH"}], '
-        '"red_flags": [str], '
-        '"candidate_actions": [{"type": "ASK"|"EXAM"|"TEST"|"DIAGNOSE", "key": str, "content": str, "utility": float|null}], '
-        '"selected_action": {"type": "ASK"|"EXAM"|"TEST"|"DIAGNOSE", "key": str, "content": str}, '
-        '"ready_to_diagnose": bool}\n\n'
+        '"selected_action": {"type": "ASK"|"EXAM"|"TEST"|"DIAGNOSE", "key": str, "content": str}}\n\n'
         "Rules: you MAY re-rank the differential, add supporting/contradictory evidence, or "
         "introduce a diagnosis not in the candidate list below if clinically justified (set its "
         "diagnosis_id to null). For selected_action of type ASK/EXAM/TEST, `key` MUST be copied "
