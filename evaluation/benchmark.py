@@ -83,7 +83,18 @@ def compute_summary(results: list[CaseResult]) -> dict:
         "unnecessary_test_rate": sum(r.unnecessary_tests for r in results) / n,
         "malformed_output_rate": sum(r.malformed_turns for r in results) / n,
         "failed_diagnosis_rate": sum(r.failed_to_diagnose for r in results) / n,
-        "fallback_rate": sum(r.malformed_turns for r in results) / n,  # see module docstring caveat below
+        # Real per-call fallback rate (llm_fallback_count / llm_call_count, aggregated across every
+        # case), distinct from malformed_output_rate above -- a malformed turn is a structured-
+        # output PARSE failure on an otherwise-successful call; a fallback is "no usable real-LLM
+        # output at all this turn" (network error, timeout, exhausted retries, or the call was
+        # never attempted). state.py only increments llm_call_count when a real provider actually
+        # attempted a call (see orchestrator.py) -- under the default `mock` provider no case ever
+        # makes one, so the denominator is 0 for every case and this is correctly reported as None
+        # (never fabricated as 0%, which would misleadingly read as "verified zero fallbacks").
+        "fallback_rate": (
+            sum(r.llm_fallback_count for r in results) / sum(r.llm_call_count for r in results)
+            if sum(r.llm_call_count for r in results) else None
+        ),
         "average_ask_count": ask_total / n,
         "average_exam_count": exam_total / n,
         "average_test_count": test_total / n,
@@ -110,6 +121,9 @@ def print_summary(title: str, results: list[CaseResult]) -> None:
     print(f"  Duplicate Action Rate:        {s['duplicate_action_rate']:.2f} per case")
     print(f"  Unnecessary Test Rate:        {s['unnecessary_test_rate']:.2f} per case")
     print(f"  Malformed Output Rate:        {s['malformed_output_rate']:.2f} per case")
+    fallback_display = "NOT MEANINGFUL (0 real LLM calls -- mock provider)" if s["fallback_rate"] is None \
+        else f"{s['fallback_rate'] * 100:.1f}%"
+    print(f"  Real-LLM Fallback Rate:       {fallback_display}")
     print(f"  Failed Diagnosis Rate:        {s['failed_diagnosis_rate'] * 100:.1f}%")
     print(f"  Avg ASK / EXAM / TEST:        {s['average_ask_count']:.1f} / {s['average_exam_count']:.1f} / "
           f"{s['average_test_count']:.1f}")

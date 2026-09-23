@@ -34,8 +34,8 @@ jobs:
       - name: pytest (nova_agent + competition adapter + safety regression)
         run: python -m pytest tests/ -v
 
-      - name: Benchmark (tuning + held-out + generalization-v2 sets)
-        run: python -m evaluation.benchmark --generalization-v2
+      - name: Benchmark (tuning + held-out + generalization-v2 + stress sets)
+        run: python -m evaluation.benchmark --generalization-v2 --stress
 
       - name: Generalization benchmark
         run: python -m evaluation.generalization_benchmark
@@ -51,7 +51,7 @@ jobs:
 
       - name: Verify README.md benchmark numbers are not stale
         run: |
-          python -m evaluation.benchmark --save-json evaluation/latest_results.json
+          python -m evaluation.benchmark --generalization-v2 --stress --save-json evaluation/latest_results.json
           python scripts/check_readme_numbers.py
 
       - name: Build submission (validates requirements, secret scan, standalone smoke test, zip+manifest)

@@ -581,6 +581,40 @@ def test_critical_recall_metric():
     assert score_case(results[1]) < score_case(results[0])  # the critical miss must score worse
 
 
+def test_fallback_rate_is_distinct_from_malformed_output_rate():
+    """compute_summary()'s fallback_rate must be the real llm_fallback_count/llm_call_count ratio
+    -- NOT a duplicate of malformed_output_rate (a structured-output PARSE failure on an otherwise-
+    successful call is a different event from "no usable real-LLM output this turn at all"). Also
+    verifies the mock-provider case (llm_call_count == 0 for every result) is reported as None,
+    never fabricated as 0%, which would misleadingly read as "verified zero fallbacks"."""
+    from evaluation.benchmark import compute_summary
+
+    real_provider_results = [
+        CaseResult(
+            case_id="a", category="synthetic", ground_truth="x", final_diagnosis="x", correct=True,
+            turns=5, duplicate_actions=0, unnecessary_tests=0, critical=False, critical_miss=False,
+            malformed_turns=3, failed_to_diagnose=False,  # 3 malformed (parse) failures
+            llm_call_count=10, llm_success_count=6, llm_failure_count=4, llm_fallback_count=4,
+        ),
+        CaseResult(
+            case_id="b", category="synthetic", ground_truth="x", final_diagnosis="x", correct=True,
+            turns=5, duplicate_actions=0, unnecessary_tests=0, critical=False, critical_miss=False,
+            malformed_turns=0, failed_to_diagnose=False,
+            llm_call_count=10, llm_success_count=10, llm_failure_count=0, llm_fallback_count=0,
+        ),
+    ]
+    summary = compute_summary(real_provider_results)
+    # 4 fallbacks / 20 total calls == 0.2 -- and NOT equal to malformed_output_rate (3 malformed
+    # turns / 2 cases == 1.5), the bug this test guards against.
+    assert summary["fallback_rate"] == pytest.approx(0.2)
+    assert summary["malformed_output_rate"] == pytest.approx(1.5)
+    assert summary["fallback_rate"] != summary["malformed_output_rate"]
+
+    mock_results = [_make_result("c", correct=True), _make_result("d", correct=True)]
+    mock_summary = compute_summary(mock_results)
+    assert mock_summary["fallback_rate"] is None
+
+
 # --- test_submission_source_sync ------------------------------------------------------------------
 
 def _read_py_files(root: Path) -> dict:

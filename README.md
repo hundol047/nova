@@ -119,17 +119,32 @@ python -m evaluation.adversarial        # crash-resistance / reliability checks
 python -m evaluation.stability --runs 5 # run-to-run determinism (agreement/variance)
 python -m evaluation.failure_analysis   # automated root-cause classification of held-out misses
 python -m evaluation.tune --random 20   # local weight calibration (tuning set only, never held-out)
+python -m evaluation.blind_benchmark    # blind_cases_v3.py -- reported as-is, see the Blind v3 row below
 python -m evaluation.benchmark --generalization-v2 --stress --save-json evaluation/latest_results.json && python scripts/check_readme_numbers.py
 ```
 
 `evaluation/cases.py` (8 cases) is the *tuning set* current `config.py` defaults were iterated
-against. `evaluation/held_out_cases.py` (18 cases) and `evaluation/generalization_cases_v2.py`
-(**18 more cases**: elderly polypharmacy, immunocompromised, anticoagulant+antiplatelet
-polypharmacy, conflicting findings, vague complaints, rare-but-dangerous, and more benign/dangerous
-mimics -- together exercising every one of this repo's 34 knowledge-base diagnoses at least once)
-were **never** used to tune any default -- they exist to measure generalization, and are a
-moderate, deliberately non-padded expansion (each case is a genuinely distinct scenario, not a
-reworded duplicate). `evaluation/generalization_stress_cases.py` (**8 more cases**) is a small,
+against. `evaluation/held_out_cases.py` (18 cases) has **never** been used to tune a default or to
+drive any code fix -- it exists purely as an independent regression check, and every result on it
+reported anywhere in this README is a genuinely blind score.
+
+`evaluation/generalization_cases_v2.py` (**18 more cases**: elderly polypharmacy,
+immunocompromised, anticoagulant+antiplatelet polypharmacy, conflicting findings, vague complaints,
+rare-but-dangerous, and more benign/dangerous mimics -- together exercising every one of this
+repo's 34 knowledge-base diagnoses at least once) is **not the same kind of blind check**: it was
+never used for the *initial* `config.py` tuning, but two of its cases' failures (a hypoglycemia
+miss and a migraine-vs-stroke miss) were later analyzed and used to drive real code fixes
+(`nova_agent/glucose_evidence.py`, `FEATURE_ALIASES`, `reassuring_if_present` in
+`nova_agent/differential.py`) -- so its current 100.0% should be read as "generalization-informed,
+fix-verified", not as a fully untouched holdout the way `held_out_cases.py` is. This is a moderate,
+deliberately non-padded expansion (each case is a genuinely distinct scenario, not a reworded
+duplicate), not a source of inflated headline numbers.
+
+`evaluation/blind_cases_v3.py` (**30+ cases**, see below) exists precisely to close this gap: a
+genuinely blind set authored *before* any tuning pass against it and never adjusted afterward to
+match its answers.
+
+`evaluation/generalization_stress_cases.py` (**8 more cases**) is a small,
 targeted follow-up set, added after root-causing the two generalization v2 misses described below:
 half the cases exercise the fix (atypical/non-diabetic hypoglycemia, migraine with aura in
 different wording, stroke presenting as headache) and half are deliberate **negative controls**
@@ -145,12 +160,36 @@ goes stale against a fresh `evaluation/latest_results.json`.
 | Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 17.1 |
 | Generalization v2 (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 15.7 |
 | Stress set (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 15.9 |
+| **Blind v3 (32 cases, all scored, 14 critical)** | **65.6%** | **65.6%** | **57.1%** | **42.9%** | 20.1 |
 
 "Scored" excludes deliberately ambiguous/insufficient-info/unmapped-complaint stress cases (see
 `evaluation/benchmark.py`'s exclusion disclosure); "All-Case" is the same correctness check applied
 to every case with no exclusions, so a hard case can never be hidden from the headline number. Full
 metric definitions and the local (non-official) utility-score proxy live in `evaluation/scoring.py`
 and `evaluation/benchmark.py` -- never presented as an official competition score.
+
+**Blind v3 is reported honestly, unrounded, and un-cherry-picked -- this is the first and only run
+against it, and no case in it and no line of `nova_agent/` was touched afterward in response to
+this number.** It is dramatically worse than every other set above, and that gap is real
+information, not noise: it means the other four sets (especially generalization-v2 and stress) are
+measuring something closer to "does the fix work" than "does this generalize to any new case,"
+despite being called generalization/stress sets. A partial post-hoc review (not used to change any
+code or case) found the misses split into two different causes:
+  - **A test-authoring bug, not a reasoning failure**, in roughly two-thirds of the misses: several
+    `blind_cases_v3.py` chief complaints (e.g. "I can't get a full breath", "my throat feels like
+    it's closing up") don't hit any keyword in `chief_complaint.py`'s fixed list, so those cases
+    silently fall through to the whole-34-diagnosis catalog instead of the intended candidate pool
+    -- the same fallback mechanism `held_out_cases.py`'s `Unknown01_UnmappedComplaint` deliberately
+    exercises on purpose, hit here by accident. Left uncorrected in this round specifically so the
+    reported 65.6%/42.9% is the true first-run number, not a number massaged after the fact --
+    fixing the chief-complaint wording (not the agent) is legitimate future work, tracked as a
+    known issue below.
+  - **Genuine generalization gaps** in the remaining misses on correctly-routed cases -- e.g. a
+    confused elderly patient with pneumonia was diagnosed as meningitis instead, and a hypotensive,
+    confused, lactate-elevated urosepsis case was diagnosed as pyelonephritis rather than sepsis
+    (the more specific, less systemic diagnosis winning over the more dangerous one despite
+    SIRS/qSOFA-level vital-sign derangement). These were **not** fixed this round, per the explicit
+    instruction not to tune code against this set -- they are real, disclosed limitations.
 
 Ablation (`python -m evaluation.ablation`):
 
@@ -235,6 +274,25 @@ ships; nothing else needs to change, since `nova_agent/`, `evaluation/`, `submis
   - As with the earlier reverted attempt, every one of these fixes is scoped and disease/phrase-
     level, not a blanket rule -- see `nova_agent/differential.py`'s `FEATURE_ALIASES` docstring for
     the full list of what's covered and what deliberately isn't.
+- **Blind v3 is only 65.6% accurate, 42.9% critical miss** (see the table above) -- this is the
+  single most important honest number in this file, reported as the first and only run against it,
+  unmodified. It shows that generalization-v2/stress's 100.0% is not evidence the agent generalizes
+  broadly; it's evidence the two specific, analyzed fix patterns work. Two concrete, unfixed
+  problems this run surfaced:
+  - **`chief_complaint.py`'s fixed keyword list is too narrow.** Several `blind_cases_v3.py` chief
+    complaints written in ordinary patient language ("I can't get a full breath", "my throat feels
+    like it's closing up") don't match any keyword and fall through to the untargeted 34-diagnosis
+    catalog. This is very likely under-counted in every other evaluation file too, since their
+    authors (including earlier rounds of this same project) tend to phrase chief complaints using
+    words the classifier already recognizes.
+  - **A dangerous diagnosis can still lose to a related, less dangerous one when both are
+    correctly in the differential** -- e.g. sepsis losing to pyelonephritis despite hypotension,
+    confusion, and an elevated lactate. `reassuring_if_present` (added this round) only ever
+    lowers a dangerous diagnosis's score from an objective negative finding; there is currently no
+    symmetric mechanism that raises a dangerous diagnosis's priority specifically when severe
+    vital-sign derangement (not just a keyword match) is present alongside a closely related
+    non-dangerous alternative. Neither of these was fixed this round -- fixing them now, having
+    just seen this exact blind set's answers, would be indistinguishable from tuning to the test.
 - **No live real-LLM call observed in this environment** (no GPU/API keys available at
   implementation time) -- the HTTP integration, prompt construction, and parse/repair/fallback path
   are unit- and subprocess-tested with scripted/mocked clients and a local HTTP test server, not

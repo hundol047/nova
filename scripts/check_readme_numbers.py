@@ -2,7 +2,7 @@
 """Verifies README.md's benchmark numbers actually match evaluation/latest_results.json (spec
 section 25: never let a stale hand-typed figure linger after the code that produced it changes).
 
-    python -m evaluation.benchmark --save-json evaluation/latest_results.json
+    python -m evaluation.benchmark --generalization-v2 --stress --save-json evaluation/latest_results.json
     python scripts/check_readme_numbers.py
 
 Checks a small, explicit set of (JSON path, README percentage) pairs -- not every number in the
@@ -31,6 +31,10 @@ CHECKS = [
     (("generalization_v2", "scored_diagnostic_accuracy"), "Generalization v2 scored accuracy"),
     (("generalization_v2", "critical_diagnosis_recall"), "Generalization v2 critical recall"),
     (("generalization_v2", "critical_miss_rate"), "Generalization v2 critical miss rate"),
+    (("stress", "scored_diagnostic_accuracy"), "Stress set scored accuracy"),
+    (("stress", "all_case_diagnostic_accuracy"), "Stress set all-case accuracy"),
+    (("stress", "critical_diagnosis_recall"), "Stress set critical recall"),
+    (("stress", "critical_miss_rate"), "Stress set critical miss rate"),
 ]
 
 
