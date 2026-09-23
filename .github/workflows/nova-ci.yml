@@ -79,20 +79,44 @@ jobs:
           path: submission/submission.zip
           retention-days: 14
 
+  # GitHub Actions does not allow the `secrets` context inside a job-level `if:` condition (the
+  # whole workflow file fails to even parse if you try -- confirmed the hard way: the run showed
+  # 0 jobs and its displayed name fell back to the file path, the classic signature of an invalid
+  # workflow file). The documented workaround: read secrets into an ordinary step's `env:` (that
+  # IS allowed) and expose a plain job output, which `if:` CAN reference via `needs.*.outputs`.
+  check-competition-secrets:
+    runs-on: ubuntu-latest
+    outputs:
+      configured: ${{ steps.check.outputs.configured }}
+    steps:
+      - id: check
+        env:
+          NOVA_LLM_PROVIDER: ${{ secrets.NOVA_LLM_PROVIDER }}
+          NOVA_LLM_BASE_URL: ${{ secrets.NOVA_LLM_BASE_URL }}
+          NOVA_LLM_API_KEY: ${{ secrets.NOVA_LLM_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NOVA_COMPETITION_BASE_URL: ${{ secrets.NOVA_COMPETITION_BASE_URL }}
+          NOVA_COMPETITION_API_KEY: ${{ secrets.NOVA_COMPETITION_API_KEY }}
+        run: |
+          if [ -n "$NOVA_LLM_PROVIDER" ] || [ -n "$NOVA_LLM_BASE_URL" ] || \
+             [ -n "$NOVA_LLM_API_KEY" ] || [ -n "$ANTHROPIC_API_KEY" ] || \
+             [ -n "$NOVA_COMPETITION_BASE_URL" ] || [ -n "$NOVA_COMPETITION_API_KEY" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          fi
+
   # Deliberately a SEPARATE job, not a step in nova-agent above: this job's checks are only
   # meaningful once real competition secrets exist, and only THIS job is allowed to fail CI over a
   # real-LLM problem. nova-agent above never touches real secrets and must stay green under the
   # default mock provider regardless of whether this job passes, fails, or is skipped.
   competition-readiness:
-    needs: nova-agent
+    needs: [nova-agent, check-competition-secrets]
     runs-on: ubuntu-latest
     # Skips cleanly (not a failure) when no real provider secret is configured at all -- a normal
     # PR against this repo (no secrets set) never sees this job as red. Once ANY of these secrets
     # IS configured, this job runs for real and its failures are NOT masked with `|| true`.
-    if: >-
-      ${{ secrets.NOVA_LLM_PROVIDER != '' || secrets.NOVA_LLM_BASE_URL != '' ||
-          secrets.NOVA_LLM_API_KEY != '' || secrets.ANTHROPIC_API_KEY != '' ||
-          secrets.NOVA_COMPETITION_BASE_URL != '' || secrets.NOVA_COMPETITION_API_KEY != '' }}
+    if: needs.check-competition-secrets.outputs.configured == 'true'
     env:
       NOVA_LLM_PROVIDER: ${{ secrets.NOVA_LLM_PROVIDER }}
       NOVA_LLM_BASE_URL: ${{ secrets.NOVA_LLM_BASE_URL }}
