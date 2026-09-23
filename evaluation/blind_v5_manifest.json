@@ -1,0 +1,8 @@
+{
+  "file": "evaluation/blind_cases_v5.py",
+  "case_count": 44,
+  "file_sha256": "94eb42e02a71291f3056dd60415ab69d7880cf140b0e57b26a5897be33d901d8",
+  "frozen_at_utc": "2026-09-23T12:10:51Z",
+  "created_commit": "4f1332e06eefdc60fec325eadf8e1f341f013784",
+  "note": "This hash was computed BEFORE evaluation.blind_benchmark_v5 was ever run. `created_commit` is the parent commit blind_cases_v5.py was authored on top of -- the commit that actually introduces this file (visible in git history) is the authoritative proof it was never modified after this hash was recorded. blind_cases_v5.py must not be edited after this point regardless of its first-run score; a genuine correction (e.g. a fixed typo found before ever running the benchmark) would require a new manifest entry documenting why, never a silent edit."
+}

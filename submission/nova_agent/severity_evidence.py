@@ -1,18 +1,29 @@
-"""Generalizable objective physiologic-derangement evidence (spec section 6/8/9): a small, fixed
-set of vital-sign/lab-value/exam-finding thresholds that mark a patient as systemically SICK,
-independent of which localized symptom or source the chief complaint pointed to.
+"""Generalizable objective physiologic-derangement evidence: a small, fixed set of vital-sign/
+lab-value/exam-finding thresholds that mark a PATIENT (not any one diagnosis) as systemically sick.
 
-Deliberately NOT disease-specific -- there is no "pyelonephritis -> sepsis" rule anywhere here.
-Every signal below is a standard clinical severity marker (the same vitals/labs a qSOFA/shock-index
-assessment would use), and differential.py applies the resulting evidence generically to every
-diagnosis in chief_complaint.CROSS_CUTTING_DANGEROUS_DIAGNOSES, never to one named disease. A
-diagnosis only benefits when the objective evidence for the PATIENT is actually present in the
-case -- this module never manufactures a diagnosis-specific boost, and awards nothing at all when
-vitals/labs are normal or unmeasured (spec section 9: no over-triggering on a stable patient).
-
-Vitals and lactate are read as NUMBERS from structured/parsed state, not matched as keywords --
-"lactate 1.1" and "lactate 8.4" share every content word but mean opposite things, exactly the
-reason glucose_evidence.py reads glucose numerically instead of via word overlap.
+This is a SEPARATE axis from diagnostic evidence, deliberately never mixed into it:
+  - `systemic_severity_signals()` / `severity_score()` describe how physiologically deranged the
+    patient currently looks -- shock, hypoxemia, marked tachycardia/tachypnea, high lactate,
+    altered mental status, multi-organ dysfunction. This says nothing about which diagnosis is
+    correct; it is used only for triage/safety purposes (stop_policy.py keeping a dangerous
+    alternative "actively unresolved" even before its own diagnostic evidence is strong, and
+    action_selector.py's existing safety-relevance weighting) -- never added to any diagnosis's
+    own diagnostic_score in differential.py. An earlier version of this module DID feed a generic
+    severity bonus into every `dangerous: true` diagnosis's score directly, and that produced a
+    real, measured regression (a diagnosis with strong vitals-derangement-only "evidence" could
+    outscore a diagnosis with genuine disease-specific confirmatory findings, e.g. a case that
+    should have stayed a benign/localized diagnosis being swept into sepsis/stroke/PE purely
+    because the patient looked sick in a way common to many different dangerous conditions at
+    once). Diagnostic plausibility must keep coming ONLY from evidence specific to that one
+    disease (its own typical_features/confirmatory_findings/risk_factors) -- severity_score never
+    substitutes for that.
+  - Numeric labs this codebase interprets for actual DIAGNOSTIC evidence (glucose for
+    hypoglycemia/DKA in glucose_evidence.py; lactate for sepsis's own KB-declared "elevated
+    lactate" confirmatory_finding in differential.py's `_score_lactate`) stay disease-specific and
+    live in their own scoring functions, not here -- this module's job is only the patient-level
+    triage signal, read the same numeric way ("lactate 1.1" and "lactate 8.4" share every content
+    word but mean opposite things) for the same reason glucose_evidence.py reads glucose
+    numerically instead of via word overlap.
 """
 
 from __future__ import annotations
@@ -29,8 +40,16 @@ MARKED_TACHYCARDIA_HR_THRESHOLD = 130
 MARKED_TACHYPNEA_RR_THRESHOLD = 28
 ELEVATED_LACTATE_MMOL_L = 2.0
 HIGH_LACTATE_MMOL_L = 4.0
+# A lab result reported as a qualitative category ("elevated lactate") rather than a raw number is
+# unambiguous on its own terms -- unlike a bare number (which genuinely needs threshold comparison,
+# "lactate 1.1" vs "lactate 8.4"), "elevated" already IS the threshold judgment, so it is read as
+# just-above-threshold rather than discarded for lacking a digit.
+QUALITATIVE_ELEVATED_LACTATE_MMOL_L = ELEVATED_LACTATE_MMOL_L
 
 _LACTATE_PATTERN = re.compile(r"lactate[^0-9]{0,15}?(\d{1,2}(?:\.\d+)?)", re.IGNORECASE)
+_QUALITATIVE_ELEVATED_LACTATE_PATTERN = re.compile(
+    r"lactate[^.]{0,20}?\belevated\b|\belevated\b[^.]{0,20}?lactate", re.IGNORECASE,
+)
 
 # Generic phrasings, not tied to any one disease's wording -- the same kind of small, fixed,
 # clinically-standard list glucose_evidence.py's threshold constants already are.
@@ -53,6 +72,8 @@ def extract_lactate_mmol_l(lactate_result_text: Optional[str]) -> Optional[float
         return None
     match = _LACTATE_PATTERN.search(lactate_result_text)
     if not match:
+        if _QUALITATIVE_ELEVATED_LACTATE_PATTERN.search(lactate_result_text):
+            return QUALITATIVE_ELEVATED_LACTATE_MMOL_L
         return None
     try:
         return float(match.group(1))
@@ -101,10 +122,18 @@ def systemic_severity_signals(state: PatientState) -> List[str]:
     return signals
 
 
-# Total number of independent signal categories `systemic_severity_signals` can ever return --
-# used by differential.py to size max_possible consistently (a category can contribute at most
-# once regardless of how many of its underlying phrases matched, since both loops above `break`
-# after the first hit within their category).
+# Total number of independent signal categories `systemic_severity_signals` can ever return -- a
+# category can contribute at most once regardless of how many of its underlying phrases matched,
+# since both loops above `break` after the first hit within their category.
 SEVERITY_SIGNAL_CATEGORY_COUNT = 6  # hypotension, hypoxemia, tachycardia, tachypnea, lactate, AMS
 # multi-organ dysfunction is a 7th, additive category.
 TOTAL_SEVERITY_SIGNAL_CATEGORIES = SEVERITY_SIGNAL_CATEGORY_COUNT + 1
+
+
+def severity_score(state: PatientState) -> float:
+    """A single 0..1 patient-level triage score: what fraction of the fixed physiologic-derangement
+    signal categories are currently confirmed. 0.0 for a stable/unmeasured patient, up to 1.0 for a
+    patient matching every category at once. Deliberately coarse (a count-based fraction, not a
+    calibrated severity index) -- it only needs to answer "how sick does this patient look right
+    now", for triage/safety purposes, never for ranking any specific diagnosis's plausibility."""
+    return len(systemic_severity_signals(state)) / TOTAL_SEVERITY_SIGNAL_CATEGORIES

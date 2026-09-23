@@ -1,19 +1,24 @@
-"""Regression tests for the generalizable systemic-severity evidence layer (differential.py's
-`_score_disease` + severity_evidence.py). Two things must both hold, always together:
+"""Regression tests proving diagnostic_score and severity_score stay on separate axes
+(differential.py's `_score_disease` for the former, severity_evidence.py's `severity_score` for
+the latter, consumed only by stop_policy.py -- see both modules' docstrings for the full
+rationale). Two things must both hold, always together:
 
-  1. When real, objective physiologic derangement (shock, hypoxemia, marked tachycardia/tachypnea,
-     high lactate, altered mental status) is actually present, a systemic dangerous syndrome must
-     be able to outrank a localized diagnosis whose own specific findings would otherwise win
-     (spec section 6/8: e.g. infection source + hypotension + confusion + high lactate -> sepsis
-     must be able to beat plain pyelonephritis).
-  2. The same mechanism must NOT fire on a stable patient -- a localized diagnosis with normal
-     vitals, or a benign diagnosis with a reassuring exam, must keep winning cleanly (spec section
-     9: no over-triggering of sepsis/stroke/PE/etc. across every patient just because the boost
-     exists). These are the explicit negative controls the spec requires.
+  1. When a diagnosis has real DISEASE-SPECIFIC evidence (its own typical_features/confirmatory_
+     findings actually present, e.g. sepsis's own "fever"/"tachycardia"/"hypotension"/"altered
+     mental status" typical_features plus a numeric elevated-lactate confirmatory finding), it can
+     still outrank a localized diagnosis whose own specific findings would otherwise win -- but
+     through ITS OWN evidence, never a generic severity bonus applied identically to every
+     dangerous diagnosis regardless of whether that diagnosis's own findings are present.
+  2. A diagnosis must NOT win, or be treated as an active unresolved alternative, just because the
+     patient looks generically sick (marked vitals derangement alone, with no disease-specific
+     evidence for that diagnosis at all) -- a localized diagnosis with normal vitals, or a benign
+     diagnosis with a reassuring exam, must keep winning cleanly. No over-triggering of sepsis/
+     stroke/PE/anaphylaxis/etc. across every patient just because SOME severity signal exists
+     somewhere. These are the explicit negative controls the spec requires.
 
-No case-specific "pyelonephritis -> sepsis" rule exists anywhere in the code under test -- the
-severity layer only reads structured vitals/labs/exam text (nova_agent/severity_evidence.py) and
-applies identically to every diagnosis the knowledge base flags `dangerous: true`.
+No case-specific "pyelonephritis -> sepsis" rule exists anywhere in the code under test -- sepsis
+wins the positive case below through its own KB-declared evidence (typical_features + a numeric
+lactate confirmatory finding), not a disease-name check.
 """
 
 from __future__ import annotations
@@ -99,3 +104,46 @@ def test_simple_gastroenteritis_with_stable_circulation_does_not_trigger_severe_
     items = DifferentialEngine().update(state)
     assert items[0].diagnosis_id == "gastroenteritis", \
         f"stable circulation must not let a severe diagnosis win, got {items[0].diagnosis_id!r}"
+
+
+def test_simple_cystitis_with_normal_vitals_does_not_trigger_sepsis():
+    state = _make_state(
+        "neg_cystitis", "burning when I pee",
+        ["dysuria", "urinary frequency"],
+        vitals="BP 118/74, HR 78, RR 14, Temp 37.0, SpO2 99%",
+    )
+    items = DifferentialEngine().update(state)
+    assert items[0].diagnosis_id == "uncomplicated_cystitis", \
+        f"normal vitals must not let sepsis win, got {items[0].diagnosis_id!r}"
+
+
+def test_mild_pneumonia_with_stable_vitals_does_not_trigger_sepsis():
+    state = _make_state(
+        "neg_pneumonia", "cough and fever",
+        ["productive cough", "fever", "pleuritic chest pain"],
+        vitals="BP 118/76, HR 92, RR 20, Temp 38.2, SpO2 96%",
+    )
+    items = DifferentialEngine().update(state)
+    assert items[0].diagnosis_id == "pneumonia", \
+        f"stable vitals must not let sepsis win over a mild pneumonia, got {items[0].diagnosis_id!r}"
+
+
+def test_severity_score_never_appears_in_diagnostic_ranking_directly():
+    """A diagnosis with strong, specific evidence of its own (ACS: crushing chest pain radiating
+    to the arm, diaphoresis, ST changes, elevated troponin) must keep winning even when the
+    patient's vitals ALSO happen to satisfy some of sepsis's own (vitals-phrased) typical_features
+    incidentally -- no fever here at all, so sepsis has only weak, partial, non-infection evidence
+    of its own. Severity_score is high (shock physiology), but that must never be enough on its own
+    to override a diagnosis with genuinely stronger, disease-specific support."""
+    state = _make_state(
+        "neg_severity_alone", "crushing chest pain radiating to my left arm",
+        ["crushing chest pain", "diaphoresis", "pain radiates to my left arm", "nausea"],
+        vitals="BP 78/50, HR 138, RR 30, Temp 37.0, SpO2 88%",
+    )
+    state.laboratory_tests["ecg"] = "ST elevation in the anterior leads"
+    state.laboratory_tests["troponin"] = "markedly elevated troponin"
+    items = DifferentialEngine().update(state)
+    assert items, "differential must never be empty"
+    assert items[0].diagnosis_id == "acute_coronary_syndrome", \
+        (f"ACS's own strong specific evidence must win over sepsis's incidental vitals-only "
+         f"overlap (no fever, no infection source), got {items[0].diagnosis_id!r}")
