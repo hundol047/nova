@@ -32,6 +32,25 @@ log = logging.getLogger("competition.adapter")
 # the real model (spec: LLM failure must never be invisible behind a healthy-looking run).
 _HIGH_FALLBACK_RATE_THRESHOLD = 0.3
 
+# Bounded, never unlimited -- each retry here calls DoctorAgent.decide() again, which itself
+# already applies its own bounded per-call retry inside the LLM client (NOVA_LLM_MAX_RETRIES).
+# When the case's time/call budget is already exhausted, decide() skips the real LLM call
+# entirely (see orchestrator.py's budget_exhausted check) and returns immediately, so a retry
+# loop here can never itself push a case past its configured case timeout -- it just fails fast.
+_DIAGNOSE_ZERO_LLM_SUCCESS_RETRIES = 2
+
+
+class RealLLMUnavailableError(RuntimeError):
+    """Raised by NovaCompetitionAgent.act() instead of returning a DIAGNOSE action, when a
+    competition-mode (provider != mock) case reaches its final answer having never once received
+    a successful real-LLM response across the whole case, even after the bounded retries above.
+
+    This is the explicit-failure half of spec section 12: a deterministic-fallback-only result
+    must never be silently returned as a normal, successful competition completion just because
+    it happens to be a well-formed action. Dev/mock mode never raises this -- see the
+    `in_competition_mode` gate in `act()` below; the deterministic fallback stays fully available
+    there, unchanged."""
+
 
 def observation_to_state(obs: CompetitionObservation, agent: DoctorAgent,
                           existing_state: Optional[PatientState],
@@ -85,28 +104,43 @@ class NovaCompetitionAgent:
         self._states[obs.case_id] = state
 
         action, _llm_output, _differential = self.agent.decide(state)
+        in_competition_mode = get_config().llm_provider != "mock"
+
+        if action.action_type == "DIAGNOSE" and in_competition_mode and state.real_llm_ever_succeeded is False:
+            # Required flow (spec section 12): bounded retry -> real LLM retry -> if it succeeds,
+            # proceed normally -> if every attempt still fails, an explicit runtime failure, never
+            # a disguised deterministic-only "success". Re-calling decide() on the same
+            # (unmutated -- observe() has not run yet for this turn) state re-attempts the real
+            # LLM call fresh each time, so a retry that lands after a transient outage clears is
+            # indistinguishable from having succeeded on the first try.
+            for _ in range(_DIAGNOSE_ZERO_LLM_SUCCESS_RETRIES):
+                if state.real_llm_ever_succeeded:
+                    break
+                action, _llm_output, _differential = self.agent.decide(state)
+            if state.real_llm_ever_succeeded is False:
+                # Every real-LLM attempt this case failed, even after this bounded retry -- the
+                # only available answer is deterministic-fallback-only. Dev/mock mode never
+                # reaches this branch (in_competition_mode is False there), so its existing
+                # fallback behavior is completely unchanged.
+                self._pending_actions.pop(obs.case_id, None)
+                raise RealLLMUnavailableError(
+                    f"case={obs.case_id}: reached DIAGNOSE with ZERO successful real-LLM calls "
+                    f"({state.llm_call_count} attempted across the case and "
+                    f"{_DIAGNOSE_ZERO_LLM_SUCCESS_RETRIES} additional bounded retries, all failed). "
+                    "Competition mode does not permit a deterministic-fallback-only submission -- "
+                    "this is a runtime failure, not a completion. Run "
+                    "scripts/preflight_competition.py before submitting."
+                )
+
         self._pending_actions[obs.case_id] = action
         real_llm_verified: Optional[bool] = None
         if action.action_type == "DIAGNOSE":
             self._pending_actions.pop(obs.case_id, None)
-            in_competition_mode = get_config().llm_provider != "mock"
             real_llm_verified = state.real_llm_ever_succeeded
-            if in_competition_mode and real_llm_verified is False:
-                # Every real-LLM attempt this case failed, even after bounded retry -- the final
-                # answer is deterministic-fallback-only. This is NOT the same as "some fallback
-                # rate" below: it means the real LLM contributed literally nothing to this case,
-                # so the result must never be mistaken for a normal, LLM-backed competition
-                # completion (spec: dev/mock mode may ride the deterministic fallback freely;
-                # competition mode may not silently do the same for an entire case).
-                print(
-                    f"ERROR: case={obs.case_id} reached DIAGNOSE with ZERO successful real-LLM "
-                    f"calls ({state.llm_call_count} attempted, all failed even after bounded "
-                    "retry). This result is deterministic-fallback-only and must NOT be treated "
-                    "as a normal competition completion -- treat it as a runtime failure. Run "
-                    "scripts/preflight_competition.py before submitting.",
-                    file=sys.stderr,
-                )
-            else:
+            if not (in_competition_mode and real_llm_verified is False):
+                # The ZERO-success case above either already raised or (after a successful retry)
+                # no longer applies here -- this branch is the ordinary "some real LLM evidence
+                # exists" path, dev/mock included.
                 fallback_rate = state.llm_fallback_rate
                 if fallback_rate is not None and fallback_rate >= _HIGH_FALLBACK_RATE_THRESHOLD:
                     print(

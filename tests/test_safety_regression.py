@@ -842,15 +842,17 @@ def test_real_llm_ever_succeeded_property():
     assert mock_state.real_llm_ever_succeeded is None
 
 
-def test_competition_adapter_flags_zero_real_llm_success(capsys):
-    """competition/adapter.py's NovaCompetitionAgent must flag -- both on stderr and in the
-    returned DIAGNOSE action's metadata -- a competition-mode case that reached DIAGNOSE with
-    every real-LLM call having failed. A dev/mock-mode case reaching DIAGNOSE purely on the
-    deterministic fallback is NOT an error and must not be flagged the same way."""
+def test_competition_adapter_raises_on_zero_real_llm_success():
+    """competition/adapter.py's NovaCompetitionAgent must not return a DIAGNOSE action as a normal
+    successful completion when a competition-mode case reached it with every real-LLM call having
+    failed, even after the adapter's own bounded retry -- it must raise RealLLMUnavailableError
+    instead (spec section 12: a deterministic-fallback-only result is a runtime failure, not a
+    disguised success). A dev/mock-mode case reaching DIAGNOSE purely on the deterministic
+    fallback is NOT an error and must complete normally, unaffected."""
     from nova_agent.llm_client import BaseLLMClient, _deterministic_turn_output
     from nova_agent.orchestrator import DoctorAgent
 
-    from competition.adapter import NovaCompetitionAgent
+    from competition.adapter import NovaCompetitionAgent, RealLLMUnavailableError
 
     class _AlwaysFailsRealClient(BaseLLMClient):
         def generate_turn_output(self, ctx):
@@ -864,14 +866,11 @@ def test_competition_adapter_flags_zero_real_llm_success(capsys):
         act = agent.act({"case_id": "comp_fail", "observation_type": "initial",
                           "chief_complaint": "chest pain", "demographics": {"age": 55, "sex": "male"},
                           "max_turns": 15})
-        for _ in range(20):
-            if act["action_type"] == "DIAGNOSE":
-                break
-            act = agent.act({"case_id": "comp_fail", "observation_type": "ask_response", "content": "yes"})
-        assert act["action_type"] == "DIAGNOSE"
-        assert act["metadata"]["real_llm_verified"] is False
-        stderr = capsys.readouterr().err
-        assert "ZERO successful real-LLM calls" in stderr
+        with pytest.raises(RealLLMUnavailableError, match="ZERO successful real-LLM calls"):
+            for _ in range(20):
+                if act["action_type"] == "DIAGNOSE":
+                    raise AssertionError("should have raised before returning a DIAGNOSE action")
+                act = agent.act({"case_id": "comp_fail", "observation_type": "ask_response", "content": "yes"})
     finally:
         restore()
 
@@ -886,8 +885,42 @@ def test_competition_adapter_flags_zero_real_llm_success(capsys):
         act = mock_agent.act({"case_id": "comp_mock", "observation_type": "ask_response", "content": "yes"})
     assert act["action_type"] == "DIAGNOSE"
     assert act["metadata"].get("real_llm_verified") is None
-    stderr = capsys.readouterr().err
-    assert "ZERO successful real-LLM calls" not in stderr
+
+
+def test_competition_adapter_recovers_via_bounded_retry_when_llm_becomes_available():
+    """If the real LLM starts succeeding again by the time DIAGNOSE would be reached, the
+    adapter's bounded retry (competition/adapter.py's _DIAGNOSE_ZERO_LLM_SUCCESS_RETRIES) must
+    pick that up and return a normal, real-LLM-verified completion instead of raising."""
+    from nova_agent.llm_client import BaseLLMClient, _deterministic_turn_output
+    from nova_agent.orchestrator import DoctorAgent
+
+    from competition.adapter import NovaCompetitionAgent
+
+    class _RecoversAfterFirstFailureClient(BaseLLMClient):
+        def __init__(self):
+            self.calls = 0
+
+        def generate_turn_output(self, ctx):
+            self.calls += 1
+            self._last_call_was_real = True
+            self._last_call_succeeded = self.calls > 1
+            return _deterministic_turn_output(ctx)
+
+    restore = _reload_config_with_env(NOVA_LLM_PROVIDER="competition")
+    try:
+        client = _RecoversAfterFirstFailureClient()
+        agent = NovaCompetitionAgent(agent=DoctorAgent(llm_client=client))
+        act = agent.act({"case_id": "comp_recover", "observation_type": "initial",
+                          "chief_complaint": "chest pain", "demographics": {"age": 55, "sex": "male"},
+                          "max_turns": 3})
+        for _ in range(20):
+            if act["action_type"] == "DIAGNOSE":
+                break
+            act = agent.act({"case_id": "comp_recover", "observation_type": "ask_response", "content": "yes"})
+        assert act["action_type"] == "DIAGNOSE"
+        assert act["metadata"]["real_llm_verified"] is True
+    finally:
+        restore()
 
 
 def test_llm_latency_and_token_metrics_tracked_per_case():

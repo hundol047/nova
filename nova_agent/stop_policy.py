@@ -25,7 +25,13 @@ from nova_agent.config import get_config
 from nova_agent.differential import DifferentialItem
 from nova_agent.resolution import is_resolved
 from nova_agent.safety import SafetyFinding
+from nova_agent.severity_evidence import severity_score
 from nova_agent.state import PatientState
+
+# How physiologically deranged the patient must look (severity_evidence.severity_score, a 0..1
+# fraction of matched signal categories) before a dangerous diagnosis with otherwise-LOW diagnostic
+# confidence still counts as an actively unresolved alternative. ~2 of 7 signal categories.
+_SEVERITY_KEEPS_ALTERNATIVE_ACTIVE_THRESHOLD = 0.3
 
 
 class StopDecision(BaseModel):
@@ -58,9 +64,23 @@ class StopPolicy:
 
         # A dangerous alternative is "unresolved" if it is not the top pick, still plausible (no
         # contradictory evidence against it), and hasn't had its discriminating tests completed.
+        # Normally that also requires at least MEDIUM diagnostic confidence -- but a genuinely
+        # sick-looking patient (severity_evidence.severity_score, a SEPARATE axis from diagnostic
+        # confidence -- see differential.py's module docs for why the two are never mixed into one
+        # score) can rationally justify keeping a dangerous diagnosis actively pursued even while
+        # its own diagnostic evidence is still thin, as long as it already has SOME real supporting
+        # evidence of its own (never zero-evidence noise): this is the "safety_priority" the spec
+        # describes -- danger_if_missed + diagnostic plausibility (some real support) + severity
+        # context + not yet ruled out -- and it only ever affects which alternative stays actively
+        # tracked here (and therefore which questions/tests action_selector.py's existing
+        # dangerous-diagnosis-discrimination weighting prioritizes next), never the differential
+        # ranking/score itself.
+        severity = severity_score(state)
+        severity_keeps_alternative_active = severity >= _SEVERITY_KEEPS_ALTERNATIVE_ACTIVE_THRESHOLD
         unresolved_dangerous = [
             d for d in differential[1:]
-            if d.dangerous_if_missed and not d.contradictory_evidence and d.confidence_band != "LOW"
+            if d.dangerous_if_missed and not d.contradictory_evidence
+            and (d.confidence_band != "LOW" or (severity_keeps_alternative_active and d.supporting_evidence))
         ]
         differential_by_id = {d.diagnosis_id: d for d in differential}
         active_safety_flags = [
