@@ -285,6 +285,94 @@ def test_competition_provider_preflight():
     assert reason and isinstance(reason, str)
 
 
+def test_real_llm_client_bounded_retry_across_transient_failure_modes():
+    """Seven distinct real-world HTTP/network/parsing failure modes -- 429, a temporary 5xx,
+    timeout, connection reset, invalid JSON, and truncated JSON -- must each be absorbed by
+    generate_turn_output()'s bounded retry, never propagate as an unhandled exception out of
+    decide(), and never retry more than NOVA_LLM_MAX_RETRIES+1 (3 by default) times total.
+    Hallucinated-action handling is covered separately by
+    test_novel_diagnosis_to_discriminative_action_flow and the parser's own hallucinated-key test
+    in test_structured_output_repair_handles_malformed_llm_json."""
+    import socket
+    import urllib.error
+    from unittest.mock import patch
+
+    from nova_agent.llm_client import CompetitionLLMClient
+    from nova_agent.orchestrator import DoctorAgent
+
+    class _FakeResponse:
+        """Minimal context-manager stand-in for urllib's response object, for the two failure
+        modes that need a 200-looking response with a bad body rather than a raised exception."""
+
+        def __init__(self, body: bytes) -> None:
+            self._body = body
+
+        def read(self):
+            return self._body
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc_info):
+            return False
+
+    def _http_error(code: int) -> urllib.error.HTTPError:
+        return urllib.error.HTTPError(url="http://127.0.0.1:1/v1/chat/completions", code=code,
+                                       msg=str(code), hdrs=None, fp=None)  # type: ignore[arg-type]
+
+    failure_modes = {
+        "http_429_rate_limited": _http_error(429),
+        "http_503_temporary": _http_error(503),
+        "timeout": socket.timeout("timed out"),
+        "connection_reset": ConnectionResetError("connection reset by peer"),
+        "invalid_json": _FakeResponse(b"not json at all"),
+        "truncated_json": _FakeResponse(b'{"choices": [{"message": {"content": "{\\"summary'),
+    }
+
+    for name, effect in failure_modes.items():
+        client = CompetitionLLMClient()
+        agent = DoctorAgent(llm_client=client)
+        state = agent.new_case(f"transient_{name}", "chest pain", {"age": 50, "sex": "male"})
+
+        call_count = 0
+
+        def _fake_urlopen(*_args, **_kwargs):
+            nonlocal call_count
+            call_count += 1
+            if isinstance(effect, _FakeResponse):
+                return effect
+            raise effect
+
+        with patch("nova_agent.llm_client.urllib.request.urlopen", side_effect=_fake_urlopen):
+            action, _llm_output, _differential = agent.decide(state)
+
+        assert action.action_type in {"ASK", "EXAM", "TEST", "DIAGNOSE"}, \
+            f"{name}: decide() must still produce a legal action, never raise or hang"
+        assert action.content, f"{name}: fallback action content must not be empty"
+        assert client._last_call_succeeded is False, f"{name}: must not report a real success"
+        assert 1 <= call_count <= 3, f"{name}: expected bounded retry (<=3 attempts), got {call_count}"
+
+
+def test_preflight_distinguishes_valid_fallback_from_real_llm_success():
+    """scripts/preflight_competition.py must not report READY-shaped signals just because the
+    deterministic fallback produced a well-formed action -- structured_output_parse_success and
+    real_llm_success_count_at_least_1 must independently FAIL when every real call to an
+    unreachable endpoint fell back, even though structured_output_and_action_validation correctly
+    PASSes (the fallback's action IS legal, that's the whole point of having one)."""
+    proc = subprocess.run(
+        [sys.executable, "scripts/preflight_competition.py"],
+        cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30,
+        env={**os.environ, "NOVA_LLM_PROVIDER": "competition",
+             "NOVA_COMPETITION_BASE_URL": "http://127.0.0.1:1/v1"},
+    )
+    assert proc.returncode == 1  # NOT READY
+    out = proc.stdout
+    assert "PASS  structured_output_and_action_validation" in out
+    assert "FAIL  structured_output_parse_success" in out
+    assert "FAIL  real_llm_success_count_at_least_1" in out
+    assert "llm_success_count=0" in out
+
+
 def test_competition_provider_does_not_silently_mock():
     """get_llm_client() with NOVA_LLM_PROVIDER=competition must actually construct a
     CompetitionLLMClient -- never silently fall back to MockLLMClient just because the provider
@@ -723,6 +811,83 @@ def test_llm_reliability_metrics_tracked_per_case():
     assert mock_state.llm_call_count == 0
     assert mock_state.llm_success_rate is None
     assert mock_state.llm_fallback_rate is None
+
+
+def test_real_llm_ever_succeeded_property():
+    """PatientState.real_llm_ever_succeeded: None when no real call was attempted (mock provider),
+    True once at least one real call succeeded, False when every real call attempted this case
+    failed -- the three-way distinction competition/adapter.py's DIAGNOSE-time check depends on."""
+    from nova_agent.llm_client import BaseLLMClient, _deterministic_turn_output
+    from nova_agent.orchestrator import DoctorAgent
+
+    class _AlwaysFailsRealClient(BaseLLMClient):
+        def generate_turn_output(self, ctx):
+            self._last_call_was_real = True
+            self._last_call_succeeded = False
+            return _deterministic_turn_output(ctx)
+
+        def preflight(self):
+            return True, "reachable but every generation call fails"
+
+    agent = DoctorAgent(llm_client=_AlwaysFailsRealClient())
+    state = agent.new_case("c3", "chest pain", {"age": 50, "sex": "male"})
+    action, _llm, _diff = agent.decide(state)
+    assert state.llm_call_count == 1
+    assert state.llm_success_count == 0
+    assert state.real_llm_ever_succeeded is False
+
+    mock_agent = DoctorAgent()
+    mock_state = mock_agent.new_case("c4", "fever", {"age": 30, "sex": "male"})
+    mock_agent.decide(mock_state)
+    assert mock_state.real_llm_ever_succeeded is None
+
+
+def test_competition_adapter_flags_zero_real_llm_success(capsys):
+    """competition/adapter.py's NovaCompetitionAgent must flag -- both on stderr and in the
+    returned DIAGNOSE action's metadata -- a competition-mode case that reached DIAGNOSE with
+    every real-LLM call having failed. A dev/mock-mode case reaching DIAGNOSE purely on the
+    deterministic fallback is NOT an error and must not be flagged the same way."""
+    from nova_agent.llm_client import BaseLLMClient, _deterministic_turn_output
+    from nova_agent.orchestrator import DoctorAgent
+
+    from competition.adapter import NovaCompetitionAgent
+
+    class _AlwaysFailsRealClient(BaseLLMClient):
+        def generate_turn_output(self, ctx):
+            self._last_call_was_real = True
+            self._last_call_succeeded = False
+            return _deterministic_turn_output(ctx)
+
+    restore = _reload_config_with_env(NOVA_LLM_PROVIDER="competition")
+    try:
+        agent = NovaCompetitionAgent(agent=DoctorAgent(llm_client=_AlwaysFailsRealClient()))
+        act = agent.act({"case_id": "comp_fail", "observation_type": "initial",
+                          "chief_complaint": "chest pain", "demographics": {"age": 55, "sex": "male"},
+                          "max_turns": 15})
+        for _ in range(20):
+            if act["action_type"] == "DIAGNOSE":
+                break
+            act = agent.act({"case_id": "comp_fail", "observation_type": "ask_response", "content": "yes"})
+        assert act["action_type"] == "DIAGNOSE"
+        assert act["metadata"]["real_llm_verified"] is False
+        stderr = capsys.readouterr().err
+        assert "ZERO successful real-LLM calls" in stderr
+    finally:
+        restore()
+
+    # Dev/mock mode: reaching DIAGNOSE purely on deterministic reasoning is normal, not an error.
+    mock_agent = NovaCompetitionAgent()
+    act = mock_agent.act({"case_id": "comp_mock", "observation_type": "initial",
+                           "chief_complaint": "chest pain", "demographics": {"age": 55, "sex": "male"},
+                           "max_turns": 15})
+    for _ in range(20):
+        if act["action_type"] == "DIAGNOSE":
+            break
+        act = mock_agent.act({"case_id": "comp_mock", "observation_type": "ask_response", "content": "yes"})
+    assert act["action_type"] == "DIAGNOSE"
+    assert act["metadata"].get("real_llm_verified") is None
+    stderr = capsys.readouterr().err
+    assert "ZERO successful real-LLM calls" not in stderr
 
 
 def test_llm_latency_and_token_metrics_tracked_per_case():

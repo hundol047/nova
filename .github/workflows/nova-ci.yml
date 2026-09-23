@@ -5,9 +5,15 @@ name: N.O.V.A. Doctor Agent CI
 # submission/tests -- never touches frontend/3D-anatomy/Jetson assets (out of scope for this
 # competition agent; see README.md's Directory structure section).
 #
-# Real-LLM checks (scripts/smoke_real_llm.py) are opt-in: they SKIP (not fail) unless a real
-# provider's secrets are configured as repository secrets, per NOVA_LLM_PROVIDER's own
-# dev-fallback-vs-competition-preflight split documented in nova_agent/llm_client.py.
+# Two jobs, deliberately separated:
+#   - nova-agent: the normal dev-mode job. Always runs, always uses the default mock provider,
+#     and must stay green regardless of whether any real-LLM secret is configured. Its own
+#     "Competition preflight" step is informational only (`|| true`) -- NOT READY under mock is
+#     expected, never a failure.
+#   - competition-readiness: SKIPPED entirely (not failed) when no real provider secret is
+#     configured. Once any secret IS configured, it runs preflight_competition.py and
+#     smoke_real_llm.py for real, with NO `|| true` -- a real-LLM problem here fails CI, it is
+#     never silently masked.
 
 on:
   push:
@@ -60,17 +66,11 @@ jobs:
       - name: Verify submission/ is in sync with nova_agent/ + competition/ (fails on drift)
         run: python -m pytest tests/test_safety_regression.py::test_submission_source_sync -v
 
-      - name: Competition preflight (expected NOT READY under default mock provider in CI)
+      # Informational only here -- this job always runs under the default mock provider, so NOT
+      # READY is expected and never blocks it. The enforcing check lives in the
+      # competition-readiness job below, gated on real secrets actually being configured.
+      - name: Competition preflight (informational, expected NOT READY under mock)
         run: python scripts/preflight_competition.py || true
-
-      - name: Real-LLM smoke test (skips cleanly if no provider secrets configured)
-        env:
-          NOVA_LLM_PROVIDER: ${{ secrets.NOVA_LLM_PROVIDER }}
-          NOVA_LLM_BASE_URL: ${{ secrets.NOVA_LLM_BASE_URL }}
-          NOVA_LLM_MODEL: ${{ secrets.NOVA_LLM_MODEL }}
-          NOVA_LLM_API_KEY: ${{ secrets.NOVA_LLM_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python scripts/smoke_real_llm.py
 
       - name: Upload submission.zip
         uses: actions/upload-artifact@v4
@@ -78,3 +78,44 @@ jobs:
           name: nova-submission
           path: submission/submission.zip
           retention-days: 14
+
+  # Deliberately a SEPARATE job, not a step in nova-agent above: this job's checks are only
+  # meaningful once real competition secrets exist, and only THIS job is allowed to fail CI over a
+  # real-LLM problem. nova-agent above never touches real secrets and must stay green under the
+  # default mock provider regardless of whether this job passes, fails, or is skipped.
+  competition-readiness:
+    needs: nova-agent
+    runs-on: ubuntu-latest
+    # Skips cleanly (not a failure) when no real provider secret is configured at all -- a normal
+    # PR against this repo (no secrets set) never sees this job as red. Once ANY of these secrets
+    # IS configured, this job runs for real and its failures are NOT masked with `|| true`.
+    if: >-
+      ${{ secrets.NOVA_LLM_PROVIDER != '' || secrets.NOVA_LLM_BASE_URL != '' ||
+          secrets.NOVA_LLM_API_KEY != '' || secrets.ANTHROPIC_API_KEY != '' ||
+          secrets.NOVA_COMPETITION_BASE_URL != '' || secrets.NOVA_COMPETITION_API_KEY != '' }}
+    env:
+      NOVA_LLM_PROVIDER: ${{ secrets.NOVA_LLM_PROVIDER }}
+      NOVA_LLM_BASE_URL: ${{ secrets.NOVA_LLM_BASE_URL }}
+      NOVA_LLM_MODEL: ${{ secrets.NOVA_LLM_MODEL }}
+      NOVA_LLM_API_KEY: ${{ secrets.NOVA_LLM_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      NOVA_COMPETITION_BASE_URL: ${{ secrets.NOVA_COMPETITION_BASE_URL }}
+      NOVA_COMPETITION_MODEL: ${{ secrets.NOVA_COMPETITION_MODEL }}
+      NOVA_COMPETITION_API_KEY: ${{ secrets.NOVA_COMPETITION_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install nova_agent runtime + dev dependencies
+        run: |
+          pip install -r requirements-nova.txt
+          pip install -r requirements-nova-dev.txt
+
+      - name: Competition preflight (real secrets configured -- must report READY)
+        run: python scripts/preflight_competition.py
+
+      - name: Real-LLM smoke test (real secrets configured -- must succeed, not just fall back)
+        run: python scripts/smoke_real_llm.py

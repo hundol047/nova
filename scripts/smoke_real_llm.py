@@ -119,17 +119,17 @@ def main() -> int:
             usage = None
     print(f"6. Token usage: {usage if usage else 'not reported by this endpoint'}")
 
-    # 8. Fallback indicator ----------------------------------------------------------------------
-    looks_like_fallback = (picked.type == deterministic_action.action_type
-                            and picked.key == deterministic_action.key
-                            and result.summary == summary.to_text())
-    fallback_note = ("possibly (response is identical to the deterministic fallback shape -- "
-                      "check logs for a fallback warning to confirm)") if looks_like_fallback else \
-        "no (response diverges from the deterministic fallback)"
-    print(f"7. Fallback occurred: {fallback_note}")
+    # 8. Fallback indicator -- `client._last_call_succeeded` is the client's own authoritative
+    #    per-call signal (set exactly where generate_turn_output() parses a real response), not a
+    #    shape-based heuristic: definitive, not "possibly".
+    real_call_succeeded = getattr(client, "_last_call_succeeded", None) is True
+    print(f"7. Fallback occurred: {'no (a real call succeeded)' if real_call_succeeded else 'YES (fell back to deterministic output)'}")
 
     print("\nSMOKE TEST COMPLETE")
-    return 0 if (ok and legal) else 1
+    # A well-formed legal action from the deterministic fallback is not a pass here (spec: a
+    # competition-mode smoke test must fail unless the REAL LLM actually succeeded at least once,
+    # not just "something legal came out the other end").
+    return 0 if (ok and legal and real_call_succeeded) else 1
 
 
 if __name__ == "__main__":

@@ -83,7 +83,11 @@ def main() -> int:
         ok, reason = client.preflight()
         check("llm_health", ok, f"provider={provider} model={model!r} endpoint={endpoint} -- {reason}")
 
-    # --- structured JSON output + legal action validation --------------------------------------
+    # --- structured JSON output + legal action validation + real-LLM-success gate --------------
+    # Two DISTINCT checks, deliberately not folded into one: a well-formed action can come from
+    # the deterministic fallback alone (that's the whole point of the fallback -- it always
+    # produces something legal), so "the action looks valid" says nothing about whether the real
+    # LLM actually contributed to it. A competition submission must know both, separately.
     if provider != "mock":
         try:
             from nova_agent.orchestrator import DoctorAgent
@@ -94,10 +98,29 @@ def main() -> int:
             check("structured_output_and_action_validation", valid_action,
                   f"one live turn produced action_type={action.action_type!r}, "
                   f"used_real_llm_output={'yes' if llm_output is not None else 'no (fell back)'}")
+            # NOTE: `llm_output is not None` is NOT a useful signal here -- every real client
+            # (Anthropic/OpenAI-compatible/competition) absorbs a failed call internally and
+            # returns a deterministic AgentTurnOutput instead of None or raising (see
+            # llm_client.py's generate_turn_output()), specifically so a single bad turn never
+            # kills the run. `client._last_call_succeeded` is the actual low-level signal this
+            # call's response was received AND parsed successfully against a live endpoint.
+            real_parse_succeeded = getattr(client, "_last_call_succeeded", None) is True
+            check("structured_output_parse_success", real_parse_succeeded,
+                  "the live call's response parsed into AgentTurnOutput successfully"
+                  if real_parse_succeeded else
+                  "the live call either failed outright or returned output that failed to parse "
+                  "-- the action above came from the deterministic fallback, not the real model")
+            check("real_llm_success_count_at_least_1", state.real_llm_ever_succeeded is True,
+                  f"llm_call_count={state.llm_call_count} llm_success_count={state.llm_success_count} "
+                  "(bounded retry already applied per call -- see NOVA_LLM_MAX_RETRIES)")
         except Exception as exc:
             check("structured_output_and_action_validation", False, f"live turn raised: {exc}")
+            check("structured_output_parse_success", False, f"live turn raised: {exc}")
+            check("real_llm_success_count_at_least_1", False, f"live turn raised: {exc}")
     else:
         check("structured_output_and_action_validation", False, "skipped (provider=mock)")
+        check("structured_output_parse_success", False, "skipped (provider=mock)")
+        check("real_llm_success_count_at_least_1", False, "skipped (provider=mock)")
 
     # --- RAG / knowledge files ------------------------------------------------------------------
     knowledge_dir = Path(cfg.knowledge_dir)

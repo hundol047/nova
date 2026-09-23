@@ -220,13 +220,31 @@ Regenerate after any change to `nova_agent/`/`competition/`: `python scripts/bui
 clear diagnostic to stderr and continues on the deterministic per-turn fallback (dev/runtime
 fallback policy), rather than silently spending the whole case on `mock`. Before a real run, gate
 on `scripts/preflight_competition.py`, which prints `READY`/`NOT READY` and exits non-zero unless a
-real provider is configured, reachable, and produces legal structured/action output:
+real provider is configured, reachable, produces legal structured/action output, **and actually
+succeeded at least once** (`real_llm_success_count_at_least_1` -- deliberately distinct from
+`structured_output_and_action_validation`: the deterministic fallback alone can already produce a
+well-formed action, so that check passing is not evidence the real model said anything):
 
 ```bash
 NOVA_LLM_PROVIDER=competition NOVA_COMPETITION_BASE_URL=http://localhost:8000/v1 \
   python scripts/preflight_competition.py
-python scripts/smoke_real_llm.py   # prints SKIPPED_REAL_LLM if no real provider configured
+python scripts/smoke_real_llm.py   # prints SKIPPED_REAL_LLM if no real provider configured,
+                                    # otherwise exits non-zero unless a real call actually succeeded
 ```
+
+**Competition mode never silently completes a case on the fallback alone.** If a case reaches
+DIAGNOSE in a non-mock provider mode having never had a single real-LLM call succeed (even after
+bounded retry), `competition/adapter.py`'s `NovaCompetitionAgent` prints a loud stderr `ERROR` and
+tags the returned action's `metadata["real_llm_verified"] = False` -- a monitoring harness can
+detect this programmatically, not just by grepping logs. Dev/mock mode is unaffected: reaching
+DIAGNOSE purely on deterministic reasoning there is normal, not an error (see
+`test_competition_adapter_flags_zero_real_llm_success`).
+
+**CI is split into two jobs** specifically so a submission-readiness problem is never invisible
+behind a green dev build: `nova-agent` (always runs, mock provider only, must always stay green)
+and `competition-readiness` (skipped cleanly when no real-provider secret is configured; once any
+is, it runs `preflight_competition.py` and `smoke_real_llm.py` for real, with no `|| true` masking
+-- a real-LLM problem there fails CI).
 
 `competition/schema.py` is an explicit, disclosed **placeholder** (no official N.O.V.A. 2026 API
 was published at implementation time) -- update it and `competition/adapter.py` once the real one
@@ -304,6 +322,21 @@ ships; nothing else needs to change, since `nova_agent/`, `evaluation/`, `submis
   set; a starting point for manual calibration, not an automated tuner.
 - **Latency / LLM-calls-per-case / token usage** are measured ad hoc by `scripts/smoke_real_llm.py`
   against a single turn, not systematically across the full evaluation harness.
+- **Turn count stays high on cases with multiple simultaneous can't-miss differentials, and this
+  was investigated, not fixed.** Traced one concrete example end to end
+  (`Dyspnea05_TensionPneumothorax`, 25 turns): its severe vitals (SpO2 86%, marked tachycardia/
+  tachypnea) trip red-flag criteria for five different critical conditions at once (ACS,
+  anaphylaxis, DKA, PE, sepsis) alongside the correct diagnosis, and `stop_policy.py` requires each
+  one's own `minimum_workup` (not its full discriminating panel -- already a bounded subset) to
+  resolve before allowing DIAGNOSE, even once the correct diagnosis has overwhelming confirmatory
+  evidence by turn 3-4. This is bounded, clinically-defensible due diligence for a genuinely
+  undifferentiated critically-ill presentation, not an unbounded loop -- but no safe way to let an
+  overwhelming top-1 lead short-circuit it was found without risking exactly the kind of
+  critical-recall regression this whole project has been built to avoid, so no code was changed.
+- **No knowledge-base expansion this round, by evidence, not by default.** Checked whether any of
+  blind v3's 32 cases had a ground-truth diagnosis missing from the 34-entry knowledge base
+  entirely: none did -- every blind-v3 miss was a ranking/routing problem on an already-present
+  diagnosis, not a missing one. Padding the KB without that evidence would just be guessing.
 
 ## 9. Installation
 

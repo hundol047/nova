@@ -196,6 +196,18 @@ class PatientState(BaseModel):
         return (self.llm_fallback_count / self.llm_call_count) if self.llm_call_count else None
 
     @property
+    def real_llm_ever_succeeded(self) -> Optional[bool]:
+        """None when no real LLM call was ever attempted this case (mock provider, or a
+        case-budget that skipped every turn) -- not applicable, not a pass/fail signal either way.
+        True once at least one real call succeeded; False when calls were attempted but every
+        single one failed even after bounded retry (spec: a competition-mode case that never got a
+        single real-LLM success must be distinguishable from one that did, not just visible as "some
+        fallback rate" -- see competition/adapter.py's DIAGNOSE-time check)."""
+        if self.llm_call_count == 0:
+            return None
+        return self.llm_success_count > 0
+
+    @property
     def llm_avg_latency_seconds(self) -> Optional[float]:
         return (self.llm_total_latency_seconds / self.llm_latency_sample_count) if self.llm_latency_sample_count else None
 
