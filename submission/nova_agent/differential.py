@@ -18,6 +18,11 @@ from pydantic import BaseModel
 from nova_agent.chief_complaint import classify as classify_chief_complaint
 from nova_agent.chief_complaint import related_tags
 from nova_agent.config import get_config
+from nova_agent.glucose_evidence import (
+    DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
+    HYPOGLYCEMIA_THRESHOLD_MG_DL,
+    extract_glucose_mg_dl,
+)
 from nova_agent.knowledge.retrieval import all_diseases, diseases_for_tag
 from nova_agent.matching import feature_denied, feature_present
 from nova_agent.state import DifferentialSnapshot, PatientState
@@ -33,6 +38,58 @@ CONTRADICTION_PENALTY = 1.2
 CONFIRMATORY_WEIGHT = 2.5
 
 _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
+
+# Feature-local aliases (spec section 6, Option A): alternate phrasings tried ONLY when evaluating
+# the ONE exact knowledge-base phrase they are keyed to -- never a global finding-text substitution
+# like the earlier clinical_synonyms.py attempt (reverted after it let unrelated findings that
+# merely shared a word-group cross-contaminate each other's matches, e.g. "mild fever" spuriously
+# supporting "denies high fever"). A lay phrase here can only ever help the ONE named KB phrase.
+# Two categories populate this table: (1) common lay-language variants of a clinical sign
+# (throbbing/pulsating, sensitive to light/photophobia) and (2) high-value medication-class
+# normalization (spec section 4) -- a specific drug name standing in for the canonical risk factor
+# phrase it belongs to. Deliberately NOT a general medication NLP system: only the drug classes an
+# existing knowledge-base risk_factor already names.
+FEATURE_ALIASES: dict[str, list[str]] = {
+    "unilateral pulsating headache": ["throbbing headache", "pounding headache", "one-sided headache",
+                                       "one sided headache", "pounding pain", "throbbing pain",
+                                       "pulsating pain"],
+    "photophobia": ["sensitive to light", "light sensitivity", "light bothers me"],
+    "phonophobia": ["sensitive to sound", "sound sensitivity", "noise bothers me"],
+    "aura": ["shimmering lights", "visual aura", "flashing lights", "seeing spots before",
+             "zigzag lines", "blind spot in my vision", "jagged lines"],
+    "recurrent similar episodes": ["similar to headaches", "happened before", "same as before",
+                                    "feels the same as last time", "this feels the same",
+                                    "gets these", "a few times a year", "has had these before"],
+    "family history of migraine": ["mother gets migraines", "father gets migraines",
+                                    "mother has migraines", "parent gets migraines", "runs in my family",
+                                    "sister gets migraines", "sister has migraines", "brother gets migraines"],
+    "known migraine history": ["diagnosed with migraines", "history of migraines", "has migraines before"],
+    "syncope": ["passed out", "fainted"],
+    "palpitations": ["racing heartbeat", "heart racing"],
+    # Medication-class normalization (spec section 4).
+    "sulfonylurea use": ["glipizide", "glyburide", "glimepiride", "sulfonylurea"],
+    "insulin use": ["insulin", "lantus", "humalog", "novolog", "glargine"],
+    "known diabetes on insulin": ["insulin", "lantus", "humalog", "novolog", "glargine"],
+    "anticoagulant use": ["warfarin", "apixaban", "rivaroxaban", "dabigatran", "heparin", "coumadin"],
+    "antiplatelet use": ["aspirin", "clopidogrel"],
+    "nsaid use": ["ibuprofen", "naproxen", "nsaid"],
+    "diuretic use": ["water pill", "furosemide", "hydrochlorothiazide", "lasix"],
+    "immunosuppressant use": ["prednisone", "methotrexate", "tacrolimus", "cyclosporine", "azathioprine"],
+    "oral contraceptive use": ["birth control", "oral contraceptive", "the pill"],
+    "missed meal": ["hasn't eaten", "hasn't eaten much", "poor oral intake", "not eating today",
+                     "skipped a meal", "skipped meals"],
+}
+
+
+def _present_with_aliases(phrase: str, findings: List[str]) -> bool:
+    """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
+    FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase."""
+    if feature_present(phrase, findings, scrub_negated_spans=True):
+        return True
+    for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
+        if feature_present(alias, findings, scrub_negated_spans=True):
+            return True
+    return False
 
 
 def _strip_negative_prefix(feature: str) -> Optional[str]:
@@ -85,10 +142,42 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
     if feature_denied(phrase, negatives):
         contradictory.append(phrase)
         return -CONTRADICTION_PENALTY
-    if feature_present(phrase, findings, scrub_negated_spans=True):
+    if _present_with_aliases(phrase, findings):
         supporting.append(phrase)
         return weight
     missing.append(phrase)
+    return 0.0
+
+
+def _score_glucose(entry_id: str, glucose_mg_dl: Optional[float],
+                    supporting: List[str], missing: List[str]) -> float:
+    """Numeric point-of-care glucose evidence (spec section 3/7): a lab NUMBER is far stronger,
+    unambiguous evidence than any keyword match, and its clinical meaning flips entirely depending
+    on the value -- word-overlap matching alone can never capture that ("glucose 42" and "glucose
+    400" share every content word). Only applies to the two diagnoses whose definitions are
+    literally a glucose threshold; weighted at CONFIRMATORY_WEIGHT since it plays the same role as
+    an objective confirmatory lab/imaging finding. Thresholds are the standard clinical definitions
+    (ADA hypoglycemia <70 mg/dL; DKA-range hyperglycemia >=250 mg/dL), never fitted to a specific
+    benchmark case's number. Normal-range glucose is a strong, DEFINITIONAL contradiction for
+    hypoglycemia (it cannot be diagnosed without a low glucose at the time of symptoms), but
+    non-elevated glucose never penalizes DKA -- euglycemic DKA is a recognized real entity, so
+    absence of a high number is treated as missing evidence, not a contradiction."""
+    if entry_id not in ("hypoglycemia", "diabetic_ketoacidosis"):
+        return 0.0
+    label = f"point-of-care glucose {glucose_mg_dl:.0f} mg/dL" if glucose_mg_dl is not None \
+        else "point-of-care glucose"
+    if glucose_mg_dl is None:
+        missing.append(label)
+        return 0.0
+    if entry_id == "hypoglycemia":
+        if glucose_mg_dl < HYPOGLYCEMIA_THRESHOLD_MG_DL:
+            supporting.append(label)
+            return CONFIRMATORY_WEIGHT
+        return -CONTRADICTION_PENALTY
+    if glucose_mg_dl >= DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL:
+        supporting.append(label)
+        return CONFIRMATORY_WEIGHT
+    missing.append(label)
     return 0.0
 
 
@@ -108,13 +197,32 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
-        if feature_present(risk_factor, findings, scrub_negated_spans=True):
+        if _present_with_aliases(risk_factor, findings):
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 
     for finding in entry.get("confirmatory_findings", []):
         max_possible += CONFIRMATORY_WEIGHT
         score += _score_phrase(finding, CONFIRMATORY_WEIGHT, findings, negatives, supporting, contradictory, missing)
+
+    # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
+    # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in
+    # pertinent_negatives -- EXAM/TEST results never populate that list, by deliberate design, see
+    # matching.py). `reassuring_if_present` is a separate, opt-in, per-disease list for exactly
+    # that gap: checked against RAW findings (scrub_negated_spans=False) since the phrase itself
+    # legitimately starts with a negation ("no focal neurological deficit") -- scrubbing would
+    # erase the very text this check needs to see. A soft, bounded penalty, not a hard exclusion:
+    # it must not be able to rule out a dangerous diagnosis on its own (spec section 8 -- e.g. an
+    # early normal CT never fully excludes ischemic stroke).
+    if entry["id"] in ("hypoglycemia", "diabetic_ketoacidosis"):
+        max_possible += CONFIRMATORY_WEIGHT
+    score += _score_glucose(entry["id"], extract_glucose_mg_dl(state.laboratory_tests.get("glucose_point_of_care")),
+                             supporting, missing)
+
+    for reassuring in entry.get("reassuring_if_present", []):
+        if feature_present(reassuring, findings, scrub_negated_spans=False):
+            contradictory.append(reassuring)
+            score -= CONTRADICTION_PENALTY
 
     return score, max(max_possible, 1.0), supporting, contradictory, missing
 

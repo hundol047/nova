@@ -28,6 +28,9 @@ CHECKS = [
     (("held_out", "all_case_diagnostic_accuracy"), "Held-out all-case accuracy"),
     (("held_out", "critical_diagnosis_recall"), "Held-out critical recall"),
     (("held_out", "critical_miss_rate"), "Held-out critical miss rate"),
+    (("generalization_v2", "scored_diagnostic_accuracy"), "Generalization v2 scored accuracy"),
+    (("generalization_v2", "critical_diagnosis_recall"), "Generalization v2 critical recall"),
+    (("generalization_v2", "critical_miss_rate"), "Generalization v2 critical miss rate"),
 ]
 
 

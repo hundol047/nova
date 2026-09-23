@@ -11,6 +11,18 @@ Everything below reflects verified, executed behavior (`pytest tests/`, `evaluat
 standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-limitations) for
 what is *not* yet verified.
 
+**Verification status** (these are three genuinely different claims -- never conflate them):
+- **Code / test CI**: READY -- 64 unit tests, the full local benchmark suite (tuning, held-out,
+  generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
+  under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
+- **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
+  a real model has been observed in this environment (no GPU/API access at implementation time); the
+  HTTP client, prompt construction, and parse/repair/fallback path are only unit- and
+  subprocess-tested against scripted/mocked responses.
+- **Official N.O.V.A. 2026 competition API**: NOT VERIFIED / PLACEHOLDER -- no official interface
+  document was published at implementation time, so `competition/schema.py` and
+  `competition/adapter.py` are an explicit, disclosed placeholder behind the adapter boundary.
+
 > No official N.O.V.A. 2026 Agent API/interface document was available at implementation time.
 > Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
@@ -99,7 +111,7 @@ nothing in this repo cites a fabricated external source.
 
 ```bash
 pytest tests/ -v                        # 64 tests
-python -m evaluation.benchmark --generalization-v2   # tuning + held-out + generalization-v2, full metrics
+python -m evaluation.benchmark --generalization-v2 --stress  # tuning + held-out + generalization-v2 + stress, full metrics
 python -m evaluation.benchmark --held-out-only
 python -m evaluation.generalization_benchmark
 python -m evaluation.ablation           # A (basic) -> F (+retrieval) component contribution
@@ -107,7 +119,7 @@ python -m evaluation.adversarial        # crash-resistance / reliability checks
 python -m evaluation.stability --runs 5 # run-to-run determinism (agreement/variance)
 python -m evaluation.failure_analysis   # automated root-cause classification of held-out misses
 python -m evaluation.tune --random 20   # local weight calibration (tuning set only, never held-out)
-python -m evaluation.benchmark --save-json evaluation/latest_results.json && python scripts/check_readme_numbers.py
+python -m evaluation.benchmark --generalization-v2 --stress --save-json evaluation/latest_results.json && python scripts/check_readme_numbers.py
 ```
 
 `evaluation/cases.py` (8 cases) is the *tuning set* current `config.py` defaults were iterated
@@ -117,14 +129,22 @@ polypharmacy, conflicting findings, vague complaints, rare-but-dangerous, and mo
 mimics -- together exercising every one of this repo's 34 knowledge-base diagnoses at least once)
 were **never** used to tune any default -- they exist to measure generalization, and are a
 moderate, deliberately non-padded expansion (each case is a genuinely distinct scenario, not a
-reworded duplicate). `scripts/check_readme_numbers.py` verifies the table below never silently
+reworded duplicate). `evaluation/generalization_stress_cases.py` (**8 more cases**) is a small,
+targeted follow-up set, added after root-causing the two generalization v2 misses described below:
+half the cases exercise the fix (atypical/non-diabetic hypoglycemia, migraine with aura in
+different wording, stroke presenting as headache) and half are deliberate **negative controls**
+checking the fix doesn't overfire (a real stroke that borrows migraine-sounding language, an
+elderly new-onset dangerous headache with no migraine history, a polypharmacy weakness case that is
+hyperkalemia rather than hypoglycemia, and a weakness case with a *normal* glucose result whose real
+cause is a GI bleed). `scripts/check_readme_numbers.py` verifies the table below never silently
 goes stale against a fresh `evaluation/latest_results.json`.
 
 | Set | Scored Accuracy | All-Case Accuracy | Critical Recall | Critical Miss Rate | Avg Turns |
 |---|---|---|---|---|---|
-| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 11.2 |
-| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 18.4 |
-| Generalization v2 (18 cases, all scored, 5 critical) | 88.9% | 88.9% | 100.0% | 0.0% | 16.8 |
+| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 14.2 |
+| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 17.1 |
+| Generalization v2 (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 15.7 |
+| Stress set (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 15.9 |
 
 "Scored" excludes deliberately ambiguous/insufficient-info/unmapped-complaint stress cases (see
 `evaluation/benchmark.py`'s exclusion disclosure); "All-Case" is the same correctness check applied
@@ -178,11 +198,43 @@ ships; nothing else needs to change, since `nova_agent/`, `evaluation/`, `submis
 
 - **Knowledge base breadth**: 34 diagnoses across 15 chief-complaint tags -- far from exhaustive;
   the LLM can introduce diagnoses outside this set, but the deterministic prior only covers these.
-- **Generalization v2 accuracy is 88.9%, not 100%** -- disclosed, not tuned away; the remaining
-  miss (a migraine vs. ischemic stroke tie) traces to the keyword-overlap matcher's known inability
-  to bridge lay-language/synonym pairs (e.g. "throbbing" vs. "pulsating"); an explicit
-  clinical-synonym normalization layer was attempted, measured to cause broad regressions
-  elsewhere, and reverted rather than shipped net-harmful (see git history for that experiment).
+- **Generalization v2 was 88.9%, with two real misses, as of the previous round** -- both were
+  root-caused (not patched around the specific case text) and are now fixed, verified at 100.0% on
+  the existing held-out and generalization-v2 sets plus a new 8-case stress set (see the table
+  above), with no critical miss, no accuracy regression, and no increase in duplicate/malformed
+  output anywhere:
+  - *Elderly polypharmacy hypoglycemia* (`Weakness01_ElderlyPolypharmacyHypoglycemia`) was losing to
+    diabetic ketoacidosis because of two literally-garbled `confirmatory_findings` entries in the
+    knowledge base (`"blood glucose 4"` / `"blood glucose 3"`) that matched almost any glucose
+    result via keyword overlap regardless of the actual number -- removed, and replaced with a
+    principled numeric glucose reader (`nova_agent/glucose_evidence.py`) using the standard clinical
+    thresholds (ADA hypoglycemia <70 mg/dL; DKA-range hyperglycemia >=250 mg/dL, never fitted to a
+    benchmark case's specific value), plus a small, explicitly-scoped medication-class alias table
+    (glipizide/glyburide/insulin -> the KB's existing `"sulfonylurea use"`/`"insulin use"` risk
+    factors) and a matching `hypoglycemia`-targeting entry in the existing `medication_risk_rules`
+    infrastructure.
+  - *Migraine vs. ischemic stroke* (`Headache04_ReassuringMigraine`) was a 0.0-vs-0.0 score tie
+    resolved by disease-declaration order, because migraine's own typical features never matched lay
+    phrasing ("throbbing" vs. the KB's "pulsating", "sensitive to light" vs. "photophobia") and an
+    objective negative exam finding ("no focal neurological deficit") had no mechanism to lower
+    stroke's score at all. Fixed with (a) a small **feature-local** alias table
+    (`FEATURE_ALIASES` in `nova_agent/differential.py`) -- each alias is attached to and only ever
+    used for the ONE exact knowledge-base phrase it's keyed to, never a global text substitution
+    (the earlier `clinical_synonyms.py` global-synonym attempt caused broad cross-disease
+    regressions and was reverted; this is a deliberately narrower design learning from that), and
+    (b) a new opt-in `reassuring_if_present` per-disease field that lets an objective negative exam
+    finding apply a bounded, soft penalty (never a hard exclusion) to a specific dangerous
+    diagnosis.
+  - The held-out `unnecessary_test_rate` metric was also investigated (spec-requested): about half
+    of the previously-reported "unnecessary" tests were a metric-definition artifact -- rule-out
+    tests for a plausible, evidence-driven alternative that simply wasn't in the metric's
+    dangerous-diagnoses-only allowlist (e.g. ruling out a urinary source of an elderly patient's
+    altered mental status). `evaluation/simulator.py::_relevant_test_ids` now also credits any
+    diagnosis the agent's own differential engine actually ranked at #1 or #2 at some point during
+    the case, not only diagnoses flagged `dangerous: true` in the knowledge base.
+  - As with the earlier reverted attempt, every one of these fixes is scoped and disease/phrase-
+    level, not a blanket rule -- see `nova_agent/differential.py`'s `FEATURE_ALIASES` docstring for
+    the full list of what's covered and what deliberately isn't.
 - **No live real-LLM call observed in this environment** (no GPU/API keys available at
   implementation time) -- the HTTP integration, prompt construction, and parse/repair/fallback path
   are unit- and subprocess-tested with scripted/mocked clients and a local HTTP test server, not

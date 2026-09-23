@@ -55,6 +55,12 @@
       "acute infarct",
       "diffusion restriction"
     ],
+    "reassuring_if_present": [
+      "no focal neurological deficit",
+      "no focal neuro deficit",
+      "normal neurologic exam",
+      "normal neurological exam"
+    ],
     "red_flag_keywords": [
       "facial droop",
       "slurred speech",
