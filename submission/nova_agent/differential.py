@@ -15,15 +15,14 @@ from typing import List, Literal, Optional
 
 from pydantic import BaseModel
 
-from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
-from nova_agent.chief_complaint import related_tags, route
+from nova_agent.candidate_generator import generate_candidates
+from nova_agent.clinical_presentation import extract_presentation
 from nova_agent.config import get_config
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
     HYPOGLYCEMIA_THRESHOLD_MG_DL,
     extract_glucose_mg_dl,
 )
-from nova_agent.knowledge.retrieval import all_diseases, disease_by_id, diseases_for_tag
 from nova_agent.matching import feature_denied, feature_present
 from nova_agent.severity_evidence import ELEVATED_LACTATE_MMOL_L, extract_lactate_mmol_l
 from nova_agent.state import DifferentialSnapshot, PatientState
@@ -116,6 +115,7 @@ class DifferentialItem(BaseModel):
     urgency: str
     dangerous_if_missed: bool
     confidence_band: ConfidenceBand
+    candidate_sources: List[str] = []
 
 
 def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: List[str],
@@ -276,131 +276,31 @@ def _confidence_band(score_ratio: float, turn_count: int, supporting_count: int)
     return "LOW"
 
 
-def _ensure_cross_cutting_dangerous_diagnoses(candidates: list) -> list:
-    """Can't-miss diagnoses (spec section 4/6: unknown-routing safety net) must always compete in
-    scoring, not only when routing produced no pool at all. A confident tag match narrows the pool
-    by presenting symptom -- but symptom-based routing is exactly the mechanism that fails for an
-    ATYPICAL presentation of a dangerous diagnosis (e.g. hypoglycemia presenting as palpitations
-    and jitteriness routes cleanly to a cardiac-tag pool that has no symptom-level reason to
-    include hypoglycemia at all). Riding a small, fixed list of dangerous diagnoses along with
-    every routed pool -- not just the empty-pool fallback -- means their own scoring (risk factors,
-    labs, exam findings gathered later in the case) still gets a chance to surface them, without
-    ever letting them replace or narrow whatever routing already found."""
-    present_ids = {entry["id"] for entry in candidates}
-    extended = list(candidates)
-    for diagnosis_id in CROSS_CUTTING_DANGEROUS_DIAGNOSES:
-        if diagnosis_id not in present_ids:
-            entry = disease_by_id(diagnosis_id)
-            if entry is not None:
-                extended.append(entry)
-                present_ids.add(diagnosis_id)
-    return extended
-
-
-def _ensure_decisive_lab_evidence_diagnoses(candidates: list, state: PatientState) -> list:
-    """Chief-complaint routing narrows the candidate pool by presenting symptom, but a decisive
-    objective lab result must never be excluded just because the routed pool didn't happen to
-    include the diagnosis it confirms -- objective evidence outranks a keyword/routing signal, the
-    same priority order the scoring hierarchy already enforces within a pool (confirmatory finding
-    > exam/lab > symptom > risk factor). Glucose is the one lab this codebase already interprets
-    numerically (glucose_evidence.py, standard ADA thresholds, not fitted to any specific case) --
-    when it has actually been drawn and crosses a diagnostic threshold, the diagnosis it confirms
-    must be reachable by scoring even if chief-complaint routing pointed elsewhere (e.g. atypical
-    hypoglycemia presenting as palpitations/jitteriness routes to a cardiac-tag pool that has no
-    reason to include hypoglycemia by symptom text alone -- the lab result is the reason)."""
-    glucose = extract_glucose_mg_dl(state.laboratory_tests.get("glucose_point_of_care"))
-    if glucose is None:
-        return candidates
-    present_ids = {entry["id"] for entry in candidates}
-    forced_ids = []
-    if glucose < HYPOGLYCEMIA_THRESHOLD_MG_DL and "hypoglycemia" not in present_ids:
-        forced_ids.append("hypoglycemia")
-    if glucose >= DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL and "diabetic_ketoacidosis" not in present_ids:
-        forced_ids.append("diabetic_ketoacidosis")
-    if not forced_ids:
-        return candidates
-    extended = list(candidates)
-    for diagnosis_id in forced_ids:
-        entry = disease_by_id(diagnosis_id)
-        if entry is not None:
-            extended.append(entry)
-    return extended
-
-
 class DifferentialEngine:
     """Stateless ranker: call `update(state)` every turn; it recomputes from scratch off the
     current PatientState rather than incrementally patching the previous ranking, so a
     contradicted early guess is never "sticky"."""
 
     def update(self, state: PatientState) -> List[DifferentialItem]:
-        routing = route(state.chief_complaint)
-
-        def _pool_for_tags(tags: List[str]) -> list:
-            seen_ids: set = set()
-            merged: list = []
-            for tag in tags:
-                for entry in diseases_for_tag(tag):
-                    if entry["id"] not in seen_ids:
-                        merged.append(entry)
-                        seen_ids.add(entry["id"])
-            return merged
-
-        # Confidence-tiered candidate pool (spec section 2/3): how sure the routing is decides how
-        # WIDE the pool is, rather than either always hard-routing to one tag or always merging a
-        # fixed number of concepts regardless of match quality.
-        add_cross_cutting = False
-        if routing.match_type == "none":
-            # No signal at all -- broad fallback (spec: the agent must always reason toward a
-            # diagnosis, never stall for lack of a tag match). Already contains every cross-cutting
-            # diagnosis, so nothing further needs to be added here.
-            candidates = list(all_diseases().values())
-        elif routing.confidence == "HIGH" and routing.match_type == "exact":
-            # The patient used the diagnosis-adjacent concept's own canonical clinical term, with
-            # no other concept scoring anything close -- primary tag's own pool, unexpanded. If
-            # that tag has no directly-tagged disease pool, fall back to clinically related tags
-            # (spec section 8/24H) before ever reaching the untargeted whole catalog.
-            candidates = _pool_for_tags([routing.primary_tag])
-            if not candidates:
-                candidates = _pool_for_tags(related_tags(routing.primary_tag))
-        elif routing.confidence == "HIGH":
-            # HIGH confidence via a lay-language ALIAS, not the concept's own clinical term. Lexically
-            # unambiguous (no other tag scored close), but a lay phrase is still one interpretive
-            # step removed from the patient's own precise vocabulary -- measured empirically during
-            # this rewrite: hard-routing an alias hit to ONLY its primary tag's pool reintroduced a
-            # real regression (an atypical hypoglycemia presenting as "heart racing" routes
-            # confidently to palpitations/cardiac diagnoses by alias, but hypoglycemia itself has no
-            # cardiac-tag membership at all, so it silently fell out of the candidate pool and the
-            # agent never even tested for it). Keeping the small cross-cutting can't-miss list
-            # riding along for an ALIAS-only HIGH match (never for an EXACT one) restores that
-            # coverage without reintroducing the broader over-triggering this session's earlier,
-            # fully-unconditional version of the same list caused (see git history / PR review).
-            candidates = _pool_for_tags([routing.primary_tag])
-            if not candidates:
-                candidates = _pool_for_tags(related_tags(routing.primary_tag))
-            add_cross_cutting = True
-        elif routing.confidence == "MEDIUM":
-            # An exact/alias tie between two concepts, or a fuzzy hit with a real margin -- merge
-            # the top 2 plausible concepts rather than hard-routing to just the primary.
-            tags = [routing.primary_tag] + routing.secondary_tags[:1]
-            candidates = _pool_for_tags(tags)
-            if not candidates:
-                candidates = _pool_for_tags(related_tags(routing.primary_tag))
-            add_cross_cutting = True
-        else:  # LOW -- a genuinely ambiguous fuzzy tie among several concepts
-            tags = [routing.primary_tag] + routing.secondary_tags[:2]
-            candidates = _pool_for_tags(tags)
-            add_cross_cutting = True
-
-        if not candidates:
-            # Nothing via the tag(s) tried above -- fall back to the whole knowledge base rather
-            # than returning an empty differential. The LLM reasoning layer can also introduce a
-            # diagnosis outside this pool entirely (spec section 7/24 -- see
-            # safety_validator.merge_differential).
-            candidates = list(all_diseases().values())
-        elif add_cross_cutting:
-            candidates = _ensure_cross_cutting_dangerous_diagnoses(candidates)
-
-        candidates = _ensure_decisive_lab_evidence_diagnoses(candidates, state)
+        # Dynamic candidate generation (spec: no single hard-routed chief-complaint tag deciding
+        # the whole pool, and no "unmatched -> dump all 34 diseases" default). Multi-concept
+        # extraction (clinical_presentation.py) plus risk/objective/safety sourcing
+        # (candidate_generator.py) build a provenance-tagged pool from everything already known
+        # about the case, not just the presenting sentence.
+        presentation = extract_presentation(
+            state.chief_complaint,
+            past_medical_history=list(state.past_medical_history) + list(state.social_history),
+            medications=list(state.medication_text) + [m.name for m in state.medications],
+            demographics=state.demographics.model_dump()
+            if hasattr(state.demographics, "model_dump") else dict(state.demographics or {}),
+        )
+        candidate_records = generate_candidates(
+            presentation,
+            glucose_result_text=state.laboratory_tests.get("glucose_point_of_care"),
+            lactate_result_text=state.laboratory_tests.get("lactate"),
+        )
+        candidates = [c.entry for c in candidate_records]
+        sources_by_id = {c.id: c.sources for c in candidate_records}
 
         scored = []
         for entry in candidates:
@@ -419,6 +319,7 @@ class DifferentialEngine:
                 supporting_evidence=supporting, contradictory_evidence=contradictory,
                 missing_discriminative_evidence=missing, urgency=entry.get("urgency", "LOW"),
                 dangerous_if_missed=bool(entry.get("dangerous", False)), confidence_band=band,
+                candidate_sources=sources_by_id.get(entry["id"], []),
             ))
 
         state.current_differential = [

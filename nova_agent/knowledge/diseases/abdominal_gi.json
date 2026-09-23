@@ -69,7 +69,8 @@
     "chief_complaint_tags": [
       "abdominal_pain",
       "vomiting",
-      "weakness"
+      "weakness",
+      "gi_bleeding"
     ],
     "category": "abdominal_gi",
     "dangerous": true,
@@ -132,7 +133,8 @@
     ],
     "chief_complaint_tags": [
       "abdominal_pain",
-      "syncope"
+      "syncope",
+      "pelvic_gynecologic"
     ],
     "category": "abdominal_gi",
     "dangerous": true,

@@ -40,7 +40,15 @@ class SafetyLayer:
     def assess(self, state: PatientState, differential: List[DifferentialItem]) -> List[SafetyFinding]:
         findings: List[SafetyFinding] = []
         tag = classify_chief_complaint(state.chief_complaint)
-        differential_ids = {d.diagnosis_id for d in differential}
+        # A diagnosis counts as "already in the differential" here only if it has some evidence-
+        # based reason to be there (symptom/risk/objective match) -- not merely because it rides
+        # along as part of the fixed cross-cutting safety net every candidate pool now always
+        # carries (candidate_generator.py). Without this distinction, every one of that small
+        # fixed list would always satisfy this OR-condition on every single case, defeating this
+        # layer's own stated purpose ("never a blanket test-everything-dangerous reflex") and
+        # measurably inflating turn counts by keeping irrelevant diagnoses "actively flagged"
+        # purely because they exist somewhere in the pool.
+        differential_ids = {d.diagnosis_id for d in differential if d.candidate_sources != ["safety_candidate"]}
         findings_text = state.all_findings_text()
 
         for diagnosis_id in critical_condition_ids():

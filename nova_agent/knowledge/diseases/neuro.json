@@ -15,7 +15,9 @@
       "dizziness",
       "altered_mental_status",
       "weakness",
-      "syncope"
+      "syncope",
+      "focal_weakness",
+      "aphasia"
     ],
     "category": "neuro",
     "dangerous": true,

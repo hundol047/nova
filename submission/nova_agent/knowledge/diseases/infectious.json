@@ -78,7 +78,8 @@
     ],
     "chief_complaint_tags": [
       "dyspnea",
-      "fever"
+      "fever",
+      "allergic"
     ],
     "category": "infectious",
     "dangerous": true,

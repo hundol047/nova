@@ -107,6 +107,14 @@ class SafetyValidator:
                     contradictory_evidence=list(item.contradictory_evidence),
                     missing_discriminative_evidence=item.missing_information,
                     urgency=urgency or "LOW", dangerous_if_missed=dangerous, confidence_band=item.confidence,
+                    # Carry the deterministic pool's provenance through the LLM-authored rebuild --
+                    # without this, safety.py's "already evidence-backed in the differential" check
+                    # (candidate_sources != ["safety_candidate"]) sees an empty list for every
+                    # entry (LLM output never sets this field) and falls back to treating every
+                    # diagnosis as equally relevant, which is exactly the over-flagging this field
+                    # exists to prevent. A novel LLM-introduced diagnosis with no deterministic
+                    # match at all gets an empty list here, same as "no evidence-based source yet".
+                    candidate_sources=det_match.candidate_sources if det_match else [],
                 )
 
             ordered = sorted(by_id.values(), key=lambda d: d.rank)[:top_k]

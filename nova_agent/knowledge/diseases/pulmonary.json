@@ -80,7 +80,8 @@
     "chief_complaint_tags": [
       "dyspnea",
       "chest_pain",
-      "cough"
+      "cough",
+      "trauma"
     ],
     "category": "pulmonary",
     "dangerous": true,

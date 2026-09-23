@@ -72,6 +72,13 @@ CANONICAL_TERMS = {
     "cough": ["cough"],
     "back_pain": ["back pain", "flank pain"],
     "leg_swelling": ["leg swelling", "edema"],
+    "focal_weakness": ["focal weakness", "one-sided weakness"],
+    "aphasia": ["aphasia", "slurred speech"],
+    "gi_bleeding": ["gi bleeding", "gastrointestinal bleeding"],
+    "pelvic_gynecologic": ["pelvic pain", "vaginal bleeding"],
+    "trauma": ["trauma", "traumatic injury"],
+    "allergic": ["allergic reaction", "anaphylaxis"],
+    "metabolic": ["metabolic symptoms", "hyperglycemia"],
 }
 
 # Generic lay-language aliases only -- each phrase describes how an ordinary patient would plausibly
@@ -123,6 +130,22 @@ CONCEPT_ALIASES = {
                   "요통", "옆구리 통증"],
     "leg_swelling": ["swollen leg", "calf swelling",
                       "다리 부종", "종아리 부종"],
+    "focal_weakness": ["weakness on one side", "one side feels weak", "arm won't work on one side",
+                        "leg won't work on one side", "can't lift my arm", "face is drooping",
+                        "drooping on one side", "one side of my face is drooping"],
+    "aphasia": ["trouble finding words", "can't find my words", "words come out wrong",
+                "can't speak clearly", "difficulty speaking", "speech sounds slurred",
+                "can't get words out"],
+    "gi_bleeding": ["blood in my stool", "black stools", "tarry stools", "vomiting blood",
+                     "blood in my vomit", "rectal bleeding", "blood when I wipe"],
+    "pelvic_gynecologic": ["vaginal spotting", "missed period", "cramping in my pelvis",
+                            "lower pelvic pain", "pain in my ovary area", "pain in my pelvis"],
+    "trauma": ["car accident", "fell down", "hit my head", "got into an accident",
+               "was in a crash", "injured in a fall", "fell and hurt myself"],
+    "allergic": ["hives", "swelling after a sting", "broke out in a rash after eating",
+                 "reaction to a sting", "reaction to a food", "itchy welts", "throat swelling after exposure"],
+    "metabolic": ["excessive thirst", "urinating a lot lately", "fruity breath", "rapid weight loss",
+                  "extreme thirst and urination", "drinking a lot of water lately"],
 }
 
 CONCEPT_PHRASES = {tag: CANONICAL_TERMS[tag] + CONCEPT_ALIASES.get(tag, []) for tag in CANONICAL_TERMS}
@@ -142,6 +165,13 @@ RELATED_TAGS = {
     "cough": ["dyspnea", "fever"],
     "back_pain": ["abdominal_pain", "urinary_symptoms"],
     "leg_swelling": ["dyspnea"],
+    "focal_weakness": ["weakness", "altered_mental_status"],
+    "aphasia": ["altered_mental_status", "focal_weakness"],
+    "gi_bleeding": ["abdominal_pain", "vomiting"],
+    "pelvic_gynecologic": ["abdominal_pain"],
+    "trauma": ["chest_pain"],
+    "allergic": ["dyspnea"],
+    "metabolic": ["altered_mental_status", "weakness"],
 }
 
 # Cross-cutting can't-miss diagnoses (spec: soft routing must never lose safety coverage just

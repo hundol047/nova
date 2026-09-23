@@ -12,7 +12,8 @@
       "abdominal_pain",
       "dyspnea",
       "vomiting",
-      "weakness"
+      "weakness",
+      "metabolic"
     ],
     "category": "endocrine_metabolic",
     "dangerous": true,
@@ -78,7 +79,8 @@
       "altered_mental_status",
       "dizziness",
       "palpitations",
-      "weakness"
+      "weakness",
+      "metabolic"
     ],
     "category": "endocrine_metabolic",
     "dangerous": true,
@@ -139,7 +141,8 @@
     "chief_complaint_tags": [
       "altered_mental_status",
       "dizziness",
-      "weakness"
+      "weakness",
+      "metabolic"
     ],
     "category": "endocrine_metabolic",
     "dangerous": false,
