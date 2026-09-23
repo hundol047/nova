@@ -19,6 +19,7 @@ import sys
 from typing import Dict, Optional
 
 from nova_agent.action_selector import AgentAction
+from nova_agent.config import get_config
 from nova_agent.orchestrator import DoctorAgent
 from nova_agent.state import PatientState
 
@@ -52,9 +53,15 @@ def observation_to_state(obs: CompetitionObservation, agent: DoctorAgent,
     return existing_state
 
 
-def action_to_competition(case_id: str, action: AgentAction) -> CompetitionAction:
+def action_to_competition(case_id: str, action: AgentAction, *, real_llm_verified: Optional[bool] = None) -> CompetitionAction:
+    metadata = {"key": action.key, "rationale": action.rationale}
+    if real_llm_verified is not None:
+        # Only ever attached to a DIAGNOSE action (see NovaCompetitionAgent.act() below) -- lets a
+        # competition-readiness harness detect "this case's final answer came from a real LLM at
+        # least once" programmatically, not just by grepping a stderr log line.
+        metadata["real_llm_verified"] = real_llm_verified
     return CompetitionAction(case_id=case_id, action_type=action.action_type, content=action.content,
-                              metadata={"key": action.key, "rationale": action.rationale})
+                              metadata=metadata)
 
 
 class NovaCompetitionAgent:
@@ -79,16 +86,35 @@ class NovaCompetitionAgent:
 
         action, _llm_output, _differential = self.agent.decide(state)
         self._pending_actions[obs.case_id] = action
+        real_llm_verified: Optional[bool] = None
         if action.action_type == "DIAGNOSE":
             self._pending_actions.pop(obs.case_id, None)
-            fallback_rate = state.llm_fallback_rate
-            if fallback_rate is not None and fallback_rate >= _HIGH_FALLBACK_RATE_THRESHOLD:
+            in_competition_mode = get_config().llm_provider != "mock"
+            real_llm_verified = state.real_llm_ever_succeeded
+            if in_competition_mode and real_llm_verified is False:
+                # Every real-LLM attempt this case failed, even after bounded retry -- the final
+                # answer is deterministic-fallback-only. This is NOT the same as "some fallback
+                # rate" below: it means the real LLM contributed literally nothing to this case,
+                # so the result must never be mistaken for a normal, LLM-backed competition
+                # completion (spec: dev/mock mode may ride the deterministic fallback freely;
+                # competition mode may not silently do the same for an entire case).
                 print(
-                    f"WARNING: {state.llm_fallback_count}/{state.llm_call_count} turns used "
-                    f"deterministic fallback for case={obs.case_id} (fallback rate "
-                    f"{fallback_rate:.0%}) -- the configured LLM provider may not be reliably "
-                    "reachable; run scripts/preflight_competition.py before submitting.",
+                    f"ERROR: case={obs.case_id} reached DIAGNOSE with ZERO successful real-LLM "
+                    f"calls ({state.llm_call_count} attempted, all failed even after bounded "
+                    "retry). This result is deterministic-fallback-only and must NOT be treated "
+                    "as a normal competition completion -- treat it as a runtime failure. Run "
+                    "scripts/preflight_competition.py before submitting.",
                     file=sys.stderr,
                 )
+            else:
+                fallback_rate = state.llm_fallback_rate
+                if fallback_rate is not None and fallback_rate >= _HIGH_FALLBACK_RATE_THRESHOLD:
+                    print(
+                        f"WARNING: {state.llm_fallback_count}/{state.llm_call_count} turns used "
+                        f"deterministic fallback for case={obs.case_id} (fallback rate "
+                        f"{fallback_rate:.0%}) -- the configured LLM provider may not be reliably "
+                        "reachable; run scripts/preflight_competition.py before submitting.",
+                        file=sys.stderr,
+                    )
 
-        return action_to_competition(obs.case_id, action).model_dump()
+        return action_to_competition(obs.case_id, action, real_llm_verified=real_llm_verified).model_dump()
