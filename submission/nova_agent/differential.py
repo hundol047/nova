@@ -15,16 +15,18 @@ from typing import List, Literal, Optional
 
 from pydantic import BaseModel
 
+from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
 from nova_agent.chief_complaint import classify as classify_chief_complaint
-from nova_agent.chief_complaint import related_tags
+from nova_agent.chief_complaint import related_tags, top_candidates
 from nova_agent.config import get_config
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
     HYPOGLYCEMIA_THRESHOLD_MG_DL,
     extract_glucose_mg_dl,
 )
-from nova_agent.knowledge.retrieval import all_diseases, diseases_for_tag
+from nova_agent.knowledge.retrieval import all_diseases, disease_by_id, diseases_for_tag
 from nova_agent.matching import feature_denied, feature_present
+from nova_agent.severity_evidence import TOTAL_SEVERITY_SIGNAL_CATEGORIES, systemic_severity_signals
 from nova_agent.state import DifferentialSnapshot, PatientState
 
 ConfidenceBand = Literal["LOW", "MEDIUM", "HIGH"]
@@ -219,6 +221,28 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
     score += _score_glucose(entry["id"], extract_glucose_mg_dl(state.laboratory_tests.get("glucose_point_of_care")),
                              supporting, missing)
 
+    # Generalizable systemic-severity evidence (spec section 6/8/9): objective physiologic
+    # derangement (shock, hypoxemia, marked tachycardia/tachypnea, high lactate, AMS, multi-organ
+    # dysfunction) is scored at the same objective-evidence tier as a confirmatory lab/imaging
+    # finding, for every diagnosis the knowledge base itself already flags `dangerous: true` --
+    # never one named disease. Eligibility deliberately uses the KB's own existing dangerous flag
+    # rather than the smaller CROSS_CUTTING_DANGEROUS_DIAGNOSES routing list: an earlier version of
+    # this restricted eligibility to that shorter list and it produced a real, measured regression
+    # (sepsis outscoring the correctly-diagnosed anaphylaxis/tension-pneumothorax cases in held-out)
+    # -- shock/hypoxemia/tachycardia are shared physiology across MANY dangerous diagnoses, so
+    # awarding the same generic boost to only a curated subset unfairly advantaged that subset over
+    # equally-dangerous diagnoses (anaphylaxis, tension pneumothorax, ...) whenever they share the
+    # same vitals picture, which is exactly the kind of diagnosis-specific favoritism the spec
+    # prohibits. Every `dangerous: true` diagnosis competing on the same footing removes that bias.
+    # Gated on real signals actually being present (see severity_evidence.py): a stable patient
+    # contributes nothing here, so this can only ever help a genuinely sick-looking presentation
+    # compete against a localized diagnosis, never inflate every case toward the dangerous list.
+    if entry.get("dangerous") is True:
+        max_possible += CONFIRMATORY_WEIGHT * TOTAL_SEVERITY_SIGNAL_CATEGORIES
+        for signal in systemic_severity_signals(state):
+            supporting.append(signal)
+            score += CONFIRMATORY_WEIGHT
+
     for reassuring in entry.get("reassuring_if_present", []):
         if feature_present(reassuring, findings, scrub_negated_spans=False):
             contradictory.append(reassuring)
@@ -236,6 +260,57 @@ def _confidence_band(score_ratio: float, turn_count: int, supporting_count: int)
     if score_ratio >= 0.30:
         return "MEDIUM"
     return "LOW"
+
+
+def _ensure_cross_cutting_dangerous_diagnoses(candidates: list) -> list:
+    """Can't-miss diagnoses (spec section 4/6: unknown-routing safety net) must always compete in
+    scoring, not only when routing produced no pool at all. A confident tag match narrows the pool
+    by presenting symptom -- but symptom-based routing is exactly the mechanism that fails for an
+    ATYPICAL presentation of a dangerous diagnosis (e.g. hypoglycemia presenting as palpitations
+    and jitteriness routes cleanly to a cardiac-tag pool that has no symptom-level reason to
+    include hypoglycemia at all). Riding a small, fixed list of dangerous diagnoses along with
+    every routed pool -- not just the empty-pool fallback -- means their own scoring (risk factors,
+    labs, exam findings gathered later in the case) still gets a chance to surface them, without
+    ever letting them replace or narrow whatever routing already found."""
+    present_ids = {entry["id"] for entry in candidates}
+    extended = list(candidates)
+    for diagnosis_id in CROSS_CUTTING_DANGEROUS_DIAGNOSES:
+        if diagnosis_id not in present_ids:
+            entry = disease_by_id(diagnosis_id)
+            if entry is not None:
+                extended.append(entry)
+                present_ids.add(diagnosis_id)
+    return extended
+
+
+def _ensure_decisive_lab_evidence_diagnoses(candidates: list, state: PatientState) -> list:
+    """Chief-complaint routing narrows the candidate pool by presenting symptom, but a decisive
+    objective lab result must never be excluded just because the routed pool didn't happen to
+    include the diagnosis it confirms -- objective evidence outranks a keyword/routing signal, the
+    same priority order the scoring hierarchy already enforces within a pool (confirmatory finding
+    > exam/lab > symptom > risk factor). Glucose is the one lab this codebase already interprets
+    numerically (glucose_evidence.py, standard ADA thresholds, not fitted to any specific case) --
+    when it has actually been drawn and crosses a diagnostic threshold, the diagnosis it confirms
+    must be reachable by scoring even if chief-complaint routing pointed elsewhere (e.g. atypical
+    hypoglycemia presenting as palpitations/jitteriness routes to a cardiac-tag pool that has no
+    reason to include hypoglycemia by symptom text alone -- the lab result is the reason)."""
+    glucose = extract_glucose_mg_dl(state.laboratory_tests.get("glucose_point_of_care"))
+    if glucose is None:
+        return candidates
+    present_ids = {entry["id"] for entry in candidates}
+    forced_ids = []
+    if glucose < HYPOGLYCEMIA_THRESHOLD_MG_DL and "hypoglycemia" not in present_ids:
+        forced_ids.append("hypoglycemia")
+    if glucose >= DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL and "diabetic_ketoacidosis" not in present_ids:
+        forced_ids.append("diabetic_ketoacidosis")
+    if not forced_ids:
+        return candidates
+    extended = list(candidates)
+    for diagnosis_id in forced_ids:
+        entry = disease_by_id(diagnosis_id)
+        if entry is not None:
+            extended.append(entry)
+    return extended
 
 
 class DifferentialEngine:
@@ -260,12 +335,31 @@ class DifferentialEngine:
                         seen_ids.add(entry["id"])
             candidates = merged
         if not candidates:
-            # Still nothing (an entirely unmapped presentation) -- fall back to the whole
-            # knowledge base rather than returning an empty differential (spec: the agent must
-            # always reason toward a diagnosis, never stall for lack of a tag match). The LLM
+            # Still nothing via the single best tag -- before falling all the way back to the
+            # untargeted whole catalog, try SOFT routing (spec: prefer an imprecise-but-plausible
+            # 2-3-category pool over either a single wrong hard routing or a same-weight dump of
+            # every diagnosis regardless of relevance). top_candidates() ranks tags by a fuzzy
+            # word-overlap score even when no exact keyword/alias matched at all, so genuinely
+            # ambiguous lay-language chief complaints usually produce SOME plausible candidates
+            # here, not just an empty list.
+            seen_ids = set()
+            merged = []
+            for candidate_tag in top_candidates(state.chief_complaint, k=3):
+                for entry in diseases_for_tag(candidate_tag):
+                    if entry["id"] not in seen_ids:
+                        merged.append(entry)
+                        seen_ids.add(entry["id"])
+            candidates = merged
+        if not candidates:
+            # Genuinely no signal at all (soft routing found nothing either) -- fall back to the
+            # whole knowledge base rather than returning an empty differential (spec: the agent
+            # must always reason toward a diagnosis, never stall for lack of a tag match). The LLM
             # reasoning layer can also introduce a diagnosis outside this pool entirely (spec
             # section 7/24 -- see safety_validator.merge_differential).
             candidates = list(all_diseases().values())
+
+        candidates = _ensure_cross_cutting_dangerous_diagnoses(candidates)
+        candidates = _ensure_decisive_lab_evidence_diagnoses(candidates, state)
 
         scored = []
         for entry in candidates:

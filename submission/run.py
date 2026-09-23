@@ -57,7 +57,7 @@ from nova_agent.config import get_config  # noqa: E402
 from nova_agent.llm_client import get_llm_client  # noqa: E402
 from nova_agent.orchestrator import DoctorAgent  # noqa: E402
 
-from competition.adapter import NovaCompetitionAgent  # noqa: E402
+from competition.adapter import NovaCompetitionAgent, RealLLMUnavailableError  # noqa: E402
 
 # Local development explicitly opts into NOVA_LLM_PROVIDER=mock; a submission run that never set
 # it at all should default to attempting the real competition LLM, not silently reasoning on mock
@@ -95,6 +95,15 @@ def run_jsonlines(agent: NovaCompetitionAgent) -> None:
         try:
             observation = json.loads(line)
             action = agent.act(observation)
+        except RealLLMUnavailableError as exc:
+            # Deliberately NOT caught by the generic handler below: this is not a malformed-line
+            # hiccup that a resend could fix -- it means the competition-mode case just reached
+            # its final answer with zero successful real-LLM calls, even after bounded retry
+            # (spec section 12). Disguising it as a normal recoverable-ASK response would be
+            # exactly the "silent deterministic-only success" the adapter's raise exists to
+            # prevent, so this must actually stop the run, loudly, on stderr.
+            print(f"FATAL: {exc}", file=sys.stderr)
+            raise SystemExit(1) from exc
         except Exception as exc:  # a single malformed line must never kill the whole run
             action = {"error": str(exc), "action_type": "ASK",
                       "content": "Unable to process the previous observation; please resend."}

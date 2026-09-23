@@ -233,12 +233,18 @@ python scripts/smoke_real_llm.py   # prints SKIPPED_REAL_LLM if no real provider
 ```
 
 **Competition mode never silently completes a case on the fallback alone.** If a case reaches
-DIAGNOSE in a non-mock provider mode having never had a single real-LLM call succeed (even after
-bounded retry), `competition/adapter.py`'s `NovaCompetitionAgent` prints a loud stderr `ERROR` and
-tags the returned action's `metadata["real_llm_verified"] = False` -- a monitoring harness can
-detect this programmatically, not just by grepping logs. Dev/mock mode is unaffected: reaching
-DIAGNOSE purely on deterministic reasoning there is normal, not an error (see
-`test_competition_adapter_flags_zero_real_llm_success`).
+DIAGNOSE in a non-mock provider mode having never had a single real-LLM call succeed, even after
+each turn's own bounded per-call retry, `competition/adapter.py`'s `NovaCompetitionAgent` makes one
+more bounded round of retries (`_DIAGNOSE_ZERO_LLM_SUCCESS_RETRIES`, currently 2) specifically at
+the DIAGNOSE gate. If a real call succeeds during that retry, the case proceeds normally with
+`metadata["real_llm_verified"] = True`. If every attempt still fails, `act()` raises
+`RealLLMUnavailableError` instead of returning a DIAGNOSE action -- a deterministic-fallback-only
+result is never disguised as a normal, successful competition completion. `submission/run.py`
+treats this distinctly from an ordinary malformed-observation error: it prints a `FATAL` line to
+stderr and exits non-zero rather than emitting a fake recoverable action. Dev/mock mode is
+unaffected: reaching DIAGNOSE purely on deterministic reasoning there is normal, not an error (see
+`test_competition_adapter_raises_on_zero_real_llm_success` and
+`test_competition_adapter_recovers_via_bounded_retry_when_llm_becomes_available`).
 
 **CI is split into two jobs** specifically so a submission-readiness problem is never invisible
 behind a green dev build: `nova-agent` (always runs, mock provider only, must always stay green)
