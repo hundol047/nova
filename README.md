@@ -328,13 +328,56 @@ production-only failure never blocks it (see the `production` job in
 jobs).
 
 Full documentation: `docs/nova/architecture.md`, `deployment.md`, `security.md`,
-`clinical_safety.md`, `operations.md`, `runbook.md`. **What is explicitly NOT verified**: clinical
-validation, regulatory review, and institutional security review have not been performed --
-"production-grade code" here means the practices above are implemented and tested, not that any of
-those three have signed off (see `docs/nova/clinical_safety.md`'s own statement of this). The
-shipped `CaseRepository`/`AuditRepository` is process-memory-only; a real deployment needs a
-database-backed implementation of the same interfaces before case data survives a restart or is
-shared across replicas (see `docs/nova/deployment.md`).
+`clinical_safety.md`, `operations.md`, `runbook.md`.
+
+**A second production path, `backend/` (backend-integrated), also exists.** Rather than a second
+standalone API, `backend/app/services/nova_service.py` wraps the same, unmodified
+`nova_agent.orchestrator.DoctorAgent` behind this repository's existing SynexAgent FastAPI app
+(`backend/app/main.py`) -- reusing its real OIDC/session auth, RBAC, SQLite audit store, and
+idempotency infrastructure instead of a parallel implementation, and adding a genuine FHIR/EMR
+normalization bridge (`backend/app/services/nova_fhir_mapper.py`) that `production/` never had.
+Five new endpoints: `POST /v1/nova/cases`, `POST .../{id}/observations`, `POST .../{id}/decide`,
+`GET .../{id}`, `POST .../{id}/close`, plus `GET /ready` (distinct from `/health`) and
+`GET /v1/nova/metrics` (admin-only). Same clinical safety contract
+(`clinician_review_required: true`, a fixed safety banner, no endpoint ever touches a
+medication/lab order repository). Full documentation:
+`docs/NOVA_PRODUCTION_ARCHITECTURE.md`, `NOVA_SECURITY.md`, `NOVA_CLINICAL_SAFETY.md`,
+`NOVA_OPERATIONS.md`, `NOVA_DEPLOYMENT.md`, `NOVA_RUNBOOK.md`. Verified via a
+dedicated `production-backend` CI job (`.github/workflows/nova-ci.yml`, independent of every other
+job) covering 35 new backend tests (full lifecycle, the 4-role RBAC matrix, concurrent-case and
+concurrent-observation safety, FHIR-mapper unit coverage, prompt-injection/control-character
+rejection, circuit-breaker behavior), a load smoke test
+(`scripts/load_smoke_backend.py`), and a container build + `/health`+`/ready` smoke test.
+
+**What is explicitly NOT verified, for both paths**: clinical validation, regulatory review, and
+institutional security review have not been performed -- "production-grade code" here means the
+practices above are implemented and tested, not that any of those three have signed off (see
+`docs/nova/clinical_safety.md`/`docs/NOVA_CLINICAL_SAFETY.md`'s own statement of this). Both
+shipped case repositories (`production/repository.py`'s `CaseRepository` and
+`backend/app/services/nova_repository.py`'s `NovaCaseRepository`) are process-memory-only; a real
+deployment of either path needs a database-backed implementation of the same interface before case
+data survives a restart or is shared across replicas. `backend/`'s existing FHIR/OIDC/SMART code
+(reused unchanged by N.O.V.A.'s integration) has never been exercised against a real hospital IdP
+or FHIR server -- see `docs/NOVA_SECURITY.md`.
+
+### Production readiness matrix
+
+| Dimension | `production/` (standalone) | `backend/` (integrated) |
+|---|---|---|
+| CODE | READY | READY |
+| LOCAL VALIDATION | READY (181+53 tests, load smoke) | READY (483 tests incl. 35 new, load smoke) |
+| CONTAINER | PARTIAL (structurally verified; full build blocked by this dev sandbox's network, not CI) | PARTIAL (same sandbox limitation; different root cause -- registry rate-limit vs. PyPI access) |
+| PERSISTENCE | NOT VERIFIED (in-memory only; no DB-backed repository built) | NOT VERIFIED (in-memory only; no DB-backed repository built) |
+| AUTH | READY (API-key + RBAC, tested) | READY (reuses existing OIDC/session + RBAC, tested) |
+| FHIR INTEROP | N/A (no FHIR integration in this path) | PARTIAL (real mapping code exists and is unit-tested; never exercised against a real hospital FHIR server) |
+| REAL LLM | NOT VERIFIED (mock provider only, no live call made) | NOT VERIFIED (mock provider only, no live call made) |
+| CLINICAL VALIDATION | NOT VERIFIED | NOT VERIFIED |
+| SECURITY REVIEW | NOT VERIFIED | NOT VERIFIED |
+| REGULATORY REVIEW | NOT VERIFIED | NOT VERIFIED |
+
+Neither path should be described as "hospital-ready" on the strength of this matrix alone --
+CODE/LOCAL VALIDATION/AUTH being READY means the software does what it claims under test, not that
+it has cleared the four rows still marked NOT VERIFIED.
 
 ## 9. Known Limitations
 
@@ -481,6 +524,21 @@ shared across replicas (see `docs/nova/deployment.md`).
   `production` CI job builds the image and runs a container smoke test under GitHub Actions' normal
   network access on every push/PR -- check that job's latest run, not this note, for the current
   verified state.
+- **A second, backend-integrated production path now also exists (`backend/app/services/
+  nova_service.py` + `/v1/nova/*`), reusing this repository's existing SynexAgent FastAPI app's
+  auth/RBAC/audit/idempotency instead of a parallel implementation, plus a real FHIR/EMR
+  normalization bridge (`nova_fhir_mapper.py`) the standalone `production/` path never had.** See
+  the Production readiness matrix in section 8 for exactly what is/isn't verified on this path;
+  it carries the same NOT VERIFIED clinical-validation/regulatory/security-review status as
+  `production/`, plus its own disclosed gaps: `NovaCaseRepository` is process-memory-only (same
+  limitation `production/repository.py` has, not a new one); `nova_parse_failure` (one metric from
+  the original spec list) is not tracked, since `PatientState` does not expose a distinct
+  LLM-parse-failure counter separate from its general failure count and this was left absent
+  rather than fabricated from a signal that doesn't exist; the container build was verified
+  structurally, not end-to-end, in this development sandbox (blocked by Docker registry
+  rate-limiting pulling the frontend build stage's base image -- a different sandbox-network
+  limitation than the one `production/Dockerfile` hit, not a code defect either time) -- the
+  `production-backend` CI job builds and smoke-tests it for real under GitHub Actions.
 
 ## 10. Installation
 
@@ -513,13 +571,20 @@ nova_agent/       Independent, standalone clinical reasoning engine (no backend/
 competition/      Competition integration (adapter pattern; the only files an official API changes)
 production/       Decision-support API service layer (FastAPI, auth, persistence, audit,
                   observability) -- isolated from nova_agent/competition/submission; see section 8
+backend/app/services/nova_*.py, nova_schemas.py
+                  N.O.V.A. integration into the existing SynexAgent backend (FHIR/EMR bridge,
+                  service layer, production_guard, observability) -- see section 8, backend/tests/
+                  test_nova_*.py, and docs/NOVA_*.md
 evaluation/       Local benchmark harness: tuning + held-out cases, simulator, benchmark,
                   ablation, adversarial, tune, scoring, blind v3-v6 (all synthetic vignettes,
                   never real patient data)
 submission/       Standalone, backend-independent deployable package (run.py entrypoint)
 scripts/          build_nova_submission.py, preflight_competition.py, smoke_real_llm.py,
-                  load_smoke.py, check_eval_leakage.py, check_readme_numbers.py
-docs/nova/        Production architecture/deployment/security/clinical-safety/operations/runbook docs
+                  load_smoke.py, load_smoke_backend.py, check_eval_leakage.py, check_readme_numbers.py
+docs/nova/        production/ (standalone) architecture/deployment/security/clinical-safety/
+                  operations/runbook docs
+docs/NOVA_*.md    backend/ (integrated) architecture/deployment/security/clinical-safety/
+                  operations/runbook docs
 tests/            pytest suite (181 tests, including tests/test_production_*.py)
 ```
 

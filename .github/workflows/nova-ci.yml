@@ -182,3 +182,45 @@ jobs:
           curl -sf http://localhost:18080/ready | tee /tmp/ready.json
           python -c "import json,sys; d=json.load(open('/tmp/ready.json')); sys.exit(0 if d['ready'] else 1)"
           docker rm -f nova-prod-smoke
+
+  # Fully independent of `production` above (the standalone production/ package's own API) and of
+  # nova-agent/competition-readiness: this job covers N.O.V.A.'s OTHER production path -- backend/,
+  # which integrates nova_agent into this repo's existing SynexAgent FastAPI app (FHIR/OIDC/SMART/
+  # RBAC/audit reuse -- see backend/app/services/nova_service.py, docs/NOVA_PRODUCTION_ARCHITECTURE.md).
+  # A failure here never blocks the competition submission pipeline, and vice versa.
+  production-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install backend dependencies (includes nova_agent's pydantic requirement)
+        run: pip install -r backend/requirements-dev.txt
+
+      - name: Backend + N.O.V.A. integration tests (lifecycle, RBAC, concurrency, idempotency, FHIR mapper, reliability)
+        run: python -m pytest backend/tests/ -v
+
+      - name: N.O.V.A. load smoke (throughput / latency / error-rate / memory-growth regression guard)
+        run: python scripts/load_smoke_backend.py --cases 100 --concurrency 10 --max-p95-ms 3000
+
+      - name: Build production backend container image (includes nova_agent/, frontend/)
+        run: docker build -f docker/Dockerfile -t nova-synexagent:ci -t nova-synexagent:${{ github.sha }} .
+
+      - name: Container smoke test (start container, hit /health and /ready, stop it)
+        run: |
+          docker run -d --name nova-backend-smoke -p 18090:8000 nova-synexagent:ci
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:18090/health > /dev/null; then echo "health OK"; break; fi
+            if [ "$i" -eq 30 ]; then echo "container never became healthy"; docker logs nova-backend-smoke; exit 1; fi
+            sleep 1
+          done
+          curl -sf http://localhost:18090/ready | tee /tmp/backend-ready.json
+          # Default container env (AUTH_MODE=demo/EMR_MODE=demo/NOVA_LLM_PROVIDER=mock, no NOVA_ENV)
+          # is dev-shaped by design -- /ready must report true here; production_guard.py's stricter
+          # gate only activates under NOVA_ENV=production, exercised by the pytest suite above, not
+          # by this smoke test's default container env.
+          python -c "import json,sys; d=json.load(open('/tmp/backend-ready.json')); sys.exit(0 if d['ready'] else 1)"
+          docker rm -f nova-backend-smoke
