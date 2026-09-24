@@ -19,9 +19,12 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import TYPE_CHECKING, Dict, List, Optional
 
 from nova_agent.chief_complaint import _scores
+
+if TYPE_CHECKING:
+    from nova_agent.state import PatientState
 
 # A concept is included in ClinicalPresentation.symptoms once it clears this score -- lower than
 # chief_complaint.py's own single-best-tag threshold implicitly requires, since multi-concept
@@ -112,4 +115,47 @@ def extract_presentation(raw_text: str, *, past_medical_history: Optional[List[s
         medication_context=list(medications or []),
         demographic_context=dict(demographics or {}),
         confidence=confidence,
+    )
+
+
+def build_clinical_presentation(state: "PatientState") -> ClinicalPresentation:
+    """Re-derives ClinicalPresentation from the FULL current PatientState every turn, not just the
+    original presenting sentence -- so a later ASK/EXAM/TEST answer's own findings (e.g. "and my
+    right arm went numb too", volunteered on turn 4) feed candidate generation exactly the way the
+    initial chief complaint does, instead of being visible only through the disease-scoring layer's
+    own separate keyword matching (differential.py's `_score_disease`).
+
+    Only POSITIVE, already-negation-filtered evidence sources are scanned for concept matches:
+    `chief_complaint`, `symptoms`, `associated_symptoms`, and `pertinent_positives`.
+    `pertinent_negatives` is deliberately EXCLUDED -- `chief_complaint._scores()` (which this
+    function delegates to via `extract_presentation()`) has no negation awareness of its own;
+    feeding it already-denied text like "denies chest pain" would spuriously re-add a ruled-out
+    concept as if newly reported. `state.raw_history_facts` is ALSO deliberately excluded for the
+    same reason: unlike `pertinent_positives`/`associated_symptoms` (which `_absorb_answer()`
+    already splits into clause-level segments and filters by negation before storing),
+    `raw_history_facts` keeps the answer's FULL original text verbatim -- e.g. a single stored
+    entry like "[associated_symptoms] runny nose, sore throat; denies shortness of breath, denies
+    chest pain" -- so scanning it would re-inject the same denied "chest pain" text this function
+    is trying to keep out. (State.py's own `_absorb_answer()` already does the negation-aware
+    segment classification that sorts a free-text answer into `pertinent_positives` vs
+    `pertinent_negatives` in the first place -- this function trusts and reuses that classification
+    rather than re-deriving it from the raw, unsegmented text.)
+
+    At turn 0 (no observations recorded yet), every source besides `chief_complaint` is empty, so
+    this degrades to exactly `extract_presentation(state.chief_complaint, ...)` -- the pre-existing
+    behavior for a case's very first decide() call is unchanged."""
+    positive_sources = [
+        state.chief_complaint,
+        *state.symptoms,
+        *state.associated_symptoms,
+        *state.pertinent_positives,
+    ]
+    combined_text = " ".join(s for s in positive_sources if s)
+    demographics = (state.demographics.model_dump()
+                    if hasattr(state.demographics, "model_dump") else dict(state.demographics or {}))
+    return extract_presentation(
+        combined_text,
+        past_medical_history=list(state.past_medical_history) + list(state.social_history),
+        medications=list(state.medication_text) + [m.name for m in state.medications],
+        demographics=demographics,
     )

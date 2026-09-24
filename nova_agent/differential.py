@@ -16,14 +16,14 @@ from typing import List, Literal, Optional
 from pydantic import BaseModel
 
 from nova_agent.candidate_generator import generate_candidates
-from nova_agent.clinical_presentation import extract_presentation
+from nova_agent.clinical_presentation import build_clinical_presentation
 from nova_agent.config import get_config
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
     HYPOGLYCEMIA_THRESHOLD_MG_DL,
     extract_glucose_mg_dl,
 )
-from nova_agent.matching import feature_denied, feature_present
+from nova_agent.matching import content_word_count, feature_denied, feature_present
 from nova_agent.severity_evidence import ELEVATED_LACTATE_MMOL_L, extract_lactate_mmol_l
 from nova_agent.state import DifferentialSnapshot, PatientState
 
@@ -90,6 +90,26 @@ def _present_with_aliases(phrase: str, findings: List[str]) -> bool:
         if feature_present(alias, findings, scrub_negated_spans=True):
             return True
     return False
+
+
+_SPECIFICITY_STEP = 0.25
+_SPECIFICITY_CAP = 2.0
+
+
+def _specificity_multiplier(phrase: str) -> float:
+    """A `typical_features` phrase's own word count as a proxy for how DISCRIMINATIVE a match on
+    it is. A bare one-word overlap like "cough" is weak, non-specific evidence -- it is, by
+    definition, a `typical_feature` of every disease the knowledge base tags with it, several of
+    which any single case might match at once -- whereas a precise multi-word phrase like "chest
+    wall soreness from coughing" found verbatim is far stronger, disease-specific evidence. Purely
+    a function of the KB phrase's own content-word count (via matching.py's shared stemmer/
+    stopword logic, so it agrees with what actually counted toward the match) -- never tied to any
+    particular disease id or evaluation case. Capped so no single feature can dominate a disease's
+    whole score, and floored at the original flat FEATURE_WEIGHT for a single-word phrase (this
+    change only ever ADDS weight for a longer, more specific phrase, never removes any for the
+    previously-flat case)."""
+    word_count = max(1, content_word_count(phrase))
+    return min(_SPECIFICITY_CAP, 1.0 + _SPECIFICITY_STEP * (word_count - 1))
 
 
 def _strip_negative_prefix(feature: str) -> Optional[str]:
@@ -216,8 +236,9 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
     max_possible = 0.0
 
     for feature in entry.get("typical_features", []):
-        max_possible += FEATURE_WEIGHT
-        score += _score_phrase(feature, FEATURE_WEIGHT, findings, negatives, supporting, contradictory, missing)
+        weight = FEATURE_WEIGHT * _specificity_multiplier(feature)
+        max_possible += weight
+        score += _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
@@ -287,13 +308,12 @@ class DifferentialEngine:
         # extraction (clinical_presentation.py) plus risk/objective/safety sourcing
         # (candidate_generator.py) build a provenance-tagged pool from everything already known
         # about the case, not just the presenting sentence.
-        presentation = extract_presentation(
-            state.chief_complaint,
-            past_medical_history=list(state.past_medical_history) + list(state.social_history),
-            medications=list(state.medication_text) + [m.name for m in state.medications],
-            demographics=state.demographics.model_dump()
-            if hasattr(state.demographics, "model_dump") else dict(state.demographics or {}),
-        )
+        # Rebuilt from the FULL current state every turn (chief_complaint + everything volunteered
+        # or elicited since) -- not just the original presenting sentence. See
+        # clinical_presentation.build_clinical_presentation()'s own docstring for why this is safe
+        # (only positive-evidence sources are scanned) and why it degrades to the old
+        # chief-complaint-only behavior on a case's first turn.
+        presentation = build_clinical_presentation(state)
         candidate_records = generate_candidates(
             presentation,
             glucose_result_text=state.laboratory_tests.get("glucose_point_of_care"),

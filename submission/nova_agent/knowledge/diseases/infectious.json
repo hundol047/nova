@@ -128,7 +128,8 @@
       "상기도감염"
     ],
     "chief_complaint_tags": [
-      "fever"
+      "fever",
+      "cough"
     ],
     "category": "infectious",
     "dangerous": false,

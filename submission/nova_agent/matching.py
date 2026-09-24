@@ -50,6 +50,12 @@ def _content_words(text: str) -> Set[str]:
     return {_stem(w) for w in words if w and w not in _IGNORED}
 
 
+def content_word_count(text: str) -> int:
+    """Public wrapper around `_content_words()` -- differential.py uses this to weight a matched
+    knowledge-base phrase by its own specificity (see `_specificity_multiplier()` there)."""
+    return len(_content_words(text))
+
+
 def _strip_negated_spans(text: str) -> str:
     return _NEGATED_SPAN_PATTERN.sub(" ", text)
 
