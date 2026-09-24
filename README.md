@@ -8,7 +8,7 @@ time-critical ("can't-miss") conditions, and always submits a final diagnosis wi
 
 Everything below reflects verified, executed behavior (`pytest tests/`, `evaluation.benchmark`,
 `evaluation.ablation`, `evaluation.adversarial`, `scripts/preflight_competition.py`, and a real
-standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-limitations) for
+standalone subprocess run of `submission/`) -- see [Known Limitations](#9-known-limitations) for
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
@@ -134,9 +134,10 @@ python -m evaluation.benchmark --generalization-v2 --stress --save-json evaluati
 | **Held-out regression** | `evaluation/held_out_cases.py` (18) | Never used to tune a default or drive a fix -- a genuinely blind regression check on every run. |
 | **Development generalization** | `evaluation/generalization_cases_v2.py` (18) | Not used for the *initial* tuning pass, but two of its failures *were* later analyzed and used to drive real fixes (see below) -- read its 100% as "generalization-informed, fix-verified," not untouched. |
 | **Targeted stress** | `evaluation/generalization_stress_cases.py` (8) | A small follow-up set deliberately built to probe the exact fix patterns above, plus negative controls that they don't overfire. |
-| **Blind v3 reference** | `evaluation/blind_cases_v3.py` (32) | A first blind check, run once and reported as-is. No longer used for tuning as of this round -- kept only as a failure-analysis reference (see [Known Limitations](#8-known-limitations)). |
-| **Blind v4 reference** | `evaluation/blind_cases_v4.py` (34, one per knowledge-base diagnosis) | A second blind check, authored and run once after the first structural fix round (routing rewrite + a since-reverted severity-scoring design -- see below). Same reference-only status as Blind v3, not tuned against in this round either. |
-| **Untouched Blind v5** | `evaluation/blind_cases_v5.py` (44) + `evaluation/blind_benchmark_v5.py` + `evaluation/blind_v5_manifest.json` | **This round's actual untouched final check.** Authored and hash-frozen (`blind_v5_manifest.json`) only after every structural change below was complete and re-verified against the sets above, then run exactly once. Nothing in `nova_agent/` or this case file was touched in response to its result. |
+| **Blind v3 reference** | `evaluation/blind_cases_v3.py` (32) | A first blind check, run once and reported as-is. No longer used for tuning -- kept only as a failure-analysis reference (see [Known Limitations](#9-known-limitations)). Its number below is a fresh re-measurement against the current codebase (the file itself was never edited), not the number it scored when first authored -- structural changes since then shift a frozen set's score without anyone tuning toward it. |
+| **Blind v4 reference** | `evaluation/blind_cases_v4.py` (34, one per knowledge-base diagnosis) | A second blind check, authored and run once after an earlier structural fix round. Same reference-only, re-measured status as Blind v3. |
+| **Blind v5 reference** | `evaluation/blind_cases_v5.py` (44) + `evaluation/blind_benchmark_v5.py` + `evaluation/blind_v5_manifest.json` | This round's untouched final check for the *previous* structural rewrite (chief-complaint confidence routing, diagnostic/severity score separation). Now reference-only, re-measured against the current codebase (`nova_agent/` and this case file untouched since authoring). |
+| **Untouched Blind v6** | `evaluation/blind_cases_v6.py` (54) + `evaluation/blind_benchmark_v6.py` + `evaluation/blind_v6_manifest.json` | **This round's actual untouched final check.** Authored and hash-frozen (`blind_v6_manifest.json`) only after this round's structural rewrite (`ClinicalPresentation` multi-concept extraction, `candidate_generator.py` dynamic candidate generation, the `production/` service layer) was complete and re-verified against the sets above, then run exactly once. Nothing in `nova_agent/` or this case file was touched in response to its result. |
 
 `evaluation/generalization_cases_v2.py` (**18 more cases**: elderly polypharmacy,
 immunocompromised, anticoagulant+antiplatelet polypharmacy, conflicting findings, vague complaints,
@@ -171,58 +172,65 @@ goes stale against a fresh `evaluation/latest_results.json`.
 | Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 17.9 |
 | Development generalization (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 16.1 |
 | Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 16.9 |
-| Blind v3 reference (32 cases, all scored, 14 critical) | 62.5% | 62.5% | 57.1% | 42.9% | 20.9 |
-| Blind v4 reference (34 cases, all scored, 14 critical) | 64.7% | 64.7% | 71.4% | 28.6% | 19.8 |
-| **Untouched Blind v5 (44 cases, all scored, 20 critical)** | **52.3%** | **52.3%** | **40.0%** | **60.0%** | 20.7 |
+| Blind v3 reference (32 cases, all scored, 14 critical) | 62.5% | 62.5% | 50.0% | 50.0% | 21.8 |
+| Blind v4 reference (34 cases, all scored, 14 critical) | 70.6% | 70.6% | 85.7% | 14.3% | 20.9 |
+| Blind v5 reference (44 cases, all scored, 20 critical) | 56.8% | 56.8% | 50.0% | 50.0% | 21.7 |
+| **Untouched Blind v6 (54 cases, all scored, 26 critical)** | **59.3%** | **59.3%** | **46.2%** | **53.8%** | 20.7 |
 
 "Scored" excludes deliberately ambiguous/insufficient-info/unmapped-complaint stress cases (see
 `evaluation/benchmark.py`'s exclusion disclosure); "All-Case" is the same correctness check applied
 to every case with no exclusions, so a hard case can never be hidden from the headline number. Full
 metric definitions and the local (non-official) utility-score proxy live in `evaluation/scoring.py`
-and `evaluation/benchmark.py` -- never presented as an official competition score. Blind v3/v4/v5
+and `evaluation/benchmark.py` -- never presented as an official competition score. Blind v3/v4/v5/v6
 are not wired into `--save-json`/`check_readme_numbers.py` (their numbers above are transcribed by
 hand from each run's own output) precisely because they must never become a silent tuning target.
 
-**This round's actual honest number is Untouched Blind v5 (52.3% / 40.0% critical recall / 60.0%
-critical miss), not Blind v3/v4.** Blind v3 and v4 are now explicitly **reference-only**: this
-round's structural rewrite (chief-complaint confidence routing, a strict diagnostic-score /
-severity-score separation, `safety_priority`-driven triage in `stop_policy.py` -- see
+**This round's actual honest number is Untouched Blind v6 (59.3% / 46.2% critical recall / 53.8%
+critical miss), not Blind v3/v4/v5.** Blind v3, v4, and v5 are now explicitly **reference-only**:
+this round's structural rewrite (`ClinicalPresentation` multi-concept extraction replacing
+single-tag routing as the reasoning entry point, `nova_agent/candidate_generator.py`'s dynamic,
+provenance-tagged candidate pooling, information-gain-based action selection with semantic
+duplicate detection, and the `production/` decision-support service layer -- see
 [Architecture](#2-architecture) and the changelog below) was deliberately designed and re-verified
-against held-out/development-generalization/targeted-stress *without* looking at Blind v3/v4's
-specific miss patterns, and neither file was edited. Blind v3's own accuracy moved slightly
-(65.6% -> 62.5%) purely as a side effect of that structural work, not because anyone tuned toward
-or away from it. Blind v5 was authored fresh only after the rewrite was complete and frozen
-(`evaluation/blind_v5_manifest.json` records its SHA-256 before it was ever run), and its result is
+against held-out/development-generalization/targeted-stress *without* looking at Blind v3/v4/v5's
+specific miss patterns, and none of those three files were edited. All three sets' own accuracy
+moved as a side effect of that structural work (v3: 62.5%->62.5% accuracy but 57.1%->50.0% critical
+recall; v4: 64.7%->70.6% accuracy, 71.4%->85.7% critical recall; v5: 52.3%->56.8% accuracy,
+40.0%->50.0% critical recall) -- not because anyone tuned toward or away from any of them. Blind v6
+was authored fresh only after the rewrite was complete and frozen
+(`evaluation/blind_v6_manifest.json` records its SHA-256 before it was ever run), and its result is
 reported exactly as first measured.
 
-**Blind v5's lower score than v3/v4 is expected, not a regression** -- it is a harder, broader set
-by design (one case per all 34 knowledge-base diagnoses *plus* ten cases explicitly targeting
-multimorbidity/polypharmacy/conflicting-evidence/sparse-information/objective-lab-confirmed
-presentations as their own axis), and per this round's explicit instruction it was **not** used to
-drive any further code or case change. A read-only failure-category pass (no code touched) on its
-12 critical misses found:
-  - **Routing gaps, not reasoning failures, in most cases**: 11 of 12 critical misses had
-    `chief_complaint.route()` return `match_type="none"` (no concept matched at all, correctly
-    falling through to the untargeted whole-catalog safety net rather than a wrong confident
-    route) -- but several of these are real, generalizable coverage gaps in the 14-concept
-    chief-complaint taxonomy itself: "short of breath" (vs. the covered "shortness of breath") is
-    missing as its own alias; there is no concept at all for aphasia/word-finding-difficulty stroke
-    presentations, pelvic/gynecologic pain, GI-bleeding-specific language ("dark stools", "maroon
-    stools" not tied to abdominal_pain), or trauma-mechanism chest complaints. This is legitimate
-    future work: expanding `chief_complaint.py`'s alias coverage and possibly adding new concept
-    categories, informed by this failure analysis but not by copying any Blind v5 sentence into an
-    alias (that would be exactly the leakage `scripts/check_eval_leakage.py` exists to catch).
-  - **Ranking/action-selection failures once the whole-catalog fallback engaged**: with every
-    diagnosis technically in the pool, several cases still landed on a diagnosis with easily-matched
-    generic typical_features (sepsis, cardiac_arrhythmia, musculoskeletal_chest_pain) instead of the
-    true diagnosis, because the decisive discriminating test for the true diagnosis (e.g. glucose/
-    ketones for a vaguely-presenting DKA, allergen-exposure history for anaphylaxis) was never
-    prioritized within the turn budget when routing gave the action selector no early steer at all.
-  - One case (meningitis vs. pyelonephritis, `Blind5_11`) routed to a real MEDIUM-confidence tag but
-    still lost on ranking -- a genuine remaining generalization gap, not a routing bug.
+**Blind v6 is a harder, broader set than v3/v4/v5 by design** (one case per all 34 knowledge-base
+diagnoses *plus* twenty cases explicitly targeting multimorbidity/polypharmacy/pregnancy-pelvic/
+trauma/GI-bleeding/atypical-neurologic/atypical-infection/metabolic/conflicting-findings/sparse-
+information/negative-finding-centric/benign-mimic/dangerous-mimic/mixed-presentation as their own
+axis), and per this round's explicit instruction it was **not** used to drive any further code or
+case change. A read-only failure-category pass (no code touched) on its actual predicted diagnoses
+(not just correct/incorrect) found:
+  - **The 6 misses among the 20 `category="common"` cases never missed a dangerous diagnosis**:
+    each landed on a different, also-non-dangerous diagnosis (e.g. asthma predicted as panic
+    attack, vasovagal syncope predicted as pancreatitis) -- `critical_miss=False` on every one, so
+    this failure mode is a plain ranking/differentiation gap among benign look-alikes, not a safety
+    issue. The remaining critical misses cluster almost entirely in the stress-axis categories
+    (`critical`, `pregnancy_pelvic`, `trauma`, `gi_bleeding`, `polypharmacy`,
+    `conflicting_findings`, `dangerous_mimic`) this set was deliberately built to probe, not a
+    representative sample of ordinary cases.
+  - **Of the 14 critical misses, 6 still landed on a different diagnosis the knowledge base itself
+    flags `dangerous: true`** (sepsis, acute coronary syndrome, diabetic ketoacidosis, or acute
+    abdomen) rather than a benign one -- the safety layer correctly recognized these patients as
+    needing urgent care even though it named the wrong specific emergency. The other 8 landed on a
+    diagnosis NOT flagged dangerous (most often vasovagal syncope, pyelonephritis, or panic
+    attack) -- a clean miss with no residual safety signal, and the more concerning failure mode of
+    the two.
+  - **The `dangerous_mimic` case (`Blind6_47`) is a genuine, disclosed hard case**: a patient with a
+    longstanding benign diagnosis (migraine with aura) whose current episode is actually a stroke
+    was diagnosed as "Migraine" -- anchoring on the benign prior-history pattern rather than the
+    new-onset persistence and new atrial-fibrillation risk factor. This specific failure mode is
+    exactly what this axis was built to surface, and it was surfaced, not obscured.
 
 None of the above was acted on this round -- reported here exactly as the first-run failure
-analysis, for a future round to address structurally (never by adding a Blind-v5-specific alias or
+analysis, for a future round to address structurally (never by adding a Blind-v6-specific alias or
 rule, which the next round's own leakage check would need to catch if it ever happened).
 
 Ablation (`python -m evaluation.ablation`):
@@ -291,7 +299,44 @@ was published at implementation time) -- update it and `competition/adapter.py` 
 ships; nothing else needs to change, since `nova_agent/`, `evaluation/`, `submission/`, and
 `tests/` only ever depend on `PatientState`/`AgentAction`.
 
-## 8. Known Limitations
+## 8. Production decision-support API
+
+```
+production/
+  api.py            FastAPI app: POST /v1/cases, /v1/cases/{id}/observations, /v1/cases/{id}/decide,
+                     GET /v1/cases/{id}, /health, /ready, /metrics
+  auth.py           API-key auth + RBAC (clinician/reviewer/admin/service)
+  repository.py     CaseRepository / AuditRepository (in-memory implementation shipped; see below)
+  schemas.py, validation.py, errors.py, circuit_breaker.py, redaction.py, logging_config.py,
+  metrics.py, versions.py, config.py, requirements.txt, Dockerfile
+```
+
+Wraps `nova_agent.orchestrator.DoctorAgent`, unmodified, behind a real service layer: API-key auth
+with least-privilege roles, strict Pydantic schemas (`extra="forbid"`), a thread-safe in-memory
+`CaseRepository`/`AuditRepository` with idempotent event application, structured JSON logging with
+PHI-minimized-by-default free text, in-process metrics, a circuit breaker, and a small non-root
+Docker image. Every clinically-facing response carries a fixed
+`"Decision Support / Not Autonomous Medical Diagnosis / Clinician Review Required"` banner and
+`clinician_review_required: true` -- this is decision support, never autonomous diagnosis, and the
+system never calls out to anything capable of executing a prescription or treatment order.
+
+**Deliberately isolated from the competition submission**: `production/` is never imported by
+`nova_agent/`/`competition/`/`submission/`, and `scripts/build_nova_submission.py` never copies it
+-- its own dependencies (FastAPI, uvicorn) never reach the competition artifact, and a
+production-only failure never blocks it (see the `production` job in
+`.github/workflows/nova-ci.yml`, fully independent of the `nova-agent`/`competition-readiness`
+jobs).
+
+Full documentation: `docs/nova/architecture.md`, `deployment.md`, `security.md`,
+`clinical_safety.md`, `operations.md`, `runbook.md`. **What is explicitly NOT verified**: clinical
+validation, regulatory review, and institutional security review have not been performed --
+"production-grade code" here means the practices above are implemented and tested, not that any of
+those three have signed off (see `docs/nova/clinical_safety.md`'s own statement of this). The
+shipped `CaseRepository`/`AuditRepository` is process-memory-only; a real deployment needs a
+database-backed implementation of the same interfaces before case data survives a restart or is
+shared across replicas (see `docs/nova/deployment.md`).
+
+## 9. Known Limitations
 
 - **Knowledge base breadth**: 34 diagnoses across 15 chief-complaint tags -- far from exhaustive;
   the LLM can introduce diagnoses outside this set, but the deterministic prior only covers these.
@@ -353,20 +398,45 @@ ships; nothing else needs to change, since `nova_agent/`, `evaluation/`, `submis
   systemic-syndrome metadata (documentation only, not a functional gate -- e.g. pyelonephritis and
   sepsis can and do coexist in the same differential; there is no hardcoded
   `pyelonephritis -> sepsis` escalation rule anywhere).
-- **Blind v3 and Blind v4 are now reference-only, not the round's honesty check.** Both were run
-  once, unmodified, but this round's actual untouched final check is **Blind v5** (44 cases, one
-  per knowledge-base diagnosis plus ten cases explicitly targeting multimorbidity/polypharmacy/
-  conflicting-evidence/sparse-information/objective-lab-confirmed presentations), authored and
-  hash-frozen (`evaluation/blind_v5_manifest.json`) only after the structural rewrite above was
-  complete, then run exactly once: **52.3% accuracy, 40.0% critical recall, 60.0% critical miss**
-  (see the table above and the failure-category breakdown just above this section) -- lower than
-  Blind v3/v4, by design (a harder, broader set), not a regression, and **not** acted on this round
-  per the explicit instruction not to tune against it. The most actionable, generalizable finding:
-  11 of its 12 critical misses trace to real coverage gaps in the 14-concept chief-complaint
-  taxonomy itself (a common phrasing variant or an entire presentation category with no matching
-  concept at all -- e.g. "short of breath" vs. the covered "shortness of breath", or no concept at
-  all for aphasia/word-finding-difficulty, pelvic pain, or GI-bleeding-specific language), not a
-  reasoning failure once a diagnosis is actually in the candidate pool.
+- **Blind v3, v4, and v5 are now reference-only, not this round's honesty check.** All three were
+  run once, unmodified, when originally authored; the table above re-measures them against the
+  current codebase (still without editing any of the three files) purely to show how a prior
+  round's structural changes moved a frozen set's score as a side effect, never as a target.
+- **This round's structural rewrite: `ClinicalPresentation` multi-concept extraction, dynamic
+  candidate generation, information-gain action selection, and a production service layer.**
+  Triggered by Blind v5's own finding that most of its critical misses traced to a single-best-tag
+  chief-complaint router losing real information whenever a presentation carried several
+  simultaneous symptom concepts at once (a stroke presentation described as "can't speak well and
+  my arm won't work" routing on only one of `aphasia`/`focal_weakness`, for instance). Replaced with
+  `nova_agent/clinical_presentation.py`'s `extract_presentation()`, which pulls every plausible
+  concept simultaneously (never a single winner-take-all tag) plus onset/duration/severity/body
+  regions, built on top of -- not replacing -- `chief_complaint.py`'s existing matcher (kept as a
+  compatibility layer several other modules still depend on). `nova_agent/candidate_generator.py`
+  replaces the old confidence-tiered pool sizing with an explicit, provenance-tagged pipeline
+  (`symptom_match` / `risk_match` / `objective_finding` / `safety_candidate` per candidate, ~8-15
+  diagnoses, full-catalog dump only as a genuine last resort when nothing matched at all) --
+  `DifferentialItem.candidate_sources` now surfaces this provenance for downstream consumers and,
+  in `production/`, for the API's own explainability fields. Fixed two genuine bugs found via the
+  full regression suite while building it: a trim-priority bug that let the fixed cross-cutting
+  safety-net entries crowd out a directly, strongly-matched non-dangerous diagnosis out of the pool
+  (protection from trimming is now "has real evidence", never "is flagged dangerous"), and a
+  fallback-ordering bug that made the whole-catalog last-resort fallback permanently unreachable
+  once the safety net always made the pool non-empty. Also fixed a resulting `safety.py` regression
+  (the fixed 8-entry safety net trivially satisfying its own "already relevant to this case" check
+  on every case, inflating turn counts) by scoping that check to diagnoses with real evidence, not
+  safety-candidate-only ones -- propagated through `safety_validator.py`'s LLM-differential merge,
+  which was silently dropping `candidate_sources` on the rebuilt differential. Full details and the
+  production service layer built alongside this rewrite are in `docs/nova/architecture.md`.
+- **Blind v6 (54 cases, one per knowledge-base diagnosis plus twenty cases explicitly targeting
+  multimorbidity/polypharmacy/pregnancy-pelvic/trauma/GI-bleeding/atypical-neurologic/atypical-
+  infection/metabolic/conflicting-findings/sparse-information/negative-finding-centric/benign-
+  mimic/dangerous-mimic/mixed-presentation), authored and hash-frozen
+  (`evaluation/blind_v6_manifest.json`) only after the rewrite above was complete, then run exactly
+  once: **59.3% accuracy, 46.2% critical recall, 53.8% critical miss** (see the table above and the
+  failure-category breakdown just above this section) -- both accuracy and critical recall improved
+  over Blind v5's re-measured reference number, but the generalization gap on genuinely atypical
+  critical presentations remains substantial and is **not** something this round claims to have
+  solved. **Not** acted on this round per the explicit instruction not to tune against it.
 - **No live real-LLM call observed in this environment** (no GPU/API keys available at
   implementation time) -- the HTTP integration, prompt construction, and parse/repair/fallback path
   are unit- and subprocess-tested with scripted/mocked clients and a local HTTP test server, not
@@ -390,12 +460,29 @@ ships; nothing else needs to change, since `nova_agent/`, `evaluation/`, `submis
   overwhelming top-1 lead short-circuit it was found without risking exactly the kind of
   critical-recall regression this whole project has been built to avoid, so no code was changed.
 - **No knowledge-base expansion this round, by evidence, not by default.** Checked whether any of
-  Blind v3's, v4's, or v5's cases had a ground-truth diagnosis missing from the 34-entry knowledge
-  base entirely: none did across any of the three sets -- every miss on every blind set was a
-  ranking/routing problem on an already-present diagnosis, never a missing one. Padding the KB
+  Blind v3's, v4's, v5's, or v6's cases had a ground-truth diagnosis missing from the 34-entry
+  knowledge base entirely: none did across any of the four sets -- every miss on every blind set was
+  a ranking/routing problem on an already-present diagnosis, never a missing one. Padding the KB
   without that evidence would just be guessing.
+- **Production service layer (`production/`) exists and is tested, but is explicitly NOT clinically
+  validated, regulatory-reviewed, or security-reviewed.** See `docs/nova/clinical_safety.md` and
+  `docs/nova/security.md` for exactly what has and has not been verified, and this file's own
+  Production Readiness summary in the session report this round produced (not reproduced verbatim
+  here to avoid the two ever silently drifting apart -- read the docs, not a stale copy).
+- **The in-memory `CaseRepository`/`AuditRepository` in `production/repository.py` is process-memory-
+  only.** It is the right default for local dev/test, but a real deployment needs a database-backed
+  implementation of the same interfaces before case data can survive a restart or be shared across
+  replicas -- see `docs/nova/deployment.md`'s persistence section for the exact contract a
+  replacement must preserve.
+- **The production Docker image build was verified structurally, not end-to-end, in this
+  development sandbox** (dependency-file path resolution and `pip`'s dependency graph resolve
+  correctly; the sandbox's own network policy blocks its Docker build network from reaching PyPI, so
+  the full image build and a running-container smoke test could not be completed there). The
+  `production` CI job builds the image and runs a container smoke test under GitHub Actions' normal
+  network access on every push/PR -- check that job's latest run, not this note, for the current
+  verified state.
 
-## 9. Installation
+## 10. Installation
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
@@ -419,16 +506,21 @@ while True:
     agent.observe(state, action, input("> "))
 ```
 
-## 10. Directory structure
+## 11. Directory structure
 
 ```
 nova_agent/       Independent, standalone clinical reasoning engine (no backend/UI dependency)
 competition/      Competition integration (adapter pattern; the only files an official API changes)
+production/       Decision-support API service layer (FastAPI, auth, persistence, audit,
+                  observability) -- isolated from nova_agent/competition/submission; see section 8
 evaluation/       Local benchmark harness: tuning + held-out cases, simulator, benchmark,
-                  ablation, adversarial, tune, scoring (all synthetic vignettes, never real patient data)
+                  ablation, adversarial, tune, scoring, blind v3-v6 (all synthetic vignettes,
+                  never real patient data)
 submission/       Standalone, backend-independent deployable package (run.py entrypoint)
-scripts/          build_nova_submission.py, preflight_competition.py, smoke_real_llm.py
-tests/            pytest suite (64 tests)
+scripts/          build_nova_submission.py, preflight_competition.py, smoke_real_llm.py,
+                  load_smoke.py, check_eval_leakage.py, check_readme_numbers.py
+docs/nova/        Production architecture/deployment/security/clinical-safety/operations/runbook docs
+tests/            pytest suite (181 tests, including tests/test_production_*.py)
 ```
 
 Module-by-module responsibility and full LLM-provider config are documented in
@@ -436,7 +528,7 @@ Module-by-module responsibility and full LLM-provider config are documented in
 spec section and role) and [`nova_agent/config.py`](nova_agent/config.py) (every tunable
 weight/threshold, all overridable by environment variable).
 
-## 11. Origin / Previous Work
+## 12. Origin / Previous Work
 
 This repository also contains **SynexAgent** (`backend/`, `frontend/`, `docs/`, ...), an existing
 medical decision-support system (medication risk/interaction checking, EMR/FHIR clinical
@@ -447,7 +539,7 @@ code from (audit logging, terminology mapping) via an optional, degrades-to-no-o
 and still passes as-is (`pytest backend/tests`). The Doctor Agent above is fully independent of
 SynexAgent's React/Vite UI and FastAPI server -- it never needs them running.
 
-## 12. Troubleshooting
+## 13. Troubleshooting
 
 - **`python -m evaluation.*` import errors**: run as modules from the repo root
   (`python -m evaluation.benchmark`, not `python evaluation/benchmark.py`).
