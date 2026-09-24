@@ -143,3 +143,42 @@ jobs:
 
       - name: Real-LLM smoke test (real secrets configured -- must succeed, not just fall back)
         run: python scripts/smoke_real_llm.py
+
+  # Deliberately a SEPARATE job from both of the above: production/ has its own dependency surface
+  # (FastAPI/uvicorn on top of nova_agent's runtime deps -- see production/requirements.txt) and is
+  # never referenced by scripts/build_nova_submission.py, so a production-only failure here must
+  # never block or gate the competition submission artifact, and vice versa.
+  production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install production API dependencies (nova_agent runtime + FastAPI/uvicorn)
+        run: |
+          pip install -r production/requirements.txt
+          pip install -r requirements-nova-dev.txt
+
+      - name: Production unit + integration + concurrency + failure-injection tests
+        run: python -m pytest tests/test_production_api.py tests/test_production_repository.py tests/test_production_reliability.py tests/test_production_units.py -v
+
+      - name: Load smoke (throughput / latency / error-rate / memory-growth regression guard)
+        run: python scripts/load_smoke.py --cases 150 --concurrency 15 --max-p95-ms 3000
+
+      - name: Build production container image
+        run: docker build -f production/Dockerfile -t nova-doctor-agent:ci -t nova-doctor-agent:${{ github.sha }} .
+
+      - name: Container smoke test (start container, hit /health and /ready, stop it)
+        run: |
+          docker run -d --name nova-prod-smoke -p 18080:8000 -e NOVA_REQUIRE_AUTH=false nova-doctor-agent:ci
+          for i in $(seq 1 20); do
+            if curl -sf http://localhost:18080/health > /dev/null; then echo "health OK"; break; fi
+            if [ "$i" -eq 20 ]; then echo "container never became healthy"; docker logs nova-prod-smoke; exit 1; fi
+            sleep 1
+          done
+          curl -sf http://localhost:18080/ready | tee /tmp/ready.json
+          python -c "import json,sys; d=json.load(open('/tmp/ready.json')); sys.exit(0 if d['ready'] else 1)"
+          docker rm -f nova-prod-smoke
