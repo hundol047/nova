@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -160,16 +161,25 @@ def main() -> int:
               severity="warn")
 
     # --- secret leakage (light static scan) -----------------------------------------------------
+    # Same shape/patterns as scripts/build_nova_submission.py's own (gating) secret scan --
+    # anchored regexes requiring an actual credential-shaped run of characters after the prefix,
+    # not a bare substring check. A bare "sk-" substring check previously flagged ordinary English
+    # text like "risk-only" or "desk-side" as a false positive; these patterns don't.
     suspicious = []
-    patterns = ("sk-", "-----BEGIN", "AKIA")
+    secret_patterns = [re.compile(p) for p in (
+        r"sk-[A-Za-z0-9]{16,}",
+        r"sk-ant-[A-Za-z0-9\-_]{16,}",
+        r"-----BEGIN [A-Z ]*PRIVATE KEY-----",
+        r"AKIA[0-9A-Z]{16}",
+    )]
     for path in list((ROOT / "nova_agent").rglob("*.py")) + list((ROOT / "competition").rglob("*.py")):
         try:
             text = path.read_text(encoding="utf-8", errors="ignore")
         except Exception:
             continue
-        for pat in patterns:
-            if pat in text:
-                suspicious.append(f"{path.relative_to(ROOT)} contains {pat!r}")
+        for pat in secret_patterns:
+            if pat.search(text):
+                suspicious.append(f"{path.relative_to(ROOT)} matches {pat.pattern!r}")
     check("secret_scan", not suspicious, "no suspicious credential-shaped strings found in nova_agent/competition"
           if not suspicious else "; ".join(suspicious))
 
