@@ -1,0 +1,48 @@
+# Production-like overlay: `docker compose -f docker-compose.yml -f docker-compose.production.yml up`
+#
+# Adds Redis (shared session/idempotency/auth-session state across replicas -- see
+# services/idempotency.py, services/smart_launch.py, services/auth.py, all of which already
+# support SYNEX_REDIS_URL as an alternative to their SQLite-file default) and Postgres, started
+# here for local rehearsal of a production-shaped topology -- backend/app itself does not yet have
+# a Postgres-backed AuditRepository/NovaCaseRepository (both are SQLite/in-memory today; see
+# docs/NOVA_DEPLOYMENT.md's Remaining blockers). Starting Postgres here documents the intended
+# target and lets an operator rehearse networking/secrets wiring before that repository swap ships;
+# it is not yet consumed by the running app.
+#
+# Real secrets (OIDC_ISSUER/OIDC_AUDIENCE, FHIR_BASE_URL/FHIR_CLIENT_ID/FHIR_CLIENT_SECRET,
+# NOVA_LLM_PROVIDER + its API key, POSTGRES_PASSWORD) are intentionally NOT set here -- pass them
+# via `docker compose --env-file` or the deployment platform's own secret manager, never baked into
+# this file or the image (see docker/Dockerfile's own no-baked-secrets note).
+services:
+  synexagent:
+    environment:
+      NOVA_ENV: production
+      SYNEX_REDIS_URL: redis://redis:6379/0
+      # AUTH_MODE/EMR_MODE/NOVA_LLM_PROVIDER/CDS_AUTH_MODE/OIDC_*/FHIR_* are deliberately left unset
+      # here -- services/production_guard.py's validate_production_startup() fails the container
+      # fast at boot if any required one is still missing, rather than this file silently supplying
+      # a demo-shaped default under NOVA_ENV=production.
+    depends_on:
+      - redis
+      - postgres
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - synex-redis:/data
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: synexagent
+      POSTGRES_USER: synexagent
+      # POSTGRES_PASSWORD intentionally unset here -- supply via --env-file or a secret manager.
+    restart: unless-stopped
+    volumes:
+      - synex-postgres:/var/lib/postgresql/data
+
+volumes:
+  synex-redis:
+  synex-postgres:

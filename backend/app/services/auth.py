@@ -64,11 +64,21 @@ _CLINICIAN_WRITE_ACTIONS = {'patient:write', 'note:write', 'note:sign', 'order:w
 # clinician) needs to invoke patient analysis -- see require_cds_invoke() below. Granted to every
 # existing role rather than inventing a separate system-account concept this demo doesn't need.
 _CDS_ACTIONS = {'cds:invoke'}
+# N.O.V.A. decision-support permissions (backend/app/services/nova_service.py + main.py's
+# /v1/nova/* endpoints): least-privilege, same three-tier split as every other resource here.
+#   nova:read   -- view an existing case's differential/state (GET /v1/nova/cases/{id})
+#   nova:invoke -- create a case, submit observations, and ask for a decision (the actual
+#                  diagnostic-reasoning actions) -- NOT granted to clinician_readonly, since this
+#                  is a workflow action (same bucket as note:write/order:write), not a read.
+#   nova:review -- close a case, recording the clinician's final accept/modify/reject on its
+#                  recommendation (spec: clinician acknowledgement, never auto-applied).
+_NOVA_READ_ACTIONS = {'nova:read'}
+_NOVA_WRITE_ACTIONS = {'nova:invoke', 'nova:review'}
 ROLE_PERMISSIONS = {
-    'clinician_readonly': set(_READ_ACTIONS) | _CDS_ACTIONS,
-    'clinician': _READ_ACTIONS | _CLINICIAN_WRITE_ACTIONS | _CDS_ACTIONS,
-    'pharmacist': {'patient:read', 'analysis:read', 'order:read', 'order:write', 'alert:review'} | _CDS_ACTIONS,
-    'admin': _READ_ACTIONS | _CLINICIAN_WRITE_ACTIONS | _CDS_ACTIONS | {'user:admin'},
+    'clinician_readonly': set(_READ_ACTIONS) | _CDS_ACTIONS | _NOVA_READ_ACTIONS,
+    'clinician': _READ_ACTIONS | _CLINICIAN_WRITE_ACTIONS | _CDS_ACTIONS | _NOVA_READ_ACTIONS | _NOVA_WRITE_ACTIONS,
+    'pharmacist': {'patient:read', 'analysis:read', 'order:read', 'order:write', 'alert:review'} | _CDS_ACTIONS | _NOVA_READ_ACTIONS,
+    'admin': _READ_ACTIONS | _CLINICIAN_WRITE_ACTIONS | _CDS_ACTIONS | _NOVA_READ_ACTIONS | _NOVA_WRITE_ACTIONS | {'user:admin'},
 }
 NEVER_GRANTED = {'patient:edit', 'prescription:auto_modify', 'rule:edit'}
 
