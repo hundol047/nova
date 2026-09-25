@@ -98,9 +98,21 @@ class StopPolicy:
         no_more_value = best_info_gain is not None and best_info_gain <= 0.0
         enough_turns_gathered = state.turn_count >= cfg.min_turns_before_diagnose
 
-        should_diagnose = enough_turns_gathered and (
-            (readiness_score >= cfg.diagnose_threshold and gap_ratio >= cfg.min_gap_rank1_rank2
-             and not dangerous_alternative_exists)
+        # `not dangerous_alternative_exists` is an UNCONDITIONAL requirement (spec: DIAGNOSE
+        # allowed only when strong evidence + top margin + critical alternatives resolved + low
+        # remaining info gain all hold SIMULTANEOUSLY) -- `no_more_value` alone must never bypass
+        # it. Previously it did: once the agent ran out of further USEFUL questions/tests to ask
+        # (best_info_gain <= 0.0), it could diagnose a well-matched benign top pick (e.g. a
+        # patient's own known-migraine history) while a newly-flagged, still-uninvestigated
+        # dangerous alternative (e.g. a new focal deficit suggesting stroke) sat completely
+        # unresolved -- exactly the anchoring/premature-closure failure mode this fix targets, in
+        # its generic form. `no_more_value` still legitimately substitutes for the
+        # readiness/gap-margin check (there's nothing more to learn that would change the
+        # ranking), it just can never substitute for having actually resolved a real danger. The
+        # separate forced-diagnose-at-low-remaining-turns branch above this still guarantees the
+        # agent never stalls forever even if a flagged danger is never resolved.
+        should_diagnose = enough_turns_gathered and not dangerous_alternative_exists and (
+            (readiness_score >= cfg.diagnose_threshold and gap_ratio >= cfg.min_gap_rank1_rank2)
             or no_more_value
         )
 
