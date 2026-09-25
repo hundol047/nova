@@ -62,3 +62,35 @@ Importing `learning` never requires torch. Only the neural train/inference path 
 
 See `tests/test_learning_eval_isolation.py` and `scripts/verify_local_release.py`
 (`learning_isolation`).
+
+
+
+## vNext completion: real training loop, checkpoints, governed runtime
+
+The learning subsystem is now end-to-end (all torch-optional; torch is imported lazily and is
+**never** a submission or core-runtime dependency):
+
+- **Training** (`learning/train.py`): a real loop — DataLoader-style batching over candidate sets,
+  cross-entropy ranking loss, Adam, gradient clipping, per-epoch validation, early stopping,
+  best-checkpoint tracking, metric logging (top-k / MRR / critical recall), deterministic seeding
+  (`learning/seed.py`). Without torch it runs data-prep + split-integrity validation and reports
+  `IMPLEMENTED_BUT_NOT_EXECUTED` (never a clinical-performance claim).
+- **Checkpoints** (`learning/checkpoint.py`): weights + a JSON metadata sidecar (model_version,
+  input_dim, hidden, dropout, feature_version, schema_version, model_arch, dataset_version,
+  code_sha, metrics, created_at). `check_compatibility()` refuses a checkpoint whose
+  feature_version / input_dim / schema_version / model_arch does not match the running code —
+  **before** touching weights. `TorchRanker.load()` is the compatibility-guarded factory.
+- **Governed runtime** (`learning/runtime.py`): `GovernedMLRuntime` consults the ranker under
+  strict governance — `disabled` (default), `shadow` (audit only, clinical output unchanged),
+  `active` (reorder only, Safety Guard applied after, OOD falls back to deterministic,
+  `_merge_preserving` guarantees ML never drops a deterministic candidate). Invariant:
+  **Safety Guard > ML Ranker > LLM**.
+- **Backend integration** (`backend/app/services/nova_service.py`): `_consult_ml_shadow()` is a
+  fail-safe hook after `agent.decide()`; in shadow mode it audits the ML ordering and never changes
+  `action`/`differential`. Config gates: `NOVA_ML_RANKER_ENABLED` (default false),
+  `NOVA_ML_SHADOW_MODE` (default true), `NOVA_ML_MODEL_PATH`.
+- **Retraining lifecycle** (`learning/retrain.py`): `train` (→ SHADOW, never auto-promote) /
+  `promote` (requires `--approved-by` **and** the safety gate) / `rollback` / `status`.
+
+**REAL PATIENT TRAINING = NOT VERIFIED**: this repository has no real hospital patient data;
+synthetic runs validate the pipeline mechanics only and are never presented as clinical performance.

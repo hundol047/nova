@@ -29,15 +29,26 @@ python scripts/report_disease_coverage.py --json    # machine-readable
 
 At the time of writing the bundled catalog contains:
 
-- **174 concepts total** = **34 Tier-1 deep** + **140 Tier-2 structured** + **0 Tier-3** (no
-  terminology snapshot bundled — see `TERMINOLOGY_PROVENANCE.md`).
-- **18 specialty categories** (cardiovascular, pulmonary, GI, neuro, endocrine/metabolic,
-  genitourinary/renal, infectious, heme/onc, rheum/msk, psychiatric, toxicology, environmental,
-  dermatology, ENT, ophthalmology, obstetric, pediatric, plus the core categories).
-- **136 concepts carry an ICD-10 anchor**; **0 duplicate concept ids**.
+- **516 concepts total** = **34 Tier-1 deep** + **482 Tier-2 structured** + **0 Tier-3** (no
+  terminology snapshot bundled — see `TERMINOLOGY_PROVENANCE.md`). `coverage_target_met=true`
+  (bundled ≥ 500).
+- **33 specialty categories** spanning cardiovascular, vascular, pulmonary, neurology, GI,
+  hepatology, nephrology, urology, endocrine/metabolic, genetics/congenital, infectious,
+  hematology, oncology, rheumatology, immunology, allergy, dermatology, psychiatric, toxicology,
+  environmental, obstetric, gynecology, pediatric, ENT, ophthalmology, orthopedics, trauma
+  (balanced, no single specialty dominates).
+- **478 concepts carry an ICD-10 anchor**; **0 duplicate concept ids**; **0 NOT_CURATED** in the
+  bundled set (every bundled concept has at least name + aliases + category).
 
-Installing an operator terminology snapshot adds Tier-3 concepts on top (potentially thousands),
-raising the searchable universe without adding any curated clinical claims.
+The catalog is generated deterministically from `scripts/build_tier2_catalog.py`
+(+ `scripts/tier2_catalog_extra.py`); re-run to regenerate. Installing an operator terminology
+snapshot (via `scripts/import_terminology.py`) adds Tier-3 concepts on top, raising the searchable
+universe without adding any curated clinical claims.
+
+> Honest framing: N.O.V.A. is **not** a "5,000-disease classifier." It is a **broad,
+> ontology-backed retrieval + high-precision clinical reranker + LLM reasoner + deterministic safety
+> guard + open-world UNKNOWN/OOD detector**. Coverage numbers describe what is *searchable*, not a
+> claim of diagnostic accuracy on all of them.
 
 ## Open-world outcomes
 
