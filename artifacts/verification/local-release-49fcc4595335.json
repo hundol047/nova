@@ -1,13 +1,39 @@
 {
-  "git_sha": "75571d6c748e19a6900d3454e9c1e130d89f9c55",
-  "timestamp_utc": "2026-09-25T08:28:39.963668+00:00",
+  "schema": "nova-verification-v2",
+  "verified_code_sha": "49fcc45953351eb7a7af23d155db3ca159a01be3",
+  "artifact_commit_sha": null,
+  "branch": "offline/nova-5000-diagnosis-expansion",
+  "remote_sha": "d2728712576e4305547a2aef1dc4ec08d8f6cdb3",
+  "current_blind_version": "v11",
+  "total_searchable_diagnoses": 5651,
+  "tier_counts": {
+    "TIER1_DEEP": 34,
+    "TIER2_STRUCTURED": 1246,
+    "TIER3_ONTOLOGY": 4371
+  },
+  "runtime_files_changed_after_verification": false,
+  "timestamp_utc": "2026-09-25T09:29:37.756145+00:00",
   "environment": {
     "python": "3.11.15",
     "pydantic": false,
     "fastapi": false,
     "psycopg": false,
+    "torch": false,
     "npm": true
   },
+  "not_available": [
+    "nova_agent_tests",
+    "backend_tests",
+    "leakage_scan",
+    "submission_sync",
+    "frontend_build",
+    "frontend_unit_tests",
+    "i18n_parity",
+    "hardcoded_string_audit",
+    "blind_first_run",
+    "postgres_available",
+    "redis_available"
+  ],
   "results": {
     "nova_agent_tests": {
       "status": "NOT AVAILABLE",
@@ -55,11 +81,11 @@
     },
     "ontology_catalog_integrity": {
       "status": "PASS",
-      "detail": "516 concepts (34 deep + 482 structured), bundled>=500 OK, 0 dup ids, code-map OK"
+      "detail": "5651 concepts (34 deep + 1246 structured), bundled>=500 OK, 0 dup ids, code-map OK"
     },
     "disease_coverage_500": {
       "status": "PASS",
-      "detail": "18 passed in 0.08s"
+      "detail": "18 passed in 0.37s"
     },
     "terminology_import": {
       "status": "PASS",
@@ -67,7 +93,7 @@
     },
     "ml_runtime_and_lifecycle": {
       "status": "PASS",
-      "detail": "39 passed, 1 skipped in 0.40s"
+      "detail": "39 passed, 1 skipped in 1.24s"
     },
     "checkpoint_roundtrip_static": {
       "status": "PASS",
@@ -79,15 +105,31 @@
     },
     "learning_pipeline_tests": {
       "status": "PASS",
-      "detail": "18 passed in 0.09s"
+      "detail": "18 passed in 0.11s"
     },
     "blind_integrity": {
       "status": "PASS",
-      "detail": "v9 hash matches frozen manifest"
+      "detail": "v11 hash matches frozen manifest"
     },
-    "blind_v9_first_run": {
+    "blind_first_run": {
       "status": "NOT AVAILABLE",
-      "detail": "pydantic not installed; run `python -m evaluation.blind_benchmark_v9` once in a runnable env"
+      "detail": "pydantic not installed; run `python -m evaluation.blind_benchmark_v11` once in a runnable env"
+    },
+    "current_blind_consistency": {
+      "status": "PASS",
+      "detail": "current blind = v11; frozen hash matches; leakage scanner includes it"
+    },
+    "reasoning_unchanged_current_blind": {
+      "status": "PASS",
+      "detail": "v11 hash matches frozen manifest"
+    },
+    "docs_current_counts": {
+      "status": "PASS",
+      "detail": "docs reflect bundled=1280, current blind=v11"
+    },
+    "verified_sha_consistency": {
+      "status": "PASS",
+      "detail": "runtime code unchanged since verified_code_sha 49fcc4595335"
     },
     "postgres_available": {
       "status": "NOT AVAILABLE",
