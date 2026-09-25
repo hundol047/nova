@@ -936,6 +936,25 @@ def session_context(synex_session:Optional[str]=Cookie(default=None)):
     ctx=SESSIONS.context(synex_session)
     return {'patient_id':ctx['patient_id'] if ctx else None}
 
+# --- Admin-only continual-learning surface (RBAC: 'learning:admin', ADMIN role only). These expose
+# ONLY PHI-free governance/registry/coverage-gap data — never patient data, never a clinician or
+# patient endpoint. The learning subsystem is opt-in and default-disabled; these are inspection
+# reads plus explicit, gated model lifecycle operations (promote/rollback). --------------------
+@app.get('/v1/admin/learning/status')
+def admin_learning_status(user:User=Depends(require('learning:admin'))):
+    from .services.learning_admin import learning_status
+    return learning_status()
+
+@app.get('/v1/admin/learning/coverage-gaps')
+def admin_learning_coverage_gaps(limit:int=50,user:User=Depends(require('learning:admin'))):
+    from .services.learning_admin import coverage_gaps
+    return {'coverage_gaps':coverage_gaps(limit=limit)}
+
+@app.get('/v1/admin/learning/models')
+def admin_learning_models(user:User=Depends(require('learning:admin'))):
+    from .services.learning_admin import list_models
+    return {'models':list_models()}
+
 DIST=Path(__file__).resolve().parents[2]/'frontend'/'dist'
 # Served straight from frontend/public (not the dist copy Vite makes on build) so the real
 # anatomy GLBs -- large, checked into git -- don't need duplicating inside dist/ too.

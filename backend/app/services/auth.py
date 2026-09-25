@@ -74,11 +74,16 @@ _CDS_ACTIONS = {'cds:invoke'}
 #                  recommendation (spec: clinician acknowledgement, never auto-applied).
 _NOVA_READ_ACTIONS = {'nova:read'}
 _NOVA_WRITE_ACTIONS = {'nova:invoke', 'nova:review'}
+# learning:admin -- inspect the (opt-in, de-identified) continual-learning subsystem: status,
+# coverage gaps, model registry, promote/rollback. ADMIN ONLY. This is NOT a clinical action and is
+# never granted to clinician/pharmacist roles; it gates the /v1/admin/learning/* endpoints so
+# model lifecycle operations require backend admin authorization (not just a hidden frontend view).
+_LEARNING_ADMIN_ACTIONS = {'learning:admin'}
 ROLE_PERMISSIONS = {
     'clinician_readonly': set(_READ_ACTIONS) | _CDS_ACTIONS | _NOVA_READ_ACTIONS,
     'clinician': _READ_ACTIONS | _CLINICIAN_WRITE_ACTIONS | _CDS_ACTIONS | _NOVA_READ_ACTIONS | _NOVA_WRITE_ACTIONS,
     'pharmacist': {'patient:read', 'analysis:read', 'order:read', 'order:write', 'alert:review'} | _CDS_ACTIONS | _NOVA_READ_ACTIONS,
-    'admin': _READ_ACTIONS | _CLINICIAN_WRITE_ACTIONS | _CDS_ACTIONS | _NOVA_READ_ACTIONS | _NOVA_WRITE_ACTIONS | {'user:admin'},
+    'admin': _READ_ACTIONS | _CLINICIAN_WRITE_ACTIONS | _CDS_ACTIONS | _NOVA_READ_ACTIONS | _NOVA_WRITE_ACTIONS | {'user:admin'} | _LEARNING_ADMIN_ACTIONS,
 }
 NEVER_GRANTED = {'patient:edit', 'prescription:auto_modify', 'rule:edit'}
 

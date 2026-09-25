@@ -467,13 +467,43 @@ class NovaService:
         except RepositoryError as exc:
             raise StorageError(str(exc)) from exc
 
-    def close_case(self, case_id: str, *, reason: str = "") -> NovaCaseRecord:
+    def close_case(self, case_id: str, *, reason: str = "",
+                   clinician_final_diagnosis_id: Optional[str] = None,
+                   clinician_label_source: Optional[str] = None) -> NovaCaseRecord:
         try:
-            return self.repository.close(case_id, reason=reason)
+            record = self.repository.close(case_id, reason=reason)
         except NotFound as exc:
             raise CaseNotFoundError(case_id) from exc
         except RepositoryError as exc:
             raise StorageError(str(exc)) from exc
+        # Opt-in continual-learning outcome capture (fail-safe; default disabled). Runs AFTER the
+        # case is durably closed so learning capture can never block or fail the clinical action.
+        # Captures ONLY when NOVA_LEARNING_ENABLED=true AND a clinician-adjudicated final diagnosis
+        # from a permitted source is supplied. A NOVA/LLM prediction can never be the label.
+        try:
+            if clinician_final_diagnosis_id and clinician_label_source:
+                from .learning_admin import capture_case_outcome
+                nova_top = None
+                differential = getattr(record.state, "differential", None) or []
+                cand_ids = []
+                for d in differential:
+                    cid = getattr(d, "diagnosis_id", None) or (d.get("diagnosis_id") if isinstance(d, dict) else None)
+                    if cid:
+                        cand_ids.append(cid)
+                if cand_ids:
+                    nova_top = cand_ids[0]
+                capture_case_outcome(
+                    case_id=case_id,
+                    patient_id=record.patient_id,
+                    encounter_time=str(record.updated_at or record.created_at or ""),
+                    nova_top_concept_id=nova_top,
+                    candidate_concept_ids=cand_ids,
+                    clinician_final_diagnosis_id=clinician_final_diagnosis_id,
+                    clinician_label_source=clinician_label_source,
+                )
+        except Exception:  # noqa: BLE001 - learning capture must never break case-close
+            pass
+        return record
 
     def list_cases_for_patient(self, patient_id: str, *, status: Optional[str] = None,
                                 encounter_id: Optional[str] = None) -> list[NovaCaseRecord]:
