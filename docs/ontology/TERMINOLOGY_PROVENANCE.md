@@ -19,14 +19,35 @@ We bundle **no** SNOMED CT, ICD-11, or proprietary ICD-10 content. Reasons:
 Providers under `nova_agent/ontology/providers/` read a **local snapshot** the operator places at
 `nova_agent/ontology/snapshots/<system>.json`:
 
-| File | System |
-| ---- | ------ |
-| `snomed.json` | SNOMED CT |
-| `icd11.json` | ICD-11 |
-| `icd10.json` | ICD-10 / ICD-10-CM |
+| File | System | Provider |
+| ---- | ------ | -------- |
+| `snomed.json` | SNOMED CT | `SnomedProvider` |
+| `icd11.json` | ICD-11 | `Icd11Provider` |
+| `icd10.json` | ICD-10 / ICD-10-CM | `Icd10Provider` |
+| `custom.json` | Operator / hospital-local terminology | `CustomProvider` |
+
+The **`custom`** system (imported with `--source custom` or `--source hospital`, both normalized to
+a `CUSTOM` code system) lets an operator load a **hospital-local terminology map** — codes and
+concepts a site maintains internally that do not fit a standard release. It is treated identically
+to any other Tier-3 source: searchable, `NOT_CURATED`, no fabricated clinical claims.
 
 Snapshot files are **git-ignored** and never committed. If a snapshot is absent, the provider
 **yields nothing** — it never fabricates concepts. See `snapshots/README.md` for the schema.
+
+### Reproducible synthetic Tier-3 snapshot (for CI / tests only)
+
+Because real SNOMED/ICD content cannot be committed, the repo ships a **non-restricted synthetic
+generator** so the ≥ 5,000 searchable universe is reproducible without any licensed data:
+
+```bash
+python scripts/build_tier3_synthetic_snapshot.py --target 4200
+```
+
+This writes a `NOVASYNTH`-system snapshot to `nova_agent/ontology/snapshots/custom.json` (also
+git-ignored). The synthetic concepts are **clearly non-clinical placeholders** used only to
+exercise retrieval/router/rerank at scale and to make coverage/tests reproducible — they are
+**never** presented as real diagnoses and are all `NOT_CURATED`. In a real deployment the operator
+replaces this with a licensed snapshot.
 
 ## No runtime network calls
 
@@ -64,12 +85,16 @@ release files). The importer validates and reports (dropping invalid rows): dupl
 missing preferred name, inactive concept, invalid hierarchy reference, cyclic hierarchy, unknown
 code system, malformed synonym. Use `--dry-run --report report.json` to validate without writing.
 
+Supported `--source` values: `snomed`, `icd11`, `icd10`, and `custom` / `hospital` (the last two
+map to the `CUSTOM` code system for hospital-local terminology).
+
 Runtime behavior:
 - With a snapshot present, Tier-3 concepts become **searchable named possibilities** with
   synonym/code/hierarchy support — never treated as deeply-curated clinical evidence
   (`curation_status = NOT_CURATED`).
-- With **no** snapshot, the ontology layer **degrades gracefully** to the bundled 500+ catalog
-  (Tier-3 count = 0). No network call is ever made at runtime — all lookups are local.
+- With **no** snapshot, the ontology layer **degrades gracefully** to the bundled catalog
+  (34 Tier-1 + 1,246 Tier-2 = 1,280 concepts, Tier-3 count = 0). No network call is ever made at
+  runtime — all lookups are local.
 
 Snapshot files live under `nova_agent/ontology/snapshots/*.json` and are **git-ignored** so
 licensed content is never committed.

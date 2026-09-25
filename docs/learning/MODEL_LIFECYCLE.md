@@ -52,3 +52,43 @@ is instant and does not require retraining.
 The served model is a static, versioned artifact. It is never mutated in place; changes happen only
 by promoting a new SHADOW model through the gate. Every production change is recorded in the
 registry with its dataset snapshot id and metrics.
+
+
+
+## Multi-metric promotion gate for the 5,000-diagnosis candidate (`learning/baseline.py`)
+
+The 516/1,280-concept bundled architecture is the **BASELINE**; the ≥ 5,000-searchable retrieval
+architecture is the **CANDIDATE**. Promotion of the candidate is governed by a configurable
+**multi-metric** gate (`MultiMetricGate`) — a single top-1 improvement is **never** sufficient.
+
+`MultiMetricGate.compare(baseline: MetricSet, candidate: MetricSet)` returns one of three
+decisions:
+
+- **PROMOTE** — the candidate clears every floor and regresses no protected metric.
+- **SHADOW** — the candidate is safe but not clearly better (e.g. improves top-1 only, or a
+  specialty/subgroup shows a non-catastrophic dip) → runs in shadow, clinical output unchanged.
+- **REJECT** — the candidate violates a hard safety floor or regresses a protected metric.
+
+Gate criteria (all enforced, not just top-1):
+
+| Criterion | Rule |
+| --------- | ---- |
+| Critical recall floor | `critical_recall >= 0.99` (absolute floor). |
+| Critical recall regression | **zero tolerance** vs baseline → REJECT on any drop. |
+| Critical miss rate | `critical_miss_rate <= 0.01`. |
+| Top-3 / Top-5 regression | material regression → REJECT. |
+| Specialty / subgroup | catastrophic regression in any specialty/subgroup → REJECT; mild → SHADOW. |
+| Top-1-only improvement | cannot PROMOTE by itself → SHADOW. |
+
+The metric set (`MetricSet`) carries Top-1/3/5/10, Recall@K, Critical Recall@5/20/100,
+Critical Miss, OOD, calibration, and latency. `scripts/compare_5000_baseline.py` computes these for
+BASELINE vs CANDIDATE on the synthetic eval set and prints the gate decision (see
+`docs/evaluation/FIVE_THOUSAND_DISEASE_COMPARISON.md`).
+
+## Shadow deployment (clinical output unchanged)
+
+The candidate retrieval architecture is introduced in **shadow** via the existing
+`GovernedMLRuntime` shadow mode: the pipeline is executed and its ordering **logged**, but the
+clinician-facing `action`/`differential` is **not changed**. Shadow data (PHI-free) is captured for
+later gate evaluation. Only a human-approved PROMOTE (clearing the multi-metric gate) makes the
+candidate authoritative.

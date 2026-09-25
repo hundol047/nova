@@ -6,11 +6,13 @@ vs **NOT VERIFIED** here (deferred to CI / a runtime environment). No GitHub Act
 
 Branch: `offline/nova-clinical-learning-disease-expansion`. Base: `07c5eab`.
 
-> **NOTE ON SECTIONS.** The first matrix below is a **HISTORICAL SNAPSHOT** of the vNext *first*
-> round (174-concept catalog; Blind **v9** current). It is accurate for that round and kept as
-> history. The CURRENT state is the **"vNext completion round"** section further down (516 bundled;
-> Blind **v10** current) and, for the 5,000-diagnosis work, the FIVE_THOUSAND comparison doc.
-> The authoritative current blind version is `evaluation/current_blind.py`.
+> **NOTE ON SECTIONS.** This doc accretes one audit matrix per round; earlier matrices are
+> **HISTORICAL SNAPSHOTS** kept for provenance, not the current state.
+> - Round 1 (first matrix below): 174-concept catalog, Blind **v9** — HISTORICAL.
+> - Round 2 ("vNext completion round"): 516 bundled, Blind **v10** — HISTORICAL.
+> - **Round 3 (CURRENT): "5,000-diagnosis expansion round" — 1,280 bundled / 5,651 searchable,
+>   Blind v11 current.** See also `docs/evaluation/FIVE_THOUSAND_DISEASE_COMPARISON.md`.
+> The authoritative current blind version is always `evaluation/current_blind.py`.
 
 ## Audit matrix — HISTORICAL SNAPSHOT (vNext first round: 174 concepts, Blind v9 current)
 
@@ -87,3 +89,44 @@ torch / psycopg / node_modules and no pip. All items marked NOT VERIFIED (env) a
 a torch/hospital environment and are never reported as passed here. Dependency-free suites (ontology,
 coverage-500, terminology import, ML runtime, training-loop mechanics, retraining lifecycle,
 continual validation, open-world, admin RBAC) run locally and PASS.
+
+
+---
+
+## 5,000-diagnosis expansion round (retrieval architecture, Blind v11 current)
+
+Third, independent pass over the ≥ 5,000-searchable-diagnosis retrieval architecture (PHASE 0
+repairs + PHASE 1 retrieval → router → safety-recall → reranker → narrowed LLM → open-world).
+Branch: `offline/nova-5000-diagnosis-expansion`. The authoritative current blind version is now
+**v11** (`evaluation/current_blind.py`); v3–v10 are REFERENCE-ONLY and the frozen v10 file/hash is
+untouched. Items needing torch/pydantic/fastapi/network are marked **NOT VERIFIED (env)** and rely
+on CI — never falsely reported as passed.
+
+| # | Concern | Finding | Status |
+|---|---------|---------|--------|
+| 1 | ≥ 5,000 searchable universe | `report_disease_coverage.py` → 5,651 total searchable (34 Tier-1 + 1,246 Tier-2 + 4,371 Tier-3), `searchable_target_met=true`, 0 duplicate ids; Tier-3 from a reproducible **synthetic** snapshot (gitignored). Bundled-alone = 1,280. | VERIFIED (local, dependency-free) |
+| 2 | 34 Tier-1 deep preserved | Exactly 34 TIER1_DEEP; ids unchanged; not padded to 500 with fabricated detail (honesty rule). | VERIFIED (local) |
+| 3 | Not a naive 5,000-way classifier | `learning/pipeline.FiveKPipeline` is retrieval→router→safety→rerank→LLM(≤26)→open-world; LLM never sees the full universe. | VERIFIED (local) |
+| 4 | Embedding retrieval executes | `learning/retrieval/*` builds an index over 5,651 concepts (~0.2 s) and queries (~72 ms) dependency-free. | VERIFIED (local) |
+| 5 | Recall@K measured | Synthetic eval: recall@50/100/200 = 1.0, recall@20 = 0.996; critical_recall@100 = 1.0; critical_miss_rate@100 = 0.0. Synthetic mechanics only. | VERIFIED (local, synthetic) |
+| 6 | Multi-specialty router | `SpecialtyRouter` activates multiple specialties (bands HIGH/MED/LOW), global fallback on low confidence. | VERIFIED (local) |
+| 7 | Router miss cannot drop critical | `boost()` is additive-only (raises scores, never removes); safety-recall re-inserts critical regardless. | VERIFIED (local) |
+| 8 | Safety restores critical | `apply_safety_recall` adds missing must-not-miss conditions; `assert_no_critical_dropped` guards. | VERIFIED (local) |
+| 9 | Reranker executes; safety retained | `Reranker` Top-100→keep≈25; `safety_mandatory` retained even at score ≈ 0.003 (PE kept rank-1 in smoke). | VERIFIED (local); torch training NOT VERIFIED (env) → CI |
+| 10 | LLM narrowed + normalized | Bundle ≤ 26; `normalize_llm_diagnosis` → canonical or `UNMAPPED_LLM_DIAGNOSIS`. | VERIFIED (local) |
+| 11 | UNKNOWN/OOD preserved | Outcomes KNOWN / POSSIBLE_UNMAPPED / INSUFFICIENT / UNKNOWN; lexical-grounding guard → gibberish = UNKNOWN. | VERIFIED (local) |
+| 12 | Baseline gate blocks worse critical recall | `MultiMetricGate`: zero-tolerance critical regression, top-1-only cannot promote, catastrophic specialty regression → REJECT/SHADOW. | VERIFIED (local) |
+| 13 | Shadow unchanged clinical output | Candidate introduced via existing `GovernedMLRuntime` shadow; output unchanged, data logged. | VERIFIED (local) |
+| 14 | Continual learning governed | Error taxonomy (6 classes) + `CoverageGapQueue` human-review-only, no auto KB edit. | VERIFIED (local) |
+| 15 | Failure-mode resilience | `resilience.safe_call` degrades (missing ML/index/ontology/LLM, incompatible checkpoint, corrupt snapshot) without crash. | VERIFIED (local) |
+| 16 | v10 reference-only, v11 authored + frozen | v10 hash `182f373a…` untouched; v11 authored (24 cases), sha `dedfec2a…`, manifest + hash guard; leakage scanner auto-includes v11. | VERIFIED (freeze, local); FIRST RUN NOT VERIFIED (env, needs pydantic) → run once in CI |
+| 17 | Verifier points to current blind | `verify_local_release.py` derives blind checks from `current_blind.py` → reports v11. | VERIFIED (local) |
+| 18 | Docs current + non-overclaim | DISEASE_COVERAGE / TERMINOLOGY_PROVENANCE / learning docs / README / this audit updated; old 516 figure marked HISTORICAL. | VERIFIED (local) |
+| 19 | Competition isolated | `submission/` declares pydantic only; no torch / index / training / admin / `learning` import; no external terminology dep; official-interface placeholder untouched. | VERIFIED (local) |
+| 20 | REAL PATIENT TRAINING | No real patient data; synthetic only; torch reranker training `IMPLEMENTED_BUT_NOT_EXECUTED` here. | NOT VERIFIED (by design / env) |
+
+**Environment note (unchanged):** network-isolated, no pydantic / fastapi / torch / psycopg /
+node_modules / pip. The full `pytest tests/`, the eval-leakage scan through `nova_agent`, the Blind
+v11 FIRST RUN, the `submission/` import smoke test, and any neural training are **NOT VERIFIED
+here** and deferred to CI. Dependency-free suites (5,000 catalog, 5,000 pipeline, learning
+retrieval/router/rerank/pipeline/gate, coverage) run locally and PASS.

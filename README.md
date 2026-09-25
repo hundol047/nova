@@ -71,22 +71,26 @@ flowchart TD
 
 ### 2.1 Open-world ontology + optional learning ranker
 
-N.O.V.A. is not limited to a fixed disease list. A **tiered disease universe** (**516+ bundled
-searchable conditions**, extensible via an operator terminology snapshot) and an **optional**
-deep-learning ranker sit alongside the deterministic engine. N.O.V.A. offers a **broad,
-ontology-backed differential diagnosis with explicit uncertainty** — it does **not** claim to
-diagnose "all diseases" or achieve "100% accuracy," and it is not a self-learning or fully
+N.O.V.A. is not limited to a fixed disease list. A **tiered disease universe** — **1,280 curated
+concepts bundled in-repo** (34 Tier-1 deep + 1,246 Tier-2 structured) and a **5,000+ searchable
+disease universe** once an operator (or the reproducible synthetic) terminology snapshot is
+installed — sits alongside an **optional** deep-learning retrieval-and-rerank pipeline. N.O.V.A.
+offers a **broad, ontology-backed clinical retrieval + open-world, safety-governed differential
+diagnosis with explicit uncertainty**. It does **not** claim to diagnose "all diseases" or achieve
+"100% accuracy"; it is **not** a naive 5,000-way classifier, a self-learning system, or a fully
 autonomous diagnostician. Conditions outside its curated knowledge are surfaced as *possible* or
 *unknown*, never forced into a label. Coverage is reported from the actual catalog by
-`python scripts/report_disease_coverage.py` (see `docs/ontology/DISEASE_COVERAGE.md`).
+`python scripts/report_disease_coverage.py` (see `docs/ontology/DISEASE_COVERAGE.md`); the
+5,000-diagnosis retrieval architecture is documented in `docs/learning/ARCHITECTURE.md` and
+compared to the baseline in `docs/evaluation/FIVE_THOUSAND_DISEASE_COMPARISON.md`.
 
 ```mermaid
 flowchart TD
   Q["Presentation / candidate query"] --> CAT["ontology/registry.py\nDiseaseCatalog"]
-  subgraph TIERS["Tiered disease universe (516+ bundled)"]
+  subgraph TIERS["Tiered disease universe (1,280 bundled; 5,000+ searchable with snapshot)"]
     T1["Tier-1 deep (34 profiles)\nfull reasoning"]
-    T2["Tier-2 structured (482)\nname/aliases/urgency/ICD-10"]
-    T3["Tier-3 ontology-only\noperator SNOMED/ICD snapshot (local)"]
+    T2["Tier-2 structured (1,246)\nname/aliases/urgency/ICD-10"]
+    T3["Tier-3 ontology-only (4,000+)\noperator SNOMED/ICD or synthetic snapshot (local)"]
   end
   CAT --- T1
   CAT --- T2

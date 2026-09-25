@@ -37,6 +37,11 @@ itself.
 using a **salted, non-reversible fingerprint** of the query terms — the raw text is never stored.
 Aggregated fingerprints show *where* to expand the catalog without retaining patient data.
 
+The 5,000-diagnosis pipeline's `CoverageGapQueue` (`learning/error_taxonomy.py`) obeys the same
+rule: it stores only PHI-free descriptors and is a **human-review queue only** — it **never**
+auto-edits the knowledge base or auto-adds a disease concept. Expanding the disease universe is
+always a deliberate, reviewed curation action. See `CONTINUAL_LEARNING.md` for the error taxonomy.
+
 ## 5. Immutable dataset snapshots
 
 Training reads from **content-hashed, immutable** JSONL snapshots (`learning/dataset.py`). A

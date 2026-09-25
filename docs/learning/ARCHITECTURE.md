@@ -94,3 +94,82 @@ The learning subsystem is now end-to-end (all torch-optional; torch is imported 
 
 **REAL PATIENT TRAINING = NOT VERIFIED**: this repository has no real hospital patient data;
 synthetic runs validate the pipeline mechanics only and are never presented as clinical performance.
+
+
+
+## 5,000-diagnosis retrieval architecture (PHASE 1)
+
+To reason over a ≥ 5,000 searchable disease universe **without** becoming a naive 5,000-way
+classifier, `learning/` adds a staged retrieval-and-rerank pipeline. Every stage can only **add**
+or **re-order** candidates within the immutable priority `Safety Guard > ML Ranker > LLM`; no stage
+may silently drop a critical/must-not-miss condition.
+
+```
+   patient query
+        │
+        ▼
+  ┌───────────────┐   embedding + lexical + code fusion over the full catalog
+  │ 1. RETRIEVAL  │   learning/retrieval/ → Top-100..200 candidates
+  └──────┬────────┘   (feature-hash embeddings; torch-optional richer encoder)
+         ▼
+  ┌───────────────┐   multi-specialty activation (bands HIGH/MED/LOW), additive-only boost;
+  │ 2. ROUTER     │   low-confidence → global fallback. A router MISS can NEVER remove a
+  └──────┬────────┘   candidate — boost() only raises scores. learning/routing/
+         ▼
+  ┌───────────────┐   deterministic must-not-miss recall: re-inserts critical conditions
+  │ 3. SAFETY     │   (e.g. ACS/PE/dissection for chest pain) even if 1&2 missed them.
+  └──────┬────────┘   assert_no_critical_dropped() guards the invariant. learning/safety_recall.py
+         ▼
+  ┌───────────────┐   deep clinical reranker Top-100 → keep ~25; safety_mandatory candidates
+  │ 4. RERANKER   │   are ALWAYS retained regardless of score. Real torch BCE path +
+  └──────┬────────┘   deterministic fallback. learning/rerank/
+         ▼
+  ┌───────────────┐   the LLM receives ONLY the narrowed bundle (≤ 26) + evidence /
+  │ 5. LLM        │   contradictions / missing data / must-not-miss list — never the full 5,000.
+  └──────┬────────┘   Novel LLM dx → normalize → canonical or UNMAPPED_LLM_DIAGNOSIS.
+         ▼
+   open-world outcome: KNOWN_CONDITION / POSSIBLE_UNMAPPED_CONDITION /
+   INSUFFICIENT_INFORMATION / UNKNOWN_PRESENTATION (OOD reduces confidence).
+```
+
+### Modules (retrieval pipeline)
+
+| Module | Role |
+| ------ | ---- |
+| `retrieval/embedding.py` | Deterministic feature-hash embedding (`EMBED_DIM=256`), cosine sim; torch-free. |
+| `retrieval/disease_encoder.py` | Encodes a catalog concept to a `DiseaseFeatures` vector (duck-typed on the catalog). |
+| `retrieval/patient_encoder.py` | Encodes a `PatientQuery` (symptoms/history/labs/imaging) to the same space. |
+| `retrieval/index.py` | `DiseaseIndex` — build-once, cached, memoized `get_default_index()`; no per-request rebuild. |
+| `retrieval/retriever.py` | `Retriever` — embedding + lexical + code fusion, per-stage latency, `RetrievedItem.sources`. |
+| `retrieval/metrics.py` | `recall_at_k`, `critical_recall_at_k`, `critical_miss_rate`. |
+| `retrieval/eval_synthetic.py` | Synthetic labeled eval set (REAL clinical recall = `NOT VERIFIED`). |
+| `routing/router.py` | `SpecialtyRouter` — multi-specialty bands, global fallback, additive-only `boost()`. |
+| `safety_recall.py` | `apply_safety_recall` adds missing critical conditions; `assert_no_critical_dropped`. |
+| `rerank/reranker.py` | `Reranker` keep≈25; `safety_mandatory` always retained; `Reranker.load` compat-guarded. |
+| `rerank/model_torch.py` `train_reranker.py` `checkpoint.py` | Real torch BCE training + per-component checkpoint + ontology-version compatibility guard. |
+| `pipeline.py` | `FiveKPipeline` orchestrates 1→5; LLM bundle ≤ 26; lexical-grounding UNKNOWN guard. |
+| `baseline.py` | `MultiMetricGate` (PROMOTE/SHADOW/REJECT) — see `MODEL_LIFECYCLE.md`. |
+| `error_taxonomy.py` | `classify_miss` + `CoverageGapQueue` (human review, no auto KB edit). |
+| `resilience.py` | `safe_call` degradation + `decide_rare_mode` (no crash on missing ML/ontology/LLM). |
+
+### Dependency-free by default
+
+The entire retrieval/router/rerank/pipeline/gate path runs and is **tested without torch** using
+deterministic feature-hash embeddings and scorers. A richer torch encoder/reranker is loaded only
+when torch is present. Consequently the torch training path is `IMPLEMENTED_BUT_NOT_EXECUTED` in a
+torch-free environment and is honestly reported as **NOT VERIFIED** there — never as a clinical
+claim.
+
+### Measured (synthetic catalog, this environment)
+
+recall@50/100/200 = 1.0, recall@20 = 0.996, critical_recall@100 = 1.0,
+critical_miss_rate@100 = 0.0; index build ≈ 0.2 s over 5,651 concepts, query ≈ 72 ms. These are
+**synthetic-catalog mechanics numbers only** — see
+`docs/evaluation/FIVE_THOUSAND_DISEASE_COMPARISON.md`.
+
+### Isolation (unchanged)
+
+`learning/` — including the retrieval pipeline — is **never** imported by `nova_agent/`,
+`competition/`, or `submission/`. The retrieval index/retriever accept a catalog object by
+duck-typing; they do not import the reasoning engine. The submission declares **no** torch and no
+external terminology dependency.

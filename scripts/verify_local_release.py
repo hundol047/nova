@@ -229,7 +229,10 @@ def check_docs_current_counts() -> dict:
     problems = []
     # DISEASE_COVERAGE.md should state the real bundled count and not a stale one.
     cov = _read("docs/ontology/DISEASE_COVERAGE.md")
-    if cov and str(bundled) not in cov:
+    # Accept either a plain or thousands-separated rendering of the count (e.g. 1280 or 1,280).
+    _bundled_str = str(bundled)
+    _bundled_comma = f"{bundled:,}"
+    if cov and _bundled_str not in cov and _bundled_comma not in cov:
         problems.append(f"DISEASE_COVERAGE.md does not mention current bundled={bundled}")
     if cov and "174 concepts total" in cov and "HISTORICAL" not in cov:
         problems.append("DISEASE_COVERAGE.md still shows stale '174 concepts total' as current")
