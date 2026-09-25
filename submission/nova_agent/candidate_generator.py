@@ -55,7 +55,8 @@ def _build_lab_to_diagnoses_index() -> dict:
 _LAB_TO_DIAGNOSES = _build_lab_to_diagnoses_index()
 
 CandidateSource = Literal["symptom_match", "risk_match", "medication_match", "history_match",
-                           "imaging_match", "objective_finding", "safety_candidate"]
+                           "imaging_match", "objective_finding", "safety_candidate",
+                           "ontology_broadening"]
 
 # ~8-15 meaningful candidates, per spec -- a target, not a hard cap: dangerous/objective-evidence
 # entries are always kept regardless of this number.
@@ -80,11 +81,88 @@ def _add(pool: dict, entry: dict, source: CandidateSource) -> None:
         existing.sources.append(source)
 
 
+def _concept_to_kb_entry(concept) -> dict:
+    """Adapt an ontology ClinicalConcept into the minimal KB-shaped dict downstream scoring expects.
+    Deliberately shallow: a Tier-2 concept carries no discriminating questions/exams/tests or
+    confirmatory findings, so those keys are EMPTY — the concept enters the pool as a low-evidence,
+    named possibility, never as if it had deep curated evidence. `id` is namespaced so it can never
+    collide with a real 34-KB diagnosis id."""
+    return {
+        "id": f"onto::{concept.concept_id}",
+        "name": concept.canonical_name,
+        "aliases": list(concept.aliases),
+        "category": concept.category or "ontology",
+        "dangerous": bool(concept.dangerous) if concept.dangerous is not None else False,
+        "urgency": concept.urgency or "ROUTINE",
+        "chief_complaint_tags": list(concept.chief_complaint_tags),
+        "typical_features": list(concept.typical_features),
+        "risk_factors": [],
+        "discriminating_questions": [],
+        "discriminating_exams": [],
+        "discriminating_tests": [],
+        "confirmatory_findings": [],
+        "red_flag_keywords": [],
+        "minimum_workup": [],
+        "evidence_level": "ontology_tier2_structured",
+    }
+
+
+def _broaden_with_ontology(pool: dict, presentation: ClinicalPresentation, max_add: int) -> None:
+    """OPT-IN open-world broadening. Adds up to `max_add` Tier-2 structured concepts that lexically
+    match the presentation's chief-complaint text/symptoms but are NOT already represented in the
+    closed-KB pool. Additive only: never removes or reweights an existing candidate. Imports the
+    ontology lazily so this cost is paid only when the deployer enables broadening. Any failure to
+    load the catalog degrades silently to the unchanged closed-KB pool (never breaks a case)."""
+    if max_add <= 0:
+        return
+    try:
+        from nova_agent.ontology.registry import get_default_catalog
+        from nova_agent.ontology.models import Tier
+    except Exception:
+        return  # ontology unavailable -> unchanged behavior
+
+    # Build the query from the concepts we already extracted (symptoms + chief complaint text).
+    query_terms = list(presentation.symptoms)
+    chief = getattr(presentation, "chief_complaint_text", None) or getattr(presentation, "raw_text", None)
+    if chief:
+        query_terms.append(str(chief))
+    if not query_terms:
+        return
+
+    try:
+        catalog = get_default_catalog()
+    except Exception:
+        return
+
+    added = 0
+    seen_names = {c.entry.get("name", "").strip().lower() for c in pool.values()}
+    for term in query_terms:
+        if added >= max_add:
+            break
+        for match in catalog.search_conditions(term, limit=max_add, fuzzy=True):
+            if added >= max_add:
+                break
+            concept = match.concept
+            # Only Tier-2 structured concepts broaden the pool here: Tier-1 deep concepts are the
+            # 34 KB entries already handled above, and Tier-3 ontology-only concepts carry no
+            # clinical structure to score. Skip anything already present (by namespaced id or name).
+            if concept.tier != Tier.TIER2_STRUCTURED:
+                continue
+            onto_id = f"onto::{concept.concept_id}"
+            if onto_id in pool or concept.canonical_name.strip().lower() in seen_names:
+                continue
+            _add(pool, _concept_to_kb_entry(concept), "ontology_broadening")
+            seen_names.add(concept.canonical_name.strip().lower())
+            added += 1
+
+
 def generate_candidates(presentation: ClinicalPresentation,
                          glucose_result_text: Optional[str] = None,
                          lactate_result_text: Optional[str] = None,
                          objective_findings: Optional[Dict[str, ObjectiveFinding]] = None,
-                         imaging_text: Optional[List[str]] = None) -> List[CandidateDiagnosis]:
+                         imaging_text: Optional[List[str]] = None,
+                         ontology_broadening: bool = False,
+                         ontology_broadening_max: int = 5) -> List[CandidateDiagnosis]:
     """Builds the candidate pool for one turn. `glucose_result_text`/`lactate_result_text`/
     `objective_findings`/`imaging_text` are passed explicitly (not a whole PatientState) to keep
     this module's dependency surface small and directly testable. `objective_findings` is the
@@ -222,6 +300,14 @@ def generate_candidates(presentation: ClinicalPresentation,
         if entry is not None:
             _add(pool, entry, "safety_candidate")
 
+    # 5. ontology_broadening (OPT-IN, default off) -- thin open-world supplement of Tier-2 concepts
+    #    the closed KB doesn't contain. Runs AFTER the safety net and BEFORE trimming so an
+    #    ontology-only entry is treated exactly like a zero-KB-evidence safety entry: trimmable,
+    #    never protected over a KB candidate with real evidence. When disabled, the pool is
+    #    byte-identical to the pre-vNext behavior.
+    if ontology_broadening:
+        _broaden_with_ontology(pool, presentation, ontology_broadening_max)
+
     candidates = list(pool.values())
     if len(candidates) <= TARGET_POOL_SIZE:
         return candidates
@@ -236,8 +322,12 @@ def generate_candidates(presentation: ClinicalPresentation,
     # backwards from the spec's intent (critical diagnoses must not disappear FROM the pool via
     # this mechanism; it never says a well-evidenced diagnosis should be sacrificed to make room
     # for a zero-evidence entry that's only present as a blanket safety net).
-    safety_only = {"safety_candidate"}
-    protected = [c for c in candidates if set(c.sources) != safety_only]
+    # An entry reached ONLY via the fixed safety net and/or opt-in ontology broadening (no
+    # symptom/risk/objective evidence of its own) is trimmable; anything with real evidence is
+    # protected. ontology_broadening entries are zero-KB-evidence supplements, so they never
+    # displace an evidenced KB candidate from the size budget.
+    trimmable_only_sources = {"safety_candidate", "ontology_broadening"}
+    protected = [c for c in candidates if not set(c.sources).issubset(trimmable_only_sources)]
     trimmable = [c for c in candidates if c.id not in {p.id for p in protected}]
     keep_count = max(0, TARGET_POOL_SIZE - len(protected))
     return protected + trimmable[:keep_count]

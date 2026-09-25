@@ -355,12 +355,15 @@ class DifferentialEngine:
         # chief-complaint-only behavior on a case's first turn.
         presentation = build_clinical_presentation(state)
         objective_findings = normalize_objective_evidence(state)
+        _cfg = get_config()
         candidate_records = generate_candidates(
             presentation,
             glucose_result_text=state.laboratory_tests.get("glucose_point_of_care"),
             lactate_result_text=state.laboratory_tests.get("lactate"),
             objective_findings=objective_findings,
             imaging_text=list(state.imaging.values()),
+            ontology_broadening=_cfg.ontology_broadening_enabled,
+            ontology_broadening_max=_cfg.ontology_broadening_max,
         )
         candidates = [c.entry for c in candidate_records]
         sources_by_id = {c.id: c.sources for c in candidate_records}

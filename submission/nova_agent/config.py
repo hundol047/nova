@@ -97,6 +97,16 @@ class NovaConfig:
     rag_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RAG_ENABLED", True))
     rag_top_k: int = field(default_factory=lambda: _int_env("NOVA_RAG_TOP_K", 4))
 
+    # ontology_broadening_enabled: OPT-IN open-world broadening of the candidate pool with Tier-2
+    # structured concepts from the DiseaseCatalog (nova_agent/ontology). DEFAULT FALSE so the closed
+    # 34-disease behavior — and every existing test/benchmark — is byte-identical unless a deployer
+    # turns it on. When true, candidate_generator adds broad ontology candidates ONLY as a thin,
+    # provenance-tagged supplement; it never removes a KB candidate and never changes scoring.
+    ontology_broadening_enabled: bool = field(
+        default_factory=lambda: _bool_env("NOVA_ONTOLOGY_BROADENING", False))
+    ontology_broadening_max: int = field(
+        default_factory=lambda: _int_env("NOVA_ONTOLOGY_BROADENING_MAX", 5))
+
     # llm_provider: 'mock' (default, offline/deterministic) | 'anthropic' | 'openai_compatible'
     # (any OpenAI Chat Completions-compatible HTTP endpoint: local vLLM/llama.cpp/ollama, or a
     # hosted API) | 'local' (openai_compatible preset for a local server) | 'competition' (reads
