@@ -369,6 +369,31 @@ except ImportError:  # pragma: no cover - path fallback when invoked from repo r
     except ImportError:
         EXTRA_GROUPS = []
 
+# Large 5,000-diagnosis-round expansion (ICD-10-chapter organized). Same tuple form + dedup.
+try:
+    from tier2_catalog_expansion import ALL_EXPANSION_GROUPS
+except ImportError:  # pragma: no cover
+    try:
+        from scripts.tier2_catalog_expansion import ALL_EXPANSION_GROUPS
+    except ImportError:
+        ALL_EXPANSION_GROUPS = []
+
+try:
+    from tier2_catalog_expansion2 import ALL_EXPANSION2_GROUPS
+except ImportError:  # pragma: no cover
+    try:
+        from scripts.tier2_catalog_expansion2 import ALL_EXPANSION2_GROUPS
+    except ImportError:
+        ALL_EXPANSION2_GROUPS = []
+
+try:
+    from tier2_catalog_expansion3 import ALL_EXPANSION3_GROUPS
+except ImportError:  # pragma: no cover
+    try:
+        from scripts.tier2_catalog_expansion3 import ALL_EXPANSION3_GROUPS
+    except ImportError:
+        ALL_EXPANSION3_GROUPS = []
+
 
 def build_conditions() -> List[Dict]:
     conditions: List[Dict] = []
@@ -404,13 +429,14 @@ def build_conditions() -> List[Dict]:
     # overlapping entry (e.g. a variant already present in the base 140) is skipped rather than
     # crashing. Within the extras, a duplicate id is still an authoring error and fails loudly.
     extra_ids = set()
-    for group in EXTRA_GROUPS:
+    for group in (list(EXTRA_GROUPS) + list(ALL_EXPANSION_GROUPS)
+                  + list(ALL_EXPANSION2_GROUPS) + list(ALL_EXPANSION3_GROUPS)):
         for cid, name, category, urgency, icd10, aliases in group:
             if cid in extra_ids:
                 raise SystemExit(f"duplicate tier2 id (extra): {cid}")
             extra_ids.add(cid)
             if cid in seen_ids or name.strip().lower() in seen_names:
-                continue  # overlaps a base concept -> skip (never double-count)
+                continue  # overlaps a base/earlier concept -> skip (never double-count)
             seen_ids.add(cid)
             seen_names.add(name.strip().lower())
             conditions.append(_make_entry(cid, name, category, urgency, icd10, aliases))
