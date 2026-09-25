@@ -54,7 +54,8 @@ def _build_lab_to_diagnoses_index() -> dict:
 
 _LAB_TO_DIAGNOSES = _build_lab_to_diagnoses_index()
 
-CandidateSource = Literal["symptom_match", "risk_match", "objective_finding", "safety_candidate"]
+CandidateSource = Literal["symptom_match", "risk_match", "medication_match", "history_match",
+                           "imaging_match", "objective_finding", "safety_candidate"]
 
 # ~8-15 meaningful candidates, per spec -- a target, not a hard cap: dangerous/objective-evidence
 # entries are always kept regardless of this number.
@@ -82,14 +83,16 @@ def _add(pool: dict, entry: dict, source: CandidateSource) -> None:
 def generate_candidates(presentation: ClinicalPresentation,
                          glucose_result_text: Optional[str] = None,
                          lactate_result_text: Optional[str] = None,
-                         objective_findings: Optional[Dict[str, ObjectiveFinding]] = None) -> List[CandidateDiagnosis]:
+                         objective_findings: Optional[Dict[str, ObjectiveFinding]] = None,
+                         imaging_text: Optional[List[str]] = None) -> List[CandidateDiagnosis]:
     """Builds the candidate pool for one turn. `glucose_result_text`/`lactate_result_text`/
-    `objective_findings` are passed explicitly (not a whole PatientState) to keep this module's
-    dependency surface small and directly testable. `objective_findings` is the
+    `objective_findings`/`imaging_text` are passed explicitly (not a whole PatientState) to keep
+    this module's dependency surface small and directly testable. `objective_findings` is the
     canonical-id-keyed dict objective_evidence.normalize_objective_evidence() returns (callers
     already compute it once per turn for differential.py's own scoring, so it's passed through
     rather than re-derived here) -- None (the default) simply skips the generalized-lab pool step
-    below, leaving the glucose/lactate-only behavior unchanged for any caller that doesn't pass it."""
+    below, leaving the glucose/lactate-only behavior unchanged for any caller that doesn't pass it.
+    `imaging_text` is `state.imaging.values()` -- also None-safe/optional for the same reason."""
     pool: dict = {}
 
     # 1. symptom_match -- every concurrently-extracted concept's own disease pool (spec: multiple
@@ -109,17 +112,59 @@ def generate_candidates(presentation: ClinicalPresentation,
                 for entry in diseases_for_tag(related):
                     _add(pool, entry, "symptom_match")
 
-    # 2. risk_match -- a disease's own risk_factors matching PMH/medication context pulls it in
-    #    even without a symptom-concept hit (e.g. known insulin use keeps hypoglycemia/DKA
+    # 2. risk_match -- a disease's own risk_factors matching the patient's PMH/social-history text
+    #    pulls it in even without a symptom-concept hit (e.g. a smoking history keeps COPD
     #    reachable for an atypical, non-classic presentation).
-    risk_context = list(presentation.risk_factors) + list(presentation.medication_context)
-    if risk_context:
+    if presentation.risk_factors:
         for entry in all_diseases().values():
             if entry["id"] in pool:
                 continue
             for risk_factor in entry.get("risk_factors", []):
-                if feature_present(risk_factor, risk_context, scrub_negated_spans=True):
+                if feature_present(risk_factor, presentation.risk_factors, scrub_negated_spans=True):
                     _add(pool, entry, "risk_match")
+                    break
+
+    # 2b. medication_match -- the SAME mechanism as risk_match, but scanning the patient's
+    #     medication context specifically, and SEPARATELY tagged (spec: a diagnosis introduced
+    #     purely by medication context should be visibly distinguishable from one introduced by
+    #     other PMH/social risk factors) -- e.g. known insulin/sulfonylurea use keeps
+    #     hypoglycemia/DKA reachable purely from the medication list, independent of PMH wording.
+    #     No `entry["id"] in pool` skip here (unlike risk_match above): a candidate already in the
+    #     pool via symptom_match/risk_match still gains this tag when it also applies, so
+    #     converging evidence from multiple independent sources stays visible in candidate_sources
+    #     rather than being hidden by whichever source happened to add the entry first.
+    if presentation.medication_context:
+        for entry in all_diseases().values():
+            for risk_factor in entry.get("risk_factors", []):
+                if feature_present(risk_factor, presentation.medication_context, scrub_negated_spans=True):
+                    _add(pool, entry, "medication_match")
+                    break
+
+    # 2c. history_match -- distinct from risk_match: risk_match matches a disease's own generic
+    #     `risk_factors` phrases (e.g. "smoking", "recent viral upper respiratory infection")
+    #     against PMH text; history_match instead catches the patient's PMH/social history naming
+    #     a PAST OCCURRENCE of the diagnosis itself BY NAME (e.g. "history of migraines", "known
+    #     atrial fibrillation", "recurrent pyelonephritis") -- a disease is not usually listed as
+    #     its own risk factor, so this is real, additional signal a plain risk_factors match would
+    #     never catch on its own (past-diagnosis recurrence risk).
+    if presentation.risk_factors:
+        for entry in all_diseases().values():
+            for name in (entry["name"], *entry.get("aliases", [])):
+                if feature_present(name, presentation.risk_factors, scrub_negated_spans=True):
+                    _add(pool, entry, "history_match")
+                    break
+
+    # 2d. imaging_match -- an already-available imaging/study finding (state.imaging, e.g. a CXR or
+    #     CT read before this turn) pulls in any diagnosis whose OWN typical_features/
+    #     confirmatory_findings it matches, even without a matching symptom concept -- e.g. a CXR
+    #     incidentally read as "widened mediastinum" keeps aortic_dissection reachable regardless
+    #     of how the chief complaint was routed.
+    if imaging_text:
+        for entry in all_diseases().values():
+            phrases = list(entry.get("typical_features", [])) + list(entry.get("confirmatory_findings", []))
+            for phrase in phrases:
+                if feature_present(phrase, imaging_text, scrub_negated_spans=True):
+                    _add(pool, entry, "imaging_match")
                     break
 
     # 3. objective_finding -- decisive numeric lab evidence pulls its diagnosis in regardless of

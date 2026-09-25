@@ -360,6 +360,7 @@ class DifferentialEngine:
             glucose_result_text=state.laboratory_tests.get("glucose_point_of_care"),
             lactate_result_text=state.laboratory_tests.get("lactate"),
             objective_findings=objective_findings,
+            imaging_text=list(state.imaging.values()),
         )
         candidates = [c.entry for c in candidate_records]
         sources_by_id = {c.id: c.sources for c in candidate_records}
