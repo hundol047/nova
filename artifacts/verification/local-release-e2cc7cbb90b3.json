@@ -1,0 +1,89 @@
+{
+  "git_sha": "e2cc7cbb90b32ce27d540003a980d20a69efc3a4",
+  "timestamp_utc": "2026-09-25T07:39:22.099372+00:00",
+  "environment": {
+    "python": "3.11.15",
+    "pydantic": false,
+    "fastapi": false,
+    "psycopg": false,
+    "npm": true
+  },
+  "results": {
+    "nova_agent_tests": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed"
+    },
+    "backend_tests": {
+      "status": "NOT AVAILABLE",
+      "detail": "fastapi not installed"
+    },
+    "unit_safety_guard": {
+      "status": "PASS",
+      "detail": ".....sss.........                                                        [100%]\n14 passed, 3 skipped in 0.02s"
+    },
+    "leakage_scan": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed (blind case modules import SyntheticCase)"
+    },
+    "submission_sync": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed (sync test imports the agent)"
+    },
+    "frontend_build": {
+      "status": "NOT AVAILABLE",
+      "detail": "frontend/node_modules not installed (run `npm ci` first)"
+    },
+    "frontend_unit_tests": {
+      "status": "NOT AVAILABLE",
+      "detail": "frontend/node_modules not installed (run `npm ci` first)"
+    },
+    "i18n_parity": {
+      "status": "NOT AVAILABLE",
+      "detail": "5)\n    at prepareExecution (node:internal/process/pre_execution:159:5) {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: [ 'internal/preload' ]\n}\n\nNode.js v22.23.2\n"
+    },
+    "hardcoded_string_audit": {
+      "status": "NOT AVAILABLE",
+      "detail": "node:internal/process/pre_execution:231:5)\n    at prepareExecution (node:internal/process/pre_execution:159:5) {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: [ 'internal/preload' ]\n}\n\nNode.js v22.23.2\n"
+    },
+    "e2e_harness_present": {
+      "status": "PASS",
+      "detail": "playwright.config.js + tests/e2e/*.spec.js present (EXECUTION NOT VERIFIED here)"
+    },
+    "case_resume_wiring": {
+      "status": "PASS",
+      "detail": "open-case API + service + frontend resume/timeline restore wired"
+    },
+    "ontology_catalog_integrity": {
+      "status": "PASS",
+      "detail": "174 concepts (34 deep + 140 structured), 0 dup ids, code-map OK"
+    },
+    "learning_isolation": {
+      "status": "PASS",
+      "detail": "learning<->eval isolated; torch/learning absent from core+submission"
+    },
+    "learning_pipeline_tests": {
+      "status": "PASS",
+      "detail": "17 passed in 0.04s"
+    },
+    "blind_integrity": {
+      "status": "PASS",
+      "detail": "v9 hash matches frozen manifest"
+    },
+    "blind_v9_first_run": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed; run `python -m evaluation.blind_benchmark_v9` once in a runnable env"
+    },
+    "postgres_available": {
+      "status": "NOT AVAILABLE",
+      "detail": "psycopg not installed"
+    },
+    "redis_available": {
+      "status": "NOT AVAILABLE",
+      "detail": "redis client not installed"
+    },
+    "browser_e2e_available": {
+      "status": "SKIPPED",
+      "detail": "E2E harness present but not auto-run here"
+    }
+  }
+}
