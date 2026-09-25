@@ -137,7 +137,7 @@ python -m evaluation.benchmark --generalization-v2 --stress --save-json evaluati
 | **Blind v3 reference** | `evaluation/blind_cases_v3.py` (32) | A first blind check, run once and reported as-is. No longer used for tuning -- kept only as a failure-analysis reference (see [Known Limitations](#9-known-limitations)). Its number below is a fresh re-measurement against the current codebase (the file itself was never edited), not the number it scored when first authored -- structural changes since then shift a frozen set's score without anyone tuning toward it. |
 | **Blind v4 reference** | `evaluation/blind_cases_v4.py` (34, one per knowledge-base diagnosis) | A second blind check, authored and run once after an earlier structural fix round. Same reference-only, re-measured status as Blind v3. |
 | **Blind v5 reference** | `evaluation/blind_cases_v5.py` (44) + `evaluation/blind_benchmark_v5.py` + `evaluation/blind_v5_manifest.json` | This round's untouched final check for the *previous* structural rewrite (chief-complaint confidence routing, diagnostic/severity score separation). Now reference-only, re-measured against the current codebase (`nova_agent/` and this case file untouched since authoring). |
-| **Untouched Blind v6** | `evaluation/blind_cases_v6.py` (54) + `evaluation/blind_benchmark_v6.py` + `evaluation/blind_v6_manifest.json` | **This round's actual untouched final check.** Authored and hash-frozen (`blind_v6_manifest.json`) only after this round's structural rewrite (`ClinicalPresentation` multi-concept extraction, `candidate_generator.py` dynamic candidate generation, the `production/` service layer) was complete and re-verified against the sets above, then run exactly once. Nothing in `nova_agent/` or this case file was touched in response to its result. |
+| **Blind v6 reference** | `evaluation/blind_cases_v6.py` (54) + `evaluation/blind_benchmark_v6.py` + `evaluation/blind_v6_manifest.json` | The prior round's untouched final check. **Now reference-only** as of the pilot-readiness workstream, because a reasoning-code change was made after it (the Stage 4 glucose unit-safety guard) -- so a fresh untouched Blind v8 was authored (see below). Original first-run: Authored and hash-frozen (`blind_v6_manifest.json`) only after this round's structural rewrite (`ClinicalPresentation` multi-concept extraction, `candidate_generator.py` dynamic candidate generation, the `production/` service layer) was complete and re-verified against the sets above, then run exactly once. Nothing in `nova_agent/` or this case file was touched in response to its result. |
 
 `evaluation/generalization_cases_v2.py` (**18 more cases**: elderly polypharmacy,
 immunocompromised, anticoagulant+antiplatelet polypharmacy, conflicting findings, vague complaints,
@@ -175,7 +175,21 @@ goes stale against a fresh `evaluation/latest_results.json`.
 | Blind v3 reference (32 cases, all scored, 14 critical) | 62.5% | 62.5% | 50.0% | 50.0% | 21.8 |
 | Blind v4 reference (34 cases, all scored, 14 critical) | 70.6% | 70.6% | 85.7% | 14.3% | 20.9 |
 | Blind v5 reference (44 cases, all scored, 20 critical) | 56.8% | 56.8% | 50.0% | 50.0% | 21.7 |
-| **Untouched Blind v6 (54 cases, all scored, 26 critical)** | **59.3%** | **59.3%** | **46.2%** | **53.8%** | 20.7 |
+| Blind v6 reference (54 cases, all scored, 26 critical) | 59.3% | 59.3% | 46.2% | 53.8% | 20.7 |
+| **Untouched Blind v8 (72 cases)** | **NOT VERIFIED (first run pending a runnable env)** | — | — | — | — |
+
+**Blind v8** (`evaluation/blind_cases_v8.py`, 72 cases, `evaluation/blind_benchmark_v8.py`,
+`evaluation/blind_v8_manifest.json`) is the pilot-readiness workstream's fresh untouched set,
+authored and hash-frozen (SHA-256 `502ea339...`) **after** the only reasoning-code change in that
+workstream (the Stage 4 glucose unit-safety guard) was complete and CI-verified against
+held-out/generalization-v2/stress. It covers all 34 KB diagnoses plus multimorbidity, polypharmacy,
+pregnancy/pelvic, trauma, GI bleeding, atypical neuro/infection, metabolic, conflicting findings,
+sparse information, negative-centric, and data-freshness/wrong-unit axes, spread across
+ko/en/ja/zh/mixed input (language distribution 46 en / 8 ko / 6 ja / 7 zh / 5 mixed). Its **first
+run has not yet been executed** — it requires a runnable Python environment (pydantic), which the
+network-isolated authoring environment does not have. Per the blind-set discipline it will be run
+**exactly once** and its result transcribed as-is, never re-tuned against; until then it is
+reported here as **NOT VERIFIED**. Blind v6 is now reference-only.
 
 "Scored" excludes deliberately ambiguous/insufficient-info/unmapped-complaint stress cases (see
 `evaluation/benchmark.py`'s exclusion disclosure); "All-Case" is the same correctness check applied
@@ -336,9 +350,10 @@ standalone API, `backend/app/services/nova_service.py` wraps the same, unmodifie
 (`backend/app/main.py`) -- reusing its real OIDC/session auth, RBAC, SQLite audit store, and
 idempotency infrastructure instead of a parallel implementation, and adding a genuine FHIR/EMR
 normalization bridge (`backend/app/services/nova_fhir_mapper.py`) that `production/` never had.
-Five new endpoints: `POST /v1/nova/cases`, `POST .../{id}/observations`, `POST .../{id}/decide`,
-`GET .../{id}`, `POST .../{id}/close`, plus `GET /ready` (distinct from `/health`) and
-`GET /v1/nova/metrics` (admin-only). Same clinical safety contract
+The `/v1/nova/*` endpoints: `POST /v1/nova/cases`, `POST .../{id}/observations` (idempotent by
+`observation_id`), `POST .../{id}/decide`, `GET .../{id}`, `PATCH .../{id}/locale` (mid-case
+language switch), `POST .../{id}/close`, plus `GET /health`, `GET /health/subsystems`,
+`GET /ready` (distinct from `/health`) and `GET /v1/nova/metrics` (admin-only). Same clinical safety contract
 (`clinician_review_required: true`, a fixed safety banner, no endpoint ever touches a
 medication/lab order repository). Full documentation:
 `docs/NOVA_PRODUCTION_ARCHITECTURE.md`, `NOVA_SECURITY.md`, `NOVA_CLINICAL_SAFETY.md`,
@@ -352,13 +367,22 @@ rejection, circuit-breaker behavior), a load smoke test
 **What is explicitly NOT verified, for both paths**: clinical validation, regulatory review, and
 institutional security review have not been performed -- "production-grade code" here means the
 practices above are implemented and tested, not that any of those three have signed off (see
-`docs/nova/clinical_safety.md`/`docs/NOVA_CLINICAL_SAFETY.md`'s own statement of this). Both
-shipped case repositories (`production/repository.py`'s `CaseRepository` and
-`backend/app/services/nova_repository.py`'s `NovaCaseRepository`) are process-memory-only; a real
-deployment of either path needs a database-backed implementation of the same interface before case
-data survives a restart or is shared across replicas. `backend/`'s existing FHIR/OIDC/SMART code
-(reused unchanged by N.O.V.A.'s integration) has never been exercised against a real hospital IdP
-or FHIR server -- see `docs/NOVA_SECURITY.md`.
+`docs/NOVA_CLINICAL_SAFETY.md`'s own statement of this).
+
+**Persistence (updated):** the authoritative hospital path (`backend/`) now has a durable,
+restart-surviving, multi-instance-safe persistence layer -- `PostgresNovaCaseRepository` and
+`PostgresAuditStore` (`backend/app/services/nova_repository.py`, `audit.py`), selected via
+`NOVA_POSTGRES_URL`, with optimistic-concurrency (`version` column), observation idempotency
+(`PRIMARY KEY (case_id, observation_id)`), a `state_schema_version` column, and an ordered SQL
+migration runner (`nova_migrations.py`). This is exercised in CI by a dedicated
+`postgres-integration` job against a real `postgres:16` service (repository, concurrency, audit, and
+migration tests -- a CI skip is turned into a failure via `NOVA_CI_REQUIRE_POSTGRES=1`, so the DB
+integration can never be silently skipped). `production_guard.py` refuses to start the backend in
+production mode on a non-durable (local/in-memory SQLite) store. The standalone `production/`
+package remains a **reference/lightweight** deployment with an in-memory repository by design (not
+the hospital path). `backend/`'s existing FHIR/OIDC/SMART code (reused unchanged by N.O.V.A.'s
+integration) has never been exercised against a real hospital IdP or FHIR server -- see
+`docs/NOVA_SECURITY.md`.
 
 ### Production readiness matrix
 
@@ -366,8 +390,8 @@ or FHIR server -- see `docs/NOVA_SECURITY.md`.
 |---|---|---|
 | CODE | READY | READY |
 | LOCAL VALIDATION | READY (181+53 tests, load smoke) | READY (483 tests incl. 35 new, load smoke) |
-| CONTAINER | PARTIAL (structurally verified; full build blocked by this dev sandbox's network, not CI) | PARTIAL (same sandbox limitation; different root cause -- registry rate-limit vs. PyPI access) |
-| PERSISTENCE | NOT VERIFIED (in-memory only; no DB-backed repository built) | NOT VERIFIED (in-memory only; no DB-backed repository built) |
+| CONTAINER | READY (image builds + `/health`+`/ready` smoke pass in the `production` CI job) | READY (image builds + `/health`+`/ready` smoke pass in the `production-backend` CI job) |
+| PERSISTENCE | REFERENCE (in-memory by design; lightweight/standalone path) | READY-IN-CI (durable Postgres repo + audit + migrations, verified by the real-DB `postgres-integration` CI job; real SNUBH DB deployment still NOT VERIFIED) |
 | AUTH | READY (API-key + RBAC, tested) | READY (reuses existing OIDC/session + RBAC, tested) |
 | FHIR INTEROP | N/A (no FHIR integration in this path) | PARTIAL (real mapping code exists and is unit-tested; never exercised against a real hospital FHIR server) |
 | REAL LLM | NOT VERIFIED (mock provider only, no live call made) | NOT VERIFIED (mock provider only, no live call made) |
@@ -508,15 +532,15 @@ it has cleared the four rows still marked NOT VERIFIED.
   a ranking/routing problem on an already-present diagnosis, never a missing one. Padding the KB
   without that evidence would just be guessing.
 - **Production service layer (`production/`) exists and is tested, but is explicitly NOT clinically
-  validated, regulatory-reviewed, or security-reviewed.** See `docs/nova/clinical_safety.md` and
-  `docs/nova/security.md` for exactly what has and has not been verified, and this file's own
+  validated, regulatory-reviewed, or security-reviewed.** See `docs/NOVA_CLINICAL_SAFETY.md` and
+  `docs/NOVA_SECURITY.md` for exactly what has and has not been verified, and this file's own
   Production Readiness summary in the session report this round produced (not reproduced verbatim
   here to avoid the two ever silently drifting apart -- read the docs, not a stale copy).
 - **The in-memory `CaseRepository`/`AuditRepository` in `production/repository.py` is process-memory-
-  only.** It is the right default for local dev/test, but a real deployment needs a database-backed
-  implementation of the same interfaces before case data can survive a restart or be shared across
-  replicas -- see `docs/nova/deployment.md`'s persistence section for the exact contract a
-  replacement must preserve.
+  only.** That is correct for the `production/` **reference/lightweight** path by design. The
+  authoritative hospital path (`backend/`) does NOT rely on it: it ships a durable
+  `PostgresNovaCaseRepository`/`PostgresAuditStore` (verified by the real-DB `postgres-integration`
+  CI job) -- see `docs/NOVA_DEPLOYMENT.md`'s persistence section for the exact contract.
 - **The production Docker image build was verified structurally, not end-to-end, in this
   development sandbox** (dependency-file path resolution and `pip`'s dependency graph resolve
   correctly; the sandbox's own network policy blocks its Docker build network from reaching PyPI, so
