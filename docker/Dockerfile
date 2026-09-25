@@ -7,7 +7,10 @@ RUN npm run build
 
 FROM python:3.12-slim
 WORKDIR /app
-COPY backend/requirements.txt /app/backend/requirements.txt
+# backend/requirements.txt does `-r requirements-core.txt` (and the split-out ONNX Runtime files),
+# so ALL of them must be present before pip install -- copying only requirements.txt made the
+# install fail with "Could not open requirements file: backend/requirements-core.txt".
+COPY backend/requirements*.txt /app/backend/
 RUN pip install --no-cache-dir -r /app/backend/requirements.txt
 COPY backend/ /app/backend/
 # nova_agent/ (the N.O.V.A. clinical reasoning engine -- see backend/app/services/nova_service.py)
