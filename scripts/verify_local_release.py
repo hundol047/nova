@@ -253,6 +253,84 @@ def check_reasoning_unchanged_blind_v9() -> dict:
     return _blind_manifest_ok("v9")
 
 
+def _load_catalog_via_stub():
+    """Build the DiseaseCatalog without triggering the pydantic-heavy nova_agent package __init__
+    (dependency-free path, works locally)."""
+    import sys as _sys
+    import types as _types
+    if "nova_agent" not in _sys.modules:
+        pkg = _types.ModuleType("nova_agent")
+        pkg.__path__ = [str(ROOT / "nova_agent")]
+        _sys.modules["nova_agent"] = pkg
+    from nova_agent.ontology import registry
+    return registry.build_catalog()
+
+
+def check_ontology_catalog_integrity() -> dict:
+    """Dependency-free: builds the catalog, asserts the 34 core deep concepts survive, no duplicate
+    concept ids, a broad Tier-2 layer is present, and external-code mapping round-trips."""
+    try:
+        cat = _load_catalog_via_stub()
+    except Exception as exc:  # noqa: BLE001
+        return {"status": FAIL, "detail": f"catalog build failed: {type(exc).__name__}: {exc}"}
+    tiers = cat.counts_by_tier()
+    ids = [c.concept_id for c in cat.all_concepts()]
+    dups = len(ids) - len(set(ids))
+    if tiers.get("TIER1_DEEP", 0) != 34:
+        return {"status": FAIL, "detail": f"expected 34 Tier-1 deep, got {tiers.get('TIER1_DEEP')}"}
+    if dups:
+        return {"status": FAIL, "detail": f"{dups} duplicate concept id(s)"}
+    if tiers.get("TIER2_STRUCTURED", 0) < 100:
+        return {"status": FAIL, "detail": f"Tier-2 catalog too small: {tiers.get('TIER2_STRUCTURED')}"}
+    # code mapping round-trip
+    coded = [c for c in cat.all_concepts() if c.external_codes]
+    if coded:
+        s = coded[0]
+        mapped = cat.map_external_code(s.external_codes[0].system, s.external_codes[0].code)
+        if s.concept_id not in {m.concept_id for m in mapped}:
+            return {"status": FAIL, "detail": "external-code mapping did not round-trip"}
+    total = len(ids)
+    return {"status": PASS, "detail": f"{total} concepts (34 deep + {tiers['TIER2_STRUCTURED']} structured), "
+                                      f"0 dup ids, code-map OK"}
+
+
+def check_learning_isolation() -> dict:
+    """Static: learning/ never imports evaluation/; nova_agent/ + submission/ never import
+    torch/learning; submission excludes the learning package + torch requirement."""
+    import re as _re
+    eval_imp = _re.compile(r"^\s*(from|import)\s+evaluation\b", _re.MULTILINE)
+    tl_imp = _re.compile(r"^\s*(from|import)\s+(torch|learning)\b", _re.MULTILINE)
+    problems = []
+    for py in (ROOT / "learning").rglob("*.py"):
+        if eval_imp.search(py.read_text(encoding="utf-8", errors="ignore")):
+            problems.append(f"learning imports evaluation: {py.name}")
+    for base in ("nova_agent", "submission"):
+        for py in (ROOT / base).rglob("*.py"):
+            if tl_imp.search(py.read_text(encoding="utf-8", errors="ignore")):
+                problems.append(f"{base} imports torch/learning: {py.name}")
+    if (ROOT / "submission" / "learning").exists():
+        problems.append("submission/ contains the learning package")
+    req = (ROOT / "submission" / "requirements.txt")
+    if req.exists() and "torch" in req.read_text(encoding="utf-8").lower():
+        problems.append("submission/requirements.txt declares torch")
+    if problems:
+        return {"status": FAIL, "detail": "; ".join(problems)[:120]}
+    return {"status": PASS, "detail": "learning<->eval isolated; torch/learning absent from core+submission"}
+
+
+def check_learning_pipeline_tests() -> dict:
+    """Runs the dependency-free learning pipeline + isolation tests (no torch/pydantic needed)."""
+    if not _have_module("pytest"):
+        return {"status": NA, "detail": "pytest not installed"}
+    proc = subprocess.run(
+        [sys.executable, "-m", "pytest", "-q",
+         "tests/test_learning_pipeline.py", "tests/test_learning_eval_isolation.py"],
+        cwd=str(ROOT), capture_output=True, text=True,
+    )
+    tail = (proc.stdout + proc.stderr).strip().splitlines()[-1:] or [""]
+    return {"status": PASS if proc.returncode == 0 else FAIL, "detail": tail[0][:80]}
+
+
 CHECKS = [
     ("nova_agent_tests", check_nova_agent_tests),
     ("backend_tests", check_backend_tests),
@@ -265,6 +343,9 @@ CHECKS = [
     ("hardcoded_string_audit", check_hardcoded_string_audit),
     ("e2e_harness_present", check_e2e_harness_present),
     ("case_resume_wiring", check_case_resume_wiring),
+    ("ontology_catalog_integrity", check_ontology_catalog_integrity),
+    ("learning_isolation", check_learning_isolation),
+    ("learning_pipeline_tests", check_learning_pipeline_tests),
     ("blind_integrity", check_blind_integrity),
     ("blind_v9_first_run", check_blind_v9_first_run),
     ("postgres_available", check_postgres_available),

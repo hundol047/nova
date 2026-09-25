@@ -11,12 +11,28 @@ prioritize for curation; no free text or identifier is ever persisted.
 from __future__ import annotations
 
 import hashlib
+import re
+import unicodedata
 import uuid
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import List, Optional
 
-from nova_agent.ontology.normalizer import tokens
+# Self-contained tokenizer (do NOT import nova_agent — learning/ stays independent of the reasoning
+# package so it runs in a torch-only environment without pydantic). Mirrors the ontology normalizer:
+# NFKC, lowercase, strip Latin accents, drop punctuation, collapse whitespace, CJK preserved.
+_PUNCT_RE = re.compile(r"[^\w\s]", flags=re.UNICODE)
+_WS_RE = re.compile(r"\s+", flags=re.UNICODE)
+
+
+def tokens(text: str) -> List[str]:
+    if not text:
+        return []
+    t = unicodedata.normalize("NFKC", text).strip().lower()
+    t = "".join(c for c in unicodedata.normalize("NFKD", t) if not unicodedata.combining(c))
+    t = _PUNCT_RE.sub(" ", t)
+    t = _WS_RE.sub(" ", t).strip()
+    return [tok for tok in t.split(" ") if tok]
 
 # A fixed salt namespaces the fingerprint so it is not a bare hash of the query (mild pre-image
 # hardening). This is analytics de-identification, not a security boundary.
