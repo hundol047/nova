@@ -75,6 +75,53 @@ MIGRATIONS: List[Tuple[int, str, List[str]]] = [
             "ALTER TABLE nova_cases ADD COLUMN IF NOT EXISTS state_schema_version INTEGER NOT NULL DEFAULT 1",
         ],
     ),
+    (
+        3,
+        "clinical_learning_cases: de-identified outcome store for the OPT-IN continual-learning "
+        "pipeline (vNext PART C). Captured ONLY when NOVA_LEARNING_ENABLED=true. A NOVA prediction "
+        "is NEVER stored as a label (see label_source CHECK); labels are clinician/coded/pathology "
+        "outcomes adjudicated separately. No PHI columns: patient identity is a non-reversible "
+        "pseudonym and only allow-listed clinical signal is retained.",
+        [
+            """
+            CREATE TABLE IF NOT EXISTS clinical_learning_cases (
+                learning_case_id TEXT PRIMARY KEY,
+                patient_pseudonym TEXT NOT NULL,
+                encounter_time TEXT NOT NULL,
+                captured_at TEXT NOT NULL,
+                feature_snapshot TEXT NOT NULL DEFAULT '{}',
+                candidate_concept_ids TEXT NOT NULL DEFAULT '[]',
+                nova_top_concept_id TEXT,
+                label_concept_id TEXT,
+                label_source TEXT NOT NULL,
+                label_status TEXT NOT NULL DEFAULT 'PENDING_ADJUDICATION',
+                deid_stable BOOLEAN NOT NULL DEFAULT FALSE,
+                used_in_snapshot_id TEXT,
+                CONSTRAINT ck_clc_label_source_not_model CHECK (
+                    label_source NOT IN ('NOVA_PREDICTION', 'LLM_SUGGESTION')
+                    OR label_status = 'PENDING_ADJUDICATION'
+                )
+            )
+            """,
+            "CREATE INDEX IF NOT EXISTS idx_clc_patient_pseudonym ON clinical_learning_cases(patient_pseudonym)",
+            "CREATE INDEX IF NOT EXISTS idx_clc_encounter_time ON clinical_learning_cases(encounter_time)",
+            "CREATE INDEX IF NOT EXISTS idx_clc_label_status ON clinical_learning_cases(label_status)",
+            # Coverage-gap analytics: PHI-free counter of presentations that produced no confident
+            # curated match (UNKNOWN_PRESENTATION / POSSIBLE_UNMAPPED_CONDITION) so we know WHERE to
+            # expand the catalog. Stores only a query fingerprint + outcome, never patient data.
+            """
+            CREATE TABLE IF NOT EXISTS coverage_gap_events (
+                gap_event_id TEXT PRIMARY KEY,
+                observed_at TEXT NOT NULL,
+                outcome TEXT NOT NULL,
+                query_fingerprint TEXT NOT NULL,
+                top_candidate_concept_id TEXT,
+                top_candidate_score REAL
+            )
+            """,
+            "CREATE INDEX IF NOT EXISTS idx_cge_outcome ON coverage_gap_events(outcome)",
+        ],
+    ),
 ]
 
 
