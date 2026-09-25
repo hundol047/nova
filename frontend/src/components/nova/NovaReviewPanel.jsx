@@ -43,6 +43,9 @@ export default function NovaReviewPanel({onSubmit, submitting, closed, dispositi
           </button>
         ))}
       </div>
+      {choice === 'modify' ? (
+        <p className="nova-muted" style={{marginTop: 8}}>{t('nova.review.modifyHint')}</p>
+      ) : null}
       <label htmlFor="nova-review-reason" className="nova-muted" style={{display: 'block', marginTop: 8}}>
         {t('common.reason')}
       </label>

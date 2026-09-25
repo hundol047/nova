@@ -70,7 +70,12 @@ def extract_lactate_mmol_l(lactate_result_text: Optional[str]) -> Optional[float
     evidence either way", never as a value of 0 (mirrors glucose_evidence.extract_glucose_mg_dl)."""
     if not lactate_result_text:
         return None
-    match = _LACTATE_PATTERN.search(lactate_result_text)
+    # Unit safety (spec section 19): thresholds here are mmol/L. A value explicitly in mg/dL
+    # (~18x larger) must NOT be read as a bare mmol/L number. A qualitative "elevated" with a
+    # mg/dL number still counts via the qualitative path below; only the NUMERIC parse is refused.
+    from nova_agent.unit_safety import value_is_in_disallowed_unit
+    numeric_unit_unsafe = value_is_in_disallowed_unit(lactate_result_text, ("mmol/l",), ("mg/dl",))
+    match = None if numeric_unit_unsafe else _LACTATE_PATTERN.search(lactate_result_text)
     if not match:
         if _QUALITATIVE_ELEVATED_LACTATE_PATTERN.search(lactate_result_text):
             return QUALITATIVE_ELEVATED_LACTATE_MMOL_L

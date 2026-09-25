@@ -35,6 +35,7 @@ export default function NovaSystemStatus({subsystems, llmDegraded, loading, erro
     ['llm', t('status.llm'), llmDegraded ? 'degraded' : llmState],
     ['auth', t('status.auth'), subsystems && (subsystems.auth || subsystems.authentication)],
     ['nova', t('status.nova'), subsystems && (subsystems.nova || subsystems.nova_service)],
+    ['redis', t('status.redis'), subsystems && (subsystems.redis || subsystems.shared_state)],
     ['kb', t('status.knowledgeBase'), subsystems && (subsystems.knowledge_base || subsystems.kb)],
   ];
 

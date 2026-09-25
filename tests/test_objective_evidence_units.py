@@ -122,3 +122,55 @@ class TestNegationNotReinjected:
         positive_tags = set(getattr(presentation, "symptoms", []) or []) \
             | set(getattr(presentation, "associated_features", []) or [])
         assert "chest_pain" not in positive_tags
+
+
+
+# --- Unit-safety guard generalized beyond glucose (independent re-audit round) --------------------
+# unit_safety.py is dependency-free, so this runs everywhere via a direct file import.
+def _load_unit_safety():
+    import importlib.util
+    from pathlib import Path
+    path = Path(__file__).resolve().parents[1] / "nova_agent" / "unit_safety.py"
+    spec = importlib.util.spec_from_file_location("unit_safety_under_test", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+us = _load_unit_safety()
+
+
+class TestUnitSafetyGuard:
+    def test_creatinine_si_umol_is_rejected(self):
+        # 90 umol/L = 1.0 mg/dL (normal); must NOT read as 90 (>> critical) against mg/dL thresholds.
+        assert us.value_is_in_disallowed_unit("creatinine 90 umol/L", ("mg/dl",), ("umol/l", "mmol/l")) is True
+
+    def test_creatinine_correct_unit_ok(self):
+        assert us.value_is_in_disallowed_unit("creatinine 1.2 mg/dL", ("mg/dl",), ("umol/l", "mmol/l")) is False
+
+    def test_allowed_unit_alongside_disallowed_is_ok(self):
+        assert us.value_is_in_disallowed_unit("creatinine 1.0 mg/dL (90 umol/L)", ("mg/dl",), ("umol/l",)) is False
+
+    def test_no_unit_stated_proceeds(self):
+        # No explicit unit -> guard does not fire; the existing name-anchored numeric parse proceeds.
+        assert us.value_is_in_disallowed_unit("creatinine 1.2", ("mg/dl",), ("umol/l", "mmol/l")) is False
+
+    def test_hemoglobin_si_g_per_l_is_rejected(self):
+        # 70 g/L = 7.0 g/dL (critical anemia); must NOT read as 70 (normal) and HIDE the critical low.
+        assert us.value_is_in_disallowed_unit("hemoglobin 70 g/L", ("g/dl",), ("g/l",)) is True
+
+    def test_hemoglobin_correct_unit_ok(self):
+        assert us.value_is_in_disallowed_unit("hemoglobin 7.0 g/dL", ("g/dl",), ("g/l",)) is False
+
+    def test_g_per_dl_pattern_does_not_match_g_per_l(self):
+        # Regression: the g/dL allowed-pattern must require the 'd' (dL), not spuriously match g/L.
+        assert us.unit_present("hemoglobin 70 g/L", "g/dl") is False
+        assert us.unit_present("hemoglobin 7 g/dL", "g/dl") is True
+
+    def test_mg_per_l_is_not_g_per_l(self):
+        # mg/L / ug/L must not be mistaken for g/L by the g/l pattern.
+        assert us.unit_present("something 12 mg/L", "g/l") is False
+
+    def test_lactate_mg_dl_rejected_mmol_ok(self):
+        assert us.value_is_in_disallowed_unit("lactate 36 mg/dL", ("mmol/l",), ("mg/dl",)) is True
+        assert us.value_is_in_disallowed_unit("lactate 4 mmol/L", ("mmol/l",), ("mg/dl",)) is False

@@ -40,7 +40,8 @@ from nova_agent.i18n import translate_diagnosis
 from .nova_schemas import (NovaCaseCreateRequest, NovaCaseCreatedResponse, NovaObservationRequest,
                             NovaObservationResponse, NovaDecideResponse, NovaDifferentialItemOut,
                             NovaRecommendedActionOut, NovaVersionsOut, NovaCaseStateResponse,
-                            NovaCloseRequest, NovaCloseResponse,
+                            NovaCloseRequest, NovaCloseResponse, NovaConversationTurnOut,
+                            NovaCaseSummaryOut, NovaCaseListResponse,
                             NovaLocaleUpdateRequest, NovaLocaleUpdateResponse)
 from fastapi import Depends, Cookie, Header
 from fastapi.responses import RedirectResponse
@@ -710,6 +711,25 @@ def _nova_differential_out(differential,locale:str='en'):
                 missing_discriminative_evidence=d.missing_discriminative_evidence,
                 candidate_sources=d.candidate_sources) for d in differential]
 
+@app.get('/v1/nova/patients/{patient_id}/cases',response_model=NovaCaseListResponse)
+def nova_list_patient_cases(patient_id:str,status:str=None,encounter_id:str=None,
+                             user:User=Depends(require('nova:read')),rid:str=Depends(request_id)):
+    # Cases already known for this patient -- powers the frontend "resume an open case" flow.
+    # patient(pid) 404s consistently with every other /patients/{pid}/... endpoint (a case for an
+    # unknown patient is never listed). status/encounter_id are optional filters; a case is scoped
+    # to a patient AND encounter, so passing encounter_id keeps a different encounter's case from
+    # being offered as a resume candidate (encounter-aware resume).
+    patient(patient_id)
+    if status is not None and status not in ('open','closed'):
+        raise HTTPException(422,{'error':{'code':'invalid_status','message':"status must be 'open' or 'closed'",'retryable':False}})
+    records=nova_call('nova_service','list_cases_for_patient',app.state.nova_service.list_cases_for_patient,
+                       patient_id,request_id=rid,status=status,encounter_id=encounter_id)
+    cases=[NovaCaseSummaryOut(case_id=r.case_id,patient_id=r.patient_id,encounter_id=r.encounter_id,
+        status=r.status,turn_count=r.state.turn_count,max_turns=r.state.max_turns,
+        chief_complaint=r.state.chief_complaint,locale=r.state.locale,
+        created_at=r.created_at or '',updated_at=r.updated_at or '') for r in records]
+    return NovaCaseListResponse(request_id=rid,patient_id=patient_id,cases=cases)
+
 @app.post('/v1/nova/cases',response_model=NovaCaseCreatedResponse,status_code=201)
 def nova_create_case(req:NovaCaseCreateRequest,user:User=Depends(require('nova:invoke')),
                       rid:str=Depends(request_id)):
@@ -808,10 +828,13 @@ def nova_get_case(case_id:str,user:User=Depends(require('nova:read')),rid:str=De
         diagnosis_id=d.diagnosis,rank=d.rank,
         confidence_band=d.confidence_band,urgency=d.urgency,dangerous_if_missed=d.dangerous_if_missed)
         for d in state.current_differential]
+    conversation_history=[NovaConversationTurnOut(turn=c.turn,action_type=c.action_type,
+        content=c.content,result=c.result,timestamp=getattr(c,'timestamp','') or '')
+        for c in getattr(state,'conversation_history',[])]
     return NovaCaseStateResponse(case_id=case_id,request_id=rid,patient_id=record.patient_id,
         encounter_id=record.encounter_id,chief_complaint=state.chief_complaint,status=record.status,
         turn_count=state.turn_count,max_turns=state.max_turns,final_diagnosis=state.final_diagnosis,
-        differential=differential)
+        differential=differential,conversation_history=conversation_history)
 
 @app.post('/v1/nova/cases/{case_id}/close',response_model=NovaCloseResponse)
 def nova_close_case(case_id:str,req:NovaCloseRequest,user:User=Depends(require('nova:review')),
@@ -822,7 +845,8 @@ def nova_close_case(case_id:str,req:NovaCloseRequest,user:User=Depends(require('
     record=nova_call('nova_service','close_case',app.state.nova_service.close_case,case_id,request_id=rid,
                       case_id=case_id,reason=f'{req.disposition}: {req.reason}'.strip())
     app.state.audit.record(record.patient_id,'nova_case_closed',{'case_id':case_id,'request_id':rid,
-        'disposition':req.disposition,'reason':req.reason},user_id=user.id,role=user.role)
+        'disposition':req.disposition,'reason':req.reason,'locale':record.state.locale,
+        'agent_version':AGENT_VERSION,'kb_version':kb_fingerprint()},user_id=user.id,role=user.role)
     return NovaCloseResponse(case_id=case_id,request_id=rid,status=record.status,disposition=req.disposition)
 
 @app.patch('/v1/nova/cases/{case_id}/locale',response_model=NovaLocaleUpdateResponse)
