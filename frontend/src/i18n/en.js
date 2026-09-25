@@ -67,10 +67,12 @@ export default {
     aiDegraded: 'AI Degraded',
     llmUnavailable: 'LLM Unavailable',
     safetyFallback: 'Safety Fallback Active',
+    degradedBanner: 'AI DEGRADED — Safety fallback active. This recommendation was produced by the deterministic safety-guard reasoning only, not the AI model. Clinician review required.',
   },
   nova: {
     title: 'N.O.V.A. Clinical Reasoning',
     subtitle: 'ASK / EXAM / TEST / DIAGNOSE decision support',
+    unavailableForCustomPatient: 'N.O.V.A. is available for EMR/FHIR patients only. A manually-entered (custom) patient cannot be resolved by the record system, so a N.O.V.A. case cannot be started for them. Select an EMR patient to use N.O.V.A.',
     caseHeader: {
       case: 'Case',
       patient: 'Patient',
@@ -155,6 +157,7 @@ export default {
       recorded: 'Review recorded. No orders were changed or executed.',
       closed: 'Case closed ({disposition}).',
       noAutoOrder: 'This review never triggers an automatic order.',
+      modifyHint: 'Modify records your amended clinical judgement in the reason field for the audit trail. N.O.V.A. does not change any diagnosis or order in the EMR.',
     },
     finalDiagnosis: 'Final recommendation',
   },

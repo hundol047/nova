@@ -125,6 +125,17 @@ class NovaDecideResponse(StrictModel):
     versions: NovaVersionsOut
 
 
+class NovaConversationTurnOut(StrictModel):
+    """One recorded ASK/EXAM/TEST/DIAGNOSE turn, mirrored from PatientState.conversation_history so
+    the frontend case timeline can be restored from the server (durable), not only from client
+    session state. Display text only -- no canonical reasoning state is exposed here."""
+    turn: int
+    action_type: str
+    content: str
+    result: str = ""
+    timestamp: str = ""
+
+
 class NovaCaseStateResponse(StrictModel):
     case_id: str
     request_id: str
@@ -136,6 +147,8 @@ class NovaCaseStateResponse(StrictModel):
     max_turns: int
     final_diagnosis: Optional[str]
     differential: list[NovaDifferentialItemOut]
+    # Durable per-turn history (ASK/EXAM/TEST/DIAGNOSE) for timeline restore across refresh/re-open.
+    conversation_history: list[NovaConversationTurnOut] = Field(default_factory=list)
     clinician_review_required: Literal[True] = True
     safety_banner: str = CLINICAL_SAFETY_BANNER
 

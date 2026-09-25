@@ -66,10 +66,12 @@ export default {
     aiDegraded: 'AI 성능 저하',
     llmUnavailable: 'LLM 사용 불가',
     safetyFallback: '안전 폴백 작동 중',
+    degradedBanner: 'AI 성능 저하 — 안전 폴백 작동 중. 이 권고는 AI 모델이 아니라 결정론적 안전-가드 추론만으로 생성되었습니다. 의료진 검토가 필요합니다.',
   },
   nova: {
     title: 'N.O.V.A. 임상 추론',
     subtitle: 'ASK / EXAM / TEST / DIAGNOSE 의사결정 지원',
+    unavailableForCustomPatient: 'N.O.V.A.는 EMR/FHIR 환자에 대해서만 사용할 수 있습니다. 직접 입력한(사용자 지정) 환자는 기록 시스템에서 조회할 수 없어 N.O.V.A. 케이스를 시작할 수 없습니다. N.O.V.A.를 사용하려면 EMR 환자를 선택하십시오.',
     caseHeader: {
       case: '케이스',
       patient: '환자',
@@ -154,6 +156,7 @@ export default {
       recorded: '검토가 기록되었습니다. 어떤 처방도 변경·실행되지 않았습니다.',
       closed: '케이스가 종료되었습니다 ({disposition}).',
       noAutoOrder: '이 검토는 어떤 자동 처방도 실행하지 않습니다.',
+      modifyHint: '수정(Modify)은 의료진이 보정한 임상 판단을 감사 기록용 사유란에 남기는 것입니다. N.O.V.A.는 EMR의 진단이나 처방을 변경하지 않습니다.',
     },
     finalDiagnosis: '최종 권고',
   },

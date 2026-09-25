@@ -66,10 +66,12 @@ export default {
     aiDegraded: 'AI 性能低下',
     llmUnavailable: 'LLM 利用不可',
     safetyFallback: '安全フォールバック作動中',
+    degradedBanner: 'AI 性能低下 — 安全フォールバック作動中。この推奨は AI モデルではなく、決定論的な安全ガード推論のみで生成されました。医療者のレビューが必要です。',
   },
   nova: {
     title: 'N.O.V.A. 臨床推論',
     subtitle: 'ASK / EXAM / TEST / DIAGNOSE 意思決定支援',
+    unavailableForCustomPatient: 'N.O.V.A. は EMR/FHIR 患者のみ利用できます。手動入力（カスタム）患者は記録システムで参照できないため、N.O.V.A. ケースを開始できません。N.O.V.A. を使用するには EMR 患者を選択してください。',
     caseHeader: {
       case: 'ケース',
       patient: '患者',
@@ -154,6 +156,7 @@ export default {
       recorded: 'レビューを記録しました。いかなるオーダーも変更・実行されていません。',
       closed: 'ケースを終了しました（{disposition}）。',
       noAutoOrder: 'このレビューは自動オーダーを一切実行しません。',
+      modifyHint: '「修正」は医療者が補正した臨床判断を監査用の理由欄に記録するものです。N.O.V.A. は EMR の診断やオーダーを変更しません。',
     },
     finalDiagnosis: '最終推奨',
   },

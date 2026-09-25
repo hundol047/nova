@@ -66,10 +66,12 @@ export default {
     aiDegraded: 'AI 性能下降',
     llmUnavailable: 'LLM 不可用',
     safetyFallback: '安全回退已启用',
+    degradedBanner: 'AI 性能下降 — 安全回退已启用。此建议仅由确定性安全防护推理生成，而非 AI 模型。需要医师审核。',
   },
   nova: {
     title: 'N.O.V.A. 临床推理',
     subtitle: 'ASK / EXAM / TEST / DIAGNOSE 决策支持',
+    unavailableForCustomPatient: 'N.O.V.A. 仅适用于 EMR/FHIR 患者。手动录入（自定义）患者无法被记录系统识别，因此无法为其创建 N.O.V.A. 病例。请选择一位 EMR 患者以使用 N.O.V.A.。',
     caseHeader: {
       case: '病例',
       patient: '患者',
@@ -154,6 +156,7 @@ export default {
       recorded: '审核已记录。未变更或执行任何医嘱。',
       closed: '病例已关闭（{disposition}）。',
       noAutoOrder: '此审核绝不触发任何自动医嘱。',
+      modifyHint: '“修改”是将医师修正后的临床判断记录到审计用的理由栏。N.O.V.A. 不会更改 EMR 中的任何诊断或医嘱。',
     },
     finalDiagnosis: '最终建议',
   },
