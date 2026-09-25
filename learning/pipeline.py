@@ -151,21 +151,34 @@ class FiveKPipeline:
             notes.append("Presentation flagged OUT-OF-DISTRIBUTION; ML/rerank confidence reduced, "
                          "deterministic + safety layers emphasized.")
 
-        # 6) open-world outcome
-        outcome = self._classify(query, llm_candidates, is_ood)
+        # 6) open-world outcome. Lexical grounding: did ANY retrieved candidate match the query by
+        # lexical/code provenance (not embedding-only, not safety-rule-added)? If not, a high
+        # embedding cosine is likely a hash collision on gibberish -> UNKNOWN.
+        lexically_grounded = any(
+            any(src in ("lexical", "code") for src in (getattr(it, "sources", []) or []))
+            for it in pool
+        )
+        outcome = self._classify(query, llm_candidates, is_ood, lexically_grounded=lexically_grounded)
         lat["total_pipeline"] = sum(v for k, v in lat.items() if k != "total")
         return PipelineResult(outcome=outcome, llm_candidates=llm_candidates,
                               must_not_miss=must_not_miss, is_ood=is_ood,
                               retrieval_pool_size=len(pool), latencies_ms=lat, notes=notes)
 
-    def _classify(self, query: PatientQuery, cands: Sequence[LLMCandidate], is_ood: bool) -> PipelineOutcome:
+    def _classify(self, query: PatientQuery, cands: Sequence[LLMCandidate], is_ood: bool,
+                  lexically_grounded: bool = True) -> PipelineOutcome:
         signal = len((query.chief_complaint or "").split()) + len(query.symptoms)
         if signal < MIN_SIGNAL_TOKENS:
             return PipelineOutcome.INSUFFICIENT_INFORMATION
         if not cands:
             return PipelineOutcome.UNKNOWN_PRESENTATION
+        # Lexical grounding guard: hash-embedding similarity can be spuriously high on out-of-
+        # vocabulary / gibberish tokens (hash collisions). If NOTHING in the pool matched the query
+        # lexically or by code (embedding-only), a high cosine is untrustworthy -> UNKNOWN, so
+        # gibberish is never promoted to KNOWN/POSSIBLE. (Safety candidates are added by rule, not by
+        # query match, so they don't count as lexical grounding.)
+        if not lexically_grounded:
+            return PipelineOutcome.UNKNOWN_PRESENTATION
         top = cands[0]
-        # a safety-mandatory top candidate still counts as a (possible) known differential
         if top.score >= KNOWN_SCORE and not is_ood:
             return PipelineOutcome.KNOWN_CONDITION
         if top.score >= POSSIBLE_SCORE:
