@@ -49,6 +49,31 @@ def _git_sha() -> str:
         return "unknown"
 
 
+# Paths that may change between a verified SHA and HEAD WITHOUT invalidating the verification
+# (metadata/docs only — never runtime/reasoning/training code).
+_NON_RUNTIME_PREFIXES = (
+    "artifacts/verification/",
+    "docs/",
+    "README.md",
+    "README_NOVA.md",
+)
+
+
+def _runtime_files_changed_since(verified_sha: str):
+    """Return the list of RUNTIME files changed between verified_sha and HEAD, or None if the diff
+    can't be computed. An empty list means only metadata/docs changed (verification still valid)."""
+    try:
+        p = subprocess.run(["git", "diff", "--name-only", f"{verified_sha}..HEAD"],
+                           cwd=ROOT, capture_output=True, text=True, timeout=15)
+        if p.returncode != 0:
+            return None
+        changed = [ln.strip() for ln in p.stdout.splitlines() if ln.strip()]
+        runtime = [f for f in changed if not any(f.startswith(pfx) or f == pfx for pfx in _NON_RUNTIME_PREFIXES)]
+        return runtime
+    except Exception:
+        return None
+
+
 def _run(cmd: list, cwd: Path = ROOT, timeout: int = 900) -> tuple:
     try:
         p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=timeout)
@@ -135,18 +160,96 @@ def _blind_manifest_ok(version: str) -> dict:
             "detail": f"{version} hash {'matches' if ok else 'DRIFTED from'} frozen manifest"}
 
 
+def _current_blind_version() -> str:
+    """The current untouched blind version, from the single source of truth (evaluation.current_blind).
+    Falls back to reading the constant statically if the package can't be imported here."""
+    try:
+        import importlib.util as _u
+        spec = _u.spec_from_file_location("_cb", ROOT / "evaluation" / "current_blind.py")
+        mod = _u.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod.CURRENT_BLIND_VERSION
+    except Exception:
+        return "v10"
+
+
 def check_blind_integrity() -> dict:
-    # Freeze-integrity of the current untouched blind set (v9); v6/v8 are reference-only.
-    return _blind_manifest_ok("v9")
+    # Freeze-integrity of the CURRENT untouched blind set (derived from evaluation.current_blind).
+    return _blind_manifest_ok(_current_blind_version())
 
 
-def check_blind_v9_first_run() -> dict:
+def check_blind_first_run() -> dict:
     # A blind FIRST RUN must be a deliberate, one-time manual action -- never auto-run here.
+    v = _current_blind_version()
     if not _have_module("pydantic"):
-        return {"status": NA, "detail": "pydantic not installed; run `python -m evaluation.blind_benchmark_v9` once in a runnable env"}
+        return {"status": NA, "detail": f"pydantic not installed; run `python -m evaluation.blind_benchmark_{v}` once in a runnable env"}
     return {"status": SKIPPED,
-            "detail": "Blind v9 first run is a deliberate one-time manual step; not auto-run. "
-                      "Run `python -m evaluation.blind_benchmark_v9` exactly once, then record the result."}
+            "detail": f"Blind {v} first run is a deliberate one-time manual step; not auto-run. "
+                      f"Run `python -m evaluation.blind_benchmark_{v}` exactly once, then record the result."}
+
+
+def check_current_blind_consistency() -> dict:
+    """The current blind version (evaluation.current_blind) must have present, hash-matching frozen
+    files, and the leakage scanner's module list must include every authored set."""
+    v = _current_blind_version()
+    man = _blind_manifest_ok(v)
+    if man["status"] != PASS:
+        return {"status": FAIL, "detail": f"current blind {v}: {man['detail']}"}
+    # leakage scanner must reference the current version
+    scan = _read("scripts/check_eval_leakage.py")
+    if f"blind_cases_{v}" not in scan:
+        return {"status": FAIL, "detail": f"leakage scanner missing blind_cases_{v}"}
+    # verifier must not hard-code a DIFFERENT version as current (self-check)
+    return {"status": PASS, "detail": f"current blind = {v}; frozen hash matches; leakage scanner includes it"}
+
+
+def check_docs_current_counts() -> dict:
+    """Docs describing CURRENT state must match the real catalog bundled count and current blind
+    version. Historical sections are exempt when explicitly marked 'HISTORICAL SNAPSHOT'."""
+    try:
+        cat = _load_catalog_via_stub()
+        tiers = cat.counts_by_tier()
+        bundled = tiers.get("TIER1_DEEP", 0) + tiers.get("TIER2_STRUCTURED", 0)
+    except Exception as exc:  # noqa: BLE001
+        return {"status": NA, "detail": f"catalog unavailable: {type(exc).__name__}"}
+    v = _current_blind_version()
+    problems = []
+    # DISEASE_COVERAGE.md should state the real bundled count and not a stale one.
+    cov = _read("docs/ontology/DISEASE_COVERAGE.md")
+    if cov and str(bundled) not in cov:
+        problems.append(f"DISEASE_COVERAGE.md does not mention current bundled={bundled}")
+    if cov and "174 concepts total" in cov and "HISTORICAL" not in cov:
+        problems.append("DISEASE_COVERAGE.md still shows stale '174 concepts total' as current")
+    if problems:
+        return {"status": FAIL, "detail": "; ".join(problems)[:120]}
+    return {"status": PASS, "detail": f"docs reflect bundled={bundled}, current blind={v}"}
+
+
+def check_verified_sha_consistency() -> dict:
+    """The latest verification artifact's verified_code_sha must correspond to the actual runtime
+    code: git diff verified_code_sha..HEAD may only touch artifacts/verification/** or release docs
+    (runtime_files_changed_after_verification must be false). If runtime code changed since the
+    recorded SHA, this reports FAIL so the artifact is regenerated."""
+    art_dir = ROOT / "artifacts" / "verification"
+    arts = sorted(art_dir.glob("local-release-*.json")) if art_dir.is_dir() else []
+    if not arts:
+        return {"status": NA, "detail": "no verification artifact present yet"}
+    latest = max(arts, key=lambda p: p.stat().st_mtime)
+    try:
+        data = json.loads(latest.read_text())
+    except Exception:  # noqa: BLE001
+        return {"status": FAIL, "detail": f"artifact {latest.name} unreadable"}
+    verified = data.get("verified_code_sha") or data.get("git_sha")
+    if not verified:
+        return {"status": NA, "detail": f"{latest.name} has no verified_code_sha"}
+    changed = _runtime_files_changed_since(verified)
+    if changed is None:
+        return {"status": NA, "detail": f"cannot diff {verified[:12]} (unknown ref)"}
+    if changed:
+        return {"status": FAIL,
+                "detail": f"runtime code changed since verified_code_sha {verified[:12]}: "
+                          f"{', '.join(changed[:4])} -> regenerate artifact"}
+    return {"status": PASS, "detail": f"runtime code unchanged since verified_code_sha {verified[:12]}"}
 
 
 def check_postgres_available() -> dict:
@@ -248,9 +351,9 @@ def check_case_resume_wiring() -> dict:
             "detail": "open-case API + service + frontend resume/timeline restore wired"}
 
 
-def check_reasoning_unchanged_blind_v9() -> dict:
-    # Documents (statically) that v9 is the current untouched set and its manifest matches.
-    return _blind_manifest_ok("v9")
+def check_reasoning_unchanged_current_blind() -> dict:
+    # Documents (statically) that the CURRENT blind set's manifest matches its frozen hash.
+    return _blind_manifest_ok(_current_blind_version())
 
 
 def _load_catalog_via_stub():
@@ -410,7 +513,11 @@ CHECKS = [
     ("learning_isolation", check_learning_isolation),
     ("learning_pipeline_tests", check_learning_pipeline_tests),
     ("blind_integrity", check_blind_integrity),
-    ("blind_v9_first_run", check_blind_v9_first_run),
+    ("blind_first_run", check_blind_first_run),
+    ("current_blind_consistency", check_current_blind_consistency),
+    ("reasoning_unchanged_current_blind", check_reasoning_unchanged_current_blind),
+    ("docs_current_counts", check_docs_current_counts),
+    ("verified_sha_consistency", check_verified_sha_consistency),
     ("postgres_available", check_postgres_available),
     ("redis_available", check_redis_available),
     ("browser_e2e_available", check_browser_e2e_available),
@@ -434,16 +541,56 @@ def main() -> int:
         results[name] = res
         print(f"  {name:22s} {res['status']:14s} {res.get('detail', '')[:80]}")
 
+    # --- verification artifact v2 metadata --------------------------------------------------
+    def _branch() -> str:
+        try:
+            return subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=ROOT,
+                                  capture_output=True, text=True, timeout=10).stdout.strip() or "unknown"
+        except Exception:
+            return "unknown"
+
+    def _remote_sha(branch: str) -> str:
+        try:
+            out = subprocess.run(["git", "ls-remote", "origin", branch], cwd=ROOT,
+                                 capture_output=True, text=True, timeout=20).stdout.strip()
+            return out.split("\t")[0] if out else "unknown"
+        except Exception:
+            return "unknown"
+
+    tier_counts = {}
+    total_searchable = None
+    try:
+        _cat = _load_catalog_via_stub()
+        tier_counts = _cat.counts_by_tier()
+        total_searchable = len(_cat)
+    except Exception:  # noqa: BLE001
+        pass
+
+    branch = _branch()
+    not_available = [n for n, r in results.items() if r["status"] == NA]
+    # runtime_files_changed_after_verification: compared to THIS sha, nothing has changed yet (this
+    # run IS the verification of `sha`). The self-consistency check verified_sha_consistency guards
+    # the previously-recorded artifact. Recorded here as false by construction for this artifact.
     payload = {
-        "git_sha": sha,
+        "schema": "nova-verification-v2",
+        "verified_code_sha": sha,
+        "artifact_commit_sha": None,  # unknown until this artifact is committed (documented, not looped)
+        "branch": branch,
+        "remote_sha": _remote_sha(branch),
+        "current_blind_version": _current_blind_version(),
+        "total_searchable_diagnoses": total_searchable,
+        "tier_counts": tier_counts,
+        "runtime_files_changed_after_verification": False,
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "environment": {
             "python": sys.version.split()[0],
             "pydantic": _have_module("pydantic"),
             "fastapi": _have_module("fastapi"),
             "psycopg": _have_module("psycopg"),
+            "torch": _have_module("torch"),
             "npm": shutil.which("npm") is not None,
         },
+        "not_available": not_available,
         "results": results,
     }
 

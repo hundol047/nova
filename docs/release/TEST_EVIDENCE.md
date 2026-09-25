@@ -1,5 +1,11 @@
 # N.O.V.A. Test Evidence
 
+> **HISTORICAL SNAPSHOT (gap-closure / independent-re-audit round).** This document records evidence
+> from an earlier round when Blind **v9** was the current untouched set. It is preserved as history
+> and is accurate for that round. For the CURRENT release state see `docs/VNEXT_INDEPENDENT_AUDIT.md`
+> and `docs/ontology/DISEASE_COVERAGE.md`; the current untouched blind set is defined by
+> `evaluation/current_blind.py` (`CURRENT_BLIND_VERSION`).
+
 > Only **actually-executed** evidence is recorded here. Anything not run is marked **NOT VERIFIED**.
 > CI runs are GitHub Actions runs on the `hundol047/nova` repository. Because the authoring
 > environment is network-isolated (no pip/npm/docker/Postgres), all Python/JS/container/DB

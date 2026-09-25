@@ -6,7 +6,13 @@ vs **NOT VERIFIED** here (deferred to CI / a runtime environment). No GitHub Act
 
 Branch: `offline/nova-clinical-learning-disease-expansion`. Base: `07c5eab`.
 
-## Audit matrix
+> **NOTE ON SECTIONS.** The first matrix below is a **HISTORICAL SNAPSHOT** of the vNext *first*
+> round (174-concept catalog; Blind **v9** current). It is accurate for that round and kept as
+> history. The CURRENT state is the **"vNext completion round"** section further down (516 bundled;
+> Blind **v10** current) and, for the 5,000-diagnosis work, the FIVE_THOUSAND comparison doc.
+> The authoritative current blind version is `evaluation/current_blind.py`.
+
+## Audit matrix — HISTORICAL SNAPSHOT (vNext first round: 174 concepts, Blind v9 current)
 
 | # | Concern | Finding | Status |
 |---|---------|---------|--------|

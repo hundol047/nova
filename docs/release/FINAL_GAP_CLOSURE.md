@@ -1,5 +1,10 @@
 # N.O.V.A. Final Gap Closure (independent re-audit round)
 
+> **HISTORICAL SNAPSHOT (independent-re-audit round).** Accurate for that round, when Blind **v9**
+> was current. For CURRENT state see `docs/VNEXT_INDEPENDENT_AUDIT.md` and
+> `evaluation/current_blind.py`.
+
+
 What the independent re-audit found and what was actually done about it. Only real changes are
 listed; nothing is claimed as verified that was not actually run locally.
 

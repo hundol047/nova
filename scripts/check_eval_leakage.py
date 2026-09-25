@@ -33,9 +33,15 @@ sys.path.insert(0, str(ROOT))
 # Every "blind" evaluation file this repo has ever authored -- each is meant to stay a one-shot
 # honesty check, never a tuning target, so leakage from ANY of them into agent core is a problem,
 # not just the most recent one.
-BLIND_MODULES = ["evaluation.blind_cases_v3", "evaluation.blind_cases_v4", "evaluation.blind_cases_v5",
-                  "evaluation.blind_cases_v6", "evaluation.blind_cases_v8", "evaluation.blind_cases_v9",
-                  "evaluation.blind_cases_v10"]
+# Derived from the single source of truth (evaluation.current_blind) so promoting a new blind set
+# updates the scanner automatically. Falls back to a static list if the module can't be imported.
+try:
+    from evaluation.current_blind import blind_module_names as _blind_module_names
+    BLIND_MODULES = _blind_module_names()
+except Exception:  # pragma: no cover - static fallback
+    BLIND_MODULES = ["evaluation.blind_cases_v3", "evaluation.blind_cases_v4", "evaluation.blind_cases_v5",
+                      "evaluation.blind_cases_v6", "evaluation.blind_cases_v8", "evaluation.blind_cases_v9",
+                      "evaluation.blind_cases_v10"]
 
 # Agent-core source the blind sets must never leak into. Deliberately excludes evaluation/ itself
 # (a blind case file referencing its own sibling files, or scripts, is not leakage) and tests/

@@ -1,5 +1,9 @@
 # N.O.V.A. Final Software Status
 
+> **HISTORICAL SNAPSHOT (gap-closure / independent-re-audit round).** Accurate for that round, when
+> Blind **v9** was current. For CURRENT state see `docs/VNEXT_INDEPENDENT_AUDIT.md`,
+> `docs/ontology/DISEASE_COVERAGE.md`, and `evaluation/current_blind.py`.
+
 > Two separate scores, never conflated. **Software readiness** is backed by code + the checks that
 > actually ran. **External hospital validation** is a separate axis that is entirely NOT VERIFIED.
 
