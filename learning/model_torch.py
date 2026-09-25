@@ -17,18 +17,18 @@ from learning.ranker import _enforce_safety_ordering
 from learning.schemas import CandidateFeature, RankedCandidate, RankerInput, RankerOutput
 
 
-def build_mlp(input_dim: int, hidden: int = 64):
+def build_mlp(input_dim: int, hidden: int = 64, dropout: float = 0.1):
     """Construct the scorer network. Requires torch."""
-    torch = require_torch()
+    require_torch()
     import torch.nn as nn
 
     class CandidateScorer(nn.Module):
-        def __init__(self, in_dim: int, h: int):
+        def __init__(self, in_dim: int, h: int, p: float):
             super().__init__()
             self.net = nn.Sequential(
                 nn.Linear(in_dim, h),
                 nn.ReLU(),
-                nn.Dropout(0.1),
+                nn.Dropout(p),
                 nn.Linear(h, h // 2),
                 nn.ReLU(),
                 nn.Linear(h // 2, 1),
@@ -37,7 +37,7 @@ def build_mlp(input_dim: int, hidden: int = 64):
         def forward(self, x):
             return self.net(x).squeeze(-1)
 
-    return CandidateScorer(input_dim, hidden)
+    return CandidateScorer(input_dim, hidden, dropout)
 
 
 class TorchRanker:
@@ -59,6 +59,18 @@ class TorchRanker:
     @staticmethod
     def available() -> bool:
         return torch_available()
+
+    @classmethod
+    def load(cls, weights_path, calibrator: Optional[Calibrator] = None,
+             ood: Optional[OODDetector] = None) -> "TorchRanker":
+        """Factory: load a checkpoint (with the mandatory compatibility guard) into a TorchRanker.
+
+        Raises CheckpointIncompatibleError BEFORE touching weights if the checkpoint's
+        feature_version / input_dim / schema_version / model_arch do not match the running code."""
+        from learning.checkpoint import load_checkpoint
+        model, meta = load_checkpoint(weights_path)
+        return cls(model, model_version=meta.model_version,
+                   calibrator=calibrator, ood=ood)
 
     def _candidate_row(self, feature_vector: List[float], c: CandidateFeature) -> List[float]:
         return list(feature_vector) + [c.base_evidence_score, c.retrieval_score, c.prior]
