@@ -35,16 +35,34 @@ _UNREADABLE_HIGH_PATTERN = re.compile(
 )
 _NUMERIC_PATTERN = re.compile(r"(\d{2,3}(?:\.\d+)?)\s*mg\s*/\s*d?l|glucose[^0-9]{0,15}?(\d{2,3})\b",
                                re.IGNORECASE)
+# Unit-safety guard (spec section 19 / clinical safety): the second numeric alternative above
+# matches a glucose-adjacent number WITHOUT requiring a unit, so a value stated in a NON-mg/dL unit
+# (e.g. "glucose 90 mmol/L" -- a physiologically impossible mg/dL reading, but 90 is a plausible
+# grabbed digit) would otherwise be silently misinterpreted as 90 mg/dL. This module's thresholds
+# are all mg/dL, and it deliberately does NOT convert units (mmol/L glucose x 18 = mg/dL is a real
+# conversion, but silently applying it to ambiguous free text risks the wrong direction). So when
+# the text explicitly carries a recognised non-mg/dL glucose unit and no explicit mg/dL, we refuse
+# to interpret the bare number and return None ("no evidence either way") rather than guess.
+_NON_MGDL_UNIT_PATTERN = re.compile(r"mmol\s*/\s*l", re.IGNORECASE)
+_MGDL_UNIT_PATTERN = re.compile(r"mg\s*/\s*d?l", re.IGNORECASE)
 
 
 def extract_glucose_mg_dl(glucose_result_text: Optional[str]) -> Optional[float]:
     """Parses PatientState.laboratory_tests.get("glucose_point_of_care") into a mg/dL value.
     Returns None if no glucose test has been performed or the result can't be interpreted --
-    callers must treat None as "no evidence either way", never as a value of 0."""
+    callers must treat None as "no evidence either way", never as a value of 0.
+
+    Unit safety: a number given in an explicit non-mg/dL unit (e.g. mmol/L) with no accompanying
+    mg/dL value is NOT interpreted (returns None) -- a bare number is never assigned a mg/dL
+    meaning when its stated unit says otherwise."""
     if not glucose_result_text:
         return None
     if _UNREADABLE_HIGH_PATTERN.search(glucose_result_text):
         return UNREADABLE_HIGH_SENTINEL_MG_DL
+    # If a non-mg/dL unit is explicitly present and there is no explicit mg/dL value alongside it,
+    # refuse to interpret rather than misread the bare digit as mg/dL.
+    if _NON_MGDL_UNIT_PATTERN.search(glucose_result_text) and not _MGDL_UNIT_PATTERN.search(glucose_result_text):
+        return None
     match = _NUMERIC_PATTERN.search(glucose_result_text)
     if not match:
         return None
