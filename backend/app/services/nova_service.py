@@ -313,6 +313,12 @@ class NovaService:
         except NotFound as exc:
             raise CaseNotFoundError(case_id) from exc
 
+    def update_locale(self, case_id: str, locale: str) -> NovaCaseRecord:
+        try:
+            return self.repository.update_locale(case_id, locale)
+        except NotFound as exc:
+            raise CaseNotFoundError(case_id) from exc
+
     def close_case(self, case_id: str, *, reason: str = "") -> NovaCaseRecord:
         try:
             return self.repository.close(case_id, reason=reason)

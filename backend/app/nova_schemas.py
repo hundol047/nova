@@ -145,6 +145,16 @@ class NovaCloseRequest(StrictModel):
     reason: str = Field(default="", max_length=1000)
 
 
+class NovaLocaleUpdateRequest(StrictModel):
+    locale: Literal["en", "ko", "ja", "zh"]
+
+
+class NovaLocaleUpdateResponse(StrictModel):
+    case_id: str
+    request_id: str
+    locale: str
+
+
 class NovaCloseResponse(StrictModel):
     case_id: str
     request_id: str

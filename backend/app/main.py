@@ -40,7 +40,8 @@ from nova_agent.i18n import translate_diagnosis
 from .nova_schemas import (NovaCaseCreateRequest, NovaCaseCreatedResponse, NovaObservationRequest,
                             NovaObservationResponse, NovaDecideResponse, NovaDifferentialItemOut,
                             NovaRecommendedActionOut, NovaVersionsOut, NovaCaseStateResponse,
-                            NovaCloseRequest, NovaCloseResponse)
+                            NovaCloseRequest, NovaCloseResponse,
+                            NovaLocaleUpdateRequest, NovaLocaleUpdateResponse)
 from fastapi import Depends, Cookie, Header
 from fastapi.responses import RedirectResponse
 import hashlib
@@ -804,6 +805,19 @@ def nova_close_case(case_id:str,req:NovaCloseRequest,user:User=Depends(require('
     app.state.audit.record(record.patient_id,'nova_case_closed',{'case_id':case_id,'request_id':rid,
         'disposition':req.disposition,'reason':req.reason},user_id=user.id,role=user.role)
     return NovaCloseResponse(case_id=case_id,request_id=rid,status=record.status,disposition=req.disposition)
+
+@app.patch('/v1/nova/cases/{case_id}/locale',response_model=NovaLocaleUpdateResponse)
+def nova_update_locale(case_id:str,req:NovaLocaleUpdateRequest,user:User=Depends(require('nova:invoke')),
+                        rid:str=Depends(request_id)):
+    # Mid-case language switch (spec: never starts a new case -- only the UI/explanation language
+    # changes; the existing case's reasoning state, evidence, and differential are untouched. The
+    # NEXT decide() call picks up the new locale automatically since nova_service.decide()
+    # constructs DoctorAgent(lang=record.state.locale) fresh every turn).
+    record=nova_call('nova_service','update_locale',app.state.nova_service.update_locale,case_id,
+                      request_id=rid,case_id=case_id,locale=req.locale)
+    app.state.audit.record(record.patient_id,'nova_locale_updated',{'case_id':case_id,'request_id':rid,
+        'locale':req.locale},user_id=user.id,role=user.role)
+    return NovaLocaleUpdateResponse(case_id=case_id,request_id=rid,locale=record.state.locale)
 
 @app.get('/v1/nova/metrics')
 def nova_metrics(user:User=Depends(require('user:admin'))):

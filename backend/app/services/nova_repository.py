@@ -124,6 +124,18 @@ class NovaCaseRepository:
             record.applied_observation_ids.add(observation_id)
             return True
 
+    def update_locale(self, case_id: str, locale: str) -> NovaCaseRecord:
+        """Mid-case language switch (spec: never starts a new case, only changes the UI/explanation
+        language -- the case's own reasoning state, PatientState.locale aside, is untouched)."""
+        lock = self._lock_for(case_id)
+        with lock:
+            record = self._cases.get(case_id)
+            if record is None:
+                raise NotFound(case_id)
+            record.state.locale = locale
+            record.updated_at = _now()
+            return record
+
     def close(self, case_id: str, *, reason: str = "") -> NovaCaseRecord:
         lock = self._lock_for(case_id)
         with lock:
