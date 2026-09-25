@@ -57,6 +57,27 @@ def test_diagnosis_canonical_id_never_varies_by_locale_only_display_does(client)
     assert all(ord(c) < 128 for c in action['key'].replace('_', ''))
 
 
+def test_audit_records_locale_and_canonical_ids_never_translated_strings_alone(client):
+    """Spec: audit records must store locale + canonical action/diagnosis IDs, never translated
+    display strings alone."""
+    r = client.post('/v1/nova/cases', json={'patient_id': 'SYN-002', 'chief_complaint': 'chest pain',
+                     'locale': 'ja'})
+    case_id = r.json()['case_id']
+    r = client.post(f'/v1/nova/cases/{case_id}/decide')
+    assert r.status_code == 200, r.text
+
+    from app.main import app
+    from app.services.audit import AuditStore
+    entries = AuditStore(app.state.audit.path).list('SYN-002')
+    created = next((e for e in entries if e['event'] == 'nova_case_created'
+                    and e['detail'].get('case_id') == case_id), None)
+    decided = next((e for e in entries if e['event'] == 'nova_decide'
+                    and e['detail'].get('case_id') == case_id), None)
+    assert created is not None and created['detail']['locale'] == 'ja'
+    assert decided is not None and decided['detail']['locale'] == 'ja'
+    assert 'action_key' in decided['detail']
+
+
 def test_differential_display_diagnosis_translated_for_known_diagnosis(client):
     r = client.post('/v1/nova/cases', json={'patient_id': 'SYN-002',
                      'chief_complaint': 'sudden severe headache, worst of my life', 'locale': 'ja'})

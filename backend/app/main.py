@@ -723,7 +723,7 @@ def nova_create_case(req:NovaCaseCreateRequest,user:User=Depends(require('nova:i
                       encounter=encounter,chief_complaint=req.chief_complaint,created_by=user.id,
                       max_turns=req.max_turns,locale=req.locale)
     app.state.audit.record(pid,'nova_case_created',{'case_id':record.case_id,'encounter_id':record.encounter_id,
-        'request_id':rid},user_id=user.id,role=user.role)
+        'request_id':rid,'locale':record.state.locale},user_id=user.id,role=user.role)
     return NovaCaseCreatedResponse(case_id=record.case_id,request_id=rid,patient_id=pid,
         encounter_id=record.encounter_id,turn_count=record.state.turn_count,max_turns=record.state.max_turns,
         status=record.status)
@@ -763,10 +763,11 @@ def nova_decide(case_id:str,user:User=Depends(require('nova:invoke')),rid:str=De
                             'deterministic safety-guard reasoning path only, not AI-augmented re-ranking.')
     red_flags=[f'{d.diagnosis}: dangerous if missed' for d in result.differential if d.dangerous_if_missed]
     app.state.audit.record(result.record.patient_id,'nova_decide',{'case_id':case_id,'request_id':rid,
-        'action_type':result.action.action_type,'action_key':result.action.key,
-        'top_diagnosis':top.diagnosis if top else None,'llm_circuit_open':result.llm_circuit_open,
+        'action_type':result.action.action_type,'action_key':result.action.key,'locale':state.locale,
+        'top_diagnosis':top.diagnosis if top else None,'top_diagnosis_id':top.diagnosis_id if top else None,
+        'llm_circuit_open':result.llm_circuit_open,
         **result.versions},user_id=user.id,role=user.role)
-    locale=getattr(state,'locale','en')
+    locale=state.locale
     display_content=(translate_diagnosis(result.action.key,locale,result.action.content)
                       if result.action.action_type=='DIAGNOSE' else result.action.content)
     return NovaDecideResponse(case_id=case_id,request_id=rid,turn_count=state.turn_count,
