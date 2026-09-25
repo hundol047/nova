@@ -45,6 +45,10 @@ SOURCE_TO_SYSTEM: Dict[str, Tuple[str, str]] = {
     "icd11": ("ICD11", "icd11.json"),
     "icd10": ("ICD10", "icd10.json"),
     "icd10cm": ("ICD10", "icd10.json"),
+    # A hospital's own local code map (e.g. an internal problem-list vocabulary mapped to canonical
+    # concepts). Local-only, operator-supplied; never fetched from an external API.
+    "custom": ("CUSTOM", "custom.json"),
+    "hospital": ("CUSTOM", "custom.json"),
 }
 
 _SNAPSHOT_ROOT = Path(__file__).resolve().parent.parent / "nova_agent" / "ontology" / "snapshots"

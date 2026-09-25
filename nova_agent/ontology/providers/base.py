@@ -81,7 +81,10 @@ class TerminologyProvider:
                 semantic_type=self._semantic_type(entry.get("semantic_type")),
                 tier=Tier.TIER3_ONTOLOGY,
                 aliases=aliases,
-                category=entry.get("category"),
+                # Tier-3 concepts default to an "ontology" category when the snapshot doesn't
+                # supply one, so every concept has a non-null category (a Tier-3 snapshot rarely
+                # carries a clinical specialty; that's expected and honest — it is ontology-only).
+                category=entry.get("category") or "ontology",
                 external_codes=(ExternalCode(system=system, code=code, display=display),),
                 parents=tuple(f"{self.concept_id_prefix}:{system}:{p}" for p in parents),
                 children=tuple(f"{self.concept_id_prefix}:{system}:{c}" for c in children),

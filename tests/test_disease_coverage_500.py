@@ -23,7 +23,9 @@ from nova_agent.ontology.registry import build_catalog  # noqa: E402
 
 CATALOG = build_catalog()
 _VALID_CURATION = {"DEEP", "STRUCTURED", "NOT_CURATED"}
-_ICD10_RE = re.compile(r"^[A-Z]\d{2}(\.[0-9A-Z]{1,4})?$")  # loose ICD-10(-CM) category shape
+# ICD-10-CM shape: a letter, two alphanumerics (e.g. C7A, T81), then an optional dotted extension
+# of up to 4 alphanumerics incl. the 'X' placeholder and 7th-character extension (e.g. T81.4XXA).
+_ICD10_RE = re.compile(r"^[A-Z][0-9A-Z]{2}(\.[0-9A-Z]{1,4})?$")
 
 
 def test_bundled_total_at_least_500():
@@ -49,6 +51,8 @@ def test_every_concept_has_valid_category_and_curation():
 
 
 def test_external_codes_well_formed():
+    # Only ICD-10-system codes must match the ICD-10 shape. Tier-3 ontology snapshots legitimately
+    # carry other code systems (SNOMEDCT, ICD11, CUSTOM, NOVASYNTH synthetic) with different shapes.
     bad = []
     for c in CATALOG.all_concepts():
         for code in c.external_codes:

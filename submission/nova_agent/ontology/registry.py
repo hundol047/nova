@@ -20,6 +20,7 @@ from nova_agent.ontology import hierarchy
 from nova_agent.ontology.mappings import canonical_system
 from nova_agent.ontology.models import ClinicalConcept, ConceptMatch, Tier
 from nova_agent.ontology.providers.core_kb import CoreKbProvider
+from nova_agent.ontology.providers.custom import CustomProvider
 from nova_agent.ontology.providers.icd10 import Icd10Provider
 from nova_agent.ontology.providers.icd11 import Icd11Provider
 from nova_agent.ontology.providers.snomed import SnomedProvider
@@ -106,7 +107,7 @@ def build_catalog(include_ontology_snapshots: bool = True) -> DiseaseCatalog:
     catalog.add_all(CoreKbProvider().load())          # Tier-1 (always present)
     catalog.add_all(Tier2CatalogProvider().load())    # Tier-2 (if data file present)
     if include_ontology_snapshots:
-        for provider in (SnomedProvider(), Icd11Provider(), Icd10Provider()):
+        for provider in (SnomedProvider(), Icd11Provider(), Icd10Provider(), CustomProvider()):
             if provider.available():
                 catalog.add_all(provider.load())      # Tier-3 (only if snapshot supplied)
     return catalog
