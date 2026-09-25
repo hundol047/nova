@@ -746,11 +746,23 @@ def nova_decide(case_id:str,user:User=Depends(require('nova:invoke')),rid:str=De
     state=result.record.state
     metrics=get_nova_metrics()
     metrics.observe('nova_turn_count',state.turn_count)
-    metrics.increment('nova_safety_blocks',sum(1 for d in result.differential if d.dangerous_if_missed))
+    critical_blocks=sum(1 for d in result.differential if d.dangerous_if_missed)
+    # nova_critical_blocks is the canonical name (R9.1). nova_safety_blocks is kept as an alias for
+    # back-compat with any existing dashboard/scrape that already references it.
+    metrics.increment('nova_critical_blocks',critical_blocks)
+    metrics.increment('nova_safety_blocks',critical_blocks)
     if state.llm_call_count:
         metrics.increment('nova_llm_calls_total',state.llm_call_count)
         metrics.increment('nova_llm_success_total',state.llm_success_count)
         metrics.increment('nova_llm_fallback_total',state.llm_fallback_count)
+        # A real LLM call that did not succeed is, for this backend, an output the parse/repair/
+        # schema-validation path could not turn into a usable structured turn (it then fell back to
+        # deterministic reasoning). Surface that as nova_parse_failure so a failing/misbehaving
+        # model is visible as its own signal, not only inside the fallback rate. (llm_failure_count
+        # == real calls attempted minus real successes for this case's turn set.)
+        parse_failures=state.llm_call_count-state.llm_success_count
+        if parse_failures>0:
+            metrics.increment('nova_parse_failure',parse_failures)
         if state.llm_latency_sample_count:
             metrics.observe('nova_llm_latency_ms',(state.llm_total_latency_seconds/state.llm_latency_sample_count)*1000)
     top=result.differential[0] if result.differential else None
@@ -763,6 +775,11 @@ def nova_decide(case_id:str,user:User=Depends(require('nova:invoke')),rid:str=De
         limitations.append('The real AI model is currently degraded/unavailable; this turn used the '
                             'deterministic safety-guard reasoning path only, not AI-augmented re-ranking.')
     red_flags=[f'{d.diagnosis}: dangerous if missed' for d in result.differential if d.dangerous_if_missed]
+    if result.llm_circuit_open:
+        # Explicit, separately-queryable audit event (R9.3): a degraded/fallback decision must be
+        # visible in the audit trail, never disguised as a normal AI-backed decide.
+        app.state.audit.record(result.record.patient_id,'nova_llm_degraded',{'case_id':case_id,
+            'request_id':rid,'reason':'llm_circuit_open'},user_id=user.id,role=user.role)
     app.state.audit.record(result.record.patient_id,'nova_decide',{'case_id':case_id,'request_id':rid,
         'action_type':result.action.action_type,'action_key':result.action.key,'locale':state.locale,
         'top_diagnosis':top.diagnosis if top else None,'top_diagnosis_id':top.diagnosis_id if top else None,

@@ -40,6 +40,8 @@ from typing import Optional
 
 from nova_agent.state import PatientState
 
+from app.services.nova_migrations import CURRENT_STATE_SCHEMA_VERSION
+
 
 class NotFound(KeyError):
     pass
@@ -96,6 +98,10 @@ class NovaCaseRecord:
     # module's docstring) -- the in-memory repository carries it for interface parity but never
     # acts on it (a plain dict write is trivially atomic under the GIL for a single attribute set).
     version: int = 0
+    # Forward-compatibility marker for the persisted case shape (R5.2). Written on create, read
+    # back on load; lets future code detect/upgrade an older persisted PatientState layout. Default
+    # is the current version so the in-memory backend and existing callers work unchanged.
+    state_schema_version: int = 1
 
 
 class NovaCaseRepository:
@@ -204,47 +210,30 @@ class PostgresNovaCaseRepository:
         return psycopg.connect(self.dsn)
 
     def _init_schema(self) -> None:
+        # Schema is now managed by the ordered migration runner (services/nova_migrations.py) --
+        # migration 0001 reproduces the original CREATE TABLE IF NOT EXISTS baseline (so an
+        # existing pre-migration database adopts it transparently) and 0002 adds
+        # state_schema_version. This is idempotent and safe to run at every startup.
+        from app.services.nova_migrations import apply_migrations
         with self._connect() as conn:
-            conn.execute(
-                """
-                CREATE TABLE IF NOT EXISTS nova_cases (
-                    case_id TEXT PRIMARY KEY,
-                    patient_id TEXT NOT NULL,
-                    encounter_id TEXT,
-                    state TEXT NOT NULL,
-                    status TEXT NOT NULL,
-                    created_by TEXT NOT NULL,
-                    created_at TEXT NOT NULL,
-                    updated_at TEXT NOT NULL,
-                    agent_version TEXT NOT NULL,
-                    kb_version TEXT NOT NULL,
-                    closed_at TEXT,
-                    close_reason TEXT NOT NULL DEFAULT '',
-                    version INTEGER NOT NULL DEFAULT 0
-                )
-                """
-            )
-            conn.execute("CREATE INDEX IF NOT EXISTS idx_nova_cases_patient_id ON nova_cases(patient_id)")
-            conn.execute(
-                """
-                CREATE TABLE IF NOT EXISTS nova_case_observations (
-                    case_id TEXT NOT NULL REFERENCES nova_cases(case_id),
-                    observation_id TEXT NOT NULL,
-                    PRIMARY KEY (case_id, observation_id)
-                )
-                """
-            )
+            apply_migrations(conn)
+
+    # Column list shared by every SELECT below, so the row-unpacking in _record_from_row stays in
+    # lockstep with the query. state_schema_version is last so it maps to the trailing tuple slot.
+    _SELECT_COLUMNS = ("case_id, patient_id, encounter_id, state, status, created_by, created_at, "
+                       "updated_at, agent_version, kb_version, closed_at, close_reason, version, "
+                       "state_schema_version")
 
     @staticmethod
     def _record_from_row(row: tuple, observation_ids: set) -> NovaCaseRecord:
         (case_id, patient_id, encounter_id, state_json, status, created_by, created_at, updated_at,
-         agent_version, kb_version, closed_at, close_reason, version) = row
+         agent_version, kb_version, closed_at, close_reason, version, state_schema_version) = row
         return NovaCaseRecord(
             case_id=case_id, patient_id=patient_id, encounter_id=encounter_id,
             state=PatientState.model_validate_json(state_json), status=status, created_by=created_by,
             created_at=created_at, updated_at=updated_at, agent_version=agent_version,
             kb_version=kb_version, applied_observation_ids=observation_ids, closed_at=closed_at,
-            close_reason=close_reason, version=version,
+            close_reason=close_reason, version=version, state_schema_version=state_schema_version,
         )
 
     def _observation_ids(self, conn, case_id: str) -> set:
@@ -261,11 +250,12 @@ class PostgresNovaCaseRepository:
                 conn.execute(
                     """
                     INSERT INTO nova_cases (case_id, patient_id, encounter_id, state, status,
-                        created_by, created_at, updated_at, agent_version, kb_version, version)
-                    VALUES (%s, %s, %s, %s, 'open', %s, %s, %s, %s, %s, 0)
+                        created_by, created_at, updated_at, agent_version, kb_version, version,
+                        state_schema_version)
+                    VALUES (%s, %s, %s, %s, 'open', %s, %s, %s, %s, %s, 0, %s)
                     """,
                     (case_id, patient_id, encounter_id, state.model_dump_json(), created_by, now, now,
-                     agent_version, kb_version),
+                     agent_version, kb_version, CURRENT_STATE_SCHEMA_VERSION),
                 )
         except Exception as exc:
             import psycopg
@@ -274,15 +264,14 @@ class PostgresNovaCaseRepository:
             raise RepositoryError(str(exc)) from exc
         return NovaCaseRecord(case_id=case_id, patient_id=patient_id, encounter_id=encounter_id,
                                state=state, status="open", created_by=created_by, created_at=now,
-                               updated_at=now, agent_version=agent_version, kb_version=kb_version)
+                               updated_at=now, agent_version=agent_version, kb_version=kb_version,
+                               state_schema_version=CURRENT_STATE_SCHEMA_VERSION)
 
     def get(self, case_id: str) -> NovaCaseRecord:
         try:
             with self._connect() as conn:
                 row = conn.execute(
-                    """SELECT case_id, patient_id, encounter_id, state, status, created_by,
-                       created_at, updated_at, agent_version, kb_version, closed_at, close_reason,
-                       version FROM nova_cases WHERE case_id = %s""",
+                    f"SELECT {self._SELECT_COLUMNS} FROM nova_cases WHERE case_id = %s",
                     (case_id,),
                 ).fetchone()
                 if row is None:
@@ -356,9 +345,7 @@ class PostgresNovaCaseRepository:
             with self._connect() as conn:
                 with conn.transaction():
                     row = conn.execute(
-                        """SELECT case_id, patient_id, encounter_id, state, status, created_by,
-                           created_at, updated_at, agent_version, kb_version, closed_at,
-                           close_reason, version FROM nova_cases WHERE case_id = %s FOR UPDATE""",
+                        f"SELECT {self._SELECT_COLUMNS} FROM nova_cases WHERE case_id = %s FOR UPDATE",
                         (case_id,),
                     ).fetchone()
                     if row is None:
@@ -384,9 +371,7 @@ class PostgresNovaCaseRepository:
             with self._connect() as conn:
                 with conn.transaction():
                     row = conn.execute(
-                        """SELECT case_id, patient_id, encounter_id, state, status, created_by,
-                           created_at, updated_at, agent_version, kb_version, closed_at,
-                           close_reason, version FROM nova_cases WHERE case_id = %s FOR UPDATE""",
+                        f"SELECT {self._SELECT_COLUMNS} FROM nova_cases WHERE case_id = %s FOR UPDATE",
                         (case_id,),
                     ).fetchone()
                     if row is None:
@@ -414,9 +399,7 @@ class PostgresNovaCaseRepository:
         try:
             with self._connect() as conn:
                 rows = conn.execute(
-                    """SELECT case_id, patient_id, encounter_id, state, status, created_by,
-                       created_at, updated_at, agent_version, kb_version, closed_at, close_reason,
-                       version FROM nova_cases WHERE patient_id = %s""",
+                    f"SELECT {self._SELECT_COLUMNS} FROM nova_cases WHERE patient_id = %s",
                     (patient_id,),
                 ).fetchall()
                 return [self._record_from_row(row, self._observation_ids(conn, row[0])) for row in rows]

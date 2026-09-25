@@ -185,7 +185,16 @@ jobs:
 
       - name: Container smoke test (start container, hit /health and /ready, stop it)
         run: |
-          docker run -d --name nova-prod-smoke -p 18080:8000 -e NOVA_REQUIRE_AUTH=false nova-doctor-agent:ci
+          # production/ is the REFERENCE / lightweight standalone deployment (its repository is
+          # in-memory by design -- see production/repository.py; the durable, Postgres-backed
+          # hospital production path is backend/, covered by the production-backend and
+          # postgres-integration jobs). The image's Dockerfile defaults NOVA_ENV=production, whose
+          # startup guard correctly refuses to start with a non-durable store; for a start-and-serve
+          # health smoke of the reference image we run it in a non-production env (staging) with auth
+          # disabled, so /ready reflects the image serving, not a hospital-durability assertion this
+          # reference package intentionally does not make.
+          docker run -d --name nova-prod-smoke -p 18080:8000 \
+            -e NOVA_ENV=staging -e NOVA_REQUIRE_AUTH=false nova-doctor-agent:ci
           for i in $(seq 1 20); do
             if curl -sf http://localhost:18080/health > /dev/null; then echo "health OK"; break; fi
             if [ "$i" -eq 20 ]; then echo "container never became healthy"; docker logs nova-prod-smoke; exit 1; fi
@@ -266,3 +275,44 @@ jobs:
 
       - name: Unit tests (i18n + N.O.V.A. components, no backend needed)
         run: npm run test:unit
+
+  # Postgres integration (R14.2): runs the Postgres-backed repository/concurrency/audit/migration
+  # tests against a REAL postgres:16 service -- never a mock. NOVA_CI_REQUIRE_POSTGRES=1 makes
+  # backend/tests/conftest.py turn a would-be Postgres skip into a hard FAILURE, so a broken (or
+  # never-run) database integration goes red instead of silently passing as "production-ready".
+  postgres-integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: nova_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      NOVA_TEST_POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/nova_test
+      NOVA_CI_REQUIRE_POSTGRES: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install backend dependencies (includes psycopg)
+        run: pip install -r backend/requirements-dev.txt
+
+      - name: Postgres integration tests (repository, concurrency, audit, migrations) -- skip == FAIL
+        run: |
+          python -m pytest \
+            backend/tests/test_nova_postgres_repository.py \
+            backend/tests/test_nova_postgres_concurrency.py \
+            backend/tests/test_audit_postgres.py \
+            backend/tests/test_nova_migrations.py -v

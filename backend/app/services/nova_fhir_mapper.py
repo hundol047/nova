@@ -53,6 +53,76 @@ def demographics_for(patient: Patient) -> dict:
     return {"age": patient.age, "sex": _map_sex(patient.sex)}
 
 
+# Deterministic recency windows (R3.3). Kept as plain day thresholds, never a clinical
+# interpretation of the value itself -- only of *when* it was measured relative to "as of" (case
+# creation / today). Conservative, documentation-only defaults.
+_RECENT_MAX_DAYS = 3        # <= 3 days old: "recent"
+_STALE_MIN_DAYS = 180       # >= 180 days old: "stale" (historical between the two)
+
+
+def _recency_label(days_old: Optional[int]) -> Optional[str]:
+    if days_old is None or days_old < 0:
+        return None
+    if days_old <= _RECENT_MAX_DAYS:
+        return "recent"
+    if days_old >= _STALE_MIN_DAYS:
+        return "stale"
+    return "historical"
+
+
+def _trend_label(earlier: float, latest: float) -> str:
+    # Purely a direction over two same-analyte, same-unit numeric values -- NOT a clinical judgment
+    # of whether the change is good/bad (that is the clinician's, and depends on the analyte).
+    if latest > earlier:
+        return "rising"
+    if latest < earlier:
+        return "falling"
+    return "stable"
+
+
+def summarize_lab_temporality(labs, *, as_of=None) -> dict:
+    """Group labs by name, and for each analyte with >=2 dated values return a deterministic
+    recency + trend summary. Same-unit values only are trended (mixing units would be a category
+    error); if the two most recent values disagree on unit, only recency is reported. Returns
+    {lab_name: {"recency": <label|None>, "trend": <label|None>, "latest_value", "latest_unit",
+    "prior_value", "days_old"}}. No value is clinically interpreted here."""
+    from collections import defaultdict
+    from datetime import date as _date
+
+    as_of = as_of or _date.today()
+    by_name: dict = defaultdict(list)
+    for lab in labs:
+        by_name[lab.name].append(lab)
+
+    summary: dict = {}
+    for name, entries in by_name.items():
+        dated = sorted((e for e in entries if getattr(e, "date", None) is not None),
+                       key=lambda e: e.date)
+        if not dated:
+            continue
+        latest = dated[-1]
+        days_old = None
+        try:
+            days_old = (as_of - latest.date).days
+        except Exception:
+            days_old = None
+        recency = _recency_label(days_old)
+        trend = None
+        prior_value = None
+        if len(dated) >= 2:
+            prior = dated[-2]
+            prior_value = prior.value
+            # Only trend when units match (or one is missing) -- never trend across unit systems.
+            if (getattr(prior, "unit", None) or "") == (getattr(latest, "unit", None) or ""):
+                trend = _trend_label(prior.value, latest.value)
+        summary[name] = {
+            "recency": recency, "trend": trend, "latest_value": latest.value,
+            "latest_unit": getattr(latest, "unit", None), "prior_value": prior_value,
+            "days_old": days_old,
+        }
+    return summary
+
+
 def _drug_display(drug_id: str) -> str:
     entry = DRUGS.get(drug_id)
     return f"{drug_id} ({entry['name_ko']})" if entry else drug_id
@@ -126,6 +196,26 @@ def apply_patient_context(state: PatientState, patient: Patient,
             # Never silently discarded (spec): surfaced for ops/dev visibility even though the
             # raw-name key above still lets plain word-overlap matching see this lab's value.
             unmapped_clinical_codes.append({"raw_code": mapped.raw_code, "raw_display": mapped.raw_display})
+
+    # Temporal/trend annotation (R3.3): labs are a dated series, but the per-name value key above
+    # keeps only the last-iterated value, which silently loses recency + trend. Add a deterministic
+    # recency (recent/historical/stale) and trend (rising/falling/stable) note per analyte that has
+    # >=2 dated values, so reasoning/UI never treats a 6-month-old value as if it were current and
+    # can see a rising troponin / falling hemoglobin. Additive: written under a distinct
+    # "<name> [trend]" key, never overwriting the raw value keys above.
+    for lab_name, temporal in summarize_lab_temporality(patient.labs).items():
+        recency, trend = temporal.get("recency"), temporal.get("trend")
+        if not recency and not trend:
+            continue
+        parts = []
+        if trend and temporal.get("prior_value") is not None:
+            parts.append(f"{trend} ({temporal['prior_value']} -> {temporal['latest_value']} "
+                         f"{temporal.get('latest_unit') or ''})".strip())
+        if recency:
+            days = temporal.get("days_old")
+            parts.append(f"{recency}" + (f", {days}d old" if days is not None else ""))
+        if parts:
+            state.laboratory_tests[f"{lab_name} [trend]"] = "; ".join(parts)
 
     # DiagnosticReport/ImagingStudy (spec: connect these FHIR resources into PatientState evidence
     # -- FHIRAdapter already fetches them into Patient.diagnostic_reports/imaging_studies, see

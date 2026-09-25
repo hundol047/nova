@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "frontend change → build",
+      "trigger": "PostFileSave",
+      "matcher": "frontend/src/.*\\.(jsx?|css)$",
+      "action": {
+        "type": "agent",
+        "prompt": "A frontend source file was changed. Before considering this work complete, run the frontend build (cd frontend && npm run build) and the bridge-free unit tests (npm run test:unit). If the environment cannot run npm (network-isolated / node unavailable), say so explicitly and rely on the 'frontend' CI job — do NOT claim the build/tests passed without evidence."
+      }
+    }
+  ]
+}

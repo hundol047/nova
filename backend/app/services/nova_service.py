@@ -345,11 +345,15 @@ class NovaService:
                     except ConcurrentModificationError:
                         if attempt == _SAVE_RETRY_ATTEMPTS - 1:
                             raise
+                        get_nova_metrics().increment("nova_save_retry_total")
                         _save_retry_backoff(attempt)
                         record = self.repository.get(case_id)
         except (RepositoryError, ConcurrentModificationError) as exc:
             # Every retry lost the race -- surfaced as a transient 503 (a caller retry re-reads the
             # now-current state) rather than silently discarding this observation.
+            get_nova_metrics().increment("nova_case_conflict_total")
+            log_event("nova_service", "nova_storage_conflict", case_id=case_id, severity="WARNING",
+                       error_code="storage_conflict", detail={"op": "add_observation"})
             raise StorageError(str(exc)) from exc
         return record, applied
 
@@ -386,10 +390,14 @@ class NovaService:
                 break
             except ConcurrentModificationError:
                 if attempt == _SAVE_RETRY_ATTEMPTS - 1:
+                    get_nova_metrics().increment("nova_case_conflict_total")
+                    log_event("nova_service", "nova_storage_conflict", case_id=case_id,
+                               severity="WARNING", error_code="storage_conflict", detail={"op": "decide"})
                     raise StorageError(
                         f"Case {case_id!r} could not be saved after {_SAVE_RETRY_ATTEMPTS} attempts "
                         "due to concurrent writes."
                     )
+                get_nova_metrics().increment("nova_save_retry_total")
                 _save_retry_backoff(attempt)
                 try:
                     record = self.repository.get(case_id)
