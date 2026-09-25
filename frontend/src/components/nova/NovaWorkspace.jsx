@@ -39,10 +39,12 @@ export default function NovaWorkspace({patientId, encounterId}) {
   const [chiefComplaint, setChiefComplaint] = useState('');
   const [maxTurns, setMaxTurns] = useState(60);
 
-  const [busy, setBusy] = useState('');               // '', 'create', 'decide', 'observe', 'review', 'locale'
+  const [busy, setBusy] = useState('');               // '', 'create', 'decide', 'observe', 'review', 'locale', 'resume', 'lookup'
   const [error, setError] = useState('');
   const [obsResultState, setObsResultState] = useState(null); // 'applied' | 'replayed' | null
   const [closed, setClosed] = useState(null);         // disposition string once closed
+  const [resumeCandidate, setResumeCandidate] = useState(null); // open case summary offered for resume
+  const [dismissedResume, setDismissedResume] = useState(false); // clinician chose Start New
 
   const caseIdRef = useRef(null);
   const lastLocaleRef = useRef(locale);
@@ -51,10 +53,12 @@ export default function NovaWorkspace({patientId, encounterId}) {
 
   const errText = useCallback((e) => (e && e.message) ? e.message : t('errors.generic'), [t]);
 
-  // --- CASE ISOLATION (items 7, 9): hard reset whenever the selected patient changes. -----------
+  // --- CASE ISOLATION (items 7, 9): hard reset whenever the selected patient (or encounter)
+  // changes, then look up any OPEN case for this patient/encounter to offer a resume. -----------
   // Bumping the epoch invalidates any in-flight response captured under the previous epoch.
   useEffect(() => {
     epochRef.current += 1;
+    const myEpoch = epochRef.current;
     caseIdRef.current = null;
     inFlightRef.current = false;
     setCaseState(null);
@@ -66,17 +70,38 @@ export default function NovaWorkspace({patientId, encounterId}) {
     setObsResultState(null);
     setBusy('');
     setChiefComplaint('');
+    setResumeCandidate(null);
+    setDismissedResume(false);
     lastLocaleRef.current = locale;
-    // Intentionally depends ONLY on patientId: a locale change must NOT reset the case.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [patientId]);
 
-  // Timeline is accumulated within the session as observations are applied. The durable per-turn
-  // history is ALSO persisted server-side (PatientState.conversation_history) and now returned by
-  // GET /v1/nova/cases/{id} as `conversation_history`, so a future "resume existing case" entry
-  // point can restore it (mapping turn/action_type/content/result/timestamp). This workspace
-  // currently always starts a fresh case, so no restore call is wired yet -- the server data is
-  // available for that follow-up without another backend change.
+    // Encounter-aware resume lookup (items 4, 6, 7): a case is scoped to patient AND encounter, so
+    // only offer an open case matching BOTH. Best-effort; a failure just means "no resume offered".
+    if (patientId) {
+      (async () => {
+        try {
+          setBusy('lookup');
+          const qs = encounterId ? `&encounter_id=${encodeURIComponent(encounterId)}` : '';
+          const resp = await api(`/v1/nova/patients/${encodeURIComponent(patientId)}/cases?status=open${qs}`);
+          if (epochRef.current !== myEpoch) return; // patient changed while awaiting -- discard
+          const open = Array.isArray(resp.cases) ? resp.cases : [];
+          setResumeCandidate(open.length ? open[0] : null); // most-recent-updated first (server-sorted)
+        } catch { /* no resume offered on lookup failure */ }
+        finally { if (epochRef.current === myEpoch) setBusy(''); }
+      })();
+    }
+    // Intentionally depends on patientId + encounterId: a locale change must NOT reset the case.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [patientId, encounterId]);
+
+  // Timeline is server-authoritative on restore (item 5): PatientState.conversation_history is
+  // returned by GET /v1/nova/cases/{id} as `conversation_history`. On resume (and on refresh via
+  // resume) the timeline is rebuilt from that durable history, not from client memory.
+  const timelineFromHistory = useCallback((history) => (
+    (Array.isArray(history) ? history : []).map((h) => ({
+      turn: h.turn, action_type: h.action_type, key: h.content, result: h.result,
+      time: h.timestamp ? new Date(h.timestamp).toLocaleTimeString() : '',
+    }))
+  ), []);
 
   const runDecide = useCallback(async () => {
     const caseId = caseIdRef.current;
@@ -139,6 +164,37 @@ export default function NovaWorkspace({patientId, encounterId}) {
       if (epochRef.current === myEpoch) setBusy('');
     }
   }, [patientId, encounterId, chiefComplaint, maxTurns, locale, runDecide, errText, t]);
+
+  // Resume an existing OPEN case (items 4, 5): restore case_id, turn_count, status, and the
+  // server-authoritative timeline from conversation_history, then re-decide to rebuild the
+  // differential/next-action in the current locale.
+  const resumeCase = useCallback(async (summary) => {
+    if (!summary || !summary.case_id) return;
+    if (inFlightRef.current) return;
+    const myEpoch = epochRef.current;
+    inFlightRef.current = true;
+    setBusy('resume'); setError('');
+    try {
+      const st = await api(`/v1/nova/cases/${encodeURIComponent(summary.case_id)}`);
+      if (epochRef.current !== myEpoch) return;   // patient changed mid-resume -- discard
+      caseIdRef.current = st.case_id;
+      setCaseState({
+        case_id: st.case_id, patient_id: st.patient_id, encounter_id: st.encounter_id,
+        turn_count: st.turn_count, max_turns: st.max_turns, status: st.status,
+        safety_banner: st.safety_banner,
+      });
+      setTimeline(timelineFromHistory(st.conversation_history));      // server-authoritative
+      setClosed(st.status === 'closed' ? 'resumed-closed' : null);
+      setResumeCandidate(null);
+      inFlightRef.current = false;
+      if (st.status !== 'closed') await runDecide();
+    } catch (e) {
+      if (epochRef.current === myEpoch) setError(errText(e));
+      inFlightRef.current = false;
+    } finally {
+      if (epochRef.current === myEpoch) setBusy('');
+    }
+  }, [runDecide, errText, timelineFromHistory]);
 
   const submitObservation = useCallback(async (payload) => {
     const caseId = caseIdRef.current;
@@ -252,6 +308,26 @@ export default function NovaWorkspace({patientId, encounterId}) {
         <section className="nova-panel" aria-labelledby="nova-unavail-h">
           <div className="nova-panel-head"><h3 id="nova-unavail-h">{t('nova.title')}</h3></div>
           <div className="nova-empty">{t('nova.unavailableForCustomPatient')}</div>
+        </section>
+      ) : (!caseState && resumeCandidate && !dismissedResume) ? (
+        // An OPEN case exists for this patient/encounter -> offer Resume or Start New (items 4, 7).
+        <section className="nova-panel" aria-labelledby="nova-resume-h">
+          <div className="nova-panel-head"><h3 id="nova-resume-h">{t('nova.resume.title')}</h3></div>
+          <p className="nova-muted">
+            {t('nova.resume.description', {
+              turns: resumeCandidate.turn_count,
+              complaint: resumeCandidate.chief_complaint || '—',
+            })}
+          </p>
+          <div className="nova-review-buttons" role="group" aria-label={t('nova.resume.title')}>
+            <button className="nova-primary" onClick={() => resumeCase(resumeCandidate)} disabled={busy !== ''}>
+              {busy === 'resume' ? t('common.loading') : t('nova.resume.resume')}
+            </button>
+            <button type="button" onClick={() => setDismissedResume(true)} disabled={busy !== ''}>
+              {t('nova.resume.startNew')}
+            </button>
+          </div>
+          {error ? <p className="nova-error" role="alert">{error}</p> : null}
         </section>
       ) : !caseState ? (
         <section className="nova-panel" aria-labelledby="nova-start-h">

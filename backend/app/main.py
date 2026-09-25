@@ -41,6 +41,7 @@ from .nova_schemas import (NovaCaseCreateRequest, NovaCaseCreatedResponse, NovaO
                             NovaObservationResponse, NovaDecideResponse, NovaDifferentialItemOut,
                             NovaRecommendedActionOut, NovaVersionsOut, NovaCaseStateResponse,
                             NovaCloseRequest, NovaCloseResponse, NovaConversationTurnOut,
+                            NovaCaseSummaryOut, NovaCaseListResponse,
                             NovaLocaleUpdateRequest, NovaLocaleUpdateResponse)
 from fastapi import Depends, Cookie, Header
 from fastapi.responses import RedirectResponse
@@ -709,6 +710,25 @@ def _nova_differential_out(differential,locale:str='en'):
                 supporting_evidence=d.supporting_evidence,contradictory_evidence=d.contradictory_evidence,
                 missing_discriminative_evidence=d.missing_discriminative_evidence,
                 candidate_sources=d.candidate_sources) for d in differential]
+
+@app.get('/v1/nova/patients/{patient_id}/cases',response_model=NovaCaseListResponse)
+def nova_list_patient_cases(patient_id:str,status:str=None,encounter_id:str=None,
+                             user:User=Depends(require('nova:read')),rid:str=Depends(request_id)):
+    # Cases already known for this patient -- powers the frontend "resume an open case" flow.
+    # patient(pid) 404s consistently with every other /patients/{pid}/... endpoint (a case for an
+    # unknown patient is never listed). status/encounter_id are optional filters; a case is scoped
+    # to a patient AND encounter, so passing encounter_id keeps a different encounter's case from
+    # being offered as a resume candidate (encounter-aware resume).
+    patient(patient_id)
+    if status is not None and status not in ('open','closed'):
+        raise HTTPException(422,{'error':{'code':'invalid_status','message':"status must be 'open' or 'closed'",'retryable':False}})
+    records=nova_call('nova_service','list_cases_for_patient',app.state.nova_service.list_cases_for_patient,
+                       patient_id,request_id=rid,status=status,encounter_id=encounter_id)
+    cases=[NovaCaseSummaryOut(case_id=r.case_id,patient_id=r.patient_id,encounter_id=r.encounter_id,
+        status=r.status,turn_count=r.state.turn_count,max_turns=r.state.max_turns,
+        chief_complaint=r.state.chief_complaint,locale=r.state.locale,
+        created_at=r.created_at or '',updated_at=r.updated_at or '') for r in records]
+    return NovaCaseListResponse(request_id=rid,patient_id=patient_id,cases=cases)
 
 @app.post('/v1/nova/cases',response_model=NovaCaseCreatedResponse,status_code=201)
 def nova_create_case(req:NovaCaseCreateRequest,user:User=Depends(require('nova:invoke')),

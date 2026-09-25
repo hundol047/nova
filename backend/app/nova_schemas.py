@@ -136,6 +136,27 @@ class NovaConversationTurnOut(StrictModel):
     timestamp: str = ""
 
 
+class NovaCaseSummaryOut(StrictModel):
+    """One case in a patient's case list (for the "resume an open case" flow). Summary only --
+    the full state/history is fetched via GET /v1/nova/cases/{id}."""
+    case_id: str
+    patient_id: str
+    encounter_id: Optional[str] = None
+    status: str
+    turn_count: int
+    max_turns: int
+    chief_complaint: str = ""
+    locale: str = "en"
+    created_at: str = ""
+    updated_at: str = ""
+
+
+class NovaCaseListResponse(StrictModel):
+    request_id: str
+    patient_id: str
+    cases: list[NovaCaseSummaryOut] = Field(default_factory=list)
+
+
 class NovaCaseStateResponse(StrictModel):
     case_id: str
     request_id: str

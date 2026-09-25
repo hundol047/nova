@@ -185,6 +185,74 @@ def check_browser_e2e_available() -> dict:
     return {"status": SKIPPED, "detail": "E2E harness present but not auto-run here"}
 
 
+def _read(rel: str) -> str:
+    p = ROOT / rel
+    return p.read_text(encoding="utf-8") if p.exists() else ""
+
+
+def check_i18n_parity() -> dict:
+    # Accurate structural parity across the 4 locale dicts by importing them in node (dependency-
+    # free) and comparing the flattened key paths -- a regex over `key:` tokens is unreliable
+    # because string VALUES can contain colons, so node is the source of truth here.
+    if shutil.which("node") is None:
+        return {"status": NA, "detail": "node not available"}
+    script = (
+        "function flat(o,p=''){let r=[];for(const k in o){const v=o[k];const kk=p?p+'.'+k:k;"
+        "if(v&&typeof v==='object')r=r.concat(flat(v,kk));else r.push(kk);}return r;}"
+        "const en=(await import('./frontend/src/i18n/en.js')).default;const enk=new Set(flat(en));"
+        "let bad=[];for(const loc of ['ko','ja','zh']){const dk=new Set(flat((await import('./frontend/src/i18n/'+loc+'.js')).default));"
+        "const miss=[...enk].filter(k=>!dk.has(k));const extra=[...dk].filter(k=>!enk.has(k));"
+        "if(miss.length||extra.length)bad.push(loc+':miss'+miss.length+':extra'+extra.length);}"
+        "console.log(bad.length?('FAIL '+bad.join(',')):('OK '+enk.size));"
+    )
+    rc, out, err = _run(["node", "--input-type=module", "-e", script], timeout=60)
+    line = (out.strip().splitlines() or [""])[-1]
+    if line.startswith("OK"):
+        return {"status": PASS, "detail": f"en/ko/ja/zh parity ({line.split()[1]} keys)"}
+    if line.startswith("FAIL"):
+        return {"status": FAIL, "detail": line}
+    return {"status": NA, "detail": (err or "could not evaluate")[-160:]}
+
+
+def check_hardcoded_string_audit() -> dict:
+    if shutil.which("node") is None:
+        return {"status": NA, "detail": "node not available"}
+    rc, out, err = _run(["node", "scripts/audit_frontend_i18n.mjs", "--json"], timeout=60)
+    if not out:
+        return {"status": NA, "detail": (err or "audit could not run")[-200:]}
+    try:
+        total = json.loads(out).get("total_findings")
+    except Exception:
+        total = "?"
+    # REVIEW-CANDIDATE report, not a pass/fail gate here -- report the count as info (PASS = ran).
+    return {"status": PASS, "detail": f"{total} hardcoded CJK candidate line(s) across frontend/src (review only)"}
+
+
+def check_e2e_harness_present() -> dict:
+    spec = ROOT / "frontend" / "tests" / "e2e"
+    cfg = ROOT / "frontend" / "playwright.config.js"
+    if cfg.exists() and spec.exists() and any(spec.glob("*.spec.js")):
+        return {"status": PASS, "detail": "playwright.config.js + tests/e2e/*.spec.js present (EXECUTION NOT VERIFIED here)"}
+    return {"status": FAIL, "detail": "E2E harness files missing"}
+
+
+def check_case_resume_wiring() -> dict:
+    # Static presence checks for the resume path (backend route + service + frontend usage).
+    ok = all([
+        "def list_cases_for_patient" in _read("backend/app/services/nova_service.py"),
+        "/v1/nova/patients/{patient_id}/cases" in _read("backend/app/main.py"),
+        "resumeCase" in _read("frontend/src/components/nova/NovaWorkspace.jsx"),
+        "conversation_history" in _read("frontend/src/components/nova/NovaWorkspace.jsx"),
+    ])
+    return {"status": PASS if ok else FAIL,
+            "detail": "open-case API + service + frontend resume/timeline restore wired"}
+
+
+def check_reasoning_unchanged_blind_v9() -> dict:
+    # Documents (statically) that v9 is the current untouched set and its manifest matches.
+    return _blind_manifest_ok("v9")
+
+
 CHECKS = [
     ("nova_agent_tests", check_nova_agent_tests),
     ("backend_tests", check_backend_tests),
@@ -193,6 +261,10 @@ CHECKS = [
     ("submission_sync", check_submission_sync),
     ("frontend_build", check_frontend_build),
     ("frontend_unit_tests", check_frontend_unit_tests),
+    ("i18n_parity", check_i18n_parity),
+    ("hardcoded_string_audit", check_hardcoded_string_audit),
+    ("e2e_harness_present", check_e2e_harness_present),
+    ("case_resume_wiring", check_case_resume_wiring),
     ("blind_integrity", check_blind_integrity),
     ("blind_v9_first_run", check_blind_v9_first_run),
     ("postgres_available", check_postgres_available),

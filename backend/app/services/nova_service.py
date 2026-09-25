@@ -435,3 +435,20 @@ class NovaService:
             raise CaseNotFoundError(case_id) from exc
         except RepositoryError as exc:
             raise StorageError(str(exc)) from exc
+
+    def list_cases_for_patient(self, patient_id: str, *, status: Optional[str] = None,
+                                encounter_id: Optional[str] = None) -> list[NovaCaseRecord]:
+        """Cases already known for a patient (for the "resume an open case" flow). Thin wrapper over
+        the repository's existing list_for_patient -- no new persistence path. Optional filters:
+        `status` ('open'/'closed') and `encounter_id` (a case is scoped to a patient AND encounter,
+        so a different encounter must NOT resume another encounter's case -- see the route)."""
+        try:
+            records = self.repository.list_for_patient(patient_id)
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
+        if status is not None:
+            records = [r for r in records if r.status == status]
+        if encounter_id is not None:
+            records = [r for r in records if (r.encounter_id or None) == (encounter_id or None)]
+        # Most-recent-updated first, so the UI's default resume candidate is the freshest case.
+        return sorted(records, key=lambda r: r.updated_at or "", reverse=True)
