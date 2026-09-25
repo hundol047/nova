@@ -90,6 +90,23 @@ class Reranker:
         self.keep = keep
         self._torch_model = torch_model  # optional; if provided, used for scoring
 
+    @classmethod
+    def load(cls, weights_path, keep: int = 25) -> "Reranker":
+        """Load a trained torch reranker via the compatibility-guarded checkpoint. Raises
+        RerankerIncompatibleError BEFORE touching weights on any version mismatch. Requires torch."""
+        from learning._torch import require_torch
+        from learning.rerank.checkpoint import check_compatibility, load_meta
+        from learning.rerank.model_torch import build_reranker_mlp
+        torch = require_torch()
+        from pathlib import Path
+        weights_path = Path(weights_path)
+        meta = load_meta(weights_path)
+        check_compatibility(meta)  # fail-safe before loading weights
+        model = build_reranker_mlp(meta.input_dim, hidden=meta.hidden, dropout=meta.dropout)
+        model.load_state_dict(torch.load(str(weights_path), map_location="cpu"))
+        model.eval()
+        return cls(keep=keep, torch_model=model)
+
     def _score(self, c: RerankInput) -> float:
         if self._torch_model is not None and torch_available():
             try:
