@@ -39,6 +39,13 @@ def pg_client(tmp_path, monkeypatch):
     # read it once, inside lifespan(), not per-request).
     monkeypatch.setenv('NOVA_POSTGRES_URL', POSTGRES_URL)
     monkeypatch.setenv('SYNEX_IDEMPOTENCY_PATH', str(tmp_path / 'idempotency.sqlite3'))
+    # Ensure the schemas exist BEFORE truncating: on a fresh CI database none of these tables have
+    # been created yet, so constructing the stores (each runs its own _init_schema/migrations)
+    # first makes the TRUNCATE below valid instead of failing with UndefinedTable.
+    from app.services.audit import PostgresAuditStore
+    from app.services.nova_repository import PostgresNovaCaseRepository
+    PostgresNovaCaseRepository(POSTGRES_URL)
+    PostgresAuditStore(POSTGRES_URL)
     with psycopg.connect(POSTGRES_URL) as conn:
         conn.execute('TRUNCATE nova_case_observations, nova_cases, audit_events, audit_analyses')
 
