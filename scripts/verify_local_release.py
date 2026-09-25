@@ -280,8 +280,9 @@ def check_ontology_catalog_integrity() -> dict:
         return {"status": FAIL, "detail": f"expected 34 Tier-1 deep, got {tiers.get('TIER1_DEEP')}"}
     if dups:
         return {"status": FAIL, "detail": f"{dups} duplicate concept id(s)"}
-    if tiers.get("TIER2_STRUCTURED", 0) < 100:
-        return {"status": FAIL, "detail": f"Tier-2 catalog too small: {tiers.get('TIER2_STRUCTURED')}"}
+    bundled = tiers.get("TIER1_DEEP", 0) + tiers.get("TIER2_STRUCTURED", 0)
+    if bundled < 500:
+        return {"status": FAIL, "detail": f"bundled catalog {bundled} < 500 target"}
     # code mapping round-trip
     coded = [c for c in cat.all_concepts() if c.external_codes]
     if coded:
@@ -291,7 +292,65 @@ def check_ontology_catalog_integrity() -> dict:
             return {"status": FAIL, "detail": "external-code mapping did not round-trip"}
     total = len(ids)
     return {"status": PASS, "detail": f"{total} concepts (34 deep + {tiers['TIER2_STRUCTURED']} structured), "
-                                      f"0 dup ids, code-map OK"}
+                                      f"bundled>={500} OK, 0 dup ids, code-map OK"}
+
+
+def check_disease_coverage_500() -> dict:
+    """Runs the dependency-free 500+ coverage + search test file."""
+    if not _have_module("pytest"):
+        return {"status": NA, "detail": "pytest not installed"}
+    proc = subprocess.run(
+        [sys.executable, "-m", "pytest", "-q", "tests/test_disease_coverage_500.py"],
+        cwd=str(ROOT), capture_output=True, text=True,
+    )
+    tail = (proc.stdout + proc.stderr).strip().splitlines()[-1:] or [""]
+    return {"status": PASS if proc.returncode == 0 else FAIL, "detail": tail[0][:80]}
+
+
+def check_terminology_import() -> dict:
+    """Runs the dependency-free terminology import CLI tests (validation + Tier-3 provider read)."""
+    if not _have_module("pytest"):
+        return {"status": NA, "detail": "pytest not installed"}
+    proc = subprocess.run(
+        [sys.executable, "-m", "pytest", "-q", "tests/test_terminology_import.py"],
+        cwd=str(ROOT), capture_output=True, text=True,
+    )
+    tail = (proc.stdout + proc.stderr).strip().splitlines()[-1:] or [""]
+    return {"status": PASS if proc.returncode == 0 else FAIL, "detail": tail[0][:80]}
+
+
+def check_ml_runtime_and_lifecycle() -> dict:
+    """Runs the dependency-free ML runtime + training + retraining lifecycle + open-world +
+    admin RBAC + continual-validation test files (everything that does not need torch/pydantic)."""
+    if not _have_module("pytest"):
+        return {"status": NA, "detail": "pytest not installed"}
+    files = [
+        "tests/test_ml_runtime_integration.py",
+        "tests/test_learning_training.py",
+        "tests/test_retraining_lifecycle.py",
+        "tests/test_continual_validation.py",
+        "tests/test_open_world_expansion.py",
+        "tests/test_learning_admin_rbac.py",
+    ]
+    proc = subprocess.run([sys.executable, "-m", "pytest", "-q", *files],
+                          cwd=str(ROOT), capture_output=True, text=True)
+    tail = (proc.stdout + proc.stderr).strip().splitlines()[-1:] or [""]
+    return {"status": PASS if proc.returncode == 0 else FAIL, "detail": tail[0][:80]}
+
+
+def check_checkpoint_roundtrip_static() -> dict:
+    """Static: the checkpoint compatibility guard exists and torch training is torch-gated. Actual
+    torch weight roundtrip is exercised by test_learning_training.py (torch-skipped without torch)."""
+    ck = _read("learning/checkpoint.py")
+    tr = _read("learning/train.py")
+    ok = ("def check_compatibility" in ck and "CheckpointIncompatibleError" in ck
+          and "MODEL_INPUT_DIM" in ck and "IMPLEMENTED_BUT_NOT_EXECUTED" in tr)
+    if not ok:
+        return {"status": FAIL, "detail": "checkpoint guard / torch-gated training markers missing"}
+    detail = "checkpoint compat-guard present; torch training torch-gated"
+    if not _have_module("torch"):
+        detail += " (torch weight roundtrip NOT EXECUTED here -> CI/torch env)"
+    return {"status": PASS, "detail": detail}
 
 
 def check_learning_isolation() -> dict:
@@ -344,6 +403,10 @@ CHECKS = [
     ("e2e_harness_present", check_e2e_harness_present),
     ("case_resume_wiring", check_case_resume_wiring),
     ("ontology_catalog_integrity", check_ontology_catalog_integrity),
+    ("disease_coverage_500", check_disease_coverage_500),
+    ("terminology_import", check_terminology_import),
+    ("ml_runtime_and_lifecycle", check_ml_runtime_and_lifecycle),
+    ("checkpoint_roundtrip_static", check_checkpoint_roundtrip_static),
     ("learning_isolation", check_learning_isolation),
     ("learning_pipeline_tests", check_learning_pipeline_tests),
     ("blind_integrity", check_blind_integrity),
