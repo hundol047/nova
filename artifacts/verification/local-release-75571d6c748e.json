@@ -1,6 +1,6 @@
 {
-  "git_sha": "e2cc7cbb90b32ce27d540003a980d20a69efc3a4",
-  "timestamp_utc": "2026-09-25T07:39:22.099372+00:00",
+  "git_sha": "75571d6c748e19a6900d3454e9c1e130d89f9c55",
+  "timestamp_utc": "2026-09-25T08:28:39.963668+00:00",
   "environment": {
     "python": "3.11.15",
     "pydantic": false,
@@ -55,7 +55,23 @@
     },
     "ontology_catalog_integrity": {
       "status": "PASS",
-      "detail": "174 concepts (34 deep + 140 structured), 0 dup ids, code-map OK"
+      "detail": "516 concepts (34 deep + 482 structured), bundled>=500 OK, 0 dup ids, code-map OK"
+    },
+    "disease_coverage_500": {
+      "status": "PASS",
+      "detail": "18 passed in 0.08s"
+    },
+    "terminology_import": {
+      "status": "PASS",
+      "detail": "5 passed in 0.02s"
+    },
+    "ml_runtime_and_lifecycle": {
+      "status": "PASS",
+      "detail": "39 passed, 1 skipped in 0.40s"
+    },
+    "checkpoint_roundtrip_static": {
+      "status": "PASS",
+      "detail": "checkpoint compat-guard present; torch training torch-gated (torch weight roundtrip NOT EXECUTED here -> CI/torch env)"
     },
     "learning_isolation": {
       "status": "PASS",
@@ -63,7 +79,7 @@
     },
     "learning_pipeline_tests": {
       "status": "PASS",
-      "detail": "17 passed in 0.04s"
+      "detail": "18 passed in 0.09s"
     },
     "blind_integrity": {
       "status": "PASS",
