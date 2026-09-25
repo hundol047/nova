@@ -161,13 +161,32 @@ class _LLMCircuitBreaker:
         self._state = "closed"
         self._consecutive_failures = 0
         self._opened_at: Optional[float] = None
+        self._half_open_probes_total = 0
 
     def should_skip_real_llm(self) -> bool:
+        # Single-probe guarantee: while `_state == "half_open"`, exactly ONE caller -- the one that
+        # itself performs the open->half_open transition below -- gets `False` (permitted to
+        # attempt a real call); every other concurrent caller, whether it still sees "open" with
+        # the cooldown not yet elapsed or already sees "half_open", gets `True` (skip). The
+        # transition and both branches happen inside the SAME `_lock` acquisition, so two callers
+        # racing on the exact cooldown boundary cannot both observe "open" and both flip to
+        # "half_open" -- one always sees the other's already-flipped "half_open" first.
+        #
+        # Before this guarantee: this method only checked `self._state == "open"` on return, so
+        # once a first caller flipped the state to "half_open", EVERY other concurrent caller
+        # during that same window also read `self._state == "open"` as False and was also let
+        # through -- an unbounded stampede of real calls at a backend that had JUST started
+        # recovering, defeating the entire point of a half-open probe.
         with self._lock:
-            if self._state == "open" and self._opened_at is not None:
-                if time.monotonic() - self._opened_at >= self.cooldown_seconds:
+            if self._state == "closed":
+                return False
+            if self._state == "open":
+                if self._opened_at is not None and time.monotonic() - self._opened_at >= self.cooldown_seconds:
                     self._state = "half_open"
-            return self._state == "open"
+                    self._half_open_probes_total += 1
+                    return False  # this caller IS the single probe
+                return True
+            return True  # self._state == "half_open": a probe is already in flight
 
     def record_outcome(self, *, attempted: bool, succeeded: bool) -> None:
         if not attempted:
@@ -185,7 +204,8 @@ class _LLMCircuitBreaker:
 
     def snapshot(self) -> dict:
         with self._lock:
-            return {"state": self._state, "consecutive_failures": self._consecutive_failures}
+            return {"state": self._state, "consecutive_failures": self._consecutive_failures,
+                    "half_open_probes_total": self._half_open_probes_total}
 
 
 @dataclass
