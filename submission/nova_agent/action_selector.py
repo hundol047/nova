@@ -13,12 +13,25 @@ from pydantic import BaseModel
 
 from nova_agent.config import get_config
 from nova_agent.differential import DifferentialItem
+from nova_agent.knowledge.retrieval import all_diseases
 from nova_agent.missing_info import CandidateInfo, MissingInformationAnalyzer
 from nova_agent.safety import SafetyFinding
 from nova_agent.state import PatientState
 from nova_agent.stop_policy import StopDecision, StopPolicy
 
 AgentActionType = Literal["ASK", "EXAM", "TEST", "DIAGNOSE"]
+
+
+def _time_critical_ids() -> set:
+    """The "time is tissue/brain/myocardium" diagnosis cluster (stroke/ACS/sepsis/anaphylaxis-
+    class) -- derived generically from the knowledge base's own `urgency`/`dangerous` fields
+    (CRITICAL urgency + dangerous:true already means, by this KB's own schema, an immediate
+    time-sensitive intervention need) rather than a second, hand-maintained ID list that could
+    drift from it. Recomputed from the live KB each call (cheap, ~30 entries) rather than cached
+    at import time, consistent with this module's "never hardcode benchmark-specific IDs" spirit
+    -- this reads only the KB's own pre-existing, already-verified urgency/dangerous metadata."""
+    return {entry["id"] for entry in all_diseases().values()
+            if entry.get("urgency") == "CRITICAL" and entry.get("dangerous")}
 
 
 class ScoredCandidate(BaseModel):
@@ -55,22 +68,24 @@ class ActionSelector:
         band_factor = {"LOW": 1.0, "MEDIUM": 0.6, "HIGH": 0.25}[top_confidence]
         return round(0.15 + 0.85 * band_factor * cand.diagnostic_discrimination, 3)
 
-    def _utility(self, cand: CandidateInfo, dangerous_involved: bool,
+    def _utility(self, cand: CandidateInfo, dangerous_involved: bool, time_critical_involved: bool,
                  differential: List[DifferentialItem]) -> tuple[float, dict]:
         w = get_config().weights
         management_relevance = self._management_relevance(cand, dangerous_involved, differential)
+        time_critical_bonus = 1.0 if time_critical_involved else 0.0
         utility = (
             w.info_gain_weight * cand.information_gain
             + w.discrimination_weight * cand.diagnostic_discrimination
             + w.safety_weight * cand.safety_relevance
             + w.management_relevance_weight * management_relevance
+            + w.time_critical_weight * time_critical_bonus
             - w.turn_cost_weight * cand.turn_cost
             - w.redundancy_penalty * cand.redundancy
         )
         components = {
             "information_gain": cand.information_gain, "diagnostic_discrimination": cand.diagnostic_discrimination,
             "safety_relevance": cand.safety_relevance, "management_relevance": management_relevance,
-            "turn_cost": cand.turn_cost, "redundancy": cand.redundancy,
+            "time_critical_bonus": time_critical_bonus, "turn_cost": cand.turn_cost, "redundancy": cand.redundancy,
         }
         return utility, components
 
@@ -78,12 +93,14 @@ class ActionSelector:
                              safety_findings: List[SafetyFinding], lang: str = "en"
                              ) -> tuple[AgentAction, List[ScoredCandidate], StopDecision]:
         dangerous_ids = {d.diagnosis_id for d in differential if d.dangerous_if_missed}
+        time_critical_ids = _time_critical_ids()
         raw_candidates = self.missing_info.analyze(state, differential, safety_findings)
 
         scored: List[ScoredCandidate] = []
         for cand in raw_candidates:
             dangerous_involved = bool(set(cand.disease_ids_discriminated) & dangerous_ids)
-            utility, components = self._utility(cand, dangerous_involved, differential)
+            time_critical_involved = bool(set(cand.disease_ids_discriminated) & time_critical_ids)
+            utility, components = self._utility(cand, dangerous_involved, time_critical_involved, differential)
             content = cand.content_ko if lang == "ko" else cand.content_en
             scored.append(ScoredCandidate(action_type=cand.action_type, key=cand.key, content=content,
                                            utility=round(utility, 3), components=components))

@@ -53,6 +53,7 @@ class UtilityWeights:
             + beta  * diagnostic_separation
             + gamma * safety_gain
             + delta * expected_management_relevance
+            + tau   * time_critical_bonus
             - lam   * turn_cost
             - rho   * redundancy
     """
@@ -63,6 +64,15 @@ class UtilityWeights:
     management_relevance_weight: float = field(
         default_factory=lambda: _float_env("NOVA_MANAGEMENT_RELEVANCE_WEIGHT", 0.5)
     )
+    # A candidate action that helps discriminate a "time is tissue/brain/myocardium" diagnosis
+    # (stroke/ACS/sepsis/anaphylaxis-class -- see action_selector.py's `_time_critical_ids()`)
+    # gets a small additional priority bump on top of the existing safety_weight, reflecting that
+    # minutes matter more for these specifically than for "merely" dangerous_if_missed diagnoses
+    # in general. Deliberately small relative to safety_weight/discrimination_weight -- this
+    # breaks a close tie toward the more time-sensitive question, never overrides genuine
+    # evidence-based prioritization. Purely a question/test PRIORITIZATION weight -- never
+    # triggers or implies any treatment/auto-treatment action.
+    time_critical_weight: float = field(default_factory=lambda: _float_env("NOVA_TIME_CRITICAL_WEIGHT", 0.4))
     turn_cost_weight: float = field(default_factory=lambda: _float_env("NOVA_TURN_COST", 0.3))
     redundancy_penalty: float = field(default_factory=lambda: _float_env("NOVA_REDUNDANCY_PENALTY", 5.0))
 
