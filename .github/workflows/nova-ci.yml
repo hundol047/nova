@@ -39,6 +39,9 @@ jobs:
           pip install -r requirements-nova.txt
           pip install -r requirements-nova-dev.txt
 
+      - name: Evaluation leakage scan (no blind-set phrase/answer leaked into the agent core)
+        run: python scripts/check_eval_leakage.py
+
       - name: pytest (nova_agent + competition adapter + safety regression)
         # Scope to the nova_agent/competition/evaluation tests only. The tests/test_production_*.py
         # files exercise the standalone production/ FastAPI package and require fastapi/httpx, which
