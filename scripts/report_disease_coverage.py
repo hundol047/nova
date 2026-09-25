@@ -32,24 +32,46 @@ def _load_catalog():
     return registry.build_catalog()
 
 
+# Bundled coverage target (Tier-1 + Tier-2). Tier-3 (operator terminology snapshot) is additive
+# and not required to meet this.
+COVERAGE_TARGET = 500
+
+
 def collect(catalog) -> dict:
     by_category: dict = {}
     coded = 0
+    dangerous = 0
+    not_curated = 0
     dup_ids: dict = {}
+    bundled = 0  # Tier-1 + Tier-2 (excludes Tier-3 ontology-only)
     for c in catalog.all_concepts():
         by_category[c.category or "uncategorized"] = by_category.get(c.category or "uncategorized", 0) + 1
         if c.external_codes:
             coded += 1
+        if c.dangerous:
+            dangerous += 1
+        if c.curation_status == "NOT_CURATED":
+            not_curated += 1
+        if c.tier.value in ("TIER1_DEEP", "TIER2_STRUCTURED"):
+            bundled += 1
         dup_ids[c.concept_id] = dup_ids.get(c.concept_id, 0) + 1
     duplicates = {k: v for k, v in dup_ids.items() if v > 1}
+    total = len(catalog)
     snapshots_dir = _ROOT / "nova_agent" / "ontology" / "snapshots"
     snapshot_files = sorted(p.name for p in snapshots_dir.glob("*.json")) if snapshots_dir.is_dir() else []
     return {
-        "total_concepts": len(catalog),
+        "total_concepts": total,
+        "bundled_concepts": bundled,
+        "coverage_target": COVERAGE_TARGET,
+        "coverage_target_met": bundled >= COVERAGE_TARGET,
         "by_tier": catalog.counts_by_tier(),
         "by_curation": catalog.counts_by_curation(),
         "by_category": dict(sorted(by_category.items())),
+        "category_count": len(by_category),
+        "dangerous_concepts": dangerous,
         "with_external_code": coded,
+        "without_external_code": total - coded,
+        "not_curated_concepts": not_curated,
         "duplicate_concept_ids": duplicates,
         "terminology_snapshots_present": snapshot_files,
     }
@@ -68,8 +90,12 @@ def main() -> int:
         return 0
 
     print("N.O.V.A. Disease Coverage Report")
-    print("=" * 40)
+    print("=" * 44)
     print(f"Total concepts in catalog : {report['total_concepts']}")
+    print(f"Bundled (Tier-1 + Tier-2) : {report['bundled_concepts']}")
+    met = "YES" if report["coverage_target_met"] else "NO"
+    print(f"Coverage target (>= {report['coverage_target']})   : {met} "
+          f"(coverage_target_met={str(report['coverage_target_met']).lower()})")
     print()
     print("By tier:")
     for tier, n in report["by_tier"].items():
@@ -79,11 +105,15 @@ def main() -> int:
     for status, n in sorted(report["by_curation"].items()):
         print(f"  {status:18s} {n}")
     print()
-    print("By category:")
+    print(f"Categories                     : {report['category_count']}")
     for cat, n in report["by_category"].items():
         print(f"  {cat:26s} {n}")
     print()
-    print(f"Concepts with an external code : {report['with_external_code']}")
+    print(f"Dangerous concepts             : {report['dangerous_concepts']}")
+    print(f"With external (ICD) code       : {report['with_external_code']}")
+    print(f"Without external code          : {report['without_external_code']}")
+    print(f"NOT_CURATED concepts           : {report['not_curated_concepts']}")
+    print(f"Duplicate concept ids          : {len(report['duplicate_concept_ids'])}")
     snaps = report["terminology_snapshots_present"]
     print(f"Terminology snapshots present  : {snaps if snaps else 'NONE (Tier-3 empty; license-safe)'}")
     if report["duplicate_concept_ids"]:
@@ -91,6 +121,10 @@ def main() -> int:
         print("WARNING duplicate concept ids:")
         for cid, n in report["duplicate_concept_ids"].items():
             print(f"  {cid} x{n}")
+        return 1
+    if not report["coverage_target_met"]:
+        print()
+        print(f"WARNING coverage_target_met=false (bundled {report['bundled_concepts']} < {report['coverage_target']})")
         return 1
     return 0
 

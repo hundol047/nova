@@ -2,8 +2,27 @@
   "schema_version": "tier2.v1",
   "description": "Broad Tier-2 structured disease catalog for N.O.V.A. open-world differential. Shallow-but-accurate: name/aliases/category/urgency/ICD-10 only. NOT a substitute for the 34 Tier-1 deep profiles. Conditions with curated=false are surfaced as NOT_CURATED.",
   "provenance": "Internally curated from standard clinical references; ICD-10 codes are convenience anchors. The operator's terminology snapshot (Tier-3) is authoritative for coding.",
-  "count": 140,
+  "count": 482,
   "conditions": [
+    {
+      "id": "achalasia",
+      "name": "Achalasia",
+      "category": "abdominal_gi",
+      "aliases": [
+        "식도 이완불능증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K22.0",
+          "display": "Achalasia"
+        }
+      ]
+    },
     {
       "id": "acute_hepatitis",
       "name": "Acute Hepatitis",
@@ -21,6 +40,25 @@
           "system": "ICD10",
           "code": "K72.00",
           "display": "Acute Hepatitis"
+        }
+      ]
+    },
+    {
+      "id": "anal_fissure",
+      "name": "Anal Fissure",
+      "category": "abdominal_gi",
+      "aliases": [
+        "항문 열창"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K60.2",
+          "display": "Anal Fissure"
         }
       ]
     },
@@ -57,6 +95,25 @@
       ]
     },
     {
+      "id": "boerhaave_syndrome",
+      "name": "Boerhaave Syndrome (Esophageal Rupture)",
+      "category": "abdominal_gi",
+      "aliases": [
+        "식도 파열"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K22.3",
+          "display": "Boerhaave Syndrome (Esophageal Rupture)"
+        }
+      ]
+    },
+    {
       "id": "bowel_obstruction",
       "name": "Small Bowel Obstruction",
       "category": "abdominal_gi",
@@ -74,6 +131,25 @@
           "system": "ICD10",
           "code": "K56.60",
           "display": "Small Bowel Obstruction"
+        }
+      ]
+    },
+    {
+      "id": "celiac_disease",
+      "name": "Celiac Disease",
+      "category": "abdominal_gi",
+      "aliases": [
+        "셀리악병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K90.0",
+          "display": "Celiac Disease"
         }
       ]
     },
@@ -140,6 +216,44 @@
       ]
     },
     {
+      "id": "chronic_pancreatitis",
+      "name": "Chronic Pancreatitis",
+      "category": "abdominal_gi",
+      "aliases": [
+        "만성 췌장염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K86.1",
+          "display": "Chronic Pancreatitis"
+        }
+      ]
+    },
+    {
+      "id": "colorectal_cancer",
+      "name": "Colorectal Cancer",
+      "category": "abdominal_gi",
+      "aliases": [
+        "대장암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C18.9",
+          "display": "Colorectal Cancer"
+        }
+      ]
+    },
+    {
       "id": "constipation",
       "name": "Constipation",
       "category": "abdominal_gi",
@@ -155,6 +269,25 @@
           "system": "ICD10",
           "code": "K59.00",
           "display": "Constipation"
+        }
+      ]
+    },
+    {
+      "id": "crohn_disease",
+      "name": "Crohn Disease",
+      "category": "abdominal_gi",
+      "aliases": [
+        "크론병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K50.90",
+          "display": "Crohn Disease"
         }
       ]
     },
@@ -179,6 +312,101 @@
       ]
     },
     {
+      "id": "esophageal_cancer",
+      "name": "Esophageal Cancer",
+      "category": "abdominal_gi",
+      "aliases": [
+        "식도암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C15.9",
+          "display": "Esophageal Cancer"
+        }
+      ]
+    },
+    {
+      "id": "esophageal_varices",
+      "name": "Esophageal Varices",
+      "category": "abdominal_gi",
+      "aliases": [
+        "식도 정맥류"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I85.00",
+          "display": "Esophageal Varices"
+        }
+      ]
+    },
+    {
+      "id": "gastric_cancer",
+      "name": "Gastric Cancer",
+      "category": "abdominal_gi",
+      "aliases": [
+        "위암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C16.9",
+          "display": "Gastric Cancer"
+        }
+      ]
+    },
+    {
+      "id": "gastritis",
+      "name": "Acute Gastritis",
+      "category": "abdominal_gi",
+      "aliases": [
+        "위염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K29.00",
+          "display": "Acute Gastritis"
+        }
+      ]
+    },
+    {
+      "id": "gastroparesis",
+      "name": "Gastroparesis",
+      "category": "abdominal_gi",
+      "aliases": [
+        "위마비"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K31.84",
+          "display": "Gastroparesis"
+        }
+      ]
+    },
+    {
       "id": "hemorrhoids",
       "name": "Hemorrhoids",
       "category": "abdominal_gi",
@@ -195,6 +423,25 @@
           "system": "ICD10",
           "code": "K64.9",
           "display": "Hemorrhoids"
+        }
+      ]
+    },
+    {
+      "id": "hemorrhoids_gi",
+      "name": "Symptomatic Hemorrhoids",
+      "category": "abdominal_gi",
+      "aliases": [
+        "치핵"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K64.9",
+          "display": "Symptomatic Hemorrhoids"
         }
       ]
     },
@@ -221,6 +468,64 @@
       ]
     },
     {
+      "id": "irritable_bowel_syndrome",
+      "name": "Irritable Bowel Syndrome",
+      "category": "abdominal_gi",
+      "aliases": [
+        "ibs",
+        "과민성 대장 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K58.9",
+          "display": "Irritable Bowel Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "ischemic_colitis",
+      "name": "Ischemic Colitis",
+      "category": "abdominal_gi",
+      "aliases": [
+        "허혈성 대장염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K55.9",
+          "display": "Ischemic Colitis"
+        }
+      ]
+    },
+    {
+      "id": "large_bowel_obstruction",
+      "name": "Large Bowel Obstruction",
+      "category": "abdominal_gi",
+      "aliases": [
+        "대장 폐색"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K56.69",
+          "display": "Large Bowel Obstruction"
+        }
+      ]
+    },
+    {
       "id": "liver_cirrhosis_decompensated",
       "name": "Decompensated Cirrhosis",
       "category": "abdominal_gi",
@@ -241,6 +546,25 @@
       ]
     },
     {
+      "id": "mallory_weiss_tear",
+      "name": "Mallory-Weiss Tear",
+      "category": "abdominal_gi",
+      "aliases": [
+        "말로리-바이스 열상"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K22.6",
+          "display": "Mallory-Weiss Tear"
+        }
+      ]
+    },
+    {
       "id": "mesenteric_ischemia",
       "name": "Acute Mesenteric Ischemia",
       "category": "abdominal_gi",
@@ -257,6 +581,25 @@
           "system": "ICD10",
           "code": "K55.0",
           "display": "Acute Mesenteric Ischemia"
+        }
+      ]
+    },
+    {
+      "id": "pancreatic_cancer",
+      "name": "Pancreatic Cancer",
+      "category": "abdominal_gi",
+      "aliases": [
+        "췌장암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C25.9",
+          "display": "Pancreatic Cancer"
         }
       ]
     },
@@ -303,6 +646,234 @@
       ]
     },
     {
+      "id": "perianal_abscess",
+      "name": "Perianal Abscess",
+      "category": "abdominal_gi",
+      "aliases": [
+        "항문 주위 농양"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K61.0",
+          "display": "Perianal Abscess"
+        }
+      ]
+    },
+    {
+      "id": "sigmoid_volvulus",
+      "name": "Sigmoid Volvulus",
+      "category": "abdominal_gi",
+      "aliases": [
+        "에스결장 염전"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K56.2",
+          "display": "Sigmoid Volvulus"
+        }
+      ]
+    },
+    {
+      "id": "small_bowel_obstruction_extra",
+      "name": "Adhesive Small Bowel Obstruction",
+      "category": "abdominal_gi",
+      "aliases": [
+        "유착성 소장 폐색"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K56.5",
+          "display": "Adhesive Small Bowel Obstruction"
+        }
+      ]
+    },
+    {
+      "id": "toxic_megacolon",
+      "name": "Toxic Megacolon",
+      "category": "abdominal_gi",
+      "aliases": [
+        "독성 거대결장"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K59.31",
+          "display": "Toxic Megacolon"
+        }
+      ]
+    },
+    {
+      "id": "ulcerative_colitis",
+      "name": "Ulcerative Colitis",
+      "category": "abdominal_gi",
+      "aliases": [
+        "궤양성 대장염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K51.90",
+          "display": "Ulcerative Colitis"
+        }
+      ]
+    },
+    {
+      "id": "allergic_rhinitis",
+      "name": "Allergic Rhinitis",
+      "category": "allergy",
+      "aliases": [
+        "알레르기 비염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J30.9",
+          "display": "Allergic Rhinitis"
+        }
+      ]
+    },
+    {
+      "id": "angioedema_allergy",
+      "name": "Allergic Angioedema",
+      "category": "allergy",
+      "aliases": [
+        "혈관부종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T78.3XXA",
+          "display": "Allergic Angioedema"
+        }
+      ]
+    },
+    {
+      "id": "atopic_dermatitis",
+      "name": "Atopic Dermatitis",
+      "category": "allergy",
+      "aliases": [
+        "아토피 피부염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "L20.9",
+          "display": "Atopic Dermatitis"
+        }
+      ]
+    },
+    {
+      "id": "contact_dermatitis",
+      "name": "Allergic Contact Dermatitis",
+      "category": "allergy",
+      "aliases": [
+        "접촉성 피부염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "L23.9",
+          "display": "Allergic Contact Dermatitis"
+        }
+      ]
+    },
+    {
+      "id": "drug_allergy",
+      "name": "Drug Allergy",
+      "category": "allergy",
+      "aliases": [
+        "약물 알레르기"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T88.7XXA",
+          "display": "Drug Allergy"
+        }
+      ]
+    },
+    {
+      "id": "eosinophilic_esophagitis",
+      "name": "Eosinophilic Esophagitis",
+      "category": "allergy",
+      "aliases": [
+        "호산구성 식도염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K20.0",
+          "display": "Eosinophilic Esophagitis"
+        }
+      ]
+    },
+    {
+      "id": "food_allergy",
+      "name": "Food Allergy",
+      "category": "allergy",
+      "aliases": [
+        "식품 알레르기"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Z91.018",
+          "display": "Food Allergy"
+        }
+      ]
+    },
+    {
       "id": "aortic_aneurysm_unruptured",
       "name": "Abdominal Aortic Aneurysm (Unruptured)",
       "category": "cardiovascular",
@@ -319,6 +890,84 @@
           "system": "ICD10",
           "code": "I71.4",
           "display": "Abdominal Aortic Aneurysm (Unruptured)"
+        }
+      ]
+    },
+    {
+      "id": "aortic_regurgitation",
+      "name": "Aortic Regurgitation",
+      "category": "cardiovascular",
+      "aliases": [
+        "ar",
+        "대동맥판막 폐쇄부전"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I35.1",
+          "display": "Aortic Regurgitation"
+        }
+      ]
+    },
+    {
+      "id": "aortic_stenosis",
+      "name": "Aortic Stenosis",
+      "category": "cardiovascular",
+      "aliases": [
+        "as",
+        "대동맥판막 협착"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I35.0",
+          "display": "Aortic Stenosis"
+        }
+      ]
+    },
+    {
+      "id": "atrial_flutter",
+      "name": "Atrial Flutter",
+      "category": "cardiovascular",
+      "aliases": [
+        "심방조동"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I48.92",
+          "display": "Atrial Flutter"
+        }
+      ]
+    },
+    {
+      "id": "atrial_myxoma",
+      "name": "Atrial Myxoma",
+      "category": "cardiovascular",
+      "aliases": [
+        "심방 점액종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D15.1",
+          "display": "Atrial Myxoma"
         }
       ]
     },
@@ -364,6 +1013,64 @@
       ]
     },
     {
+      "id": "cardiogenic_shock",
+      "name": "Cardiogenic Shock",
+      "category": "cardiovascular",
+      "aliases": [
+        "심인성 쇼크"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "R57.0",
+          "display": "Cardiogenic Shock"
+        }
+      ]
+    },
+    {
+      "id": "chronic_heart_failure",
+      "name": "Chronic Heart Failure",
+      "category": "cardiovascular",
+      "aliases": [
+        "chf",
+        "만성 심부전"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I50.22",
+          "display": "Chronic Heart Failure"
+        }
+      ]
+    },
+    {
+      "id": "constrictive_pericarditis",
+      "name": "Constrictive Pericarditis",
+      "category": "cardiovascular",
+      "aliases": [
+        "교착성 심막염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I31.1",
+          "display": "Constrictive Pericarditis"
+        }
+      ]
+    },
+    {
       "id": "deep_vein_thrombosis",
       "name": "Deep Vein Thrombosis",
       "category": "cardiovascular",
@@ -380,6 +1087,26 @@
           "system": "ICD10",
           "code": "I82.409",
           "display": "Deep Vein Thrombosis"
+        }
+      ]
+    },
+    {
+      "id": "dilated_cardiomyopathy",
+      "name": "Dilated Cardiomyopathy",
+      "category": "cardiovascular",
+      "aliases": [
+        "dcm",
+        "확장성 심근병증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I42.0",
+          "display": "Dilated Cardiomyopathy"
         }
       ]
     },
@@ -445,6 +1172,26 @@
       ]
     },
     {
+      "id": "hypertrophic_cardiomyopathy",
+      "name": "Hypertrophic Cardiomyopathy",
+      "category": "cardiovascular",
+      "aliases": [
+        "hcm",
+        "비후성 심근병증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I42.1",
+          "display": "Hypertrophic Cardiomyopathy"
+        }
+      ]
+    },
+    {
       "id": "infective_endocarditis",
       "name": "Infective Endocarditis",
       "category": "cardiovascular",
@@ -465,6 +1212,65 @@
       ]
     },
     {
+      "id": "long_qt_syndrome",
+      "name": "Long QT Syndrome",
+      "category": "cardiovascular",
+      "aliases": [
+        "lqts"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I45.81",
+          "display": "Long QT Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "mitral_regurgitation",
+      "name": "Mitral Regurgitation",
+      "category": "cardiovascular",
+      "aliases": [
+        "mr",
+        "승모판 폐쇄부전"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I34.0",
+          "display": "Mitral Regurgitation"
+        }
+      ]
+    },
+    {
+      "id": "mitral_stenosis",
+      "name": "Mitral Stenosis",
+      "category": "cardiovascular",
+      "aliases": [
+        "ms",
+        "승모판 협착"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I05.0",
+          "display": "Mitral Stenosis"
+        }
+      ]
+    },
+    {
       "id": "myocarditis",
       "name": "Myocarditis",
       "category": "cardiovascular",
@@ -481,6 +1287,25 @@
           "system": "ICD10",
           "code": "I40.9",
           "display": "Myocarditis"
+        }
+      ]
+    },
+    {
+      "id": "pericardial_effusion",
+      "name": "Pericardial Effusion",
+      "category": "cardiovascular",
+      "aliases": [
+        "심낭 삼출"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I31.3",
+          "display": "Pericardial Effusion"
         }
       ]
     },
@@ -526,6 +1351,83 @@
       ]
     },
     {
+      "id": "premature_ventricular_contractions",
+      "name": "Premature Ventricular Contractions",
+      "category": "cardiovascular",
+      "aliases": [
+        "pvc",
+        "심실조기수축"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I49.3",
+          "display": "Premature Ventricular Contractions"
+        }
+      ]
+    },
+    {
+      "id": "restrictive_cardiomyopathy",
+      "name": "Restrictive Cardiomyopathy",
+      "category": "cardiovascular",
+      "aliases": [
+        "제한성 심근병증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I42.5",
+          "display": "Restrictive Cardiomyopathy"
+        }
+      ]
+    },
+    {
+      "id": "rheumatic_heart_disease",
+      "name": "Rheumatic Heart Disease",
+      "category": "cardiovascular",
+      "aliases": [
+        "류마티스 심장병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I09.9",
+          "display": "Rheumatic Heart Disease"
+        }
+      ]
+    },
+    {
+      "id": "sick_sinus_syndrome",
+      "name": "Sick Sinus Syndrome",
+      "category": "cardiovascular",
+      "aliases": [
+        "동기능 부전 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I49.5",
+          "display": "Sick Sinus Syndrome"
+        }
+      ]
+    },
+    {
       "id": "stable_angina",
       "name": "Stable Angina Pectoris",
       "category": "cardiovascular",
@@ -547,6 +1449,337 @@
       ]
     },
     {
+      "id": "stable_coronary_artery_disease",
+      "name": "Stable Coronary Artery Disease",
+      "category": "cardiovascular",
+      "aliases": [
+        "cad",
+        "관상동맥질환"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I25.10",
+          "display": "Stable Coronary Artery Disease"
+        }
+      ]
+    },
+    {
+      "id": "supraventricular_tachycardia",
+      "name": "Supraventricular Tachycardia",
+      "category": "cardiovascular",
+      "aliases": [
+        "svt",
+        "상심실성 빈맥"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I47.1",
+          "display": "Supraventricular Tachycardia"
+        }
+      ]
+    },
+    {
+      "id": "takotsubo_cardiomyopathy",
+      "name": "Takotsubo Cardiomyopathy",
+      "category": "cardiovascular",
+      "aliases": [
+        "stress cardiomyopathy",
+        "broken heart syndrome"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I51.81",
+          "display": "Takotsubo Cardiomyopathy"
+        }
+      ]
+    },
+    {
+      "id": "tricuspid_regurgitation",
+      "name": "Tricuspid Regurgitation",
+      "category": "cardiovascular",
+      "aliases": [
+        "tr",
+        "삼첨판 폐쇄부전"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I07.1",
+          "display": "Tricuspid Regurgitation"
+        }
+      ]
+    },
+    {
+      "id": "ventricular_fibrillation",
+      "name": "Ventricular Fibrillation",
+      "category": "cardiovascular",
+      "aliases": [
+        "vfib",
+        "심실세동"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I49.01",
+          "display": "Ventricular Fibrillation"
+        }
+      ]
+    },
+    {
+      "id": "ventricular_tachycardia",
+      "name": "Ventricular Tachycardia",
+      "category": "cardiovascular",
+      "aliases": [
+        "vt",
+        "심실빈맥"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I47.2",
+          "display": "Ventricular Tachycardia"
+        }
+      ]
+    },
+    {
+      "id": "wolff_parkinson_white",
+      "name": "Wolff-Parkinson-White Syndrome",
+      "category": "cardiovascular",
+      "aliases": [
+        "wpw"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I45.6",
+          "display": "Wolff-Parkinson-White Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "atrial_septal_defect",
+      "name": "Atrial Septal Defect",
+      "category": "congenital",
+      "aliases": [
+        "asd",
+        "심방중격결손"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q21.1",
+          "display": "Atrial Septal Defect"
+        }
+      ]
+    },
+    {
+      "id": "biliary_atresia",
+      "name": "Biliary Atresia",
+      "category": "congenital",
+      "aliases": [
+        "담도 폐쇄증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q44.2",
+          "display": "Biliary Atresia"
+        }
+      ]
+    },
+    {
+      "id": "cleft_lip_palate",
+      "name": "Cleft Lip and Palate",
+      "category": "congenital",
+      "aliases": [
+        "구순구개열"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q37.9",
+          "display": "Cleft Lip and Palate"
+        }
+      ]
+    },
+    {
+      "id": "coarctation_of_aorta",
+      "name": "Coarctation of the Aorta",
+      "category": "congenital",
+      "aliases": [
+        "대동맥 축착"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q25.1",
+          "display": "Coarctation of the Aorta"
+        }
+      ]
+    },
+    {
+      "id": "congenital_heart_disease",
+      "name": "Congenital Heart Disease",
+      "category": "congenital",
+      "aliases": [
+        "선천성 심장병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q24.9",
+          "display": "Congenital Heart Disease"
+        }
+      ]
+    },
+    {
+      "id": "esophageal_atresia",
+      "name": "Esophageal Atresia",
+      "category": "congenital",
+      "aliases": [
+        "식도 폐쇄증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q39.0",
+          "display": "Esophageal Atresia"
+        }
+      ]
+    },
+    {
+      "id": "hirschsprung_disease",
+      "name": "Hirschsprung Disease",
+      "category": "congenital",
+      "aliases": [
+        "히르슈슈프룽병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q43.1",
+          "display": "Hirschsprung Disease"
+        }
+      ]
+    },
+    {
+      "id": "neural_tube_defect",
+      "name": "Neural Tube Defect",
+      "category": "congenital",
+      "aliases": [
+        "신경관 결손"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q00.0",
+          "display": "Neural Tube Defect"
+        }
+      ]
+    },
+    {
+      "id": "tetralogy_of_fallot",
+      "name": "Tetralogy of Fallot",
+      "category": "congenital",
+      "aliases": [
+        "팔로4징"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q21.3",
+          "display": "Tetralogy of Fallot"
+        }
+      ]
+    },
+    {
+      "id": "ventricular_septal_defect",
+      "name": "Ventricular Septal Defect",
+      "category": "congenital",
+      "aliases": [
+        "vsd",
+        "심실중격결손"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q21.0",
+          "display": "Ventricular Septal Defect"
+        }
+      ]
+    },
+    {
       "id": "angioedema",
       "name": "Angioedema",
       "category": "dermatology",
@@ -562,6 +1795,234 @@
           "system": "ICD10",
           "code": "T78.3XXA",
           "display": "Angioedema"
+        }
+      ]
+    },
+    {
+      "id": "basal_cell_carcinoma",
+      "name": "Basal Cell Carcinoma",
+      "category": "dermatology",
+      "aliases": [
+        "기저세포암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C44.91",
+          "display": "Basal Cell Carcinoma"
+        }
+      ]
+    },
+    {
+      "id": "bullous_pemphigoid",
+      "name": "Bullous Pemphigoid",
+      "category": "dermatology",
+      "aliases": [
+        "수포성 유천포창"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "L12.0",
+          "display": "Bullous Pemphigoid"
+        }
+      ]
+    },
+    {
+      "id": "cellulitis_derm",
+      "name": "Skin Cellulitis",
+      "category": "dermatology",
+      "aliases": [
+        "피부 봉와직염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "L03.90",
+          "display": "Skin Cellulitis"
+        }
+      ]
+    },
+    {
+      "id": "dress_syndrome",
+      "name": "DRESS Syndrome",
+      "category": "dermatology",
+      "aliases": [
+        "약물반응 호산구증가 전신증상"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "L27.0",
+          "display": "DRESS Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "erysipelas",
+      "name": "Erysipelas",
+      "category": "dermatology",
+      "aliases": [
+        "단독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A46",
+          "display": "Erysipelas"
+        }
+      ]
+    },
+    {
+      "id": "erythema_multiforme",
+      "name": "Erythema Multiforme",
+      "category": "dermatology",
+      "aliases": [
+        "다형 홍반"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "L51.9",
+          "display": "Erythema Multiforme"
+        }
+      ]
+    },
+    {
+      "id": "herpes_simplex",
+      "name": "Herpes Simplex",
+      "category": "dermatology",
+      "aliases": [
+        "단순 포진"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B00.9",
+          "display": "Herpes Simplex"
+        }
+      ]
+    },
+    {
+      "id": "melanoma_derm",
+      "name": "Cutaneous Melanoma",
+      "category": "dermatology",
+      "aliases": [
+        "피부 흑색종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C43.9",
+          "display": "Cutaneous Melanoma"
+        }
+      ]
+    },
+    {
+      "id": "pemphigus_vulgaris",
+      "name": "Pemphigus Vulgaris",
+      "category": "dermatology",
+      "aliases": [
+        "천포창"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "L10.0",
+          "display": "Pemphigus Vulgaris"
+        }
+      ]
+    },
+    {
+      "id": "psoriasis",
+      "name": "Psoriasis",
+      "category": "dermatology",
+      "aliases": [
+        "건선"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "L40.9",
+          "display": "Psoriasis"
+        }
+      ]
+    },
+    {
+      "id": "scabies",
+      "name": "Scabies",
+      "category": "dermatology",
+      "aliases": [
+        "옴"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B86",
+          "display": "Scabies"
+        }
+      ]
+    },
+    {
+      "id": "squamous_cell_carcinoma_skin",
+      "name": "Cutaneous Squamous Cell Carcinoma",
+      "category": "dermatology",
+      "aliases": [
+        "편평세포암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C44.92",
+          "display": "Cutaneous Squamous Cell Carcinoma"
         }
       ]
     },
@@ -586,6 +2047,26 @@
       ]
     },
     {
+      "id": "toxic_epidermal_necrolysis",
+      "name": "Toxic Epidermal Necrolysis",
+      "category": "dermatology",
+      "aliases": [
+        "ten",
+        "독성 표피 괴사용해"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "L51.2",
+          "display": "Toxic Epidermal Necrolysis"
+        }
+      ]
+    },
+    {
       "id": "urticaria",
       "name": "Urticaria",
       "category": "dermatology",
@@ -606,6 +2087,44 @@
       ]
     },
     {
+      "id": "acromegaly",
+      "name": "Acromegaly",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "말단비대증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E22.0",
+          "display": "Acromegaly"
+        }
+      ]
+    },
+    {
+      "id": "addison_disease",
+      "name": "Addison Disease (Primary Adrenal Insufficiency)",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "애디슨병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E27.1",
+          "display": "Addison Disease (Primary Adrenal Insufficiency)"
+        }
+      ]
+    },
+    {
       "id": "adrenal_crisis",
       "name": "Adrenal Crisis",
       "category": "endocrine_metabolic",
@@ -622,6 +2141,44 @@
           "system": "ICD10",
           "code": "E27.2",
           "display": "Adrenal Crisis"
+        }
+      ]
+    },
+    {
+      "id": "cushing_syndrome",
+      "name": "Cushing Syndrome",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "쿠싱 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E24.9",
+          "display": "Cushing Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "diabetes_insipidus",
+      "name": "Diabetes Insipidus",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "요붕증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E23.2",
+          "display": "Diabetes Insipidus"
         }
       ]
     },
@@ -661,6 +2218,25 @@
           "system": "ICD10",
           "code": "E11.00",
           "display": "Hyperosmolar Hyperglycemic State"
+        }
+      ]
+    },
+    {
+      "id": "hyperparathyroidism",
+      "name": "Primary Hyperparathyroidism",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "부갑상선 기능항진증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E21.0",
+          "display": "Primary Hyperparathyroidism"
         }
       ]
     },
@@ -705,6 +2281,63 @@
       ]
     },
     {
+      "id": "hypoglycemia_severe",
+      "name": "Severe Hypoglycemia",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "중증 저혈당"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E16.2",
+          "display": "Severe Hypoglycemia"
+        }
+      ]
+    },
+    {
+      "id": "hypoparathyroidism",
+      "name": "Hypoparathyroidism",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "부갑상선 기능저하증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E20.9",
+          "display": "Hypoparathyroidism"
+        }
+      ]
+    },
+    {
+      "id": "hypopituitarism",
+      "name": "Hypopituitarism",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "뇌하수체 기능저하증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E23.0",
+          "display": "Hypopituitarism"
+        }
+      ]
+    },
+    {
       "id": "hypothyroidism",
       "name": "Hypothyroidism",
       "category": "endocrine_metabolic",
@@ -744,6 +2377,25 @@
       ]
     },
     {
+      "id": "pheochromocytoma",
+      "name": "Pheochromocytoma",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "갈색세포종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E27.5",
+          "display": "Pheochromocytoma"
+        }
+      ]
+    },
+    {
       "id": "pituitary_apoplexy",
       "name": "Pituitary Apoplexy",
       "category": "endocrine_metabolic",
@@ -759,6 +2411,83 @@
           "system": "ICD10",
           "code": "E23.6",
           "display": "Pituitary Apoplexy"
+        }
+      ]
+    },
+    {
+      "id": "primary_aldosteronism",
+      "name": "Primary Aldosteronism",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "원발성 알도스테론증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E26.09",
+          "display": "Primary Aldosteronism"
+        }
+      ]
+    },
+    {
+      "id": "siadh",
+      "name": "Syndrome of Inappropriate ADH",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "siadh",
+        "항이뇨호르몬 부적절 분비 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E22.2",
+          "display": "Syndrome of Inappropriate ADH"
+        }
+      ]
+    },
+    {
+      "id": "subacute_thyroiditis",
+      "name": "Subacute Thyroiditis",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "아급성 갑상선염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E06.1",
+          "display": "Subacute Thyroiditis"
+        }
+      ]
+    },
+    {
+      "id": "thyroid_nodule",
+      "name": "Thyroid Nodule",
+      "category": "endocrine_metabolic",
+      "aliases": [
+        "갑상선 결절"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E04.1",
+          "display": "Thyroid Nodule"
         }
       ]
     },
@@ -822,6 +2551,45 @@
       ]
     },
     {
+      "id": "acute_sinusitis",
+      "name": "Acute Sinusitis",
+      "category": "ent",
+      "aliases": [
+        "급성 부비동염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J01.90",
+          "display": "Acute Sinusitis"
+        }
+      ]
+    },
+    {
+      "id": "bppv_ent",
+      "name": "Benign Paroxysmal Positional Vertigo",
+      "category": "ent",
+      "aliases": [
+        "bppv",
+        "이석증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H81.10",
+          "display": "Benign Paroxysmal Positional Vertigo"
+        }
+      ]
+    },
+    {
       "id": "epistaxis",
       "name": "Epistaxis",
       "category": "ent",
@@ -838,6 +2606,139 @@
           "system": "ICD10",
           "code": "R04.0",
           "display": "Epistaxis"
+        }
+      ]
+    },
+    {
+      "id": "laryngeal_cancer",
+      "name": "Laryngeal Cancer",
+      "category": "ent",
+      "aliases": [
+        "후두암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C32.9",
+          "display": "Laryngeal Cancer"
+        }
+      ]
+    },
+    {
+      "id": "ludwig_angina",
+      "name": "Ludwig Angina",
+      "category": "ent",
+      "aliases": [
+        "루드비히 안기나"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K12.2",
+          "display": "Ludwig Angina"
+        }
+      ]
+    },
+    {
+      "id": "mastoiditis",
+      "name": "Mastoiditis",
+      "category": "ent",
+      "aliases": [
+        "유양돌기염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H70.90",
+          "display": "Mastoiditis"
+        }
+      ]
+    },
+    {
+      "id": "meniere_disease",
+      "name": "Meniere Disease",
+      "category": "ent",
+      "aliases": [
+        "메니에르병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H81.09",
+          "display": "Meniere Disease"
+        }
+      ]
+    },
+    {
+      "id": "nasopharyngeal_cancer",
+      "name": "Nasopharyngeal Carcinoma",
+      "category": "ent",
+      "aliases": [
+        "비인두암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C11.9",
+          "display": "Nasopharyngeal Carcinoma"
+        }
+      ]
+    },
+    {
+      "id": "otitis_externa",
+      "name": "Otitis Externa",
+      "category": "ent",
+      "aliases": [
+        "외이도염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H60.90",
+          "display": "Otitis Externa"
+        }
+      ]
+    },
+    {
+      "id": "retropharyngeal_abscess",
+      "name": "Retropharyngeal Abscess",
+      "category": "ent",
+      "aliases": [
+        "후인두 농양"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J39.0",
+          "display": "Retropharyngeal Abscess"
         }
       ]
     },
@@ -862,6 +2763,101 @@
       ]
     },
     {
+      "id": "anaphylaxis_env",
+      "name": "Anaphylaxis (Envenomation)",
+      "category": "environmental",
+      "aliases": [
+        "교상 아나필락시스"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T63.91XA",
+          "display": "Anaphylaxis (Envenomation)"
+        }
+      ]
+    },
+    {
+      "id": "decompression_sickness",
+      "name": "Decompression Sickness",
+      "category": "environmental",
+      "aliases": [
+        "잠수병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T70.3XXA",
+          "display": "Decompression Sickness"
+        }
+      ]
+    },
+    {
+      "id": "drowning",
+      "name": "Drowning / Submersion Injury",
+      "category": "environmental",
+      "aliases": [
+        "익수"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T75.1XXA",
+          "display": "Drowning / Submersion Injury"
+        }
+      ]
+    },
+    {
+      "id": "electrical_injury",
+      "name": "Electrical Injury",
+      "category": "environmental",
+      "aliases": [
+        "전기 손상"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T75.4XXA",
+          "display": "Electrical Injury"
+        }
+      ]
+    },
+    {
+      "id": "frostbite",
+      "name": "Frostbite",
+      "category": "environmental",
+      "aliases": [
+        "동상"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T33.90XA",
+          "display": "Frostbite"
+        }
+      ]
+    },
+    {
       "id": "heat_stroke",
       "name": "Heat Stroke",
       "category": "environmental",
@@ -881,6 +2877,26 @@
       ]
     },
     {
+      "id": "high_altitude_pulmonary_edema",
+      "name": "High-Altitude Pulmonary Edema",
+      "category": "environmental",
+      "aliases": [
+        "hape",
+        "고산성 폐부종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T70.29XA",
+          "display": "High-Altitude Pulmonary Edema"
+        }
+      ]
+    },
+    {
       "id": "hypothermia",
       "name": "Hypothermia",
       "category": "environmental",
@@ -896,6 +2912,158 @@
           "system": "ICD10",
           "code": "T68.XXXA",
           "display": "Hypothermia"
+        }
+      ]
+    },
+    {
+      "id": "cystic_fibrosis_genetic",
+      "name": "Cystic Fibrosis (Genetic)",
+      "category": "genetics",
+      "aliases": [
+        "낭성 섬유증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E84.9",
+          "display": "Cystic Fibrosis (Genetic)"
+        }
+      ]
+    },
+    {
+      "id": "down_syndrome",
+      "name": "Down Syndrome",
+      "category": "genetics",
+      "aliases": [
+        "다운 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q90.9",
+          "display": "Down Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "ehlers_danlos_syndrome",
+      "name": "Ehlers-Danlos Syndrome",
+      "category": "genetics",
+      "aliases": [
+        "엘러스-단로스 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q79.60",
+          "display": "Ehlers-Danlos Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "hereditary_angioedema",
+      "name": "Hereditary Angioedema",
+      "category": "genetics",
+      "aliases": [
+        "유전성 혈관부종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D84.1",
+          "display": "Hereditary Angioedema"
+        }
+      ]
+    },
+    {
+      "id": "marfan_syndrome",
+      "name": "Marfan Syndrome",
+      "category": "genetics",
+      "aliases": [
+        "마르판 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q87.40",
+          "display": "Marfan Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "neurofibromatosis",
+      "name": "Neurofibromatosis",
+      "category": "genetics",
+      "aliases": [
+        "신경섬유종증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q85.00",
+          "display": "Neurofibromatosis"
+        }
+      ]
+    },
+    {
+      "id": "sickle_cell_disease",
+      "name": "Sickle Cell Disease",
+      "category": "genetics",
+      "aliases": [
+        "겸상 적혈구병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D57.1",
+          "display": "Sickle Cell Disease"
+        }
+      ]
+    },
+    {
+      "id": "turner_syndrome",
+      "name": "Turner Syndrome",
+      "category": "genetics",
+      "aliases": [
+        "터너 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q96.9",
+          "display": "Turner Syndrome"
         }
       ]
     },
@@ -1114,6 +3282,447 @@
       ]
     },
     {
+      "id": "bacterial_vaginosis",
+      "name": "Bacterial Vaginosis",
+      "category": "gynecology",
+      "aliases": [
+        "세균성 질증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N76.0",
+          "display": "Bacterial Vaginosis"
+        }
+      ]
+    },
+    {
+      "id": "bartholin_abscess",
+      "name": "Bartholin Gland Abscess",
+      "category": "gynecology",
+      "aliases": [
+        "바르톨린선 농양"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N75.1",
+          "display": "Bartholin Gland Abscess"
+        }
+      ]
+    },
+    {
+      "id": "cervical_dysplasia",
+      "name": "Cervical Dysplasia",
+      "category": "gynecology",
+      "aliases": [
+        "자궁경부 이형성증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N87.9",
+          "display": "Cervical Dysplasia"
+        }
+      ]
+    },
+    {
+      "id": "dysfunctional_uterine_bleeding",
+      "name": "Abnormal Uterine Bleeding",
+      "category": "gynecology",
+      "aliases": [
+        "비정상 자궁출혈"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N93.9",
+          "display": "Abnormal Uterine Bleeding"
+        }
+      ]
+    },
+    {
+      "id": "endometrial_cancer",
+      "name": "Endometrial Cancer",
+      "category": "gynecology",
+      "aliases": [
+        "자궁내막암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C54.1",
+          "display": "Endometrial Cancer"
+        }
+      ]
+    },
+    {
+      "id": "endometriosis",
+      "name": "Endometriosis",
+      "category": "gynecology",
+      "aliases": [
+        "자궁내막증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N80.9",
+          "display": "Endometriosis"
+        }
+      ]
+    },
+    {
+      "id": "polycystic_ovary_syndrome",
+      "name": "Polycystic Ovary Syndrome",
+      "category": "gynecology",
+      "aliases": [
+        "pcos",
+        "다낭성 난소 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E28.2",
+          "display": "Polycystic Ovary Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "tubo_ovarian_abscess",
+      "name": "Tubo-Ovarian Abscess",
+      "category": "gynecology",
+      "aliases": [
+        "난관난소 농양"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N70.93",
+          "display": "Tubo-Ovarian Abscess"
+        }
+      ]
+    },
+    {
+      "id": "uterine_fibroids",
+      "name": "Uterine Fibroids",
+      "category": "gynecology",
+      "aliases": [
+        "자궁근종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D25.9",
+          "display": "Uterine Fibroids"
+        }
+      ]
+    },
+    {
+      "id": "uterine_prolapse",
+      "name": "Uterine Prolapse",
+      "category": "gynecology",
+      "aliases": [
+        "자궁 탈출증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N81.4",
+          "display": "Uterine Prolapse"
+        }
+      ]
+    },
+    {
+      "id": "vulvovaginal_candidiasis",
+      "name": "Vulvovaginal Candidiasis",
+      "category": "gynecology",
+      "aliases": [
+        "외음질 칸디다증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B37.3",
+          "display": "Vulvovaginal Candidiasis"
+        }
+      ]
+    },
+    {
+      "id": "aplastic_anemia",
+      "name": "Aplastic Anemia",
+      "category": "hematology",
+      "aliases": [
+        "재생불량성 빈혈"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D61.9",
+          "display": "Aplastic Anemia"
+        }
+      ]
+    },
+    {
+      "id": "b12_deficiency",
+      "name": "Vitamin B12 Deficiency Anemia",
+      "category": "hematology",
+      "aliases": [
+        "b12 결핍성 빈혈"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D51.9",
+          "display": "Vitamin B12 Deficiency Anemia"
+        }
+      ]
+    },
+    {
+      "id": "essential_thrombocythemia",
+      "name": "Essential Thrombocythemia",
+      "category": "hematology",
+      "aliases": [
+        "본태성 혈소판증가증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D47.3",
+          "display": "Essential Thrombocythemia"
+        }
+      ]
+    },
+    {
+      "id": "folate_deficiency",
+      "name": "Folate Deficiency Anemia",
+      "category": "hematology",
+      "aliases": [
+        "엽산 결핍성 빈혈"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D52.9",
+          "display": "Folate Deficiency Anemia"
+        }
+      ]
+    },
+    {
+      "id": "hemolytic_anemia",
+      "name": "Hemolytic Anemia",
+      "category": "hematology",
+      "aliases": [
+        "용혈성 빈혈"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D59.9",
+          "display": "Hemolytic Anemia"
+        }
+      ]
+    },
+    {
+      "id": "hemophilia",
+      "name": "Hemophilia",
+      "category": "hematology",
+      "aliases": [
+        "혈우병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D66",
+          "display": "Hemophilia"
+        }
+      ]
+    },
+    {
+      "id": "itp",
+      "name": "Immune Thrombocytopenic Purpura",
+      "category": "hematology",
+      "aliases": [
+        "itp",
+        "면역 혈소판감소성 자반증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D69.3",
+          "display": "Immune Thrombocytopenic Purpura"
+        }
+      ]
+    },
+    {
+      "id": "myelodysplastic_syndrome",
+      "name": "Myelodysplastic Syndrome",
+      "category": "hematology",
+      "aliases": [
+        "mds",
+        "골수형성이상 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D46.9",
+          "display": "Myelodysplastic Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "polycythemia_vera",
+      "name": "Polycythemia Vera",
+      "category": "hematology",
+      "aliases": [
+        "진성 적혈구증가증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D45",
+          "display": "Polycythemia Vera"
+        }
+      ]
+    },
+    {
+      "id": "thalassemia",
+      "name": "Thalassemia",
+      "category": "hematology",
+      "aliases": [
+        "지중해빈혈"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D56.9",
+          "display": "Thalassemia"
+        }
+      ]
+    },
+    {
+      "id": "ttp",
+      "name": "Thrombotic Thrombocytopenic Purpura",
+      "category": "hematology",
+      "aliases": [
+        "ttp",
+        "혈전성 혈소판감소성 자반증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M31.19",
+          "display": "Thrombotic Thrombocytopenic Purpura"
+        }
+      ]
+    },
+    {
+      "id": "von_willebrand_disease",
+      "name": "Von Willebrand Disease",
+      "category": "hematology",
+      "aliases": [
+        "폰빌레브란트병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D68.0",
+          "display": "Von Willebrand Disease"
+        }
+      ]
+    },
+    {
       "id": "acute_leukemia",
       "name": "Acute Leukemia (Presentation)",
       "category": "hematology_oncology",
@@ -1320,6 +3929,451 @@
       ]
     },
     {
+      "id": "acute_liver_failure",
+      "name": "Acute Liver Failure",
+      "category": "hepatology",
+      "aliases": [
+        "fulminant hepatic failure",
+        "급성 간부전"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K72.00",
+          "display": "Acute Liver Failure"
+        }
+      ]
+    },
+    {
+      "id": "alcoholic_hepatitis",
+      "name": "Alcoholic Hepatitis",
+      "category": "hepatology",
+      "aliases": [
+        "알코올성 간염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K70.10",
+          "display": "Alcoholic Hepatitis"
+        }
+      ]
+    },
+    {
+      "id": "cirrhosis",
+      "name": "Hepatic Cirrhosis",
+      "category": "hepatology",
+      "aliases": [
+        "간경변"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K74.60",
+          "display": "Hepatic Cirrhosis"
+        }
+      ]
+    },
+    {
+      "id": "hemochromatosis",
+      "name": "Hereditary Hemochromatosis",
+      "category": "hepatology",
+      "aliases": [
+        "혈색소증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E83.110",
+          "display": "Hereditary Hemochromatosis"
+        }
+      ]
+    },
+    {
+      "id": "hepatic_encephalopathy",
+      "name": "Hepatic Encephalopathy",
+      "category": "hepatology",
+      "aliases": [
+        "간성 뇌증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K72.90",
+          "display": "Hepatic Encephalopathy"
+        }
+      ]
+    },
+    {
+      "id": "hepatitis_a",
+      "name": "Hepatitis A",
+      "category": "hepatology",
+      "aliases": [
+        "a형 간염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B15.9",
+          "display": "Hepatitis A"
+        }
+      ]
+    },
+    {
+      "id": "hepatitis_b",
+      "name": "Hepatitis B",
+      "category": "hepatology",
+      "aliases": [
+        "b형 간염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B16.9",
+          "display": "Hepatitis B"
+        }
+      ]
+    },
+    {
+      "id": "hepatitis_c",
+      "name": "Hepatitis C",
+      "category": "hepatology",
+      "aliases": [
+        "c형 간염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B17.10",
+          "display": "Hepatitis C"
+        }
+      ]
+    },
+    {
+      "id": "hepatocellular_carcinoma",
+      "name": "Hepatocellular Carcinoma",
+      "category": "hepatology",
+      "aliases": [
+        "hcc",
+        "간세포암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C22.0",
+          "display": "Hepatocellular Carcinoma"
+        }
+      ]
+    },
+    {
+      "id": "nafld",
+      "name": "Non-Alcoholic Fatty Liver Disease",
+      "category": "hepatology",
+      "aliases": [
+        "nafld",
+        "비알코올성 지방간"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K76.0",
+          "display": "Non-Alcoholic Fatty Liver Disease"
+        }
+      ]
+    },
+    {
+      "id": "portal_vein_thrombosis",
+      "name": "Portal Vein Thrombosis",
+      "category": "hepatology",
+      "aliases": [
+        "문맥 혈전증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I81",
+          "display": "Portal Vein Thrombosis"
+        }
+      ]
+    },
+    {
+      "id": "primary_biliary_cholangitis",
+      "name": "Primary Biliary Cholangitis",
+      "category": "hepatology",
+      "aliases": [
+        "pbc",
+        "원발성 담즙성 담관염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K74.3",
+          "display": "Primary Biliary Cholangitis"
+        }
+      ]
+    },
+    {
+      "id": "spontaneous_bacterial_peritonitis",
+      "name": "Spontaneous Bacterial Peritonitis",
+      "category": "hepatology",
+      "aliases": [
+        "sbp",
+        "자발성 세균성 복막염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "K65.2",
+          "display": "Spontaneous Bacterial Peritonitis"
+        }
+      ]
+    },
+    {
+      "id": "wilson_disease",
+      "name": "Wilson Disease",
+      "category": "hepatology",
+      "aliases": [
+        "윌슨병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E83.01",
+          "display": "Wilson Disease"
+        }
+      ]
+    },
+    {
+      "id": "antiphospholipid_syndrome",
+      "name": "Antiphospholipid Syndrome",
+      "category": "immunology",
+      "aliases": [
+        "aps",
+        "항인지질 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D68.61",
+          "display": "Antiphospholipid Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "chronic_granulomatous_disease",
+      "name": "Chronic Granulomatous Disease",
+      "category": "immunology",
+      "aliases": [
+        "만성 육아종병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D71",
+          "display": "Chronic Granulomatous Disease"
+        }
+      ]
+    },
+    {
+      "id": "common_variable_immunodeficiency",
+      "name": "Common Variable Immunodeficiency",
+      "category": "immunology",
+      "aliases": [
+        "cvid"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D83.9",
+          "display": "Common Variable Immunodeficiency"
+        }
+      ]
+    },
+    {
+      "id": "graft_versus_host_disease",
+      "name": "Graft-versus-Host Disease",
+      "category": "immunology",
+      "aliases": [
+        "gvhd",
+        "이식편대숙주병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D89.813",
+          "display": "Graft-versus-Host Disease"
+        }
+      ]
+    },
+    {
+      "id": "hereditary_c1_inhibitor_deficiency",
+      "name": "C1 Esterase Inhibitor Deficiency",
+      "category": "immunology",
+      "aliases": [
+        "c1 억제제 결핍"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D84.1",
+          "display": "C1 Esterase Inhibitor Deficiency"
+        }
+      ]
+    },
+    {
+      "id": "selective_iga_deficiency",
+      "name": "Selective IgA Deficiency",
+      "category": "immunology",
+      "aliases": [
+        "선택적 IgA 결핍"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D80.2",
+          "display": "Selective IgA Deficiency"
+        }
+      ]
+    },
+    {
+      "id": "severe_combined_immunodeficiency",
+      "name": "Severe Combined Immunodeficiency",
+      "category": "immunology",
+      "aliases": [
+        "scid",
+        "중증 복합 면역결핍증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D81.9",
+          "display": "Severe Combined Immunodeficiency"
+        }
+      ]
+    },
+    {
+      "id": "brucellosis",
+      "name": "Brucellosis",
+      "category": "infectious",
+      "aliases": [
+        "브루셀라증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A23.9",
+          "display": "Brucellosis"
+        }
+      ]
+    },
+    {
+      "id": "candidemia",
+      "name": "Candidemia (Invasive Candidiasis)",
+      "category": "infectious",
+      "aliases": [
+        "칸디다 혈증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B37.7",
+          "display": "Candidemia (Invasive Candidiasis)"
+        }
+      ]
+    },
+    {
       "id": "cellulitis",
       "name": "Cellulitis",
       "category": "infectious",
@@ -1417,6 +4471,45 @@
       ]
     },
     {
+      "id": "hiv_infection",
+      "name": "HIV Infection",
+      "category": "infectious",
+      "aliases": [
+        "hiv",
+        "인간면역결핍바이러스"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B20",
+          "display": "HIV Infection"
+        }
+      ]
+    },
+    {
+      "id": "infectious_diarrhea",
+      "name": "Infectious Diarrhea",
+      "category": "infectious",
+      "aliases": [
+        "감염성 설사"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A09",
+          "display": "Infectious Diarrhea"
+        }
+      ]
+    },
+    {
       "id": "infectious_mononucleosis",
       "name": "Infectious Mononucleosis",
       "category": "infectious",
@@ -1438,6 +4531,44 @@
       ]
     },
     {
+      "id": "leptospirosis",
+      "name": "Leptospirosis",
+      "category": "infectious",
+      "aliases": [
+        "렙토스피라증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A27.9",
+          "display": "Leptospirosis"
+        }
+      ]
+    },
+    {
+      "id": "lyme_disease",
+      "name": "Lyme Disease",
+      "category": "infectious",
+      "aliases": [
+        "라임병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A69.20",
+          "display": "Lyme Disease"
+        }
+      ]
+    },
+    {
       "id": "malaria",
       "name": "Malaria",
       "category": "infectious",
@@ -1453,6 +4584,44 @@
           "system": "ICD10",
           "code": "B54",
           "display": "Malaria"
+        }
+      ]
+    },
+    {
+      "id": "measles",
+      "name": "Measles",
+      "category": "infectious",
+      "aliases": [
+        "홍역"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B05.9",
+          "display": "Measles"
+        }
+      ]
+    },
+    {
+      "id": "mumps",
+      "name": "Mumps",
+      "category": "infectious",
+      "aliases": [
+        "볼거리"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B26.9",
+          "display": "Mumps"
         }
       ]
     },
@@ -1516,6 +4685,63 @@
       ]
     },
     {
+      "id": "rabies",
+      "name": "Rabies",
+      "category": "infectious",
+      "aliases": [
+        "광견병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A82.9",
+          "display": "Rabies"
+        }
+      ]
+    },
+    {
+      "id": "rubella",
+      "name": "Rubella",
+      "category": "infectious",
+      "aliases": [
+        "풍진"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B06.9",
+          "display": "Rubella"
+        }
+      ]
+    },
+    {
+      "id": "scarlet_fever",
+      "name": "Scarlet Fever",
+      "category": "infectious",
+      "aliases": [
+        "성홍열"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A38.9",
+          "display": "Scarlet Fever"
+        }
+      ]
+    },
+    {
       "id": "septic_arthritis",
       "name": "Septic Arthritis",
       "category": "infectious",
@@ -1531,6 +4757,25 @@
           "system": "ICD10",
           "code": "M00.9",
           "display": "Septic Arthritis"
+        }
+      ]
+    },
+    {
+      "id": "tetanus",
+      "name": "Tetanus",
+      "category": "infectious",
+      "aliases": [
+        "파상풍"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A35",
+          "display": "Tetanus"
         }
       ]
     },
@@ -1551,6 +4796,236 @@
           "system": "ICD10",
           "code": "A48.3",
           "display": "Toxic Shock Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "typhoid_fever",
+      "name": "Typhoid Fever",
+      "category": "infectious",
+      "aliases": [
+        "장티푸스"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A01.00",
+          "display": "Typhoid Fever"
+        }
+      ]
+    },
+    {
+      "id": "varicella",
+      "name": "Varicella (Chickenpox)",
+      "category": "infectious",
+      "aliases": [
+        "수두"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B01.9",
+          "display": "Varicella (Chickenpox)"
+        }
+      ]
+    },
+    {
+      "id": "fabry_disease",
+      "name": "Fabry Disease",
+      "category": "metabolic",
+      "aliases": [
+        "파브리병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E75.21",
+          "display": "Fabry Disease"
+        }
+      ]
+    },
+    {
+      "id": "g6pd_deficiency",
+      "name": "G6PD Deficiency",
+      "category": "metabolic",
+      "aliases": [
+        "g6pd 결핍증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D55.0",
+          "display": "G6PD Deficiency"
+        }
+      ]
+    },
+    {
+      "id": "galactosemia",
+      "name": "Galactosemia",
+      "category": "metabolic",
+      "aliases": [
+        "갈락토스혈증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E74.21",
+          "display": "Galactosemia"
+        }
+      ]
+    },
+    {
+      "id": "gaucher_disease",
+      "name": "Gaucher Disease",
+      "category": "metabolic",
+      "aliases": [
+        "고셰병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E75.22",
+          "display": "Gaucher Disease"
+        }
+      ]
+    },
+    {
+      "id": "glycogen_storage_disease",
+      "name": "Glycogen Storage Disease",
+      "category": "metabolic",
+      "aliases": [
+        "당원병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E74.00",
+          "display": "Glycogen Storage Disease"
+        }
+      ]
+    },
+    {
+      "id": "maple_syrup_urine_disease",
+      "name": "Maple Syrup Urine Disease",
+      "category": "metabolic",
+      "aliases": [
+        "msud",
+        "단풍당뇨증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E71.0",
+          "display": "Maple Syrup Urine Disease"
+        }
+      ]
+    },
+    {
+      "id": "mitochondrial_myopathy",
+      "name": "Mitochondrial Myopathy",
+      "category": "metabolic",
+      "aliases": [
+        "미토콘드리아 근병증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G71.3",
+          "display": "Mitochondrial Myopathy"
+        }
+      ]
+    },
+    {
+      "id": "phenylketonuria",
+      "name": "Phenylketonuria",
+      "category": "metabolic",
+      "aliases": [
+        "pku",
+        "페닐케톤뇨증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E70.0",
+          "display": "Phenylketonuria"
+        }
+      ]
+    },
+    {
+      "id": "porphyria_acute",
+      "name": "Acute Intermittent Porphyria",
+      "category": "metabolic",
+      "aliases": [
+        "급성 간헐성 포르피린증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E80.21",
+          "display": "Acute Intermittent Porphyria"
+        }
+      ]
+    },
+    {
+      "id": "tay_sachs_disease",
+      "name": "Tay-Sachs Disease",
+      "category": "metabolic",
+      "aliases": [
+        "테이-삭스병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E75.02",
+          "display": "Tay-Sachs Disease"
         }
       ]
     },
@@ -1734,6 +5209,276 @@
       ]
     },
     {
+      "id": "ckd_stage5",
+      "name": "End-Stage Renal Disease",
+      "category": "nephrology",
+      "aliases": [
+        "esrd",
+        "말기 신부전"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N18.6",
+          "display": "End-Stage Renal Disease"
+        }
+      ]
+    },
+    {
+      "id": "contrast_induced_nephropathy",
+      "name": "Contrast-Induced Nephropathy",
+      "category": "nephrology",
+      "aliases": [
+        "조영제 신병증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N14.11",
+          "display": "Contrast-Induced Nephropathy"
+        }
+      ]
+    },
+    {
+      "id": "glomerulonephritis",
+      "name": "Acute Glomerulonephritis",
+      "category": "nephrology",
+      "aliases": [
+        "사구체신염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N05.9",
+          "display": "Acute Glomerulonephritis"
+        }
+      ]
+    },
+    {
+      "id": "hemolytic_uremic_syndrome",
+      "name": "Hemolytic Uremic Syndrome",
+      "category": "nephrology",
+      "aliases": [
+        "hus",
+        "용혈성 요독 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D59.30",
+          "display": "Hemolytic Uremic Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "hyperkalemia",
+      "name": "Hyperkalemia",
+      "category": "nephrology",
+      "aliases": [
+        "고칼륨혈증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E87.5",
+          "display": "Hyperkalemia"
+        }
+      ]
+    },
+    {
+      "id": "hypernatremia",
+      "name": "Hypernatremia",
+      "category": "nephrology",
+      "aliases": [
+        "고나트륨혈증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E87.0",
+          "display": "Hypernatremia"
+        }
+      ]
+    },
+    {
+      "id": "hypokalemia",
+      "name": "Hypokalemia",
+      "category": "nephrology",
+      "aliases": [
+        "저칼륨혈증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E87.6",
+          "display": "Hypokalemia"
+        }
+      ]
+    },
+    {
+      "id": "hyponatremia",
+      "name": "Hyponatremia",
+      "category": "nephrology",
+      "aliases": [
+        "저나트륨혈증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E87.1",
+          "display": "Hyponatremia"
+        }
+      ]
+    },
+    {
+      "id": "metabolic_acidosis",
+      "name": "Metabolic Acidosis",
+      "category": "nephrology",
+      "aliases": [
+        "대사성 산증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E87.2",
+          "display": "Metabolic Acidosis"
+        }
+      ]
+    },
+    {
+      "id": "metabolic_alkalosis",
+      "name": "Metabolic Alkalosis",
+      "category": "nephrology",
+      "aliases": [
+        "대사성 알칼리증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E87.3",
+          "display": "Metabolic Alkalosis"
+        }
+      ]
+    },
+    {
+      "id": "nephrotic_syndrome",
+      "name": "Nephrotic Syndrome",
+      "category": "nephrology",
+      "aliases": [
+        "신증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N04.9",
+          "display": "Nephrotic Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "polycystic_kidney_disease",
+      "name": "Polycystic Kidney Disease",
+      "category": "nephrology",
+      "aliases": [
+        "pkd",
+        "다낭성 신질환"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q61.3",
+          "display": "Polycystic Kidney Disease"
+        }
+      ]
+    },
+    {
+      "id": "renal_tubular_acidosis",
+      "name": "Renal Tubular Acidosis",
+      "category": "nephrology",
+      "aliases": [
+        "신세뇨관 산증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N25.89",
+          "display": "Renal Tubular Acidosis"
+        }
+      ]
+    },
+    {
+      "id": "amyotrophic_lateral_sclerosis",
+      "name": "Amyotrophic Lateral Sclerosis",
+      "category": "neuro",
+      "aliases": [
+        "als",
+        "루게릭병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G12.21",
+          "display": "Amyotrophic Lateral Sclerosis"
+        }
+      ]
+    },
+    {
       "id": "bell_palsy",
       "name": "Bell's Palsy",
       "category": "neuro",
@@ -1754,6 +5499,63 @@
       ]
     },
     {
+      "id": "brain_abscess",
+      "name": "Brain Abscess",
+      "category": "neuro",
+      "aliases": [
+        "뇌 농양"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G06.0",
+          "display": "Brain Abscess"
+        }
+      ]
+    },
+    {
+      "id": "brain_tumor",
+      "name": "Brain Tumor",
+      "category": "neuro",
+      "aliases": [
+        "뇌종양"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C71.9",
+          "display": "Brain Tumor"
+        }
+      ]
+    },
+    {
+      "id": "carpal_tunnel_syndrome",
+      "name": "Carpal Tunnel Syndrome",
+      "category": "neuro",
+      "aliases": [
+        "손목터널 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G56.00",
+          "display": "Carpal Tunnel Syndrome"
+        }
+      ]
+    },
+    {
       "id": "cauda_equina",
       "name": "Cauda Equina Syndrome",
       "category": "neuro",
@@ -1770,6 +5572,45 @@
           "system": "ICD10",
           "code": "G83.4",
           "display": "Cauda Equina Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "cerebellar_ataxia",
+      "name": "Cerebellar Ataxia",
+      "category": "neuro",
+      "aliases": [
+        "소뇌 실조"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G11.9",
+          "display": "Cerebellar Ataxia"
+        }
+      ]
+    },
+    {
+      "id": "cerebral_venous_thrombosis",
+      "name": "Cerebral Venous Sinus Thrombosis",
+      "category": "neuro",
+      "aliases": [
+        "cvst",
+        "뇌정맥동 혈전증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I67.6",
+          "display": "Cerebral Venous Sinus Thrombosis"
         }
       ]
     },
@@ -1814,6 +5655,64 @@
       ]
     },
     {
+      "id": "dementia_alzheimer",
+      "name": "Alzheimer Disease",
+      "category": "neuro",
+      "aliases": [
+        "알츠하이머병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G30.9",
+          "display": "Alzheimer Disease"
+        }
+      ]
+    },
+    {
+      "id": "encephalitis",
+      "name": "Viral Encephalitis",
+      "category": "neuro",
+      "aliases": [
+        "뇌염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A86",
+          "display": "Viral Encephalitis"
+        }
+      ]
+    },
+    {
+      "id": "epidural_hematoma",
+      "name": "Epidural Hematoma",
+      "category": "neuro",
+      "aliases": [
+        "edh",
+        "경막외 출혈"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I62.1",
+          "display": "Epidural Hematoma"
+        }
+      ]
+    },
+    {
       "id": "epilepsy",
       "name": "Epilepsy",
       "category": "neuro",
@@ -1830,6 +5729,25 @@
           "system": "ICD10",
           "code": "G40.909",
           "display": "Epilepsy"
+        }
+      ]
+    },
+    {
+      "id": "essential_tremor",
+      "name": "Essential Tremor",
+      "category": "neuro",
+      "aliases": [
+        "본태성 진전"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G25.0",
+          "display": "Essential Tremor"
         }
       ]
     },
@@ -1875,6 +5793,45 @@
       ]
     },
     {
+      "id": "huntington_disease",
+      "name": "Huntington Disease",
+      "category": "neuro",
+      "aliases": [
+        "헌팅턴병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G10",
+          "display": "Huntington Disease"
+        }
+      ]
+    },
+    {
+      "id": "idiopathic_intracranial_hypertension",
+      "name": "Idiopathic Intracranial Hypertension",
+      "category": "neuro",
+      "aliases": [
+        "iih",
+        "pseudotumor cerebri"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G93.2",
+          "display": "Idiopathic Intracranial Hypertension"
+        }
+      ]
+    },
+    {
       "id": "intracerebral_hemorrhage",
       "name": "Intracerebral Hemorrhage",
       "category": "neuro",
@@ -1916,6 +5873,104 @@
       ]
     },
     {
+      "id": "myasthenia_gravis",
+      "name": "Myasthenia Gravis",
+      "category": "neuro",
+      "aliases": [
+        "mg",
+        "중증 근무력증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G70.00",
+          "display": "Myasthenia Gravis"
+        }
+      ]
+    },
+    {
+      "id": "myasthenic_crisis",
+      "name": "Myasthenic Crisis",
+      "category": "neuro",
+      "aliases": [
+        "근무력성 위기"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G70.01",
+          "display": "Myasthenic Crisis"
+        }
+      ]
+    },
+    {
+      "id": "myelitis_transverse",
+      "name": "Transverse Myelitis",
+      "category": "neuro",
+      "aliases": [
+        "횡단성 척수염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G37.3",
+          "display": "Transverse Myelitis"
+        }
+      ]
+    },
+    {
+      "id": "neuromyelitis_optica",
+      "name": "Neuromyelitis Optica",
+      "category": "neuro",
+      "aliases": [
+        "nmo",
+        "시신경 척수염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G36.0",
+          "display": "Neuromyelitis Optica"
+        }
+      ]
+    },
+    {
+      "id": "normal_pressure_hydrocephalus",
+      "name": "Normal Pressure Hydrocephalus",
+      "category": "neuro",
+      "aliases": [
+        "nph",
+        "정상압 수두증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G91.2",
+          "display": "Normal Pressure Hydrocephalus"
+        }
+      ]
+    },
+    {
       "id": "parkinson_disease",
       "name": "Parkinson's Disease",
       "category": "neuro",
@@ -1932,6 +5987,25 @@
           "system": "ICD10",
           "code": "G20",
           "display": "Parkinson's Disease"
+        }
+      ]
+    },
+    {
+      "id": "peripheral_neuropathy",
+      "name": "Peripheral Neuropathy",
+      "category": "neuro",
+      "aliases": [
+        "말초 신경병증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G62.9",
+          "display": "Peripheral Neuropathy"
         }
       ]
     },
@@ -1996,6 +6070,26 @@
       ]
     },
     {
+      "id": "subdural_hematoma",
+      "name": "Subdural Hematoma",
+      "category": "neuro",
+      "aliases": [
+        "sdh",
+        "경막하 출혈"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I62.00",
+          "display": "Subdural Hematoma"
+        }
+      ]
+    },
+    {
       "id": "tia",
       "name": "Transient Ischemic Attack",
       "category": "neuro",
@@ -2013,6 +6107,44 @@
           "system": "ICD10",
           "code": "G45.9",
           "display": "Transient Ischemic Attack"
+        }
+      ]
+    },
+    {
+      "id": "trigeminal_neuralgia",
+      "name": "Trigeminal Neuralgia",
+      "category": "neuro",
+      "aliases": [
+        "삼차신경통"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G50.0",
+          "display": "Trigeminal Neuralgia"
+        }
+      ]
+    },
+    {
+      "id": "vascular_dementia",
+      "name": "Vascular Dementia",
+      "category": "neuro",
+      "aliases": [
+        "혈관성 치매"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "F01.50",
+          "display": "Vascular Dementia"
         }
       ]
     },
@@ -2037,6 +6169,63 @@
       ]
     },
     {
+      "id": "wernicke_encephalopathy",
+      "name": "Wernicke Encephalopathy",
+      "category": "neuro",
+      "aliases": [
+        "베르니케 뇌병증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E51.2",
+          "display": "Wernicke Encephalopathy"
+        }
+      ]
+    },
+    {
+      "id": "amniotic_fluid_embolism",
+      "name": "Amniotic Fluid Embolism",
+      "category": "obstetric",
+      "aliases": [
+        "양수 색전증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "O88.13",
+          "display": "Amniotic Fluid Embolism"
+        }
+      ]
+    },
+    {
+      "id": "chorioamnionitis",
+      "name": "Chorioamnionitis",
+      "category": "obstetric",
+      "aliases": [
+        "융모양막염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "O41.1030",
+          "display": "Chorioamnionitis"
+        }
+      ]
+    },
+    {
       "id": "eclampsia",
       "name": "Eclampsia",
       "category": "obstetric",
@@ -2052,6 +6241,63 @@
           "system": "ICD10",
           "code": "O15.9",
           "display": "Eclampsia"
+        }
+      ]
+    },
+    {
+      "id": "gestational_diabetes",
+      "name": "Gestational Diabetes",
+      "category": "obstetric",
+      "aliases": [
+        "임신성 당뇨"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "O24.419",
+          "display": "Gestational Diabetes"
+        }
+      ]
+    },
+    {
+      "id": "gestational_trophoblastic_disease",
+      "name": "Gestational Trophoblastic Disease",
+      "category": "obstetric",
+      "aliases": [
+        "포상기태"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "O01.9",
+          "display": "Gestational Trophoblastic Disease"
+        }
+      ]
+    },
+    {
+      "id": "hellp_syndrome",
+      "name": "HELLP Syndrome",
+      "category": "obstetric",
+      "aliases": [
+        "헬프 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "O14.20",
+          "display": "HELLP Syndrome"
         }
       ]
     },
@@ -2075,6 +6321,44 @@
       ]
     },
     {
+      "id": "miscarriage",
+      "name": "Miscarriage (Spontaneous Abortion)",
+      "category": "obstetric",
+      "aliases": [
+        "유산"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "O03.9",
+          "display": "Miscarriage (Spontaneous Abortion)"
+        }
+      ]
+    },
+    {
+      "id": "placenta_previa",
+      "name": "Placenta Previa",
+      "category": "obstetric",
+      "aliases": [
+        "전치태반"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "O44.10",
+          "display": "Placenta Previa"
+        }
+      ]
+    },
+    {
       "id": "placental_abruption",
       "name": "Placental Abruption",
       "category": "obstetric",
@@ -2090,6 +6374,25 @@
           "system": "ICD10",
           "code": "O45.90",
           "display": "Placental Abruption"
+        }
+      ]
+    },
+    {
+      "id": "postpartum_hemorrhage",
+      "name": "Postpartum Hemorrhage",
+      "category": "obstetric",
+      "aliases": [
+        "산후 출혈"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "O72.1",
+          "display": "Postpartum Hemorrhage"
         }
       ]
     },
@@ -2113,6 +6416,276 @@
       ]
     },
     {
+      "id": "preterm_labor",
+      "name": "Preterm Labor",
+      "category": "obstetric",
+      "aliases": [
+        "조기 진통"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "O60.00",
+          "display": "Preterm Labor"
+        }
+      ]
+    },
+    {
+      "id": "acute_lymphoblastic_leukemia",
+      "name": "Acute Lymphoblastic Leukemia",
+      "category": "oncology",
+      "aliases": [
+        "all",
+        "급성 림프모구 백혈병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C91.00",
+          "display": "Acute Lymphoblastic Leukemia"
+        }
+      ]
+    },
+    {
+      "id": "acute_myeloid_leukemia",
+      "name": "Acute Myeloid Leukemia",
+      "category": "oncology",
+      "aliases": [
+        "aml",
+        "급성 골수성 백혈병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C92.00",
+          "display": "Acute Myeloid Leukemia"
+        }
+      ]
+    },
+    {
+      "id": "breast_cancer",
+      "name": "Breast Cancer",
+      "category": "oncology",
+      "aliases": [
+        "유방암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C50.919",
+          "display": "Breast Cancer"
+        }
+      ]
+    },
+    {
+      "id": "cervical_cancer",
+      "name": "Cervical Cancer",
+      "category": "oncology",
+      "aliases": [
+        "자궁경부암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C53.9",
+          "display": "Cervical Cancer"
+        }
+      ]
+    },
+    {
+      "id": "chronic_lymphocytic_leukemia",
+      "name": "Chronic Lymphocytic Leukemia",
+      "category": "oncology",
+      "aliases": [
+        "cll",
+        "만성 림프구성 백혈병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C91.10",
+          "display": "Chronic Lymphocytic Leukemia"
+        }
+      ]
+    },
+    {
+      "id": "chronic_myeloid_leukemia",
+      "name": "Chronic Myeloid Leukemia",
+      "category": "oncology",
+      "aliases": [
+        "cml",
+        "만성 골수성 백혈병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C92.10",
+          "display": "Chronic Myeloid Leukemia"
+        }
+      ]
+    },
+    {
+      "id": "hodgkin_lymphoma",
+      "name": "Hodgkin Lymphoma",
+      "category": "oncology",
+      "aliases": [
+        "호지킨 림프종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C81.90",
+          "display": "Hodgkin Lymphoma"
+        }
+      ]
+    },
+    {
+      "id": "malignant_hypercalcemia",
+      "name": "Hypercalcemia of Malignancy",
+      "category": "oncology",
+      "aliases": [
+        "악성 고칼슘혈증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E83.52",
+          "display": "Hypercalcemia of Malignancy"
+        }
+      ]
+    },
+    {
+      "id": "melanoma",
+      "name": "Malignant Melanoma",
+      "category": "oncology",
+      "aliases": [
+        "흑색종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C43.9",
+          "display": "Malignant Melanoma"
+        }
+      ]
+    },
+    {
+      "id": "multiple_myeloma",
+      "name": "Multiple Myeloma",
+      "category": "oncology",
+      "aliases": [
+        "다발성 골수종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C90.00",
+          "display": "Multiple Myeloma"
+        }
+      ]
+    },
+    {
+      "id": "non_hodgkin_lymphoma",
+      "name": "Non-Hodgkin Lymphoma",
+      "category": "oncology",
+      "aliases": [
+        "비호지킨 림프종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C85.90",
+          "display": "Non-Hodgkin Lymphoma"
+        }
+      ]
+    },
+    {
+      "id": "ovarian_cancer",
+      "name": "Ovarian Cancer",
+      "category": "oncology",
+      "aliases": [
+        "난소암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C56.9",
+          "display": "Ovarian Cancer"
+        }
+      ]
+    },
+    {
+      "id": "thyroid_cancer",
+      "name": "Thyroid Cancer",
+      "category": "oncology",
+      "aliases": [
+        "갑상선암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C73",
+          "display": "Thyroid Cancer"
+        }
+      ]
+    },
+    {
       "id": "acute_angle_closure_glaucoma",
       "name": "Acute Angle-Closure Glaucoma",
       "category": "ophthalmology",
@@ -2128,6 +6701,44 @@
           "system": "ICD10",
           "code": "H40.219",
           "display": "Acute Angle-Closure Glaucoma"
+        }
+      ]
+    },
+    {
+      "id": "acute_conjunctivitis",
+      "name": "Acute Conjunctivitis",
+      "category": "ophthalmology",
+      "aliases": [
+        "급성 결막염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H10.9",
+          "display": "Acute Conjunctivitis"
+        }
+      ]
+    },
+    {
+      "id": "bacterial_keratitis",
+      "name": "Bacterial Keratitis",
+      "category": "ophthalmology",
+      "aliases": [
+        "세균성 각막염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H16.009",
+          "display": "Bacterial Keratitis"
         }
       ]
     },
@@ -2152,6 +6763,101 @@
       ]
     },
     {
+      "id": "central_retinal_vein_occlusion",
+      "name": "Central Retinal Vein Occlusion",
+      "category": "ophthalmology",
+      "aliases": [
+        "망막중심정맥 폐쇄"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H34.8110",
+          "display": "Central Retinal Vein Occlusion"
+        }
+      ]
+    },
+    {
+      "id": "chemical_eye_burn",
+      "name": "Chemical Eye Injury",
+      "category": "ophthalmology",
+      "aliases": [
+        "화학 안 손상"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T26.60XA",
+          "display": "Chemical Eye Injury"
+        }
+      ]
+    },
+    {
+      "id": "diabetic_retinopathy",
+      "name": "Diabetic Retinopathy",
+      "category": "ophthalmology",
+      "aliases": [
+        "당뇨망막병증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E11.319",
+          "display": "Diabetic Retinopathy"
+        }
+      ]
+    },
+    {
+      "id": "endophthalmitis",
+      "name": "Endophthalmitis",
+      "category": "ophthalmology",
+      "aliases": [
+        "안내염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H44.009",
+          "display": "Endophthalmitis"
+        }
+      ]
+    },
+    {
+      "id": "optic_neuritis",
+      "name": "Optic Neuritis",
+      "category": "ophthalmology",
+      "aliases": [
+        "시신경염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H46.9",
+          "display": "Optic Neuritis"
+        }
+      ]
+    },
+    {
       "id": "orbital_cellulitis",
       "name": "Orbital Cellulitis",
       "category": "ophthalmology",
@@ -2167,6 +6873,272 @@
           "system": "ICD10",
           "code": "H05.019",
           "display": "Orbital Cellulitis"
+        }
+      ]
+    },
+    {
+      "id": "retinal_detachment",
+      "name": "Retinal Detachment",
+      "category": "ophthalmology",
+      "aliases": [
+        "망막 박리"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H33.20",
+          "display": "Retinal Detachment"
+        }
+      ]
+    },
+    {
+      "id": "uveitis",
+      "name": "Uveitis",
+      "category": "ophthalmology",
+      "aliases": [
+        "포도막염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "H20.9",
+          "display": "Uveitis"
+        }
+      ]
+    },
+    {
+      "id": "achilles_tendon_rupture",
+      "name": "Achilles Tendon Rupture",
+      "category": "orthopedics",
+      "aliases": [
+        "아킬레스건 파열"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "S86.011A",
+          "display": "Achilles Tendon Rupture"
+        }
+      ]
+    },
+    {
+      "id": "acl_tear",
+      "name": "Anterior Cruciate Ligament Tear",
+      "category": "orthopedics",
+      "aliases": [
+        "전십자인대 파열"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "S83.519A",
+          "display": "Anterior Cruciate Ligament Tear"
+        }
+      ]
+    },
+    {
+      "id": "dislocation_shoulder",
+      "name": "Shoulder Dislocation",
+      "category": "orthopedics",
+      "aliases": [
+        "어깨 탈구"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "S43.006A",
+          "display": "Shoulder Dislocation"
+        }
+      ]
+    },
+    {
+      "id": "frozen_shoulder",
+      "name": "Adhesive Capsulitis (Frozen Shoulder)",
+      "category": "orthopedics",
+      "aliases": [
+        "오십견"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M75.00",
+          "display": "Adhesive Capsulitis (Frozen Shoulder)"
+        }
+      ]
+    },
+    {
+      "id": "hip_fracture",
+      "name": "Hip Fracture",
+      "category": "orthopedics",
+      "aliases": [
+        "고관절 골절"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "S72.009A",
+          "display": "Hip Fracture"
+        }
+      ]
+    },
+    {
+      "id": "meniscal_tear",
+      "name": "Meniscal Tear",
+      "category": "orthopedics",
+      "aliases": [
+        "반월상 연골 파열"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "S83.209A",
+          "display": "Meniscal Tear"
+        }
+      ]
+    },
+    {
+      "id": "osteoarthritis",
+      "name": "Osteoarthritis",
+      "category": "orthopedics",
+      "aliases": [
+        "골관절염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M19.90",
+          "display": "Osteoarthritis"
+        }
+      ]
+    },
+    {
+      "id": "osteoporotic_fracture",
+      "name": "Osteoporotic Vertebral Fracture",
+      "category": "orthopedics",
+      "aliases": [
+        "골다공증성 척추 골절"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M80.08XA",
+          "display": "Osteoporotic Vertebral Fracture"
+        }
+      ]
+    },
+    {
+      "id": "plantar_fasciitis",
+      "name": "Plantar Fasciitis",
+      "category": "orthopedics",
+      "aliases": [
+        "족저 근막염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M72.2",
+          "display": "Plantar Fasciitis"
+        }
+      ]
+    },
+    {
+      "id": "rotator_cuff_tear",
+      "name": "Rotator Cuff Tear",
+      "category": "orthopedics",
+      "aliases": [
+        "회전근개 파열"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M75.100",
+          "display": "Rotator Cuff Tear"
+        }
+      ]
+    },
+    {
+      "id": "septic_arthritis_ortho",
+      "name": "Septic Arthritis (Joint)",
+      "category": "orthopedics",
+      "aliases": [
+        "화농성 관절염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M00.9",
+          "display": "Septic Arthritis (Joint)"
+        }
+      ]
+    },
+    {
+      "id": "stress_fracture",
+      "name": "Stress Fracture",
+      "category": "orthopedics",
+      "aliases": [
+        "피로 골절"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M84.30XA",
+          "display": "Stress Fracture"
         }
       ]
     },
@@ -2209,6 +7181,25 @@
       ]
     },
     {
+      "id": "epiglottitis_peds",
+      "name": "Pediatric Epiglottitis",
+      "category": "pediatric",
+      "aliases": [
+        "소아 후두개염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J05.10",
+          "display": "Pediatric Epiglottitis"
+        }
+      ]
+    },
+    {
       "id": "febrile_infant",
       "name": "Febrile Infant (<90 days)",
       "category": "pediatric",
@@ -2219,6 +7210,64 @@
       "curated": true,
       "urgency": "CRITICAL",
       "dangerous": true
+    },
+    {
+      "id": "febrile_seizure",
+      "name": "Febrile Seizure",
+      "category": "pediatric",
+      "aliases": [
+        "열성 경련"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "R56.00",
+          "display": "Febrile Seizure"
+        }
+      ]
+    },
+    {
+      "id": "hand_foot_mouth_disease",
+      "name": "Hand-Foot-Mouth Disease",
+      "category": "pediatric",
+      "aliases": [
+        "수족구병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B08.4",
+          "display": "Hand-Foot-Mouth Disease"
+        }
+      ]
+    },
+    {
+      "id": "henoch_schonlein_purpura",
+      "name": "Henoch-Schonlein Purpura",
+      "category": "pediatric",
+      "aliases": [
+        "hsp",
+        "헤노흐-쇤라인 자반증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D69.0",
+          "display": "Henoch-Schonlein Purpura"
+        }
+      ]
     },
     {
       "id": "intussusception",
@@ -2255,6 +7304,82 @@
           "system": "ICD10",
           "code": "M30.3",
           "display": "Kawasaki Disease"
+        }
+      ]
+    },
+    {
+      "id": "neonatal_jaundice",
+      "name": "Neonatal Jaundice",
+      "category": "pediatric",
+      "aliases": [
+        "신생아 황달"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "P59.9",
+          "display": "Neonatal Jaundice"
+        }
+      ]
+    },
+    {
+      "id": "pediatric_sepsis",
+      "name": "Pediatric Sepsis",
+      "category": "pediatric",
+      "aliases": [
+        "소아 패혈증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A41.9",
+          "display": "Pediatric Sepsis"
+        }
+      ]
+    },
+    {
+      "id": "pyloric_stenosis",
+      "name": "Hypertrophic Pyloric Stenosis",
+      "category": "pediatric",
+      "aliases": [
+        "유문 협착증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q40.0",
+          "display": "Hypertrophic Pyloric Stenosis"
+        }
+      ]
+    },
+    {
+      "id": "rsv_infection",
+      "name": "Respiratory Syncytial Virus Infection",
+      "category": "pediatric",
+      "aliases": [
+        "rsv 감염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B97.4",
+          "display": "Respiratory Syncytial Virus Infection"
         }
       ]
     },
@@ -2299,6 +7424,63 @@
       ]
     },
     {
+      "id": "anorexia_nervosa",
+      "name": "Anorexia Nervosa",
+      "category": "psychiatric",
+      "aliases": [
+        "신경성 식욕부진증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "F50.00",
+          "display": "Anorexia Nervosa"
+        }
+      ]
+    },
+    {
+      "id": "bipolar_disorder",
+      "name": "Bipolar Disorder",
+      "category": "psychiatric",
+      "aliases": [
+        "양극성 장애"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "F31.9",
+          "display": "Bipolar Disorder"
+        }
+      ]
+    },
+    {
+      "id": "catatonia",
+      "name": "Catatonia",
+      "category": "psychiatric",
+      "aliases": [
+        "긴장증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "F06.1",
+          "display": "Catatonia"
+        }
+      ]
+    },
+    {
       "id": "generalized_anxiety",
       "name": "Generalized Anxiety Disorder",
       "category": "psychiatric",
@@ -2339,6 +7521,25 @@
       ]
     },
     {
+      "id": "major_depressive_disorder",
+      "name": "Major Depressive Disorder",
+      "category": "psychiatric",
+      "aliases": [
+        "우울증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "F32.9",
+          "display": "Major Depressive Disorder"
+        }
+      ]
+    },
+    {
       "id": "neuroleptic_malignant_syndrome",
       "name": "Neuroleptic Malignant Syndrome",
       "category": "psychiatric",
@@ -2355,6 +7556,63 @@
           "system": "ICD10",
           "code": "G21.0",
           "display": "Neuroleptic Malignant Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "panic_disorder",
+      "name": "Panic Disorder",
+      "category": "psychiatric",
+      "aliases": [
+        "공황장애"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "F41.0",
+          "display": "Panic Disorder"
+        }
+      ]
+    },
+    {
+      "id": "ptsd",
+      "name": "Post-Traumatic Stress Disorder",
+      "category": "psychiatric",
+      "aliases": [
+        "외상후 스트레스 장애"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "F43.10",
+          "display": "Post-Traumatic Stress Disorder"
+        }
+      ]
+    },
+    {
+      "id": "schizophrenia",
+      "name": "Schizophrenia",
+      "category": "psychiatric",
+      "aliases": [
+        "조현병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "F20.9",
+          "display": "Schizophrenia"
         }
       ]
     },
@@ -2414,6 +7672,25 @@
           "system": "ICD10",
           "code": "J80",
           "display": "Acute Respiratory Distress Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "acute_respiratory_failure",
+      "name": "Acute Respiratory Failure",
+      "category": "pulmonary",
+      "aliases": [
+        "급성 호흡부전"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J96.00",
+          "display": "Acute Respiratory Failure"
         }
       ]
     },
@@ -2478,6 +7755,25 @@
       ]
     },
     {
+      "id": "bronchiolitis_obliterans",
+      "name": "Bronchiolitis Obliterans",
+      "category": "pulmonary",
+      "aliases": [
+        "폐쇄성 세기관지염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J44.81",
+          "display": "Bronchiolitis Obliterans"
+        }
+      ]
+    },
+    {
       "id": "copd_stable",
       "name": "Chronic Obstructive Pulmonary Disease (Stable)",
       "category": "pulmonary",
@@ -2515,6 +7811,141 @@
           "system": "ICD10",
           "code": "U07.1",
           "display": "COVID-19"
+        }
+      ]
+    },
+    {
+      "id": "cystic_fibrosis",
+      "name": "Cystic Fibrosis",
+      "category": "pulmonary",
+      "aliases": [
+        "cf",
+        "낭성 섬유증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "E84.9",
+          "display": "Cystic Fibrosis"
+        }
+      ]
+    },
+    {
+      "id": "empyema",
+      "name": "Pleural Empyema",
+      "category": "pulmonary",
+      "aliases": [
+        "농흉"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J86.9",
+          "display": "Pleural Empyema"
+        }
+      ]
+    },
+    {
+      "id": "fat_embolism_syndrome",
+      "name": "Fat Embolism Syndrome",
+      "category": "pulmonary",
+      "aliases": [
+        "지방 색전 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T79.1",
+          "display": "Fat Embolism Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "foreign_body_aspiration",
+      "name": "Foreign Body Aspiration",
+      "category": "pulmonary",
+      "aliases": [
+        "이물 흡인"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T17.900",
+          "display": "Foreign Body Aspiration"
+        }
+      ]
+    },
+    {
+      "id": "hemothorax",
+      "name": "Hemothorax",
+      "category": "pulmonary",
+      "aliases": [
+        "혈흉"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J94.2",
+          "display": "Hemothorax"
+        }
+      ]
+    },
+    {
+      "id": "hypersensitivity_pneumonitis",
+      "name": "Hypersensitivity Pneumonitis",
+      "category": "pulmonary",
+      "aliases": [
+        "과민성 폐렴"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J67.9",
+          "display": "Hypersensitivity Pneumonitis"
+        }
+      ]
+    },
+    {
+      "id": "idiopathic_pulmonary_fibrosis",
+      "name": "Idiopathic Pulmonary Fibrosis",
+      "category": "pulmonary",
+      "aliases": [
+        "ipf",
+        "특발성 폐섬유증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J84.112",
+          "display": "Idiopathic Pulmonary Fibrosis"
         }
       ]
     },
@@ -2561,6 +7992,105 @@
       ]
     },
     {
+      "id": "legionella_pneumonia",
+      "name": "Legionella Pneumonia",
+      "category": "pulmonary",
+      "aliases": [
+        "legionnaires",
+        "레지오넬라 폐렴"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A48.1",
+          "display": "Legionella Pneumonia"
+        }
+      ]
+    },
+    {
+      "id": "lung_cancer",
+      "name": "Lung Malignancy",
+      "category": "pulmonary",
+      "aliases": [
+        "lung cancer",
+        "폐암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C34.90",
+          "display": "Lung Malignancy"
+        }
+      ]
+    },
+    {
+      "id": "mesothelioma",
+      "name": "Pleural Mesothelioma",
+      "category": "pulmonary",
+      "aliases": [
+        "중피종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C45.0",
+          "display": "Pleural Mesothelioma"
+        }
+      ]
+    },
+    {
+      "id": "obstructive_sleep_apnea",
+      "name": "Obstructive Sleep Apnea",
+      "category": "pulmonary",
+      "aliases": [
+        "osa",
+        "폐쇄성 수면무호흡"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G47.33",
+          "display": "Obstructive Sleep Apnea"
+        }
+      ]
+    },
+    {
+      "id": "pertussis",
+      "name": "Pertussis (Whooping Cough)",
+      "category": "pulmonary",
+      "aliases": [
+        "whooping cough",
+        "백일해"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "A37.90",
+          "display": "Pertussis (Whooping Cough)"
+        }
+      ]
+    },
+    {
       "id": "pleural_effusion",
       "name": "Pleural Effusion",
       "category": "pulmonary",
@@ -2577,6 +8107,45 @@
           "system": "ICD10",
           "code": "J90",
           "display": "Pleural Effusion"
+        }
+      ]
+    },
+    {
+      "id": "pneumocystis_pneumonia",
+      "name": "Pneumocystis Pneumonia",
+      "category": "pulmonary",
+      "aliases": [
+        "pcp",
+        "pjp"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "B59",
+          "display": "Pneumocystis Pneumonia"
+        }
+      ]
+    },
+    {
+      "id": "pulmonary_hypertension",
+      "name": "Pulmonary Hypertension",
+      "category": "pulmonary",
+      "aliases": [
+        "폐고혈압"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I27.20",
+          "display": "Pulmonary Hypertension"
         }
       ]
     },
@@ -2601,6 +8170,44 @@
       ]
     },
     {
+      "id": "sarcoidosis",
+      "name": "Sarcoidosis",
+      "category": "pulmonary",
+      "aliases": [
+        "유육종증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D86.0",
+          "display": "Sarcoidosis"
+        }
+      ]
+    },
+    {
+      "id": "simple_pneumothorax",
+      "name": "Simple Pneumothorax",
+      "category": "pulmonary",
+      "aliases": [
+        "기흉"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "J93.9",
+          "display": "Simple Pneumothorax"
+        }
+      ]
+    },
+    {
       "id": "spontaneous_pneumothorax",
       "name": "Spontaneous Pneumothorax (Non-tension)",
       "category": "pulmonary",
@@ -2617,6 +8224,235 @@
           "system": "ICD10",
           "code": "J93.11",
           "display": "Spontaneous Pneumothorax (Non-tension)"
+        }
+      ]
+    },
+    {
+      "id": "ankylosing_spondylitis",
+      "name": "Ankylosing Spondylitis",
+      "category": "rheumatology",
+      "aliases": [
+        "강직성 척추염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M45.9",
+          "display": "Ankylosing Spondylitis"
+        }
+      ]
+    },
+    {
+      "id": "behcet_disease",
+      "name": "Behcet Disease",
+      "category": "rheumatology",
+      "aliases": [
+        "베체트병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M35.2",
+          "display": "Behcet Disease"
+        }
+      ]
+    },
+    {
+      "id": "dermatomyositis",
+      "name": "Dermatomyositis",
+      "category": "rheumatology",
+      "aliases": [
+        "피부근염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M33.90",
+          "display": "Dermatomyositis"
+        }
+      ]
+    },
+    {
+      "id": "gca",
+      "name": "Giant Cell Arteritis",
+      "category": "rheumatology",
+      "aliases": [
+        "측두동맥염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M31.6",
+          "display": "Giant Cell Arteritis"
+        }
+      ]
+    },
+    {
+      "id": "granulomatosis_polyangiitis",
+      "name": "Granulomatosis with Polyangiitis",
+      "category": "rheumatology",
+      "aliases": [
+        "gpa",
+        "베게너 육아종증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M31.30",
+          "display": "Granulomatosis with Polyangiitis"
+        }
+      ]
+    },
+    {
+      "id": "polyarteritis_nodosa",
+      "name": "Polyarteritis Nodosa",
+      "category": "rheumatology",
+      "aliases": [
+        "결절성 다발동맥염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M30.0",
+          "display": "Polyarteritis Nodosa"
+        }
+      ]
+    },
+    {
+      "id": "polymyositis",
+      "name": "Polymyositis",
+      "category": "rheumatology",
+      "aliases": [
+        "다발근염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M33.20",
+          "display": "Polymyositis"
+        }
+      ]
+    },
+    {
+      "id": "psoriatic_arthritis",
+      "name": "Psoriatic Arthritis",
+      "category": "rheumatology",
+      "aliases": [
+        "건선성 관절염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "L40.50",
+          "display": "Psoriatic Arthritis"
+        }
+      ]
+    },
+    {
+      "id": "reactive_arthritis",
+      "name": "Reactive Arthritis",
+      "category": "rheumatology",
+      "aliases": [
+        "반응성 관절염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M02.9",
+          "display": "Reactive Arthritis"
+        }
+      ]
+    },
+    {
+      "id": "sarcoidosis_rheum",
+      "name": "Sarcoidosis (Systemic)",
+      "category": "rheumatology",
+      "aliases": [
+        "유육종증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "D86.9",
+          "display": "Sarcoidosis (Systemic)"
+        }
+      ]
+    },
+    {
+      "id": "scleroderma",
+      "name": "Systemic Sclerosis (Scleroderma)",
+      "category": "rheumatology",
+      "aliases": [
+        "전신 경화증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M34.9",
+          "display": "Systemic Sclerosis (Scleroderma)"
+        }
+      ]
+    },
+    {
+      "id": "sjogren_syndrome",
+      "name": "Sjogren Syndrome",
+      "category": "rheumatology",
+      "aliases": [
+        "쇼그렌 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "M35.00",
+          "display": "Sjogren Syndrome"
         }
       ]
     },
@@ -2641,6 +8477,25 @@
       ]
     },
     {
+      "id": "acetaminophen_toxicity",
+      "name": "Acetaminophen Toxicity",
+      "category": "toxicology",
+      "aliases": [
+        "아세트아미노펜 중독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T39.1X1A",
+          "display": "Acetaminophen Toxicity"
+        }
+      ]
+    },
+    {
       "id": "anaphylactoid_reaction",
       "name": "Anaphylactoid Reaction",
       "category": "toxicology",
@@ -2651,6 +8506,63 @@
       "curated": true,
       "urgency": "CRITICAL",
       "dangerous": true
+    },
+    {
+      "id": "benzodiazepine_toxicity",
+      "name": "Benzodiazepine Toxicity",
+      "category": "toxicology",
+      "aliases": [
+        "벤조디아제핀 중독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T42.4X1A",
+          "display": "Benzodiazepine Toxicity"
+        }
+      ]
+    },
+    {
+      "id": "beta_blocker_overdose",
+      "name": "Beta-Blocker Overdose",
+      "category": "toxicology",
+      "aliases": [
+        "베타차단제 중독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T44.7X1A",
+          "display": "Beta-Blocker Overdose"
+        }
+      ]
+    },
+    {
+      "id": "calcium_channel_blocker_overdose",
+      "name": "Calcium Channel Blocker Overdose",
+      "category": "toxicology",
+      "aliases": [
+        "칼슘차단제 중독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T46.1X1A",
+          "display": "Calcium Channel Blocker Overdose"
+        }
+      ]
     },
     {
       "id": "carbon_monoxide_poisoning",
@@ -2673,6 +8585,120 @@
       ]
     },
     {
+      "id": "cyanide_poisoning",
+      "name": "Cyanide Poisoning",
+      "category": "toxicology",
+      "aliases": [
+        "시안화물 중독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T57.3X1A",
+          "display": "Cyanide Poisoning"
+        }
+      ]
+    },
+    {
+      "id": "digoxin_toxicity",
+      "name": "Digoxin Toxicity",
+      "category": "toxicology",
+      "aliases": [
+        "디곡신 중독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T46.0X1A",
+          "display": "Digoxin Toxicity"
+        }
+      ]
+    },
+    {
+      "id": "ethylene_glycol_poisoning",
+      "name": "Ethylene Glycol Poisoning",
+      "category": "toxicology",
+      "aliases": [
+        "에틸렌글리콜 중독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T52.8X1A",
+          "display": "Ethylene Glycol Poisoning"
+        }
+      ]
+    },
+    {
+      "id": "iron_overdose",
+      "name": "Iron Overdose",
+      "category": "toxicology",
+      "aliases": [
+        "철분 과다복용"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T45.4X1A",
+          "display": "Iron Overdose"
+        }
+      ]
+    },
+    {
+      "id": "lithium_toxicity",
+      "name": "Lithium Toxicity",
+      "category": "toxicology",
+      "aliases": [
+        "리튬 중독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T43.591A",
+          "display": "Lithium Toxicity"
+        }
+      ]
+    },
+    {
+      "id": "methanol_poisoning",
+      "name": "Methanol Poisoning",
+      "category": "toxicology",
+      "aliases": [
+        "메탄올 중독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T51.1X1A",
+          "display": "Methanol Poisoning"
+        }
+      ]
+    },
+    {
       "id": "opioid_overdose",
       "name": "Opioid Overdose",
       "category": "toxicology",
@@ -2689,6 +8715,25 @@
           "system": "ICD10",
           "code": "T40.2X1A",
           "display": "Opioid Overdose"
+        }
+      ]
+    },
+    {
+      "id": "opioid_toxicity",
+      "name": "Opioid Toxicity",
+      "category": "toxicology",
+      "aliases": [
+        "아편유사제 중독"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T40.2X1A",
+          "display": "Opioid Toxicity"
         }
       ]
     },
@@ -2747,6 +8792,524 @@
           "system": "ICD10",
           "code": "T43.011A",
           "display": "Tricyclic Antidepressant Overdose"
+        }
+      ]
+    },
+    {
+      "id": "cervical_spine_injury",
+      "name": "Cervical Spine Injury",
+      "category": "trauma",
+      "aliases": [
+        "경추 손상"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "S14.109A",
+          "display": "Cervical Spine Injury"
+        }
+      ]
+    },
+    {
+      "id": "hemorrhagic_shock",
+      "name": "Hemorrhagic Shock",
+      "category": "trauma",
+      "aliases": [
+        "출혈성 쇼크"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "R57.1",
+          "display": "Hemorrhagic Shock"
+        }
+      ]
+    },
+    {
+      "id": "open_fracture",
+      "name": "Open Fracture",
+      "category": "trauma",
+      "aliases": [
+        "개방성 골절"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "T14.8",
+          "display": "Open Fracture"
+        }
+      ]
+    },
+    {
+      "id": "pelvic_fracture",
+      "name": "Pelvic Fracture",
+      "category": "trauma",
+      "aliases": [
+        "골반 골절"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "S32.9XXA",
+          "display": "Pelvic Fracture"
+        }
+      ]
+    },
+    {
+      "id": "splenic_rupture",
+      "name": "Splenic Rupture",
+      "category": "trauma",
+      "aliases": [
+        "비장 파열"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "S36.09XA",
+          "display": "Splenic Rupture"
+        }
+      ]
+    },
+    {
+      "id": "tension_pneumothorax_trauma",
+      "name": "Traumatic Tension Pneumothorax",
+      "category": "trauma",
+      "aliases": [
+        "긴장성 기흉"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "S27.0XXA",
+          "display": "Traumatic Tension Pneumothorax"
+        }
+      ]
+    },
+    {
+      "id": "traumatic_brain_injury",
+      "name": "Traumatic Brain Injury",
+      "category": "trauma",
+      "aliases": [
+        "외상성 뇌손상"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "S06.9X9A",
+          "display": "Traumatic Brain Injury"
+        }
+      ]
+    },
+    {
+      "id": "bladder_cancer",
+      "name": "Bladder Cancer",
+      "category": "urology",
+      "aliases": [
+        "방광암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C67.9",
+          "display": "Bladder Cancer"
+        }
+      ]
+    },
+    {
+      "id": "fournier_gangrene",
+      "name": "Fournier Gangrene",
+      "category": "urology",
+      "aliases": [
+        "푸르니에 괴저"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N49.3",
+          "display": "Fournier Gangrene"
+        }
+      ]
+    },
+    {
+      "id": "hydronephrosis",
+      "name": "Hydronephrosis",
+      "category": "urology",
+      "aliases": [
+        "수신증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N13.30",
+          "display": "Hydronephrosis"
+        }
+      ]
+    },
+    {
+      "id": "interstitial_cystitis",
+      "name": "Interstitial Cystitis",
+      "category": "urology",
+      "aliases": [
+        "간질성 방광염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N30.10",
+          "display": "Interstitial Cystitis"
+        }
+      ]
+    },
+    {
+      "id": "priapism",
+      "name": "Priapism",
+      "category": "urology",
+      "aliases": [
+        "지속발기증"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "N48.30",
+          "display": "Priapism"
+        }
+      ]
+    },
+    {
+      "id": "prostate_cancer",
+      "name": "Prostate Cancer",
+      "category": "urology",
+      "aliases": [
+        "전립선암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C61",
+          "display": "Prostate Cancer"
+        }
+      ]
+    },
+    {
+      "id": "renal_cell_carcinoma",
+      "name": "Renal Cell Carcinoma",
+      "category": "urology",
+      "aliases": [
+        "rcc",
+        "신세포암"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "C64.9",
+          "display": "Renal Cell Carcinoma"
+        }
+      ]
+    },
+    {
+      "id": "varicocele",
+      "name": "Varicocele",
+      "category": "urology",
+      "aliases": [
+        "정계정맥류"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I86.1",
+          "display": "Varicocele"
+        }
+      ]
+    },
+    {
+      "id": "acute_limb_ischemia",
+      "name": "Acute Limb Ischemia",
+      "category": "vascular",
+      "aliases": [
+        "급성 사지 허혈"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I74.3",
+          "display": "Acute Limb Ischemia"
+        }
+      ]
+    },
+    {
+      "id": "arteriovenous_malformation",
+      "name": "Arteriovenous Malformation",
+      "category": "vascular",
+      "aliases": [
+        "avm",
+        "동정맥 기형"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "Q27.30",
+          "display": "Arteriovenous Malformation"
+        }
+      ]
+    },
+    {
+      "id": "carotid_artery_stenosis",
+      "name": "Carotid Artery Stenosis",
+      "category": "vascular",
+      "aliases": [
+        "경동맥 협착"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I65.2",
+          "display": "Carotid Artery Stenosis"
+        }
+      ]
+    },
+    {
+      "id": "chronic_venous_insufficiency",
+      "name": "Chronic Venous Insufficiency",
+      "category": "vascular",
+      "aliases": [
+        "만성 정맥부전"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I87.2",
+          "display": "Chronic Venous Insufficiency"
+        }
+      ]
+    },
+    {
+      "id": "lymphedema",
+      "name": "Lymphedema",
+      "category": "vascular",
+      "aliases": [
+        "림프부종"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I89.0",
+          "display": "Lymphedema"
+        }
+      ]
+    },
+    {
+      "id": "raynaud_phenomenon",
+      "name": "Raynaud Phenomenon",
+      "category": "vascular",
+      "aliases": [
+        "레이노 현상"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I73.00",
+          "display": "Raynaud Phenomenon"
+        }
+      ]
+    },
+    {
+      "id": "renal_artery_stenosis",
+      "name": "Renal Artery Stenosis",
+      "category": "vascular",
+      "aliases": [
+        "신동맥 협착"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I70.1",
+          "display": "Renal Artery Stenosis"
+        }
+      ]
+    },
+    {
+      "id": "ruptured_aaa",
+      "name": "Ruptured Abdominal Aortic Aneurysm",
+      "category": "vascular",
+      "aliases": [
+        "ruptured aaa",
+        "복부대동맥류 파열"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "CRITICAL",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I71.3",
+          "display": "Ruptured Abdominal Aortic Aneurysm"
+        }
+      ]
+    },
+    {
+      "id": "subclavian_steal_syndrome",
+      "name": "Subclavian Steal Syndrome",
+      "category": "vascular",
+      "aliases": [
+        "쇄골하동맥 도류 증후군"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "G45.8",
+          "display": "Subclavian Steal Syndrome"
+        }
+      ]
+    },
+    {
+      "id": "superficial_thrombophlebitis",
+      "name": "Superficial Thrombophlebitis",
+      "category": "vascular",
+      "aliases": [
+        "표재성 혈전정맥염"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "ROUTINE",
+      "dangerous": false,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I80.0",
+          "display": "Superficial Thrombophlebitis"
+        }
+      ]
+    },
+    {
+      "id": "thoracic_aortic_aneurysm",
+      "name": "Thoracic Aortic Aneurysm",
+      "category": "vascular",
+      "aliases": [
+        "taa",
+        "흉부대동맥류"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I71.2",
+          "display": "Thoracic Aortic Aneurysm"
+        }
+      ]
+    },
+    {
+      "id": "thromboangiitis_obliterans",
+      "name": "Thromboangiitis Obliterans (Buerger Disease)",
+      "category": "vascular",
+      "aliases": [
+        "buerger disease",
+        "버거병"
+      ],
+      "semantic_type": "DISEASE",
+      "curated": true,
+      "urgency": "URGENT",
+      "dangerous": true,
+      "external_codes": [
+        {
+          "system": "ICD10",
+          "code": "I73.1",
+          "display": "Thromboangiitis Obliterans (Buerger Disease)"
         }
       ]
     }

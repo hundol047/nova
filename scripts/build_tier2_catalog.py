@@ -358,31 +358,63 @@ ALL_GROUPS = [
     TOXICOLOGY_ENV, DERM_ENT_EYE, OB_PEDS,
 ]
 
+# Supplementary groups (vNext coverage expansion). Loaded lazily so the base catalog still builds
+# even if the extra module is absent. build_conditions() de-duplicates against the base by id AND
+# canonical name, so an extra entry that clinically overlaps a base one is skipped, never crashing.
+try:
+    from tier2_catalog_extra import EXTRA_GROUPS  # when run from scripts/
+except ImportError:  # pragma: no cover - path fallback when invoked from repo root
+    try:
+        from scripts.tier2_catalog_extra import EXTRA_GROUPS
+    except ImportError:
+        EXTRA_GROUPS = []
+
 
 def build_conditions() -> List[Dict]:
     conditions: List[Dict] = []
     seen_ids = set()
+    seen_names = set()
+
+    def _make_entry(cid, name, category, urgency, icd10, aliases) -> Dict:
+        entry: Dict = {
+            "id": cid,
+            "name": name,
+            "category": category,
+            "aliases": aliases,
+            "semantic_type": "DISEASE",
+            "curated": True,
+        }
+        if urgency:
+            entry["urgency"] = urgency
+            entry["dangerous"] = urgency in ("CRITICAL", "URGENT")
+        if icd10:
+            entry["external_codes"] = [{"system": "ICD10", "code": icd10, "display": name}]
+        return entry
+
+    # Base groups: id collisions here are an authoring error and must fail loudly.
     for group in ALL_GROUPS:
         for cid, name, category, urgency, icd10, aliases in group:
             if cid in seen_ids:
-                raise SystemExit(f"duplicate tier2 id: {cid}")
+                raise SystemExit(f"duplicate tier2 id (base): {cid}")
             seen_ids.add(cid)
-            entry: Dict = {
-                "id": cid,
-                "name": name,
-                "category": category,
-                "aliases": aliases,
-                "semantic_type": "DISEASE",
-                "curated": True,
-            }
-            if urgency:
-                entry["urgency"] = urgency
-                entry["dangerous"] = urgency in ("CRITICAL", "URGENT")
-            if icd10:
-                entry["external_codes"] = [
-                    {"system": "ICD10", "code": icd10, "display": name}
-                ]
-            conditions.append(entry)
+            seen_names.add(name.strip().lower())
+            conditions.append(_make_entry(cid, name, category, urgency, icd10, aliases))
+
+    # Supplementary groups: silently DEDUP against the base by id AND canonical name so a clinically
+    # overlapping entry (e.g. a variant already present in the base 140) is skipped rather than
+    # crashing. Within the extras, a duplicate id is still an authoring error and fails loudly.
+    extra_ids = set()
+    for group in EXTRA_GROUPS:
+        for cid, name, category, urgency, icd10, aliases in group:
+            if cid in extra_ids:
+                raise SystemExit(f"duplicate tier2 id (extra): {cid}")
+            extra_ids.add(cid)
+            if cid in seen_ids or name.strip().lower() in seen_names:
+                continue  # overlaps a base concept -> skip (never double-count)
+            seen_ids.add(cid)
+            seen_names.add(name.strip().lower())
+            conditions.append(_make_entry(cid, name, category, urgency, icd10, aliases))
+
     conditions.sort(key=lambda e: (e["category"], e["id"]))
     return conditions
 
