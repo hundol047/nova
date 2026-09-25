@@ -124,16 +124,16 @@ def test_registry_blocks_critical_recall_regression_and_supports_rollback():
     d = Path(tempfile.mkdtemp())
     reg = ModelRegistry(d / "registry")
     reg.register("v1", "snapA", {"critical_recall": 0.995, "top_k_accuracy": 0.7})
-    reg.promote("v1")
+    reg.promote("v1", approved_by="admin")
     assert reg.production_version() == "v1"
 
     reg.register("v2", "snapB", {"critical_recall": 0.80, "top_k_accuracy": 0.95})
     with pytest.raises(PermissionError):
-        reg.promote("v2")  # regresses critical recall -> blocked
+        reg.promote("v2", approved_by="admin")  # regresses critical recall -> blocked
     assert reg.production_version() == "v1"
 
     reg.register("v3", "snapC", {"critical_recall": 0.999, "top_k_accuracy": 0.85})
-    reg.promote("v3")
+    reg.promote("v3", approved_by="admin")
     assert reg.production_version() == "v3"
     reg.rollback()
     assert reg.production_version() == "v1"

@@ -56,11 +56,17 @@ class ModelEntry:
     dataset_snapshot_id: str
     metrics: Dict[str, float] = field(default_factory=dict)
     notes: str = ""
+    code_sha: str = ""            # training-code SHA the model was produced from (provenance)
+    dataset_version: str = ""     # human-readable dataset version (mirrors snapshot id)
+    approved_by: str = ""         # WHO promoted it to production (empty until promoted)
+    approved_at: str = ""         # WHEN it was promoted (UTC ISO; empty until promoted)
 
     def as_dict(self) -> dict:
         return {
             "version": self.version, "state": self.state.value, "created_utc": self.created_utc,
-            "dataset_snapshot_id": self.dataset_snapshot_id, "metrics": self.metrics, "notes": self.notes,
+            "dataset_snapshot_id": self.dataset_snapshot_id, "dataset_version": self.dataset_version,
+            "metrics": self.metrics, "notes": self.notes, "code_sha": self.code_sha,
+            "approved_by": self.approved_by, "approved_at": self.approved_at,
         }
 
 
@@ -82,7 +88,9 @@ class ModelRegistry:
             self._entries[e["version"]] = ModelEntry(
                 version=e["version"], state=ModelState(e["state"]), created_utc=e["created_utc"],
                 dataset_snapshot_id=e.get("dataset_snapshot_id", ""), metrics=e.get("metrics", {}),
-                notes=e.get("notes", ""),
+                notes=e.get("notes", ""), code_sha=e.get("code_sha", ""),
+                dataset_version=e.get("dataset_version", ""),
+                approved_by=e.get("approved_by", ""), approved_at=e.get("approved_at", ""),
             )
         self._production = data.get("production")
         self._prod_history = list(data.get("production_history", []))
@@ -96,7 +104,7 @@ class ModelRegistry:
         self._path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 
     def register(self, version: str, dataset_snapshot_id: str, metrics: Dict[str, float],
-                 notes: str = "") -> ModelEntry:
+                 notes: str = "", code_sha: str = "", dataset_version: str = "") -> ModelEntry:
         """Register a new model in SHADOW state. Never auto-promotes."""
         if version in self._entries:
             raise ValueError(f"version {version} already registered")
@@ -104,16 +112,23 @@ class ModelRegistry:
             version=version, state=ModelState.SHADOW,
             created_utc=datetime.now(timezone.utc).isoformat(),
             dataset_snapshot_id=dataset_snapshot_id, metrics=dict(metrics), notes=notes,
+            code_sha=code_sha, dataset_version=dataset_version or dataset_snapshot_id,
         )
         self._entries[version] = entry
         self._save()
         return entry
 
-    def promote(self, version: str) -> ModelEntry:
-        """Promote a SHADOW model to PRODUCTION only if it clears the safety gate."""
+    def promote(self, version: str, *, approved_by: str) -> ModelEntry:
+        """Promote a SHADOW model to PRODUCTION. Requires BOTH:
+          (1) an explicit human approver (`approved_by`, non-empty), and
+          (2) clearing the safety gate (critical-recall floor + no regression vs current prod).
+        Never auto-promotes; a promotion is always an explicit, attributed human action."""
         entry = self._entries.get(version)
         if entry is None:
             raise ValueError(f"unknown version {version}")
+        if not approved_by or not str(approved_by).strip():
+            raise PermissionError("promotion requires an explicit approver (approved_by); "
+                                  "models are never auto-promoted.")
         prod_metrics = self._entries[self._production].metrics if self._production else None
         ok, reason = PromotionGate.evaluate(entry.metrics, prod_metrics)
         if not ok:
@@ -125,6 +140,8 @@ class ModelRegistry:
             self._entries[self._production].state = ModelState.ARCHIVED
             self._prod_history.append(self._production)
         entry.state = ModelState.PRODUCTION
+        entry.approved_by = str(approved_by).strip()
+        entry.approved_at = datetime.now(timezone.utc).isoformat()
         self._production = version
         self._save()
         return entry
