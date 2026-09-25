@@ -154,6 +154,138 @@ class OpenWorldRetriever:
         rare = [c for c in cands if c.tier != "TIER1_DEEP"]
         return rare[:limit]
 
+    def retrieve_by_code(self, system: str, code: str) -> List[RetrievedCandidate]:
+        """Direct code match (SNOMED/ICD). A high-confidence retrieval signal independent of text."""
+        out = []
+        for concept in self._catalog.map_external_code(system, code):
+            out.append(RetrievedCandidate(
+                concept=concept, match_score=0.97, match_kind="code",
+                tier=concept.tier.value, curation_status=concept.curation_status,
+                is_curated=concept.curation_status in ("DEEP", "STRUCTURED"),
+            ))
+        return out
+
+    def _expand_hierarchy(self, candidates: List[RetrievedCandidate],
+                          per_parent: int = 2) -> List[RetrievedCandidate]:
+        """Add ontology CHILDREN of matched concepts as lower-scored siblings, so a match on a
+        parent concept surfaces its more-specific descendants too (a retrieval-recall boost, not a
+        ranking claim). Children are scored below their parent and tagged match_kind='hierarchy'."""
+        extra: List[RetrievedCandidate] = []
+        seen = {c.concept.concept_id for c in candidates}
+        for cand in candidates[:8]:  # bound the expansion
+            for child in self._catalog.get_children(cand.concept.concept_id)[:per_parent]:
+                if child.concept_id in seen:
+                    continue
+                seen.add(child.concept_id)
+                extra.append(RetrievedCandidate(
+                    concept=child, match_score=max(0.4, cand.match_score - 0.2),
+                    match_kind="hierarchy", tier=child.tier.value,
+                    curation_status=child.curation_status,
+                    is_curated=child.curation_status in ("DEEP", "STRUCTURED"),
+                ))
+        return extra
+
+    def retrieve_multi_signal(self, *, chief_complaint: str = "", symptoms: Sequence[str] = (),
+                              history: Sequence[str] = (), lab_concepts: Sequence[str] = (),
+                              imaging_concepts: Sequence[str] = (),
+                              codes: Sequence[tuple] = (), limit: int = 20,
+                              expand_hierarchy: bool = True) -> List[RetrievedCandidate]:
+        """Fuse MULTIPLE retrieval signals into one deduplicated, best-score-per-concept candidate
+        list. Signals: chief complaint text, symptom concepts, history concepts, lab/imaging finding
+        concepts, and external codes (system, code). Optionally expands the ontology hierarchy of the
+        strongest matches. This raises retrieval RECALL (getting the true diagnosis into the pool),
+        which is distinct from ranking — the deep re-ranker/LLM/safety layers decide final order.
+
+        Every signal is text/code lookup against the catalog; there is no external call. A weak or
+        empty signal simply contributes nothing (never fabricates)."""
+        best: dict = {}
+
+        def offer(cands: List[RetrievedCandidate]) -> None:
+            for c in cands:
+                cur = best.get(c.concept.concept_id)
+                if cur is None or c.match_score > cur.match_score:
+                    best[c.concept.concept_id] = c
+
+        if chief_complaint:
+            offer(self.retrieve(chief_complaint, limit=limit))
+        for term in list(symptoms) + list(history) + list(lab_concepts) + list(imaging_concepts):
+            if term and len(str(term).strip()) >= MIN_QUERY_SIGNAL_CHARS:
+                offer(self.retrieve(str(term), limit=max(5, limit // 2)))
+        for entry in codes:
+            try:
+                system, code = entry
+            except (ValueError, TypeError):
+                continue
+            offer(self.retrieve_by_code(str(system), str(code)))
+
+        merged = list(best.values())
+        if expand_hierarchy and merged:
+            merged.extend(self._expand_hierarchy(sorted(merged, key=lambda c: -c.match_score)))
+            # de-dup again after expansion (children may already have been offered)
+            dedup: dict = {}
+            for c in merged:
+                cur = dedup.get(c.concept.concept_id)
+                if cur is None or c.match_score > cur.match_score:
+                    dedup[c.concept.concept_id] = c
+            merged = list(dedup.values())
+
+        merged.sort(key=lambda c: (-c.match_score, c.concept.canonical_name))
+        return merged[:limit]
+
+    def assess_multi_signal(self, *, chief_complaint: str = "", symptoms: Sequence[str] = (),
+                            history: Sequence[str] = (), lab_concepts: Sequence[str] = (),
+                            imaging_concepts: Sequence[str] = (), codes: Sequence[tuple] = (),
+                            limit: int = 20, rare_fallback: bool = True) -> OpenWorldAssessment:
+        """Open-world classification over FUSED signals, with a rare-disease fallback: if no
+        curated candidate is confident enough, retry the rare/ontology path before concluding.
+        UNKNOWN_PRESENTATION is still a permitted final outcome — we never force a label."""
+        query_repr = chief_complaint or " ".join(symptoms) or " ".join(history)
+        candidates = self.retrieve_multi_signal(
+            chief_complaint=chief_complaint, symptoms=symptoms, history=history,
+            lab_concepts=lab_concepts, imaging_concepts=imaging_concepts, codes=codes, limit=limit)
+
+        if not candidates:
+            if rare_fallback and query_repr:
+                rare = self.retrieve_rare(query_repr, limit=limit)
+                if rare:
+                    return OpenWorldAssessment(
+                        outcome=OpenWorldOutcome.POSSIBLE_UNMAPPED_CONDITION, query=query_repr,
+                        candidates=rare,
+                        rationale="No curated candidate matched the fused signals; rare/ontology "
+                                  "retrieval surfaced possibilities (not confirmed).")
+            if not query_repr or len(query_repr.strip()) < MIN_QUERY_SIGNAL_CHARS:
+                return OpenWorldAssessment(outcome=OpenWorldOutcome.INSUFFICIENT_INFORMATION,
+                                           query=query_repr,
+                                           rationale="Too little signal to retrieve responsibly.")
+            return OpenWorldAssessment(outcome=OpenWorldOutcome.UNKNOWN_PRESENTATION, query=query_repr,
+                                       rationale="No plausible match across all signals; outside "
+                                                 "known coverage. Escalate to human differential.")
+
+        top = candidates[0]
+        curated_confident = [c for c in candidates if c.is_curated and c.match_score >= KNOWN_MATCH_THRESHOLD]
+        if curated_confident:
+            outcome = OpenWorldOutcome.KNOWN_CONDITION
+            rationale = (f"Confident curated match '{curated_confident[0].concept.canonical_name}' "
+                         f"across fused signals.")
+        elif top.match_score >= POSSIBLE_MATCH_THRESHOLD:
+            outcome = OpenWorldOutcome.POSSIBLE_UNMAPPED_CONDITION
+            rationale = (f"Candidates found but none confidently curated; highest "
+                         f"'{top.concept.canonical_name}' ({top.tier}, {top.match_score:.2f}). "
+                         "Treat as possible.")
+        else:
+            # weak matches only -> try rare path before declaring unknown
+            if rare_fallback and query_repr:
+                rare = self.retrieve_rare(query_repr, limit=limit)
+                if rare and rare[0].match_score >= POSSIBLE_MATCH_THRESHOLD:
+                    return OpenWorldAssessment(
+                        outcome=OpenWorldOutcome.POSSIBLE_UNMAPPED_CONDITION, query=query_repr,
+                        candidates=rare, rationale="Rare/ontology retrieval surfaced a possibility.")
+            outcome = OpenWorldOutcome.UNKNOWN_PRESENTATION
+            rationale = ("Only weak matches across all signals; prefer explicit uncertainty over a "
+                         "low-confidence label.")
+        return OpenWorldAssessment(outcome=outcome, query=query_repr, candidates=candidates,
+                                   rationale=rationale)
+
     # -- open-world classification ----------------------------------------
     def assess(self, query: str, limit: int = 15) -> OpenWorldAssessment:
         q = (query or "").strip()

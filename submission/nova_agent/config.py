@@ -107,6 +107,18 @@ class NovaConfig:
     ontology_broadening_max: int = field(
         default_factory=lambda: _int_env("NOVA_ONTOLOGY_BROADENING_MAX", 5))
 
+    # --- Optional ML ranker (HOSPITAL deployment only; NEVER in the competition submission) ------
+    # ml_ranker_enabled: master switch for the optional deep-learning candidate ranker. DEFAULT
+    # FALSE. When false the ML subsystem is never consulted and behavior is unchanged.
+    # ml_shadow_mode: when true (default), the ML ranker runs in SHADOW — its ordering is computed
+    # and audited but NEVER changes the clinician-facing result. Active (non-shadow) mode requires
+    # BOTH ml_ranker_enabled=true AND ml_shadow_mode=false AND an approved model, and even then the
+    # deterministic Safety Guard remains authoritative (Safety Guard > ML Ranker > LLM).
+    # ml_model_path: filesystem path to an approved checkpoint (.pt + .json sidecar). Empty => no model.
+    ml_ranker_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ML_RANKER_ENABLED", False))
+    ml_shadow_mode: bool = field(default_factory=lambda: _bool_env("NOVA_ML_SHADOW_MODE", True))
+    ml_model_path: str = field(default_factory=lambda: _str_env("NOVA_ML_MODEL_PATH", ""))
+
     # llm_provider: 'mock' (default, offline/deterministic) | 'anthropic' | 'openai_compatible'
     # (any OpenAI Chat Completions-compatible HTTP endpoint: local vLLM/llama.cpp/ollama, or a
     # hosted API) | 'local' (openai_compatible preset for a local server) | 'competition' (reads
