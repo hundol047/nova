@@ -66,6 +66,23 @@ under a 12-concurrent-writer HTTP-level test
 in-memory-backend scenarios and holds the identical guarantee (`turn_count == n`, no lost or
 duplicated turns) for the Postgres backend too.
 
+**Schema migrations + versioning**: the Postgres schema is managed by an ordered, idempotent SQL
+migration runner (`backend/app/services/nova_migrations.py`), not ad-hoc `CREATE TABLE IF NOT
+EXISTS`. A `schema_migrations(version, description, applied_at)` table records applied versions;
+`apply_migrations()` runs at repository init (advisory-lock serialized, so concurrent starters are
+safe) and applies only the not-yet-applied versions in order. Migration `0001` reproduces the
+original baseline (an existing pre-migration database adopts it transparently); `0002` adds a
+`state_schema_version` column on `nova_cases` (a forward-compatibility marker written on create and
+read back). Each case row therefore carries the schema version its persisted `PatientState` was
+written under. These are exercised against a real database by `backend/tests/test_nova_migrations.py`
+(empty-DB apply + idempotency, pre-migration data preservation, `state_schema_version` round-trip).
+
+**CI enforcement**: a dedicated `postgres-integration` GitHub Actions job runs all of the above
+against a real `postgres:16` service. It sets `NOVA_CI_REQUIRE_POSTGRES=1`, which makes
+`backend/tests/conftest.py` turn a would-be "no Postgres reachable" skip into a hard **failure** —
+so the durable-persistence integration can never be silently skipped in CI and mistaken for
+verified. (A local developer without Postgres still gets a clean skip.)
+
 ## Containerization
 
 `docker/Dockerfile` now also `COPY`s `nova_agent/` into the image (no new pip dependency --

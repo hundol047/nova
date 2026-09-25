@@ -34,7 +34,7 @@ sys.path.insert(0, str(ROOT))
 # honesty check, never a tuning target, so leakage from ANY of them into agent core is a problem,
 # not just the most recent one.
 BLIND_MODULES = ["evaluation.blind_cases_v3", "evaluation.blind_cases_v4", "evaluation.blind_cases_v5",
-                  "evaluation.blind_cases_v6"]
+                  "evaluation.blind_cases_v6", "evaluation.blind_cases_v8"]
 
 # Agent-core source the blind sets must never leak into. Deliberately excludes evaluation/ itself
 # (a blind case file referencing its own sibling files, or scripts, is not leakage) and tests/
