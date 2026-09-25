@@ -84,11 +84,21 @@ def validate_production_startup() -> None:
             "a hospital EMR."
         )
 
-    if not os.getenv("SYNEX_AUDIT_PATH") and not os.getenv("SYNEX_REDIS_URL"):
+    nova_postgres_url = os.getenv("NOVA_POSTGRES_URL")
+    if not os.getenv("SYNEX_AUDIT_PATH") and not os.getenv("SYNEX_REDIS_URL") and not nova_postgres_url:
         problems.append(
-            "Neither SYNEX_AUDIT_PATH nor SYNEX_REDIS_URL is set -- the audit log would default to "
-            "an in-container SQLite path that does not survive a container replacement. Set "
-            "SYNEX_AUDIT_PATH to a mounted persistent volume path."
+            "Neither SYNEX_AUDIT_PATH, SYNEX_REDIS_URL, nor NOVA_POSTGRES_URL is set -- the audit "
+            "log would default to an in-container SQLite path that does not survive a container "
+            "replacement. Set SYNEX_AUDIT_PATH to a mounted persistent volume path, or "
+            "NOVA_POSTGRES_URL for PostgresAuditStore."
+        )
+
+    if not nova_postgres_url:
+        problems.append(
+            "NOVA_POSTGRES_URL is not set -- N.O.V.A. cases would be held in the in-process "
+            "NovaCaseRepository, which loses every open case on restart or redeploy (spec: never "
+            "in-memory as a production default). Set NOVA_POSTGRES_URL to a real Postgres server "
+            "so PostgresNovaCaseRepository is used instead (see services/nova_repository.py)."
         )
 
     if problems:

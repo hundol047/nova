@@ -55,7 +55,7 @@ backend/app/
   services/
     nova_service.py              NovaService -- the ONLY code that touches nova_agent internals
     nova_fhir_mapper.py           Patient/ClinicalEncounter -> PatientState (read-only, one direction)
-    nova_repository.py            NovaCaseRepository (in-memory; see Remaining blockers)
+    nova_repository.py            NovaCaseRepository (in-memory dev/test default) + PostgresNovaCaseRepository (NOVA_POSTGRES_URL)
     nova_observability.py         structured logging + in-process metrics
     production_guard.py           NOVA_ENV=production startup validation
     auth.py                       UNCHANGED except for 3 new permissions (nova:read/invoke/review)

@@ -14,8 +14,10 @@ production, fails fast (crashes startup, never serves a single request) if any o
   `NOVA_ENV=production` (e.g. infra testing) without real patient data.
 - `EMR_MODE=fhir` but `FHIR_BASE_URL` missing.
 - `CDS_AUTH_MODE=none` -- the CDS Hooks execution endpoint would accept unauthenticated calls.
-- Neither `SYNEX_AUDIT_PATH` nor `SYNEX_REDIS_URL` set -- the audit log would default to an
-  in-container SQLite path that does not survive a container replacement.
+- Neither `SYNEX_AUDIT_PATH`, `SYNEX_REDIS_URL`, nor `NOVA_POSTGRES_URL` set -- the audit log would
+  default to an in-container SQLite path that does not survive a container replacement.
+- `NOVA_POSTGRES_URL` not set -- N.O.V.A. cases would be held in the in-process
+  `NovaCaseRepository`, which loses every open case on restart or redeploy.
 
 ## Configuration reference (new/N.O.V.A.-relevant variables)
 
@@ -26,6 +28,7 @@ production, fails fast (crashes startup, never serves a single request) if any o
 | `NOVA_CB_FAILURE_THRESHOLD` | `5` | LLM circuit breaker consecutive-failure threshold |
 | `NOVA_CB_COOLDOWN_SECONDS` | `30` | LLM circuit breaker open-state cooldown |
 | `NOVA_LLM_PROVIDER` | `mock` | `nova_agent`'s own provider setting (`nova_agent/config.py`) |
+| `NOVA_POSTGRES_URL` | unset | Set to a real Postgres DSN to switch both `NovaCaseRepository` and `AuditStore` to their durable, restart-surviving Postgres-backed implementations (see Persistence below). Required in `NOVA_ENV=production`. |
 
 Every other variable (`AUTH_MODE`, `EMR_MODE`, `OIDC_ISSUER`/`OIDC_AUDIENCE`, `FHIR_BASE_URL`/
 `FHIR_CLIENT_ID`/`FHIR_CLIENT_SECRET`, `CDS_AUTH_MODE`, `SYNEX_REDIS_URL`, `SYNEX_AUDIT_PATH`) is
@@ -33,14 +36,28 @@ this backend's existing configuration, unchanged.
 
 ## Persistence
 
-`backend/app/services/nova_repository.py`'s `NovaCaseRepository` is process-memory-only -- the
-same limitation every other Clinical Workspace repository in this backend already has
-(`EncounterRepository`/`ClinicalNoteRepository`/... all wrap `DemoAdapter.mutate()`, itself
-process memory). **A real production deployment needs a database-backed implementation of the same
-interface** (`create`/`get`/`save`/`try_apply_observation`/`close`/`list_for_patient`) before case
-data survives a container restart or is shared across replicas. This is a genuine, disclosed
-remaining blocker -- see Remaining blockers below and `docker-compose.production.yml`'s own note on
-why Postgres is started there but not yet consumed.
+`backend/app/services/nova_repository.py`'s `NovaCaseRepository` (in-memory) is the dev/test
+default -- the same limitation every other Clinical Workspace repository in this backend has by
+default (`EncounterRepository`/`ClinicalNoteRepository`/... all wrap `DemoAdapter.mutate()`, itself
+process memory). Setting `NOVA_POSTGRES_URL` switches both N.O.V.A. cases and the audit log to
+durable, restart-surviving Postgres-backed implementations that share the exact same interface
+(`PostgresNovaCaseRepository`: `create`/`get`/`save`/`try_apply_observation`/`update_locale`/
+`close`/`list_for_patient`; `PostgresAuditStore`: `record`/`save_analysis`/`get_analysis`/`list`) --
+`production_guard.validate_production_startup()` refuses to start in `NOVA_ENV=production` without
+it, so a real deployment cannot silently fall back to the in-memory default. See
+`backend/tests/test_nova_postgres_repository.py`/`test_audit_postgres.py` for tests run against a
+real local Postgres server (not a mock).
+
+**Known remaining gap** (tracked, not hidden): `try_apply_observation` is fully atomic under
+concurrent Postgres writers (the same `PRIMARY KEY` insert primitive `idempotency.py` uses), and
+`update_locale`/`close` are single-transaction `SELECT ... FOR UPDATE` read-modify-writes, so both
+are race-safe. The `get()` -> mutate in Python -> `save()` cycle `add_observation()`/`decide()`
+drive is NOT atomic across that gap by construction (the repository interface hands the caller a
+plain object between calls, not an open transaction); `PostgresNovaCaseRepository` uses optimistic
+concurrency (a `version` column) so a genuine write race is *detected and rejected*
+(`ConcurrentModificationError` -> `NovaService.StorageError`, HTTP 503) rather than silently
+overwriting the other writer's turn. A caller-side retry-on-conflict loop would close this
+remaining gap and is tracked as follow-up work, not something this document claims is solved.
 
 ## Containerization
 
@@ -71,9 +88,9 @@ Actions' normal network access -- check that job's latest run for the actual ver
 
 An overlay profile (`docker compose -f docker-compose.yml -f docker-compose.production.yml up`)
 adding Redis (already supported by `idempotency.py`/`smart_launch.py`/`auth.py` via
-`SYNEX_REDIS_URL`) and Postgres (documents the intended persistence target; not yet consumed by a
-repository -- see Persistence above). Real secrets are never baked into either compose file --
-supply via `--env-file` or a secret manager.
+`SYNEX_REDIS_URL`) and Postgres (now consumed by `PostgresNovaCaseRepository`/`PostgresAuditStore`
+via `NOVA_POSTGRES_URL` -- see Persistence above). Real secrets are never baked into either compose
+file -- supply via `--env-file` or a secret manager.
 
 ## CI/CD
 

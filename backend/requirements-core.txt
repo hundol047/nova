@@ -13,3 +13,9 @@ httpx==0.28.1
 pyjwt==2.10.1
 cryptography==44.0.0
 redis==8.1.0
+# Postgres driver for PostgresNovaCaseRepository/PostgresAuditRepository (see
+# services/nova_repository.py, services/audit.py) -- an opt-in production-grade backend selected
+# via NOVA_POSTGRES_URL, same shape as the existing SYNEX_REDIS_URL opt-in for idempotency/smart
+# launch. Always installed (like redis above) so the opt-in works without a separate deploy step;
+# the binary wheel avoids needing libpq-dev to build from source.
+psycopg[binary]==3.2.4

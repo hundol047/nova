@@ -2,12 +2,10 @@
 #
 # Adds Redis (shared session/idempotency/auth-session state across replicas -- see
 # services/idempotency.py, services/smart_launch.py, services/auth.py, all of which already
-# support SYNEX_REDIS_URL as an alternative to their SQLite-file default) and Postgres, started
-# here for local rehearsal of a production-shaped topology -- backend/app itself does not yet have
-# a Postgres-backed AuditRepository/NovaCaseRepository (both are SQLite/in-memory today; see
-# docs/NOVA_DEPLOYMENT.md's Remaining blockers). Starting Postgres here documents the intended
-# target and lets an operator rehearse networking/secrets wiring before that repository swap ships;
-# it is not yet consumed by the running app.
+# support SYNEX_REDIS_URL as an alternative to their SQLite-file default) and Postgres, backing
+# PostgresNovaCaseRepository/PostgresAuditStore via NOVA_POSTGRES_URL below (see
+# services/nova_repository.py, services/audit.py, docs/NOVA_DEPLOYMENT.md's Persistence section) --
+# without it, validate_production_startup() refuses to boot under NOVA_ENV=production.
 #
 # Real secrets (OIDC_ISSUER/OIDC_AUDIENCE, FHIR_BASE_URL/FHIR_CLIENT_ID/FHIR_CLIENT_SECRET,
 # NOVA_LLM_PROVIDER + its API key, POSTGRES_PASSWORD) are intentionally NOT set here -- pass them
@@ -18,6 +16,10 @@ services:
     environment:
       NOVA_ENV: production
       SYNEX_REDIS_URL: redis://redis:6379/0
+      # POSTGRES_PASSWORD is supplied via --env-file/secret manager (never baked in here), so this
+      # DSN is deliberately incomplete without it -- matches this service's own POSTGRES_PASSWORD
+      # comment below.
+      NOVA_POSTGRES_URL: postgresql://synexagent:${POSTGRES_PASSWORD}@postgres:5432/synexagent
       # AUTH_MODE/EMR_MODE/NOVA_LLM_PROVIDER/CDS_AUTH_MODE/OIDC_*/FHIR_* are deliberately left unset
       # here -- services/production_guard.py's validate_production_startup() fails the container
       # fast at boot if any required one is still missing, rather than this file silently supplying

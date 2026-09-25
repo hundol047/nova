@@ -54,7 +54,8 @@ from nova_agent.state import PatientState
 from ..schemas import ClinicalEncounter, Patient
 from .nova_fhir_mapper import apply_patient_context, demographics_for
 from .nova_observability import get_nova_metrics, log_event
-from .nova_repository import CaseConflict, NotFound, NovaCaseRecord, NovaCaseRepository, new_case_id
+from .nova_repository import (CaseConflict, ConcurrentModificationError, NotFound, NovaCaseRecord,
+                               RepositoryError, build_nova_case_repository, new_case_id)
 
 AGENT_VERSION = "1.0.0"
 SCHEMA_VERSION = "1"
@@ -108,10 +109,12 @@ class EMRUnavailableError(NovaServiceError):
 
 
 class StorageError(NovaServiceError):
-    """An unexpected failure from the case repository itself -- never raised by the current
-    in-memory NovaCaseRepository (a plain dict write cannot fail), but a real database-backed
-    implementation can raise here (connection loss, constraint violation) without every call site
-    needing its own translation logic."""
+    """An unexpected failure from the case repository itself -- never raised by the in-memory
+    NovaCaseRepository (a plain dict write cannot fail), but PostgresNovaCaseRepository raises
+    RepositoryError (connection loss, etc.) or ConcurrentModificationError (a genuine write race on
+    the same case -- see nova_repository.py's module docstring) and both are translated to this one
+    error here, so no call site below needs its own psycopg-specific translation logic. 503, not
+    500: this is a transient infrastructure condition a retry can resolve, not a code defect."""
     error_code = "storage_error"
     http_status = 503
 
@@ -215,8 +218,11 @@ def _float_env(name: str, default: float) -> float:
 
 
 class NovaService:
-    def __init__(self) -> None:
-        self.repository = NovaCaseRepository()
+    def __init__(self, repository=None) -> None:
+        # build_nova_case_repository() selects PostgresNovaCaseRepository when NOVA_POSTGRES_URL is
+        # set, else the in-memory NovaCaseRepository (dev/test default) -- see nova_repository.py's
+        # module docstring. `repository` lets tests inject a specific backend directly.
+        self.repository = repository if repository is not None else build_nova_case_repository()
         self.circuit_breaker = _LLMCircuitBreaker(
             failure_threshold=_int_env("NOVA_CB_FAILURE_THRESHOLD", 5),
             cooldown_seconds=_float_env("NOVA_CB_COOLDOWN_SECONDS", 30.0),
@@ -265,6 +271,8 @@ class NovaService:
                                            agent_version=AGENT_VERSION, kb_version=kb_fingerprint())
         except CaseConflict as exc:
             raise CaseConflictError(str(exc)) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
 
     def add_observation(self, case_id: str, *, observation_id: str, action_type: str, key: str,
                          result: str) -> tuple[NovaCaseRecord, bool]:
@@ -272,14 +280,23 @@ class NovaService:
             record = self.repository.get(case_id)
         except NotFound as exc:
             raise CaseNotFoundError(case_id) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
         if record.status == "closed":
             raise CaseClosedError(f"Case {case_id!r} is closed; no further observations can be recorded.")
-        applied = self.repository.try_apply_observation(case_id, observation_id)
-        if applied:
-            agent = DoctorAgent()
-            action = AgentAction(action_type=action_type, key=key, content=key, rationale="")
-            agent.observe(record.state, action, result)
-            self.repository.save(record)
+        try:
+            applied = self.repository.try_apply_observation(case_id, observation_id)
+            if applied:
+                agent = DoctorAgent()
+                action = AgentAction(action_type=action_type, key=key, content=key, rationale="")
+                agent.observe(record.state, action, result)
+                self.repository.save(record)
+        except (RepositoryError, ConcurrentModificationError) as exc:
+            # A genuine write race on this case between our get() above and save() here -- surfaced
+            # as a transient 503 (a caller retry re-reads the now-current state) rather than
+            # silently discarding this observation. See nova_repository.py's module docstring;
+            # closing this gap with an automatic server-side retry is tracked separately.
+            raise StorageError(str(exc)) from exc
         return record, applied
 
     def decide(self, case_id: str) -> DecideResult:
@@ -287,6 +304,8 @@ class NovaService:
             record = self.repository.get(case_id)
         except NotFound as exc:
             raise CaseNotFoundError(case_id) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
         if record.status == "closed":
             raise CaseClosedError(f"Case {case_id!r} is closed; no further decisions can be made.")
 
@@ -300,7 +319,10 @@ class NovaService:
         self.circuit_breaker.record_outcome(attempted=attempted_real_call,
                                              succeeded=success_after > success_before)
 
-        self.repository.save(record)
+        try:
+            self.repository.save(record)
+        except (RepositoryError, ConcurrentModificationError) as exc:
+            raise StorageError(str(exc)) from exc
         versions = {"agent_version": AGENT_VERSION, "schema_version": SCHEMA_VERSION,
                     "prompt_version": PROMPT_VERSION, "kb_version": kb_fingerprint(),
                     "model_version": model_version()}
@@ -312,15 +334,21 @@ class NovaService:
             return self.repository.get(case_id)
         except NotFound as exc:
             raise CaseNotFoundError(case_id) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
 
     def update_locale(self, case_id: str, locale: str) -> NovaCaseRecord:
         try:
             return self.repository.update_locale(case_id, locale)
         except NotFound as exc:
             raise CaseNotFoundError(case_id) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
 
     def close_case(self, case_id: str, *, reason: str = "") -> NovaCaseRecord:
         try:
             return self.repository.close(case_id, reason=reason)
         except NotFound as exc:
             raise CaseNotFoundError(case_id) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc

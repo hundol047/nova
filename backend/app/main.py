@@ -14,7 +14,7 @@ from .services.risk_inference import RiskEngine
 from .services.rule_engine import CATALOG, DRUGS
 from .services.emr_adapter import DemoAdapter, FHIRAdapter, SmartOAuthClient, SmartSessionTokenProvider, SmartAuthRequired
 from .services.clinical_agent import ClinicalAgent
-from .services.audit import AuditStore
+from .services.audit import build_audit_store
 from .services.terminology_mapper import patient_terminology
 from .services.data_quality import assess as assess_data_quality
 from .services.cds_hooks import SERVICES_DOC, build_cards
@@ -86,7 +86,7 @@ async def lifespan(app):
     app.state.engine=RiskEngine()
     app.state.agent=ClinicalAgent(app.state.engine)
     app.state.adapter=build_adapter()
-    app.state.audit=AuditStore()
+    app.state.audit=build_audit_store()
     # Clinical Workspace repositories -- see services/repositories.py. All wrap app.state.adapter,
     # so EMR_MODE=fhir naturally gets NotImplementedError from adapter.mutate() on any write (no
     # local write-back to a real hospital system), translated to 501 by call() below.
