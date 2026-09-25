@@ -195,10 +195,23 @@ def check_current_blind_consistency() -> dict:
     man = _blind_manifest_ok(v)
     if man["status"] != PASS:
         return {"status": FAIL, "detail": f"current blind {v}: {man['detail']}"}
-    # leakage scanner must reference the current version
+    # leakage scanner must cover the current version. It derives BLIND_MODULES from
+    # evaluation.current_blind (blind_module_names), so accept EITHER the dynamic derivation OR an
+    # explicit literal reference to blind_cases_<v>.
     scan = _read("scripts/check_eval_leakage.py")
-    if f"blind_cases_{v}" not in scan:
-        return {"status": FAIL, "detail": f"leakage scanner missing blind_cases_{v}"}
+    covers = (f"blind_cases_{v}" in scan) or ("blind_module_names" in scan) or ("current_blind" in scan)
+    if not covers:
+        return {"status": FAIL, "detail": f"leakage scanner does not cover blind_cases_{v}"}
+    # And confirm the derivation actually includes the current version.
+    try:
+        import importlib.util as _u
+        spec = _u.spec_from_file_location("_cb2", ROOT / "evaluation" / "current_blind.py")
+        mod = _u.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if f"evaluation.blind_cases_{v}" not in mod.blind_module_names():
+            return {"status": FAIL, "detail": f"current_blind.blind_module_names() missing {v}"}
+    except Exception as exc:  # noqa: BLE001
+        return {"status": FAIL, "detail": f"current_blind derivation failed: {type(exc).__name__}"}
     # verifier must not hard-code a DIFFERENT version as current (self-check)
     return {"status": PASS, "detail": f"current blind = {v}; frozen hash matches; leakage scanner includes it"}
 
