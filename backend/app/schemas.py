@@ -53,6 +53,12 @@ class Lab(StrictModel):
     date: date
     low: Optional[float] = Field(default=None, allow_inf_nan=False)
     high: Optional[float] = Field(default=None, allow_inf_nan=False)
+    # Optional LOINC code, populated by FHIRAdapter when a real Observation resource carries one
+    # (emr_adapter.py already extracts this for the height/weight special-case Observations --
+    # this field lets it be preserved for every OTHER Observation too, instead of being read and
+    # then discarded). None for DemoAdapter-sourced labs and any legacy payload that omits it --
+    # every existing patients.json entry and test fixture keeps validating unchanged.
+    loinc: Optional[str] = Field(default=None, max_length=20)
 
 class Encounter(StrictModel):
     id: str

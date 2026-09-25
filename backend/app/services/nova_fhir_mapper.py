@@ -36,6 +36,7 @@ from nova_agent.state import PatientState
 from nova_agent.vitals_parser import describe_vital_sign_abnormalities
 
 from ..schemas import ClinicalEncounter, Patient, VitalSigns
+from .clinical_code_mapper import map_lab
 from .rule_engine import DRUGS
 
 
@@ -72,11 +73,17 @@ def _format_vitals(v: VitalSigns) -> str:
     return ", ".join(parts)
 
 
-def apply_patient_context(state: PatientState, patient: Patient, encounter: Optional[ClinicalEncounter] = None) -> None:
+def apply_patient_context(state: PatientState, patient: Patient,
+                           encounter: Optional[ClinicalEncounter] = None) -> list:
     """Populates PatientState with everything already known about this patient/encounter in the
     EMR at case-creation time -- called once, right after DoctorAgent.new_case(), before the first
     decide(). Never called again mid-case (later facts arrive through the normal ASK/EXAM/TEST
-    observation flow, exactly like any other N.O.V.A. case)."""
+    observation flow, exactly like any other N.O.V.A. case).
+
+    Returns the list of labs whose LOINC code/display text had no canonical clinical_code_mapper.py
+    mapping (each a `{"raw_code": ..., "raw_display": ...}` dict) -- never discarded silently, so
+    the caller can surface it for ops/dev visibility (nova_service.py increments a metrics counter
+    with this count)."""
     for condition in patient.conditions:
         if condition and condition not in state.past_medical_history:
             state.past_medical_history.append(condition)
@@ -97,11 +104,50 @@ def apply_patient_context(state: PatientState, patient: Patient, encounter: Opti
         if text not in state.allergy_text:
             state.allergy_text.append(text)
 
+    unmapped_clinical_codes: list = []
     for lab in patient.labs:
         range_note = ""
         if lab.low is not None or lab.high is not None:
             range_note = f" (ref {lab.low if lab.low is not None else '?'}-{lab.high if lab.high is not None else '?'})"
-        state.laboratory_tests[lab.name] = f"{lab.value} {lab.unit}{range_note}"
+        value_text = f"{lab.value} {lab.unit}{range_note}"
+        # Raw display-name key, always written -- unchanged existing behavior, so plain
+        # word-overlap matching against `lab.name` keeps working for every lab regardless of
+        # whether it also has a canonical mapping below (spec: never lose a fact for not fitting
+        # a structured model perfectly, same principle this module's own docstring states for
+        # medications/allergies).
+        state.laboratory_tests[lab.name] = value_text
+        mapped = map_lab(lab.name, lab.loinc)
+        if mapped.canonical_id is not None and mapped.nova_state_key != lab.name:
+            # ADDITIONALLY keyed under nova_agent's own canonical raw key (e.g. "potassium",
+            # "troponin") so objective_evidence.py's numeric/qualitative interpretation finds it
+            # directly -- additive, never replacing the raw-name key above.
+            state.laboratory_tests[mapped.nova_state_key] = f"{lab.value} {lab.unit}"
+        elif mapped.canonical_id is None:
+            # Never silently discarded (spec): surfaced for ops/dev visibility even though the
+            # raw-name key above still lets plain word-overlap matching see this lab's value.
+            unmapped_clinical_codes.append({"raw_code": mapped.raw_code, "raw_display": mapped.raw_display})
+
+    # DiagnosticReport/ImagingStudy (spec: connect these FHIR resources into PatientState evidence
+    # -- FHIRAdapter already fetches them into Patient.diagnostic_reports/imaging_studies, see
+    # schemas.py's own comment on those fields, but until now nothing on the N.O.V.A. side ever
+    # read them). Written into state.imaging (already scanned by state.all_findings_text() for
+    # scoring, and by candidate_generator.py's imaging_match source) preserving status/modality/
+    # date exactly as FHIR reported them, rather than discarding that context to just the
+    # conclusion/description text.
+    for report in patient.diagnostic_reports:
+        if not (report.name or report.conclusion):
+            continue
+        date_part = f", {report.date}" if report.date else ""
+        state.imaging[f"diagnostic_report:{report.id}"] = (
+            f"{report.name}: {report.conclusion} (status={report.status or 'unknown'}{date_part})"
+        )
+    for study in patient.imaging_studies:
+        if not (study.modality or study.description):
+            continue
+        date_part = f", {study.date}" if study.date else ""
+        state.imaging[f"imaging_study:{study.id}"] = (
+            f"{study.modality}: {study.description}{date_part}"
+        )
 
     vitals_list = encounter.vital_signs if encounter else []
     if vitals_list:
@@ -116,3 +162,5 @@ def apply_patient_context(state: PatientState, patient: Patient, encounter: Opti
         for finding in describe_vital_sign_abnormalities(nova_vitals):
             if finding not in state.vital_sign_findings:
                 state.vital_sign_findings.append(finding)
+
+    return unmapped_clinical_codes

@@ -3,7 +3,7 @@ No FastAPI app involved -- constructs Patient/ClinicalEncounter/VitalSigns objec
 inspects the resulting PatientState fields.
 """
 
-from app.schemas import Allergy, ClinicalEncounter, Lab, Medication, Patient, VitalSigns
+from app.schemas import Allergy, ClinicalEncounter, DiagnosticReport, ImagingStudy, Lab, Medication, Patient, VitalSigns
 from app.services.nova_fhir_mapper import apply_patient_context, demographics_for
 
 
@@ -87,3 +87,75 @@ def test_no_encounter_means_no_vitals_populated():
     state = DoctorAgent().new_case(case_id='c6', chief_complaint='cough', demographics=demographics_for(p))
     apply_patient_context(state, p, None)
     assert state.vital_signs == []
+
+
+def test_lab_with_recognized_loinc_gets_additional_canonical_key():
+    from nova_agent.orchestrator import DoctorAgent
+    p = _patient(labs=[Lab(name='Potassium', value=6.9, unit='mEq/L', date='2026-01-01', loinc='2823-3')])
+    state = DoctorAgent().new_case(case_id='c7', chief_complaint='weakness', demographics=demographics_for(p))
+    apply_patient_context(state, p, None)
+    # Raw display-name key is always still populated (unchanged existing behavior).
+    assert 'Potassium' in state.laboratory_tests
+    # ADDITIONALLY keyed under nova_agent's own canonical raw key.
+    assert 'potassium' in state.laboratory_tests
+    assert '6.9' in state.laboratory_tests['potassium']
+
+
+def test_unmapped_lab_is_reported_not_discarded():
+    from nova_agent.orchestrator import DoctorAgent
+    p = _patient(labs=[Lab(name='Erythrocyte Sedimentation Rate', value=40, unit='mm/hr', date='2026-01-01',
+                            loinc='4537-7')])
+    state = DoctorAgent().new_case(case_id='c8', chief_complaint='fatigue', demographics=demographics_for(p))
+    unmapped = apply_patient_context(state, p, None)
+    # Raw display-name key is still populated -- the fact is never lost even though unmapped.
+    assert 'Erythrocyte Sedimentation Rate' in state.laboratory_tests
+    assert unmapped == [{'raw_code': '4537-7', 'raw_display': 'Erythrocyte Sedimentation Rate'}]
+
+
+def test_diagnostic_report_populates_state_imaging_with_status_and_date():
+    from nova_agent.orchestrator import DoctorAgent
+    p = _patient(diagnostic_reports=[
+        DiagnosticReport(id='DR1', date='2026-01-02', name='CT Head', status='final',
+                          conclusion='No acute intracranial hemorrhage'),
+    ])
+    state = DoctorAgent().new_case(case_id='c9', chief_complaint='headache', demographics=demographics_for(p))
+    apply_patient_context(state, p, None)
+    matches = [v for v in state.imaging.values() if 'CT Head' in v]
+    assert len(matches) == 1
+    assert 'No acute intracranial hemorrhage' in matches[0]
+    assert 'final' in matches[0]
+    assert '2026-01-02' in matches[0]
+
+
+def test_imaging_study_populates_state_imaging_with_modality_and_description():
+    from nova_agent.orchestrator import DoctorAgent
+    p = _patient(imaging_studies=[
+        ImagingStudy(id='IS1', date='2026-01-03', modality='CXR', description='Widened mediastinum'),
+    ])
+    state = DoctorAgent().new_case(case_id='c10', chief_complaint='chest pain', demographics=demographics_for(p))
+    apply_patient_context(state, p, None)
+    matches = [v for v in state.imaging.values() if 'Widened mediastinum' in v]
+    assert len(matches) == 1
+    assert 'CXR' in matches[0]
+
+
+def test_imaging_study_feeds_candidate_pool_via_imaging_match():
+    """End-to-end: a diagnosis-confirming imaging finding recorded at case-creation time (before any
+    ASK/EXAM/TEST) must be visible to nova_agent's candidate_generator.py imaging_match source, not
+    just to scoring -- proves DiagnosticReport/ImagingStudy are actually wired into reasoning, not
+    just stored inertly on PatientState."""
+    from nova_agent.candidate_generator import generate_candidates
+    from nova_agent.clinical_presentation import build_clinical_presentation
+    from nova_agent.orchestrator import DoctorAgent
+
+    p = _patient(diagnostic_reports=[
+        DiagnosticReport(id='DR2', date='2026-01-02', name='CT Chest', status='final',
+                          conclusion='widened mediastinum'),
+    ])
+    state = DoctorAgent().new_case(case_id='c11', chief_complaint='tearing back pain',
+                                    demographics=demographics_for(p))
+    apply_patient_context(state, p, None)
+    presentation = build_clinical_presentation(state)
+    candidates = generate_candidates(presentation, imaging_text=list(state.imaging.values()))
+    matched = [c for c in candidates if c.id == 'aortic_dissection' and 'imaging_match' in c.sources]
+    assert matched, 'aortic_dissection should be pulled into the pool via imaging_match'

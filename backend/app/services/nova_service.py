@@ -53,6 +53,7 @@ from nova_agent.state import PatientState
 
 from ..schemas import ClinicalEncounter, Patient
 from .nova_fhir_mapper import apply_patient_context, demographics_for
+from .nova_observability import get_nova_metrics, log_event
 from .nova_repository import CaseConflict, NotFound, NovaCaseRecord, NovaCaseRepository, new_case_id
 
 AGENT_VERSION = "1.0.0"
@@ -245,7 +246,15 @@ class NovaService:
         case_id = new_case_id()
         state: PatientState = agent.new_case(case_id=case_id, chief_complaint=cc,
                                               demographics=demographics_for(patient), max_turns=max_turns)
-        apply_patient_context(state, patient, encounter)
+        unmapped_clinical_codes = apply_patient_context(state, patient, encounter)
+        if unmapped_clinical_codes:
+            # Never silently discarded (spec): counted for ops visibility and logged with enough
+            # detail (raw code/display) for a dev to add the missing clinical_code_mapper.py row --
+            # the case itself still proceeds normally (the raw-name key still lets plain
+            # word-overlap matching see the lab's value; only the canonical-id fast path is missing).
+            get_nova_metrics().increment("nova_unmapped_clinical_codes_total", len(unmapped_clinical_codes))
+            log_event("nova_fhir_mapper", "unmapped_clinical_codes", case_id=case_id,
+                       detail={"codes": unmapped_clinical_codes})
         try:
             return self.repository.create(case_id=case_id, patient_id=patient_id,
                                            encounter_id=encounter.id if encounter else None,
