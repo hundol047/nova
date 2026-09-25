@@ -215,6 +215,42 @@ class DecideResult:
     differential: list
     llm_circuit_open: bool = False
     versions: dict = field(default_factory=dict)
+    # Optional audit of the governed ML ranker (shadow by default). None when ML is disabled or
+    # unavailable. In shadow mode this NEVER affects `action`/`differential`; it is audit-only.
+    ml_shadow: Optional[dict] = None
+
+
+def _consult_ml_shadow(case_id: str, differential: list) -> Optional[dict]:
+    """Fail-safe governed ML consultation for the current decision.
+
+    Runs ONLY the optional ML ranker subsystem behind its config gate (default disabled). In shadow
+    mode (default when enabled) this audits the ML ordering WITHOUT changing the clinician-facing
+    result. Any failure degrades silently to None — the ML subsystem must never crash a clinical
+    decision. The deterministic + LLM + Safety pipeline already produced `differential`; here we
+    only observe. The Safety Guard remains authoritative (Safety Guard > ML > LLM)."""
+    try:
+        from learning.runtime import GovernedMLRuntime, MLRuntimeConfig
+        from learning.schemas import CandidateFeature
+        cfg = MLRuntimeConfig.from_env()
+        if not cfg.enabled:
+            return None
+        det_order = [getattr(d, "diagnosis_id", None) for d in differential if getattr(d, "diagnosis_id", None)]
+        cands = [
+            CandidateFeature(
+                concept_id=d.diagnosis_id,
+                base_evidence_score=float(getattr(d, "score_ratio", 0.0) or 0.0),
+                is_critical=bool(getattr(d, "dangerous_if_missed", False)),
+                is_red_flag=bool(getattr(d, "dangerous_if_missed", False)),
+            )
+            for d in differential if getattr(d, "diagnosis_id", None)
+        ]
+        # Feature vector is not reconstructed here (the encoder runs upstream in a full deployment);
+        # a zero vector keeps this audit-only hook dependency-light. OOD/model govern trust.
+        runtime = GovernedMLRuntime(cfg)
+        decision = runtime.consult(case_id, [0.0] * 72, cands, det_order)
+        return decision.as_dict()
+    except Exception:  # noqa: BLE001 - ML subsystem must never break a clinical decision
+        return None
 
 
 def _int_env(name: str, default: int) -> int:
@@ -409,8 +445,11 @@ class NovaService:
         versions = {"agent_version": AGENT_VERSION, "schema_version": SCHEMA_VERSION,
                     "prompt_version": PROMPT_VERSION, "kb_version": kb_fingerprint(),
                     "model_version": model_version()}
+        # Governed ML ranker (optional, default disabled; shadow when enabled). Audit-only in
+        # shadow mode — never changes `action`/`differential`. Fail-safe: None on any error.
+        ml_shadow = _consult_ml_shadow(case_id, differential)
         return DecideResult(record=record, action=action, differential=differential,
-                             llm_circuit_open=skip_real_llm, versions=versions)
+                             llm_circuit_open=skip_real_llm, versions=versions, ml_shadow=ml_shadow)
 
     def get_case(self, case_id: str) -> NovaCaseRecord:
         try:
