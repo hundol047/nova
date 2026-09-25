@@ -41,8 +41,12 @@ Only pieces with no network/pydantic dependency could run locally:
 - `tests/test_objective_evidence_units.py`: the glucose-guard class ran locally (5 passed); the
   pydantic-dependent objective_evidence/presentation classes skipped locally and run in CI.
 - `py_compile` clean on every changed Python file.
-- Blind v8: 72 cases, all ground-truth ids validated against the 34-diagnosis KB; manifest SHA-256
-  matches the frozen case file; freeze-integrity check in the runner.
+- Blind v9 (current untouched set; v6 + v8 are now REFERENCE-ONLY after this round's unit-safety
+  reasoning change): 44 cases, all ground-truth ids validated against the 34-diagnosis KB; manifest
+  SHA-256 matches the frozen case file (`scripts/verify_local_release.py` blind_integrity: PASS);
+  freeze-integrity check in the runner. Blind v9 FIRST RUN: NOT VERIFIED (needs pydantic).
+- Unit-safety guard (nova_agent/unit_safety.py): 9 dedicated tests PASS locally
+  (tests/test_objective_evidence_units.py, dependency-free direct import).
 - Workflow YAML structure validated (7 jobs, services block).
 
 ## NOT VERIFIED (could not be executed anywhere in this workstream)

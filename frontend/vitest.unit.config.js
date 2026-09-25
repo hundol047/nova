@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./tests/setup.unit.js'],
-    include: ['tests/nova-i18n.test.jsx', 'tests/nova-components.test.jsx'],
+    include: ['tests/nova-i18n.test.jsx', 'tests/nova-components.test.jsx', 'tests/nova-i18n-parity.test.jsx'],
     testTimeout: 10000,
   },
 });

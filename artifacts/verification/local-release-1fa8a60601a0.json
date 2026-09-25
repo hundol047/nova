@@ -1,0 +1,61 @@
+{
+  "git_sha": "1fa8a60601a0240425159bcd618b6192f7bc925d",
+  "timestamp_utc": "2026-09-25T04:52:36.781523+00:00",
+  "environment": {
+    "python": "3.11.15",
+    "pydantic": false,
+    "fastapi": false,
+    "psycopg": false,
+    "npm": true
+  },
+  "results": {
+    "nova_agent_tests": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed"
+    },
+    "backend_tests": {
+      "status": "NOT AVAILABLE",
+      "detail": "fastapi not installed"
+    },
+    "unit_safety_guard": {
+      "status": "PASS",
+      "detail": ".....sss.........                                                        [100%]\n14 passed, 3 skipped in 0.02s"
+    },
+    "leakage_scan": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed (blind case modules import SyntheticCase)"
+    },
+    "submission_sync": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed (sync test imports the agent)"
+    },
+    "frontend_build": {
+      "status": "NOT AVAILABLE",
+      "detail": "frontend/node_modules not installed (run `npm ci` first)"
+    },
+    "frontend_unit_tests": {
+      "status": "NOT AVAILABLE",
+      "detail": "frontend/node_modules not installed (run `npm ci` first)"
+    },
+    "blind_integrity": {
+      "status": "PASS",
+      "detail": "v9 hash matches frozen manifest"
+    },
+    "blind_v9_first_run": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed; run `python -m evaluation.blind_benchmark_v9` once in a runnable env"
+    },
+    "postgres_available": {
+      "status": "NOT AVAILABLE",
+      "detail": "psycopg not installed"
+    },
+    "redis_available": {
+      "status": "NOT AVAILABLE",
+      "detail": "redis client not installed"
+    },
+    "browser_e2e_available": {
+      "status": "NOT AVAILABLE",
+      "detail": "no Playwright/E2E spec present"
+    }
+  }
+}
