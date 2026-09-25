@@ -6,7 +6,11 @@
 # installed at once.
 fastapi==0.141.1
 uvicorn==0.52.4
-numpy==2.5.3
+# numpy 2.5.x requires Python >=3.12; the backend/production CI jobs (and the documented
+# Python 3.11 support target) run on 3.11, where 2.5.3 has no matching wheel and the install
+# fails. 2.4.6 is the newest 2.4.x, is compatible with Python 3.11-3.13, and provides the same
+# NumPy 2.x API this project uses.
+numpy==2.4.6
 pydantic==2.13.5
 typing_extensions==4.16.0
 httpx==0.28.1

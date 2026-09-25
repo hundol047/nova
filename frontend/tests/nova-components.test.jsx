@@ -30,7 +30,8 @@ describe('NovaDifferentialPanel', () => {
 
   it('marks dangerous_if_missed items', () => {
     wrap(<NovaDifferentialPanel differential={differential} selectedId={null} onSelect={() => {}} />);
-    expect(screen.getByText(/Dangerous if missed/i)).toBeTruthy();
+    // "Dangerous if missed" may render in more than one place; assert at least one match.
+    expect(screen.getAllByText(/Dangerous if missed/i).length).toBeGreaterThan(0);
   });
 });
 

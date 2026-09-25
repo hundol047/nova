@@ -40,7 +40,13 @@ jobs:
           pip install -r requirements-nova-dev.txt
 
       - name: pytest (nova_agent + competition adapter + safety regression)
-        run: python -m pytest tests/ -v
+        # Scope to the nova_agent/competition/evaluation tests only. The tests/test_production_*.py
+        # files exercise the standalone production/ FastAPI package and require fastapi/httpx, which
+        # this mock-provider job deliberately does NOT install (it installs pydantic-only
+        # requirements-nova.txt); they have their own `production` job below with the right deps.
+        # Without this exclusion, pytest's collection imports test_production_api.py and fails on a
+        # missing fastapi before any nova_agent test runs.
+        run: python -m pytest tests/ -v --ignore=tests/test_production_api.py --ignore=tests/test_production_repository.py --ignore=tests/test_production_reliability.py --ignore=tests/test_production_units.py
 
       - name: Benchmark (tuning + held-out + generalization-v2 + stress sets)
         run: python -m evaluation.benchmark --generalization-v2 --stress
@@ -163,6 +169,10 @@ jobs:
         run: |
           pip install -r production/requirements.txt
           pip install -r requirements-nova-dev.txt
+          # starlette.testclient (used by tests/test_production_api.py via FastAPI's TestClient)
+          # requires httpx at TEST time only -- it is deliberately NOT in production/requirements.txt
+          # (runtime deps only). Install it here so the production API tests can run.
+          pip install "httpx>=0.28,<1"
 
       - name: Production unit + integration + concurrency + failure-injection tests
         run: python -m pytest tests/test_production_api.py tests/test_production_repository.py tests/test_production_reliability.py tests/test_production_units.py -v
