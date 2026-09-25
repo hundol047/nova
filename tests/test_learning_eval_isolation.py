@@ -52,3 +52,46 @@ def test_nova_agent_does_not_import_learning_or_torch():
         if bad.search(text):
             offenders.append(str(py.relative_to(ROOT)))
     assert not offenders, f"nova_agent/ must not import torch or learning: {offenders}"
+
+
+# Blind / held-out / generalization data-file identifiers the learning pipeline must NEVER read as
+# TRAINING input (reading them would train a model on the very cases used to judge it). We scan for
+# CODE references (imports, path/glob literals), skipping comments and docstrings so prose that
+# merely describes this rule doesn't trip it.
+_EVAL_DATA_TOKENS = ("blind_cases", "blind_benchmark", "generalization_cases", "held_out_cases")
+
+
+def _strip_comments_and_docstrings(source: str) -> str:
+    """Return source with comments and string literals blanked out (best-effort via tokenize) so we
+    match only real code references, not prose in docstrings/comments."""
+    import io
+    import tokenize
+
+    out_lines = source.splitlines()
+    try:
+        toks = list(tokenize.generate_tokens(io.StringIO(source).readline))
+    except (tokenize.TokenError, IndentationError):
+        return source
+    for tok in toks:
+        if tok.type in (tokenize.COMMENT, tokenize.STRING):
+            (srow, scol), (erow, ecol) = tok.start, tok.end
+            for r in range(srow, erow + 1):
+                line = out_lines[r - 1]
+                a = scol if r == srow else 0
+                b = ecol if r == erow else len(line)
+                out_lines[r - 1] = line[:a] + (" " * (b - a)) + line[b:]
+    return "\n".join(out_lines)
+
+
+def test_learning_never_references_eval_data_sources():
+    """Beyond imports: no learning/ module may reference blind/held-out/generalization data files
+    in CODE (docstrings/comments describing the rule are fine)."""
+    offenders = []
+    for py in LEARNING.rglob("*.py"):
+        code = _strip_comments_and_docstrings(py.read_text(encoding="utf-8", errors="ignore"))
+        low = code.lower()
+        for tok in _EVAL_DATA_TOKENS:
+            if tok in low:
+                offenders.append(f"{py.relative_to(ROOT)}: references {tok!r} in code")
+    assert not offenders, ("learning/ must not reference blind/held-out/generalization data as a "
+                           "source:\n" + "\n".join(offenders))
