@@ -33,3 +33,9 @@ bp3d_repo
 # nova_agent/ + competition/ + submission/run.py, never hand-edited, not committed.
 /submission/submission.zip
 /submission/MANIFEST.json
+
+
+# Operator-supplied, license-restricted terminology snapshots (SNOMED CT / ICD-11 / ICD-10).
+# NEVER commit these — the repo ships terminology-free. See docs/ontology/TERMINOLOGY_PROVENANCE.md.
+nova_agent/ontology/snapshots/*.json
+submission/nova_agent/ontology/snapshots/*.json
