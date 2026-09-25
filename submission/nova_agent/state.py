@@ -36,7 +36,8 @@ def normalize_key(text: str) -> str:
 # weakness but my speech became slurred") -- splitting only on ';' (the original implementation)
 # missed every one of these, silently losing or misclassifying half the answer.
 _CLAUSE_SPLIT_PATTERN = re.compile(
-    r";|(?<=\w)\s+but\s+|(?<=\w)\s+however\s+|(?<=\w)\s+although\s+|(?<=\w)\s+except\s+(?:that\s+)?",
+    r";|(?<=\w)\s+but\s+|(?<=\w)\s+however\s+|(?<=\w)\s+although\s+|(?<=\w)\s+except\s+(?:that\s+)?"
+    r"|하지만|그러나|그런데|근데|でも|しかし|だが|但是|不过|但",
     re.IGNORECASE,
 )
 
@@ -44,7 +45,17 @@ _NEGATION_MARKERS = [
     "denies", "denied", "no ", "none", "negative for", "not present", "without",
     "don't have", "doesn't have", "do not have", "does not have",
     "didn't have", "did not have", "never had", "not experiencing", "not having",
-    "아니", "없습니다", "없음",
+    # Korean
+    "아니", "없습니다", "없어요", "없음", "안 아파요", "하지 않아요", "부인함",
+    # Japanese
+    "ない", "ありません", "認めない", "否定", "していない",
+    # Chinese (simplified). Deliberately NOT bare "不" -- Chinese uses no word-spacing, and "不" is
+    # a substring of many unrelated words that do NOT mean a symptom is denied (e.g. "不适"
+    # discomfort, "不规则" irregular) -- a bare single-character marker would misclassify a
+    # POSITIVE finding as negated. The multi-character markers below are specific enough to avoid
+    # that false-positive class the same way English "no " (with a trailing space, not bare "no")
+    # already avoids matching inside unrelated words like "corner".
+    "没有", "无", "否认", "未出现",
 ]
 
 

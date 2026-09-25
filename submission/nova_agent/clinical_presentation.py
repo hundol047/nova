@@ -41,12 +41,33 @@ _ONSET_PATTERNS = [
     (re.compile(r"\bwoke up (with|and)\b", re.IGNORECASE), "unknown (present on waking)"),
     (re.compile(r"\bfor (the )?(past |last )?\d+\s*(minute|hour|day|week|month)s?\b", re.IGNORECASE), "stated duration"),
     (re.compile(r"\bsince (yesterday|this morning|last night|today)\b", re.IGNORECASE), "stated duration"),
+    # Korean
+    (re.compile(r"갑자기"), "sudden"),
+    (re.compile(r"서서히"), "gradual"),
+    (re.compile(r"오늘|어제부터|며칠 전부터|한 시간 전부터"), "stated duration"),
+    # Japanese
+    (re.compile(r"突然"), "sudden"),
+    (re.compile(r"徐々に"), "gradual"),
+    (re.compile(r"今日|昨日から|数日前から"), "stated duration"),
+    # Chinese (simplified)
+    (re.compile(r"突然"), "sudden"),
+    (re.compile(r"逐渐"), "gradual"),
+    (re.compile(r"今天|从昨天开始|几天前开始"), "stated duration"),
 ]
 
 _SEVERITY_PATTERNS = [
     (re.compile(r"\b(worst|excruciating|unbearable|severe|intense|extreme)\b", re.IGNORECASE), "severe"),
     (re.compile(r"\b(mild|slight|a little|minor)\b", re.IGNORECASE), "mild"),
     (re.compile(r"\b(moderate)\b", re.IGNORECASE), "moderate"),
+    # Korean
+    (re.compile(r"극심한|견딜 수 없는|심한"), "severe"),
+    (re.compile(r"약한"), "mild"),
+    # Japanese
+    (re.compile(r"激しい|ひどい|耐えられない"), "severe"),
+    (re.compile(r"軽い"), "mild"),
+    # Chinese (simplified)
+    (re.compile(r"严重|剧烈|无法忍受"), "severe"),
+    (re.compile(r"轻微"), "mild"),
 ]
 
 _BODY_REGION_BY_CONCEPT = {

@@ -86,66 +86,122 @@ CANONICAL_TERMS = {
 CONCEPT_ALIASES = {
     "chest_pain": ["chest tightness", "chest pressure", "chest hurts", "chest discomfort",
                    "pain in my chest",
-                   "흉통", "가슴 통증", "가슴이 아프"],
+                   "흉통", "가슴 통증", "가슴이 아프", "가슴이 아파",
+                   "胸が痛い", "胸の痛み", "胸が締め付けられる",
+                   "胸痛", "胸闷", "胸口疼"],
     "abdominal_pain": ["stomach pain", "belly pain", "stomach hurts", "my stomach", "tummy",
                         "gut pain", "stomach ache", "cramping in my stomach", "pain in my gut",
-                        "복통", "배가 아프"],
+                        "복통", "배가 아프", "배가 아파",
+                        "お腹が痛い", "腹痛", "胃が痛い",
+                        "腹痛", "肚子疼", "胃痛"],
     "headache": ["head pain", "head hurts", "head is pounding", "splitting headache",
                  "head is throbbing", "pain in my head",
-                 "두통", "머리가 아프"],
+                 "두통", "머리가 아프", "머리가 아파",
+                 "頭が痛い", "頭痛",
+                 "头痛", "头疼"],
     "fever": ["chills", "high temperature", "burning up", "running a temperature", "feverish",
               "temperature is high", "hot and shivery",
-              "열", "발열", "오한"],
+              "열", "발열", "오한",
+              "発熱", "悪寒", "熱がある",
+              "发热", "寒战", "发烧"],
     "dyspnea": ["breathless", "can't breathe", "cant breathe", "can't catch my breath",
                 "out of breath", "winded", "hard to breathe", "unable to breathe comfortably",
                 "not getting enough air", "air hunger", "struggling to breathe", "throat feels tight",
                 "throat is tightening", "gasping for air", "harder to breathe",
-                "숨이 차", "호흡곤란"],
+                "숨이 차", "호흡곤란",
+                "息苦しい", "息ができない", "呼吸が苦しい", "息が苦しい",
+                "呼吸困难", "喘不过气", "喘不上气"],
     "dizziness": ["dizzy", "lightheaded", "light-headed", "room spinning", "woozy",
-                  "어지러", "현훈"],
+                  "어지러", "현훈",
+                  "めまいがする", "ふらふらする",
+                  "头晕", "眩晕"],
     "altered_mental_status": ["confused", "unresponsive", "disoriented", "not making sense",
                               "out of it", "not himself", "not herself", "not tracking conversation",
                               "mentally foggy", "not acting like himself", "not acting like herself",
                               "seems out of it", "can't focus", "can't think straight", "zoning out",
-                              "의식", "혼돈", "의식저하"],
+                              "의식", "혼돈", "의식저하",
+                              "意識がぼんやりする", "意識障害", "反応が鈍い",
+                              "意识模糊", "神志不清", "反应迟钝"],
     "urinary_symptoms": ["blood in urine", "burning when I pee", "burns when I pee",
                           "burning when I urinate", "pain when urinating", "peeing", "urinate",
                           "bladder",
-                          "소변", "배뇨통", "빈뇨"],
+                          "소변", "배뇨통", "빈뇨",
+                          "排尿時の痛み", "頻尿", "血尿",
+                          "排尿疼痛", "尿频", "血尿"],
     "syncope": ["passed out", "loss of consciousness", "blacked out", "went unconscious",
                 "lost consciousness", "collapsed", "everything went dark",
-                "실신", "기절"],
+                "실신", "기절",
+                "失神", "気を失った",
+                "晕厥", "昏倒", "晕倒"],
     "palpitations": ["heart racing", "irregular heartbeat", "heart pounding", "skipping beats",
                       "racing heart", "heart is fluttering", "heart skipping",
                       "pulse pounding in my throat", "feel my pulse in my throat",
-                      "두근거림", "심계항진"],
+                      "두근거림", "심계항진",
+                      "動悸", "心臓がドキドキする",
+                      "心悸", "心跳加速"],
     "vomiting": ["throwing up", "nausea and vomiting", "puking",
-                 "구토", "토했"],
+                 "구토", "토했",
+                 "吐き気", "嘔吐",
+                 "呕吐", "恶心"],
     "weakness": ["feeling weak", "muscle weakness", "no energy", "can't move", "no strength",
                  "body feels heavy", "drained of energy", "feel completely exhausted",
-                 "무기력", "힘이 없"],
+                 "무기력", "힘이 없",
+                 # "力が入らない" deliberately NOT used here -- it's a literal substring of
+                 # focal_weakness's own JA alias "片側に力が入らない" below, which would make this
+                 # generic tag spuriously co-match (and, on a score tie, sometimes WIN over) every
+                 # one-sided-weakness phrasing. "体に力が出ない" is a distinct phrase that doesn't
+                 # embed focal_weakness's wording as a substring.
+                 "体がだるい", "体に力が出ない",
+                 "没有力气", "浑身无力"],
     "cough": ["coughing", "productive cough",
-              "기침"],
+              "기침",
+              "咳が出る", "咳",
+              "咳嗽"],
     "back_pain": ["lower back pain", "side hurts", "side pain", "my flank",
-                  "요통", "옆구리 통증"],
+                  "요통", "옆구리 통증",
+                  "腰が痛い", "背中の痛み", "脇腹の痛み",
+                  "腰痛", "背痛", "腰部疼痛"],
     "leg_swelling": ["swollen leg", "calf swelling",
-                      "다리 부종", "종아리 부종"],
+                      "다리 부종", "종아리 부종",
+                      "脚のむくみ", "ふくらはぎの腫れ",
+                      "腿肿", "小腿肿胀"],
     "focal_weakness": ["weakness on one side", "one side feels weak", "arm won't work on one side",
                         "leg won't work on one side", "can't lift my arm", "face is drooping",
-                        "drooping on one side", "one side of my face is drooping"],
+                        "drooping on one side", "one side of my face is drooping",
+                        "한쪽 힘이 빠짐", "편측 위약", "얼굴이 한쪽으로 처짐", "한쪽 팔에 힘이 없",
+                        "片側に力が入らない", "片方の手足が動かない", "顔が片側に下がる",
+                        "一侧无力", "手臂没力气", "一侧肢体无力", "脸部一侧下垂"],
     "aphasia": ["trouble finding words", "can't find my words", "words come out wrong",
                 "can't speak clearly", "difficulty speaking", "speech sounds slurred",
-                "can't get words out"],
+                "can't get words out",
+                "말이 어눌함", "말이 어눌해", "말이 안 나옴", "단어가 생각나지 않음", "발음이 이상함",
+                "言葉が出ない", "ろれつが回らない", "うまく話せない", "うまく話せません",
+                "说话困难", "言语不清", "说不出话"],
     "gi_bleeding": ["blood in my stool", "black stools", "tarry stools", "vomiting blood",
-                     "blood in my vomit", "rectal bleeding", "blood when I wipe"],
+                     "blood in my vomit", "rectal bleeding", "blood when I wipe",
+                     "혈변", "흑변", "토혈", "피를 토함",
+                     "吐血", "黒い便", "血便",
+                     "呕血", "黑便", "便血"],
     "pelvic_gynecologic": ["vaginal spotting", "missed period", "cramping in my pelvis",
-                            "lower pelvic pain", "pain in my ovary area", "pain in my pelvis"],
+                            "lower pelvic pain", "pain in my ovary area", "pain in my pelvis",
+                            "질 출혈", "골반통", "생리가 없음",
+                            "性器出血", "骨盤の痛み", "生理が来ない",
+                            "阴道出血", "盆腔疼痛", "月经推迟"],
     "trauma": ["car accident", "fell down", "hit my head", "got into an accident",
-               "was in a crash", "injured in a fall", "fell and hurt myself"],
+               "was in a crash", "injured in a fall", "fell and hurt myself",
+               "넘어짐", "낙상", "교통사고", "외상",
+               "転倒した", "交通事故に遭った", "頭を打った",
+               "摔倒", "车祸", "外伤", "跌倒受伤"],
     "allergic": ["hives", "swelling after a sting", "broke out in a rash after eating",
-                 "reaction to a sting", "reaction to a food", "itchy welts", "throat swelling after exposure"],
+                 "reaction to a sting", "reaction to a food", "itchy welts", "throat swelling after exposure",
+                 "두드러기", "입술 부종", "혀 부종", "목이 붓는 느낌",
+                 "じんましん", "唇が腫れる", "喉が腫れる感じ",
+                 "荨麻疹", "嘴唇肿胀", "喉咙发紧"],
     "metabolic": ["excessive thirst", "urinating a lot lately", "fruity breath", "rapid weight loss",
-                  "extreme thirst and urination", "drinking a lot of water lately"],
+                  "extreme thirst and urination", "drinking a lot of water lately",
+                  "물을 많이 마심", "소변을 자주 봄", "갈증이 심함",
+                  "喉が渇く", "尿の回数が増えた", "急激な体重減少",
+                  "口渴", "多尿", "体重迅速下降"],
 }
 
 CONCEPT_PHRASES = {tag: CANONICAL_TERMS[tag] + CONCEPT_ALIASES.get(tag, []) for tag in CANONICAL_TERMS}
@@ -257,7 +313,21 @@ def _scores(chief_complaint_text: str) -> List[Tuple[str, float, MatchType]]:
         if matched:
             exact_hits = sum(1 for p in matched if p.lower() in _CANONICAL_SET[tag])
             match_type: MatchType = "exact" if exact_hits > 0 else "alias"
-            scored.append((tag, 1.0 + len(matched), match_type))
+            # A tiny length-proportional tiebreaker (spec: a more SPECIFIC phrase match should
+            # count for more than a generic one, same principle differential.py's
+            # _specificity_multiplier already applies to typical_feature scoring). Needed because
+            # a longer, more specific alias can legitimately CONTAIN a shorter, more generic
+            # alias from a DIFFERENT tag as a literal substring (e.g. focal_weakness's "한쪽 팔에
+            # 힘이 없" contains weakness's own "힘이 없") -- both tags then match the same
+            # match-count and would otherwise tie, with the winner decided only by which tag
+            # happens to sort first in CONCEPT_PHRASES (dict insertion order), not by which match
+            # is actually more clinically specific. Weighted small enough (<=0.01 per matched
+            # phrase's length, so well under 1.0 even for a long phrase) that it can only ever
+            # break an EXACT tie in match count -- it can never overturn a tag that matched more
+            # distinct phrases, or flip an exact/alias hit's ordering against a fuzzy-only one
+            # (those already live in disjoint score ranges).
+            specificity_bonus = 0.01 * sum(min(len(p), 30) for p in matched) / max(len(matched), 1)
+            scored.append((tag, 1.0 + len(matched) + specificity_bonus, match_type))
             continue
         fuzzy = _fuzzy_score(text_words, tag)
         if fuzzy >= _FUZZY_MATCH_THRESHOLD:
