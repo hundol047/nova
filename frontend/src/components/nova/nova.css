@@ -1,0 +1,94 @@
+/* N.O.V.A. clinical workspace styles. Scoped under .nova-workspace so they never affect the
+   existing SynexAgent UI. Critical state is conveyed by icon + text + shape, not color alone
+   (accessibility, R8.10). */
+.nova-workspace{display:flex;flex-direction:column;gap:16px}
+.nova-workspace .nova-safety-banner{display:flex;align-items:flex-start;gap:8px;background:#fff8e6;border:1px solid #e6c65c;border-radius:8px;padding:10px 12px;font-size:13px;color:#6b5300}
+.nova-workspace .nova-panel{background:#fff;border:1px solid #e2e8ea;border-radius:10px;padding:14px 16px}
+.nova-workspace .nova-panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.nova-workspace .nova-panel-head h3{font-size:13px;letter-spacing:.04em;margin:0;color:#334}
+.nova-workspace .nova-muted{color:#6b7a80;font-size:13px}
+.nova-workspace .nova-empty,.nova-workspace .nova-loading,.nova-workspace .nova-error{padding:12px;border-radius:8px;font-size:13px}
+.nova-workspace .nova-empty{background:#f5f8f9;color:#6b7a80}
+.nova-workspace .nova-loading{background:#eef6ff;color:#245}
+.nova-workspace .nova-error{background:#fdece9;color:#8a1c10;display:flex;align-items:center;justify-content:space-between;gap:10px}
+
+/* Case header */
+.nova-case-header{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.nova-case-header .nova-ch-item{display:flex;flex-direction:column}
+.nova-case-header .nova-ch-item span{font-size:11px;color:#6b7a80;text-transform:uppercase;letter-spacing:.04em}
+.nova-case-header .nova-ch-item b{font-size:15px;color:#223}
+
+/* Must-not-miss -- visually distinct from the differential */
+.nova-critical{border-color:#d94c3d;background:#fff6f4}
+.nova-critical .nova-panel-head h3{color:#b0271a}
+.nova-critical ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.nova-critical li{display:flex;align-items:flex-start;gap:8px;font-size:14px;color:#7a1a10;font-weight:600}
+.nova-critical li::before{content:"\26A0";flex:0 0 auto}/* warning sign, not color-only */
+
+/* Differential */
+.nova-diff-list{display:flex;flex-direction:column;gap:8px}
+.nova-diff-item{width:100%;text-align:left;border:1px solid #e2e8ea;border-radius:8px;padding:10px 12px;background:#fff;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.nova-diff-item[aria-pressed="true"]{border-color:#2a7de1;background:#f2f8ff}
+.nova-diff-item .nova-diff-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.nova-diff-item .nova-diff-name{font-weight:700;color:#223}
+.nova-diff-item .nova-diff-id{font-family:ui-monospace,monospace;font-size:11px;color:#6b7a80}
+.nova-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid transparent}
+.nova-badge.conf-HIGH{background:#fdeacd;border-color:#d98f2a;color:#7a4d05}
+.nova-badge.conf-MEDIUM{background:#eef1f4;border-color:#9aa7b2;color:#3a4652}
+.nova-badge.conf-LOW{background:#f2f5f6;border-color:#c3ccd2;color:#5a6670}
+.nova-badge.danger{background:#fdece9;border-color:#d94c3d;color:#8a1c10}
+.nova-badge.danger::before{content:"\26A0";font-weight:700}
+
+/* Next best action */
+.nova-action .nova-action-type{display:inline-block;font-weight:800;letter-spacing:.06em;padding:3px 10px;border-radius:6px;background:#eaf2ff;color:#1c4e8a;border:1px solid #b7d2f2}
+.nova-action dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:10px 0 0}
+.nova-action dt{font-size:12px;color:#6b7a80;font-weight:700}
+.nova-action dd{margin:0;font-size:14px;color:#223}
+
+/* Evidence */
+.nova-evidence h4{font-size:12px;letter-spacing:.03em;margin:10px 0 4px;color:#445}
+.nova-evidence ul{margin:0;padding-left:18px;font-size:13px;color:#334;display:flex;flex-direction:column;gap:3px}
+.nova-evidence .contra li{color:#8a1c10}
+
+/* Timeline */
+.nova-timeline ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.nova-timeline li{display:grid;grid-template-columns:44px 90px 1fr auto;gap:10px;align-items:baseline;font-size:13px;border-bottom:1px dashed #e2e8ea;padding-bottom:6px}
+.nova-timeline .nova-tl-turn{font-family:ui-monospace,monospace;color:#6b7a80}
+.nova-timeline .nova-tl-action{font-weight:700;color:#1c4e8a}
+.nova-timeline .nova-tl-time{color:#8a97a0;font-size:11px}
+
+/* Review */
+.nova-review .nova-review-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.nova-review button{border:1px solid #c3ccd2;border-radius:8px;padding:8px 14px;background:#fff;font-weight:700;cursor:pointer}
+.nova-review button[aria-pressed="true"]{border-color:#2a7de1;background:#eaf2ff}
+.nova-review textarea{width:100%;min-height:64px;margin-top:8px;border:1px solid #c3ccd2;border-radius:8px;padding:8px;font:inherit}
+
+/* System status */
+.nova-status-grid{display:flex;flex-wrap:wrap;gap:8px}
+.nova-status-chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid #c3ccd2;background:#f5f8f9;color:#3a4652}
+.nova-status-chip .nova-dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.nova-status-chip.ok .nova-dot{background:#1a9d6a}
+.nova-status-chip.down{border-color:#d94c3d;color:#8a1c10}
+.nova-status-chip.down .nova-dot{background:#d94c3d}
+.nova-status-chip.degraded{border-color:#d98f2a;color:#7a4d05}
+.nova-status-chip.degraded .nova-dot{background:#d98f2a}
+.nova-status-chip.down::after{content:"\2715"}/* also a glyph, not color-only */
+.nova-status-chip.degraded::after{content:"\26A0"}
+
+.nova-workspace .nova-primary{background:#1c4e8a;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-weight:700;cursor:pointer}
+.nova-workspace .nova-primary:disabled{opacity:.5;cursor:default}
+.nova-workspace .nova-field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.nova-workspace .nova-field label{font-size:12px;font-weight:700;color:#445}
+.nova-workspace .nova-field input,.nova-workspace .nova-field select,.nova-workspace .nova-field textarea{border:1px solid #c3ccd2;border-radius:8px;padding:8px;font:inherit}
+
+@media (max-width:1024px){
+  .nova-timeline li{grid-template-columns:40px 1fr;gap:4px}
+  .nova-timeline .nova-tl-time{grid-column:1/-1}
+}
+
+
+/* Top-bar language selector (rendered inside the SynexAgent topbar .top-meta) */
+.nova-lang-selector{display:inline-flex;gap:2px;border:1px solid #d5dde1;border-radius:8px;overflow:hidden;margin-right:10px}
+.nova-lang-selector button{border:none;background:transparent;padding:5px 9px;font-size:12px;font-weight:700;color:#5a6670;cursor:pointer;white-space:nowrap}
+.nova-lang-selector button.active{background:#1c4e8a;color:#fff}
+.nova-lang-selector button:not(.active):hover{background:#eef2f4}

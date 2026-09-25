@@ -17,9 +17,11 @@ name: N.O.V.A. Doctor Agent CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, "claude/**", "kiro/**"]
   pull_request:
-    branches: [main]
+    # Run on PRs targeting main OR the integration branch used for staged delivery, so each
+    # stage PR gets real CI before it is merged upward.
+    branches: [main, "claude/**"]
   workflow_dispatch: {}
 
 jobs:
@@ -224,3 +226,33 @@ jobs:
           # by this smoke test's default container env.
           python -c "import json,sys; d=json.load(open('/tmp/backend-ready.json')); sys.exit(0 if d['ready'] else 1)"
           docker rm -f nova-backend-smoke
+
+
+  # Frontend build + pure unit tests (R14.3). Deliberately independent of every backend job: it
+  # needs no Python, no backend, and no database. The `test:unit` script uses vitest.unit.config.js
+  # (tests/setup.unit.js) which does NOT spawn the Python API bridge that the default vitest config
+  # uses, so it runs green in CI without a live backend. A full browser E2E against a running
+  # backend is a separate concern (see the staged E2E work) and is intentionally not gated here to
+  # avoid a flaky job that would need the whole backend + Postgres stack stood up first.
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build (vite production build must succeed)
+        run: npm run build
+
+      - name: Unit tests (i18n + N.O.V.A. components, no backend needed)
+        run: npm run test:unit
