@@ -39,6 +39,7 @@ from typing import Dict, List, Optional
 from nova_agent.glucose_evidence import extract_glucose_mg_dl
 from nova_agent.severity_evidence import extract_lactate_mmol_l
 from nova_agent.state import PatientState
+from nova_agent.unit_safety import value_is_in_disallowed_unit
 
 Direction = str  # "high" | "low" -- which side of normal counts as abnormal for a given lab
 
@@ -60,6 +61,16 @@ class LabSpec:
     qualitative_high_words: tuple = ()
     qualitative_low_words: tuple = ()
     qualitative_normal_words: tuple = ()
+    # Unit safety (spec section 19): the units this lab's thresholds are defined in
+    # (`allowed_units`) and units that would MISinterpret the bare number against those thresholds
+    # (`disallowed_units`, e.g. creatinine mg/dL thresholds vs an SI umol/L value ~88x larger, or
+    # hemoglobin g/dL thresholds vs a g/L value ~10x larger that could HIDE a critical low). When
+    # the raw text states a disallowed unit and no allowed unit, the numeric parse is refused
+    # (interpretation stays "unknown"), never silently interpreted. Empty tuples => no unit guard
+    # (unchanged behavior), used where the number is unit-agnostic or the units are numerically
+    # equivalent (mEq/L == mmol/L for monovalent ions) or intrinsically unitless (pH).
+    allowed_units: tuple = ()
+    disallowed_units: tuple = ()
 
 
 def _panel_pattern(*names: str) -> re.Pattern:
@@ -92,6 +103,7 @@ LAB_SPECS: Dict[str, LabSpec] = {
         canonical_id="lab.creatinine", display_name="creatinine", unit="mg/dL",
         raw_keys=("creatinine", "bmp", "basic_metabolic_panel"),
         numeric_pattern=_panel_pattern("creatinine"),
+        allowed_units=("mg/dl",), disallowed_units=("umol/l", "mmol/l"),
         # A single absolute cutoff is a real simplification (true AKI is defined by a RISE from a
         # patient's own baseline, not one absolute number) -- disclosed, not hidden: this flags a
         # plausibly-abnormal single value only, it is not a substitute for trend/baseline
@@ -114,6 +126,9 @@ LAB_SPECS: Dict[str, LabSpec] = {
         # Unisex conservative adult cutoff (true normal range is sex-specific) -- a disclosed
         # simplification, same spirit as the creatinine note above.
         low=12.0, critical_low=7.0,
+        # g/L (SI) is ~10x g/dL -- "hemoglobin 70 g/L" (=7.0 g/dL, critical) must NOT read as 70
+        # (which would look normal and HIDE a critical anemia).
+        allowed_units=("g/dl",), disallowed_units=("g/l",),
         qualitative_low_words=("low hemoglobin", "anemia", "hemoglobin drop"),
     ),
     "lab.platelet": LabSpec(
@@ -172,6 +187,28 @@ LAB_SPECS: Dict[str, LabSpec] = {
         qualitative_high_words=("positive beta-hcg", "positive hcg", "positive pregnancy test"),
         qualitative_normal_words=("negative",),
     ),
+    # Lipase -- the discriminating lab for acute_pancreatitis / acute_abdomen (KB confirmatory).
+    # Reference ULN varies by assay, so numeric interpretation is kept qualitative-only (like
+    # troponin/D-dimer): a value >= ~3x ULN is diagnostic, expressed in text as "3x the upper
+    # limit"/"markedly elevated" rather than a single hardcoded number that would be assay-wrong.
+    "lab.lipase": LabSpec(
+        canonical_id="lab.lipase", display_name="lipase", unit="",
+        raw_keys=("lipase", "amylase_lipase"), numeric_pattern=None,
+        qualitative_high_words=("elevated lipase", "lipase elevated", "markedly elevated",
+                                 "three times the upper limit", "3x the upper limit",
+                                 "above the upper limit of normal", "over three times"),
+        qualitative_normal_words=("normal lipase", "not elevated", "within normal limits", "normal"),
+    ),
+    # Urinalysis dipstick positivity -- confirmatory for uncomplicated_cystitis / pyelonephritis
+    # (KB). Qualitative by nature (dipstick reads positive/negative/trace), so numeric_pattern=None.
+    "lab.urinalysis_infection": LabSpec(
+        canonical_id="lab.urinalysis_infection", display_name="urinalysis (infection markers)", unit="",
+        raw_keys=("urinalysis", "ua", "urine_dipstick"), numeric_pattern=None,
+        qualitative_high_words=("leukocyte esterase", "positive nitrites", "nitrite positive",
+                                 "pyuria", "positive leukocyte esterase", "bacteriuria"),
+        qualitative_normal_words=("negative leukocyte esterase", "no nitrites", "negative nitrites",
+                                   "no pyuria", "clean urinalysis"),
+    ),
 }
 
 
@@ -191,6 +228,11 @@ def _extract_numeric(spec: LabSpec, raw_texts: List[str]) -> Optional[float]:
     if spec.numeric_pattern is None:
         return None
     for text in raw_texts:
+        # Unit safety (spec section 19): if this text states a unit the spec's thresholds are NOT
+        # defined in (and no allowed unit alongside it), refuse to interpret the bare number rather
+        # than misread e.g. creatinine umol/L or hemoglobin g/L against mg/dL / g/dL thresholds.
+        if value_is_in_disallowed_unit(text, spec.allowed_units, spec.disallowed_units):
+            continue
         match = spec.numeric_pattern.search(text)
         if match:
             try:
@@ -303,4 +345,9 @@ CONFIRMATORY_PHRASE_TO_LAB: Dict[str, tuple] = {
     "hemoglobin drop": ("lab.hemoglobin", "low"),
     "large ketones": ("lab.ketones", "high"),
     "positive beta-hcg": ("lab.beta_hcg", "high"),
+    "elevated lipase": ("lab.lipase", "high"),
+    "lipase elevated": ("lab.lipase", "high"),
+    "positive leukocyte esterase": ("lab.urinalysis_infection", "high"),
+    "positive nitrites": ("lab.urinalysis_infection", "high"),
+    "pyuria": ("lab.urinalysis_infection", "high"),
 }
