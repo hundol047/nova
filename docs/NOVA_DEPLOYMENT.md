@@ -29,6 +29,8 @@ production, fails fast (crashes startup, never serves a single request) if any o
 | `NOVA_CB_COOLDOWN_SECONDS` | `30` | LLM circuit breaker open-state cooldown |
 | `NOVA_LLM_PROVIDER` | `mock` | `nova_agent`'s own provider setting (`nova_agent/config.py`) |
 | `NOVA_POSTGRES_URL` | unset | Set to a real Postgres DSN to switch both `NovaCaseRepository` and `AuditStore` to their durable, restart-surviving Postgres-backed implementations (see Persistence below). Required in `NOVA_ENV=production`. |
+| `NOVA_SAVE_RETRY_ATTEMPTS` | `6` | Bounded retry count for a `ConcurrentModificationError` on the same case (Postgres backend only; see Persistence below) |
+| `NOVA_SAVE_RETRY_BASE_DELAY_SECONDS` | `0.02` | Base for the jittered exponential backoff between save-retry attempts |
 
 Every other variable (`AUTH_MODE`, `EMR_MODE`, `OIDC_ISSUER`/`OIDC_AUDIENCE`, `FHIR_BASE_URL`/
 `FHIR_CLIENT_ID`/`FHIR_CLIENT_SECRET`, `CDS_AUTH_MODE`, `SYNEX_REDIS_URL`, `SYNEX_AUDIT_PATH`) is
@@ -48,16 +50,21 @@ it, so a real deployment cannot silently fall back to the in-memory default. See
 `backend/tests/test_nova_postgres_repository.py`/`test_audit_postgres.py` for tests run against a
 real local Postgres server (not a mock).
 
-**Known remaining gap** (tracked, not hidden): `try_apply_observation` is fully atomic under
-concurrent Postgres writers (the same `PRIMARY KEY` insert primitive `idempotency.py` uses), and
+**Concurrent writes to the same case**: `try_apply_observation` is fully atomic under concurrent
+Postgres writers (the same `PRIMARY KEY` insert primitive `idempotency.py` uses), and
 `update_locale`/`close` are single-transaction `SELECT ... FOR UPDATE` read-modify-writes, so both
-are race-safe. The `get()` -> mutate in Python -> `save()` cycle `add_observation()`/`decide()`
-drive is NOT atomic across that gap by construction (the repository interface hands the caller a
-plain object between calls, not an open transaction); `PostgresNovaCaseRepository` uses optimistic
-concurrency (a `version` column) so a genuine write race is *detected and rejected*
-(`ConcurrentModificationError` -> `NovaService.StorageError`, HTTP 503) rather than silently
-overwriting the other writer's turn. A caller-side retry-on-conflict loop would close this
-remaining gap and is tracked as follow-up work, not something this document claims is solved.
+are race-safe outright. The `get()` -> mutate in Python -> `save()` cycle `add_observation()`/
+`decide()` drive is NOT atomic across that gap by construction (the repository interface hands the
+caller a plain object between calls, not an open transaction); `PostgresNovaCaseRepository` instead
+uses optimistic concurrency (a `version` column), and `NovaService` retries the whole
+get-mutate-save cycle (re-reading the now-current state, so a concurrent writer's change is never
+discarded) up to `NOVA_SAVE_RETRY_ATTEMPTS` times (default 6) with jittered backoff
+(`NOVA_SAVE_RETRY_BASE_DELAY_SECONDS`) between attempts before giving up and surfacing
+`StorageError` (HTTP 503, `retryable: true`) -- verified directly against a real Postgres server
+under a 12-concurrent-writer HTTP-level test
+(`backend/tests/test_nova_postgres_concurrency.py`) that mirrors `test_nova_concurrency.py`'s own
+in-memory-backend scenarios and holds the identical guarantee (`turn_count == n`, no lost or
+duplicated turns) for the Postgres backend too.
 
 ## Containerization
 

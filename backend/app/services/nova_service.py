@@ -217,6 +217,31 @@ def _float_env(name: str, default: float) -> float:
         return default
 
 
+# Bounded retry for the get()->mutate->save() race PostgresNovaCaseRepository's `version` column
+# detects (see nova_repository.py's module docstring) -- a genuine conflict here means another
+# concurrent request wrote this SAME case between our get() and save(), so the fix is simply to
+# re-read the now-current state and redo this call's mutation on top of it, not to fail the
+# request. NOVA_SAVE_RETRY_ATTEMPTS=1 (the in-memory NovaCaseRepository's default reality: save()
+# never raises ConcurrentModificationError) makes this a no-op single attempt, matching pre-retry
+# behavior exactly. A small randomized backoff between attempts (below) matters more than the
+# attempt count once several writers genuinely collide on the same case: without it, every loser
+# immediately retries and re-collides in lockstep (a thundering herd against one row) -- observed
+# directly under a 12-way-concurrent-writer test against a real Postgres server before this was
+# added, where attempt count alone still left several requests exhausting their retries.
+_SAVE_RETRY_ATTEMPTS = max(1, _int_env("NOVA_SAVE_RETRY_ATTEMPTS", 6))
+_SAVE_RETRY_BASE_DELAY_SECONDS = max(0.0, _float_env("NOVA_SAVE_RETRY_BASE_DELAY_SECONDS", 0.02))
+
+
+def _save_retry_backoff(attempt: int) -> None:
+    """Jittered, exponential-ish backoff before retry attempt `attempt` (0-indexed; never called
+    before the first attempt). random.uniform, not a fixed delay, so concurrent losers don't all
+    wake up and re-collide at the same instant."""
+    if _SAVE_RETRY_BASE_DELAY_SECONDS <= 0:
+        return
+    import random
+    time.sleep(random.uniform(0, _SAVE_RETRY_BASE_DELAY_SECONDS * (2 ** attempt)))
+
+
 class NovaService:
     def __init__(self, repository=None) -> None:
         # build_nova_case_repository() selects PostgresNovaCaseRepository when NOVA_POSTGRES_URL is
@@ -285,17 +310,26 @@ class NovaService:
         if record.status == "closed":
             raise CaseClosedError(f"Case {case_id!r} is closed; no further observations can be recorded.")
         try:
+            # try_apply_observation is claimed at most ONCE, atomically, before the retry loop --
+            # a retry never re-claims it; it only redoes the (not-yet-persisted) state mutation
+            # against a freshly re-read record after losing a save() race (see _SAVE_RETRY_ATTEMPTS).
             applied = self.repository.try_apply_observation(case_id, observation_id)
             if applied:
-                agent = DoctorAgent()
-                action = AgentAction(action_type=action_type, key=key, content=key, rationale="")
-                agent.observe(record.state, action, result)
-                self.repository.save(record)
+                for attempt in range(_SAVE_RETRY_ATTEMPTS):
+                    agent = DoctorAgent()
+                    action = AgentAction(action_type=action_type, key=key, content=key, rationale="")
+                    agent.observe(record.state, action, result)
+                    try:
+                        self.repository.save(record)
+                        break
+                    except ConcurrentModificationError:
+                        if attempt == _SAVE_RETRY_ATTEMPTS - 1:
+                            raise
+                        _save_retry_backoff(attempt)
+                        record = self.repository.get(case_id)
         except (RepositoryError, ConcurrentModificationError) as exc:
-            # A genuine write race on this case between our get() above and save() here -- surfaced
-            # as a transient 503 (a caller retry re-reads the now-current state) rather than
-            # silently discarding this observation. See nova_repository.py's module docstring;
-            # closing this gap with an automatic server-side retry is tracked separately.
+            # Every retry lost the race -- surfaced as a transient 503 (a caller retry re-reads the
+            # now-current state) rather than silently discarding this observation.
             raise StorageError(str(exc)) from exc
         return record, applied
 
@@ -306,23 +340,44 @@ class NovaService:
             raise CaseNotFoundError(case_id) from exc
         except RepositoryError as exc:
             raise StorageError(str(exc)) from exc
-        if record.status == "closed":
-            raise CaseClosedError(f"Case {case_id!r} is closed; no further decisions can be made.")
 
-        skip_real_llm = self.circuit_breaker.should_skip_real_llm()
-        agent = DoctorAgent(llm_client=self._new_llm_client(force_mock=skip_real_llm), lang=record.state.locale)
+        # A conflict here means another concurrent request wrote this SAME case between our get()
+        # and save() -- retried by re-fetching the now-current state and re-deciding against it
+        # (see _SAVE_RETRY_ATTEMPTS), which is also the clinically correct response: the fresher
+        # state may carry evidence (a concurrently-recorded observation) this decision should see.
+        # Each retry attempt is a full, real re-decide -- including a real LLM call when not
+        # circuit-broken -- so a conflict here is more costly than in add_observation(), but no
+        # less necessary: silently dropping a DIAGNOSE/ASK/EXAM/TEST recommendation is unacceptable.
+        for attempt in range(_SAVE_RETRY_ATTEMPTS):
+            if record.status == "closed":
+                raise CaseClosedError(f"Case {case_id!r} is closed; no further decisions can be made.")
 
-        calls_before, success_before = record.state.llm_call_count, record.state.llm_success_count
-        action, _llm_output, differential = agent.decide(record.state)
-        calls_after, success_after = record.state.llm_call_count, record.state.llm_success_count
-        attempted_real_call = calls_after > calls_before
-        self.circuit_breaker.record_outcome(attempted=attempted_real_call,
-                                             succeeded=success_after > success_before)
+            skip_real_llm = self.circuit_breaker.should_skip_real_llm()
+            agent = DoctorAgent(llm_client=self._new_llm_client(force_mock=skip_real_llm), lang=record.state.locale)
 
-        try:
-            self.repository.save(record)
-        except (RepositoryError, ConcurrentModificationError) as exc:
-            raise StorageError(str(exc)) from exc
+            calls_before, success_before = record.state.llm_call_count, record.state.llm_success_count
+            action, _llm_output, differential = agent.decide(record.state)
+            calls_after, success_after = record.state.llm_call_count, record.state.llm_success_count
+            attempted_real_call = calls_after > calls_before
+            self.circuit_breaker.record_outcome(attempted=attempted_real_call,
+                                                 succeeded=success_after > success_before)
+            try:
+                self.repository.save(record)
+                break
+            except ConcurrentModificationError:
+                if attempt == _SAVE_RETRY_ATTEMPTS - 1:
+                    raise StorageError(
+                        f"Case {case_id!r} could not be saved after {_SAVE_RETRY_ATTEMPTS} attempts "
+                        "due to concurrent writes."
+                    )
+                _save_retry_backoff(attempt)
+                try:
+                    record = self.repository.get(case_id)
+                except NotFound as exc:
+                    raise CaseNotFoundError(case_id) from exc
+            except RepositoryError as exc:
+                raise StorageError(str(exc)) from exc
+
         versions = {"agent_version": AGENT_VERSION, "schema_version": SCHEMA_VERSION,
                     "prompt_version": PROMPT_VERSION, "kb_version": kb_fingerprint(),
                     "model_version": model_version()}
