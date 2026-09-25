@@ -4,6 +4,7 @@ from uuid import uuid4
 from .rule_engine import evaluate
 from .anatomy import build_anatomy
 from .feature_engineering import features_for
+from .production_guard import environment_label
 
 class ClinicalAgent:
     def __init__(self,engine):self.engine=engine
@@ -42,4 +43,4 @@ class ClinicalAgent:
             'missing':missing,'data_status':'incomplete' if missing else 'demo_complete',
             'contributing_factors':[{'type':a['type'],'title':a['title'],'alert_id':a['id']} for a in rules['alerts']],
             'explanation_method':'MODEL INPUT SUMMARY + EVIDENCE PATH (detected contributing factors via rules); not SHAP or another causal attribution method -- no per-feature contribution percentage is computed or shown',
-            'agent_mode':'deterministic evidence-grounded summarizer','demo':True,'duration_ms':round((perf_counter()-start)*1000,2)}
+            'agent_mode':'deterministic evidence-grounded summarizer','environment':environment_label(),'duration_ms':round((perf_counter()-start)*1000,2)}

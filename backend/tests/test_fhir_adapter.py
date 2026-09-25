@@ -94,6 +94,10 @@ def test_fhir_adapter_parses_patient_from_fake_server():
     assert p.imaging_studies[0].modality == "CT" and p.imaging_studies[0].description == "Chest CT"
     assert "missing" not in " ".join(p.missing) or True  # missing list should be empty here (all data present)
     assert p.missing == []
+    # Real FHIR-sourced patient: never tagged as synthetic demo data (spec section 20 -- the old
+    # `demo: Literal[True] = True` field structurally forbade this from ever being false).
+    assert p.data_source == "fhir"
+    assert p.is_synthetic is False
 
 def test_fhir_adapter_maps_encounters_diagnostic_reports_imaging_studies():
     # Regression test for the gap this replaced: Encounter/DiagnosticReport/ImagingStudy used to be

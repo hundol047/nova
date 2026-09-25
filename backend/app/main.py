@@ -34,7 +34,7 @@ from .services.vitals import assess as assess_vitals
 from .services.demo_seed import seed_demo_clinical_data
 from .services.idempotency import IdempotencyStore, IdempotencyConflict, IdempotencyTimeout
 from .services.nova_service import NovaService, NovaServiceError
-from .services.production_guard import ProductionConfigError, is_production, validate_production_startup
+from .services.production_guard import ProductionConfigError, environment_label, is_production, validate_production_startup
 from .services.nova_observability import log_event as nova_log_event, get_nova_metrics
 from nova_agent.i18n import translate_diagnosis
 from .nova_schemas import (NovaCaseCreateRequest, NovaCaseCreatedResponse, NovaObservationRequest,
@@ -177,7 +177,7 @@ def save_analysis(result,event='analysis_completed'):
     audit.record(result['patient_id'],event,{'analysis_id':result['analysis_id'],'risk_probability':result['risk']['risk_probability'],'model_sha256':result['risk']['model_sha256'],'rules_sha256':result['rules_sha256']})
 
 @app.get('/health')
-def health():return {'status':'ok','demo':True,**app.state.engine.health()}
+def health():return {'status':'ok','environment':environment_label(),**app.state.engine.health()}
 
 @app.get('/health/subsystems')
 def health_subsystems():
@@ -191,6 +191,7 @@ def health_subsystems():
     except Exception as e:
         model={'error':str(e)};model_status='down'
     return {
+        'environment':environment_label(),
         'emr':{'status':'ok','mode':emr_mode,'adapter':type(app.state.adapter).__name__},
         'terminology':{'status':'ok','note':'fixed reference tables; see services/terminology_mapper.py'},
         'rule_engine':{'status':'ok','rules_version':RULE_METADATA['rules_version'],'evidence_level':RULE_METADATA['evidence_level']},

@@ -368,7 +368,8 @@ class FHIRAdapter(BaseEMRAdapter):
         return Patient(id=pid, name=display_name, age=age, sex=sex or 'unspecified',
                         diagnosis=conditions[0] if conditions else '', scenario='',
                         medications=medications, conditions=conditions, allergies=allergies,
-                        labs=labs, history=[], missing=missing, demo=True,
+                        labs=labs, history=[], missing=missing,
+                        data_source='fhir', is_synthetic=False,
                         height_cm=height_cm, weight_kg=weight_kg,
                         encounters=encounters, diagnostic_reports=diagnostic_reports,
                         imaging_studies=imaging_studies)

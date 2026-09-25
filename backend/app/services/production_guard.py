@@ -22,6 +22,24 @@ def is_production() -> bool:
     return os.getenv("NOVA_ENV", "development").lower() == "production"
 
 
+def environment_label() -> str:
+    """A real, config-derived environment indicator (spec: DEMO / FHIR SANDBOX / STAGING /
+    PRODUCTION -- never a hardcoded frontend string). Derived purely from the same NOVA_ENV/
+    EMR_MODE/NOVA_ALLOW_DEMO_EMR variables validate_production_startup() already reads, so it can
+    never drift out of sync with what that function actually enforces:
+
+      - NOVA_ENV=production + EMR_MODE=fhir              -> "production"
+      - NOVA_ENV=production + EMR_MODE=demo (allowed)     -> "staging" (real production infra,
+        intentionally demo-data-only, per NOVA_ALLOW_DEMO_EMR -- see validate_production_startup())
+      - NOVA_ENV!=production + EMR_MODE=fhir              -> "fhir_sandbox"
+      - NOVA_ENV!=production + EMR_MODE=demo              -> "demo"
+    """
+    emr_mode = os.getenv("EMR_MODE", "demo").lower()
+    if is_production():
+        return "production" if emr_mode == "fhir" else "staging"
+    return "fhir_sandbox" if emr_mode == "fhir" else "demo"
+
+
 def validate_production_startup() -> None:
     if not is_production():
         return
