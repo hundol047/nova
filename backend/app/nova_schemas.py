@@ -37,6 +37,9 @@ class NovaCaseCreateRequest(StrictModel):
     encounter_id: Optional[str] = Field(default=None, max_length=80)
     chief_complaint: Optional[str] = Field(default=None, max_length=4000)
     max_turns: Optional[int] = Field(default=None, gt=0, le=200)
+    # UI/output locale (spec: never affects internal reasoning -- see PatientState.locale's own
+    # docstring). Defaults to "en" so every existing caller that omits it keeps working unchanged.
+    locale: Literal["en", "ko", "ja", "zh"] = "en"
 
     _validate_chief_complaint = field_validator("chief_complaint")(_reject_control_characters)
 
@@ -70,6 +73,10 @@ class NovaObservationResponse(StrictModel):
 
 class NovaDifferentialItemOut(StrictModel):
     diagnosis: str
+    # Locale-rendered display name for the SAME diagnosis_id (spec: internal canonical IDs never
+    # vary per locale; only this field does). Falls back to the English `diagnosis` name whenever
+    # the case's locale is "en" or this diagnosis_id has no translation row yet -- never fabricated.
+    display_diagnosis: str = ""
     diagnosis_id: str
     rank: int
     confidence_band: str
@@ -85,6 +92,12 @@ class NovaRecommendedActionOut(StrictModel):
     action_type: Literal["ASK", "EXAM", "TEST", "DIAGNOSE"]
     key: str
     content: str
+    # For ASK/EXAM/TEST this already equals `content` (DoctorAgent(lang=...) renders those in the
+    # case's own locale at generation time). For DIAGNOSE, `content`/`key` stay the English
+    # canonical diagnosis name/id -- required internally for evaluation/audit diagnosis matching,
+    # see nova_agent.i18n's own module docstring -- and this field carries the SEPARATE,
+    # locale-rendered display name for that same diagnosis_id.
+    display_content: str = ""
     rationale: str
 
 

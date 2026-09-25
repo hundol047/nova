@@ -101,7 +101,8 @@ class ActionSelector:
             dangerous_involved = bool(set(cand.disease_ids_discriminated) & dangerous_ids)
             time_critical_involved = bool(set(cand.disease_ids_discriminated) & time_critical_ids)
             utility, components = self._utility(cand, dangerous_involved, time_critical_involved, differential)
-            content = cand.content_ko if lang == "ko" else cand.content_en
+            content = {"ko": cand.content_ko, "ja": cand.content_ja, "zh": cand.content_zh}.get(lang) \
+                or cand.content_en
             scored.append(ScoredCandidate(action_type=cand.action_type, key=cand.key, content=content,
                                            utility=round(utility, 3), components=components))
         scored.sort(key=lambda c: c.utility, reverse=True)

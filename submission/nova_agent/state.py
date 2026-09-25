@@ -118,6 +118,13 @@ class PatientState(BaseModel):
     """Everything accumulated about the current case (spec section 2)."""
 
     case_id: str = "case"
+    # UI/output locale only -- "en" | "ko" | "ja" | "zh". Never affects internal reasoning: every
+    # canonical diagnosis_id/concept tag/lab.* key stays identical regardless of this value (spec:
+    # internal reasoning language and display language are strictly separated). Persisted with the
+    # case (not just passed once at creation) since a production backend constructs a fresh
+    # DoctorAgent(lang=...) on every decide() call -- see nova_service.py's own module docstring on
+    # why -- so this is the only place that value can durably live between turns.
+    locale: str = "en"
     demographics: Demographics = Field(default_factory=Demographics)
 
     chief_complaint: str = ""

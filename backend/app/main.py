@@ -36,6 +36,7 @@ from .services.idempotency import IdempotencyStore, IdempotencyConflict, Idempot
 from .services.nova_service import NovaService, NovaServiceError
 from .services.production_guard import ProductionConfigError, is_production, validate_production_startup
 from .services.nova_observability import log_event as nova_log_event, get_nova_metrics
+from nova_agent.i18n import translate_diagnosis
 from .nova_schemas import (NovaCaseCreateRequest, NovaCaseCreatedResponse, NovaObservationRequest,
                             NovaObservationResponse, NovaDecideResponse, NovaDifferentialItemOut,
                             NovaRecommendedActionOut, NovaVersionsOut, NovaCaseStateResponse,
@@ -698,8 +699,10 @@ def nova_call(component,event,fn,*args,request_id='',case_id='',**kwargs):
         nova_log_event(component,event,request_id=request_id,case_id=case_id,severity='INFO',latency_ms=latency_ms)
         return result
 
-def _nova_differential_out(differential):
-    return [NovaDifferentialItemOut(diagnosis=d.diagnosis,diagnosis_id=d.diagnosis_id,rank=d.rank,
+def _nova_differential_out(differential,locale:str='en'):
+    return [NovaDifferentialItemOut(diagnosis=d.diagnosis,
+                display_diagnosis=translate_diagnosis(d.diagnosis_id,locale,d.diagnosis),
+                diagnosis_id=d.diagnosis_id,rank=d.rank,
                 confidence_band=d.confidence_band,urgency=d.urgency,dangerous_if_missed=d.dangerous_if_missed,
                 supporting_evidence=d.supporting_evidence,contradictory_evidence=d.contradictory_evidence,
                 missing_discriminative_evidence=d.missing_discriminative_evidence,
@@ -717,7 +720,7 @@ def nova_create_case(req:NovaCaseCreateRequest,user:User=Depends(require('nova:i
     record=nova_call('nova_service','create_case',app.state.nova_service.create_case,request_id=rid,
                       adapter=app.state.adapter,patient_id=pid,
                       encounter=encounter,chief_complaint=req.chief_complaint,created_by=user.id,
-                      max_turns=req.max_turns)
+                      max_turns=req.max_turns,locale=req.locale)
     app.state.audit.record(pid,'nova_case_created',{'case_id':record.case_id,'encounter_id':record.encounter_id,
         'request_id':rid},user_id=user.id,role=user.role)
     return NovaCaseCreatedResponse(case_id=record.case_id,request_id=rid,patient_id=pid,
@@ -762,10 +765,14 @@ def nova_decide(case_id:str,user:User=Depends(require('nova:invoke')),rid:str=De
         'action_type':result.action.action_type,'action_key':result.action.key,
         'top_diagnosis':top.diagnosis if top else None,'llm_circuit_open':result.llm_circuit_open,
         **result.versions},user_id=user.id,role=user.role)
+    locale=getattr(state,'locale','en')
+    display_content=(translate_diagnosis(result.action.key,locale,result.action.content)
+                      if result.action.action_type=='DIAGNOSE' else result.action.content)
     return NovaDecideResponse(case_id=case_id,request_id=rid,turn_count=state.turn_count,
-        remaining_turns=state.remaining_turns,differential=_nova_differential_out(result.differential),
+        remaining_turns=state.remaining_turns,differential=_nova_differential_out(result.differential,locale),
         recommended_next_action=NovaRecommendedActionOut(action_type=result.action.action_type,
-            key=result.action.key,content=result.action.content,rationale=result.action.rationale),
+            key=result.action.key,content=result.action.content,display_content=display_content,
+            rationale=result.action.rationale),
         red_flags=red_flags,confidence_band=top.confidence_band if top else None,limitations=limitations,
         llm_degraded=result.llm_circuit_open,versions=NovaVersionsOut(**result.versions))
 
@@ -773,7 +780,12 @@ def nova_decide(case_id:str,user:User=Depends(require('nova:invoke')),rid:str=De
 def nova_get_case(case_id:str,user:User=Depends(require('nova:read')),rid:str=Depends(request_id)):
     record=nova_call('nova_service','get_case',app.state.nova_service.get_case,case_id,request_id=rid,case_id=case_id)
     state=record.state
-    differential=[NovaDifferentialItemOut(diagnosis=d.diagnosis,diagnosis_id=d.diagnosis,rank=d.rank,
+    # DifferentialSnapshot (state.current_differential) carries no real diagnosis_id, only the
+    # display name (a pre-existing limitation of that lightweight mirror, unrelated to locale) --
+    # display_diagnosis is left equal to diagnosis rather than attempting a translate_diagnosis()
+    # lookup keyed on a display string, which would either silently miss or risk a wrong match.
+    differential=[NovaDifferentialItemOut(diagnosis=d.diagnosis,display_diagnosis=d.diagnosis,
+        diagnosis_id=d.diagnosis,rank=d.rank,
         confidence_band=d.confidence_band,urgency=d.urgency,dangerous_if_missed=d.dangerous_if_missed)
         for d in state.current_differential]
     return NovaCaseStateResponse(case_id=case_id,request_id=rid,patient_id=record.patient_id,

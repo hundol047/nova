@@ -41,6 +41,8 @@ class CandidateInfo(BaseModel):
     key: str
     content_en: str
     content_ko: str
+    content_ja: str = ""
+    content_zh: str = ""
     disease_ids_discriminated: List[str]
     diagnostic_discrimination: float
     safety_relevance: float
@@ -132,6 +134,7 @@ class MissingInformationAnalyzer:
                 spec = disease_specific_question(item.diagnosis_id, discriminator)
                 cand = ask_candidates.setdefault(key, CandidateInfo(
                     action_type="ASK", key=discriminator, content_en=spec["text_en"], content_ko=spec["text_ko"],
+                    content_ja=spec.get("text_ja", ""), content_zh=spec.get("text_zh", ""),
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
@@ -146,6 +149,7 @@ class MissingInformationAnalyzer:
                     continue
                 cand = exam_candidates.setdefault(exam_id, CandidateInfo(
                     action_type="EXAM", key=exam_id, content_en=spec["name_en"], content_ko=spec["name_ko"],
+                    content_ja=spec.get("name_ja", ""), content_zh=spec.get("name_zh", ""),
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
@@ -160,6 +164,7 @@ class MissingInformationAnalyzer:
                     continue
                 cand = test_candidates.setdefault(test_id, CandidateInfo(
                     action_type="TEST", key=test_id, content_en=spec["name_en"], content_ko=spec["name_ko"],
+                    content_ja=spec.get("name_ja", ""), content_zh=spec.get("name_zh", ""),
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))

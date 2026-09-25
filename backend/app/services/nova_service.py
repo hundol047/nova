@@ -228,7 +228,8 @@ class NovaService:
         return get_llm_client()
 
     def create_case(self, *, adapter, patient_id: str, encounter: Optional[ClinicalEncounter],
-                     chief_complaint: Optional[str], created_by: str, max_turns: Optional[int] = None) -> NovaCaseRecord:
+                     chief_complaint: Optional[str], created_by: str, max_turns: Optional[int] = None,
+                     locale: str = "en") -> NovaCaseRecord:
         try:
             patient: Optional[Patient] = adapter.get(patient_id)
         except NotImplementedError:
@@ -242,10 +243,12 @@ class NovaService:
             raise ValidationError(
                 "chief_complaint is required (pass it directly, or reference an encounter that already has one)."
             )
-        agent = DoctorAgent(llm_client=self._new_llm_client(force_mock=self.circuit_breaker.should_skip_real_llm()))
+        agent = DoctorAgent(llm_client=self._new_llm_client(force_mock=self.circuit_breaker.should_skip_real_llm()),
+                             lang=locale)
         case_id = new_case_id()
         state: PatientState = agent.new_case(case_id=case_id, chief_complaint=cc,
                                               demographics=demographics_for(patient), max_turns=max_turns)
+        state.locale = locale
         unmapped_clinical_codes = apply_patient_context(state, patient, encounter)
         if unmapped_clinical_codes:
             # Never silently discarded (spec): counted for ops visibility and logged with enough
@@ -288,7 +291,7 @@ class NovaService:
             raise CaseClosedError(f"Case {case_id!r} is closed; no further decisions can be made.")
 
         skip_real_llm = self.circuit_breaker.should_skip_real_llm()
-        agent = DoctorAgent(llm_client=self._new_llm_client(force_mock=skip_real_llm))
+        agent = DoctorAgent(llm_client=self._new_llm_client(force_mock=skip_real_llm), lang=record.state.locale)
 
         calls_before, success_before = record.state.llm_call_count, record.state.llm_success_count
         action, _llm_output, differential = agent.decide(record.state)
