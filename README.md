@@ -69,6 +69,41 @@ flowchart TD
   just asserted -- see `tests/test_hybrid_and_robustness.py::test_llm_can_change_differential` /
   `test_llm_can_select_valid_non_deterministic_candidate`.
 
+### 2.1 Open-world ontology + optional learning ranker
+
+N.O.V.A. is not limited to a fixed disease list. A **tiered disease universe** and an **optional**
+deep-learning ranker sit alongside the deterministic engine. N.O.V.A. offers a **broad,
+ontology-backed differential diagnosis with explicit uncertainty** — it does **not** claim to
+diagnose "all diseases" or achieve "100% accuracy." Conditions outside its curated knowledge are
+surfaced as *possible* or *unknown*, never forced into a label.
+
+```mermaid
+flowchart TD
+  Q["Presentation / candidate query"] --> CAT["ontology/registry.py\nDiseaseCatalog"]
+  subgraph TIERS["Tiered disease universe"]
+    T1["Tier-1 deep (34 profiles)\nfull reasoning"]
+    T2["Tier-2 structured (broad)\nname/aliases/urgency/ICD-10"]
+    T3["Tier-3 ontology-only\noperator SNOMED/ICD snapshot (local)"]
+  end
+  CAT --- T1
+  CAT --- T2
+  CAT --- T3
+  CAT --> OW["open_world.py\nKNOWN / POSSIBLE_UNMAPPED /\nINSUFFICIENT_INFO / UNKNOWN"]
+  OW --> SG["safety_validator.py (SAFETY GUARD)"]
+  SG -->|safety-vetted candidates| RANK["learning/ ranker (OPTIONAL, torch-optional)\nre-orders only; never auto-confirms"]
+  RANK --> DX["clinician-facing differential"]
+  OUT["adjudicated outcomes (opt-in, de-identified)"] -.->|offline, gated| RANK
+```
+
+- **Priority invariant:** `Safety Guard > ML Ranker > LLM`. The ranker only re-orders an
+  already-safety-vetted list; it can never resurrect an excluded candidate, outrank a critical one,
+  or show a probability without a fitted calibrator.
+- **Isolation:** `learning/` (and torch) are **never** part of the competition submission or the
+  core runtime; the ontology layer makes **no external terminology calls**; a NOVA prediction is
+  **never** used as a training label. See `docs/ontology/*` and `docs/learning/*`.
+- Coverage numbers are reported from the actual catalog by
+  `python scripts/report_disease_coverage.py` — never aspirational.
+
 ## 3. The ASK / EXAM / TEST / DIAGNOSE loop
 
 Each turn: the deterministic engine proposes a scored candidate pool -> the LLM reasons over it
