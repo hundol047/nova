@@ -11,7 +11,7 @@ reshuffle the ranking.
 
 from __future__ import annotations
 
-from typing import List, Literal, Optional
+from typing import Dict, List, Literal, Optional
 
 from pydantic import BaseModel
 
@@ -24,6 +24,7 @@ from nova_agent.glucose_evidence import (
     extract_glucose_mg_dl,
 )
 from nova_agent.matching import content_word_count, feature_denied, feature_present
+from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding, normalize_objective_evidence
 from nova_agent.severity_evidence import ELEVATED_LACTATE_MMOL_L, extract_lactate_mmol_l
 from nova_agent.state import DifferentialSnapshot, PatientState
 
@@ -138,6 +139,37 @@ class DifferentialItem(BaseModel):
     candidate_sources: List[str] = []
 
 
+def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict[str, ObjectiveFinding],
+                             supporting: List[str], contradictory: List[str],
+                             missing: List[str]) -> Optional[float]:
+    """If `phrase` is one of the confirmatory-finding phrases objective_evidence.py knows maps to
+    a specific lab (see CONFIRMATORY_PHRASE_TO_LAB), scores it from that lab's actual numeric/
+    qualitative INTERPRETATION rather than plain word-overlap against the finding text -- so a raw
+    "potassium 6.9 mEq/L" result correctly supports "hyperkalemia" even though the finding text
+    never contains the word "hyperkalemia"/"elevated" itself (the same class of gap
+    glucose_evidence.py/severity_evidence.py's lactate handling already closed for those two
+    labs). Returns None (never 0.0) when `phrase` has no lab mapping at all, so the caller falls
+    back to the plain word-overlap `_score_phrase()` path unchanged for every other phrase."""
+    mapping = CONFIRMATORY_PHRASE_TO_LAB.get(phrase.lower())
+    if mapping is None:
+        return None
+    lab_id, direction = mapping
+    finding = objective_findings.get(lab_id)
+    if finding is None or finding.interpretation == "unknown":
+        missing.append(phrase)
+        return 0.0
+    abnormal = {"high": ("high", "critical_high"), "low": ("low", "critical_low")}[direction]
+    opposite = {"high": ("low", "critical_low"), "low": ("high", "critical_high")}[direction]
+    if finding.interpretation in abnormal:
+        supporting.append(phrase)
+        return weight
+    if finding.interpretation in opposite:
+        contradictory.append(phrase)
+        return -CONTRADICTION_PENALTY
+    missing.append(phrase)
+    return 0.0
+
+
 def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: List[str],
                    supporting: List[str], contradictory: List[str], missing: List[str]) -> float:
     """Negation-aware scoring for ONE typical_feature or confirmatory_finding phrase. Shared by
@@ -225,7 +257,10 @@ def _score_glucose(entry_id: str, glucose_mg_dl: Optional[float],
     return 0.0
 
 
-def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List[str], List[str], List[str]]:
+def _score_disease(entry: dict, state: PatientState,
+                    objective_findings: Optional[Dict[str, ObjectiveFinding]] = None) -> tuple[float, float, List[str], List[str], List[str]]:
+    if objective_findings is None:
+        objective_findings = normalize_objective_evidence(state)
     findings = state.all_findings_text()
     negatives = state.pertinent_negatives
 
@@ -248,7 +283,12 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
 
     for finding in entry.get("confirmatory_findings", []):
         max_possible += CONFIRMATORY_WEIGHT
-        score += _score_phrase(finding, CONFIRMATORY_WEIGHT, findings, negatives, supporting, contradictory, missing)
+        lab_aware_delta = _score_lab_aware_phrase(finding, CONFIRMATORY_WEIGHT, objective_findings,
+                                                   supporting, contradictory, missing)
+        if lab_aware_delta is not None:
+            score += lab_aware_delta
+        else:
+            score += _score_phrase(finding, CONFIRMATORY_WEIGHT, findings, negatives, supporting, contradictory, missing)
 
     # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
     # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in
@@ -314,17 +354,19 @@ class DifferentialEngine:
         # (only positive-evidence sources are scanned) and why it degrades to the old
         # chief-complaint-only behavior on a case's first turn.
         presentation = build_clinical_presentation(state)
+        objective_findings = normalize_objective_evidence(state)
         candidate_records = generate_candidates(
             presentation,
             glucose_result_text=state.laboratory_tests.get("glucose_point_of_care"),
             lactate_result_text=state.laboratory_tests.get("lactate"),
+            objective_findings=objective_findings,
         )
         candidates = [c.entry for c in candidate_records]
         sources_by_id = {c.id: c.sources for c in candidate_records}
 
         scored = []
         for entry in candidates:
-            score, max_possible, supporting, contradictory, missing = _score_disease(entry, state)
+            score, max_possible, supporting, contradictory, missing = _score_disease(entry, state, objective_findings)
             score_ratio = max(0.0, score) / max_possible
             band = _confidence_band(score_ratio, state.turn_count, len(supporting))
             scored.append((score, score_ratio, entry, supporting, contradictory, missing, band))

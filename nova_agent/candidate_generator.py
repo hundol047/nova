@@ -20,7 +20,7 @@ anything at all (mirrors the old chief_complaint-only fallback's safety property
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import List, Literal, Optional
+from typing import Dict, List, Literal, Optional
 
 from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES, related_tags
 from nova_agent.clinical_presentation import ClinicalPresentation
@@ -31,7 +31,28 @@ from nova_agent.glucose_evidence import (
 )
 from nova_agent.knowledge.retrieval import all_diseases, disease_by_id, diseases_for_tag
 from nova_agent.matching import feature_present
+from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding
 from nova_agent.severity_evidence import ELEVATED_LACTATE_MMOL_L, extract_lactate_mmol_l
+
+# Reverse index: lab canonical id -> {(diagnosis_id, direction it asserts), ...}, built once from
+# the same CONFIRMATORY_PHRASE_TO_LAB table differential.py's lab-aware scoring already uses, so a
+# decisive abnormal lab pulls its diagnosis into the CANDIDATE POOL the same way it already gets
+# credited once scored -- generalizes the glucose/lactate-only objective_finding step below to
+# every lab objective_evidence.py understands (troponin -> ACS, D-dimer -> PE, potassium/sodium ->
+# severe_electrolyte_disorder, WBC -> pyelonephritis/meningitis, hemoglobin -> GI bleeding, ketones
+# -> DKA, beta-hCG -> ectopic pregnancy, ...) without hand-listing each pair twice.
+def _build_lab_to_diagnoses_index() -> dict:
+    index: dict = {}
+    for entry in all_diseases().values():
+        for phrase in entry.get("confirmatory_findings", []):
+            mapping = CONFIRMATORY_PHRASE_TO_LAB.get(phrase.lower())
+            if mapping is not None:
+                lab_id, direction = mapping
+                index.setdefault(lab_id, set()).add((entry["id"], direction))
+    return index
+
+
+_LAB_TO_DIAGNOSES = _build_lab_to_diagnoses_index()
 
 CandidateSource = Literal["symptom_match", "risk_match", "objective_finding", "safety_candidate"]
 
@@ -60,10 +81,15 @@ def _add(pool: dict, entry: dict, source: CandidateSource) -> None:
 
 def generate_candidates(presentation: ClinicalPresentation,
                          glucose_result_text: Optional[str] = None,
-                         lactate_result_text: Optional[str] = None) -> List[CandidateDiagnosis]:
-    """Builds the candidate pool for one turn. `glucose_result_text`/`lactate_result_text` are
-    passed explicitly (not a whole PatientState) to keep this module's dependency surface small
-    and directly testable -- callers pass `state.laboratory_tests.get(...)`."""
+                         lactate_result_text: Optional[str] = None,
+                         objective_findings: Optional[Dict[str, ObjectiveFinding]] = None) -> List[CandidateDiagnosis]:
+    """Builds the candidate pool for one turn. `glucose_result_text`/`lactate_result_text`/
+    `objective_findings` are passed explicitly (not a whole PatientState) to keep this module's
+    dependency surface small and directly testable. `objective_findings` is the
+    canonical-id-keyed dict objective_evidence.normalize_objective_evidence() returns (callers
+    already compute it once per turn for differential.py's own scoring, so it's passed through
+    rather than re-derived here) -- None (the default) simply skips the generalized-lab pool step
+    below, leaving the glucose/lactate-only behavior unchanged for any caller that doesn't pass it."""
     pool: dict = {}
 
     # 1. symptom_match -- every concurrently-extracted concept's own disease pool (spec: multiple
@@ -114,6 +140,20 @@ def generate_candidates(presentation: ClinicalPresentation,
         entry = disease_by_id("sepsis")
         if entry is not None:
             _add(pool, entry, "objective_finding")
+
+    # 3b. Same objective_finding idea, generalized: any OTHER lab objective_evidence.py normalizes
+    # (troponin, D-dimer, potassium, sodium, WBC, hemoglobin, ketones, beta-hCG, ...) pulls in
+    # every diagnosis whose own confirmatory_findings reference it, once that lab's actual reading
+    # is abnormal in the direction that finding asserts -- via the reverse index built above, so a
+    # decisive lab result is never invisible to pool membership just because no symptom concept
+    # happened to name the diagnosis it confirms.
+    abnormal_by_direction = {"high": ("high", "critical_high"), "low": ("low", "critical_low")}
+    for lab_id, finding in (objective_findings or {}).items():
+        for diagnosis_id, direction in _LAB_TO_DIAGNOSES.get(lab_id, ()):
+            if finding.interpretation in abnormal_by_direction[direction]:
+                entry = disease_by_id(diagnosis_id)
+                if entry is not None:
+                    _add(pool, entry, "objective_finding")
 
     if not pool:
         # Genuinely nothing matched anything at all via symptom/risk/objective evidence -- the
