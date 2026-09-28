@@ -122,8 +122,25 @@ class NovaConfig:
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"
         )
     )
-    competition_retrieval_max: int = field(
-        default_factory=lambda: _int_env("NOVA_COMPETITION_RETRIEVAL_MAX", 15))
+
+    # Three DISTINCT stage sizes of the competition retrieval pipeline (nova_agent/retrieval_
+    # pipeline.py) -- deliberately not one shared number, since each stage has a different job:
+    #   retrieval_top_k  (Stage 1, recommended 100-200): how many catalog hits high-recall
+    #                     retrieval pulls. Large on purpose -- a true long-tail diagnosis needs
+    #                     room to survive before anything narrows the pool.
+    #   rerank_top_k     (Stage 2/3, recommended 20-30): how many of those survive the lightweight
+    #                     deterministic reranker (+ mandatory dangerous-concept reinjection) before
+    #                     being added to this turn's candidate pool.
+    #   reasoning_top_k  (recommended 20-30): how large the FINAL active clinical differential
+    #                     (deterministic KB pool + reranked ontology candidates, see differential.py
+    #                     `effective_differential_top_k()`) is allowed to be -- this is what
+    #                     actually reaches the LLM context, replacing the legacy fixed
+    #                     top_k_differential=5 cap ONLY when competition_retrieval_enabled is True,
+    #                     so the change never affects the mock/legacy/non-retrieval path.
+    # Retrieval/rerank are only consulted when competition_retrieval_enabled is True.
+    retrieval_top_k: int = field(default_factory=lambda: _int_env("NOVA_RETRIEVAL_TOP_K", 150))
+    rerank_top_k: int = field(default_factory=lambda: _int_env("NOVA_RERANK_TOP_K", 25))
+    reasoning_top_k: int = field(default_factory=lambda: _int_env("NOVA_REASONING_TOP_K", 25))
 
     # --- Optional ML ranker (HOSPITAL deployment only; NEVER in the competition submission) ------
     # ml_ranker_enabled: master switch for the optional deep-learning candidate ranker. DEFAULT
@@ -187,6 +204,15 @@ class NovaConfig:
             "NOVA_KNOWLEDGE_DIR", os.path.join(os.path.dirname(__file__), "knowledge")
         )
     )
+
+    def effective_differential_top_k(self) -> int:
+        """The final active-differential size (differential.py's DifferentialEngine.update() and
+        safety_validator.py's SafetyValidator.merge_differential() both call this, so the two stay
+        consistent). `reasoning_top_k` (competition, ~25) when competition retrieval is enabled;
+        the legacy `top_k_differential` (~5) otherwise -- so enabling competition retrieval is what
+        widens the differential that actually reaches the LLM context, and every existing
+        mock/legacy caller that never turns retrieval on keeps its exact previous behavior."""
+        return self.reasoning_top_k if self.competition_retrieval_enabled else self.top_k_differential
 
 
 _config: NovaConfig | None = None

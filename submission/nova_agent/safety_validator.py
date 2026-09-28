@@ -70,7 +70,11 @@ class SafetyValidator:
         # bandderived proxy instead of a fabricated-looking precise number.
         det_by_id = {d.diagnosis_id: d for d in deterministic_differential}
         band_proxy = {"HIGH": 0.75, "MEDIUM": 0.45, "LOW": 0.15}
-        top_k = get_config().top_k_differential
+        # Kept consistent with differential.py's own final-differential size (see NovaConfig.
+        # effective_differential_top_k()) -- otherwise an LLM given up to reasoning_top_k
+        # candidates in its context could have its own returned differential arbitrarily
+        # truncated back down to the legacy 5 here, undoing the wider competition-mode context.
+        top_k = get_config().effective_differential_top_k()
 
         if llm_output is not None and llm_output.differential:
             # LLM differential validation hardening (spec section 10): canonicalize each entry,

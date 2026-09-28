@@ -180,31 +180,38 @@ def _broaden_with_ontology(pool: dict, presentation: ClinicalPresentation, max_a
 
 def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
                              imaging_text: Optional[List[str]], chief_complaint_text: Optional[str],
-                             max_add: int) -> None:
-    """Competition-mode broad retrieval (NOVA_COMPETITION_RETRIEVAL). Unlike the legacy
-    `_broaden_with_ontology` above (Tier-2 only, single-term lexical search per symptom), this
-    fuses EVERY signal already extracted this turn -- chief complaint text, symptom concepts,
-    risk/PMH/social history, medication context, and imaging findings -- through the existing,
-    already-tested `nova_agent.open_world.OpenWorldRetriever.retrieve_multi_signal()`, rebuilt fresh
+                             retrieval_top_k: int, rerank_top_k: int) -> None:
+    """Competition-mode broad retrieval (NOVA_COMPETITION_RETRIEVAL), now a real 3-stage funnel
+    instead of a single small `limit`: nova_agent.retrieval_pipeline.retrieve_and_rerank() first
+    retrieves up to `retrieval_top_k` (recommended 100-200) candidates -- HIGH RECALL, so a true
+    long-tail diagnosis has room to survive -- fuses EVERY signal already extracted this turn (chief
+    complaint text, symptom concepts, risk/PMH/social history, medication context, imaging findings)
+    through the existing, already-tested OpenWorldRetriever.retrieve_multi_signal(), rebuilt fresh
     every call from whatever `presentation`/`imaging_text`/`chief_complaint_text` the caller
-    currently has. Since `differential.py`'s `DifferentialEngine.update()` already rebuilds
-    `presentation` (via `build_clinical_presentation(state)`) and passes `state.chief_complaint`
-    fresh every turn, this is never limited to the original presenting sentence. It allows BOTH
-    Tier-2 structured
-    AND Tier-3 ontology-only concepts through: a Tier-3 concept still enters the pool as a named,
-    zero-deep-evidence possibility (via `_concept_to_kb_entry`, which correctly gives it no
-    discriminating_questions), exactly like the existing fixed safety-net entries.
+    currently has (never limited to the original presenting sentence, since differential.py already
+    rebuilds `presentation` from the FULL current PatientState every turn). It then deterministically
+    reranks that pool down to `rerank_top_k` (recommended 20-30) before ANY of it reaches this
+    function's caller -- expensive downstream reasoning (differential scoring, LLM context) only
+    ever sees the narrowed, reranked survivors, never the full retrieval pool.
+
+    Allows BOTH Tier-2 structured AND Tier-3 ontology-only concepts through: a Tier-3 concept still
+    enters the pool as a named, zero-deep-evidence possibility (via `_concept_to_kb_entry`, which
+    correctly gives it no discriminating_questions), exactly like the existing fixed safety-net
+    entries -- and the reranker's dangerous-concept reinjection (see retrieval_pipeline.py) means a
+    `dangerous: true` ontology concept cannot be silently reranked away even at this stage, on top
+    of (not instead of) the pool-level `trimmable_only_sources` protection below.
 
     Source-tagged 'ontology_retrieval' -- distinct from the legacy 'ontology_broadening' tag -- so
     provenance stays honest about which mechanism actually found the candidate. Additive only:
-    never removes or reweights an existing candidate. Any failure to import/load the catalog or
-    retriever degrades silently to the unchanged pool -- the deterministic KB pool remains the safe
-    fallback, a broad-retrieval outage never crashes or blocks a case."""
-    if max_add <= 0:
+    never removes or reweights an existing candidate. Any failure to import/load the catalog,
+    retriever, or reranker degrades silently to the unchanged pool -- the deterministic KB pool
+    remains the safe fallback, a broad-retrieval outage never crashes or blocks a case."""
+    if retrieval_top_k <= 0 or rerank_top_k <= 0:
         return
     try:
         from nova_agent.open_world import OpenWorldRetriever
         from nova_agent.ontology.registry import get_default_catalog
+        from nova_agent.retrieval_pipeline import retrieve_and_rerank
     except Exception:
         return
 
@@ -215,28 +222,26 @@ def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
 
     history_signals = list(presentation.risk_factors) + list(presentation.medication_context)
     try:
-        retrieved = retriever.retrieve_multi_signal(
+        reranked = retrieve_and_rerank(
+            retriever,
             chief_complaint=str(chief_complaint_text or ""),
             symptoms=list(presentation.symptoms),
             history=history_signals,
             imaging_concepts=list(imaging_text or []),
-            limit=max_add * 3,
+            retrieval_top_k=retrieval_top_k,
+            rerank_top_k=rerank_top_k,
         )
     except Exception:
         return
 
-    added = 0
     seen_names = {c.entry.get("name", "").strip().lower() for c in pool.values()}
-    for candidate in retrieved:
-        if added >= max_add:
-            break
+    for candidate in reranked:
         concept = candidate.concept
         onto_id = f"onto::{concept.concept_id}"
         if onto_id in pool or concept.canonical_name.strip().lower() in seen_names:
             continue
         _add(pool, _concept_to_kb_entry(concept), "ontology_retrieval")
         seen_names.add(concept.canonical_name.strip().lower())
-        added += 1
 
 
 def generate_candidates(presentation: ClinicalPresentation,
@@ -247,8 +252,10 @@ def generate_candidates(presentation: ClinicalPresentation,
                          ontology_broadening: bool = False,
                          ontology_broadening_max: int = 5,
                          competition_retrieval: bool = False,
-                         competition_retrieval_max: int = 15,
-                         chief_complaint_text: Optional[str] = None) -> List[CandidateDiagnosis]:
+                         retrieval_top_k: int = 150,
+                         rerank_top_k: int = 25,
+                         chief_complaint_text: Optional[str] = None,
+                         pool_target_size: Optional[int] = None) -> List[CandidateDiagnosis]:
     """Builds the candidate pool for one turn. `glucose_result_text`/`lactate_result_text`/
     `objective_findings`/`imaging_text` are passed explicitly (not a whole PatientState) to keep
     this module's dependency surface small and directly testable. `objective_findings` is the
@@ -259,7 +266,20 @@ def generate_candidates(presentation: ClinicalPresentation,
     `imaging_text` is `state.imaging.values()` -- also None-safe/optional for the same reason.
     `chief_complaint_text` is `state.chief_complaint` -- used ONLY by the opt-in competition
     retrieval step (`_broaden_with_open_world`) as one fused free-text signal alongside
-    `presentation`'s already-extracted symptoms/history; None-safe/optional, same reasoning."""
+    `presentation`'s already-extracted symptoms/history; None-safe/optional, same reasoning.
+
+    `retrieval_top_k`/`rerank_top_k` are the two DISTINCT stage sizes of the competition retrieval
+    pipeline (nova_agent.retrieval_pipeline): `retrieval_top_k` (recommended 100-200) is how many
+    catalog hits Stage 1 pulls for high recall; `rerank_top_k` (recommended 20-30) is how many of
+    those survive Stage 2/3 (lightweight deterministic rerank + safety reinjection) before entering
+    THIS pool. Only consulted when `competition_retrieval=True`.
+
+    `pool_target_size` overrides the module-level TARGET_POOL_SIZE for the final pool-size-trim
+    step below (None keeps the existing default, preserving byte-identical legacy/non-retrieval
+    behavior). The real runtime (differential.py) passes the configured `reasoning_top_k` here when
+    competition retrieval is enabled, so the ACTIVE CLINICAL DIFFERENTIAL -- the deterministic KB
+    pool plus reranked ontology candidates -- has room for more than the legacy 12-candidate budget
+    without changing that legacy budget for any caller that doesn't opt in."""
     pool: dict = {}
 
     # 1. symptom_match -- every concurrently-extracted concept's own disease pool (spec: multiple
@@ -403,10 +423,11 @@ def generate_candidates(presentation: ClinicalPresentation,
     #    candidates neither of those already found; byte-identical existing behavior when disabled.
     if competition_retrieval:
         _broaden_with_open_world(pool, presentation, imaging_text, chief_complaint_text,
-                                 competition_retrieval_max)
+                                 retrieval_top_k, rerank_top_k)
 
+    target_size = pool_target_size if pool_target_size is not None else TARGET_POOL_SIZE
     candidates = list(pool.values())
-    if len(candidates) <= TARGET_POOL_SIZE:
+    if len(candidates) <= target_size:
         return candidates
 
     # Trim toward the target size -- but ONLY an entry reached SOLELY via the fixed safety-net
@@ -428,5 +449,5 @@ def generate_candidates(presentation: ClinicalPresentation,
     trimmable_only_sources = {"safety_candidate", "ontology_broadening", "ontology_retrieval"}
     protected = [c for c in candidates if not set(c.sources).issubset(trimmable_only_sources)]
     trimmable = [c for c in candidates if c.id not in {p.id for p in protected}]
-    keep_count = max(0, TARGET_POOL_SIZE - len(protected))
+    keep_count = max(0, target_size - len(protected))
     return protected + trimmable[:keep_count]

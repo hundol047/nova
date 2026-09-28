@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#9-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 121 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 444 unit tests (1 skipped), the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -97,7 +97,7 @@ flowchart TD
   CAT --- T3
   CAT --> OW["open_world.py\nKNOWN / POSSIBLE_UNMAPPED /\nINSUFFICIENT_INFO / UNKNOWN"]
   OW --> SG["safety_validator.py (SAFETY GUARD)"]
-  SG -->|safety-vetted candidates| RANK["learning/ ranker (OPTIONAL, torch-optional)\nre-orders only; never auto-confirms"]
+  SG -->|safety-vetted candidates| RANK["learning/ ranker (OPTIONAL, torch-optional,\nHOSPITAL-SIDE ONLY -- see 2.2)\nre-orders only; never auto-confirms"]
   RANK --> DX["clinician-facing differential"]
   OUT["adjudicated outcomes (opt-in, de-identified)"] -.->|offline, gated| RANK
 ```
@@ -110,6 +110,50 @@ flowchart TD
   **never** used as a training label. See `docs/ontology/*` and `docs/learning/*`.
 - Coverage numbers are reported from the actual catalog by
   `python scripts/report_disease_coverage.py` — never aspirational.
+
+### 2.2 Competition retrieval pipeline (actually wired into `DoctorAgent`)
+
+The diagram above's `learning/` ranker is a *separate*, still-optional, hospital-side-only
+component (torch-optional, never in the submission, never invoked by the live turn loop). The
+**competition-mode retrieval path that `DoctorAgent.decide()` actually executes every turn** is a
+different, dependency-light pipeline entirely inside `nova_agent/`:
+
+```mermaid
+flowchart LR
+  STATE["PatientState\n(rebuilt every turn: chief complaint + symptoms +\nPMH/FH/SH + meds + imaging + labs)"] --> PRES["clinical_presentation.py\nbuild_clinical_presentation()"]
+  PRES --> RET["retrieval_pipeline.py\nStage 1: retrieve_high_recall()\n(NOVA_RETRIEVAL_TOP_K, 100-200)"]
+  RET --> RERANK["retrieval_pipeline.py\nStage 2/3: lightweight_rerank()\n+ dangerous-concept reinjection\n(NOVA_RERANK_TOP_K, 20-30)"]
+  RERANK --> POOL["candidate_generator.py\ncandidate pool\n(+ deterministic KB / safety-net candidates)"]
+  POOL --> DIFF["differential.py\nfinal differential\n(NOVA_REASONING_TOP_K, ~25 in competition mode)"]
+  DIFF --> SUMMARY["clinical_summary.py\nbounded, provenance-tagged LLM text"]
+  SUMMARY --> LLM["llm_client.py\nOfficial gpt-oss-20b (competition provider)"]
+  LLM --> GUARD["safety_validator.py\nDeterministic Safety Guard"]
+  GUARD --> ACTION["ASK / EXAM / TEST / DIAGNOSE"]
+```
+
+- Opt-in via `NOVA_COMPETITION_RETRIEVAL` (defaults on when `NOVA_LLM_PROVIDER=competition`, off
+  otherwise -- every mock/legacy caller keeps byte-identical behavior). Three distinct, separately
+  configurable stage sizes (`NOVA_RETRIEVAL_TOP_K`≈150, `NOVA_RERANK_TOP_K`≈25,
+  `NOVA_REASONING_TOP_K`≈25) — the full disease catalog is never sent to the LLM; only the narrowed,
+  reranked, provenance-tagged bundle is.
+- The reranker (`nova_agent/retrieval_pipeline.py`) is a transparent, deterministic weighted-sum
+  scorer -- explicitly **not** deep learning, no torch/embeddings -- and never silently drops a
+  `dangerous: true` candidate (mandatory reinjection; see that module's docstring). This is
+  independent of, and additive to, the pool-level `trimmable_only_sources` protection that already
+  guarantees a must-not-miss or evidenced Tier-1 diagnosis can never be displaced by a retrieval
+  addition (`candidate_generator.py`).
+- Measured (mock-LLM `decide()`, this environment, single-machine, not a production benchmark):
+  retrieval p50≈11ms/p95≈15ms, rerank p50<1ms, full `DifferentialEngine.update()` p50≈10ms/p95≈17ms.
+  Honest limitation: the underlying `OpenWorldRetriever` is a **lexical/token index, not an
+  embedding retriever** -- measured against the 44 real synthetic evaluation cases' own presenting
+  text (not their disease name), lexical Recall@20/50/100 for a Tier-1 KB diagnosis is ~11%
+  (chief complaint alone) to ~34% (chief complaint + full elicited history text). The system's
+  actual 100% end-to-end diagnostic accuracy on those same 44 cases comes from the separate,
+  independent deterministic symptom-tag KB path (`candidate_generator.py`'s `symptom_match`/
+  `risk_match`/`objective_finding` steps), not from ontology retrieval -- retrieval's proven,
+  tested value-add is that a Tier-2/Tier-3 long-tail candidate *outside* the 34-disease KB can now
+  reach the differential/LLM context at all (see `tests/test_tier2_retrieval_runtime.py`,
+  `tests/test_long_tail_reaches_llm.py`), not that it out-recalls the KB's own 34 diagnoses.
 
 ## 3. The ASK / EXAM / TEST / DIAGNOSE loop
 
@@ -152,7 +196,7 @@ nothing in this repo cites a fabricated external source.
 ## 6. Evaluation & results
 
 ```bash
-pytest tests/ -v                        # 121 tests
+pytest tests/ -v                        # 444 tests, 1 skipped
 python -m evaluation.benchmark --generalization-v2 --stress  # tuning + held-out + generalization-v2 + stress, full metrics
 python -m evaluation.benchmark --held-out-only
 python -m evaluation.generalization_benchmark

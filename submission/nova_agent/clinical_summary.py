@@ -59,10 +59,18 @@ def build_clinical_summary(state: PatientState, differential: List[DifferentialI
         "pregnant" if demo.pregnant else None,
     ])) or "unknown"
 
-    top_differential_text = [
-        f"{d.rank}. {d.diagnosis} ({d.confidence_band}, {'DANGEROUS' if d.dangerous_if_missed else 'routine'})"
-        for d in differential
-    ]
+    def _differential_line(d: DifferentialItem) -> str:
+        # Concise per-candidate provenance (spec: tier + candidate source alongside the existing
+        # confidence/urgency/dangerous fields) -- never a full evidence dump for every item, which
+        # would blow up prompt size once the differential can hold up to reasoning_top_k (~25)
+        # candidates in competition mode; supporting/contradictory/missing evidence detail stays in
+        # the separate, already-bounded "unresolved discriminating evidence" section below.
+        tier = "ontology" if d.diagnosis_id.startswith("onto::") else "kb"
+        source = d.candidate_sources[0] if d.candidate_sources else "llm"
+        danger = "DANGEROUS" if d.dangerous_if_missed else "routine"
+        return f"{d.rank}. {d.diagnosis} [{tier}/{source}] ({d.confidence_band}, {d.urgency}, {danger})"
+
+    top_differential_text = [_differential_line(d) for d in differential]
     unresolved = []
     for d in differential[:3]:
         for missing in d.missing_discriminative_evidence[:2]:

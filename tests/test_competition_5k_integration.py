@@ -70,7 +70,7 @@ def test_competition_retrieval_adds_provenance_tagged_ontology_retrieval_candida
     presentation = _presentation("progressive hearing loss and ringing in the ears with vertigo")
     pool: dict = {}
     _broaden_with_open_world(pool, presentation, [],
-                              "progressive hearing loss and ringing in the ears with vertigo", 10)
+                              "progressive hearing loss and ringing in the ears with vertigo", 150, 10)
     assert pool, "competition_retrieval must be able to add ontology_retrieval-sourced candidates"
     for candidate in pool.values():
         assert candidate.id.startswith("onto::"), "ontology-sourced candidates must use the onto:: namespace"
@@ -86,7 +86,7 @@ def test_full_catalog_is_never_dumped_into_the_pool():
     behavior this test isn't about)."""
     presentation = _presentation("chronic dry cough for several weeks")
     records = generate_candidates(
-        presentation, competition_retrieval=True, competition_retrieval_max=500,
+        presentation, competition_retrieval=True, retrieval_top_k=200, rerank_top_k=100,
         chief_complaint_text="chronic dry cough for several weeks",
     )
     assert len(records) <= TARGET_POOL_SIZE
@@ -104,7 +104,7 @@ def test_competition_retrieval_never_makes_the_must_not_miss_trim_worse():
     kwargs = dict(chief_complaint_text="progressive hearing loss and ringing in the ears with vertigo")
     without = generate_candidates(presentation, competition_retrieval=False, **kwargs)
     with_retrieval = generate_candidates(
-        presentation, competition_retrieval=True, competition_retrieval_max=500, **kwargs)
+        presentation, competition_retrieval=True, retrieval_top_k=200, rerank_top_k=100, **kwargs)
 
     ids_without = {c.id for c in without}
     ids_with = {c.id for c in with_retrieval}
@@ -122,7 +122,7 @@ def test_competition_retrieval_never_displaces_an_evidenced_kb_candidate():
     trimming; only zero-evidence supplements (safety net / broadening / retrieval) are trimmable."""
     presentation = _presentation("sudden severe chest pain radiating to the back")
     records = generate_candidates(
-        presentation, competition_retrieval=True, competition_retrieval_max=500,
+        presentation, competition_retrieval=True, retrieval_top_k=200, rerank_top_k=100,
         chief_complaint_text="sudden severe chest pain radiating to the back",
     )
     ids_present = {c.id for c in records}
@@ -142,7 +142,7 @@ def test_retrieval_failure_falls_back_to_deterministic_pool_safely(monkeypatch):
 
     presentation = _presentation("sudden severe chest pain radiating to the back")
     records = generate_candidates(
-        presentation, competition_retrieval=True, competition_retrieval_max=10,
+        presentation, competition_retrieval=True, retrieval_top_k=150, rerank_top_k=10,
         chief_complaint_text="sudden severe chest pain radiating to the back",
     )
     # Deterministic KB candidates still present; nothing crashed.

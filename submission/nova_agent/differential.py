@@ -365,8 +365,10 @@ class DifferentialEngine:
             ontology_broadening=_cfg.ontology_broadening_enabled,
             ontology_broadening_max=_cfg.ontology_broadening_max,
             competition_retrieval=_cfg.competition_retrieval_enabled,
-            competition_retrieval_max=_cfg.competition_retrieval_max,
+            retrieval_top_k=_cfg.retrieval_top_k,
+            rerank_top_k=_cfg.rerank_top_k,
             chief_complaint_text=state.chief_complaint,
+            pool_target_size=_cfg.reasoning_top_k if _cfg.competition_retrieval_enabled else None,
         )
         candidates = [c.entry for c in candidate_records]
         sources_by_id = {c.id: c.sources for c in candidate_records}
@@ -379,7 +381,11 @@ class DifferentialEngine:
             scored.append((score, score_ratio, entry, supporting, contradictory, missing, band))
 
         scored.sort(key=lambda t: t[0], reverse=True)
-        top_k = get_config().top_k_differential
+        # The final active-clinical-differential size: the legacy fixed 5 for any mock/legacy
+        # caller (byte-identical, unchanged), or the configured reasoning_top_k (~25) once
+        # competition retrieval is enabled -- see NovaConfig.effective_differential_top_k()'s
+        # docstring. This is what actually reaches build_clinical_summary()'s LLM-facing text.
+        top_k = get_config().effective_differential_top_k()
         items: List[DifferentialItem] = []
         for rank, (score, score_ratio, entry, supporting, contradictory, missing, band) in enumerate(scored[:top_k], start=1):
             items.append(DifferentialItem(
