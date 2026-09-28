@@ -7,10 +7,12 @@ Three explicit, separately-sized stages, matching the competition architecture s
     never conflated with the real count)
         |
         v  Stage 1: RETRIEVE  (retrieval_top_k, recommended 100-200)
-    nova_agent.open_world.OpenWorldRetriever.retrieve_multi_signal() -- already-tested, already
-    dependency-free multi-signal fusion (chief complaint + symptoms + history + imaging + codes),
-    unchanged here. This module does not reimplement retrieval; it only widens how many hits the
-    caller asks for and adds the next two stages on top.
+    Multiple BOUNDED, signal-typed sub-queries (chief complaint / symptoms / objective findings /
+    history+risk / medications / imaging -- see `build_signal_queries()`), each independently
+    retrieved via the existing, already-tested `OpenWorldRetriever.retrieve()` /
+    `retrieve_by_code()`, then combined with Weighted Reciprocal Rank Fusion (`_rrf_fuse()`) --
+    never one giant concatenated query. This module does not reimplement lexical matching; it only
+    decides WHAT to query and HOW to combine independently-ranked results.
         |
         v  Stage 2: RERANK  (rerank_top_k, recommended 20-30)
     lightweight_rerank() -- a transparent, deterministic, non-ML scorer (retrieval match strength +
@@ -37,7 +39,7 @@ diagnosis from the FINAL pool regardless of what this pipeline does upstream."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import List, Sequence
+from typing import Dict, List, Sequence, Tuple
 
 from nova_agent.open_world import OpenWorldRetriever, RetrievedCandidate
 
@@ -49,6 +51,29 @@ _MATCH_KIND_WEIGHT = {
 _CURATION_BONUS = {"DEEP": 0.15, "STRUCTURED": 0.05, "NOT_CURATED": 0.0}
 _DANGEROUS_BONUS = 0.12
 _CRITICAL_URGENCY_BONUS = 0.08
+
+# Stage 1 multi-query fusion. All weights/constants live here, not scattered as magic numbers.
+# SIGNAL_WEIGHTS: how much each independently-retrieved signal type counts in the fused ranking.
+# Objective findings (e.g. "critical_high potassium", "elevated troponin" -- ObjectiveFinding.
+# evidence_label, already-computed real lab/vital interpretations, never fabricated here) and
+# imaging findings carry more discriminating power than a generic symptom word, implemented
+# GENERICALLY through signal TYPE (never a disease- or case-specific rule):
+SIGNAL_WEIGHTS: Dict[str, float] = {
+    "chief_complaint": 0.9,
+    "symptom": 1.0,
+    "objective_finding": 1.5,
+    "imaging": 1.3,
+    "history_risk": 0.6,
+    "medication": 0.6,
+    "code": 1.5,
+}
+# Reciprocal Rank Fusion constant (standard choice from the IR literature; not tuned per-case --
+# larger K flattens the influence of rank position, smaller K sharpens it).
+_RRF_K = 60
+# Each signal-typed sub-query independently asks the catalog for this many candidates before
+# fusion -- bounded so no single signal can dominate purely by returning more raw hits than
+# another; the fused, deduplicated result is then truncated to the caller's retrieval_top_k.
+_PER_SIGNAL_QUERY_LIMIT = 80
 
 
 @dataclass
@@ -64,20 +89,124 @@ class RerankedCandidate:
     reasons: List[str] = field(default_factory=list)
 
 
+def build_signal_queries(*, chief_complaint: str = "", symptoms: Sequence[str] = (),
+                          objective_finding_phrases: Sequence[str] = (),
+                          history_risk: Sequence[str] = (), medications: Sequence[str] = (),
+                          imaging_concepts: Sequence[str] = ()) -> List[Tuple[str, str]]:
+    """Builds several BOUNDED, signal-typed queries (Q1 chief complaint, Q2 symptoms, Q3 objective
+    findings, Q4 history/risk, Q5 medications, Q6 imaging) instead of concatenating unlimited
+    patient text into one giant query. Every input here is already negation-scrubbed, positive-
+    evidence-only text: `symptoms`/`history_risk`/`medications` come from
+    clinical_presentation.ClinicalPresentation (built by build_clinical_presentation(), whose own
+    docstring explains why `pertinent_negatives`/raw unsegmented history text are deliberately
+    excluded -- e.g. "denies fever" can never surface here as a positive signal for "fever"), and
+    `objective_finding_phrases` should be each abnormal ObjectiveFinding's own `evidence_label`
+    (never a raw/normal lab value). This function does not itself interpret or filter for
+    negation -- it trusts the caller to pass only already-positive signals, exactly like every
+    other consumer of ClinicalPresentation already does."""
+    queries: List[Tuple[str, str]] = []
+    if chief_complaint.strip():
+        queries.append(("chief_complaint", chief_complaint.strip()))
+    if symptoms:
+        queries.append(("symptom", " ".join(symptoms)))
+    if objective_finding_phrases:
+        queries.append(("objective_finding", " ".join(objective_finding_phrases)))
+    if history_risk:
+        queries.append(("history_risk", " ".join(history_risk)))
+    if medications:
+        queries.append(("medication", " ".join(medications)))
+    if imaging_concepts:
+        queries.append(("imaging", " ".join(imaging_concepts)))
+    return queries
+
+
+def _rrf_fuse(ranked_lists: List[Tuple[str, List[RetrievedCandidate]]],
+              top_k: int) -> List[RetrievedCandidate]:
+    """Weighted Reciprocal Rank Fusion across independently-retrieved, per-signal-type ranked
+    lists: score(concept) = sum over signals s of SIGNAL_WEIGHTS[s] / (_RRF_K + rank_s(concept)).
+    Transparent, deterministic, no learned parameters. A concept's own best-scoring RetrievedCandidate
+    (across whichever signals found it) is kept for downstream provenance/rerank scoring; only its
+    RANK POSITION within each signal's list feeds the fusion score."""
+    fused_scores: Dict[str, float] = {}
+    best_candidate: Dict[str, RetrievedCandidate] = {}
+    for signal, ranked in ranked_lists:
+        weight = SIGNAL_WEIGHTS.get(signal, 1.0)
+        for rank, candidate in enumerate(ranked, start=1):
+            cid = candidate.concept.concept_id
+            fused_scores[cid] = fused_scores.get(cid, 0.0) + weight / (_RRF_K + rank)
+            current_best = best_candidate.get(cid)
+            if current_best is None or candidate.match_score > current_best.match_score:
+                best_candidate[cid] = candidate
+
+    ordered_ids = sorted(fused_scores, key=lambda cid: -fused_scores[cid])
+    return [best_candidate[cid] for cid in ordered_ids[:top_k]]
+
+
 def retrieve_high_recall(retriever: OpenWorldRetriever, *, chief_complaint: str = "",
                           symptoms: Sequence[str] = (), history: Sequence[str] = (),
                           imaging_concepts: Sequence[str] = (), codes: Sequence[tuple] = (),
+                          objective_finding_phrases: Sequence[str] = (),
+                          medications: Sequence[str] = (),
                           retrieval_top_k: int = 150) -> List[RetrievedCandidate]:
-    """Stage 1: high-recall retrieval. A thin, explicit wrapper over the existing, already-tested
-    OpenWorldRetriever.retrieve_multi_signal() -- the only thing this function changes is asking for
-    a MUCH larger `limit` (100-200, configurable) than a final candidate bundle would ever need, so
-    a true long-tail diagnosis has room to survive into the pool before any narrowing happens."""
+    """Stage 1: high-recall retrieval. Builds bounded, signal-typed sub-queries
+    (build_signal_queries()) from whatever positive-evidence signals the caller has this turn,
+    retrieves each independently (each still itself hierarchy-expanded via the existing, already-
+    tested OpenWorldRetriever.retrieve()/retrieve_by_code()), and fuses them with weighted
+    reciprocal rank fusion (_rrf_fuse()) into a single ranked pool bounded at `retrieval_top_k`
+    (recommended 100-200) -- so a true long-tail diagnosis has room to survive before any narrowing
+    happens, and a decisive objective finding or imaging result carries more weight than a generic
+    symptom word without any disease-specific hardcoding.
+
+    `history` is kept as the parameter name for backward compatibility with existing callers that
+    pass a combined risk-factor/social-history list; it is treated as the "history_risk" signal.
+    """
     if retrieval_top_k <= 0:
         return []
-    return retriever.retrieve_multi_signal(
-        chief_complaint=chief_complaint, symptoms=symptoms, history=history,
-        imaging_concepts=imaging_concepts, codes=codes, limit=retrieval_top_k,
+
+    signal_queries = build_signal_queries(
+        chief_complaint=chief_complaint, symptoms=symptoms,
+        objective_finding_phrases=objective_finding_phrases, history_risk=history,
+        medications=medications, imaging_concepts=imaging_concepts,
     )
+    ranked_lists: List[Tuple[str, List[RetrievedCandidate]]] = []
+    for signal, text in signal_queries:
+        hits = retriever.retrieve(text, limit=_PER_SIGNAL_QUERY_LIMIT, fuzzy=True)
+        if hits:
+            ranked_lists.append((signal, hits))
+    for entry in codes:
+        try:
+            system, code = entry
+        except (ValueError, TypeError):
+            continue
+        hits = retriever.retrieve_by_code(str(system), str(code))
+        if hits:
+            ranked_lists.append(("code", hits))
+
+    if not ranked_lists:
+        return []
+    fused = _rrf_fuse(ranked_lists, top_k=retrieval_top_k)
+
+    # Bounded ontology hierarchy expansion: reuses OpenWorldRetriever's own existing, already-
+    # tested child-expansion helper (a parent match surfaces a few of its more-specific children as
+    # lower-confidence siblings -- a recall boost, not a ranking claim) rather than reimplementing
+    # hierarchy traversal here. Applied only to the TOP of the fused list (never every result, so
+    # one broad parent match can't explode into dozens of children) and never grows the pool past
+    # retrieval_top_k. Any failure degrades silently -- hierarchy expansion is a bonus, never load-
+    # bearing for this stage.
+    if fused:
+        try:
+            expanded_children = retriever._expand_hierarchy(fused[:8])  # noqa: SLF001
+        except Exception:
+            expanded_children = []
+        seen_ids = {c.concept.concept_id for c in fused}
+        for child in expanded_children:
+            if len(fused) >= retrieval_top_k:
+                break
+            if child.concept.concept_id not in seen_ids:
+                fused.append(child)
+                seen_ids.add(child.concept.concept_id)
+
+    return fused
 
 
 def _rerank_score(candidate: RetrievedCandidate) -> float:
@@ -133,11 +262,15 @@ def lightweight_rerank(retrieved: List[RetrievedCandidate], *,
 def retrieve_and_rerank(retriever: OpenWorldRetriever, *, chief_complaint: str = "",
                          symptoms: Sequence[str] = (), history: Sequence[str] = (),
                          imaging_concepts: Sequence[str] = (), codes: Sequence[tuple] = (),
+                         objective_finding_phrases: Sequence[str] = (),
+                         medications: Sequence[str] = (),
                          retrieval_top_k: int = 150, rerank_top_k: int = 25) -> List[RerankedCandidate]:
     """The full 3-stage pipeline as one call -- what candidate_generator.py's competition-retrieval
     step actually invokes each turn."""
     retrieved = retrieve_high_recall(
         retriever, chief_complaint=chief_complaint, symptoms=symptoms, history=history,
-        imaging_concepts=imaging_concepts, codes=codes, retrieval_top_k=retrieval_top_k,
+        imaging_concepts=imaging_concepts, codes=codes,
+        objective_finding_phrases=objective_finding_phrases, medications=medications,
+        retrieval_top_k=retrieval_top_k,
     )
     return lightweight_rerank(retrieved, rerank_top_k=rerank_top_k)

@@ -64,13 +64,19 @@ def test_multi_signal_fusion_recall_at_least_single():
 
 
 def test_hierarchy_expansion_surfaces_children(tmp_path, monkeypatch):
-    # Build a catalog with a temporary Tier-3 snapshot that has parent/child edges.
+    # Build a catalog with a temporary Tier-3 snapshot that has parent/child edges. The children
+    # are deliberately named with NO shared distinctive token with the parent (unlike a real
+    # "Zzxq parent" / "Zzxq child" pair, which -- since the IDF-weighted token-overlap scoring
+    # upgrade -- a shared rare token like "Zzxq" would now let a child surface via ordinary direct
+    # lexical search too, which is a genuine retrieval improvement, not a hierarchy-expansion
+    # regression; this test isolates hierarchy expansion specifically, so the children must be
+    # findable ONLY through the parent/child graph edge, never through lexical overlap).
     snap_dir = tmp_path / "snapshots"
     snap_dir.mkdir()
     (snap_dir / "snomed.json").write_text(json.dumps({"concepts": [
         {"code": "P1", "display": "Zzxq parent syndrome", "children": ["C1", "C2"]},
-        {"code": "C1", "display": "Zzxq child variant one", "parents": ["P1"]},
-        {"code": "C2", "display": "Zzxq child variant two", "parents": ["P1"]},
+        {"code": "C1", "display": "Plimwick alpha disorder", "parents": ["P1"]},
+        {"code": "C2", "display": "Plimwick beta disorder", "parents": ["P1"]},
     ]}), encoding="utf-8")
 
     from nova_agent.ontology.providers.snomed import SnomedProvider
@@ -87,7 +93,7 @@ def test_hierarchy_expansion_surfaces_children(tmp_path, monkeypatch):
     kinds = {c.match_kind for c in m}
     assert "hierarchy" in kinds
     child_names = {c.concept.canonical_name for c in m if c.match_kind == "hierarchy"}
-    assert "Zzxq child variant one" in child_names
+    assert "Plimwick alpha disorder" in child_names
 
 
 def test_rare_fallback_returns_possible_not_unknown_when_ontology_matches():

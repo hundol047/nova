@@ -180,7 +180,8 @@ def _broaden_with_ontology(pool: dict, presentation: ClinicalPresentation, max_a
 
 def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
                              imaging_text: Optional[List[str]], chief_complaint_text: Optional[str],
-                             retrieval_top_k: int, rerank_top_k: int) -> None:
+                             retrieval_top_k: int, rerank_top_k: int,
+                             objective_findings: Optional[Dict[str, ObjectiveFinding]] = None) -> None:
     """Competition-mode broad retrieval (NOVA_COMPETITION_RETRIEVAL), now a real 3-stage funnel
     instead of a single small `limit`: nova_agent.retrieval_pipeline.retrieve_and_rerank() first
     retrieves up to `retrieval_top_k` (recommended 100-200) candidates -- HIGH RECALL, so a true
@@ -220,13 +221,24 @@ def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
     except Exception:
         return
 
-    history_signals = list(presentation.risk_factors) + list(presentation.medication_context)
+    # Decisive abnormal objective findings become their OWN weighted retrieval signal (real,
+    # already-computed ObjectiveFinding.evidence_label text -- never fabricated here), so e.g. a
+    # positive troponin or severe hypoglycemia carries more retrieval weight than a generic word
+    # like "pain"/"fatigue" (see retrieval_pipeline.SIGNAL_WEIGHTS) -- generic through signal TYPE,
+    # never a disease-specific rule. Only genuinely abnormal findings are included; "normal"/
+    # "unknown" interpretations carry no retrieval signal.
+    objective_finding_phrases = [
+        finding.evidence_label for finding in (objective_findings or {}).values()
+        if finding.interpretation not in ("normal", "unknown")
+    ]
     try:
         reranked = retrieve_and_rerank(
             retriever,
             chief_complaint=str(chief_complaint_text or ""),
             symptoms=list(presentation.symptoms),
-            history=history_signals,
+            history=list(presentation.risk_factors),
+            medications=list(presentation.medication_context),
+            objective_finding_phrases=objective_finding_phrases,
             imaging_concepts=list(imaging_text or []),
             retrieval_top_k=retrieval_top_k,
             rerank_top_k=rerank_top_k,
@@ -423,7 +435,7 @@ def generate_candidates(presentation: ClinicalPresentation,
     #    candidates neither of those already found; byte-identical existing behavior when disabled.
     if competition_retrieval:
         _broaden_with_open_world(pool, presentation, imaging_text, chief_complaint_text,
-                                 retrieval_top_k, rerank_top_k)
+                                 retrieval_top_k, rerank_top_k, objective_findings)
 
     target_size = pool_target_size if pool_target_size is not None else TARGET_POOL_SIZE
     candidates = list(pool.values())

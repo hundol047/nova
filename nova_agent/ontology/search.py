@@ -8,6 +8,7 @@ third-party fuzzy library.
 
 from __future__ import annotations
 
+import math
 from typing import Dict, Iterable, List, Optional, Tuple
 
 from nova_agent.ontology.models import ClinicalConcept, ConceptMatch
@@ -62,6 +63,20 @@ class ConceptSearchIndex:
                 bucket = self._by_token.setdefault(tok, [])
                 if concept.concept_id not in bucket:
                     bucket.append(concept.concept_id)
+        # Also index `typical_features` tokens (e.g. Tier-1's "substernal pressure", "radiates to
+        # arm or jaw") -- these are real, already-curated descriptive phrases (the SAME field
+        # differential.py's own scoring already trusts), not fabricated here, but were previously
+        # never searchable at all: all_search_terms() only covers canonical_name/aliases, so a
+        # patient's own descriptive wording ("pressure in my chest") could share real clinical
+        # vocabulary with a disease's typical_features ("substernal pressure") while sharing almost
+        # nothing with its formal name/aliases. Folded into the SAME token index (not a separate
+        # weight class) so the existing IDF weighting above already suppresses generic overlap
+        # (e.g. "pain") while rewarding a rarer shared term (e.g. "substernal").
+        for feature in concept.typical_features:
+            for tok in tokens(feature):
+                bucket = self._by_token.setdefault(tok, [])
+                if concept.concept_id not in bucket:
+                    bucket.append(concept.concept_id)
         for code in concept.external_codes:
             self._by_code.setdefault(code.code.strip().upper(), []).append(concept.concept_id)
 
@@ -97,15 +112,36 @@ class ConceptSearchIndex:
         for cid in self._by_code.get(query.strip().upper(), []):
             offer(cid, 0.97, query.strip().upper(), "code")
 
-        # 3) token overlap (Jaccard-ish over query tokens)
+        # 3) token overlap, IDF-weighted (corpus-frequency-aware, catalog-only -- no external
+        #    corpus). A plain hit-count Jaccard treats every matched token equally, so a query
+        #    like "severe hypoglycemia" would let the generic word "severe" contribute exactly as
+        #    much as the rare, distinctive "hypoglycemia" -- a rare term appearing in few concepts
+        #    (low document frequency across THIS catalog) is far more discriminating than a common
+        #    one appearing in hundreds, so it's weighted accordingly:
+        #      idf(tok) = ln((N+1)/(df(tok)+1)) + 1  (smoothed, always > 0, N = concept count)
+        #    The final score is still normalized into the same [0.5, 0.9] band the caller already
+        #    depends on (open_world.py's KNOWN/POSSIBLE thresholds, etc.) -- only the RELATIVE
+        #    ranking among token-overlap matches changes, not the score's meaning or range.
         q_tokens = tokens(query)
         if q_tokens:
-            candidate_counts: Dict[str, int] = {}
+            total_concepts = max(1, len(self._concepts))
+            tok_weight: Dict[str, float] = {}
             for tok in q_tokens:
-                for cid in self._by_token.get(tok, []):
-                    candidate_counts[cid] = candidate_counts.get(cid, 0) + 1
-            for cid, hits in candidate_counts.items():
-                score = 0.5 + 0.4 * (hits / len(q_tokens))  # 0.5..0.9
+                df = len(self._by_token.get(tok, ()))
+                # A token absent from the WHOLE catalog (df=0) still counts toward the
+                # denominator at its natural (maximal) IDF weight -- it must NOT be excluded from
+                # `total_weight`, or a query where only one common word happens to match would
+                # look like a complete match (weighted_hits == total_weight) just because the
+                # other, unmatched query tokens were silently dropped from the denominator too.
+                tok_weight[tok] = math.log((total_concepts + 1) / (df + 1)) + 1.0
+            total_weight = sum(tok_weight.values()) or 1.0
+            candidate_weight: Dict[str, float] = {}
+            for tok in q_tokens:
+                w = tok_weight[tok]
+                for cid in self._by_token.get(tok, ()):
+                    candidate_weight[cid] = candidate_weight.get(cid, 0.0) + w
+            for cid, weighted_hits in candidate_weight.items():
+                score = 0.5 + 0.4 * min(1.0, weighted_hits / total_weight)  # 0.5..0.9
                 concept = self._concepts.get(cid)
                 mt = concept.canonical_name if concept else query
                 offer(cid, min(score, 0.9), mt, "token")
