@@ -57,6 +57,28 @@ class StopPolicy:
                                  reason="No differential has been generated yet.", readiness_score=0.0)
 
         top = differential[0]
+
+        # UNKNOWN_PRESENTATION / zero-evidence gate (spec: the file-order fallback-ranking bug's
+        # real fix). `top.fallback_candidate` is only ever True when literally nothing -- no
+        # symptom, risk, medication, history, imaging, or objective evidence -- matched anything
+        # this turn (see differential.py's own `is_zero_evidence_presentation` computation); every
+        # entry in `differential` is then just the untargeted whole catalog, tied at score 0.0, and
+        # "rank 1" is an artifact of dict/file insertion order, not clinical signal. Diagnosing
+        # confidently off that tie is exactly the bug this gate closes: never let `no_more_value`
+        # (there is genuinely nothing left to usefully ask when nothing has been elicited yet, which
+        # is trivially true turn one) or a coincidentally-passing readiness/gap check bypass this.
+        # The hard forced-diagnose-at-low-remaining-turns branch above this still applies regardless
+        # -- the agent must still submit SOME final diagnosis before the turn budget runs out even
+        # if the presentation is never clarified -- so this can never cause an infinite stall.
+        if top.fallback_candidate:
+            return StopDecision(
+                should_diagnose=False, forced=False,
+                reason="UNKNOWN_PRESENTATION: no symptom, risk, medication, history, imaging, or "
+                       "objective evidence has matched anything yet -- the current top-ranked entry "
+                       "is an artifact of candidate order, not real clinical support. Further "
+                       "clarifying information is required before any diagnosis can be made.",
+                readiness_score=0.0,
+            )
         second = differential[1] if len(differential) > 1 else None
 
         band_score = {"HIGH": 1.0, "MEDIUM": 0.5, "LOW": 0.0}[top.confidence_band]

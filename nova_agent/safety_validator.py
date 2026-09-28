@@ -187,6 +187,28 @@ class SafetyValidator:
                 )
 
             llm_diagnosis_id = picked.key or (normalize_diagnosis(picked.content).canonical_id or "")
+            llm_item = next((d for d in merged_differential if d.diagnosis_id == llm_diagnosis_id), None)
+
+            # UNKNOWN_PRESENTATION (spec: zero-evidence file-order bug fix): an explicit,
+            # unconditional block on a diagnosis reached only through candidate_generator.py's
+            # whole-catalog zero-evidence fallback (fallback_candidate=True, always zero real
+            # supporting evidence) -- checked FIRST, ahead of the unresolved-dangerous-alternative
+            # check below, so the reported reason names the real root cause (nothing matched at
+            # all) rather than the misleading "a specific danger is still unresolved" framing that
+            # check would otherwise report (every zero-evidence candidate is technically
+            # "unresolved dangerous", which is true but not the actual reason to refuse). Never
+            # bypassable via the turn-count/evidence-count minimum-readiness fallback further
+            # below. stop_policy.py already refuses `should_diagnose` in this state; this closes
+            # the same gate for the SEPARATE LLM-selected-diagnosis path, which could otherwise
+            # still pick this diagnosis on its own.
+            if llm_item is not None and llm_item.fallback_candidate:
+                return ValidationResult(
+                    action=deterministic_action, differential=merged_differential, overridden=True,
+                    override_reason=f"Blocked DIAGNOSE: {picked.content!r} has no real supporting evidence -- "
+                                     "the presentation is unmatched (UNKNOWN_PRESENTATION); further clarifying "
+                                     "information is required before any diagnosis can be made.",
+                )
+
             unresolved = [
                 d for d in merged_differential
                 if d.dangerous_if_missed and d.diagnosis_id != llm_diagnosis_id
@@ -208,7 +230,6 @@ class SafetyValidator:
             # regardless of which diagnosis it names, not only ones that happen to leave a
             # dangerous alternative dangling.
             cfg = get_config().stop_policy
-            llm_item = next((d for d in merged_differential if d.diagnosis_id == llm_diagnosis_id), None)
             evidence_count = len(llm_item.supporting_evidence) if llm_item else 0
             minimally_ready = stop_decision.should_diagnose or (
                 state.turn_count >= cfg.min_turns_before_diagnose and evidence_count >= cfg.min_evidence_items

@@ -107,6 +107,17 @@ class DifferentialItem(BaseModel):
     dangerous_if_missed: bool
     confidence_band: ConfidenceBand
     candidate_sources: List[str] = []
+    # True only when this diagnosis (and, in practice, every other diagnosis in the same
+    # differential -- see DifferentialEngine.update()) is present SOLELY via
+    # candidate_generator.py's "zero_evidence_fallback" source: literally nothing (no symptom
+    # concept, risk factor, medication, history match, imaging, or objective lab) matched anything
+    # at all this turn. Always carries score==0.0/score_ratio==0.0/supporting_evidence==[] (there
+    # is no evidence to report -- "evidence_score=0, diagnostic_support=none" per spec) and
+    # confidence_band=="LOW". stop_policy.py and action_selector.py both check this flag to refuse
+    # a confident DIAGNOSE on an unmatched presentation and prefer clarifying ASK/EXAM over TEST --
+    # never let stable-sort/dict-insertion order (ultimately disease KB file load order) silently
+    # pick an arbitrary "winning" diagnosis out of an undifferentiated tie.
+    fallback_candidate: bool = False
 
 
 def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict[str, ObjectiveFinding],
@@ -232,6 +243,7 @@ def _score_disease(entry: dict, state: PatientState,
     if objective_findings is None:
         objective_findings = normalize_objective_evidence(state)
     findings = state.all_findings_text()
+    confirmatory_evidence_pool = state.objective_findings_text()
     negatives = state.pertinent_negatives
 
     supporting: List[str] = []
@@ -270,7 +282,13 @@ def _score_disease(entry: dict, state: PatientState,
         if lab_aware_delta is not None:
             score += lab_aware_delta
         else:
-            score += _score_phrase(finding, CONFIRMATORY_WEIGHT, findings, negatives, supporting, contradictory, missing)
+            # Scored against confirmatory_evidence_pool (EXAM/TEST/imaging results only), never the
+            # full `findings` bag -- a confirmatory_findings phrase represents a specific objective
+            # test/exam result (see PatientState.objective_findings_text()'s docstring for the real
+            # false-positive this closes: a merely-reported PAST diagnosis must never satisfy a
+            # confirmatory finding that requires an actual current test/exam to have been performed).
+            score += _score_phrase(finding, CONFIRMATORY_WEIGHT, confirmatory_evidence_pool, negatives,
+                                    supporting, contradictory, missing)
 
     # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
     # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in
@@ -354,6 +372,17 @@ class DifferentialEngine:
         )
         candidates = [c.entry for c in candidate_records]
         sources_by_id = {c.id: c.sources for c in candidate_records}
+
+        # UNKNOWN_PRESENTATION / zero-evidence detection (spec: the file-order fallback-ranking
+        # bug's real fix). candidate_generator.py's whole-catalog fallback (fired only when
+        # literally nothing -- no symptom concept, risk factor, medication, history, imaging, or
+        # objective lab -- matched anything) tags EVERY candidate it adds with the single source
+        # "zero_evidence_fallback" and returns immediately, before any other source could ever mix
+        # in (see that module's own `if not pool:` branch) -- so "every candidate's sources is
+        # exactly that one tag" is both necessary and sufficient to detect this state here.
+        is_zero_evidence_presentation = bool(candidate_records) and all(
+            set(c.sources) == {"zero_evidence_fallback"} for c in candidate_records
+        )
 
         scored = []
         for entry in candidates:
@@ -462,6 +491,7 @@ class DifferentialEngine:
                 missing_discriminative_evidence=missing, urgency=entry.get("urgency", "LOW"),
                 dangerous_if_missed=bool(entry.get("dangerous", False)), confidence_band=band,
                 candidate_sources=sources_by_id.get(entry["id"], []),
+                fallback_candidate=is_zero_evidence_presentation,
             ))
 
         state.current_differential = [

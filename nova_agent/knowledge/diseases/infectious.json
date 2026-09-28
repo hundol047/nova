@@ -129,7 +129,8 @@
     ],
     "chief_complaint_tags": [
       "fever",
-      "cough"
+      "cough",
+      "upper_respiratory"
     ],
     "category": "infectious",
     "dangerous": false,

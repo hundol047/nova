@@ -18,6 +18,7 @@ from nova_agent.orchestrator import DoctorAgent
 
 from evaluation.cases import CASES
 from evaluation.generalization_cases_v2 import GENERALIZATION_CASES_V2
+from evaluation.generalization_dev_cases_round_d import GENERALIZATION_DEV_CASES_ROUND_D
 from evaluation.generalization_stress_cases import GENERALIZATION_STRESS_CASES
 from evaluation.held_out_cases import HELD_OUT_CASES
 from evaluation.scoring import score_case
@@ -143,6 +144,13 @@ def main() -> None:
                               "17-18: a small, targeted set probing the two known generalization "
                               "miss patterns from both directions -- run only after held-out and "
                               "generalization-v2 both stay clean).")
+    parser.add_argument("--dev-round-d", action="store_true",
+                         help="Also run evaluation/generalization_dev_cases_round_d.py (a small "
+                              "DEVELOPMENT set, distinct wording from Blind v13, never Blind v14 -- "
+                              "probes the four Round D architectural fixes: chief-complaint "
+                              "taxonomy coverage, morphology normalization, specific-over-generic "
+                              "routing precedence, and zero-evidence UNKNOWN_PRESENTATION "
+                              "handling).")
     parser.add_argument("--save-json", default=None,
                          help="Write each run set's compute_summary() output to this path (spec "
                               "section 25: a single generated source of truth for benchmark "
@@ -179,6 +187,15 @@ def main() -> None:
         print_case_table(stress_results)
         print_summary("Stress set summary", stress_results)
         results_for_json["stress"] = compute_summary(stress_results)
+
+    if args.dev_round_d:
+        dev_results = run_all(GENERALIZATION_DEV_CASES_ROUND_D)
+        print("\n=== Round D development set (evaluation/generalization_dev_cases_round_d.py -- "
+              "distinct wording from Blind v13, never Blind v14; probes the four Round D "
+              "architectural fixes) ===")
+        print_case_table(dev_results)
+        print_summary("Round D development set summary", dev_results)
+        results_for_json["dev_round_d"] = compute_summary(dev_results)
 
     if args.save_json:
         import json
