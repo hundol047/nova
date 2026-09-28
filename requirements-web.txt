@@ -1,0 +1,9 @@
+# N.O.V.A. browser development/demo workspace (web/nova_app.py) ONLY.
+#
+# Deliberately separate from requirements-nova.txt / requirements-nova-dev.txt: this file is never
+# installed for a competition submission run, and scripts/build_nova_submission.py never copies
+# web/ into submission/ -- see web/README.md. Installing this on top of requirements-nova.txt gives
+# you everything needed to run the browser workspace locally.
+
+-r requirements-nova.txt
+streamlit>=1.38,<2

@@ -630,6 +630,23 @@ while True:
     agent.observe(state, action, input("> "))
 ```
 
+### 10.1 Browser clinical reasoning workspace (development / demo)
+
+A standalone Streamlit app for manual testing and clinical reasoning visualization -- NOT the
+competition submission interface, and NOT the separate SynexAgent hospital workspace (`frontend/`).
+It drives the SAME `DoctorAgent` used everywhere else in this repo (see `web/nova_web_adapter.py`);
+there is only one clinical reasoning engine. Full details: [`web/README.md`](web/README.md).
+
+```bash
+pip install -r requirements-web.txt
+python -m streamlit run web/nova_app.py
+```
+
+Open **http://localhost:8501**. `NOVA_LLM_PROVIDER=mock` (the default) shows a mandatory
+"DEVELOPMENT MODE - MOCK LLM - NOT A REAL LLM" banner so mock output is never mistaken for a real
+competition-provider result. Never included in `submission/` -- `scripts/build_nova_submission.py`
+has no reference to `web/` at all (verified by `tests/test_submission_excludes_web.py`).
+
 ## 11. Directory structure
 
 ```
@@ -645,6 +662,9 @@ evaluation/       Local benchmark harness: tuning + held-out cases, simulator, b
                   ablation, adversarial, tune, scoring, blind v3-v6 (all synthetic vignettes,
                   never real patient data)
 submission/       Standalone, backend-independent deployable package (run.py entrypoint)
+web/              Standalone Streamlit browser workspace for development/demo/manual testing
+                  (nova_app.py + nova_web_adapter.py) -- drives the SAME DoctorAgent, never a
+                  second reasoning engine; excluded from submission/ -- see web/README.md
 scripts/          build_nova_submission.py, preflight_competition.py, smoke_real_llm.py,
                   load_smoke.py, load_smoke_backend.py, check_eval_leakage.py, check_readme_numbers.py
 docs/nova/        production/ (standalone) architecture/deployment/security/clinical-safety/
