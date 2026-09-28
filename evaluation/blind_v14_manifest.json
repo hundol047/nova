@@ -1,0 +1,20 @@
+{
+  "file": "evaluation/blind_cases_v14.py",
+  "case_count": 56,
+  "file_sha256": "38d46e1122ec0359c8326bed80ad6d9b3a4396afbf807a83e1a86ac50301d1f7",
+  "frozen_at_utc": "2026-09-28T17:31:19Z",
+  "created_commit": "202ed76c4b9bf49fffc62f1ba42f316fcc9f9b9b",
+  "language_distribution": {"en": 54, "ko_mixed": 1, "ja_mixed": 1},
+  "category_distribution": {
+    "common": 4, "critical": 8, "dangerous_mimic": 3, "benign_mimic": 5,
+    "unseen_lay_phrasing": 2, "objective_evidence_heavy": 2, "risk_context_heavy": 2,
+    "medication_risk": 2, "negative_evidence_heavy": 2, "atypical_presentation": 2,
+    "elderly": 1, "pediatric": 2, "pregnancy": 1, "polypharmacy": 1, "multimorbidity": 1,
+    "mixed_language": 2, "long_tail": 5, "unknown_ood": 2, "retrieval_miss_trap": 2,
+    "safety_trap": 1, "over_testing_trap": 2, "premature_diagnosis_trap": 2,
+    "conflicting_evidence": 1, "sparse_evidence": 1
+  },
+  "diagnosis_coverage": "Deliberately wider than Blind v13: touches all 34 Tier-1 knowledge/diseases ids at least once (v13 touched a representative subset), plus 5 Tier-2 long-tail diagnoses (cholecystitis, small bowel obstruction, herpes zoster, DVT, pericarditis) and 2 genuinely unknown/OOD presentations. Full required category spread: common/critical/dangerous-mimic/benign-mimic/unseen-lay-phrasing/objective-evidence-heavy/risk-context-heavy/medication-risk/negative-evidence-heavy/atypical/elderly/pediatric/pregnancy/polypharmacy/multimorbidity/mixed-language/long-tail-Tier-2/UNKNOWN-OOD/retrieval-miss-trap/safety-trap/over-testing-trap/premature-diagnosis-trap/conflicting-evidence/sparse-evidence. 56 genuinely distinct cases (v13 used 52; the 4 extra exist specifically to round out Tier-1 diagnosis coverage to all 34, appended after the core 52-case category-balanced set rather than displacing any of it -- not padding toward a round number). Deliberately does NOT reword any of Blind v13's own cases, including its critical-recall misses, merely to prove Round D's fixes now pass -- samples a fresh, independently-authored distribution instead. Screened for accidental near-duplicate phrasing against Blind v13 and the Round D development set via an n-gram overlap scan; one genuine near-duplicate construction (an appendicitis periumbilical-to-RLQ migration description) was found and rewritten before freeze.",
+  "supersedes": "Blind v3 through v13 are ALL REFERENCE-ONLY as of this round. This round audited (never tuned directly against) Blind v13's own critical-recall drop at an abstract architectural-failure-category level -- chief-complaint taxonomy coverage gaps, naive truncation-based morphology, generic-alias shadowing of specific concepts, and a zero-evidence fallback whose winning diagnosis was silently decided by disease-KB file load order -- and fixed each root cause generically in nova_agent/chief_complaint.py, nova_agent/matching.py, nova_agent/candidate_generator.py, nova_agent/differential.py, nova_agent/stop_policy.py, and nova_agent/safety_validator.py, code every prior blind set predates. Blind v14 is authored/frozen after these changes (commit 202ed76c4b9bf49fffc62f1ba42f316fcc9f9b9b, the FINAL_REASONING_SHA / reasoning-freeze point) and is the untouched check for the current code.",
+  "note": "SHA-256 computed BEFORE evaluation.blind_benchmark_v14 was ever run, against commit 202ed76c4b9bf49fffc62f1ba42f316fcc9f9b9b (the reasoning-freeze commit -- no nova_agent/competition/submission-reasoning files changed after this point through the first run, only this evaluation/ authoring, evaluation/current_blind.py's version pointer, and this manifest itself). blind_cases_v14.py must not be edited after this point; a pre-first-run correction would require a NEW manifest entry documenting why, never a silent edit. FIRST RUN of evaluation.blind_benchmark_v14 happens exactly once, reported as-is, and is never re-tuned against. If reasoning/retrieval code changes again after this freeze, v14 becomes reference-only and a fresh v15 is authored."
+}
