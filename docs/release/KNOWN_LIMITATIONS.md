@@ -10,10 +10,19 @@ Honest, current limitations — only what actually remains. None are hidden.
 > lexical (token-overlap + IDF-like weighting over `nova_agent/ontology/search.py`'s index, not an
 > embedding model) -- this round materially improved its recall (see README.md section 2.2) but did
 > not change that fundamental design choice, and measured recall is still well short of what an
-> embedding retriever would likely achieve (chief-complaint-only Recall@50 61.4%, not 90%+). Blind
-> v12's first run (32 fresh cases) scored 64.0% diagnostic accuracy and a 22.2% critical-miss rate --
-> materially worse than the tuned held-out/generalization suites (100%/0%) -- reported honestly as a
-> genuine, unremediated finding, not a regression introduced by editing the blind set.
+> embedding retriever would likely achieve (chief-complaint-only Recall@50 61.4%, not 90%+).
+>
+> **Round update (critical-generalization hardening round, FINAL_REASONING_SHA `faa1701`):** Blind
+> v12 is now REFERENCE-ONLY (its first-run 64.0%/22.2% figures are historical). This round audited
+> (never tuned directly against) v12's 4 critical misses and fixed the identified abstract root
+> causes generically. A fresh, untouched **Blind v13** (52 cases) then scored **57.9% diagnostic
+> accuracy and a 42.9% critical-miss rate -- materially WORSE than v12**, reported honestly, not
+> hidden. Root-cause tracing (read-only, no code changed after the run) found a real,
+> **pre-existing** cluster of chief-complaint-routing/matching-stemmer/fallback-tie-break gaps that
+> this round's own fixes did not touch and did not cause -- see
+> `artifacts/blind_runs/blind_v13_failure_analysis.md` for the full technical detail. **This is the
+> single largest known limitation in this release**, more significant than any other line in this
+> document, and is the clear top priority for a future round.
 
 ## Reasoning / clinical scope
 - **Closed-KB (non-competition-retrieval) path is 34 diagnoses** across a bounded set of

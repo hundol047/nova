@@ -24,6 +24,24 @@ Branch: `offline/nova-clinical-learning-disease-expansion`. Base: `07c5eab`.
 >   reported, not remediated this round). Full pytest: 474 passed/1 skipped. Verification artifact:
 >   `artifacts/verification/local-release-b3fdccd37519-v3.json`. No ClinicalBERT/heavy model added;
 >   `learning/`/`web/` remain excluded from `submission/`.
+> - **Round 5 (CURRENT, same branch, FINAL_REASONING_SHA `faa1701a1954239074cc9dea1137525eb19b3a22`):
+>   "critical-generalization hardening round".** Audited (never tuned directly against) Blind v12's
+>   4 critical misses at an abstract failure-category level and fixed the identified root causes
+>   generically: a candidate-pool must-not-miss trim bug (a `dangerous: true` diagnosis reachable
+>   only via the fixed safety net could be silently trimmed to zero), an analogous final-differential
+>   safety reinjection, a typical-feature stacking cap (keyword volume can no longer outweigh one
+>   decisive confirmatory finding), broadened qualitative-evidence vocabulary for objective_evidence.py's
+>   single-direction labs, and shared alias-aware candidate-pool matching (matching.py). Disease
+>   catalog and retrieval recall UNCHANGED (this round touched no retrieval code). Full pytest: 520
+>   passed/1 skipped; tuning/held-out/generalization-v2/stress unchanged at 100%/0% critical miss.
+>   **Blind v13 current** (52 fresh cases, first run: 57.9% scored accuracy, 57.1% critical recall,
+>   42.9% critical miss -- materially WORSE than v12, honestly reported, NOT remediated this round).
+>   Root-cause tracing (read-only) found a real, pre-existing cluster of chief-complaint-routing/
+>   matching-stemmer/fallback-tie-break gaps this round's broader case authoring exposed for the
+>   first time, distinct from and unaffected by this round's own targeted fixes -- see
+>   `artifacts/blind_runs/blind_v13_failure_analysis.md`. Verification artifact:
+>   `artifacts/verification/local-release-faa1701-v4.json`. No ClinicalBERT/heavy model added;
+>   `learning/`/`web/` remain excluded from `submission/`.
 > The authoritative current blind version is always `evaluation/current_blind.py`.
 
 ## Audit matrix — HISTORICAL SNAPSHOT (vNext first round: 174 concepts, Blind v9 current)

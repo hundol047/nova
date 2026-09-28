@@ -1,10 +1,14 @@
 # N.O.V.A. Final Software Status
 
 > **HISTORICAL SNAPSHOT (gap-closure / independent-re-audit round).** Accurate for that round, when
-> Blind **v9** was current. Current as of commit `b3fdccd` is Blind **v12** (v3-v11 REFERENCE-ONLY)
-> over a real default catalog of 1,280 concepts (34 Tier-1 + 1,246 Tier-2 + 0 real Tier-3 in this
-> environment) -- see `README.md` section 2.2, `docs/ontology/DISEASE_COVERAGE.md`,
-> `docs/VNEXT_INDEPENDENT_AUDIT.md`, and `evaluation/current_blind.py` for current state.
+> Blind **v9** was current. Current as of commit `faa1701` (FINAL_REASONING_SHA) is Blind **v13**
+> (v3-v12 REFERENCE-ONLY) over a real default catalog of 1,280 concepts (34 Tier-1 + 1,246 Tier-2 +
+> 0 real Tier-3 in this environment) -- see `README.md` section 2.2/2.2a/2.2b,
+> `docs/ontology/DISEASE_COVERAGE.md`, `docs/VNEXT_INDEPENDENT_AUDIT.md`, and
+> `evaluation/current_blind.py` for current state. Blind v13's first run scored materially worse
+> than v12 (57.9%/42.9% critical miss vs 64.0%/22.2%) -- a genuine, honestly-reported,
+> pre-existing generalization gap this round's broader case authoring exposed and did NOT
+> remediate this round; see `artifacts/blind_runs/blind_v13_failure_analysis.md`.
 
 > Two separate scores, never conflated. **Software readiness** is backed by code + the checks that
 > actually ran. **External hospital validation** is a separate axis that is entirely NOT VERIFIED.

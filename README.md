@@ -12,9 +12,11 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#9-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 474 unit tests (1 skipped), the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 520 unit tests (1 skipped), the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
+  A fresh, untouched blind set (**Blind v13**) scored materially lower (57.9%/42.9% critical
+  miss) -- see section 2.2b, reported honestly and not remediated this round.
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
   a real model has been observed in this environment (no GPU/API access at implementation time); the
   HTTP client, prompt construction, and parse/repair/fallback path are only unit- and
@@ -163,11 +165,42 @@ flowchart LR
   proven, tested value-add is that a Tier-2/Tier-3 long-tail candidate *outside* the 34-disease KB
   can now reach the differential/LLM context at all, AND with materially better recall than before
   (see `tests/test_tier2_retrieval_runtime.py`, `tests/test_long_tail_reaches_llm.py`,
-  `tests/test_long_tail_recall.py`). A genuinely fresh, untouched **Blind v12** set (32 cases,
-  first run) scored 64.0% diagnostic accuracy and a 22.2% critical-miss rate -- materially worse
-  than the tuned held-out/generalization suites (100%/0%), reported honestly as a real,
-  unremediated finding of what a never-before-seen phrasing set surfaces (see
-  `evaluation/blind_v12_manifest.json`, `artifacts/verification/local-release-b3fdccd37519-v3.json`).
+  `tests/test_long_tail_recall.py`). This round's own retrieval-recall measurement above is
+  unchanged from the prior round (no retrieval code was touched this round) -- see section 2.2a
+  below for what DID change, and section 2.2b for the honest, separately-reported blind-set result.
+
+### 2.2a INTERNAL REGRESSION RESULTS (this round, commit `faa1701`)
+
+This round audited (never tuned directly against) Blind v12's 4 critical misses at an *abstract*
+failure-category level and fixed the identified root causes generically -- see
+`docs/release/FINAL_GAP_CLOSURE.md`-style detail in the commit message of `faa1701a1954239074cc9d
+ea1137525eb19b3a22` ("Generalize critical presentation recognition without blind-case tuning"):
+candidate-pool must-not-miss trim bug, an analogous final-differential safety reinjection, a
+typical-feature stacking cap so keyword volume cannot outweigh one decisive confirmatory finding,
+broadened objective-evidence vocabulary for qualitative-only labs, and shared alias-aware
+candidate-pool matching. On the internally-tuned suites (never used to tune any of this round's
+changes beyond the abstract categories above): full pytest suite 520 passed / 1 skipped; tuning,
+held-out, generalization-v2, and stress sets all still 100% scored diagnostic accuracy / 0%
+critical miss (unchanged from before this round); retrieval Recall@20/50/100 unchanged (this round
+touched no retrieval code); adversarial suite all PASS; leakage scan clean.
+
+### 2.2b FRESH BLIND v13 RESULTS (first run, never re-tuned against)
+
+A genuinely fresh, untouched **Blind v13** set (52 cases, first run, authored after the freeze
+above) scored **57.9% scored diagnostic accuracy and a 42.9% critical-miss rate** --
+**materially WORSE than Blind v12** (64.0% / 22.2%), reported honestly, not hidden. Root-cause
+tracing (read-only, no code changed after the run) found this dominated by chief-complaint routing
+gaps this round's broader case authoring happened to expose for the first time (no
+`chief_complaint.py` tag at all for common cold/URI wording; a naive stemmer failing common
+morphological variants; a generic tag's alias shadowing a more specific, critical one; and a
+clinically-arbitrary tie-break in the zero-evidence whole-catalog fallback) -- see
+`artifacts/blind_runs/blind_v13_failure_analysis.md` for the full analysis and
+`artifacts/blind_runs/blind_v13_first_run_output.txt` for the raw per-case output. **None of this
+round's own targeted fixes caused these misses** (each is separately unit/integration-tested and
+passes); this is a genuine, pre-existing generalization gap Blind v13 surfaced, not a regression.
+Flagged as the top priority for a future round -- not remediated this round, and
+`evaluation/blind_cases_v13.py` was not edited after this run (see
+`evaluation/blind_v13_manifest.json`, `artifacts/verification/local-release-faa1701-v4.json`).
 
 ## 3. The ASK / EXAM / TEST / DIAGNOSE loop
 
@@ -210,7 +243,7 @@ nothing in this repo cites a fabricated external source.
 ## 6. Evaluation & results
 
 ```bash
-pytest tests/ -v                        # 474 tests, 1 skipped
+pytest tests/ -v                        # 520 tests, 1 skipped
 python -m evaluation.benchmark --generalization-v2 --stress  # tuning + held-out + generalization-v2 + stress, full metrics
 python -m evaluation.benchmark --held-out-only
 python -m evaluation.generalization_benchmark

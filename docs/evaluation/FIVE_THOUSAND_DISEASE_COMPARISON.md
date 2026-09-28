@@ -7,11 +7,14 @@
 > `nova_agent/retrieval_pipeline.py` (wired into `DoctorAgent` since this branch's earlier rounds),
 > not `learning/pipeline.py`. This round measured and materially improved that real path's recall
 > against 44 real synthetic evaluation cases' own presenting text (never the answer): see
-> `scripts/benchmark_competition_retrieval.py` and `README.md` section 2.2. Blind v11 referenced
-> below is now REFERENCE-ONLY; current is Blind v12 (32 cases, first run: 64.0% scored accuracy,
-> 77.8% critical recall, 22.2% critical miss -- reported honestly, not remediated this round). The
-> rest of this document is preserved from an earlier round describing the separate `learning/`
-> scale-test architecture and was not rewritten this round.
+> `scripts/benchmark_competition_retrieval.py` and `README.md` section 2.2 (unchanged as of the
+> critical-generalization hardening round, FINAL_REASONING_SHA `faa1701` -- that round touched
+> reasoning/candidate-pool code, not retrieval). Blind v11 AND v12 referenced below are now
+> REFERENCE-ONLY; current is Blind v13 (52 cases, first run: 57.9% scored accuracy, 57.1% critical
+> recall, 42.9% critical miss -- materially worse than v12, reported honestly, not remediated this
+> round -- see `artifacts/blind_runs/blind_v13_failure_analysis.md`). The rest of this document is
+> preserved from an earlier round describing the separate `learning/` scale-test architecture and
+> was not rewritten this round.
 
 This document records the **BASELINE vs CANDIDATE** comparison for the 5,000-searchable-diagnosis
 retrieval architecture (PHASE 1) and the governance decision the promotion gate would enforce.

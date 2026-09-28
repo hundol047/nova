@@ -11,10 +11,16 @@
 > materially improved long-tail retrieval RECALL (not just catalog size): see
 > `scripts/benchmark_competition_retrieval.py` and `README.md` section 2.2 for the actual
 > Recall@20/50/100 numbers (chief-complaint-only: 11.4%→56.8%/61.4%/61.4%; chief-complaint+history:
-> 31.8%→75.0%/93.2%/93.2%). `evaluation/current_blind.py`'s CURRENT_BLIND_VERSION is now **v12**
-> (v11 and earlier are REFERENCE-ONLY). The rest of this document below is preserved as-is from an
-> earlier round and was not fully rewritten this round -- read the callout above as authoritative
-> for current real-vs-synthetic counts.
+> 31.8%→75.0%/93.2%/93.2%). Disease counts (34 Tier-1 / 1,246 Tier-2 / 0 real Tier-3, 1,280 total)
+> and retrieval Recall@20/50/100 are UNCHANGED as of the critical-generalization hardening round
+> (FINAL_REASONING_SHA `faa1701`) -- that round touched reasoning/candidate-pool code, not the
+> catalog or retrieval pipeline. `evaluation/current_blind.py`'s CURRENT_BLIND_VERSION is now
+> **v13** (v12 and earlier are REFERENCE-ONLY); Blind v13's first run scored materially worse than
+> v12 (57.9%/42.9% critical miss vs 64.0%/22.2%), a genuine pre-existing generalization gap
+> reported honestly, not remediated this round -- see
+> `artifacts/blind_runs/blind_v13_failure_analysis.md`. The rest of this document below is
+> preserved as-is from an earlier round and was not fully rewritten this round -- read the callout
+> above as authoritative for current real-vs-synthetic counts.
 
 N.O.V.A. reasons over a **tiered disease universe**, not a fixed list. Coverage numbers below are
 **reported from the actual catalog** by `scripts/report_disease_coverage.py`, never aspirational.
