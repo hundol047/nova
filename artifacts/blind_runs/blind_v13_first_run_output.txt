@@ -1,0 +1,69 @@
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+Blind13_01_ColdSymptomsAfterKidsGotSickcommon                NO        20      0          NO             
+Blind13_02_UncomplicatedUTI     common                YES       30      0          NO             
+Blind13_03_ClassicViralGastroenteritiscommon                YES       23      0          NO             
+Blind13_04_StressTensionHeadachecommon                YES       5       0          NO             
+Blind13_05_PressureAcrossChestOnExertioncritical              YES       11      0          NO             
+Blind13_06_SuddenBreathlessnessAfterSurgerycritical              YES       31      0          NO             
+Blind13_07_SuddenRightSidedWeaknessAndGarbledWordscritical              YES       18      0          NO             
+Blind13_08_ConfusedFeverishNursingHomeResidentcritical              NO        26      0          YES            
+Blind13_09_ExtremeThirstAndFruitySmellingBreathcritical              YES       29      0          NO             
+Blind13_10_ThroatSwellingAfterShellfishcritical              NO        25      0          YES            
+Blind13_11_RippingBackPainThoughtItWasAPulledMuscledangerous_mimic       YES       27      0          NO             
+Blind13_12_LowerAbdominalPainThoughtItWasABladderInfectiondangerous_mimic       YES       29      0          NO             
+Blind13_13_WorstHeadacheThoughtItWasJustAMigrainedangerous_mimic       YES       20      0          NO             
+Blind13_14_ChestTightnessDuringExamStressbenign_mimic          NO        18      0          NO             
+Blind13_15_RoomSpinsOnlyWhenTurningOverInBedbenign_mimic          NO        20      0          NO             
+Blind13_16_SharpChestPainWorseWhenPressingOnItbenign_mimic          YES       21      0          NO             
+Blind13_17_CollapsedLungAfterCarAccidentunseen_lay_phrasing   NO        28      0          YES            
+Blind13_18_BrainInfectionDescribedAsFluWithNeckPainunseen_lay_phrasing   YES       27      0          NO             
+Blind13_19_VagueWeaknessDecisivePotassiumOnDialysisPatientobjective_evidence_heavyNO        20      0          YES            
+Blind13_20_MildBellyDiscomfortDecisiveLipaseobjective_evidence_heavyYES       23      0          NO             
+Blind13_21_PalpitationsInPatientWithKnownHeartDiseaserisk_context_heavy    YES       30      0          NO             
+Blind13_22_CalfSwellingAfterLongFlightrisk_context_heavy    NO (not scored)30      0          NO             
+Blind13_23_FatigueAndDarkStoolsOnBloodThinnersAndPainkillersmedication_risk       NO        16      0          YES            
+Blind13_24_ConfusedAndSweatyOnMultipleDiabetesMedicationsmedication_risk       YES       19      0          NO             
+Blind13_25_MigratingBellyPainDespiteFewOtherSymptomsnegative_evidence_heavyNO        34      0          NO             
+Blind13_26_FlankPainWithoutObviousInfectionSignsnegative_evidence_heavyYES       37      0          NO             
+Blind13_27_ElderlyPneumoniaPresentingAsConfusionatypical_presentation YES       18      0          NO             
+Blind13_28_YoungAthleteWithFatigueAndVagueChestDiscomfortAfterViralIllnessatypical_presentation NO (not scored)20      0          NO             
+Blind13_29_ElderlyRightUpperQuadrantPainAfterFattyMealelderly               NO (not scored)27      0          NO             
+Blind13_30_ToddlerWheezingAfterColdSymptomspediatric             NO        32      0          NO             
+Blind13_31_ToddlerSealLikeCoughAtNightpediatric             NO (not scored)21      0          NO             
+Blind13_32_PregnantWomanWithSwellingHeadacheAndHighBloodPressurepregnancy             NO (not scored)20      0          NO             
+Blind13_33_ElderlyOnManyMedicationsWithWeaknessAndSlowPulsepolypharmacy          YES       20      0          NO             
+Blind13_34_DiabeticCatheterizedPatientWithFeverAndLowBloodPressuremultimorbidity        NO        24      0          YES            
+Blind13_35_KoreanPhrasedChestPressuremixed_language        YES       12      0          NO             
+Blind13_36_JapanesePhrasedDyspneamixed_language        NO        27      0          YES            
+Blind13_37_ScalpTendernessAndJawPainWhileChewinglong_tail             NO (not scored)20      0          NO             
+Blind13_38_SuddenSevereTesticularPainInTeenlong_tail             NO (not scored)27      0          NO             
+Blind13_39_AscendingLegWeaknessAfterDiarrheaIllnesslong_tail             NO (not scored)20      0          NO             
+Blind13_40_RacingHeartFeverAndTremorInKnownThyroidDiseaselong_tail             NO (not scored)24      0          NO             
+Blind13_41_SeverePainOutOfProportionToExamAfterAtrialFibrillationlong_tail             NO (not scored)28      0          NO             
+Blind13_42_VagueMalaiseNoLocalizingFeaturesunknown_ood           NO (not scored)22      0          NO             
+Blind13_43_InventedNonclinicalComplaintunknown_ood           NO (not scored)20      0          NO             
+Blind13_44_HandFallsAsleepAtNightWakingHerUpretrieval_miss_trap   NO (not scored)20      0          NO             
+Blind13_45_BriefElectricShockFeelingInCheekWhenTouchedretrieval_miss_trap   NO (not scored)20      0          NO             
+Blind13_46_MinorFallWithDelayedOnsetBellyPainsafety_trap           YES       28      0          NO             
+Blind13_47_ClearCutFacialDroopAndArmParalysisWatchForOvertestingover_testing_trap     NO        21      0          YES            
+Blind13_48_ObviousSTEMIWatchForOvertestingover_testing_trap     YES       3       0          NO             
+Blind13_49_VagueEarlyDKANeedsWorkupBeforeDiagnosingpremature_diagnosis_trapNO        27      0          YES            
+Blind13_50_VagueEarlyAppendicitisNeedsWorkupBeforeDiagnosingpremature_diagnosis_trapNO        22      0          NO             
+Blind13_51_FeverAndCoughButAlsoPleuriticPainAndRecentSurgeryconflicting_evidence  YES       21      0          NO             
+Blind13_52_BriefLightheadednessOnStandingSparseInfosparse_evidence       NO        18      0          NO             
+
+Blind v13 summary (52 cases, 38 scored, 21 critical)
+  Scored Diagnostic Accuracy:   57.9%  (excludes: Blind13_22_CalfSwellingAfterLongFlight, Blind13_28_YoungAthleteWithFatigueAndVagueChestDiscomfortAfterViralIllness, Blind13_29_ElderlyRightUpperQuadrantPainAfterFattyMeal, Blind13_31_ToddlerSealLikeCoughAtNight, Blind13_32_PregnantWomanWithSwellingHeadacheAndHighBloodPressure, Blind13_37_ScalpTendernessAndJawPainWhileChewing, Blind13_38_SuddenSevereTesticularPainInTeen, Blind13_39_AscendingLegWeaknessAfterDiarrheaIllness, Blind13_40_RacingHeartFeverAndTremorInKnownThyroidDisease, Blind13_41_SeverePainOutOfProportionToExamAfterAtrialFibrillation, Blind13_42_VagueMalaiseNoLocalizingFeatures, Blind13_43_InventedNonclinicalComplaint, Blind13_44_HandFallsAsleepAtNightWakingHerUp, Blind13_45_BriefElectricShockFeelingInCheekWhenTouched)
+  All-Case Diagnostic Accuracy: 42.3%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (safe handling of excluded cases: diagnosed, no critical miss)
+  Critical Diagnosis Recall:    57.1%
+  Critical Miss Rate:           42.9%
+  Average / Median Turns:       22.7 / 21.5
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        1.65 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        7.7 / 5.4 / 8.5
+  Utility Score Proxy:          0.027  (informal local metric, evaluation/scoring.py -- not an official competition score)
