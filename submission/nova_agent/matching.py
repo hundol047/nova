@@ -9,8 +9,11 @@ finding regardless of relevance, and would otherwise register as a match. So:
   - stopwords and domain-generic words (pain, ache, discomfort, ...) never count toward overlap.
   - a short phrase (<=2 remaining content words) requires ALL of them present, not just some.
   - a longer phrase requires most (>=60%) of them present.
-  - words are lightly stemmed (truncated to 6 chars) so "exertional"/"exertion" etc. still match
-    without a full NLP stemmer dependency.
+  - words are lightly, conservatively stemmed (see `_stem()` below -- deterministic suffix
+    stripping for common morphological variants like weak/weakness or spin/spinning, falling back
+    to the original bounded first-6-characters truncation only when no recognized suffix applies)
+    so real variant pairs still match without a full NLP stemmer dependency, while an unrelated
+    word that merely shares a short prefix (e.g. "pain" vs "painting") stays distinct.
 """
 
 from __future__ import annotations
@@ -41,8 +44,79 @@ _NEGATED_SPAN_PATTERN = re.compile(
 )
 
 
+# Longest/most-specific suffix checked first (a `return`-on-first-match loop, so order matters):
+# "-iness" before "-ness" (dizziness -> dizzy, not "dizzi"), "-ies" before generic "-s"/"-es",
+# "-es" before bare "-s" (boxes -> box, not "boxe"). (suffix, replacement) -- replacement is "" for
+# a plain strip, or a real letter for the y<->i orthographic swap English spelling uses before
+# "-ness"/"-ed" endings.
+#
+# Deliberately NO "-ly" rule, despite being a common, otherwise-safe suffix pattern: a degree/
+# intensity ADVERB (mildly, severely, moderately) very often modifies a completely different
+# clinical dimension than the same-root ADJECTIVE appearing elsewhere in a knowledge-base phrase
+# (e.g. an exam's "mildly coarse breath sounds" describes lung-sound TEXTURE, not overall symptom
+# severity) -- stemming both to "mild" let that phrase spuriously satisfy viral_uri's own "mild
+# symptoms" typical_feature via a single generic leftover content word, a real false positive this
+# round's own generalization regression suite caught (see evaluation.benchmark's
+# Cough01_CommonBronchitis case). None of this round's required target pairs need "-ly" stripping,
+# so it stays out rather than accept that systemic collision risk.
+_SUFFIX_RULES: tuple = (
+    ("iness", "y"), ("ies", "y"), ("ness", ""), ("ing", ""), ("ed", ""), ("es", ""), ("s", ""),
+)
+_MIN_STEM_LENGTH = 3
+# Vowels plus w/x/y are never the second half of an English CVC-doubling pair (e.g. "spinning" =
+# spin + doubled-n + ing; "seeing" is NOT see + doubled-e + ing -- "ee" is a vowel digraph, not a
+# doubled consonant added for the suffix), so a trailing doubled letter from this set is left alone.
+_NEVER_DOUBLED_FOR_SUFFIX = set("aeiouwxy")
+
+
+def _reduce_doubled_consonant(stem: str) -> str:
+    """After stripping "-ing"/"-ed", undoes the standard English CVC-doubling spelling rule
+    ("spinning" -> strip "-ing" -> "spinn" -> reduce -> "spin") so the base verb form matches its
+    own gerund/past-tense -- conservative: only ever removes ONE trailing letter, only when the
+    last two characters are an identical CONSONANT pair."""
+    if len(stem) >= 3 and stem[-1] == stem[-2] and stem[-1] not in _NEVER_DOUBLED_FOR_SUFFIX:
+        return stem[:-1]
+    return stem
+
+
 def _stem(word: str) -> str:
-    return word[:6] if len(word) > 6 else word
+    """Conservative, deterministic suffix-stripping morphology normalizer (spec: a common clinical
+    morphological variant -- weak/weakness, spin/spinning, bleed/bleeding, vomit/vomiting, dizzy/
+    dizziness, faint/fainting, numb/numbness -- must normalize to the same stem; an unrelated word
+    that merely shares a short prefix must NOT, e.g. "pain" vs "painting" -- must stay distinct).
+
+    Strips AT MOST ONE recognized suffix (see _SUFFIX_RULES, longest/most-specific first), and only
+    when the remaining stem is still >= _MIN_STEM_LENGTH characters -- this length guard is what
+    keeps a short, unrelated word from ever being touched at all: "pain" matches none of these
+    suffixes to begin with, so it is never conflated with "painting" (paint+ing, itself correctly
+    stemmed down to "paint", a different string). A doubled final consonant left behind by
+    stripping "-ing"/"-ed" (the standard English CVC-doubling spelling rule) is reduced by one
+    letter via `_reduce_doubled_consonant`.
+
+    Falls back to the ORIGINAL bounded first-6-characters truncation only when no recognized
+    suffix applies at all (e.g. "exertional"/"exertion" -- an irregular derivational pair no plain
+    suffix rule connects) -- demoted to a last resort, never the primary mechanism, per this
+    module's own generalization-hardening round: the earlier truncation-only approach produced
+    false NEGATIVES whenever two real variants first diverged within their own first 6 characters
+    (exactly what "weak"/"weakness" and "spin"/"spinning" do -- "weak " vs "weakne", "spin  " vs
+    "spinni" -- see tests/test_morphology_normalization.py and its negative-control sibling)."""
+    lowered = word
+    for suffix, replacement in _SUFFIX_RULES:
+        if not lowered.endswith(suffix):
+            continue
+        if len(lowered) - len(suffix) + len(replacement) < _MIN_STEM_LENGTH:
+            continue
+        if suffix == "ed" and len(lowered) > 2 and lowered[-3] == "e":
+            # A handful of common English verbs end in a natural "-eed" (bleed, breed, feed,
+            # freed, greed, heed, need, seed, speed, weed) -- their base/present-tense form, not
+            # some other root + the "-ed" past-tense suffix. Stripping "-ed" there would wrongly
+            # turn "bleed" into "ble". Skipped only for this specific vowel-before-suffix pattern.
+            continue
+        stem = lowered[: -len(suffix)] + replacement
+        if suffix in ("ing", "ed"):
+            stem = _reduce_doubled_consonant(stem)
+        return stem
+    return lowered[:6] if len(lowered) > 6 else lowered
 
 
 def _content_words(text: str) -> Set[str]:

@@ -282,7 +282,8 @@
     "chief_complaint_tags": [
       "abdominal_pain",
       "fever",
-      "vomiting"
+      "vomiting",
+      "diarrhea"
     ],
     "category": "abdominal_gi",
     "dangerous": false,

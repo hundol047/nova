@@ -146,6 +146,19 @@ class ActionSelector:
                                            utility=round(utility, 3), components=components))
         scored.sort(key=lambda c: c.utility, reverse=True)
 
+        # UNKNOWN_PRESENTATION (spec: zero-evidence file-order bug fix, see differential.py's
+        # `is_zero_evidence_presentation`/stop_policy.py's matching gate): with literally nothing
+        # matched yet, a TEST result is not meaningfully better-targeted than any other -- it is
+        # effectively a random blind test, exactly what the spec forbids here. A plain ASK/EXAM
+        # clarifying question is always preferred while any remain, so the very next action is
+        # information-gathering rather than an arbitrary test order; only once ASK/EXAM candidates
+        # are genuinely exhausted does TEST become reachable again (never a hard block, so the
+        # agent can still make progress in the rare case nothing else is left to ask/examine).
+        if differential and differential[0].fallback_candidate:
+            info_gathering = [c for c in scored if c.action_type in ("ASK", "EXAM")]
+            if info_gathering:
+                scored = info_gathering + [c for c in scored if c.action_type == "TEST"]
+
         # The REAL expected information gain of the best remaining action (missing_info.py's
         # entropy-based estimate), not the post-weighting utility score -- utility already bakes
         # in safety/turn-cost/management terms that are irrelevant to "is there anything left to

@@ -17,8 +17,12 @@ from nova_agent.ontology.registry import get_default_catalog
 _ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_current_blind_version_is_v13():
-    assert CURRENT_BLIND_VERSION == "v13"
+def test_v13_is_now_reference_only():
+    # Blind v14 (Round D) superseded v13 as CURRENT_BLIND_VERSION -- v13 remains a known, frozen,
+    # still-scanned set (its own file/hash/content below are all still checked), but is no longer
+    # the untouched measure of the current code. Mirrors how v12 became reference-only when v13
+    # itself was frozen.
+    assert CURRENT_BLIND_VERSION != "v13"
     assert "v13" in ALL_BLIND_VERSIONS
     assert "v12" in ALL_BLIND_VERSIONS  # reference-only, still known
 

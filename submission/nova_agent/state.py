@@ -386,3 +386,19 @@ class PatientState(BaseModel):
         out += list(self.medication_text) + list(self.allergy_text)
         out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
         return [t for t in out if t]
+
+    def objective_findings_text(self) -> List[str]:
+        """Narrower than all_findings_text(): only text that came from an EXAM/TEST actually
+        performed (physical_examinations, imaging, laboratory_tests, vital_sign_findings) --
+        excludes patient-reported symptoms, chief complaint, and (critically) past_medical_history/
+        social_history/family_history. A knowledge-base `confirmatory_findings` phrase (e.g.
+        cardiac_arrhythmia's "atrial fibrillation on ecg") represents a specific objective test/exam
+        result, not a patient history fact -- scoring it against the full findings bag let a patient
+        merely REPORTING a past diagnosis of atrial fibrillation (in past_medical_history, with no
+        ECG ever performed) spuriously satisfy an ECG-specific confirmatory finding via plain
+        word-overlap. Confirmatory findings must only ever be earned by evidence an EXAM/TEST action
+        actually produced this encounter."""
+        out = list(self.physical_examinations.values()) + list(self.imaging.values())
+        out += list(self.vital_sign_findings)
+        out += list(self.laboratory_tests.values())
+        return [t for t in out if t]

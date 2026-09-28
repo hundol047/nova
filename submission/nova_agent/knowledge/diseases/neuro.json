@@ -17,7 +17,9 @@
       "weakness",
       "syncope",
       "focal_weakness",
-      "aphasia"
+      "aphasia",
+      "numbness",
+      "vision_changes"
     ],
     "category": "neuro",
     "dangerous": true,
@@ -87,7 +89,8 @@
     ],
     "chief_complaint_tags": [
       "headache",
-      "altered_mental_status"
+      "altered_mental_status",
+      "neck_stiffness"
     ],
     "category": "neuro",
     "dangerous": true,
@@ -146,7 +149,8 @@
     "chief_complaint_tags": [
       "headache",
       "fever",
-      "altered_mental_status"
+      "altered_mental_status",
+      "neck_stiffness"
     ],
     "category": "neuro",
     "dangerous": true,

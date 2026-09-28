@@ -13,7 +13,8 @@
       "syncope",
       "palpitations",
       "cough",
-      "leg_swelling"
+      "leg_swelling",
+      "hemoptysis"
     ],
     "category": "pulmonary",
     "dangerous": true,

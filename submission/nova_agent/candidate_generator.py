@@ -56,7 +56,7 @@ _LAB_TO_DIAGNOSES = _build_lab_to_diagnoses_index()
 
 CandidateSource = Literal["symptom_match", "risk_match", "medication_match", "history_match",
                            "imaging_match", "objective_finding", "safety_candidate",
-                           "ontology_broadening", "ontology_retrieval"]
+                           "ontology_broadening", "ontology_retrieval", "zero_evidence_fallback"]
 
 # Tier-2 structured concepts carry real curated typical_features but no KB-depth discriminating
 # questions of their own; this bounds how many of those features become generic ASK candidates
@@ -408,8 +408,18 @@ def generate_candidates(presentation: ClinicalPresentation,
         # catalog fallback permanently unreachable -- a real bug caught by a measured regression
         # (a plain viral URI with no matched concept at all lost viral_uri from the pool entirely
         # and was scored as sepsis, the only entries a fully-unmatched presentation would ever see).
+        #
+        # Tagged with the DISTINCT "zero_evidence_fallback" source (never "safety_candidate", the
+        # small fixed must-not-miss list step 4 below adds) so differential.py can tell "every
+        # candidate is here purely because NOTHING matched at all" apart from "a normal, possibly
+        # well-evidenced pool that also happens to carry the fixed safety net" -- this is what lets
+        # differential.py recognize a genuine zero-evidence/UNKNOWN_PRESENTATION case and refuse to
+        # let stable-sort/dict-insertion order (ultimately: disease KB file load order) silently
+        # decide an arbitrary "winning" diagnosis (spec: this must become an explicit
+        # insufficient-information state, never a confident DIAGNOSE). See
+        # tests/test_zero_evidence_file_order_independence.py.
         for entry in all_diseases().values():
-            _add(pool, entry, "safety_candidate")
+            _add(pool, entry, "zero_evidence_fallback")
         return list(pool.values())
 
     # 4. safety_candidate -- the small, fixed can't-miss list always rides along ON TOP OF a

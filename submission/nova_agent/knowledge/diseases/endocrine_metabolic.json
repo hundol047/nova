@@ -80,7 +80,8 @@
       "dizziness",
       "palpitations",
       "weakness",
-      "metabolic"
+      "metabolic",
+      "seizure"
     ],
     "category": "endocrine_metabolic",
     "dangerous": true,
