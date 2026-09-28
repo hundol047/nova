@@ -73,6 +73,36 @@ class LabSpec:
     disallowed_units: tuple = ()
 
 
+_GENERIC_ABNORMAL_HIGH_WORDS = (
+    "above threshold", "above the threshold", "above the reference range", "above the upper limit",
+    "above the upper limit of normal", "exceeds the upper limit", "out of range", "flagged high",
+    "critically elevated", "positive result",
+)
+
+
+def _direction_words(direction: str, *specific: str) -> tuple:
+    """Shared generic phrasing for a QUALITATIVE-ONLY, single-abnormal-direction lab (troponin,
+    D-dimer, CRP, lipase, ketones, beta-hCG, urinalysis infection markers -- every LabSpec below
+    whose only clinically meaningful abnormality is "elevated"/"positive", never "low", so a bare
+    "out of range"/"flagged high" is unambiguous FOR THESE SPECIFIC LABS even though it says
+    nothing about direction on its own). A real lab report calling a result "above
+    threshold"/"out of range"/"flagged high" is exactly as abnormal as one that spells out the
+    specific analyte word ("elevated troponin") -- generalizing this generic vocabulary, shared
+    across every single-direction lab here, closes that gap without adding any lab- or case-
+    specific keyword. Kept OUT of the bidirectional labs above (potassium/sodium/wbc/hemoglobin/
+    platelet/pH/bicarbonate), which mostly have a numeric_pattern anyway and where a bare
+    "abnormal"/"out of range" word IS genuinely ambiguous about direction. `direction` is always
+    "high" for the labs that use this (asserted, not silently accepted, since the generic list
+    above is deliberately direction-specific to this module's actual single-direction labs).
+    `specific` appends the lab's own already-existing specific words (never removed)."""
+    assert direction == "high", "objective_evidence.py's qualitative-only labs are all high-only"
+    return _GENERIC_ABNORMAL_HIGH_WORDS + specific
+
+
+_GENERIC_NORMAL_WORDS = ("within reference range", "within normal range", "within the reference range",
+                          "unremarkable")
+
+
 def _panel_pattern(*names: str) -> re.Pattern:
     """Builds a pattern that finds `<analyte name> <number>` anywhere in a combined panel string
     (e.g. a single "bmp"/"basic_metabolic_panel" result reporting several analytes at once, such
@@ -158,34 +188,40 @@ LAB_SPECS: Dict[str, LabSpec] = {
     "lab.troponin": LabSpec(
         canonical_id="lab.troponin", display_name="troponin", unit="",
         raw_keys=("troponin",), numeric_pattern=None,
-        qualitative_high_words=("elevated troponin", "troponin elevated", "positive troponin",
-                                 "markedly elevated"),
-        qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal"),
+        qualitative_high_words=_direction_words("high", "elevated troponin", "troponin elevated",
+                                                 "positive troponin", "markedly elevated"),
+        qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal")
+        + _GENERIC_NORMAL_WORDS,
     ),
     "lab.d_dimer": LabSpec(
         canonical_id="lab.d_dimer", display_name="D-dimer", unit="",
         raw_keys=("d_dimer",), numeric_pattern=None,
-        qualitative_high_words=("elevated d-dimer", "elevated d dimer", "markedly elevated",
-                                 "positive"),
-        qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal"),
+        qualitative_high_words=_direction_words("high", "elevated d-dimer", "elevated d dimer",
+                                                 "markedly elevated", "positive"),
+        qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal")
+        + _GENERIC_NORMAL_WORDS,
     ),
     "lab.crp": LabSpec(
         canonical_id="lab.crp", display_name="CRP", unit="",
         raw_keys=("crp",), numeric_pattern=None,
-        qualitative_high_words=("elevated crp", "elevated c-reactive protein", "markedly elevated"),
-        qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal"),
+        qualitative_high_words=_direction_words("high", "elevated crp", "elevated c-reactive protein",
+                                                 "markedly elevated"),
+        qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal")
+        + _GENERIC_NORMAL_WORDS,
     ),
     "lab.ketones": LabSpec(
         canonical_id="lab.ketones", display_name="urine/serum ketones", unit="",
         raw_keys=("ketones", "urinalysis"), numeric_pattern=None,
-        qualitative_high_words=("large ketones", "moderate ketones", "positive ketones"),
-        qualitative_normal_words=("negative", "trace ketones", "no ketones"),
+        qualitative_high_words=_direction_words("high", "large ketones", "moderate ketones",
+                                                 "positive ketones"),
+        qualitative_normal_words=("negative", "trace ketones", "no ketones") + _GENERIC_NORMAL_WORDS,
     ),
     "lab.beta_hcg": LabSpec(
         canonical_id="lab.beta_hcg", display_name="beta-hCG", unit="",
         raw_keys=("beta_hcg", "hcg", "pregnancy_test"), numeric_pattern=None,
-        qualitative_high_words=("positive beta-hcg", "positive hcg", "positive pregnancy test"),
-        qualitative_normal_words=("negative",),
+        qualitative_high_words=_direction_words("high", "positive beta-hcg", "positive hcg",
+                                                 "positive pregnancy test"),
+        qualitative_normal_words=("negative",) + _GENERIC_NORMAL_WORDS,
     ),
     # Lipase -- the discriminating lab for acute_pancreatitis / acute_abdomen (KB confirmatory).
     # Reference ULN varies by assay, so numeric interpretation is kept qualitative-only (like
@@ -194,10 +230,12 @@ LAB_SPECS: Dict[str, LabSpec] = {
     "lab.lipase": LabSpec(
         canonical_id="lab.lipase", display_name="lipase", unit="",
         raw_keys=("lipase", "amylase_lipase"), numeric_pattern=None,
-        qualitative_high_words=("elevated lipase", "lipase elevated", "markedly elevated",
-                                 "three times the upper limit", "3x the upper limit",
-                                 "above the upper limit of normal", "over three times"),
-        qualitative_normal_words=("normal lipase", "not elevated", "within normal limits", "normal"),
+        qualitative_high_words=_direction_words("high", "elevated lipase", "lipase elevated",
+                                                 "markedly elevated", "three times the upper limit",
+                                                 "3x the upper limit", "above the upper limit of normal",
+                                                 "over three times"),
+        qualitative_normal_words=("normal lipase", "not elevated", "within normal limits", "normal")
+        + _GENERIC_NORMAL_WORDS,
     ),
     # Urinalysis dipstick positivity -- confirmatory for uncomplicated_cystitis / pyelonephritis
     # (KB). Qualitative by nature (dipstick reads positive/negative/trace), so numeric_pattern=None.
@@ -207,7 +245,7 @@ LAB_SPECS: Dict[str, LabSpec] = {
         qualitative_high_words=("leukocyte esterase", "positive nitrites", "nitrite positive",
                                  "pyuria", "positive leukocyte esterase", "bacteriuria"),
         qualitative_normal_words=("negative leukocyte esterase", "no nitrites", "negative nitrites",
-                                   "no pyuria", "clean urinalysis"),
+                                   "no pyuria", "clean urinalysis") + _GENERIC_NORMAL_WORDS,
     ),
 }
 

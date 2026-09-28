@@ -30,7 +30,7 @@ from nova_agent.glucose_evidence import (
     extract_glucose_mg_dl,
 )
 from nova_agent.knowledge.retrieval import all_diseases, disease_by_id, diseases_for_tag
-from nova_agent.matching import feature_present
+from nova_agent.matching import feature_present, feature_present_with_aliases
 from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding
 from nova_agent.severity_evidence import ELEVATED_LACTATE_MMOL_L, extract_lactate_mmol_l
 
@@ -319,7 +319,7 @@ def generate_candidates(presentation: ClinicalPresentation,
             if entry["id"] in pool:
                 continue
             for risk_factor in entry.get("risk_factors", []):
-                if feature_present(risk_factor, presentation.risk_factors, scrub_negated_spans=True):
+                if feature_present_with_aliases(risk_factor, presentation.risk_factors, scrub_negated_spans=True):
                     _add(pool, entry, "risk_match")
                     break
 
@@ -335,7 +335,7 @@ def generate_candidates(presentation: ClinicalPresentation,
     if presentation.medication_context:
         for entry in all_diseases().values():
             for risk_factor in entry.get("risk_factors", []):
-                if feature_present(risk_factor, presentation.medication_context, scrub_negated_spans=True):
+                if feature_present_with_aliases(risk_factor, presentation.medication_context, scrub_negated_spans=True):
                     _add(pool, entry, "medication_match")
                     break
 
@@ -462,4 +462,34 @@ def generate_candidates(presentation: ClinicalPresentation,
     protected = [c for c in candidates if not set(c.sources).issubset(trimmable_only_sources)]
     trimmable = [c for c in candidates if c.id not in {p.id for p in protected}]
     keep_count = max(0, target_size - len(protected))
-    return protected + trimmable[:keep_count]
+    result = protected + trimmable[:keep_count]
+
+    # Bounded safety reinjection (mirrors retrieval_pipeline.lightweight_rerank's Stage 3): the
+    # evidence-based trim above deliberately does NOT blanket-protect every `dangerous: true`
+    # candidate (an earlier attempt at that starved well-evidenced non-dangerous diagnoses -- see
+    # the comment above), but that means a `dangerous: true` entry reached only via the fixed,
+    # SMALL, bounded safety net (CROSS_CUTTING_DANGEROUS_DIAGNOSES, ~8 ids) can still be cut to
+    # ZERO when `protected` alone already fills the whole budget -- exactly the "candidate present
+    # then silently dropped" failure this pool exists to prevent. Deliberately restricted to
+    # `safety_candidate`-sourced entries only (never ontology_broadening/ontology_retrieval, which
+    # can surface an open-ended, potentially large number of dangerous concepts of their own --
+    # those already have their OWN, separate protection one stage earlier, in
+    # retrieval_pipeline.lightweight_rerank's Stage 3 reinjection, before they ever reach this
+    # pool), so growth here stays genuinely bounded to at most the fixed safety net's own size, not
+    # unbounded. Swaps a dropped safety-net entry in for the weakest already-kept TRIMMABLE
+    # (zero-real-evidence, non-dangerous) entry; only grows the pool past `target_size` in the rare
+    # case where safety-net omissions outnumber non-dangerous trimmed entries available to swap
+    # out. Never touches `protected` (a diagnosis with real evidence of its own is never sacrificed
+    # for this).
+    result_ids = {c.id for c in result}
+    dangerous_missing = [c for c in trimmable[keep_count:]
+                          if "safety_candidate" in c.sources and c.entry.get("dangerous") and c.id not in result_ids]
+    if dangerous_missing:
+        swappable = [c for c in trimmable[:keep_count] if not c.entry.get("dangerous")]
+        for missing in dangerous_missing:
+            if swappable:
+                weakest = swappable.pop(0)
+                result = [c for c in result if c.id != weakest.id]
+            result.append(missing)
+            result_ids.add(missing.id)
+    return result

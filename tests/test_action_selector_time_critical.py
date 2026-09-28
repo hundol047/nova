@@ -32,10 +32,12 @@ def test_time_critical_candidate_gets_higher_utility_than_otherwise_identical_no
     time_critical_cand = CandidateInfo(disease_ids_discriminated=["acute_coronary_syndrome"], **base_kwargs)
     non_critical_cand = CandidateInfo(disease_ids_discriminated=["viral_uri"], **base_kwargs)
 
-    tc_utility, tc_components = selector._utility(time_critical_cand, dangerous_involved=True,
-                                                    time_critical_involved=True, differential=[])
-    nc_utility, nc_components = selector._utility(non_critical_cand, dangerous_involved=False,
-                                                    time_critical_involved=False, differential=[])
+    tc_utility, tc_components = selector._utility(
+        time_critical_cand, dangerous_discriminated={"acute_coronary_syndrome"},
+        time_critical_involved=True, differential=[], decisively_supported={})
+    nc_utility, nc_components = selector._utility(
+        non_critical_cand, dangerous_discriminated=set(),
+        time_critical_involved=False, differential=[], decisively_supported={})
 
     assert tc_components["time_critical_bonus"] == 1.0
     assert nc_components["time_critical_bonus"] == 0.0

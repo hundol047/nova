@@ -16,6 +16,7 @@ from typing import Dict, List, Literal, Optional
 from pydantic import BaseModel
 
 from nova_agent.candidate_generator import generate_candidates
+from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
 from nova_agent.clinical_presentation import build_clinical_presentation
 from nova_agent.config import get_config
 from nova_agent.glucose_evidence import (
@@ -23,7 +24,13 @@ from nova_agent.glucose_evidence import (
     HYPOGLYCEMIA_THRESHOLD_MG_DL,
     extract_glucose_mg_dl,
 )
-from nova_agent.matching import content_word_count, feature_denied, feature_present
+from nova_agent.matching import (
+    FEATURE_ALIASES,
+    content_word_count,
+    feature_denied,
+    feature_present,
+    feature_present_with_aliases,
+)
 from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding, normalize_objective_evidence
 from nova_agent.severity_evidence import ELEVATED_LACTATE_MMOL_L, extract_lactate_mmol_l
 from nova_agent.state import DifferentialSnapshot, PatientState
@@ -37,60 +44,23 @@ CONTRADICTION_PENALTY = 1.2
 # `confirmatory_findings`) are weighted higher than a soft symptom feature -- clinically, "ST
 # elevation on ECG" should move the ranking far more than "chest pain worse with exertion" does.
 CONFIRMATORY_WEIGHT = 2.5
+# Soft ceiling on how much cumulative credit stacked typical_feature matches alone can contribute
+# to one diagnosis's score (see _score_disease's typical_features loop) -- exactly one confirmatory
+# finding's worth. Generous enough to never change a diagnosis with a genuinely small, focused
+# typical_features list (most of this KB, where the uncapped sum rarely approaches this anyway),
+# but guaranteeing that no amount of stacked, individually-weak generic symptom-word matches for
+# one diagnosis can outscore a single decisive confirmatory/objective finding for a competing,
+# more dangerous candidate (spec: converging evidence must not let simple keyword counting
+# overpower one decisive finding).
+_TYPICAL_FEATURE_CONTRIBUTION_CAP = CONFIRMATORY_WEIGHT
 
 _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
 
-# Feature-local aliases (spec section 6, Option A): alternate phrasings tried ONLY when evaluating
-# the ONE exact knowledge-base phrase they are keyed to -- never a global finding-text substitution
-# like the earlier clinical_synonyms.py attempt (reverted after it let unrelated findings that
-# merely shared a word-group cross-contaminate each other's matches, e.g. "mild fever" spuriously
-# supporting "denies high fever"). A lay phrase here can only ever help the ONE named KB phrase.
-# Two categories populate this table: (1) common lay-language variants of a clinical sign
-# (throbbing/pulsating, sensitive to light/photophobia) and (2) high-value medication-class
-# normalization (spec section 4) -- a specific drug name standing in for the canonical risk factor
-# phrase it belongs to. Deliberately NOT a general medication NLP system: only the drug classes an
-# existing knowledge-base risk_factor already names.
-FEATURE_ALIASES: dict[str, list[str]] = {
-    "unilateral pulsating headache": ["throbbing headache", "pounding headache", "one-sided headache",
-                                       "one sided headache", "pounding pain", "throbbing pain",
-                                       "pulsating pain"],
-    "photophobia": ["sensitive to light", "light sensitivity", "light bothers me"],
-    "phonophobia": ["sensitive to sound", "sound sensitivity", "noise bothers me"],
-    "aura": ["shimmering lights", "visual aura", "flashing lights", "seeing spots before",
-             "zigzag lines", "blind spot in my vision", "jagged lines"],
-    "recurrent similar episodes": ["similar to headaches", "happened before", "same as before",
-                                    "feels the same as last time", "this feels the same",
-                                    "gets these", "a few times a year", "has had these before"],
-    "family history of migraine": ["mother gets migraines", "father gets migraines",
-                                    "mother has migraines", "parent gets migraines", "runs in my family",
-                                    "sister gets migraines", "sister has migraines", "brother gets migraines"],
-    "known migraine history": ["diagnosed with migraines", "history of migraines", "has migraines before"],
-    "syncope": ["passed out", "fainted"],
-    "palpitations": ["racing heartbeat", "heart racing"],
-    # Medication-class normalization (spec section 4).
-    "sulfonylurea use": ["glipizide", "glyburide", "glimepiride", "sulfonylurea"],
-    "insulin use": ["insulin", "lantus", "humalog", "novolog", "glargine"],
-    "known diabetes on insulin": ["insulin", "lantus", "humalog", "novolog", "glargine"],
-    "anticoagulant use": ["warfarin", "apixaban", "rivaroxaban", "dabigatran", "heparin", "coumadin"],
-    "antiplatelet use": ["aspirin", "clopidogrel"],
-    "nsaid use": ["ibuprofen", "naproxen", "nsaid"],
-    "diuretic use": ["water pill", "furosemide", "hydrochlorothiazide", "lasix"],
-    "immunosuppressant use": ["prednisone", "methotrexate", "tacrolimus", "cyclosporine", "azathioprine"],
-    "oral contraceptive use": ["birth control", "oral contraceptive", "the pill"],
-    "missed meal": ["hasn't eaten", "hasn't eaten much", "poor oral intake", "not eating today",
-                     "skipped a meal", "skipped meals"],
-}
-
-
-def _present_with_aliases(phrase: str, findings: List[str]) -> bool:
-    """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
-    FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase."""
-    if feature_present(phrase, findings, scrub_negated_spans=True):
-        return True
-    for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
-        if feature_present(alias, findings, scrub_negated_spans=True):
-            return True
-    return False
+# FEATURE_ALIASES / feature_present_with_aliases now live in matching.py, shared with
+# candidate_generator.py's risk_match/medication_match/history_match (pool-membership) checks --
+# see that module's own docstring for why the two call sites must never diverge. `_present_with_aliases`
+# stays as a thin local name for this module's own call sites below, unchanged otherwise.
+_present_with_aliases = feature_present_with_aliases
 
 
 _SPECIFICITY_STEP = 0.25
@@ -270,10 +240,22 @@ def _score_disease(entry: dict, state: PatientState,
     score = 0.0
     max_possible = 0.0
 
+    # Diminishing returns on stacked generic typical_feature matches (spec: converging evidence
+    # must be handled without letting simple keyword counting -- many independently-matched but
+    # individually low-value symptom words -- mathematically outweigh a single decisive
+    # confirmatory/objective finding for a DIFFERENT, more dangerous candidate). Only the total
+    # POSITIVE contribution from this one evidence class is capped, at a small multiple of a single
+    # confirmatory finding's own weight; a genuine contradiction still applies its full penalty
+    # uncapped (this must never soften real evidence AGAINST a diagnosis), and every matched/missing
+    # phrase is still recorded in full for supporting_evidence/missing_discriminative_evidence --
+    # only the numeric ranking contribution saturates, clinician-facing evidence text does not.
+    typical_feature_score = 0.0
     for feature in entry.get("typical_features", []):
         weight = FEATURE_WEIGHT * _specificity_multiplier(feature)
         max_possible += weight
-        score += _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)
+        typical_feature_score += _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)
+    score += min(typical_feature_score, _TYPICAL_FEATURE_CONTRIBUTION_CAP) \
+        if typical_feature_score > 0 else typical_feature_score
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
@@ -386,8 +368,93 @@ class DifferentialEngine:
         # competition retrieval is enabled -- see NovaConfig.effective_differential_top_k()'s
         # docstring. This is what actually reaches build_clinical_summary()'s LLM-facing text.
         top_k = get_config().effective_differential_top_k()
+        kept = scored[:top_k]
+
+        # Stage A -- small, fixed must-not-miss defense-in-depth. candidate_generator.py's own
+        # pool already guarantees the same small, fixed CROSS_CUTTING_DANGEROUS_DIAGNOSES list
+        # (~8 ids) is ALWAYS pool-member, regardless of matched evidence; that visibility used to
+        # reach the LLM-facing differential for free, because the pool was always sized <= top_k.
+        # It is no longer guaranteed to be (the pool can legitimately be larger), so this restores
+        # the same guarantee explicitly at differential.py's own size boundary -- deliberately
+        # un-gated by evidence (unlike Stage B below), because this is the same small, fixed, named
+        # list candidate_generator.py already always includes, not an open-ended one.
+        # Both reinjection stages are gated on competition retrieval being enabled: the legacy
+        # (non-competition) path has its own long-verified, byte-identical fixed top_k_differential
+        # (5) size guarantee (tests/test_full_catalog_not_in_prompt.py) that this must not disturb
+        # -- these stages exist to restore a guarantee the LARGER, competition-mode reasoning_top_k
+        # budget was always meant to hold, not to grow the legacy differential past its own bound.
+        by_id = {t[2]["id"]: t for t in scored}
+        kept_ids = {t[2]["id"] for t in kept}
+        must_not_miss_missing = [
+            by_id[did] for did in CROSS_CUTTING_DANGEROUS_DIAGNOSES
+            if did in by_id and did not in kept_ids and not by_id[did][4]
+        ] if _cfg.competition_retrieval_enabled else []
+        if must_not_miss_missing:
+            # Swap-eligible entries are restricted to ones with NO genuine supporting evidence of
+            # their own (mirrors candidate_generator.py's own protected-vs-trimmable split) -- a
+            # diagnosis with real matched evidence (e.g. cystitis on an otherwise bland,
+            # zero-evidence presentation) must NEVER be sacrificed for this, regardless of how it
+            # compares by raw score to the zero-evidence entries around it; that is exactly the
+            # "permanently immortal dangerous diagnosis" failure this whole mechanism must avoid
+            # (caught by tests/test_severity_evidence.py's negative controls). When no safe swap
+            # target exists, this only ever APPENDS (bounded: at most the fixed list's own size),
+            # never evicts real evidence.
+            non_dangerous_kept = sorted(
+                (t for t in kept if not t[2].get("dangerous") and not t[3]), key=lambda t: t[0]
+            )
+            for missing in must_not_miss_missing:
+                if non_dangerous_kept:
+                    weakest = non_dangerous_kept.pop(0)
+                    kept.remove(weakest)
+                kept.append(missing)
+            kept.sort(key=lambda t: t[0], reverse=True)
+
+        # Stage B -- the ANALOGOUS protection to
+        # retrieval_pipeline.lightweight_rerank's Stage 3, one layer up: candidate_generator.py's
+        # own pool-size trim already guarantees a `dangerous: true` candidate is never dropped just
+        # to hit ITS size budget, but that pool can still legitimately be larger than `top_k` (many
+        # protected, evidenced candidates at once, plus a bounded safety-net reinjection of its
+        # own), so this score-based ranking step needs the SAME guarantee at ITS OWN size boundary
+        # -- a dangerous diagnosis with REAL matched evidence of its own must never be silently
+        # outranked out of the LLM-visible differential purely because more non-dangerous candidates
+        # out-scored it on generic keyword volume (spec: converging moderate evidence must not let
+        # a decisive/dangerous possibility disappear). Requires at least one genuine
+        # supporting_evidence entry -- this is NOT the same fixed, zero-evidence safety net
+        # candidate_generator.py's own pool-level protection guarantees mere POOL membership for;
+        # without this check a bare safety-net placeholder with no evidence at all would evict a
+        # well-evidenced benign diagnosis from the top rank on every bland/normal presentation,
+        # exactly the "permanently immortal dangerous diagnosis" failure mode this must NOT cause
+        # (caught by tests/test_severity_evidence.py's negative controls). Also excludes anything
+        # with real CONTRADICTORY evidence against it -- a genuinely different, resolution.py-style
+        # state ("actively evidenced against"), not merely "scored lower than the cutoff" -- so a
+        # dangerous diagnosis still loses this protection the moment real evidence rules it out, and
+        # stop_policy.py/safety_validator.py's own is_resolved()-based gates (never this ranking)
+        # remain the actual authority on whether DIAGNOSE may proceed.
+        kept_ids = {t[2]["id"] for t in kept}
+        dangerous_missing = [
+            t for t in scored[top_k:]
+            if t[2].get("dangerous") and t[3] and not t[4] and t[2]["id"] not in kept_ids
+        ] if _cfg.competition_retrieval_enabled else []
+        if dangerous_missing:
+            # Same swap-eligibility restriction as Stage A: only a ZERO-real-evidence non-dangerous
+            # kept entry may be evicted, never one with genuine supporting evidence of its own, no
+            # matter how much weaker than the incoming dangerous candidate it scores. This makes
+            # Stage B a pure "make room among zero-evidence filler" + "grow when none exists"
+            # mechanism rather than a rank-inversion one -- the deliberately more powerful,
+            # score-affecting fix for "many weak matches outscoring one decisive finding" is
+            # `_TYPICAL_FEATURE_CONTRIBUTION_CAP` above, not this reinjection step.
+            non_dangerous_kept = sorted(
+                (t for t in kept if not t[2].get("dangerous") and not t[3]), key=lambda t: t[0]
+            )
+            for missing in dangerous_missing:
+                if non_dangerous_kept:
+                    weakest = non_dangerous_kept.pop(0)
+                    kept.remove(weakest)
+                kept.append(missing)
+            kept.sort(key=lambda t: t[0], reverse=True)
+
         items: List[DifferentialItem] = []
-        for rank, (score, score_ratio, entry, supporting, contradictory, missing, band) in enumerate(scored[:top_k], start=1):
+        for rank, (score, score_ratio, entry, supporting, contradictory, missing, band) in enumerate(kept, start=1):
             items.append(DifferentialItem(
                 diagnosis=entry["name"], diagnosis_id=entry["id"], rank=rank, score=round(score, 3),
                 score_ratio=round(score_ratio, 3),

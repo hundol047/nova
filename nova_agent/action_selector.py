@@ -13,7 +13,7 @@ from pydantic import BaseModel
 
 from nova_agent.config import get_config
 from nova_agent.differential import DifferentialItem
-from nova_agent.knowledge.retrieval import all_diseases
+from nova_agent.knowledge.retrieval import all_diseases, disease_by_id
 from nova_agent.missing_info import CandidateInfo, MissingInformationAnalyzer
 from nova_agent.safety import SafetyFinding
 from nova_agent.state import PatientState
@@ -54,24 +54,61 @@ class ActionSelector:
         self.missing_info = MissingInformationAnalyzer()
         self.stop_policy = StopPolicy()
 
-    def _management_relevance(self, cand: CandidateInfo, dangerous_involved: bool,
-                               differential: List[DifferentialItem]) -> float:
+    def _decisively_supported_dangerous_ids(self, differential: List[DifferentialItem]) -> dict:
+        """Dangerous diagnoses that are ALREADY the clear, well-separated leading diagnosis with no
+        competing unresolved dangerous alternative -- i.e. the case is essentially ready to
+        DIAGNOSE already (mirrors stop_policy.StopPolicy's own HIGH-confidence + rank1/2-gap +
+        no-unresolved-alternative gate, deliberately at least as conservative: ANY other dangerous
+        entry anywhere in the differential without contradictory evidence blocks this, not just a
+        MEDIUM+ confidence one). Maps diagnosis_id -> that diagnosis's own `minimum_workup` set (or
+        empty), used by `_management_relevance` below to stop treating every remaining
+        discriminator for an already-decided dangerous diagnosis as automatically management-
+        changing (spec: avoid continued unnecessary testing once the leading diagnosis is strongly
+        supported and dangerous alternatives are addressed) while still giving full priority to
+        whatever that diagnosis's own real confirmatory workup still needs."""
+        if not differential:
+            return {}
+        top = differential[0]
+        if not top.dangerous_if_missed or top.confidence_band != "HIGH":
+            return {}
+        if any(d.dangerous_if_missed and not d.contradictory_evidence for d in differential[1:]):
+            return {}
+        cfg = get_config().stop_policy
+        second = differential[1] if len(differential) > 1 else None
+        if second is not None and (top.score_ratio - second.score_ratio) < cfg.min_gap_rank1_rank2:
+            return {}
+        entry = disease_by_id(top.diagnosis_id)
+        return {top.diagnosis_id: set((entry or {}).get("minimum_workup") or ())}
+
+    def _management_relevance(self, cand: CandidateInfo, dangerous_discriminated: set,
+                               differential: List[DifferentialItem],
+                               decisively_supported: dict) -> float:
         """Spec section 11: not a constant keyed only on the dangerous flag -- reflects how likely
-        this action's result is to actually change the clinical plan. Ruling a dangerous diagnosis
-        in/out always changes management (urgent workup vs. not), so that case is a hard 1.0.
-        Otherwise, relevance scales with how undecided the leading diagnosis still is (a highly
-        confident top pick means most further non-dangerous discrimination has little left to
-        change) and with how discriminative this specific candidate is."""
-        if dangerous_involved:
-            return 1.0
+        this action's result is to actually change the clinical plan. Ruling a still-genuinely-
+        uncertain dangerous diagnosis in/out always changes management (urgent workup vs. not), so
+        that case is a hard 1.0. A dangerous diagnosis this candidate touches that is ALREADY
+        decisively supported (see `_decisively_supported_dangerous_ids`) keeps that hard 1.0 ONLY
+        for an item still in ITS OWN minimum_workup (the real confirmatory gate) -- once that gate
+        is satisfied, an extra item no longer changes the plan and falls through to the same
+        discrimination-scaled relevance a non-dangerous candidate gets. Otherwise, relevance scales
+        with how undecided the leading diagnosis still is (a highly confident top pick means most
+        further non-dangerous discrimination has little left to change) and with how discriminative
+        this specific candidate is."""
+        if dangerous_discriminated:
+            still_relevant = any(
+                did not in decisively_supported or cand.key in decisively_supported[did]
+                for did in dangerous_discriminated
+            )
+            if still_relevant:
+                return 1.0
         top_confidence = differential[0].confidence_band if differential else "LOW"
         band_factor = {"LOW": 1.0, "MEDIUM": 0.6, "HIGH": 0.25}[top_confidence]
         return round(0.15 + 0.85 * band_factor * cand.diagnostic_discrimination, 3)
 
-    def _utility(self, cand: CandidateInfo, dangerous_involved: bool, time_critical_involved: bool,
-                 differential: List[DifferentialItem]) -> tuple[float, dict]:
+    def _utility(self, cand: CandidateInfo, dangerous_discriminated: set, time_critical_involved: bool,
+                 differential: List[DifferentialItem], decisively_supported: dict) -> tuple[float, dict]:
         w = get_config().weights
-        management_relevance = self._management_relevance(cand, dangerous_involved, differential)
+        management_relevance = self._management_relevance(cand, dangerous_discriminated, differential, decisively_supported)
         time_critical_bonus = 1.0 if time_critical_involved else 0.0
         utility = (
             w.info_gain_weight * cand.information_gain
@@ -94,13 +131,15 @@ class ActionSelector:
                              ) -> tuple[AgentAction, List[ScoredCandidate], StopDecision]:
         dangerous_ids = {d.diagnosis_id for d in differential if d.dangerous_if_missed}
         time_critical_ids = _time_critical_ids()
+        decisively_supported = self._decisively_supported_dangerous_ids(differential)
         raw_candidates = self.missing_info.analyze(state, differential, safety_findings)
 
         scored: List[ScoredCandidate] = []
         for cand in raw_candidates:
-            dangerous_involved = bool(set(cand.disease_ids_discriminated) & dangerous_ids)
+            dangerous_discriminated = set(cand.disease_ids_discriminated) & dangerous_ids
             time_critical_involved = bool(set(cand.disease_ids_discriminated) & time_critical_ids)
-            utility, components = self._utility(cand, dangerous_involved, time_critical_involved, differential)
+            utility, components = self._utility(cand, dangerous_discriminated, time_critical_involved,
+                                                  differential, decisively_supported)
             content = {"ko": cand.content_ko, "ja": cand.content_ja, "zh": cand.content_zh}.get(lang) \
                 or cand.content_en
             scored.append(ScoredCandidate(action_type=cand.action_type, key=cand.key, content=content,
