@@ -56,7 +56,13 @@ _LAB_TO_DIAGNOSES = _build_lab_to_diagnoses_index()
 
 CandidateSource = Literal["symptom_match", "risk_match", "medication_match", "history_match",
                            "imaging_match", "objective_finding", "safety_candidate",
-                           "ontology_broadening"]
+                           "ontology_broadening", "ontology_retrieval"]
+
+# Tier-2 structured concepts carry real curated typical_features but no KB-depth discriminating
+# questions of their own; this bounds how many of those features become generic ASK candidates
+# (see _concept_to_kb_entry) so a single broad concept can never flood the differential engine's
+# missing-information analysis with dozens of near-duplicate generic questions.
+MAX_TIER2_DISCRIMINATING_FEATURES = 4
 
 # ~8-15 meaningful candidates, per spec -- a target, not a hard cap: dangerous/objective-evidence
 # entries are always kept regardless of this number.
@@ -83,10 +89,26 @@ def _add(pool: dict, entry: dict, source: CandidateSource) -> None:
 
 def _concept_to_kb_entry(concept) -> dict:
     """Adapt an ontology ClinicalConcept into the minimal KB-shaped dict downstream scoring expects.
-    Deliberately shallow: a Tier-2 concept carries no discriminating questions/exams/tests or
-    confirmatory findings, so those keys are EMPTY — the concept enters the pool as a low-evidence,
-    named possibility, never as if it had deep curated evidence. `id` is namespaced so it can never
-    collide with a real 34-KB diagnosis id."""
+    Deliberately shallow: no concept carries discriminating exams/tests or confirmatory findings, so
+    those keys stay EMPTY — the concept enters the pool as a low-evidence, named possibility, never
+    as if it had deep curated evidence. `id` is namespaced so it can never collide with a real
+    34-KB diagnosis id.
+
+    TIER-AWARE discriminating_questions (missing_info.py's action-generation gap fix): a Tier-2
+    STRUCTURED concept's own curated `typical_features` become a BOUNDED set of generic
+    "associated_symptoms:<feature>" discriminators -- the exact same generic fallback phrasing
+    taxonomy.disease_specific_question() already produces for any KB discriminator it doesn't have a
+    templated question for, so this fabricates no new clinical content, only reuses real curated
+    ontology data through an existing generic template. A Tier-3 ontology-only concept carries no
+    curated clinical claims (see nova_agent/open_world.py's design constraints), so it correctly
+    gets NO discriminating_questions here -- it can still appear in the differential/LLM context via
+    retrieval, but never generates a deterministic action of its own."""
+    is_tier2_structured = concept.tier.value == "TIER2_STRUCTURED"
+    discriminating_questions = (
+        [f"associated_symptoms:{feature}"
+         for feature in list(concept.typical_features)[:MAX_TIER2_DISCRIMINATING_FEATURES]]
+        if is_tier2_structured else []
+    )
     return {
         "id": f"onto::{concept.concept_id}",
         "name": concept.canonical_name,
@@ -97,13 +119,13 @@ def _concept_to_kb_entry(concept) -> dict:
         "chief_complaint_tags": list(concept.chief_complaint_tags),
         "typical_features": list(concept.typical_features),
         "risk_factors": [],
-        "discriminating_questions": [],
+        "discriminating_questions": discriminating_questions,
         "discriminating_exams": [],
         "discriminating_tests": [],
         "confirmatory_findings": [],
         "red_flag_keywords": [],
         "minimum_workup": [],
-        "evidence_level": "ontology_tier2_structured",
+        "evidence_level": "ontology_tier2_structured" if is_tier2_structured else "ontology_tier3",
     }
 
 
@@ -156,13 +178,77 @@ def _broaden_with_ontology(pool: dict, presentation: ClinicalPresentation, max_a
             added += 1
 
 
+def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
+                             imaging_text: Optional[List[str]], chief_complaint_text: Optional[str],
+                             max_add: int) -> None:
+    """Competition-mode broad retrieval (NOVA_COMPETITION_RETRIEVAL). Unlike the legacy
+    `_broaden_with_ontology` above (Tier-2 only, single-term lexical search per symptom), this
+    fuses EVERY signal already extracted this turn -- chief complaint text, symptom concepts,
+    risk/PMH/social history, medication context, and imaging findings -- through the existing,
+    already-tested `nova_agent.open_world.OpenWorldRetriever.retrieve_multi_signal()`, rebuilt fresh
+    every call from whatever `presentation`/`imaging_text`/`chief_complaint_text` the caller
+    currently has. Since `differential.py`'s `DifferentialEngine.update()` already rebuilds
+    `presentation` (via `build_clinical_presentation(state)`) and passes `state.chief_complaint`
+    fresh every turn, this is never limited to the original presenting sentence. It allows BOTH
+    Tier-2 structured
+    AND Tier-3 ontology-only concepts through: a Tier-3 concept still enters the pool as a named,
+    zero-deep-evidence possibility (via `_concept_to_kb_entry`, which correctly gives it no
+    discriminating_questions), exactly like the existing fixed safety-net entries.
+
+    Source-tagged 'ontology_retrieval' -- distinct from the legacy 'ontology_broadening' tag -- so
+    provenance stays honest about which mechanism actually found the candidate. Additive only:
+    never removes or reweights an existing candidate. Any failure to import/load the catalog or
+    retriever degrades silently to the unchanged pool -- the deterministic KB pool remains the safe
+    fallback, a broad-retrieval outage never crashes or blocks a case."""
+    if max_add <= 0:
+        return
+    try:
+        from nova_agent.open_world import OpenWorldRetriever
+        from nova_agent.ontology.registry import get_default_catalog
+    except Exception:
+        return
+
+    try:
+        retriever = OpenWorldRetriever(get_default_catalog())
+    except Exception:
+        return
+
+    history_signals = list(presentation.risk_factors) + list(presentation.medication_context)
+    try:
+        retrieved = retriever.retrieve_multi_signal(
+            chief_complaint=str(chief_complaint_text or ""),
+            symptoms=list(presentation.symptoms),
+            history=history_signals,
+            imaging_concepts=list(imaging_text or []),
+            limit=max_add * 3,
+        )
+    except Exception:
+        return
+
+    added = 0
+    seen_names = {c.entry.get("name", "").strip().lower() for c in pool.values()}
+    for candidate in retrieved:
+        if added >= max_add:
+            break
+        concept = candidate.concept
+        onto_id = f"onto::{concept.concept_id}"
+        if onto_id in pool or concept.canonical_name.strip().lower() in seen_names:
+            continue
+        _add(pool, _concept_to_kb_entry(concept), "ontology_retrieval")
+        seen_names.add(concept.canonical_name.strip().lower())
+        added += 1
+
+
 def generate_candidates(presentation: ClinicalPresentation,
                          glucose_result_text: Optional[str] = None,
                          lactate_result_text: Optional[str] = None,
                          objective_findings: Optional[Dict[str, ObjectiveFinding]] = None,
                          imaging_text: Optional[List[str]] = None,
                          ontology_broadening: bool = False,
-                         ontology_broadening_max: int = 5) -> List[CandidateDiagnosis]:
+                         ontology_broadening_max: int = 5,
+                         competition_retrieval: bool = False,
+                         competition_retrieval_max: int = 15,
+                         chief_complaint_text: Optional[str] = None) -> List[CandidateDiagnosis]:
     """Builds the candidate pool for one turn. `glucose_result_text`/`lactate_result_text`/
     `objective_findings`/`imaging_text` are passed explicitly (not a whole PatientState) to keep
     this module's dependency surface small and directly testable. `objective_findings` is the
@@ -170,7 +256,10 @@ def generate_candidates(presentation: ClinicalPresentation,
     already compute it once per turn for differential.py's own scoring, so it's passed through
     rather than re-derived here) -- None (the default) simply skips the generalized-lab pool step
     below, leaving the glucose/lactate-only behavior unchanged for any caller that doesn't pass it.
-    `imaging_text` is `state.imaging.values()` -- also None-safe/optional for the same reason."""
+    `imaging_text` is `state.imaging.values()` -- also None-safe/optional for the same reason.
+    `chief_complaint_text` is `state.chief_complaint` -- used ONLY by the opt-in competition
+    retrieval step (`_broaden_with_open_world`) as one fused free-text signal alongside
+    `presentation`'s already-extracted symptoms/history; None-safe/optional, same reasoning."""
     pool: dict = {}
 
     # 1. symptom_match -- every concurrently-extracted concept's own disease pool (spec: multiple
@@ -308,6 +397,14 @@ def generate_candidates(presentation: ClinicalPresentation,
     if ontology_broadening:
         _broaden_with_ontology(pool, presentation, ontology_broadening_max)
 
+    # 6. ontology_retrieval (OPT-IN via NOVA_COMPETITION_RETRIEVAL, default off) -- the broader,
+    #    multi-signal, Tier-2+Tier-3 competition retrieval step. Runs after (never instead of) both
+    #    the deterministic KB pool and the legacy ontology_broadening step, so it can only ADD
+    #    candidates neither of those already found; byte-identical existing behavior when disabled.
+    if competition_retrieval:
+        _broaden_with_open_world(pool, presentation, imaging_text, chief_complaint_text,
+                                 competition_retrieval_max)
+
     candidates = list(pool.values())
     if len(candidates) <= TARGET_POOL_SIZE:
         return candidates
@@ -322,11 +419,13 @@ def generate_candidates(presentation: ClinicalPresentation,
     # backwards from the spec's intent (critical diagnoses must not disappear FROM the pool via
     # this mechanism; it never says a well-evidenced diagnosis should be sacrificed to make room
     # for a zero-evidence entry that's only present as a blanket safety net).
-    # An entry reached ONLY via the fixed safety net and/or opt-in ontology broadening (no
+    # An entry reached ONLY via the fixed safety net and/or opt-in ontology broadening/retrieval (no
     # symptom/risk/objective evidence of its own) is trimmable; anything with real evidence is
-    # protected. ontology_broadening entries are zero-KB-evidence supplements, so they never
-    # displace an evidenced KB candidate from the size budget.
-    trimmable_only_sources = {"safety_candidate", "ontology_broadening"}
+    # protected. ontology_broadening/ontology_retrieval entries are zero-KB-evidence supplements, so
+    # they never displace an evidenced KB candidate (or a must-not-miss safety_candidate) from the
+    # size budget -- a broad retrieval hit can add a genuinely new long-tail possibility, but it can
+    # never crowd out an existing Tier-1 candidate or must-not-miss diagnosis.
+    trimmable_only_sources = {"safety_candidate", "ontology_broadening", "ontology_retrieval"}
     protected = [c for c in candidates if not set(c.sources).issubset(trimmable_only_sources)]
     trimmable = [c for c in candidates if c.id not in {p.id for p in protected}]
     keep_count = max(0, TARGET_POOL_SIZE - len(protected))

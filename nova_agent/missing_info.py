@@ -9,7 +9,7 @@ turns those axis scores into the final utility ranking (section 7) using the con
 from __future__ import annotations
 
 import math
-from typing import Dict, Iterable, List, Literal
+from typing import Dict, Iterable, List, Literal, Optional
 
 from pydantic import BaseModel
 
@@ -93,6 +93,37 @@ def _expected_information_gain(prior: Dict[str, float], affected_ids: set) -> fl
     return max(0.0, prior_entropy - expected_posterior_entropy)
 
 
+def _resolve_entry(diagnosis_id: str) -> Optional[dict]:
+    """Resolve a differential item's diagnosis_id to a KB-shaped dict, covering BOTH real Tier-1 KB
+    diseases (disease_by_id) and ontology-sourced Tier-2/3 candidates (`onto::<concept_id>`, added
+    to the pool by candidate_generator's ontology_broadening/ontology_retrieval steps).
+
+    Before this fix, `disease_by_id()` alone returned None for every `onto::` id and analyze()
+    silently `continue`d past it -- an ontology-sourced candidate could appear in the differential
+    but never generate a single discriminating ASK/EXAM/TEST action of its own. Tier-2/3 entries now
+    resolve to the SAME shallow, tier-aware dict `candidate_generator._concept_to_kb_entry()`
+    already builds (Tier-2: bounded generic questions from real typical_features; Tier-3: correctly
+    empty, no fabricated clinical content) -- reusing that logic rather than forking it."""
+    entry = disease_by_id(diagnosis_id)
+    if entry is not None:
+        return entry
+    if not diagnosis_id.startswith("onto::"):
+        return None
+    try:
+        from nova_agent.candidate_generator import _concept_to_kb_entry
+        from nova_agent.ontology.registry import get_default_catalog
+    except Exception:
+        return None
+    concept_id = diagnosis_id[len("onto::"):]
+    try:
+        concept = get_default_catalog().get_condition(concept_id)
+    except Exception:
+        return None
+    if concept is None:
+        return None
+    return _concept_to_kb_entry(concept)
+
+
 def _already_answered(state: PatientState, category: str) -> bool:
     field = _ANSWERED_CATEGORY_FIELD.get(category)
     if field and getattr(state, field, None):
@@ -122,7 +153,7 @@ class MissingInformationAnalyzer:
         test_candidates: dict[str, CandidateInfo] = {}
 
         for item in top_k:
-            entry = disease_by_id(item.diagnosis_id)
+            entry = _resolve_entry(item.diagnosis_id)
             if entry is None:
                 continue
 

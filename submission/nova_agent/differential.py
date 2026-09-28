@@ -364,6 +364,9 @@ class DifferentialEngine:
             imaging_text=list(state.imaging.values()),
             ontology_broadening=_cfg.ontology_broadening_enabled,
             ontology_broadening_max=_cfg.ontology_broadening_max,
+            competition_retrieval=_cfg.competition_retrieval_enabled,
+            competition_retrieval_max=_cfg.competition_retrieval_max,
+            chief_complaint_text=state.chief_complaint,
         )
         candidates = [c.entry for c in candidate_records]
         sources_by_id = {c.id: c.sources for c in candidate_records}

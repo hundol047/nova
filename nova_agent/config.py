@@ -107,6 +107,24 @@ class NovaConfig:
     ontology_broadening_max: int = field(
         default_factory=lambda: _int_env("NOVA_ONTOLOGY_BROADENING_MAX", 5))
 
+    # competition_retrieval_enabled: broad, multi-signal open-world retrieval over the SAME
+    # DiseaseCatalog (nova_agent/open_world.py's OpenWorldRetriever), rebuilt every turn from the
+    # FULL current PatientState (chief complaint + symptoms + PMH/FH/SH + medications + imaging),
+    # not just the original chief complaint. Distinct from ontology_broadening_enabled above (which
+    # stays untouched, Tier-2-only, single-signal, off by default): this flag also allows Tier-3
+    # ontology-only concepts through, and defaults ON when NOVA_LLM_PROVIDER=competition, since a
+    # genuinely broad (thousands-of-concepts) differential is the competition's own goal. Any
+    # deployer/test can still force it explicitly with NOVA_COMPETITION_RETRIEVAL=true|false
+    # regardless of provider. Pure additive supplement -- see candidate_generator._broaden_with_
+    # open_world's docstring for the safety/fallback contract.
+    competition_retrieval_enabled: bool = field(
+        default_factory=lambda: _bool_env(
+            "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"
+        )
+    )
+    competition_retrieval_max: int = field(
+        default_factory=lambda: _int_env("NOVA_COMPETITION_RETRIEVAL_MAX", 15))
+
     # --- Optional ML ranker (HOSPITAL deployment only; NEVER in the competition submission) ------
     # ml_ranker_enabled: master switch for the optional deep-learning candidate ranker. DEFAULT
     # FALSE. When false the ML subsystem is never consulted and behavior is unchanged.
