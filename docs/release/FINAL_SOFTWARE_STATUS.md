@@ -1,8 +1,10 @@
 # N.O.V.A. Final Software Status
 
 > **HISTORICAL SNAPSHOT (gap-closure / independent-re-audit round).** Accurate for that round, when
-> Blind **v9** was current. For CURRENT state see `docs/VNEXT_INDEPENDENT_AUDIT.md`,
-> `docs/ontology/DISEASE_COVERAGE.md`, and `evaluation/current_blind.py`.
+> Blind **v9** was current. Current as of commit `b3fdccd` is Blind **v12** (v3-v11 REFERENCE-ONLY)
+> over a real default catalog of 1,280 concepts (34 Tier-1 + 1,246 Tier-2 + 0 real Tier-3 in this
+> environment) -- see `README.md` section 2.2, `docs/ontology/DISEASE_COVERAGE.md`,
+> `docs/VNEXT_INDEPENDENT_AUDIT.md`, and `evaluation/current_blind.py` for current state.
 
 > Two separate scores, never conflated. **Software readiness** is backed by code + the checks that
 > actually ran. **External hospital validation** is a separate axis that is entirely NOT VERIFIED.

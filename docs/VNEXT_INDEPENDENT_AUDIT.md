@@ -10,8 +10,20 @@ Branch: `offline/nova-clinical-learning-disease-expansion`. Base: `07c5eab`.
 > **HISTORICAL SNAPSHOTS** kept for provenance, not the current state.
 > - Round 1 (first matrix below): 174-concept catalog, Blind **v9** — HISTORICAL.
 > - Round 2 ("vNext completion round"): 516 bundled, Blind **v10** — HISTORICAL.
-> - **Round 3 (CURRENT): "5,000-diagnosis expansion round" — 1,280 bundled / 5,651 searchable,
->   Blind v11 current.** See also `docs/evaluation/FIVE_THOUSAND_DISEASE_COMPARISON.md`.
+> - Round 3: "5,000-diagnosis expansion round" — 1,280 bundled real concepts (the 5,651 figure was
+>   a SEPARATE synthetic test-fixture catalog, never the real default catalog), Blind v11 — HISTORICAL.
+> - **Round 4 (CURRENT, branch `offline/nova-competition-agent-optimization`, commit `b3fdccd`):
+>   "competition retrieval-recall round".** Rebuilt `nova_agent/retrieval_pipeline.py` Stage 1
+>   (multi-query weighted RRF fusion, signal-type weighting) and `nova_agent/ontology/search.py`
+>   (typical_features indexing, IDF-like corpus-frequency token weighting). Real default catalog
+>   unchanged at 1,280 (34 Tier-1 + 1,246 Tier-2 + 0 real Tier-3 in this environment). Measured,
+>   materially improved retrieval recall (see `scripts/benchmark_competition_retrieval.py`,
+>   `README.md` section 2.2): chief-complaint-only Recall@20/50/100 11.4%→56.8%/61.4%/61.4%;
+>   chief-complaint+history 31.8%/34.1%/34.1%→75.0%/93.2%/93.2%. **Blind v12 current** (32 cases,
+>   first run: 64.0% scored accuracy, 77.8% critical recall, 22.2% critical miss -- honestly
+>   reported, not remediated this round). Full pytest: 474 passed/1 skipped. Verification artifact:
+>   `artifacts/verification/local-release-b3fdccd37519-v3.json`. No ClinicalBERT/heavy model added;
+>   `learning/`/`web/` remain excluded from `submission/`.
 > The authoritative current blind version is always `evaluation/current_blind.py`.
 
 ## Audit matrix — HISTORICAL SNAPSHOT (vNext first round: 174 concepts, Blind v9 current)

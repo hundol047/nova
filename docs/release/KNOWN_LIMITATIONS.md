@@ -2,13 +2,26 @@
 
 Honest, current limitations — only what actually remains. None are hidden.
 
+> **Round update (commit `b3fdccd`, competition retrieval-recall round):** in competition mode
+> (`NOVA_COMPETITION_RETRIEVAL`), the deterministic prior is no longer limited to the 34-diagnosis
+> KB alone -- `nova_agent/retrieval_pipeline.py` retrieves and reranks candidates from the full
+> 1,280-concept default catalog (34 Tier-1 + 1,246 Tier-2), so the two bullets immediately below now
+> apply specifically to the CLOSED-KB / non-competition path. The retriever itself is STILL purely
+> lexical (token-overlap + IDF-like weighting over `nova_agent/ontology/search.py`'s index, not an
+> embedding model) -- this round materially improved its recall (see README.md section 2.2) but did
+> not change that fundamental design choice, and measured recall is still well short of what an
+> embedding retriever would likely achieve (chief-complaint-only Recall@50 61.4%, not 90%+). Blind
+> v12's first run (32 fresh cases) scored 64.0% diagnostic accuracy and a 22.2% critical-miss rate --
+> materially worse than the tuned held-out/generalization suites (100%/0%) -- reported honestly as a
+> genuine, unremediated finding, not a regression introduced by editing the blind set.
+
 ## Reasoning / clinical scope
-- **Knowledge base is 34 diagnoses** across a bounded set of chief-complaint concepts — far from
-  exhaustive. The LLM may introduce diagnoses outside this set, but the deterministic prior only
-  covers these 34.
-- **Matching is keyword/entropy-based, not an embedding model** (`nova_agent/matching.py`) —
-  deliberate, for determinism/testability, but misses synonym pairs neither stemmed nor
-  keyword-matched.
+- **Closed-KB (non-competition-retrieval) path is 34 diagnoses** across a bounded set of
+  chief-complaint concepts — far from exhaustive. The LLM may introduce diagnoses outside this set,
+  but the deterministic prior on this path only covers these 34.
+- **Matching is keyword/entropy-based, not an embedding model** (`nova_agent/matching.py`,
+  `nova_agent/ontology/search.py`) — deliberate, for determinism/testability/competition submission
+  weight, but misses synonym pairs neither stemmed, aliased, nor typical-feature-indexed.
 - **Objective-evidence numeric interpretation is scoped** to a defined analyte registry with a
   unit-safety guard (a value in an unexpected unit is not interpreted). Analytes/units outside the
   registry are not numerically interpreted.

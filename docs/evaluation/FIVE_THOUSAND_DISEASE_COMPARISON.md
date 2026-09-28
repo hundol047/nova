@@ -1,5 +1,18 @@
 # 5,000-Diagnosis Architecture: Baseline vs Candidate
 
+> **Round update (commit `b3fdccd`):** the 5,651/synthetic-catalog numbers below describe the
+> `learning/` package's own scale-test fixture, which is NOT what the competition runtime actually
+> loads (the real default catalog is 1,280 concepts: 34 Tier-1 + 1,246 Tier-2 + 0 real Tier-3 in
+> this environment). The competition runtime's ACTUAL retrieval path is
+> `nova_agent/retrieval_pipeline.py` (wired into `DoctorAgent` since this branch's earlier rounds),
+> not `learning/pipeline.py`. This round measured and materially improved that real path's recall
+> against 44 real synthetic evaluation cases' own presenting text (never the answer): see
+> `scripts/benchmark_competition_retrieval.py` and `README.md` section 2.2. Blind v11 referenced
+> below is now REFERENCE-ONLY; current is Blind v12 (32 cases, first run: 64.0% scored accuracy,
+> 77.8% critical recall, 22.2% critical miss -- reported honestly, not remediated this round). The
+> rest of this document is preserved from an earlier round describing the separate `learning/`
+> scale-test architecture and was not rewritten this round.
+
 This document records the **BASELINE vs CANDIDATE** comparison for the 5,000-searchable-diagnosis
 retrieval architecture (PHASE 1) and the governance decision the promotion gate would enforce.
 

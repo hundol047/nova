@@ -4,7 +4,10 @@
 > from an earlier round when Blind **v9** was the current untouched set. It is preserved as history
 > and is accurate for that round. For the CURRENT release state see `docs/VNEXT_INDEPENDENT_AUDIT.md`
 > and `docs/ontology/DISEASE_COVERAGE.md`; the current untouched blind set is defined by
-> `evaluation/current_blind.py` (`CURRENT_BLIND_VERSION`).
+> `evaluation/current_blind.py` (`CURRENT_BLIND_VERSION`). As of commit `b3fdccd`: full pytest
+> suite 474 passed/1 skipped (`pytest tests/ -v`); current blind set is **v12** (32 cases; first run
+> 64.0% scored accuracy, 77.8% critical recall, 22.2% critical miss -- see
+> `artifacts/verification/local-release-b3fdccd37519-v3.json`).
 
 > Only **actually-executed** evidence is recorded here. Anything not run is marked **NOT VERIFIED**.
 > CI runs are GitHub Actions runs on the `hundol047/nova` repository. Because the authoring

@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#9-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 444 unit tests (1 skipped), the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 474 unit tests (1 skipped), the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -147,13 +147,27 @@ flowchart LR
   Honest limitation: the underlying `OpenWorldRetriever` is a **lexical/token index, not an
   embedding retriever** -- measured against the 44 real synthetic evaluation cases' own presenting
   text (not their disease name), lexical Recall@20/50/100 for a Tier-1 KB diagnosis is ~11%
-  (chief complaint alone) to ~34% (chief complaint + full elicited history text). The system's
-  actual 100% end-to-end diagnostic accuracy on those same 44 cases comes from the separate,
-  independent deterministic symptom-tag KB path (`candidate_generator.py`'s `symptom_match`/
-  `risk_match`/`objective_finding` steps), not from ontology retrieval -- retrieval's proven,
-  tested value-add is that a Tier-2/Tier-3 long-tail candidate *outside* the 34-disease KB can now
-  reach the differential/LLM context at all (see `tests/test_tier2_retrieval_runtime.py`,
-  `tests/test_long_tail_reaches_llm.py`), not that it out-recalls the KB's own 34 diagnoses.
+  (chief complaint alone) to ~34% (chief complaint + full elicited history text), **as of an
+  earlier round** -- a later round (commit `b3fdccd`) materially improved this by indexing each
+  concept's real, already-curated `typical_features` (previously never searchable at all) and
+  adding IDF-like corpus-frequency token weighting plus genuine multi-query Weighted Reciprocal
+  Rank Fusion (`nova_agent/retrieval_pipeline.py`'s `build_signal_queries()`/`_rrf_fuse()`,
+  `SIGNAL_WEIGHTS` giving objective findings/imaging more influence than a generic symptom word).
+  Current measured Recall@20/50/100 on the same 44 cases' own presenting text (never the answer;
+  see `scripts/benchmark_competition_retrieval.py`): chief-complaint-only 56.8%/61.4%/61.4%;
+  chief-complaint+history 75.0%/93.2%/93.2% (MRR 0.24/0.38, median true-diagnosis rank 4 in both).
+  Still purely lexical, not an embedding retriever -- honest limitation, not "production-grade
+  semantic retrieval." The system's actual 100% end-to-end diagnostic accuracy on those same 44
+  cases still comes primarily from the separate, independent deterministic symptom-tag KB path
+  (`candidate_generator.py`'s `symptom_match`/`risk_match`/`objective_finding` steps); retrieval's
+  proven, tested value-add is that a Tier-2/Tier-3 long-tail candidate *outside* the 34-disease KB
+  can now reach the differential/LLM context at all, AND with materially better recall than before
+  (see `tests/test_tier2_retrieval_runtime.py`, `tests/test_long_tail_reaches_llm.py`,
+  `tests/test_long_tail_recall.py`). A genuinely fresh, untouched **Blind v12** set (32 cases,
+  first run) scored 64.0% diagnostic accuracy and a 22.2% critical-miss rate -- materially worse
+  than the tuned held-out/generalization suites (100%/0%), reported honestly as a real,
+  unremediated finding of what a never-before-seen phrasing set surfaces (see
+  `evaluation/blind_v12_manifest.json`, `artifacts/verification/local-release-b3fdccd37519-v3.json`).
 
 ## 3. The ASK / EXAM / TEST / DIAGNOSE loop
 
@@ -196,7 +210,7 @@ nothing in this repo cites a fabricated external source.
 ## 6. Evaluation & results
 
 ```bash
-pytest tests/ -v                        # 444 tests, 1 skipped
+pytest tests/ -v                        # 474 tests, 1 skipped
 python -m evaluation.benchmark --generalization-v2 --stress  # tuning + held-out + generalization-v2 + stress, full metrics
 python -m evaluation.benchmark --held-out-only
 python -m evaluation.generalization_benchmark
