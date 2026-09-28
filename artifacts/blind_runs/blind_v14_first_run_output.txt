@@ -1,0 +1,73 @@
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+Blind14_01_ClassicColdAfterOfficeOutbreakcommon                YES       17      0          NO             
+Blind14_02_TypicalCystitisYoungWomancommon                YES       30      0          NO             
+Blind14_03_WeekendPotluckGastro common                YES       23      0          NO             
+Blind14_04_WorkStressBandHeadachecommon                YES       20      0          NO             
+Blind14_05_SubsternalPressureShovelingcritical              YES       4       0          NO             
+Blind14_06_SuddenOneSidedWeaknessAndSlurcritical              YES       27      0          NO             
+Blind14_07_ThunderclapHeadacheAtTheGymcritical              YES       20      0          NO             
+Blind14_08_PostSurgicalFeverAndConfusioncritical              YES       25      0          NO             
+Blind14_09_SharpChestPainAfterLongDrivecritical              NO        18      0          YES            
+Blind14_10_FeverStiffNeckCollegeDormcritical              YES       23      0          NO             
+Blind14_11_RippingBackPainMistakenForMuscleStraindangerous_mimic       YES       16      0          NO             
+Blind14_12_LatePeriodMistakenForStomachBugdangerous_mimic       NO        28      0          YES            
+Blind14_13_AsthmaFlareThatWasActuallyCollapsedLungdangerous_mimic       YES       24      0          NO             
+Blind14_14_RibCagePainAfterGymDaybenign_mimic          NO        22      0          NO             
+Blind14_15_RoomSpinsWhenRollingOverInBedbenign_mimic          YES       14      0          NO             
+Blind14_16_RacingHeartBeforeBigPresentationbenign_mimic          NO        18      0          NO             
+Blind14_17_LayLanguagePneumonia unseen_lay_phrasing   YES       22      0          NO             
+Blind14_18_LayLanguageDKA       unseen_lay_phrasing   YES       18      0          NO             
+Blind14_19_EpigastricPainConfirmedByLipaseobjective_evidence_heavyYES       27      0          NO             
+Blind14_20_FlankPainConfirmedByUrineWorkupobjective_evidence_heavyYES       25      0          NO             
+Blind14_21_KnownAfibWithNewPalpitationsrisk_context_heavy    YES       18      0          NO             
+Blind14_22_PriorStonesWithNewFlankPainrisk_context_heavy    YES       25      0          NO             
+Blind14_23_SulfonylureaMissedMealConfusionmedication_risk       YES       9       0          NO             
+Blind14_24_AnticoagulantBlackStoolsmedication_risk       YES       7       0          NO             
+Blind14_25_RightLowerAbdPainWithReassuringLabsStillAppendicitisnegative_evidence_heavyNO        33      0          NO             
+Blind14_26_DizzyOnStandingAllOtherFindingsNegativenegative_evidence_heavyYES       21      0          NO             
+Blind14_27_SilentMICInDiabeticWomanatypical_presentation YES       16      0          NO             
+Blind14_28_IsolatedImbalanceStrokeatypical_presentation YES       27      0          NO             
+Blind14_29_ElderlyPneumoniaWithoutFeverelderly               YES       29      0          NO             
+Blind14_30_ToddlerColdFromDaycarepediatric             YES       22      0          NO             
+Blind14_31_TeenAsthmaFlareAfterSoccerpediatric             YES       27      0          NO             
+Blind14_32_PregnantWithFlankPainAndFeverpregnancy             YES       25      0          NO             
+Blind14_33_ACEInhibitorPlusPotassiumSupplementpolypharmacy          YES       24      0          NO             
+Blind14_34_DiabeticCKDPatientWithChestTightnessmultimorbidity        YES       25      0          NO             
+Blind14_35_KoreanMixedChestPain mixed_language        YES       25      0          NO             
+Blind14_36_JapaneseMixedAbdominalPainmixed_language        NO        32      0          NO             
+Blind14_37_LongTailCholecystitislong_tail             NO (not scored)25      0          NO             
+Blind14_38_LongTailBowelObstructionlong_tail             NO (not scored)22      0          NO             
+Blind14_39_LongTailShingles     long_tail             NO (not scored)25      0          NO             
+Blind14_40_LongTailDVT          long_tail             NO (not scored)33      0          NO             
+Blind14_41_LongTailPericarditis long_tail             NO (not scored)19      0          NO             
+Blind14_42_TrulyVagueMalaise    unknown_ood           NO (not scored)20      0          NO             
+Blind14_43_NonMedicalRamblingComplaintunknown_ood           NO (not scored)20      0          NO             
+Blind14_44_VagueComplaintDKAOnlyOnLabsretrieval_miss_trap   YES       9       0          NO             
+Blind14_45_VagueChestComplaintDissectionOnImagingretrieval_miss_trap   YES       20      0          NO             
+Blind14_46_ReassuringHeadacheHistoryMaskingSAHsafety_trap           YES       23      0          NO             
+Blind14_47_ClassicMigraineNotSAHover_testing_trap     YES       24      0          NO             
+Blind14_48_ClassicBronchitisNotPneumoniaover_testing_trap     YES       20      0          NO             
+Blind14_49_EarlyAppendicitisLooksLikeGastropremature_diagnosis_trapNO        33      0          NO             
+Blind14_50_EarlyHyperkalemiaLooksLikeSimpleWeaknesspremature_diagnosis_trapYES       9       0          NO             
+Blind14_51_ChestPainNormalECGHighRiskHistoryconflicting_evidence  YES       33      0          NO             
+Blind14_52_MinimalInformationGastrosparse_evidence       YES       38      0          NO             
+Blind14_53_PerforatedUlcerRigidAbdomencritical              YES       20      0          NO             
+Blind14_54_PeanutReactionAtRestaurantcritical              NO        23      0          YES            
+Blind14_55_BurningChestAfterBigMealsbenign_mimic          YES       25      0          NO             
+Blind14_56_FaintedAtTheSightOfBloodbenign_mimic          YES       23      0          NO             
+
+Blind v14 summary (56 cases, 49 scored, 23 critical)
+  Scored Diagnostic Accuracy:   83.7%  (excludes: Blind14_37_LongTailCholecystitis, Blind14_38_LongTailBowelObstruction, Blind14_39_LongTailShingles, Blind14_40_LongTailDVT, Blind14_41_LongTailPericarditis, Blind14_42_TrulyVagueMalaise, Blind14_43_NonMedicalRamblingComplaint)
+  All-Case Diagnostic Accuracy: 73.2%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (safe handling of excluded cases: diagnosed, no critical miss)
+  Critical Diagnosis Recall:    87.0%
+  Critical Miss Rate:           13.0%
+  Average / Median Turns:       22.3 / 23.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        1.34 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        7.5 / 5.7 / 8.1
+  Utility Score Proxy:          0.415  (informal local metric, evaluation/scoring.py -- not an official competition score)
