@@ -10,10 +10,15 @@ finding regardless of relevance, and would otherwise register as a match. So:
   - a short phrase (<=2 remaining content words) requires ALL of them present, not just some.
   - a longer phrase requires most (>=60%) of them present.
   - words are lightly, conservatively stemmed (see `_stem()` below -- deterministic suffix
-    stripping for common morphological variants like weak/weakness or spin/spinning, falling back
-    to the original bounded first-6-characters truncation only when no recognized suffix applies)
+    stripping for common morphological variants like weak/weakness or spin/spinning; a word with no
+    matching suffix rule and no explicit `_IRREGULAR_STEM_OVERRIDES` entry is returned UNCHANGED,
+    never truncated to a fixed character count -- Round E removed that fallback, since truncation
+    could silently equate two otherwise-unrelated words that merely share a prefix)
     so real variant pairs still match without a full NLP stemmer dependency, while an unrelated
     word that merely shares a short prefix (e.g. "pain" vs "painting") stays distinct.
+  - a phrase's low-information RELATIONAL/temporal words (after, worse, with, during, ...) must
+    never by themselves satisfy a multi-word feature -- see `_distinguishing_tokens()` and
+    `feature_present()`'s own gate below (Round E's feature-match specificity hardening).
 """
 
 from __future__ import annotations
@@ -28,6 +33,33 @@ _STOPWORDS = {
 _GENERIC_MEDICAL_WORDS = {"pain", "ache", "aching", "discomfort", "feeling", "symptom", "symptoms", "sensation"}
 _IGNORED = _STOPWORDS | _GENERIC_MEDICAL_WORDS
 _OVERLAP_RATIO_THRESHOLD = 0.6
+
+# Round E (feature-match specificity hardening): low-information RELATIONAL/temporal/severity
+# connector words -- distinct from _GENERIC_MEDICAL_WORDS above (which are generic SYMPTOM-TYPE
+# nouns, already stripped from every content-word set entirely). These words describe a relation
+# ("after", "with", "during"), a comparison ("worse", "better"), or an unscoped severity/context
+# descriptor ("acute", "severe", "episode", "history") that recurs across countless unrelated KB
+# phrases -- a multi-word feature like "worse after meals" or "chest pain after trauma" must never
+# be satisfied by unrelated text that only shares words from THIS set (e.g. "worse when I breathe"
+# sharing only "worse", or "chest pain after a long work shift" sharing only "after"/"chest") while
+# missing the phrase's own real distinguishing concept ("meals", "trauma"). Deliberately NOT merged
+# into _IGNORED/_content_words() -- this must never blanket-strip these words from every content-
+# word computation in the module (content_word_count()'s specificity weighting, the existing
+# overlap-ratio math, aliasing, etc. all keep seeing them); it is used ONLY by
+# `_distinguishing_tokens()` below, itself used only by feature_present()'s own extra gate.
+_RELATIONAL_WORDS = {
+    "after", "before", "with", "without", "during", "when", "worse", "better",
+    "episode", "history", "acute", "severe",
+}
+
+
+def _distinguishing_tokens(content_words: Set[str]) -> Set[str]:
+    """The subset of a phrase's own content words that actually carries its distinguishing
+    clinical meaning -- everything left after also removing _RELATIONAL_WORDS (on top of the
+    stopwords/generic-medical-words _content_words() already strips). Returns an empty set when a
+    phrase reduces to nothing but relational words (rare for a real KB phrase); callers must treat
+    that as "no distinguishing-token gate applies" rather than as a match failure."""
+    return content_words - _RELATIONAL_WORDS
 
 # EXAM/TEST result strings routinely embed a negation in the SAME string as a positive finding
 # (e.g. "clear breath sounds, no focal consolidation") -- unlike ASK answers, this text is never
@@ -59,14 +91,36 @@ _NEGATED_SPAN_PATTERN = re.compile(
 # round's own generalization regression suite caught (see evaluation.benchmark's
 # Cough01_CommonBronchitis case). None of this round's required target pairs need "-ly" stripping,
 # so it stays out rather than accept that systemic collision risk.
+#
+# "-ish" IS included (Round E): a common, narrow adjectival suffix on real clinical descriptor
+# words (feverish, bluish, yellowish) whose base noun/adjective IS the clinically meaningful
+# concept (fever, blue, yellow) -- unlike "-ly", the base word here is almost always the SAME
+# clinical dimension, not a different one, so this doesn't carry the same collision risk. Discovered
+# via this round's own word-boundary hardening of feature_present()'s EXACT tier (see
+# `_exact_phrase_present`): a plain, unbounded `"fever" in "...feverish..."` substring check used to
+# accidentally cover this case; making that check word-boundary-safe (closing the "PE"/"period"
+# false-positive class) also closed this legitimate variant unless it is handled explicitly here.
 _SUFFIX_RULES: tuple = (
-    ("iness", "y"), ("ies", "y"), ("ness", ""), ("ing", ""), ("ed", ""), ("es", ""), ("s", ""),
+    ("iness", "y"), ("ies", "y"), ("ness", ""), ("ish", ""), ("ing", ""), ("ed", ""), ("es", ""), ("s", ""),
 )
 _MIN_STEM_LENGTH = 3
 # Vowels plus w/x/y are never the second half of an English CVC-doubling pair (e.g. "spinning" =
 # spin + doubled-n + ing; "seeing" is NOT see + doubled-e + ing -- "ee" is a vowel digraph, not a
 # doubled consonant added for the suffix), so a trailing doubled letter from this set is left alone.
 _NEVER_DOUBLED_FOR_SUFFIX = set("aeiouwxy")
+
+# Round E (residual unsafe morphology fallback removal): tightly-scoped, hand-curated overrides for
+# the rare irregular clinical derivational pair that shares NO suffix relationship any rule above
+# can connect (spec: never fall back to truncating an arbitrary word to its first 6 characters,
+# which can silently equate two otherwise-UNRELATED words that merely happen to share a prefix --
+# e.g. a truncation fallback would have equated "generic"/"generalized" or "several"/"severe" at 6
+# characters, a real safety risk this table closes generically). Each entry is a single, explicit,
+# reviewed word pair -- never a broad rule -- and every entry must have its own test (see
+# tests/test_morphology_no_truncation_fallback.py). Maps the LESS-common derived form to the
+# canonical KB form it must normalize to; the canonical form already stems to itself unchanged.
+_IRREGULAR_STEM_OVERRIDES = {
+    "exertional": "exertion",
+}
 
 
 def _reduce_doubled_consonant(stem: str) -> str:
@@ -93,14 +147,21 @@ def _stem(word: str) -> str:
     stripping "-ing"/"-ed" (the standard English CVC-doubling spelling rule) is reduced by one
     letter via `_reduce_doubled_consonant`.
 
-    Falls back to the ORIGINAL bounded first-6-characters truncation only when no recognized
-    suffix applies at all (e.g. "exertional"/"exertion" -- an irregular derivational pair no plain
-    suffix rule connects) -- demoted to a last resort, never the primary mechanism, per this
-    module's own generalization-hardening round: the earlier truncation-only approach produced
-    false NEGATIVES whenever two real variants first diverged within their own first 6 characters
-    (exactly what "weak"/"weakness" and "spin"/"spinning" do -- "weak " vs "weakne", "spin  " vs
-    "spinni" -- see tests/test_morphology_normalization.py and its negative-control sibling)."""
+    Round E removed the earlier bounded first-6-characters truncation this function fell back to
+    when no suffix rule applied: that fallback could silently equate two otherwise-UNRELATED words
+    that merely happen to share their first 6 characters (e.g. "generic"/"generalized" or
+    "several"/"severe" would both have truncated to the same 6-character prefix) -- a real,
+    generic false-positive risk, not merely a hypothetical one (see
+    tests/test_morphology_no_truncation_fallback.py's negative controls, built independently of any
+    blind evaluation set). When no suffix rule applies and the word is not one of the small,
+    explicitly-reviewed `_IRREGULAR_STEM_OVERRIDES` pairs (e.g. "exertional"/"exertion", a genuine
+    irregular derivational pair no plain suffix rule connects), this now simply returns the
+    normalized original token UNCHANGED -- never truncated. Any FUTURE irregular pair needing
+    normalization must be added to `_IRREGULAR_STEM_OVERRIDES` explicitly, with its own test, never
+    handled by reintroducing a blanket truncation fallback."""
     lowered = word
+    if lowered in _IRREGULAR_STEM_OVERRIDES:
+        return _IRREGULAR_STEM_OVERRIDES[lowered]
     for suffix, replacement in _SUFFIX_RULES:
         if not lowered.endswith(suffix):
             continue
@@ -116,7 +177,7 @@ def _stem(word: str) -> str:
         if suffix in ("ing", "ed"):
             stem = _reduce_doubled_consonant(stem)
         return stem
-    return lowered[:6] if len(lowered) > 6 else lowered
+    return lowered
 
 
 def _content_words(text: str) -> Set[str]:
@@ -130,8 +191,31 @@ def content_word_count(text: str) -> int:
     return len(_content_words(text))
 
 
+def content_words(text: str) -> Set[str]:
+    """Public wrapper around `_content_words()` -- differential.py uses the actual word SET (not
+    just the count) to check whether a phrase reduces to nothing but generic physiologic-severity
+    markers (see `_specificity_multiplier()` there, Round E's defect C)."""
+    return _content_words(text)
+
+
 def _strip_negated_spans(text: str) -> str:
     return _NEGATED_SPAN_PATTERN.sub(" ", text)
+
+
+def _exact_phrase_present(feature_lower: str, finding_lower: str) -> bool:
+    """Word-boundary-safe version of a plain substring check. A naive `feature_lower in
+    finding_lower` check is unsafe for a SHORT feature/alias (e.g. the disease-name alias "PE" for
+    pulmonary_embolism, or "MI" for acute_coronary_syndrome): as a raw substring, "pe" silently
+    matches inside completely unrelated words like "period" or "experience", and "mi" matches
+    inside "family" or "time" -- a real, general false-positive risk for every short clinical
+    abbreviation in the knowledge base (see tests/test_feature_match_generic_word_collision.py),
+    not a hypothetical one (this is exactly how "PE" matched a social-history mention of a late
+    "period" and hijacked a reproductive-age-emergency case's candidate pool during Round E
+    development). `\\b` is Unicode-aware by default for `str` patterns in Python 3, so this stays
+    correct for Korean/Japanese multi-character phrases too. A multi-word phrase like "one-sided
+    headache" is unaffected -- the boundary only anchors the two ends of the whole phrase, any
+    internal punctuation/spacing is matched literally exactly as before."""
+    return re.search(rf"\b{re.escape(feature_lower)}\b", finding_lower) is not None
 
 
 def feature_present(feature: str, findings_text: List[str], scrub_negated_spans: bool = False) -> bool:
@@ -142,6 +226,7 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
     "denies chest pain"), so scrubbing them would erase the very text being matched against."""
     feature_content = _content_words(feature)
     feature_lower = feature.lower()
+    distinguishing = _distinguishing_tokens(feature_content)
     for finding in findings_text:
         finding_lower = _strip_negated_spans(finding.lower()) if scrub_negated_spans else finding.lower()
         # Only the feature-contained-in-finding direction is a safe substring shortcut (a longer
@@ -151,11 +236,32 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
         # complaint text "headache" is trivially a substring of almost any longer feature phrase
         # that happens to contain that word (e.g. "worst headache of life"), which would falsely
         # match every such feature regardless of relevance -- so it is deliberately not checked.
-        if feature_lower in finding_lower:
+        # This EXACT tier is unconditional (never gated below) -- the whole literal phrase text
+        # being present, ON A WORD BOUNDARY (see `_exact_phrase_present`), is inherently safe
+        # regardless of which of its words are "relational".
+        if _exact_phrase_present(feature_lower, finding_lower):
             return True
         if not feature_content:
             continue
-        overlap = feature_content & _content_words(finding_lower)
+        finding_content = _content_words(finding_lower)
+        # Round E gate (feature-match specificity hardening): a phrase's distinguishing tokens
+        # (its content words minus low-information RELATIONAL connectors like "after"/"worse"/
+        # "with") must independently clear the SAME two-tier presence rule the full content-word
+        # set does below -- otherwise generic relational words overlapping alone (e.g. "worse
+        # after meals" satisfied by "...worse when I breathe...", sharing only "worse"; "chest
+        # pain after trauma" satisfied by "chest pain after a long work shift", sharing only
+        # "after"/"chest") could clear the overlap-ratio check on relational words alone, with the
+        # phrase's real distinguishing concept ("meals", "trauma") never actually present. Purely
+        # ADDITIVE -- never loosens matching, only narrows it further; skipped only when a phrase
+        # has no distinguishing tokens left at all (rare), since no meaningful gate could apply.
+        if distinguishing:
+            distinguishing_overlap = distinguishing & finding_content
+            if len(distinguishing) <= 2:
+                if distinguishing_overlap != distinguishing:
+                    continue
+            elif len(distinguishing_overlap) / len(distinguishing) < _OVERLAP_RATIO_THRESHOLD:
+                continue
+        overlap = feature_content & finding_content
         if len(feature_content) <= 2:
             if overlap == feature_content:
                 return True
