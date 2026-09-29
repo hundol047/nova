@@ -1,0 +1,78 @@
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+Blind15_01_SharedOfficeColdGoingAroundcommon                YES       3       0          NO             
+Blind15_02_PainfulUrinationCollegeStudentcommon                YES       35      0          NO             
+Blind15_03_FoodTruckStomachBug  common                YES       23      0          NO             
+Blind15_04_AllDayScreenTimeHeadachecommon                NO        28      0          NO             
+Blind15_05_CrushingPressureShovelingSnowcritical              YES       16      0          NO             
+Blind15_06_SuddenFaceDropAndArmWeaknesscritical              YES       27      0          NO             
+Blind15_07_InstantExplosiveHeadachePoolcritical              YES       20      0          NO             
+Blind15_08_NursingHomeFeverAndConfusioncritical              YES       30      0          NO             
+Blind15_09_SuddenBreathlessAfterCastRemovalcritical              NO        27      0          YES            
+Blind15_10_DormRoommateFeverNeckPaincritical              NO        31      0          YES            
+Blind15_11_ThroatClosingAfterShrimpDinnercritical              YES       30      0          NO             
+Blind15_12_TearingBetweenShoulderBladesCalledItAPulledMuscledangerous_mimic       YES       26      0          NO             
+Blind15_13_SkateboardFallThoughtItWasJustHisAsthmadangerous_mimic       NO        29      0          YES            
+Blind15_14_DarkStoolsBlamedOnBeetSaladdangerous_mimic       YES       7       0          NO             
+Blind15_15_SorePecsAfterBenchPressDaybenign_mimic          NO        32      0          NO             
+Blind15_16_WorldSpinsFlippingPillowOverbenign_mimic          NO        17      0          NO             
+Blind15_17_HeartPoundingBeforeBoardExambenign_mimic          NO        18      0          NO             
+Blind15_18_BurningChestAfterLateNightPizzabenign_mimic          NO        20      0          NO             
+Blind15_19_LayLanguageWetLungInfectionunseen_lay_phrasing   YES       30      0          NO             
+Blind15_20_LayLanguageSugarCrisisunseen_lay_phrasing   NO        23      0          YES            
+Blind15_21_UpperBellyPainRadiatingToBackLipaseConfirmsobjective_evidence    YES       25      0          NO             
+Blind15_22_FlutteryHeartECGConfirmsIrregularRhythmobjective_evidence    YES       30      0          NO             
+Blind15_23_SameStoneAgainRightFlankrisk_context_heavy    YES       23      0          NO             
+Blind15_24_InsulinPenDoubleDoseConfusionmedication_risk       YES       31      0          NO             
+Blind15_25_LightheadedOnStandingEverythingElseNormalnegative_evidence_heavyYES       22      0          NO             
+Blind15_26_ClumsyAndOffBalanceNothingElseObviousatypical_presentation NO        18      0          YES            
+Blind15_27_GrandpaJustNotEatingOrTalkingMuchelderly               YES       34      0          NO             
+Blind15_28_KidWheezingAfterRecesspediatric             NO        27      0          NO             
+Blind15_29_PregnantWithSuddenBreathlessnesspregnancy             NO        27      0          YES            
+Blind15_30_BloodPressurePillsPlusPotassiumPillspolypharmacy          YES       24      0          NO             
+Blind15_31_CKDDiabetesHypertensionWithNewPalpitationsmultimorbidity        YES       19      0          NO             
+Blind15_32_KoreanMixedAppendicitismultilingual_korean   YES       35      0          NO             
+Blind15_33_KoreanMixedMigraine  multilingual_korean   NO        30      0          NO             
+Blind15_34_JapaneseMixedAsthmaExacerbationmultilingual_japanese NO        27      0          NO             
+Blind15_35_KoreanMixedPyelonephritisFeverFlankmixed_language        YES       20      0          NO             
+Blind15_36_VagueCrampyDiscomfortMissedPeriodreproductive_age_emergencyNO        21      0          YES            
+Blind15_37_SuddenGroinPainAfterGymClassreproductive_age_emergencyNO (not scored)20      0          NO             
+Blind15_38_MassivePEWithShockLikeVitalsspecific_vs_generic_severity_conflictYES       36      0          NO             
+Blind15_39_AnaphylaxisWithSepticLookingVitalsspecific_vs_generic_severity_conflictYES       23      0          NO             
+Blind15_40_DKAWithFeverLookingLikeSepsisspecific_vs_generic_severity_conflictNO        25      0          YES            
+Blind15_41_ChestBurnWorseAfterExerciseNotMealsfuzzy_phrase_collision_trapYES       19      0          NO             
+Blind15_42_SharpChestPainAfterArgumentNotTraumafuzzy_phrase_collision_trapYES       11      0          NO             
+Blind15_43_DizzyOnStandingNotABenignFaintfuzzy_phrase_collision_trapYES       18      0          NO             
+Blind15_44_LongTailGallbladderAttacklong_tail             NO (not scored)31      0          NO             
+Blind15_45_LongTailSwollenCalfNoInjurylong_tail             NO (not scored)23      0          NO             
+Blind15_46_LongTailLeftSidedBellyPainWithFeverlong_tail             NO (not scored)34      0          NO             
+Blind15_47_LongTailSuddenGroinPainTeenBoylong_tail             NO (not scored)28      0          NO             
+Blind15_48_CantPutItIntoWordsMalaiseunknown_ood           NO (not scored)20      0          NO             
+Blind15_49_OffTopicComplaintAboutTheWeatherunknown_ood           NO (not scored)20      0          NO             
+Blind15_50_VagueOutOfItTeenagerLabsRevealDKAretrieval_miss_trap   YES       31      0          NO             
+Blind15_51_VagueChestDiscomfortImagingRevealsDissectionretrieval_miss_trap   YES       26      0          NO             
+Blind15_52_StomachThenSideAmbiguousMigrationrouting_trap          NO        32      0          NO             
+Blind15_53_BackThenFlankAmbiguousFeverPainrouting_trap          YES       25      0          NO             
+Blind15_54_TextbookMigraineNotSAHover_testing_trap     YES       18      0          NO             
+Blind15_55_TextbookBronchitisNotPneumoniaover_testing_trap     NO        6       0          NO             
+Blind15_56_VagueEarlyBellyPainActuallyPerforationpremature_diagnosis_trapNO        29      0          YES            
+Blind15_57_VagueFluLikeStartActuallyDKApremature_diagnosis_trapNO        26      0          YES            
+Blind15_58_ComplexElderlyMultiSystemSepsisMustNotDawdlelate_diagnosis_trap   YES       24      0          NO             
+Blind15_59_NormalECGButHighRiskHistoryChestPainconflicting_evidence  YES       19      0          NO             
+Blind15_60_MinimalDetailBladderInfectionsparse_evidence       NO        20      0          NO             
+Blind15_61_StoodTooLongAtTheWeddingThenWentDownbenign_mimic          NO        22      0          NO             
+
+Blind v15 summary (61 cases, 54 scored, 26 critical)
+  Scored Diagnostic Accuracy:   59.3%  (excludes: Blind15_37_SuddenGroinPainAfterGymClass, Blind15_44_LongTailGallbladderAttack, Blind15_45_LongTailSwollenCalfNoInjury, Blind15_46_LongTailLeftSidedBellyPainWithFever, Blind15_47_LongTailSuddenGroinPainTeenBoy, Blind15_48_CantPutItIntoWordsMalaise, Blind15_49_OffTopicComplaintAboutTheWeather)
+  All-Case Diagnostic Accuracy: 52.5%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (safe handling of excluded cases: diagnosed, no critical miss)
+  Critical Diagnosis Recall:    61.5%
+  Critical Miss Rate:           38.5%
+  Average / Median Turns:       24.1 / 25.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        1.43 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        8.0 / 6.3 / 8.9
+  Utility Score Proxy:          0.130  (informal local metric, evaluation/scoring.py -- not an official competition score)
