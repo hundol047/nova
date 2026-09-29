@@ -93,14 +93,17 @@ def test_v5_chief_complaint_routing_benchmark_is_recorded():
         assert routing[key] == 100.0
 
 
-def test_current_release_pointer_matches_v5_artifact():
+def test_current_release_pointer_no_longer_points_to_v5():
+    # v6 (Round E) superseded v5 as the CURRENT_RELEASE.json target -- v5 remains a preserved,
+    # still-checked historical artifact (its own schema/content assertions above still run), but
+    # is no longer what the pointer resolves to. Mirrors how the v14/v13 blind-version tests
+    # updated their own "is current" assertion to "is now reference-only" once superseded.
     pointer = _load_pointer()
     data = _load_v5()
-    assert pointer["current_verification_schema"] == data["schema"]
-    assert pointer["verified_runtime_sha"] == data["verified_runtime_sha"]
-    assert pointer["current_blind_version"] == data["current_blind_version"]
+    assert pointer["current_verification_schema"] != data["schema"]
     referenced = _ROOT / pointer["current_verification_artifact"]
-    assert referenced.resolve() == _V5_PATH.resolve()
+    assert referenced.resolve() != _V5_PATH.resolve()
+    assert data["schema"] == "nova-verification-v5"  # v5's own content is still exactly itself
 
 
 def test_current_release_pointer_never_creates_a_self_referential_commit_chain():

@@ -1,13 +1,14 @@
 {
   "note": "Pointer file (spec: a single, unambiguous place to find the CURRENT verification artifact, so a reader never has to guess which SHA-suffixed local-release-*.json file in this directory is current). This file itself is always updated in the SAME commit as the verification artifact it points to -- never a separate follow-up.",
-  "current_verification_artifact": "artifacts/verification/local-release-202ed76-v5.json",
-  "current_verification_schema": "nova-verification-v5",
-  "verified_runtime_sha": "202ed76c4b9bf49fffc62f1ba42f316fcc9f9b9b",
-  "current_blind_version": "v14",
-  "current_blind_manifest": "evaluation/blind_v14_manifest.json",
+  "current_verification_artifact": "artifacts/verification/local-release-659c7dc-v6.json",
+  "current_verification_schema": "nova-verification-v6",
+  "verified_runtime_sha": "659c7dc6cdb484dc7dc351a39c52eea71a5b621f",
+  "current_blind_version": "v15",
+  "current_blind_manifest": "evaluation/blind_v15_manifest.json",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-202ed76-v5.json",
     "artifacts/verification/local-release-faa1701-v4.json",
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
-  "updated_utc": "2026-09-28T17:41:44Z"
+  "updated_utc": "2026-09-29T05:45:00Z"
 }
