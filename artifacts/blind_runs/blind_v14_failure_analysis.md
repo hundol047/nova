@@ -16,7 +16,16 @@ Blind v14 itself is never re-tuned against these findings -- any fix implied her
   dev-round-d regression suites all hit.
 - All-case accuracy: 73.2%. Zero malformed output, zero duplicate actions, 0% failed-to-diagnose.
 
-## The 4 critical misses
+## The 3 critical misses (plus one non-critical failure discussed below for its own architectural lesson)
+
+Corrected wording (Round E): the actual critical miss rate is **13.0% (3 of 23 critical cases)**,
+matching the headline number above -- exactly three cases below are true critical misses. A fourth
+case, `Blind14_36_JapaneseMixedAbdominalPain`, is discussed in its own subsection further down for
+what it reveals about multilingual routing, but its ground-truth diagnosis (appendicitis) is
+`dangerous: false`, so it is NOT one of the three critical misses and was never counted in the
+13.0% figure. This section heading previously read "The 4 critical misses," which incorrectly
+implied all four discussed failures were critical; that wording is corrected here without altering
+any Blind v14 result, score, or classification.
 
 ### Blind14_09_SharpChestPainAfterLongDrive (truth: pulmonary_embolism, got: GERD)
 

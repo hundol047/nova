@@ -19,6 +19,7 @@ from nova_agent.orchestrator import DoctorAgent
 from evaluation.cases import CASES
 from evaluation.generalization_cases_v2 import GENERALIZATION_CASES_V2
 from evaluation.generalization_dev_cases_round_d import GENERALIZATION_DEV_CASES_ROUND_D
+from evaluation.generalization_dev_cases_round_e import GENERALIZATION_DEV_CASES_ROUND_E
 from evaluation.generalization_stress_cases import GENERALIZATION_STRESS_CASES
 from evaluation.held_out_cases import HELD_OUT_CASES
 from evaluation.scoring import score_case
@@ -151,6 +152,12 @@ def main() -> None:
                               "taxonomy coverage, morphology normalization, specific-over-generic "
                               "routing precedence, and zero-evidence UNKNOWN_PRESENTATION "
                               "handling).")
+    parser.add_argument("--dev-round-e", action="store_true",
+                         help="Also run evaluation/generalization_dev_cases_round_e.py (a small "
+                              "DEVELOPMENT set, distinct wording from Blind v14, never Blind v15 -- "
+                              "probes Round E's five architectural fixes: feature-match "
+                              "specificity, context-aware critical safety, specific-vs-generic "
+                              "severity, multilingual routing, and morphology truncation removal).")
     parser.add_argument("--save-json", default=None,
                          help="Write each run set's compute_summary() output to this path (spec "
                               "section 25: a single generated source of truth for benchmark "
@@ -196,6 +203,15 @@ def main() -> None:
         print_case_table(dev_results)
         print_summary("Round D development set summary", dev_results)
         results_for_json["dev_round_d"] = compute_summary(dev_results)
+
+    if args.dev_round_e:
+        dev_e_results = run_all(GENERALIZATION_DEV_CASES_ROUND_E)
+        print("\n=== Round E development set (evaluation/generalization_dev_cases_round_e.py -- "
+              "distinct wording from Blind v14, never Blind v15; probes Round E's architectural "
+              "fixes) ===")
+        print_case_table(dev_e_results)
+        print_summary("Round E development set summary", dev_e_results)
+        results_for_json["dev_round_e"] = compute_summary(dev_e_results)
 
     if args.save_json:
         import json
