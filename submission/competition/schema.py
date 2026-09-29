@@ -41,9 +41,15 @@ class CompetitionObservation(BaseModel):
 
 
 class CompetitionAction(BaseModel):
-    """One turn's output back to the competition environment."""
+    """One turn's output back to the competition environment.
+
+    "INSUFFICIENT_INFORMATION" is this repo's OWN speculative addition, never confirmed by an
+    official N.O.V.A. 2026 schema -- competition/adapter.py's action_to_competition() only ever
+    emits it when NovaConfig.competition_supports_insufficient_information is explicitly set True
+    (default False), for a genuinely forced/zero-evidence diagnosis. Never invented as if it were
+    part of a real published contract; see that config field's own docstring."""
 
     case_id: str
-    action_type: Literal["ASK", "EXAM", "TEST", "DIAGNOSE"]
+    action_type: Literal["ASK", "EXAM", "TEST", "DIAGNOSE", "INSUFFICIENT_INFORMATION"]
     content: str
     metadata: Dict[str, Any] = Field(default_factory=dict)

@@ -119,6 +119,15 @@ class SafetyValidator:
                     # exists to prevent. A novel LLM-introduced diagnosis with no deterministic
                     # match at all gets an empty list here, same as "no evidence-based source yet".
                     candidate_sources=det_match.candidate_sources if det_match else [],
+                    # Round E: same reasoning as candidate_sources immediately above -- without
+                    # this, this method's own LLM-authored rebuild path silently reset
+                    # fallback_candidate to its pydantic default (False) for EVERY entry, breaking
+                    # both this method's own `llm_item.fallback_candidate` UNKNOWN_PRESENTATION
+                    # gate a few lines below AND orchestrator.py's forced-low-evidence-diagnosis
+                    # metadata, specifically whenever an LLM/mock provider call returned ANY
+                    # non-empty differential of its own (the pass-through `else` branch below never
+                    # had this gap -- only this reconstruction branch did).
+                    fallback_candidate=bool(det_match and det_match.fallback_candidate),
                 )
 
             ordered = sorted(by_id.values(), key=lambda d: d.rank)[:top_k]

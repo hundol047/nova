@@ -72,14 +72,37 @@ def observation_to_state(obs: CompetitionObservation, agent: DoctorAgent,
     return existing_state
 
 
-def action_to_competition(case_id: str, action: AgentAction, *, real_llm_verified: Optional[bool] = None) -> CompetitionAction:
+def action_to_competition(case_id: str, action: AgentAction, *, real_llm_verified: Optional[bool] = None,
+                           diagnosis_quality: Optional[Dict[str, bool]] = None) -> CompetitionAction:
+    """`diagnosis_quality` (Round E) is PatientState's own forced/zero-evidence flags (see that
+    class's field docstrings), only ever populated for a DIAGNOSE action. Always attached to
+    metadata as plain, inspectable booleans regardless of config -- a competition-readiness harness
+    can always tell "was this diagnosis forced/evidence-free" from the metadata alone, independent
+    of whether the wire action_type itself changes. The wire action_type ONLY changes to
+    "INSUFFICIENT_INFORMATION" when NovaConfig.competition_supports_insufficient_information is
+    explicitly True (default False, since no official schema confirms this label exists) AND the
+    diagnosis was genuinely forced/zero-evidence -- an ordinary, evidence-backed DIAGNOSE is never
+    relabeled, and with the flag off the action_type is always the plain "DIAGNOSE" the existing
+    forced-final-diagnosis contract already guarantees."""
     metadata = {"key": action.key, "rationale": action.rationale}
     if real_llm_verified is not None:
         # Only ever attached to a DIAGNOSE action (see NovaCompetitionAgent.act() below) -- lets a
         # competition-readiness harness detect "this case's final answer came from a real LLM at
         # least once" programmatically, not just by grepping a stderr log line.
         metadata["real_llm_verified"] = real_llm_verified
-    return CompetitionAction(case_id=case_id, action_type=action.action_type, content=action.content,
+
+    action_type = action.action_type
+    if diagnosis_quality is not None:
+        metadata["diagnosis_quality"] = diagnosis_quality
+        is_forced_or_evidence_free = (
+            diagnosis_quality.get("zero_evidence_at_diagnosis")
+            or diagnosis_quality.get("fallback_candidate_selected")
+        )
+        if (action_type == "DIAGNOSE" and is_forced_or_evidence_free
+                and get_config().competition_supports_insufficient_information):
+            action_type = "INSUFFICIENT_INFORMATION"
+
+    return CompetitionAction(case_id=case_id, action_type=action_type, content=action.content,
                               metadata=metadata)
 
 
@@ -151,4 +174,10 @@ class NovaCompetitionAgent:
                         file=sys.stderr,
                     )
 
-        return action_to_competition(obs.case_id, action, real_llm_verified=real_llm_verified).model_dump()
+        # Read `pending_diagnosis_quality` (staged by decide() this same call), NOT the
+        # `final_diagnosis_*` fields -- those are only populated once observe() later records this
+        # DIAGNOSE action (on the NEXT act() call, when the environment's reply arrives), so they
+        # would still be stale/unset here.
+        diagnosis_quality = dict(state.pending_diagnosis_quality) if action.action_type == "DIAGNOSE" else None
+        return action_to_competition(obs.case_id, action, real_llm_verified=real_llm_verified,
+                                      diagnosis_quality=diagnosis_quality).model_dump()

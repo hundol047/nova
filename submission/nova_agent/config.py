@@ -123,6 +123,22 @@ class NovaConfig:
         )
     )
 
+    # Round E: whether the (still-unofficial, see competition/schema.py's own PLACEHOLDER
+    # disclosure) competition protocol accepts an explicit "we don't know" final result distinct
+    # from an ordinary DIAGNOSE. No official N.O.V.A. 2026 schema confirms this either way at
+    # implementation time, so this defaults to False (obey the existing forced-final-diagnosis
+    # contract: a DIAGNOSE is always eventually produced, per stop_policy.py's own hard turn-limit
+    # guarantee) -- never assumed/invented. competition/adapter.py's action_to_competition() only
+    # ever emits action_type="INSUFFICIENT_INFORMATION" (competition/schema.py's own, equally
+    # optional, addition to the wire enum) when this is explicitly set True AND the diagnosis being
+    # returned is genuinely a forced/zero-evidence one (PatientState.final_diagnosis_zero_evidence_
+    # at_diagnosis or .final_diagnosis_fallback_candidate_selected) -- never for an ordinary,
+    # evidence-backed diagnosis. Regardless of this flag, the underlying reasoning/turn-count
+    # behavior is completely unchanged; only the WIRE label differs.
+    competition_supports_insufficient_information: bool = field(
+        default_factory=lambda: _bool_env("NOVA_COMPETITION_SUPPORTS_INSUFFICIENT_INFO", False)
+    )
+
     # Three DISTINCT stage sizes of the competition retrieval pipeline (nova_agent/retrieval_
     # pipeline.py) -- deliberately not one shared number, since each stage has a different job:
     #   retrieval_top_k  (Stage 1, recommended 100-200): how many catalog hits high-recall

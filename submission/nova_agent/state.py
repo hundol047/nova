@@ -175,6 +175,28 @@ class PatientState(BaseModel):
     final_diagnosis: Optional[str] = None
     final_diagnosis_rationale: Optional[str] = None
 
+    # Round E (defect: forced/low-evidence diagnosis must never look like a confidently
+    # evidence-supported NORMAL_DIAGNOSIS). Distinct, independently-readable flags recorded once a
+    # DIAGNOSE action is actually taken (see record_diagnose() below) -- None until then, never a
+    # default of False, so "not yet diagnosed" is never confused with "diagnosed normally":
+    #   - forced_due_to_turn_limit: StopPolicy's hard remaining-turns fallback fired (StopDecision.
+    #     forced) -- the case would not otherwise have been ready to diagnose yet.
+    #   - zero_evidence_at_diagnosis: the diagnosed item was differential.py's own
+    #     fallback_candidate (candidate_generator.py's whole-catalog zero-evidence fallback) --
+    #     literally nothing matched anything; this is an UNKNOWN_PRESENTATION forced through.
+    #   - fallback_candidate_selected: the diagnosed item's OWN candidate_sources were entirely
+    #     evidence-free sources (safety_candidate/contextual_safety/zero_evidence_fallback/
+    #     ontology_broadening/ontology_retrieval) -- broader than zero_evidence_at_diagnosis (which
+    #     requires the WHOLE differential to be the catalog fallback): this can be true even when
+    #     other, better-evidenced candidates existed elsewhere in the differential.
+    # Populated from orchestrator.DoctorAgent.decide()'s own already-computed StopDecision/
+    # differential via `pending_diagnosis_quality` (transient, cleared once consumed) rather than
+    # widening decide()'s/observe()'s public signatures.
+    final_diagnosis_forced_due_to_turn_limit: Optional[bool] = None
+    final_diagnosis_zero_evidence_at_diagnosis: Optional[bool] = None
+    final_diagnosis_fallback_candidate_selected: Optional[bool] = None
+    pending_diagnosis_quality: Optional[Dict[str, bool]] = None
+
     # Wall-clock case start (spec: graceful degradation as a per-case time budget runs out).
     # time.time()-based (not perf_counter) since it must be meaningful even if PatientState is
     # constructed and later resumed across separate calls, not just within one process lifetime.
@@ -297,6 +319,15 @@ class PatientState(BaseModel):
         self.turn_count += 1
         self.final_diagnosis = diagnosis
         self.final_diagnosis_rationale = rationale
+        # Consume whatever orchestrator.DoctorAgent.decide() staged in `pending_diagnosis_quality`
+        # (see this class's own field docstrings) -- defaults to all-False only when decide() never
+        # ran first (e.g. a test constructing state directly), never silently left as None once an
+        # actual DIAGNOSE is recorded.
+        quality = self.pending_diagnosis_quality or {}
+        self.final_diagnosis_forced_due_to_turn_limit = quality.get("forced_due_to_turn_limit", False)
+        self.final_diagnosis_zero_evidence_at_diagnosis = quality.get("zero_evidence_at_diagnosis", False)
+        self.final_diagnosis_fallback_candidate_selected = quality.get("fallback_candidate_selected", False)
+        self.pending_diagnosis_quality = None
         turn = ConversationTurn(turn=self.turn_count, action_type="DIAGNOSE", content=diagnosis, result=rationale)
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)

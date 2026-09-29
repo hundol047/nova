@@ -30,6 +30,13 @@ from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG
 
 log = logging.getLogger("nova_agent.orchestrator")
 
+# Round E: candidate_sources a diagnosis can be reached through with NO real diagnostic evidence
+# of its own (mirrors candidate_generator.py's own `trimmable_only_sources` and safety.py's
+# `_NO_EVIDENCE_ONLY_SOURCES` -- kept in sync with those, never a separate list that could drift).
+# Used only to compute PatientState.pending_diagnosis_quality's `fallback_candidate_selected` flag.
+_NO_REAL_EVIDENCE_SOURCES = {"safety_candidate", "contextual_safety", "zero_evidence_fallback",
+                             "ontology_broadening", "ontology_retrieval"}
+
 
 class DoctorAgent:
     def __init__(self, llm_client: Optional[BaseLLMClient] = None, lang: str = "en") -> None:
@@ -136,6 +143,25 @@ class DoctorAgent:
                                       urgency=d.urgency, dangerous_if_missed=d.dangerous_if_missed)
                 for d in result.differential
             ]
+
+            # Round E: stage forced/low-evidence diagnosis metadata for PatientState.
+            # record_diagnose() to pick up (see that field's own docstring) -- computed here, not
+            # inside record_diagnose() itself, because only decide() has stop_decision and the
+            # full DifferentialItem (with fallback_candidate/candidate_sources) in scope; observe()
+            # only ever sees the already-decided action/result text.
+            if result.action.action_type == "DIAGNOSE":
+                diagnosed_item = next(
+                    (d for d in result.differential if d.diagnosis_id == result.action.key),
+                    result.differential[0] if result.differential else None,
+                )
+                state.pending_diagnosis_quality = {
+                    "forced_due_to_turn_limit": bool(stop_decision.forced),
+                    "zero_evidence_at_diagnosis": bool(diagnosed_item and diagnosed_item.fallback_candidate),
+                    "fallback_candidate_selected": bool(
+                        diagnosed_item and diagnosed_item.candidate_sources
+                        and set(diagnosed_item.candidate_sources).issubset(_NO_REAL_EVIDENCE_SOURCES)
+                    ),
+                }
             return result.action, llm_output, result.differential
         except Exception:  # noqa: BLE001 - a single bad turn must never kill the whole case/run
             log.exception("decide() failed for case=%s turn=%s; using safe fallback.", state.case_id, state.turn_count)
