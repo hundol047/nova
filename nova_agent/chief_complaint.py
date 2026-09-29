@@ -47,6 +47,7 @@ from dataclasses import dataclass, field
 from typing import List, Literal, Tuple
 
 from nova_agent.matching import _content_words
+from nova_agent.multilingual_concepts import apply_multilingual_aliases
 
 MatchType = Literal["exact", "alias", "fuzzy", "none"]
 Confidence = Literal["HIGH", "MEDIUM", "LOW"]
@@ -244,6 +245,12 @@ CONCEPT_ALIASES = {
     "hemoptysis": ["coughing blood", "spitting blood", "blood in my cough", "blood in my spit"],
     "seizure": ["convulsing", "shaking uncontrollably", "had a fit"],
 }
+
+# Round E (defect D): merges nova_agent/multilingual_concepts.py's bounded Korean/Japanese phrase
+# table into CONCEPT_ALIASES BEFORE CONCEPT_PHRASES is built -- every downstream consumer (route(),
+# extract_presentation(), specificity precedence) sees a multilingual alias exactly the way it sees
+# any English one, through the same exact/alias/fuzzy machinery, with zero new code paths.
+CONCEPT_ALIASES = apply_multilingual_aliases(CONCEPT_ALIASES)
 
 CONCEPT_PHRASES = {tag: CANONICAL_TERMS[tag] + CONCEPT_ALIASES.get(tag, []) for tag in CANONICAL_TERMS}
 _CANONICAL_SET = {tag: {t.lower() for t in terms} for tag, terms in CANONICAL_TERMS.items()}
