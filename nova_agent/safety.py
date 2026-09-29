@@ -45,12 +45,14 @@ class SafetyLayer:
         # along as part of the fixed cross-cutting safety net every candidate pool now always
         # carries (candidate_generator.py), nor because it is only present via the whole-catalog
         # zero-evidence fallback (candidate_generator.py's "zero_evidence_fallback" source -- see
-        # that module's own docstring). Without this distinction, every one of that small fixed
-        # list -- or every diagnosis in the catalog on a genuinely unmatched presentation -- would
+        # that module's own docstring), nor because it was only contextually activated
+        # (nova_agent/contextual_safety.py's "contextual_safety" source -- a demographic/context
+        # match alone, e.g. reproductive-age + abdominal symptoms, is not itself red-flag SYMPTOM
+        # evidence). Without this distinction, every one of these small, evidence-free sources would
         # always satisfy this OR-condition, defeating this layer's own stated purpose ("never a
         # blanket test-everything-dangerous reflex") and measurably inflating turn counts by
         # keeping irrelevant diagnoses "actively flagged" purely because they exist in the pool.
-        _NO_EVIDENCE_ONLY_SOURCES = ({"safety_candidate"}, {"zero_evidence_fallback"})
+        _NO_EVIDENCE_ONLY_SOURCES = ({"safety_candidate"}, {"zero_evidence_fallback"}, {"contextual_safety"})
         differential_ids = {d.diagnosis_id for d in differential
                              if set(d.candidate_sources) not in _NO_EVIDENCE_ONLY_SOURCES}
         findings_text = state.all_findings_text()

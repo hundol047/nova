@@ -63,6 +63,27 @@ _MULTI_ORGAN_DYSFUNCTION_PHRASES = [
     "thrombocytopenia", "elevated bilirubin", "liver dysfunction", "oliguria",
 ]
 
+# Round E (defect C: specific diagnostic evidence losing to generic physiologic severity): the
+# vital-sign/physiologic-derangement WORDS this module's own thresholds above describe (hypotension,
+# hypoxemia, marked tachycardia/tachypnea, fever) are shared, by definition, across dozens of
+# dangerous diagnoses' own `typical_features` lists -- they mark a PATIENT as sick, never identify
+# WHICH disease is present. differential.py's own docstring/module comment already establishes this
+# principle for `severity_score()` itself (never folded into any one diagnosis's score directly),
+# but a bare single-word typical_feature phrase like sepsis's "hypotension" or "tachycardia" could
+# still reach the SAME diagnostic-identity role through plain word-overlap matching, each counting
+# as full-weight disease-specific evidence via `_specificity_multiplier()`'s single-word floor --
+# exactly the "generic severity outscores real disease-specific evidence" failure mode (confirmed:
+# sepsis's typical_features 'tachycardia'+'hypotension'+'tachypnea' outscored anaphylaxis's own
+# 'wheeze'+'hypotension' for a textbook anaphylaxis presentation, purely by matching MORE generic
+# severity words). Exported for differential.py's `_specificity_multiplier()` to apply a reduced
+# (never zero -- still real, if weak, corroborating signal) weight to a typical_feature phrase that
+# reduces to nothing but one of these generic markers.
+GENERIC_PHYSIOLOGIC_SEVERITY_WORDS = {
+    "hypotension", "hypotensive", "tachycardia", "tachycardic", "bradycardia", "bradycardic",
+    "tachypnea", "tachypneic", "bradypnea", "hypoxia", "hypoxemia", "hypoxemic", "fever", "febrile",
+    "hyperthermia", "hypothermia", "shock",
+}
+
 
 def extract_lactate_mmol_l(lactate_result_text: Optional[str]) -> Optional[float]:
     """Parses PatientState.laboratory_tests.get("lactate") into a mmol/L value. None if no lactate

@@ -24,6 +24,7 @@ from typing import Dict, List, Literal, Optional
 
 from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES, related_tags
 from nova_agent.clinical_presentation import ClinicalPresentation
+from nova_agent.contextual_safety import contextually_activated_diagnosis_ids
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
     HYPOGLYCEMIA_THRESHOLD_MG_DL,
@@ -56,7 +57,8 @@ _LAB_TO_DIAGNOSES = _build_lab_to_diagnoses_index()
 
 CandidateSource = Literal["symptom_match", "risk_match", "medication_match", "history_match",
                            "imaging_match", "objective_finding", "safety_candidate",
-                           "ontology_broadening", "ontology_retrieval", "zero_evidence_fallback"]
+                           "ontology_broadening", "ontology_retrieval", "zero_evidence_fallback",
+                           "contextual_safety"]
 
 # Tier-2 structured concepts carry real curated typical_features but no KB-depth discriminating
 # questions of their own; this bounds how many of those features become generic ASK candidates
@@ -431,6 +433,20 @@ def generate_candidates(presentation: ClinicalPresentation,
         if entry is not None:
             _add(pool, entry, "safety_candidate")
 
+    # 4b. contextual_safety (Round E, defect B) -- a small, NARROW, contextually-gated activation
+    #     for a dangerous diagnosis that does NOT belong in the always-on CROSS_CUTTING_DANGEROUS_
+    #     DIAGNOSES list (that would blanket-inflate every case's pool regardless of relevance) but
+    #     still needs a path into the pool for an atypical/vague presentation that never generates
+    #     its own symptom_match -- e.g. ectopic pregnancy for a reproductive-age patient with
+    #     abdominal/pelvic symptoms or unexplained syncope/bleeding. See
+    #     nova_agent/contextual_safety.py's own module docstring for the full rationale; activation
+    #     is additive only (never displaces anything) and never "keeps forever" -- ordinary scoring
+    #     and resolution.py's existing is_resolved() logic can still rank it down or resolve it out.
+    for diagnosis_id in contextually_activated_diagnosis_ids(presentation):
+        entry = disease_by_id(diagnosis_id)
+        if entry is not None:
+            _add(pool, entry, "contextual_safety")
+
     # 5. ontology_broadening (OPT-IN, default off) -- thin open-world supplement of Tier-2 concepts
     #    the closed KB doesn't contain. Runs AFTER the safety net and BEFORE trimming so an
     #    ontology-only entry is treated exactly like a zero-KB-evidence safety entry: trimmable,
@@ -468,7 +484,7 @@ def generate_candidates(presentation: ClinicalPresentation,
     # they never displace an evidenced KB candidate (or a must-not-miss safety_candidate) from the
     # size budget -- a broad retrieval hit can add a genuinely new long-tail possibility, but it can
     # never crowd out an existing Tier-1 candidate or must-not-miss diagnosis.
-    trimmable_only_sources = {"safety_candidate", "ontology_broadening", "ontology_retrieval"}
+    trimmable_only_sources = {"safety_candidate", "contextual_safety", "ontology_broadening", "ontology_retrieval"}
     protected = [c for c in candidates if not set(c.sources).issubset(trimmable_only_sources)]
     trimmable = [c for c in candidates if c.id not in {p.id for p in protected}]
     keep_count = max(0, target_size - len(protected))
@@ -478,10 +494,12 @@ def generate_candidates(presentation: ClinicalPresentation,
     # evidence-based trim above deliberately does NOT blanket-protect every `dangerous: true`
     # candidate (an earlier attempt at that starved well-evidenced non-dangerous diagnoses -- see
     # the comment above), but that means a `dangerous: true` entry reached only via the fixed,
-    # SMALL, bounded safety net (CROSS_CUTTING_DANGEROUS_DIAGNOSES, ~8 ids) can still be cut to
-    # ZERO when `protected` alone already fills the whole budget -- exactly the "candidate present
-    # then silently dropped" failure this pool exists to prevent. Deliberately restricted to
-    # `safety_candidate`-sourced entries only (never ontology_broadening/ontology_retrieval, which
+    # SMALL, bounded safety net (CROSS_CUTTING_DANGEROUS_DIAGNOSES, ~8 ids) OR the equally small,
+    # narrowly-gated `contextual_safety` activations (nova_agent/contextual_safety.py) can still be
+    # cut to ZERO when `protected` alone already fills the whole budget -- exactly the "candidate
+    # present then silently dropped" failure this pool exists to prevent. Deliberately restricted to
+    # `safety_candidate`/`contextual_safety`-sourced entries only (never ontology_broadening/
+    # ontology_retrieval, which
     # can surface an open-ended, potentially large number of dangerous concepts of their own --
     # those already have their OWN, separate protection one stage earlier, in
     # retrieval_pipeline.lightweight_rerank's Stage 3 reinjection, before they ever reach this
@@ -493,7 +511,8 @@ def generate_candidates(presentation: ClinicalPresentation,
     # for this).
     result_ids = {c.id for c in result}
     dangerous_missing = [c for c in trimmable[keep_count:]
-                          if "safety_candidate" in c.sources and c.entry.get("dangerous") and c.id not in result_ids]
+                          if ("safety_candidate" in c.sources or "contextual_safety" in c.sources)
+                          and c.entry.get("dangerous") and c.id not in result_ids]
     if dangerous_missing:
         swappable = [c for c in trimmable[:keep_count] if not c.entry.get("dangerous")]
         for missing in dangerous_missing:

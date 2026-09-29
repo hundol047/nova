@@ -27,12 +27,17 @@ from nova_agent.glucose_evidence import (
 from nova_agent.matching import (
     FEATURE_ALIASES,
     content_word_count,
+    content_words,
     feature_denied,
     feature_present,
     feature_present_with_aliases,
 )
 from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding, normalize_objective_evidence
-from nova_agent.severity_evidence import ELEVATED_LACTATE_MMOL_L, extract_lactate_mmol_l
+from nova_agent.severity_evidence import (
+    ELEVATED_LACTATE_MMOL_L,
+    GENERIC_PHYSIOLOGIC_SEVERITY_WORDS,
+    extract_lactate_mmol_l,
+)
 from nova_agent.state import DifferentialSnapshot, PatientState
 
 ConfidenceBand = Literal["LOW", "MEDIUM", "HIGH"]
@@ -65,6 +70,14 @@ _present_with_aliases = feature_present_with_aliases
 
 _SPECIFICITY_STEP = 0.25
 _SPECIFICITY_CAP = 2.0
+# Round E (defect C): a typical_feature phrase that reduces to NOTHING but generic physiologic-
+# severity markers (hypotension, tachycardia, tachypnea, fever, ...) is real but weak, non-
+# decisive corroborating signal -- never full disease-identifying weight. Deliberately > 0 (spec:
+# generic severity may still keep a dangerous alternative active / raise urgency, it must simply
+# never by itself let one dangerous diagnosis outrank another that has genuinely disease-specific
+# support) and deliberately << 1.0 so a disease relying ONLY on stacked generic-severity matches
+# can never outscore a competitor with real disease-specific findings.
+_GENERIC_SEVERITY_MULTIPLIER = 0.3
 
 
 def _specificity_multiplier(phrase: str) -> float:
@@ -78,7 +91,18 @@ def _specificity_multiplier(phrase: str) -> float:
     particular disease id or evaluation case. Capped so no single feature can dominate a disease's
     whole score, and floored at the original flat FEATURE_WEIGHT for a single-word phrase (this
     change only ever ADDS weight for a longer, more specific phrase, never removes any for the
-    previously-flat case)."""
+    previously-flat case).
+
+    EXCEPT: a phrase whose content words are ENTIRELY generic physiologic-severity markers (e.g.
+    sepsis's own bare "hypotension"/"tachycardia"/"tachypnea" typical_features) gets the separate,
+    much smaller `_GENERIC_SEVERITY_MULTIPLIER` instead -- these words mark a PATIENT as sick, not
+    WHICH disease is present (severity_evidence.py's own module docstring already establishes this
+    for severity_score() itself; this closes the same gap for plain typical_features word-overlap
+    matching, which could otherwise let several diseases' shared generic vital-sign wording alone
+    decide the ranking -- see tests/test_severity_not_diagnostic_identity.py)."""
+    content = content_words(phrase)
+    if content and content.issubset(GENERIC_PHYSIOLOGIC_SEVERITY_WORDS):
+        return _GENERIC_SEVERITY_MULTIPLIER
     word_count = max(1, content_word_count(phrase))
     return min(_SPECIFICITY_CAP, 1.0 + _SPECIFICITY_STEP * (word_count - 1))
 
