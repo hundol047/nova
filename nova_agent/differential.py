@@ -19,7 +19,7 @@ from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
 from nova_agent.chief_complaint import related_tags, route, expanded_tags
 from nova_agent.config import get_config
 from nova_agent.postural_evidence import postural_drop
-from nova_agent.evidence_interpreter import concept_present, objective_findings
+from nova_agent.evidence_interpreter import concept_present, objective_findings, current_symptom_findings, infection_with_circulatory_and_mental_change
 from nova_agent.electrolyte_evidence import extract_potassium_mmol_l, SEVERE_POTASSIUM_MMOL_L
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
@@ -230,7 +230,8 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
 
     for feature in entry.get("typical_features", []):
         max_possible += FEATURE_WEIGHT
-        score += _score_phrase(feature, FEATURE_WEIGHT, findings, negatives, supporting, contradictory, missing)
+        feature_sources = current_symptom_findings(feature, findings) if get_config().evidence_interpretation else findings
+        score += _score_phrase(feature, FEATURE_WEIGHT, feature_sources, negatives, supporting, contradictory, missing)
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
@@ -263,6 +264,13 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
         max_possible += CONFIRMATORY_WEIGHT
     score += _score_lactate(entry["id"], extract_lactate_mmol_l(state.laboratory_tests.get("lactate")),
                              supporting, missing)
+
+    if get_config().evidence_interpretation and entry["id"] == "sepsis":
+        max_possible += CONFIRMATORY_WEIGHT
+        combined = infection_with_circulatory_and_mental_change(state)
+        if combined:
+            score += CONFIRMATORY_WEIGHT
+            supporting.extend(combined)
 
     if get_config().evidence_interpretation and entry["id"] == "orthostatic_hypotension":
         drop = postural_drop(state.physical_examinations.get("vital_signs", ""))

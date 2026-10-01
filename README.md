@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 167 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 172 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -27,6 +27,43 @@ what is *not* yet verified.
 > Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
+
+## Evidence refinement — 2026-10-02 (Asia/Seoul)
+
+Latest executed **mock** results supersede the historical sections below. This revision fixes
+case-sensitive acronym labels hiding asthma history, migration evidence split across clauses,
+resolved nasal symptoms counted as present, and infection-compatible specimen results combined
+with recorded hypotension and mental-status change. The last pattern is bounded, uncalibrated
+support, not a SOFA score, confirmed sepsis diagnosis or a rule-out protocol.
+
+| Suite | Correct | Accuracy | Interpretation |
+|---|---:|---:|---|
+| V3 | 32/32 | 100.0% | Development; previous two errors used for fixes |
+| V4 | 34/34 | 100.0% | Development; previous bronchitis error used for fixes |
+| V5 | 44/44 | 100.0% | Development; previous appendicitis error used for fixes |
+| Existing scored development | 49/49 | 100.0% | Regression data; three other cases remain explicitly unscored |
+| V6 | 12/12 | 100.0% | Reused same-author synthetic validation |
+
+Critical-case recall is 100% in these local suites. V3/V4/V5 together have 110 cases;
+none of their original case text, labels or freeze manifests changed. The development
+accuracy is not an independent generalization claim or live clinical/model accuracy.
+All cases, costs, exclusions, and limits are recorded in `evaluation/accuracy_refinement_results.json`.
+Earlier reports are retained. Mean turns remain high: V3 30.9, V4 29.0, V5 29.6.
+
+172 tests pass, including failures for tentative cultures, isolated shock without infection,
+negated mental change, resolved symptoms and non-migratory location descriptions. Submission
+build/standalone smoke, source-sync, adversarial/stability, and README/leakage checks are executed.
+For formatting robustness, `evaluation.text_robustness` changes only capitalization and comma
+punctuation on the same development observations: all 110/110 formatting variants remain
+correct (V3 32/32, V4 34/34, V5 44/44). This is not new independent case evidence.
+
+```bash
+python -m evaluation.text_robustness --save-json formatting-report.json
+```
+
+Live competition accuracy remains **NOT VERIFIED** because no model endpoint/key is configured.
+The official protocol adapter remains unverified. Do not advertise the local 100% as a real
+competition or patient-population accuracy. See the existing live-verification commands below.
 
 ## Accuracy follow-up — 2026-10-01
 

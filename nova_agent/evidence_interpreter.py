@@ -65,6 +65,8 @@ ALIASES = {
  'suspected infection source': [r'\b(?:purulent|infected|infection)\b'],
 }
 
+# KB feature labels are case-insensitive (including acronym-bearing labels).
+ALIASES = {key.lower(): value for key, value in ALIASES.items()}
 
 @lru_cache(maxsize=4096)
 def positive_clauses(text: str) -> list[str]:
@@ -74,7 +76,7 @@ def positive_clauses(text: str) -> list[str]:
     for part in clauses:
         # 'not only' is not negation; absent physiological findings are handled separately.
         part=re.sub(r'\bnot only\b', '', part)
-        part=re.sub(r"\b(?:denies|denied|no|without|negative for|not present|not elevated|don.t have|doesn.t have|do not have|does not have)\b.*", '', part)
+        part=re.sub(r"\b(?:denies|denied|no|without|negative for|not present|not elevated|not(?!\s+hungry\b)|don.t have|doesn.t have|do not have|does not have)\b.*", '', part)
         if part.strip(): output.append(part.strip())
     return output
 
@@ -85,6 +87,15 @@ def _patterns(feature: str):
 
 
 def concept_present(feature: str, texts: list[str]) -> bool:
+    feature = feature.lower()
+    if feature == "periumbilical pain migrating to right lower quadrant":
+        # Bind locations to an explicit temporal/migration description within one observation.
+        for text in texts:
+            positive = " ; ".join(positive_clauses(text))
+            if (re.search(r"\b(?:start\w*|began|initially|migrat\w*|mov\w*)\b", positive)
+                and re.search(r"\b(?:umbilic\w*|navel|belly button)\b.{0,180}\b(?:right lower|lower right|rlq)\b", positive)):
+                return True
+        return False
     if feature == "epigastric pain radiating to back":
         combined = " ; ".join(clause for text in texts for clause in positive_clauses(text))
         if re.search(r"\bepigastric\b", combined) and re.search(r"\b(?:radiat\w*|boring)\b.{0,40}\bback\b", combined):
@@ -120,3 +131,43 @@ def objective_findings(entry: dict, state) -> list[str]:
     if re.search(r'\b(?:elevated|increased|high)\b.{0,20}\b(?:white|wbc|leukocyte|cell)',csf,re.I):
         out.append('CSF pleocytosis')
     return out
+
+
+def current_symptom_findings(feature: str, texts: list[str]) -> list[str]:
+    """Exclude explicitly resolved nasal symptoms from current-symptom evidence.
+
+    The original observations stay in state and LLM history. Historical viral illness
+    can still be a risk/trigger; this filter only applies to the current nasal feature.
+    """
+    if feature.lower() != "rhinorrhea":
+        return texts
+    return [clause for text in texts for clause in positive_clauses(text)
+            if not re.search(r"\b(?:resolved|cleared(?: up)?|subsided|gone|used to)\b", clause)]
+
+
+def infection_with_circulatory_and_mental_change(state) -> list[str]:
+    """Conservative source-bound support, not SOFA or confirmed sepsis criteria.
+
+    Requires infection-compatible objective evidence, actual recorded hypotension,
+    and mental-status change together. None of these alone receives this support.
+    Unknowns, pending cultures, and unrelated shock do not count as infection.
+    """
+    urine = state.laboratory_tests.get('urinalysis', '')
+    culture = state.laboratory_tests.get('blood_culture', '')
+    # Tentative, pending and contaminated interpretations are not objective support.
+    if re.search(r'\b(?:pending|possible|contaminat\w*|hypothetical)\b', urine, re.I):
+        urine = ''
+    if re.search(r'\b(?:pending|possible|contaminat\w*|hypothetical)\b', culture, re.I):
+        culture = ''
+    infection = (any(re.search(r"\bpositive\s+" + marker + r"\b", clause)
+                     for clause in positive_clauses(urine)
+                     for marker in ['nitrites?', 'leukocyte esterase'])
+                 or any(re.search(r"\b(?:positive|growth of|grew)\b", clause)
+                        for clause in positive_clauses(culture)))
+    low_pressure = bool(state.vital_signs and state.vital_signs[-1].sbp is not None
+                        and state.vital_signs[-1].sbp < 90)
+    mental = state.physical_examinations.get('mental_status_exam', '')
+    changed = concept_present('altered mental status', [mental])
+    if infection and low_pressure and changed:
+        return ['infection-compatible specimen result with recorded hypotension and mental-status change']
+    return []

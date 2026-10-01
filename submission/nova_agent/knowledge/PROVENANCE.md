@@ -64,3 +64,16 @@ a specific diagnosis; numerical multiples of the upper limit of normal are not i
 
 Nonspecific white blood cell/CRP evidence is weighted below disease-specific findings.
 The exact scoring weights are uncalibrated implementation choices, not guideline values.
+
+## Evidence parsing revision (2026-10-02 Asia/Seoul)
+
+Case-insensitive KB labels, clause-linked temporal migration and resolved nasal symptoms
+are language-processing fixes, not new diagnostic criteria. The combination of an
+infection-compatible urine/blood result, recorded SBP below 90 and observed mental-status
+change supplies bounded sepsis support. The weight 2.5 is uncalibrated. It is not a SOFA
+calculation, proof of causation, a confirmed sepsis/shock diagnosis or a rule-out criterion.
+Pending/possible/contaminated results and shock without infection evidence do not qualify.
+
+Reference checked for the distinction between infection and organ dysfunction:
+Sepsis-3 consensus, https://doi.org/10.1001/jama.2016.0287 . The implementation is
+a limited internal heuristic and does not reproduce the complete consensus definition.

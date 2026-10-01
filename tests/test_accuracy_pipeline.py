@@ -124,3 +124,48 @@ def test_wheezing_and_band_pressure_keep_their_clinical_concepts():
     assert feature_present('wheeze',['wheezing'])
     assert concept_present('bilateral band-like pressure',['tight band around my head'])
     assert concept_present('polydipsia',['unusually thirsty'])
+
+
+def test_acronym_case_does_not_hide_asthma_history():
+    assert concept_present('known asthma or COPD',['asthma since childhood'])
+    assert concept_present('KNOWN ASTHMA OR COPD',['history of COPD'])
+    assert not concept_present('known asthma or COPD',['no history of COPD'])
+
+
+def test_migration_binds_temporal_locations_across_clauses():
+    feature='periumbilical pain migrating to right lower quadrant'
+    assert concept_present(feature,['started near the navel, now in the lower right abdomen'])
+    assert not concept_present(feature,['no pain near the navel, no pain in the lower right'])
+    assert not concept_present(feature,['navel and lower right abdomen examined'])
+
+
+def test_resolved_nasal_symptom_is_history_not_current_uri_support():
+    s=PatientState(chief_complaint='cough')
+    s.record_ask('onset','onset?','after a cold; nasal congestion has resolved, cough persists')
+    assert 'rhinorrhea' not in _score_disease(disease_by_id('viral_uri'),s)[2]
+    assert 'recent viral illness' in _score_disease(disease_by_id('acute_bronchitis'),s)[2]
+
+
+def test_sepsis_pattern_requires_specimen_pressure_and_mental_evidence_together():
+    from nova_agent.evidence_interpreter import infection_with_circulatory_and_mental_change as pattern
+    s=PatientState()
+    s.record_exam('vital_signs','BP 84/52, HR 120, RR 25, Temp 39.0, SpO2 95%')
+    s.record_exam('mental_status_exam','confused')
+    s.record_test('blood_culture','pending')
+    assert not pattern(s)
+    s.record_test('urinalysis','positive nitrites')
+    assert pattern(s)
+    s.laboratory_tests['urinalysis']='not positive nitrites'
+    assert not pattern(s)
+    s.laboratory_tests['urinalysis']='positive nitrites'
+    s.physical_examinations['mental_status_exam']='not confused'
+    assert not pattern(s)
+
+
+def test_tentative_culture_does_not_supply_combined_infection_evidence():
+    from nova_agent.evidence_interpreter import infection_with_circulatory_and_mental_change as pattern
+    s=PatientState()
+    s.record_exam('vital_signs','BP 80/50, HR 120')
+    s.record_exam('mental_status_exam','confused')
+    s.record_test('blood_culture','possible positive, identification pending')
+    assert not pattern(s)
