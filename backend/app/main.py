@@ -33,7 +33,7 @@ from .services.results import unified_results
 from .services.vitals import assess as assess_vitals
 from .services.demo_seed import seed_demo_clinical_data
 from .services.idempotency import IdempotencyStore, IdempotencyConflict, IdempotencyTimeout
-from .services.nova_service import NovaService, NovaServiceError
+from .services.nova_service import NovaService, NovaServiceError, AGENT_VERSION, kb_fingerprint
 from .services.production_guard import ProductionConfigError, environment_label, is_production, validate_production_startup
 from .services.nova_observability import log_event as nova_log_event, get_nova_metrics
 from nova_agent.i18n import translate_diagnosis

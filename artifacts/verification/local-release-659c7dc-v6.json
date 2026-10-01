@@ -37,12 +37,30 @@
     "rerank_top_k": 25,
     "reasoning_top_k": 25,
     "competition_retrieval_enabled_default_for_competition_provider": true,
-    "baseline_recall_at_20": {"chief_complaint_only": 11.4, "chief_complaint_plus_history": 31.8},
-    "new_recall_at_20": {"chief_complaint_only": 56.8, "chief_complaint_plus_history": 75.0},
-    "baseline_recall_at_50": {"chief_complaint_only": 11.4, "chief_complaint_plus_history": 34.1},
-    "new_recall_at_50": {"chief_complaint_only": 61.4, "chief_complaint_plus_history": 93.2},
-    "baseline_recall_at_100": {"chief_complaint_only": 11.4, "chief_complaint_plus_history": 34.1},
-    "new_recall_at_100": {"chief_complaint_only": 61.4, "chief_complaint_plus_history": 93.2},
+    "baseline_recall_at_20": {
+      "chief_complaint_only": 11.4,
+      "chief_complaint_plus_history": 31.8
+    },
+    "new_recall_at_20": {
+      "chief_complaint_only": 56.8,
+      "chief_complaint_plus_history": 75.0
+    },
+    "baseline_recall_at_50": {
+      "chief_complaint_only": 11.4,
+      "chief_complaint_plus_history": 34.1
+    },
+    "new_recall_at_50": {
+      "chief_complaint_only": 61.4,
+      "chief_complaint_plus_history": 93.2
+    },
+    "baseline_recall_at_100": {
+      "chief_complaint_only": 11.4,
+      "chief_complaint_plus_history": 34.1
+    },
+    "new_recall_at_100": {
+      "chief_complaint_only": 61.4,
+      "chief_complaint_plus_history": 93.2
+    },
     "measurement_method": "scripts/benchmark_competition_retrieval.py against the 44 real synthetic evaluation cases' own chief_complaint/history text. Re-run this round, byte-identical to v3/v4/v5's artifacts -- this round did not touch the retrieval/rerank pipeline itself (spec: do not change retrieval/RRF unless the new matching integration requires it -- it did not).",
     "retrieval_latency_p50_ms": 8.06,
     "retrieval_latency_p95_ms": 10.49,
@@ -54,23 +72,58 @@
     "measurement_method": "scripts/audit_feature_match_specificity.py --known-reviewed-only (NEW this round) -- systematically scans every Tier-1 typical_feature/risk_factor/confirmatory_finding phrase for generic-word-dominated (\"no distinguishing content token\" or \"thin distinguishing-token ratio\") matching risk.",
     "result": "OK: no new feature-match specificity risks beyond the 3 already-reviewed phrase(s)",
     "known_reviewed_thin_phrases": [
-      ["gerd", "typical_features", "worse after meals"],
-      ["orthostatic_hypotension", "typical_features", "no palpitations before the episode"],
-      ["vasovagal_syncope", "typical_features", "no palpitations before the episode"]
+      [
+        "gerd",
+        "typical_features",
+        "worse after meals"
+      ],
+      [
+        "orthostatic_hypotension",
+        "typical_features",
+        "no palpitations before the episode"
+      ],
+      [
+        "vasovagal_syncope",
+        "typical_features",
+        "no palpitations before the episode"
+      ]
     ],
     "note": "Each reviewed phrase remains individually safe: matching.py's new distinguishing-content-token gate (feature_present()) still requires the phrase's own real distinguishing concept -- 'meal(s)'/'palpitat(ions)' -- to be present, not merely the relational/generic words it shares with unrelated text."
   },
   "morphology_normalization": {
     "measurement_method": "tests/test_morphology_no_truncation_fallback.py (12 tests, all passing).",
     "truncation_fallback_removed": true,
-    "irregular_stem_overrides": {"exertional": "exertion"},
+    "irregular_stem_overrides": {
+      "exertional": "exertion"
+    },
     "new_suffix_rule_this_round": "ish (e.g. feverish -> fever) -- a general, productive English adjectival suffix, added after removing the truncation fallback surfaced a real, narrow case (a plain 'fever' typical_feature failing to match 'felt a little feverish' text) that the old truncation shortcut used to cover by accident.",
-    "negative_controls_verified": ["generic/generalized", "several/severely", "continue/continent", "respond/responsible", "cardiac/cardiology", "abdomen/abdominal", "selfish/finish (does not falsely satisfy an unrelated 'self harm' phrase)"]
+    "negative_controls_verified": [
+      "generic/generalized",
+      "several/severely",
+      "continue/continent",
+      "respond/responsible",
+      "cardiac/cardiology",
+      "abdomen/abdominal",
+      "selfish/finish (does not falsely satisfy an unrelated 'self harm' phrase)"
+    ]
   },
   "short_alias_word_boundary_safety": {
     "measurement_method": "tests/test_feature_match_generic_word_collision.py (short-alias section, 7 new tests).",
     "defect_found_and_fixed_this_round": "feature_present()'s EXACT/substring tier used a naive `feature in finding` substring check, so a short KB disease-name alias (e.g. pulmonary_embolism's 'PE', acute_coronary_syndrome's 'MI') matched as a raw substring inside a completely unrelated word ('PE' inside 'period', 'MI' inside 'family') -- discovered via a development case where a reproductive-age patient's 'period is about seven weeks late' spuriously activated pulmonary embolism and hijacked the candidate pool. Fixed with a word-boundary-safe check (`_exact_phrase_present`); legitimate exact matches (e.g. 'known PE diagnosed last year') still work.",
-    "short_aliases_in_kb_checked": ["MI", "AMI", "ACS", "GERD", "afib", "svt", "DKA", "UTI", "CVA", "SAH", "BPPV", "PE"]
+    "short_aliases_in_kb_checked": [
+      "MI",
+      "AMI",
+      "ACS",
+      "GERD",
+      "afib",
+      "svt",
+      "DKA",
+      "UTI",
+      "CVA",
+      "SAH",
+      "BPPV",
+      "PE"
+    ]
   },
   "contextual_safety_activation": {
     "measurement_method": "tests/test_cross_cutting_critical_activation.py, tests/test_reproductive_emergency_safety.py (11 tests total).",
@@ -93,7 +146,11 @@
     "mechanism": "nova_agent/multilingual_concepts.py (NEW) -- a bounded table mapping Korean/Japanese phrases for the currently-supported clinical domains (pain, abdominal/chest pain, headache, weakness, numbness, dyspnea, fever, vomiting, diarrhea, GI bleeding, dizziness, syncope) to the SAME canonical chief_complaint.py concept tags English phrasing already routes to, merged into CONCEPT_ALIASES at import time.",
     "no_translation_api_used": true,
     "no_translation_api_used_note": "No Google Translate/external LLM translation/online translation API of any kind -- fully offline, dependency-light, per spec. No separate per-language reasoning logic: a matched phrase flows through the identical exact/alias/fuzzy matching machinery as English.",
-    "languages_supported": ["en", "ko", "ja"]
+    "languages_supported": [
+      "en",
+      "ko",
+      "ja"
+    ]
   },
   "forced_low_evidence_diagnosis_metadata": {
     "measurement_method": "tests/test_forced_low_evidence_diagnosis_metadata.py (7 tests), tests/test_discriminator_priority.py (3 tests).",
@@ -143,7 +200,7 @@
   "tests_skipped": 1,
   "tests_note": "Up from 596/1 (v5) -- 116 net new tests this round across 13 new/updated test files (11 new Round E test files, test_blind_v15_integrity.py, plus test_blind_v14_integrity.py's own current-version assertion updated to reflect v14 now being reference-only, mirroring how Round D updated v13's). `python -m pytest tests/`.",
   "unrelated_pre_existing_failure": {
-    "backend_tests": "3 failures in backend/tests/ (test_clinical_code_mapper.py, test_nova_auth.py, test_nova_lifecycle.py) via scripts/verify_local_release.py's own backend_tests check -- confirmed via `git diff --stat` that backend/ was not touched by any commit this round; these are pre-existing, environment-dependent (no Postgres/Redis reachable in this sandbox, consistent with postgres_available/redis_available both reporting NOT AVAILABLE in the same run), and entirely unrelated to nova_agent/ reasoning, which this round's mandate was scoped to. Not investigated or fixed here (out of scope), unchanged from v5's own disclosure."
+    "backend_tests": "CORRECTED after the first real GitHub Actions run of this branch (run 36802858254, job production-backend): the 3 backend/tests failures this artifact originally attributed to 'environment-dependent, no Postgres/Redis' were NOT environmental -- they reproduce locally and were real bugs unrelated to nova_agent/ reasoning: (1) backend/app/main.py used AGENT_VERSION and kb_fingerprint without importing them (NameError in the NOVA case-close endpoint, 2 tests); (2) backend/app/services/clinical_code_mapper.py had no LOINC/display rows for lab.lipase and lab.urinalysis_infection (1 test). Fixed in a follow-up commit touching only backend/; backend tests now 335 passed / 0 failed. No nova_agent/, competition/ or submission/ file changed, so verified_runtime_sha and the frozen Blind v15 result are unaffected."
   },
   "generalization_hardening_this_round": {
     "summary": "Audited (never tuned directly against) Blind v14's own critical misses and Round D's own remaining architectural blind spots at an abstract architectural-failure-category level and fixed five root-cause defect classes generically.",
@@ -158,12 +215,18 @@
       "safety_validator.py: fixed a real, previously-undiscovered fallback_candidate propagation gap in the LLM-reconstruction differential-merge path that silently weakened Round D's own zero-evidence safety gate"
     ],
     "new_tests": [
-      "test_feature_match_specificity.py", "test_feature_match_generic_word_collision.py",
-      "test_morphology_no_truncation_fallback.py", "test_cross_cutting_critical_activation.py",
-      "test_reproductive_emergency_safety.py", "test_specific_evidence_over_generic_severity.py",
-      "test_severity_not_diagnostic_identity.py", "test_multilingual_clinical_concepts.py",
-      "test_mixed_language_routing.py", "test_forced_low_evidence_diagnosis_metadata.py",
-      "test_discriminator_priority.py", "test_blind_v15_integrity.py"
+      "test_feature_match_specificity.py",
+      "test_feature_match_generic_word_collision.py",
+      "test_morphology_no_truncation_fallback.py",
+      "test_cross_cutting_critical_activation.py",
+      "test_reproductive_emergency_safety.py",
+      "test_specific_evidence_over_generic_severity.py",
+      "test_severity_not_diagnostic_identity.py",
+      "test_multilingual_clinical_concepts.py",
+      "test_mixed_language_routing.py",
+      "test_forced_low_evidence_diagnosis_metadata.py",
+      "test_discriminator_priority.py",
+      "test_blind_v15_integrity.py"
     ],
     "regression_status": "No regression: full pytest 712/1 (up from 596/1), tuning/held-out/generalization-v2/stress/dev-round-d/dev-round-e ALL 100% scored accuracy / 0% critical miss, retrieval recall floor unchanged (56.8/61.4/61.4 and 75.0/93.2/93.2), routing benchmark unchanged 100% across all 6 metrics, adversarial all PASS, leakage scan clean, feature-match specificity audit clean (0 new risks)."
   },

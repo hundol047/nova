@@ -47,6 +47,11 @@ LOINC_TO_NOVA_LAB: Dict[str, Tuple[str, str]] = {
     '20416-4': ('lab.beta_hcg', 'beta_hcg'),
     '2345-7': ('lab.glucose', 'glucose_point_of_care'),
     '2524-7': ('lab.lactate', 'lactate'),
+    '3040-3': ('lab.lipase', 'lipase'),
+    # Urine dipstick infection markers (leukocyte esterase / nitrite) both feed the single
+    # urinalysis_infection lab nova_agent reads from the 'urinalysis' raw key.
+    '5799-2': ('lab.urinalysis_infection', 'urinalysis'),
+    '5802-4': ('lab.urinalysis_infection', 'urinalysis'),
 }
 
 # Fallback when the Observation carries no loinc.org coding at all (a DemoAdapter-sourced lab, or
@@ -75,6 +80,10 @@ DISPLAY_TEXT_TO_NOVA_LAB: Dict[str, Tuple[str, str]] = {
     'hcg': ('lab.beta_hcg', 'beta_hcg'),
     'glucose': ('lab.glucose', 'glucose_point_of_care'),
     'lactate': ('lab.lactate', 'lactate'),
+    'lipase': ('lab.lipase', 'lipase'),
+    'urinalysis': ('lab.urinalysis_infection', 'urinalysis'),
+    'leukocyte esterase': ('lab.urinalysis_infection', 'urinalysis'),
+    'nitrite': ('lab.urinalysis_infection', 'urinalysis'),
 }
 
 
