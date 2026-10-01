@@ -38,3 +38,17 @@ v15 59.3%/38.5%, **v16 79.7%/10.7% (default)**, 83.1%/7.1% (competition-like). D
 - Never splitting a tie at the cutoff: breaks 4 tests guarding the documented prompt-size invariants
   (legacy differential size 5; differential never exceeds reasoning_top_k). Not adopted.
 Both reverted; no nova_agent/ change. Raising the legacy cap remains an open design decision.
+
+## Follow-up (after the two declared runs; Blind v16 is now REFERENCE-ONLY)
+Investigated the two Japanese-mixed misses with read-only traces, then made ONE reasoning change (commit 27ded23):
+- `Blind16_43` (vomiting/diarrhea): the differential never moved. Cause: scoring matches English KB features by
+  word overlap, but the multilingual layer only fed routing, and its table held only sentence-ending phrases
+  ("下痢をしています"), so "下痢がひどいです" matched nothing. Fix: add complete clinical nouns (>=2 chars) and append the
+  canonical English wording of any localized, non-negated symptom to the evidence bag. After the fix the case is
+  diagnosed correctly. English input is unchanged: tuning/held-out/generalization-v2/stress/Round D/E dev suites are
+  identical to before (100% / 0% critical miss, same turns).
+- `Blind16_44` (positional vertigo): NOT a language problem. The English-only twin of the complaint scores all-zero
+  and BPPV never enters the 5-slot differential either; this is the top-5 cap / all-zero turn-1 tie described above
+  and remains wrong. Left unfixed: both attempted cap fixes failed (see "Round F code experiments").
+This change was verified only on unit tests and development sets plus these two probe cases; no new blind claim is
+made for it. Measuring it honestly requires a fresh Blind v17.
