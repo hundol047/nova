@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 379 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 604 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -28,7 +28,21 @@ what is *not* yet verified.
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
 
-## Catalog expansion — 2026-10-02 (Asia/Seoul)
+## 272-entry inventory — 2026-10-02 (Asia/Seoul)
+
+**68 rule-supported entries + 204 MedlinePlus reference-only candidates = 272 entries.**
+This is not 272 autonomous or clinically validated diagnoses. The added material is sourced
+public-domain health-topic context for differential exploration, with explicit attribution,
+status and confidence/finalization guards. It cannot turn itself into patient evidence or
+enter the deterministic scorer. [Scope, full list and unfinished validation](docs/CATALOG_272_READINESS.md).
+
+Validation: 604 unit tests passed; the existing mock regression retained 205/205 scored
+cases (three additional cases are unscored). These results do not measure clinical accuracy.
+The 204/204 title lookup result is a catalog test, not diagnostic accuracy. New-condition
+clinical accuracy remains unmeasured; the existing regression gate covers the original 68
+rule-supported entries only. Fourfold **verified diagnostic ability** has not been established.
+
+## Earlier 68-entry rule catalog expansion — 2026-10-02 (Asia/Seoul)
 
 **68 diagnostic entries (34 added), with 16 additional local examination/test procedures.**
 Source-bound evidence, conservative confidence/early-stop guards, dangerous-alternative tracking,

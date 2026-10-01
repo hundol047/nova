@@ -91,6 +91,7 @@ class NovaConfig:
     candidate_pool_size: int = field(default_factory=lambda: _int_env("NOVA_CANDIDATE_POOL_SIZE", 8))
 
     rag_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RAG_ENABLED", True))
+    reference_candidates_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_REFERENCE_CANDIDATES", True))
     rag_top_k: int = field(default_factory=lambda: _int_env("NOVA_RAG_TOP_K", 4))
 
     # llm_provider: 'mock' (default, offline/deterministic) | 'anthropic' | 'openai_compatible'

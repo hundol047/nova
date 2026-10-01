@@ -82,16 +82,18 @@ class SafetyValidator:
             for item in llm_output.differential:
                 diagnosis_id = item.diagnosis_id or normalize_diagnosis(item.diagnosis).canonical_id
                 entry = disease_by_id(diagnosis_id) if diagnosis_id else None
+                from nova_agent.knowledge.reference_catalog import reference_by_name
+                reference = None if entry else (reference_by_name(diagnosis_id or '') or reference_by_name(item.diagnosis))
                 # Known-diagnosis metadata (dangerous/urgency) is authoritative from the local KB
                 # once matched -- the LLM can only ever ADD a dangerous flag it wasn't given
                 # credit for, never suppress one the KB already asserts.
                 dangerous = item.dangerous_if_missed or bool(entry and entry.get("dangerous"))
                 urgency = entry.get("urgency") if entry else ("CRITICAL" if dangerous else "LOW")
-                resolved_id = diagnosis_id or f"novel:{normalize_key(item.diagnosis)}"
+                resolved_id = reference['id'] if reference else (diagnosis_id or f"novel:{normalize_key(item.diagnosis)}")
                 raw_rank = item.rank if 1 <= item.rank <= 1000 else 1000
                 det_match = det_by_id.get(resolved_id)
                 score = det_match.score if det_match else 0.0
-                score_ratio = det_match.score_ratio if det_match else band_proxy[item.confidence]
+                score_ratio = det_match.score_ratio if det_match else band_proxy['LOW' if reference else item.confidence]
 
                 if resolved_id in by_id:
                     existing = by_id[resolved_id]
@@ -106,7 +108,7 @@ class SafetyValidator:
                     score_ratio=score_ratio, supporting_evidence=list(item.supporting_evidence),
                     contradictory_evidence=list(item.contradictory_evidence),
                     missing_discriminative_evidence=item.missing_information,
-                    urgency=urgency or "LOW", dangerous_if_missed=dangerous, confidence_band=item.confidence,
+                    urgency=urgency or "LOW", dangerous_if_missed=dangerous, confidence_band='LOW' if reference else item.confidence,
                 )
 
             ordered = sorted(by_id.values(), key=lambda d: d.rank)[:top_k]
@@ -146,7 +148,9 @@ class SafetyValidator:
         if stop_decision.forced:
             content = deterministic_action.content
             if llm_output is not None and llm_output.selected_action.type == "DIAGNOSE" and llm_output.selected_action.content:
-                content = llm_output.selected_action.content  # keep the LLM's phrasing/diagnosis if it agrees
+                from nova_agent.diagnosis_normalizer import same_diagnosis
+                if same_diagnosis(content, llm_output.selected_action.content):
+                    content = llm_output.selected_action.content
             action = AgentAction(action_type="DIAGNOSE", key=deterministic_action.key, content=content,
                                   rationale=stop_decision.reason)
             return ValidationResult(action=action, differential=merged_differential, overridden=False)
@@ -174,6 +178,10 @@ class SafetyValidator:
                         break
 
         if picked.type == "DIAGNOSE":
+            from nova_agent.knowledge.reference_catalog import reference_mentions
+            if reference_mentions(picked.key) or reference_mentions(picked.content):
+                return ValidationResult(action=fallback_action, differential=merged_differential, overridden=True,
+                    override_reason='Reference-only candidate is not enabled for autonomous diagnosis; independent validation pending.')
             # DIAGNOSE key/content consistency (spec section 9): a malformed output where `key`
             # and `content` name two DIFFERENT known diagnoses (e.g. key="gerd",
             # content="Acute Myocardial Infarction") must never be trusted at face value -- reject

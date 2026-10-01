@@ -52,6 +52,7 @@ class DoctorAgent:
     # --- core turn loop -----------------------------------------------------------------------
 
     def decide(self, state: PatientState) -> Tuple[AgentAction, Optional[AgentTurnOutput], List[DifferentialItem]]:
+        state.reference_candidates = []
         state.decision_quality = {"band":"LOW", "probability":None, "calibrated":False,
                                   "catalog_status":"unassessed", "reasons":["assessment_unavailable"]}
         try:
@@ -90,6 +91,10 @@ class DoctorAgent:
                 retrieved_context = retrieve_turn_context(
                     tag, [d.diagnosis_id for d in deterministic_differential], candidate_test_ids,
                 )
+                if cfg.rag_enabled and cfg.reference_candidates_enabled:
+                    from nova_agent.knowledge.reference_catalog import retrieve_reference_candidates
+                    state.reference_candidates = retrieve_reference_candidates(state.all_findings_text())
+                    retrieved_context.extend(state.reference_candidates)
 
                 # 4/5. LLM Differential Reasoning + LLM Candidate Actions (one combined call).
                 ctx = TurnContext(summary=summary, differential=deterministic_differential,

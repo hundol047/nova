@@ -156,6 +156,8 @@ class PatientState(BaseModel):
     turn_count: int = 0
     max_turns: int = 60
     decision_quality: dict = Field(default_factory=dict)
+    # Retrieved educational context, never included in all_findings_text / patient evidence.
+    reference_candidates: List[dict] = Field(default_factory=list)
     final_diagnosis: Optional[str] = None
     final_diagnosis_rationale: Optional[str] = None
 

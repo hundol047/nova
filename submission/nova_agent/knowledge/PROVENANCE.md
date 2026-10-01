@@ -85,3 +85,13 @@ features. Per-entry URLs, limitations and `clinical_review_verified: false` are 
 See `docs/CATALOG_EXPANSION.md` for the complete list and validation limits. Literal phrase
 matching, scoring weights, all-rule evidence gates and urgency labels are implementation
 choices; they do not reproduce complete clinical guidelines or constitute clinical review.
+
+
+## MedlinePlus reference-only library (2026-10-02 Asia/Seoul)
+
+Source: MedlinePlus, National Library of Medicine. `reference_candidates/` contains 204
+public-domain health-topic summaries and metadata from the dated official XML export.
+It is separate from the 68 scored disease rules. NLM source authority is not clinical
+validation of this agent. See `docs/CATALOG_272_READINESS.md` and the bundled manifest
+for attribution, reuse terms, immutable hashes, the selected title list and validation limits.
+No A.D.A.M. encyclopedia content, third-party images or drug monographs are imported.

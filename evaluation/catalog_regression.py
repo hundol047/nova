@@ -43,6 +43,10 @@ def main():
         raise SystemExit('This is a MOCK regression gate; use real_llm_benchmark for live validation.')
     report={'provider':'mock','independent_validation':False,'clinical_accuracy_claim':False,
             'catalog_size':len(all_diseases()),'catalog_sha256':digest(all_diseases()),'sets':{},'passed':False}
+    from nova_agent.knowledge.reference_catalog import catalog_inventory, reference_candidates
+    report['catalog_inventory'] = catalog_inventory()
+    report['reference_catalog_sha256'] = digest(reference_candidates())
+    report['reference_only_diagnostic_accuracy'] = None
     failed=[]
     for name,cases in SETS.items():
         results=run_all(cases)
