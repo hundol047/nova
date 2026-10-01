@@ -88,6 +88,9 @@ FEATURE_ALIASES: dict[str, list[str]] = {
 def _present_with_aliases(phrase: str, findings: List[str]) -> bool:
     """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
     FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase."""
+    if phrase in {"unilateral pulsating headache", "recurrent similar episodes"} and not any(
+        feature_present("headache", [t], scrub_negated_spans=True) for t in findings):
+        return False
     if get_config().evidence_interpretation and concept_present(phrase, findings):
         return True
     if feature_present(phrase, findings, scrub_negated_spans=True):
@@ -132,6 +135,11 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
     ("clear breath sounds") -- "absent"/"breath"/"sounds" word-overlaps with "clear breath sounds"
     at 2/3 content words, over the match threshold, despite the two being clinically opposite.
     Returns the score delta; appends the phrase to exactly one of supporting/contradictory/missing."""
+    # An explicitly observed pathological absence is affirmative evidence.
+    # Keep it distinct from a healthy absence such as no chest pain.
+    if get_config().evidence_interpretation and phrase in {"absent breath sounds", "unilateral absent breath sounds"} and concept_present(phrase, findings):
+        supporting.append(phrase)
+        return weight
     underlying = _strip_negative_prefix(phrase)
     if underlying is not None:
         # The phrase itself describes an ABSENCE (e.g. "no chest pain", "absent breath sounds").
@@ -233,7 +241,9 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
     confirmation_sources = objective_findings(entry, state) if get_config().evidence_interpretation else findings
     for finding in entry.get("confirmatory_findings", []):
         max_possible += CONFIRMATORY_WEIGHT
-        score += _score_phrase(finding, CONFIRMATORY_WEIGHT, confirmation_sources, negatives, supporting, contradictory, missing)
+        # Inflammatory markers are nonspecific, even when the specimen source is correct.
+        weight = 0.5 if get_config().evidence_interpretation and finding in {"elevated white blood cell count", "elevated CRP"} else CONFIRMATORY_WEIGHT
+        score += _score_phrase(finding, weight, confirmation_sources, negatives, supporting, contradictory, missing)
 
     # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
     # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in

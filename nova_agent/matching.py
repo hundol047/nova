@@ -46,7 +46,7 @@ def _stem(word: str) -> str:
     # hypertriglyceridemia. Only known inflections share a token now.
     equivalents = {"exertional":"exertion", "exerting":"exertion", "radiating":"radiate",
         "radiates":"radiate", "radiation":"radiate", "vomiting":"vomit", "vomited":"vomit",
-        "coughing":"cough", "coughed":"cough", "swollen":"swelling", "dizzy":"dizziness",
+        "coughing":"cough", "wheezing":"wheeze", "coughed":"cough", "swollen":"swelling", "dizzy":"dizziness",
         "nauseated":"nausea", "nauseous":"nausea", "confused":"confusion",
         "palpitations":"palpitation", "seizures":"seizure", "ketones":"ketone",
         "waves":"wave", "sounds":"sound", "findings":"finding"}
@@ -88,7 +88,9 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
         finding_words = _content_words(finding_lower)
         anchors = {"headache": {"headache", "head", "cephalgia"},
                    "chest": {"chest", "substernal", "sternum", "thoracic"},
-                   "abdominal": {"abdominal", "abdomen", "belly", "stomach", "epigastric"}}
+                   "abdominal": {"abdominal", "abdomen", "belly", "stomach", "epigastric"},
+                   "dyspnea": {"dyspnea", "breath", "breathing", "breathlessness", "sob"},
+                   "palpitation": {"palpitation", "heartbeat", "heart"}}
         if any(anchor in feature_content and not (alternatives & finding_words)
                for anchor, alternatives in anchors.items()):
             continue

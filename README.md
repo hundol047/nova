@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 160 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 167 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -27,6 +27,52 @@ what is *not* yet verified.
 > Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
+
+## Accuracy follow-up — 2026-10-01
+
+**Local synthetic development accuracy now exceeds 90% in each reported scored suite.**
+This is not independent generalization or live competition-model verification. V3/V4/V5
+errors were analyzed during development; V6 is a reused, small same-author synthetic set.
+All runs use `mock`. The prior accuracy revision below is historical.
+
+| Evaluation | Correct | Accuracy | Status |
+|---|---:|---:|---|
+| V3 | 30/32 | 93.8% | Development, reused historical cases |
+| V4 | 33/34 | 97.1% | Development after follow-up error analysis |
+| V5 | 43/44 | 97.7% | Development; one appendicitis remains wrong |
+| Existing scored development | 49/49 | 100.0% | Includes recovery of the appendicitis regression |
+| V6 | 12/12 | 100.0% | Reused same-author synthetic validation |
+
+The held-out-named historical suite has three unscored cases; its scored denominator is 15,
+not 18. All-case accuracy and exclusion names remain visible in the detailed report.
+
+The follow-up fixes anatomical and event anchors (a pounding heart cannot imply headache;
+sudden abdominal pain cannot imply dyspnea), recognizes named lipase results, appendix CT
+findings, explicit pathological absence of breath sounds, tracheal shift and wheeze inflection,
+and ensures abdominal complaints receive a baseline abdominal exam. Nonspecific inflammatory
+markers receive less weight than disease-specific evidence. Sources and heuristic limitations
+are documented in `nova_agent/knowledge/PROVENANCE.md`; this is not complete clinical criteria.
+
+There are remaining errors, including urosepsis on V3. V5 decreased from 44/44 to 43/44
+while V4 improved from 29/34 to 33/34 and generalization-v2 recovered from 17/18 to 18/18.
+These tradeoffs are retained rather than selecting only favorable evaluations. Mean turns:
+V3 30.8, V4 29.0, V5 29.6; efficiency is not solved.
+
+167 tests, 12 adversarial checks, stability, submission standalone build/source sync, and
+README/evaluation-leakage checks pass locally. Full results and remaining misses are in
+`evaluation/accuracy_followup_results.json`; the earlier report is retained unchanged.
+Competition preflight is **NOT READY** because no real model is configured and the official
+adapter remains unverified. A successful live model call is still enforced before submission.
+
+To perform live complete-case verification, configure the approved competition model endpoint
+and credentials in environment variables/GitHub secrets, then run:
+
+```bash
+python scripts/preflight_competition.py
+python -m evaluation.real_llm_benchmark --provider competition --require-real --timeout 180 --save-json real-llm-report.json
+```
+
+Do not claim live or independent 90% accuracy from the local development table above.
 
 ## Accuracy revision — 2026-10-01
 
@@ -258,10 +304,10 @@ goes stale against a fresh `evaluation/latest_results.json`.
 
 | Set | Scored Accuracy | All-Case Accuracy | Critical Recall | Critical Miss Rate | Avg Turns |
 |---|---|---|---|---|---|
-| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 27.1 |
-| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 30.8 |
-| Development generalization (18 cases, all scored, 5 critical) | 94.4% | 94.4% | 100.0% | 0.0% | 27.7 |
-| Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 30.2 |
+| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 27.8 |
+| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 31.3 |
+| Development generalization (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 27.6 |
+| Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 31.0 |
 | Blind v3 reference (32 cases, all scored, 14 critical) | 62.5% | 62.5% | 57.1% | 42.9% | 20.9 |
 | Blind v4 reference (34 cases, all scored, 14 critical) | 64.7% | 64.7% | 71.4% | 28.6% | 19.8 |
 | **Untouched Blind v5 (44 cases, all scored, 20 critical)** | **52.3%** | **52.3%** | **40.0%** | **60.0%** | 20.7 |

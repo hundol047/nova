@@ -89,7 +89,7 @@ class ActionSelector:
             if get_config().strategic_questions:
                 # Bounded baseline information gathering, at most five actions. No hidden
                 # case label or simulator fields enter this selection.
-                core = {("EXAM", "vital_signs"): 10.0, ("ASK", "associated_symptoms"): 8.0,
+                core = {("EXAM", "vital_signs"): 10.0, ("EXAM", "abdominal_exam"): 8.0, ("ASK", "associated_symptoms"): 8.0,
                         ("ASK", "onset"): 7.0, ("ASK", "past_medical_history"): 6.0,
                         ("ASK", "medication"): 5.0}
                 gain = core.get((cand.action_type, cand.key), 0.0)

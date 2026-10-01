@@ -49,3 +49,18 @@ If the N.O.V.A. 2026 competition rules specify a required knowledge source, an a
 set, or a licensing constraint, that takes precedence over everything in this file and in
 `knowledge/*.json` -- update the affected entries (and this file) to cite it accurately rather than
 leaving this internally-authored-heuristic framing in place once a real source is confirmed.
+
+## Accuracy follow-up references (2026-10-01)
+
+The new appendix imaging and lipase evidence features were checked against these primary
+references. They remain implementer-authored text-matching heuristics, not implementations
+of complete diagnostic criteria or clinician-reviewed rules. Lipase elevation alone is not
+a specific diagnosis; numerical multiples of the upper limit of normal are not inferred.
+
+- WSES 2020 appendicitis guidelines: https://doi.org/10.1186/s13017-020-00306-3
+  (clinical assessment and imaging in diagnosis).
+- NICE NG104 recommendations: https://www.nice.org.uk/guidance/ng104/chapter/Recommendations
+  (raised lipase supports pancreatitis but also occurs in other conditions).
+
+Nonspecific white blood cell/CRP evidence is weighted below disease-specific findings.
+The exact scoring weights are uncalibrated implementation choices, not guideline values.

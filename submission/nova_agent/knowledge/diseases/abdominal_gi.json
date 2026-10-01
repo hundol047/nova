@@ -44,7 +44,8 @@
     "confirmatory_findings": [
       "free air",
       "peritoneal signs on imaging",
-      "perforation"
+      "perforation",
+      "bowel obstruction"
     ],
     "red_flag_keywords": [
       "rebound tenderness",
@@ -225,7 +226,10 @@
       "abdominal_ultrasound"
     ],
     "red_flag_keywords": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "elevated lipase"
+    ]
   },
   {
     "id": "appendicitis",
@@ -244,7 +248,8 @@
       "periumbilical pain migrating to right lower quadrant",
       "anorexia",
       "low grade fever",
-      "nausea"
+      "nausea",
+      "right lower quadrant tenderness"
     ],
     "risk_factors": [
       "young age"
@@ -266,7 +271,11 @@
       "rebound tenderness",
       "guarding"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "dilated thickened appendix",
+      "appendiceal inflammation"
+    ]
   },
   {
     "id": "gastroenteritis",

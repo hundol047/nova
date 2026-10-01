@@ -20,6 +20,7 @@ from nova_agent.resolution import is_resolved, required_workup
 from nova_agent.state import PatientState
 from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG, QUESTION_CATALOG, disease_specific_question
 from nova_agent.config import get_config
+from nova_agent.chief_complaint import route
 
 CandidateActionType = Literal["ASK", "EXAM", "TEST"]
 
@@ -188,9 +189,15 @@ class MissingInformationAnalyzer:
                         content_en=spec["text_en"], content_ko=spec["text_ko"], disease_ids_discriminated=[],
                         diagnostic_discrimination=0, safety_relevance=0, information_gain=0,
                         redundancy=0, turn_cost=spec["turn_cost"]))
-            if not state.exam_done("vital_signs"):
-                spec = EXAM_CATALOG["vital_signs"]
-                exam_candidates.setdefault("vital_signs", CandidateInfo(action_type="EXAM", key="vital_signs",
+            baseline_exams = ["vital_signs"]
+            routing = route(state.chief_complaint)
+            if "abdominal_pain" in [routing.primary_tag, *routing.secondary_tags]:
+                baseline_exams.append("abdominal_exam")
+            for baseline_exam in baseline_exams:
+                if state.exam_done(baseline_exam):
+                    continue
+                spec = EXAM_CATALOG[baseline_exam]
+                exam_candidates.setdefault(baseline_exam, CandidateInfo(action_type="EXAM", key=baseline_exam,
                     content_en=spec["name_en"], content_ko=spec["name_ko"], disease_ids_discriminated=[],
                     diagnostic_discrimination=0, safety_relevance=0, information_gain=0,
                     redundancy=0, turn_cost=spec["turn_cost"]))

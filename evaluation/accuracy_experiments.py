@@ -1,6 +1,6 @@
 """Reproducible accuracy/ablation report. No case data is imported by the agent.
 
-V5 is development data. V4 is a reused reference. V6 is same-author synthetic
+V5 is development data. V4 is development data after follow-up error analysis. V6 is same-author synthetic
 validation, not external/clinically adjudicated evidence. All metrics retain these labels.
 """
 from __future__ import annotations
@@ -24,13 +24,13 @@ def main():
     args=parser.parse_args()
     if args.suite=='v4':
         from evaluation.blind_cases_v4 import BLIND_CASES_V4 as cases
-        role='reused reference; not tuned in this revision'
+        role='development; V4 errors analyzed during follow-up fixes'
     elif args.suite=='v5':
         from evaluation.blind_cases_v5 import BLIND_CASES_V5 as cases
         role='development; analyzed during fixes, not blind'
     else:
         from evaluation.validation_v6 import VALIDATION_V6 as cases
-        role='same-author synthetic validation; not external clinical validation'
+        role='reused same-author synthetic validation; not independent clinical validation'
         directory=Path(__file__).parent
         expected=json.loads((directory/'validation_v6_manifest.json').read_text())['sha256']
         if hashlib.sha256((directory/'validation_v6.py').read_bytes()).hexdigest()!=expected:

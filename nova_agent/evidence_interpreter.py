@@ -10,6 +10,13 @@ from functools import lru_cache
 
 # Generic concept variants, scoped to a single KB feature. No global text replacement.
 ALIASES = {
+ 'tracheal deviation': [r'\btrachea\b.{0,18}\b(?:shift\w*|deviat\w*)\b'],
+ 'bilateral band-like pressure': [r'\b(?:tight|squeez\w*)\b.{0,20}\bband\b',r'\bband[- ]like\b.{0,15}\b(?:headache|pressure)\b'],
+ 'known asthma or COPD': [r'\b(?:history of asthma|asthma since|known asthma|known copd|history of copd)\b'],
+ 'right lower quadrant tenderness': [r'\bmcburney.{0,15}point\b', r'\b(?:right lower|lower right|rlq)\b.{0,25}\btender'],
+ 'rigid abdomen': [r'\bboard[- ](?:hard|like|rigid)\b', r'\b(?:abdomen|belly|stomach)\b.{0,20}\b(?:rigid|hard)\b'],
+ 'palpitations': [r'\bheart\b.{0,20}\b(?:pound|rac)\w*'],
+ 'tingling around the mouth or fingers': [r'\b(?:tingl\w*|paresthesia)\b.{0,25}\b(?:fingers?|mouth|hands?)\b'],
  'altered mental status': [r'\b(?:confused|confusion|disoriented|unresponsive)\b'],
  'fear of dying or losing control': [r'\b(?:impending doom|fear of death|afraid of dying)\b'],
  'chest tightness': [r'\bchest\b.{0,12}\btight\b'],
@@ -22,7 +29,7 @@ ALIASES = {
  'slurred speech': [r'\b(?:dysarthria|aphasia)\b',r'\b(?:word[- ]finding|speech)\s+(?:difficulty|trouble|problem)',r'\b(?:trouble|difficulty)\b.{0,12}\b(?:speaking|words)\b'],
  'unilateral absent breath sounds': [r'\b(?:absent|no)\s+(?:\w+\s+){0,2}breath sounds?\b.{0,30}\b(?:left|right|one side)\b'],
  'absent breath sounds': [r'\b(?:absent|no)\s+(?:\w+\s+){0,2}breath sounds?\b'],
- 'productive cough': [r'\b(?:sputum|phlegm)\b'],
+ 'productive cough': [r'\b(?:sputum|phlegm|mucus)\b'],
  'recent viral illness': [r'\b(?:recent|after|following)\b.{0,25}\b(?:cold|viral|uri)\b',r'\bcold\b.{0,25}\b(?:resolved|cleared|subsided)\b'],
  'chest wall soreness from coughing': [r'\b(?:chest|ribs?)\b.{0,20}\b(?:sore|hurt)\b.{0,20}\bcough'],
  'rhinorrhea': [r'\b(?:runny|stuffy|congested) nose\b',r'\bnasal congestion\b'],
@@ -53,7 +60,7 @@ ALIASES = {
  'improves with sitting or lying down': [r'\b(?:improv\w*|resolv\w*|better)\b.{0,30}\bseated\b', r'\b(?:better|improv\w*|resolv\w*|ease\w*)\b.{0,30}\b(?:sitting|lying|sit|lie)\b'],
  'fruity breath odor': [r'\b(?:fruity|acetone|sweet)\b.{0,15}\bbreath\b'],
  'kussmaul breathing': [r'\b(?:deep|labou?red)\b.{0,15}\b(?:rapid|fast)\b.{0,15}\bbreath',r'\bkussmaul\b'],
- 'polydipsia': [r'\b(?:very thirsty|excessive thirst|always thirsty)\b'],
+ 'polydipsia': [r'\b(?:thirsty|excessive thirst|increased thirst)\b'],
  'polyuria': [r'\b(?:frequent urination|urinating a lot|peeing a lot)\b'],
  'suspected infection source': [r'\b(?:purulent|infected|infection)\b'],
 }
@@ -105,6 +112,10 @@ def objective_findings(entry: dict, state) -> list[str]:
         value=results.get(key,'')
         if key in allowed and re.search(r'\b(?:positive|large|strongly positive)\b',value,re.I) and not re.search(r'\b(?:not|negative|pending|trace)\b',value,re.I):
             out.append(label)
+    # Preserve the named procedure when a result only describes its value.
+    lipase=results.get('lipase','') if 'lipase' in allowed else ''
+    if re.search(r'\b(?:elevated|raised|high|increased)\b',lipase,re.I) and not re.search(r'\b(?:not|no|normal|pending)\b',lipase,re.I):
+        out.append('elevated lipase')
     csf=results.get('lumbar_puncture','') if 'lumbar_puncture' in allowed else ''
     if re.search(r'\b(?:elevated|increased|high)\b.{0,20}\b(?:white|wbc|leukocyte|cell)',csf,re.I):
         out.append('CSF pleocytosis')
