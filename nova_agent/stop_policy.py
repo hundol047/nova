@@ -57,6 +57,13 @@ class StopPolicy:
                                  reason="No differential has been generated yet.", readiness_score=0.0)
 
         top = differential[0]
+        from nova_agent.knowledge.retrieval import disease_by_id
+        from nova_agent.expanded_evidence import evidence_complete
+        entry = disease_by_id(top.diagnosis_id)
+        if entry and entry.get('evidence_rules') and not evidence_complete(entry, state):
+            return StopDecision(should_diagnose=False, forced=False,
+                                reason='Expanded diagnosis lacks required source-bound evidence.',
+                                readiness_score=0.0)
         second = differential[1] if len(differential) > 1 else None
 
         band_score = {"HIGH": 1.0, "MEDIUM": 0.5, "LOW": 0.0}[top.confidence_band]

@@ -47,10 +47,18 @@ def _exclusion_pattern(diagnosis_id: str):
 def is_resolved(diagnosis_id: str, contradictory_evidence: List[str], state: PatientState) -> bool:
     """Resolution is based on recorded objective results, never a model's assertion."""
     results = {**state.physical_examinations, **state.laboratory_tests, **state.imaging}
+    entry = disease_by_id(diagnosis_id)
+    expanded = bool(entry and entry.get('evidence_rules'))
+    if expanded:
+        allowed = {rule['source'] for rule in entry['evidence_rules']}
+        results = {key: value for key, value in results.items() if key in allowed}
     pattern = _exclusion_pattern(diagnosis_id)
     if pattern:
         for text in results.values():
             if text and not _UNCERTAIN.search(text) and pattern.search(text):
                 return True
+    if expanded:
+        # A generic normal result is not a disease-specific exclusion protocol.
+        return False
     required = required_workup(diagnosis_id)
     return bool(required) and all(reassuring_result(results.get(key, "")) for key in required)

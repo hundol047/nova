@@ -1,0 +1,2029 @@
+[
+  {
+    "id": "acute_pericarditis",
+    "name": "Acute Pericarditis",
+    "aliases": [
+      "급성 심낭염"
+    ],
+    "chief_complaint_tags": [
+      "chest_pain",
+      "dyspnea"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "pleuritic chest pain",
+      "pain improves leaning forward",
+      "pain worse supine"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "cardiac_auscultation"
+    ],
+    "discriminating_tests": [
+      "ecg"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "ecg",
+      "cardiac_auscultation"
+    ],
+    "evidence_rules": [
+      {
+        "source": "ecg",
+        "any_of": [
+          "diffuse st elevation with pr depression",
+          "widespread st elevation and pr depression"
+        ]
+      },
+      {
+        "source": "cardiac_auscultation",
+        "any_of": [
+          "pericardial friction rub",
+          "pericardial rub"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/cardiovascular-disorders/myocarditis-and-pericarditis/pericarditis"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "acute_heart_failure",
+    "name": "Acute Heart Failure",
+    "aliases": [
+      "급성 심부전"
+    ],
+    "chief_complaint_tags": [
+      "dyspnea",
+      "chest_pain",
+      "weakness"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "orthopnea",
+      "paroxysmal nocturnal dyspnea",
+      "bilateral leg edema"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "cxr",
+      "echocardiogram"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "cxr",
+      "echocardiogram"
+    ],
+    "evidence_rules": [
+      {
+        "source": "cxr",
+        "any_of": [
+          "pulmonary vascular congestion",
+          "bilateral interstitial pulmonary edema"
+        ]
+      },
+      {
+        "source": "echocardiogram",
+        "any_of": [
+          "reduced left ventricular systolic function",
+          "elevated left ventricular filling pressure"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/cardiovascular-disorders/heart-failure/acute-heart-failure"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Preserved ejection fraction does not exclude heart failure; evaluate cardiac function and congestion together."
+  },
+  {
+    "id": "pleural_effusion",
+    "name": "Pleural Effusion",
+    "aliases": [
+      "흉막삼출"
+    ],
+    "chief_complaint_tags": [
+      "dyspnea",
+      "chest_pain",
+      "cough"
+    ],
+    "category": "expanded_v1",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "progressive dyspnea",
+      "pleuritic discomfort",
+      "reduced breath sounds at base"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "cxr",
+      "thoracic_ultrasound"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "cxr",
+      "thoracic_ultrasound"
+    ],
+    "evidence_rules": [
+      {
+        "source": "cxr",
+        "any_of": [
+          "pleural fluid with meniscus",
+          "blunted costophrenic angle"
+        ]
+      },
+      {
+        "source": "thoracic_ultrasound",
+        "any_of": [
+          "fluid in pleural space",
+          "anechoic pleural collection"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/pulmonary-disorders/mediastinal-and-pleural-disorders/pleural-effusion"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Describes pleural fluid, not its cause; infection, malignancy, embolism and heart failure require further evaluation."
+  },
+  {
+    "id": "acute_cholecystitis",
+    "name": "Acute Cholecystitis",
+    "aliases": [
+      "급성 담낭염"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "fever",
+      "vomiting"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "persistent right upper quadrant pain",
+      "right shoulder radiation",
+      "pain after fatty meal"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "abdominal_ultrasound"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "abdominal_ultrasound"
+    ],
+    "evidence_rules": [
+      {
+        "source": "abdominal_ultrasound",
+        "any_of": [
+          "gallbladder wall thickening",
+          "thickened gallbladder wall"
+        ]
+      },
+      {
+        "source": "abdominal_ultrasound",
+        "any_of": [
+          "sonographic murphy sign",
+          "pericholecystic fluid"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/hepatic-and-biliary-disorders/gallbladder-and-bile-duct-disorders/acute-cholecystitis"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "acute_cholangitis",
+    "name": "Acute Cholangitis",
+    "aliases": [
+      "급성 담관염"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "fever",
+      "altered_mental_status"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "right upper quadrant pain",
+      "jaundice",
+      "rigors"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "abdominal_ultrasound",
+      "liver_panel",
+      "blood_culture"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "abdominal_ultrasound",
+      "liver_panel",
+      "blood_culture"
+    ],
+    "evidence_rules": [
+      {
+        "source": "abdominal_ultrasound",
+        "any_of": [
+          "dilated common bile duct",
+          "common bile duct stone"
+        ]
+      },
+      {
+        "source": "liver_panel",
+        "any_of": [
+          "cholestatic liver injury",
+          "elevated bilirubin and alkaline phosphatase"
+        ]
+      },
+      {
+        "source": "blood_culture",
+        "any_of": [
+          "growth of escherichia coli",
+          "growth of klebsiella"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/hepatic-and-biliary-disorders/gallbladder-and-bile-duct-disorders/choledocholithiasis-and-cholangitis"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "acute_diverticulitis",
+    "name": "Acute Diverticulitis",
+    "aliases": [
+      "급성 게실염"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "fever"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "left lower quadrant pain",
+      "change in bowel habit",
+      "left lower quadrant tenderness"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "ct_abdomen"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "ct_abdomen"
+    ],
+    "evidence_rules": [
+      {
+        "source": "ct_abdomen",
+        "any_of": [
+          "inflamed colonic diverticulum",
+          "inflamed sigmoid diverticula"
+        ]
+      },
+      {
+        "source": "ct_abdomen",
+        "any_of": [
+          "pericolic fat stranding",
+          "pericolonic fat stranding"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/gastrointestinal-disorders/diverticular-disease/colonic-diverticulitis"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "small_bowel_obstruction",
+    "name": "Small Bowel Obstruction",
+    "aliases": [
+      "소장폐색"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "vomiting"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "abdominal distension",
+      "obstipation",
+      "bilious vomiting"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "ct_abdomen"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "ct_abdomen"
+    ],
+    "evidence_rules": [
+      {
+        "source": "ct_abdomen",
+        "any_of": [
+          "dilated small bowel loops",
+          "dilated proximal small bowel"
+        ]
+      },
+      {
+        "source": "ct_abdomen",
+        "any_of": [
+          "transition point with collapsed distal bowel",
+          "small bowel transition point"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/gastrointestinal-disorders/acute-abdomen-and-surgical-gastroenterology/intestinal-obstruction"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "acute_mesenteric_ischemia",
+    "name": "Acute Mesenteric Ischemia",
+    "aliases": [
+      "급성 장간막허혈"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "vomiting"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "pain out of proportion to examination",
+      "sudden severe abdominal pain",
+      "bloody diarrhea"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "ct_mesenteric_angio"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "ct_mesenteric_angio"
+    ],
+    "evidence_rules": [
+      {
+        "source": "ct_mesenteric_angio",
+        "any_of": [
+          "superior mesenteric artery occlusion",
+          "mesenteric arterial filling defect"
+        ]
+      },
+      {
+        "source": "ct_mesenteric_angio",
+        "any_of": [
+          "reduced bowel wall enhancement",
+          "absent bowel wall enhancement"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/gastrointestinal-disorders/acute-abdomen-and-surgical-gastroenterology/acute-mesenteric-ischemia"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "ovarian_torsion",
+    "name": "Ovarian Torsion",
+    "aliases": [
+      "난소염전"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "vomiting"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "sudden unilateral pelvic pain",
+      "intermittent unilateral pelvic pain",
+      "vomiting"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "pelvic_ultrasound"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "pelvic_ultrasound"
+    ],
+    "evidence_rules": [
+      {
+        "source": "pelvic_ultrasound",
+        "any_of": [
+          "twisted vascular pedicle",
+          "ovarian whirlpool sign"
+        ]
+      },
+      {
+        "source": "pelvic_ultrasound",
+        "any_of": [
+          "enlarged edematous ovary",
+          "ovarian stromal edema"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/gynecology-and-obstetrics/miscellaneous-gynecologic-disorders/adnexal-torsion"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Normal Doppler flow does not exclude torsion; surgical assessment is required when suspected."
+  },
+  {
+    "id": "pelvic_inflammatory_disease",
+    "name": "Pelvic Inflammatory Disease",
+    "aliases": [
+      "골반염"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "fever"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "bilateral pelvic pain",
+      "dyspareunia",
+      "abnormal vaginal discharge"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "pelvic_exam"
+    ],
+    "discriminating_tests": [],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "pelvic_exam"
+    ],
+    "evidence_rules": [
+      {
+        "source": "pelvic_exam",
+        "any_of": [
+          "cervical motion tenderness",
+          "uterine tenderness"
+        ]
+      },
+      {
+        "source": "pelvic_exam",
+        "any_of": [
+          "mucopurulent cervical discharge",
+          "purulent cervical discharge"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/gynecology-and-obstetrics/vaginitis-cervicitis-and-pelvic-inflammatory-disease/pelvic-inflammatory-disease-pid"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Clinical diagnosis; the conservative support rules do not mean both findings are required to consider or treat PID."
+  },
+  {
+    "id": "hemorrhagic_ovarian_cyst",
+    "name": "Hemorrhagic Ovarian Cyst",
+    "aliases": [
+      "출혈성 난소낭종"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "acute pelvic pain",
+      "midcycle pelvic pain",
+      "unilateral pelvic tenderness"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "pelvic_ultrasound"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "pelvic_ultrasound"
+    ],
+    "evidence_rules": [
+      {
+        "source": "pelvic_ultrasound",
+        "any_of": [
+          "reticular echoes within ovarian cyst",
+          "lacy internal echoes in ovarian cyst"
+        ]
+      },
+      {
+        "source": "pelvic_ultrasound",
+        "any_of": [
+          "retracting clot within ovarian cyst",
+          "avascular clot in ovarian cyst"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/gynecology-and-obstetrics/miscellaneous-gynecologic-disorders/benign-adnexal-masses",
+      "https://pubs.rsna.org/radiology/doi/10.1148/radiol.230685"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Exclude ectopic pregnancy and torsion; instability or hemoperitoneum requires urgent assessment."
+  },
+  {
+    "id": "intracerebral_hemorrhage",
+    "name": "Intracerebral Hemorrhage",
+    "aliases": [
+      "뇌내출혈"
+    ],
+    "chief_complaint_tags": [
+      "headache",
+      "altered_mental_status",
+      "weakness"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "sudden focal weakness",
+      "abrupt severe headache",
+      "reduced consciousness"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "ct_head"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "ct_head"
+    ],
+    "evidence_rules": [
+      {
+        "source": "ct_head",
+        "any_of": [
+          "acute intraparenchymal hematoma",
+          "acute intracerebral blood"
+        ]
+      },
+      {
+        "source": "ct_head",
+        "any_of": [
+          "surrounding perihematomal edema",
+          "hematoma with mass effect"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/neurologic-disorders/stroke/intracerebral-hemorrhage"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "subdural_hematoma",
+    "name": "Subdural Hematoma",
+    "aliases": [
+      "경막하혈종"
+    ],
+    "chief_complaint_tags": [
+      "headache",
+      "altered_mental_status",
+      "weakness"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "head trauma",
+      "progressive drowsiness",
+      "worsening headache"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "ct_head"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "ct_head"
+    ],
+    "evidence_rules": [
+      {
+        "source": "ct_head",
+        "any_of": [
+          "crescentic extra-axial hematoma",
+          "crescent-shaped extra-axial blood"
+        ]
+      },
+      {
+        "source": "ct_head",
+        "any_of": [
+          "subdural mass effect",
+          "subdural collection crossing sutures"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/injuries-poisoning/traumatic-brain-injury-tbi/traumatic-brain-injury-tbi"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "epidural_hematoma",
+    "name": "Epidural Hematoma",
+    "aliases": [
+      "경막외혈종"
+    ],
+    "chief_complaint_tags": [
+      "headache",
+      "altered_mental_status"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "head trauma",
+      "lucid interval",
+      "deteriorating consciousness"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "ct_head"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "ct_head"
+    ],
+    "evidence_rules": [
+      {
+        "source": "ct_head",
+        "any_of": [
+          "biconvex extra-axial hematoma",
+          "lentiform extra-axial hematoma"
+        ]
+      },
+      {
+        "source": "ct_head",
+        "any_of": [
+          "adjacent skull fracture",
+          "hematoma limited by sutures"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/injuries-poisoning/traumatic-brain-injury-tbi/traumatic-brain-injury-tbi"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "brain_abscess",
+    "name": "Brain Abscess",
+    "aliases": [
+      "뇌농양"
+    ],
+    "chief_complaint_tags": [
+      "headache",
+      "fever",
+      "altered_mental_status"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "progressive headache",
+      "focal seizure",
+      "focal neurological deficit"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "mri_brain_contrast"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "mri_brain_contrast"
+    ],
+    "evidence_rules": [
+      {
+        "source": "mri_brain_contrast",
+        "any_of": [
+          "intraparenchymal ring-enhancing lesion",
+          "ring-enhancing brain lesion"
+        ]
+      },
+      {
+        "source": "mri_brain_contrast",
+        "any_of": [
+          "central restricted diffusion",
+          "restricted diffusion within cavity"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/neurologic-disorders/brain-infections/brain-abscess"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Imaging pattern supports but does not prove infection; distinguish tumor and other lesions, with specialist assessment."
+  },
+  {
+    "id": "subdural_empyema",
+    "name": "Subdural Empyema",
+    "aliases": [
+      "경막하축농"
+    ],
+    "chief_complaint_tags": [
+      "headache",
+      "fever",
+      "altered_mental_status"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "recent sinusitis",
+      "focal seizure",
+      "progressive headache"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "mri_brain_contrast"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "mri_brain_contrast"
+    ],
+    "evidence_rules": [
+      {
+        "source": "mri_brain_contrast",
+        "any_of": [
+          "enhancing subdural collection",
+          "rim-enhancing subdural collection"
+        ]
+      },
+      {
+        "source": "mri_brain_contrast",
+        "any_of": [
+          "restricted diffusion in subdural collection",
+          "subdural pus with diffusion restriction"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/neurologic-disorders/brain-infections/intracranial-epidural-abscess-and-subdural-empyema"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "lung_abscess",
+    "name": "Lung Abscess",
+    "aliases": [
+      "폐농양"
+    ],
+    "chief_complaint_tags": [
+      "cough",
+      "fever",
+      "dyspnea"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "foul smelling sputum",
+      "persistent productive cough",
+      "aspiration history"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "ct_chest"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "ct_chest"
+    ],
+    "evidence_rules": [
+      {
+        "source": "ct_chest",
+        "any_of": [
+          "thick-walled pulmonary cavity",
+          "thick-walled lung cavity"
+        ]
+      },
+      {
+        "source": "ct_chest",
+        "any_of": [
+          "air-fluid level within cavity",
+          "cavitary air-fluid level"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/pulmonary-disorders/lung-abscess/lung-abscess"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Cavitation also occurs in malignancy and tuberculosis; microbiological and clinical assessment remain necessary."
+  },
+  {
+    "id": "renal_infarction",
+    "name": "Renal Infarction",
+    "aliases": [
+      "신장경색"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "back_pain"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "sudden flank pain",
+      "hematuria",
+      "flank tenderness"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "ct_abdomen"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "ct_abdomen"
+    ],
+    "evidence_rules": [
+      {
+        "source": "ct_abdomen",
+        "any_of": [
+          "wedge-shaped renal perfusion defect",
+          "wedge-shaped nonenhancing renal cortex"
+        ]
+      },
+      {
+        "source": "ct_abdomen",
+        "any_of": [
+          "renal artery filling defect",
+          "renal arterial occlusion"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/nephrology/renovascular-disorders/renal-artery-stenosis-and-occlusion"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "obstructive_uropathy",
+    "name": "Obstructive Uropathy",
+    "aliases": [
+      "폐쇄성 요로병증"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "back_pain",
+      "weakness"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "reduced urine output",
+      "flank discomfort",
+      "difficulty voiding"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "renal_ultrasound"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "renal_ultrasound"
+    ],
+    "evidence_rules": [
+      {
+        "source": "renal_ultrasound",
+        "any_of": [
+          "hydronephrosis",
+          "dilated renal collecting system"
+        ]
+      },
+      {
+        "source": "renal_ultrasound",
+        "any_of": [
+          "obstructed ureter",
+          "ureteric obstruction"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/genitourinary-disorders/obstructive-uropathy/obstructive-uropathy"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Hydronephrosis alone does not establish obstruction; determine cause and assess infection and renal function."
+  },
+  {
+    "id": "acute_urinary_retention",
+    "name": "Acute Urinary Retention",
+    "aliases": [
+      "급성 요폐"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "unable to pass urine",
+      "painful suprapubic distension",
+      "urinary hesitancy"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "bladder_scan"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "bladder_scan"
+    ],
+    "evidence_rules": [
+      {
+        "source": "bladder_scan",
+        "any_of": [
+          "markedly distended bladder",
+          "large retained bladder volume"
+        ]
+      },
+      {
+        "source": "bladder_scan",
+        "any_of": [
+          "high postvoid residual",
+          "large postvoid residual"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/genitourinary-disorders/voiding-disorders/urinary-retention"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "acute_kidney_injury",
+    "name": "Acute Kidney Injury",
+    "aliases": [
+      "급성 신손상"
+    ],
+    "chief_complaint_tags": [
+      "weakness",
+      "vomiting",
+      "altered_mental_status"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "oliguria",
+      "recent volume depletion",
+      "reduced urine output"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "bmp"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "bmp"
+    ],
+    "evidence_rules": [
+      {
+        "source": "bmp",
+        "any_of": [
+          "acute rise in creatinine from baseline",
+          "creatinine rise over 48 hours",
+          "new decline in renal function",
+          "acute reduction in kidney function"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/nephrology/acute-kidney-injury/acute-kidney-injury-aki"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Requires timing and baseline; isolated elevated creatinine cannot distinguish acute from chronic kidney disease."
+  },
+  {
+    "id": "hyperosmolar_hyperglycemic_state",
+    "name": "Hyperosmolar Hyperglycemic State",
+    "aliases": [
+      "고삼투압 고혈당 상태"
+    ],
+    "chief_complaint_tags": [
+      "altered_mental_status",
+      "weakness",
+      "dyspnea"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "profound dehydration",
+      "polyuria",
+      "polydipsia"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "serum_osmolality",
+      "glucose_point_of_care",
+      "ketones"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "serum_osmolality",
+      "glucose_point_of_care",
+      "ketones"
+    ],
+    "evidence_rules": [
+      {
+        "source": "serum_osmolality",
+        "any_of": [
+          "markedly elevated serum osmolality",
+          "severe hyperosmolality"
+        ]
+      },
+      {
+        "source": "glucose_point_of_care",
+        "any_of": [
+          "severe hyperglycemia",
+          "marked hyperglycemia"
+        ]
+      },
+      {
+        "source": "ketones",
+        "any_of": [
+          "minimal ketonemia",
+          "ketones negative"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/endocrine-and-metabolic-disorders/diabetes-mellitus-and-hypoglycemia/acute-complications-of-diabetes-mellitus"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Assess acid-base status and overlapping DKA. Qualitative laboratory interpretation required; thresholds are not inferred from unparsed numbers."
+  },
+  {
+    "id": "iron_deficiency_anemia",
+    "name": "Iron Deficiency Anemia",
+    "aliases": [
+      "철결핍빈혈"
+    ],
+    "chief_complaint_tags": [
+      "weakness",
+      "dyspnea",
+      "dizziness"
+    ],
+    "category": "expanded_v1",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "pica",
+      "exertional fatigue",
+      "pallor"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "cbc",
+      "iron_studies"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "cbc",
+      "iron_studies"
+    ],
+    "evidence_rules": [
+      {
+        "source": "cbc",
+        "any_of": [
+          "microcytic anemia",
+          "hypochromic microcytic anemia"
+        ]
+      },
+      {
+        "source": "iron_studies",
+        "any_of": [
+          "low ferritin",
+          "depleted iron stores"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/hematology/anemias-caused-by-deficient-erythropoiesis/iron-deficiency-anemia"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Evaluate bleeding and other causes; ferritin can be increased by inflammation."
+  },
+  {
+    "id": "primary_hypothyroidism",
+    "name": "Primary Hypothyroidism",
+    "aliases": [
+      "일차성 갑상선기능저하증"
+    ],
+    "chief_complaint_tags": [
+      "weakness",
+      "altered_mental_status"
+    ],
+    "category": "expanded_v1",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "cold intolerance",
+      "weight gain",
+      "constipation"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "thyroid_panel"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "thyroid_panel"
+    ],
+    "evidence_rules": [
+      {
+        "source": "thyroid_panel",
+        "any_of": [
+          "elevated tsh",
+          "high tsh"
+        ]
+      },
+      {
+        "source": "thyroid_panel",
+        "any_of": [
+          "low free t4",
+          "reduced free thyroxine"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/endocrine-and-metabolic-disorders/thyroid-disorders/hypothyroidism"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "This entry covers primary hypothyroidism, not central disease; severe decompensation requires urgent assessment."
+  },
+  {
+    "id": "hyperthyroidism",
+    "name": "Hyperthyroidism",
+    "aliases": [
+      "갑상선기능항진증"
+    ],
+    "chief_complaint_tags": [
+      "palpitations",
+      "weakness",
+      "dyspnea"
+    ],
+    "category": "expanded_v1",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "heat intolerance",
+      "weight loss despite appetite",
+      "fine tremor"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "thyroid_panel"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "thyroid_panel"
+    ],
+    "evidence_rules": [
+      {
+        "source": "thyroid_panel",
+        "any_of": [
+          "suppressed tsh",
+          "low tsh"
+        ]
+      },
+      {
+        "source": "thyroid_panel",
+        "any_of": [
+          "elevated free t4",
+          "elevated free t3"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/endocrine-and-metabolic-disorders/thyroid-disorders/hyperthyroidism"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "deep_vein_thrombosis",
+    "name": "Deep Vein Thrombosis",
+    "aliases": [
+      "심부정맥혈전증"
+    ],
+    "chief_complaint_tags": [
+      "weakness",
+      "dyspnea"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "unilateral leg swelling",
+      "calf pain",
+      "recent immobilization"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "venous_ultrasound"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "venous_ultrasound"
+    ],
+    "evidence_rules": [
+      {
+        "source": "venous_ultrasound",
+        "any_of": [
+          "noncompressible deep vein",
+          "noncompressible femoral vein",
+          "intraluminal venous thrombus",
+          "deep venous thrombus"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/cardiovascular-disorders/peripheral-venous-disorders/deep-venous-thrombosis-dvt"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Assess concurrent PE for chest symptoms; negative limited ultrasound does not always exclude distal or early thrombosis."
+  },
+  {
+    "id": "cellulitis",
+    "name": "Cellulitis",
+    "aliases": [
+      "봉와직염"
+    ],
+    "chief_complaint_tags": [
+      "fever",
+      "weakness"
+    ],
+    "category": "expanded_v1",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "painful skin redness",
+      "spreading skin erythema",
+      "skin break"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "skin_exam"
+    ],
+    "discriminating_tests": [],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "skin_exam"
+    ],
+    "evidence_rules": [
+      {
+        "source": "skin_exam",
+        "any_of": [
+          "warm tender erythematous skin",
+          "warmth and tenderness of erythematous skin"
+        ]
+      },
+      {
+        "source": "skin_exam",
+        "any_of": [
+          "spreading ill-defined erythema",
+          "poorly demarcated expanding erythema"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/infectious-diseases/bacterial-skin-infections/cellulitis"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Consider DVT and dermatitis; disproportionate pain or systemic instability requires assessment for necrotizing infection."
+  },
+  {
+    "id": "herpes_zoster",
+    "name": "Herpes Zoster",
+    "aliases": [
+      "대상포진"
+    ],
+    "chief_complaint_tags": [
+      "chest_pain",
+      "back_pain",
+      "headache"
+    ],
+    "category": "expanded_v1",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "burning dermatomal pain",
+      "skin hypersensitivity",
+      "unilateral painful rash"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs",
+      "skin_exam"
+    ],
+    "discriminating_tests": [],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "skin_exam"
+    ],
+    "evidence_rules": [
+      {
+        "source": "skin_exam",
+        "any_of": [
+          "grouped vesicles",
+          "clustered vesicles"
+        ]
+      },
+      {
+        "source": "skin_exam",
+        "any_of": [
+          "unilateral dermatomal distribution",
+          "vesicular rash confined to one dermatome"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/infectious-diseases/herpesviruses/herpes-zoster"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Eye or ear involvement and immunocompromise require additional urgent assessment."
+  },
+  {
+    "id": "septic_arthritis",
+    "name": "Septic Arthritis",
+    "aliases": [
+      "화농성 관절염"
+    ],
+    "chief_complaint_tags": [
+      "fever",
+      "weakness"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "acute swollen joint",
+      "pain with passive joint movement",
+      "inability to bear weight"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "synovial_fluid"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "synovial_fluid"
+    ],
+    "evidence_rules": [
+      {
+        "source": "synovial_fluid",
+        "any_of": [
+          "bacteria on synovial gram stain",
+          "positive synovial bacterial culture"
+        ]
+      },
+      {
+        "source": "synovial_fluid",
+        "any_of": [
+          "purulent synovial fluid",
+          "neutrophil predominant synovial fluid"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/musculoskeletal-and-connective-tissue-disorders/infections-of-joints-and-bones/acute-infectious-arthritis"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Negative Gram stain or concurrent crystals do not exclude septic arthritis."
+  },
+  {
+    "id": "acute_gout",
+    "name": "Acute Gout",
+    "aliases": [
+      "급성 통풍"
+    ],
+    "chief_complaint_tags": [
+      "weakness",
+      "fever"
+    ],
+    "category": "expanded_v1",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "first metatarsophalangeal pain",
+      "podagra",
+      "abrupt joint pain"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "synovial_fluid"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "synovial_fluid"
+    ],
+    "evidence_rules": [
+      {
+        "source": "synovial_fluid",
+        "any_of": [
+          "needle-shaped crystals",
+          "needle shaped crystals"
+        ]
+      },
+      {
+        "source": "synovial_fluid",
+        "any_of": [
+          "negatively birefringent monosodium urate",
+          "negatively birefringent urate crystals"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/musculoskeletal-and-connective-tissue-disorders/crystal-induced-arthritides/gout"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Crystals do not exclude concurrent septic arthritis; serum urate alone is not diagnostic."
+  },
+  {
+    "id": "acute_hepatitis",
+    "name": "Acute Hepatitis",
+    "aliases": [
+      "급성 간염"
+    ],
+    "chief_complaint_tags": [
+      "abdominal_pain",
+      "vomiting",
+      "weakness"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "jaundice",
+      "dark urine",
+      "anorexia"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "liver_panel"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "liver_panel"
+    ],
+    "evidence_rules": [
+      {
+        "source": "liver_panel",
+        "any_of": [
+          "acute hepatocellular injury pattern",
+          "marked aminotransferase elevation",
+          "elevated alt and ast",
+          "elevated alanine and aspartate aminotransferases"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/hepatic-and-biliary-disorders/hepatitis/causes-of-hepatitis"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "This is a syndrome-level differential; viral, toxic, ischemic and autoimmune causes need separate investigation."
+  },
+  {
+    "id": "rhabdomyolysis",
+    "name": "Rhabdomyolysis",
+    "aliases": [
+      "횡문근융해증"
+    ],
+    "chief_complaint_tags": [
+      "weakness",
+      "back_pain"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "HIGH",
+    "typical_features": [
+      "severe muscle pain",
+      "dark urine after exertion",
+      "muscle swelling"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "creatine_kinase",
+      "urinalysis"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "creatine_kinase",
+      "urinalysis"
+    ],
+    "evidence_rules": [
+      {
+        "source": "creatine_kinase",
+        "any_of": [
+          "markedly elevated creatine kinase",
+          "creatine kinase greater than five times upper limit"
+        ]
+      },
+      {
+        "source": "urinalysis",
+        "any_of": [
+          "heme positive with few red cells",
+          "myoglobinuria"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/nephrology/acute-kidney-injury/rhabdomyolysis"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Support for a differential diagnosis, not a standalone diagnostic criterion. Missing or normal results do not exclude disease."
+  },
+  {
+    "id": "carbon_monoxide_poisoning",
+    "name": "Carbon Monoxide Poisoning",
+    "aliases": [
+      "일산화탄소 중독"
+    ],
+    "chief_complaint_tags": [
+      "headache",
+      "dizziness",
+      "altered_mental_status"
+    ],
+    "category": "expanded_v1",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "typical_features": [
+      "enclosed space combustion exposure",
+      "household members with similar headache",
+      "symptoms improve outdoors"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "co_oximetry"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "co_oximetry"
+    ],
+    "evidence_rules": [
+      {
+        "source": "co_oximetry",
+        "any_of": [
+          "elevated carboxyhemoglobin",
+          "raised carboxyhemoglobin",
+          "carboxyhemoglobin above exposure reference range",
+          "carboxyhemoglobinemia"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/injuries-poisoning/poisoning/carbon-monoxide-poisoning"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Normal pulse oximetry does not exclude CO poisoning; interpret COHb in exposure and oxygen-treatment context."
+  },
+  {
+    "id": "influenza",
+    "name": "Influenza",
+    "aliases": [
+      "인플루엔자"
+    ],
+    "chief_complaint_tags": [
+      "fever",
+      "cough",
+      "weakness"
+    ],
+    "category": "expanded_v1",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "typical_features": [
+      "abrupt fever and myalgia",
+      "dry cough",
+      "influenza exposure"
+    ],
+    "risk_factors": [],
+    "discriminating_questions": [
+      "onset",
+      "associated_symptoms",
+      "past_medical_history"
+    ],
+    "discriminating_exams": [
+      "vital_signs"
+    ],
+    "discriminating_tests": [
+      "respiratory_pcr"
+    ],
+    "confirmatory_findings": [],
+    "red_flag_keywords": [],
+    "minimum_workup": [
+      "respiratory_pcr"
+    ],
+    "evidence_rules": [
+      {
+        "source": "respiratory_pcr",
+        "any_of": [
+          "influenza a detected",
+          "influenza b detected",
+          "influenza rna detected",
+          "influenza pcr positive"
+        ]
+      }
+    ],
+    "evidence_level": "internally_authored_source_informed_heuristic",
+    "sources": [
+      "https://www.merckmanuals.com/professional/infectious-diseases/respiratory-viruses/influenza"
+    ],
+    "reviewed_on": "2026-10-02",
+    "clinical_review_verified": false,
+    "diagnostic_limitations": "Negative testing does not always exclude infection; assess complications and high-risk patients."
+  }
+]

@@ -221,6 +221,9 @@ def _score_glucose(entry_id: str, glucose_mg_dl: Optional[float],
 
 
 def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List[str], List[str], List[str]]:
+    if entry.get("evidence_rules"):
+        from nova_agent.expanded_evidence import score_expanded
+        return score_expanded(entry, state)
     findings = state.all_findings_text()
     negatives = state.pertinent_negatives
 
@@ -462,6 +465,10 @@ class DifferentialEngine:
             score, max_possible, supporting, contradictory, missing = _score_disease(entry, state)
             score_ratio = max(0.0, score) / max_possible
             band = _confidence_band(score_ratio, state.turn_count, len(supporting))
+            if entry.get("evidence_rules"):
+                from nova_agent.expanded_evidence import evidence_complete
+                if not evidence_complete(entry, state):
+                    band = "LOW"
             scored.append((score, score_ratio, entry, supporting, contradictory, missing, band))
 
         scored.sort(key=lambda t: (t[0], t[2]["id"] in routed_ids), reverse=True)

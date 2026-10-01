@@ -43,6 +43,9 @@ jobs:
       - name: Benchmark (tuning + held-out + generalization-v2 + stress sets)
         run: python -m evaluation.benchmark --generalization-v2 --stress
 
+      - name: Enforce 68-condition catalog regression (mock, not clinical validation)
+        run: python -m evaluation.catalog_regression --save-json /tmp/nova-catalog-results.json
+
       - name: Generalization benchmark
         run: python -m evaluation.generalization_benchmark
 

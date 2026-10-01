@@ -44,6 +44,19 @@ class SafetyLayer:
         differential_ids = {d.diagnosis_id for d in differential}
         findings_text = state.all_findings_text()
 
+        # Keep source-supported dangerous additions visible even outside top-K.
+        from nova_agent.knowledge.retrieval import all_diseases
+        from nova_agent.expanded_evidence import rule_matches
+        for entry in all_diseases().values():
+            if not entry.get('dangerous') or not entry.get('evidence_rules'):
+                continue
+            evidence = [rule['source'] + ': ' + ' / '.join(rule['any_of'])
+                        for rule, matched in zip(entry['evidence_rules'], rule_matches(entry, state)) if matched]
+            if evidence:
+                findings.append(SafetyFinding(diagnosis_id=entry['id'], condition=entry['name'],
+                    reason='Source-bound findings support a dangerous alternative; specialist assessment may be needed.',
+                    evidence=evidence, source='objective_evidence', urgency=entry['urgency']))
+
         for diagnosis_id in critical_condition_ids():
             entry = disease_by_id(diagnosis_id)
             if entry is None:

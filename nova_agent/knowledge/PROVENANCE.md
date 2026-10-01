@@ -6,7 +6,8 @@ than no citation at all.
 
 ## What this is
 
-Every entry in `diseases/*.json`, `red_flags/*.json`, `diagnostic_tests/notes.json`, and
+The original entries in `diseases/*.json` (excluding the source-informed `expanded_v1.json`),
+`red_flags/*.json`, `diagnostic_tests/notes.json`, and
 `guidelines/chief_complaint_guidelines.json` is an **internally authored clinical heuristic**,
 written by the implementer from general medical knowledge (standard differential-diagnosis
 teaching: typical presenting features, common risk factors, first-line discriminating workup for
@@ -24,13 +25,10 @@ prototype's clinical judgment encoded as data, not a certified source.
 
 ## What this is not
 
-- Not sourced from UpToDate, DynaMed, a specific national/society clinical practice guideline, a
-  peer-reviewed diagnostic-accuracy study, or any other citable external reference. No such
-  citation is claimed anywhere in the JSON files, deliberately -- adding a fabricated "source" URL
-  or document name to make an entry look more authoritative than it is would be actively
-  misleading, and none has been added.
+- The original base catalog was not sourced from UpToDate, DynaMed, a specific national/society clinical practice guideline, a
+  peer-reviewed diagnostic-accuracy study, or any other citable external reference. Later source-informed additions are listed separately below; their references do not certify the software.
 - Not clinically validated against real patient outcomes or reviewed by a licensed physician.
-- Not exhaustive: 34 diagnoses across 15 chief-complaint categories is a deliberately small,
+- Not exhaustive: 68 diagnostic entries across the existing chief-complaint categories is a deliberately small,
   can't-miss-condition-weighted set (spec section 12's KB = high-frequency + can't-miss diseases /
   LLM = long-tail differential generation design), not a claim of comprehensive coverage.
 
@@ -77,3 +75,13 @@ Pending/possible/contaminated results and shock without infection evidence do no
 Reference checked for the distinction between infection and organ dysfunction:
 Sepsis-3 consensus, https://doi.org/10.1001/jama.2016.0287 . The implementation is
 a limited internal heuristic and does not reproduce the complete consensus definition.
+
+
+## Expanded catalog (2026-10-02 Asia/Seoul)
+
+`diseases/expanded_v1.json` adds 34 internally authored, source-informed definitions.
+Merck Manual Professional topic pages and the O-RADS US v2022 consensus inform the bounded
+features. Per-entry URLs, limitations and `clinical_review_verified: false` are supplied.
+See `docs/CATALOG_EXPANSION.md` for the complete list and validation limits. Literal phrase
+matching, scoring weights, all-rule evidence gates and urgency labels are implementation
+choices; they do not reproduce complete clinical guidelines or constitute clinical review.

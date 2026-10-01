@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 233 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 379 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -28,7 +28,22 @@ what is *not* yet verified.
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
 
-## Validation readiness — 2026-10-02 (Asia/Seoul)
+## Catalog expansion — 2026-10-02 (Asia/Seoul)
+
+**68 diagnostic entries (34 added), with 16 additional local examination/test procedures.**
+Source-bound evidence, conservative confidence/early-stop guards, dangerous-alternative tracking,
+and whole-phrase diagnosis mapping accompany the expansion. [Coverage, limitations and references](docs/CATALOG_EXPANSION.md).
+
+379 software tests pass. The final mock gate retains all 171/171 previously scored diagnoses
+and reaches 34/34 on new same-author development vignettes (205/205 scored in total; 3
+additional unscored cases reported separately). No critical misses, duplicate actions or
+malformed outputs occurred. The enforcing mock regression gate is
+`python -m evaluation.catalog_regression --save-json evaluation/catalog_results.json`.
+New vignettes are internally authored, vocabulary-aligned development checks; they do not
+establish real-model or clinical accuracy. Official support for the new procedures remains
+unverified. Existing case text/labels are unchanged. Earlier revision results below are historical.
+
+## Validation readiness — earlier 2026-10-02 revision (Asia/Seoul)
 
 The latest revision adds external frozen-case loading, real-model workflow support, bounded
 Korean/English normalization, offline catalog extensions, uncertainty reporting, and repeat-question
@@ -403,10 +418,10 @@ goes stale against a fresh `evaluation/latest_results.json`.
 
 | Set | Scored Accuracy | All-Case Accuracy | Critical Recall | Critical Miss Rate | Avg Turns |
 |---|---|---|---|---|---|
-| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 27.8 |
-| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 31.2 |
-| Development generalization (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 27.6 |
-| Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 31.0 |
+| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 28.4 |
+| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 32.1 |
+| Development generalization (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 28.6 |
+| Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 29.6 |
 | Blind v3 reference (32 cases, all scored, 14 critical) | 62.5% | 62.5% | 57.1% | 42.9% | 20.9 |
 | Blind v4 reference (34 cases, all scored, 14 critical) | 64.7% | 64.7% | 71.4% | 28.6% | 19.8 |
 | **Untouched Blind v5 (44 cases, all scored, 20 critical)** | **52.3%** | **52.3%** | **40.0%** | **60.0%** | 20.7 |
@@ -529,7 +544,7 @@ ships; nothing else needs to change, since `nova_agent/`, `evaluation/`, `submis
 
 ## 8. Known Limitations
 
-- **Knowledge base breadth**: 34 diagnoses across 15 chief-complaint tags -- far from exhaustive;
+- **Knowledge base breadth**: 68 diagnostic entries across the existing chief-complaint tags -- far from exhaustive;
   the LLM can introduce diagnoses outside this set, but the deterministic prior only covers these.
 - **Generalization v2 was 88.9%, with two real misses, as of the previous round** -- both were
   root-caused (not patched around the specific case text) and are now fixed, verified at 100.0% on

@@ -43,4 +43,17 @@ def load_extension(path, existing_ids):
             raise ValueError('Unsupported minimum workup')
         if not entry.get('typical_features') and not entry.get('confirmatory_findings'):
             raise ValueError('Diagnostic evidence features required')
+        if 'evidence_rules' in entry:
+            rules = entry['evidence_rules']
+            if not isinstance(rules, list) or not rules:
+                raise ValueError('Nonempty evidence_rules required')
+            allowed = set(entry.get('discriminating_exams', []) + entry.get('discriminating_tests', []))
+            for rule in rules:
+                if not isinstance(rule, dict) or set(rule) != {'source', 'any_of'}:
+                    raise ValueError('Evidence rule requires source and any_of')
+                if not isinstance(rule['source'], str) or rule['source'] not in allowed:
+                    raise ValueError('Evidence source must be a declared examination or test')
+                aliases = rule['any_of']
+                if not isinstance(aliases, list) or not aliases or not all(isinstance(s, str) and s.strip() for s in aliases):
+                    raise ValueError('Evidence aliases must be nonempty strings')
     return entries

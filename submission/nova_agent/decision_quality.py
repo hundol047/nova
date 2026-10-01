@@ -8,7 +8,11 @@ def assess_decision(state, differential):
     if not differential:
         return {'band':'LOW','probability':None,'calibrated':False,'catalog_status':'unsupported','reasons':['no_candidate']}
     top=differential[0]
-    known=disease_by_id(top.diagnosis_id) is not None
+    entry=disease_by_id(top.diagnosis_id)
+    known=entry is not None
+    if entry and entry.get("evidence_rules"):
+        from nova_agent.expanded_evidence import evidence_complete
+        if not evidence_complete(entry, state):reasons.append("required_evidence_missing")
     if not known:reasons.append('outside_local_catalog')
     if not top.supporting_evidence:reasons.append('no_supporting_evidence')
     if top.contradictory_evidence:reasons.append('contradictory_evidence')
