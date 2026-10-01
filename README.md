@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 172 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 195 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -27,6 +27,39 @@ what is *not* yet verified.
 > Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
+
+## Assertion handling — 2026-10-02 (Asia/Seoul)
+
+This latest revision reduces false supporting evidence. On 22 newly authored, same-author
+adversarial **evidence-interpretation probes**, correct handling improved from **10/22 to 22/22**.
+This metric is not diagnostic accuracy. Positive controls verify that genuine reported findings
+still contribute support; rejecting every observation would fail the challenge.
+
+- Tentative, hypothetical, inconclusive and contaminated wording is kept in the patient history
+  and LLM summary but filtered from deterministic affirmative keyword/confirmatory matching.
+- Negated CSF white-cell elevation no longer becomes an affirmative pleocytosis label.
+- A ketone result reported only as positive is no longer promoted to large ketones.
+- Double negation such as no absent breath sounds does not count as absent breath sounds.
+- Temporal evidence spanning clauses remains linked; observed positional triggers and the month
+  May are not discarded merely because they contain conditional/modal-looking words.
+
+The interpretation remains a bounded English heuristic. It does not establish clinical
+sensitivity/specificity, solve every uncertainty or negation pattern, or supply independent
+validation. The following development diagnostic scores must not be presented as live accuracy.
+
+195 tests pass. Full-case diagnostic regressions retain V3 32/32, V4 34/34, V5 44/44,
+V6 12/12 and the existing 49/49 scored development cases. All use mock; none establish
+independent or live-model accuracy. Adversarial checks and deterministic stability also pass.
+
+Reproducible probe command:
+
+```bash
+python -m evaluation.evidence_challenge --save-json evidence-report.json
+```
+
+See `evaluation/assertion_validation_results.json` for before/after probe results and current
+full-case regressions. Previous reports below remain historical. Live model accuracy remains
+unverified because no competition endpoint/key is configured.
 
 ## Evidence refinement — 2026-10-02 (Asia/Seoul)
 

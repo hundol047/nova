@@ -81,6 +81,21 @@ def positive_clauses(text: str) -> list[str]:
     return output
 
 
+@lru_cache(maxsize=4096)
+def asserted_clauses(text: str) -> tuple[str, ...]:
+    """Retain stated observations, without upgrading possibilities to findings.
+
+    This is a bounded text assertion filter. Tentative evidence remains in the
+    original patient state and model summary but cannot act as confirmed support.
+    Negations are retained for the caller to interpret; they are not positives.
+    """
+    parts = re.split(r'[;,]|(?<!\d)\.(?!\d)|\b(?:but|however|although)\b', text, flags=re.I)
+    uncertain = re.compile(r'\b(?:possibl\w*|suspected|unconfirmed|inconclusive|pending|hypothetical|'
+                           r'might|cannot exclude|cannot rule out|rule out|contaminat\w*)\b|\?|'
+                           r'^\s*if\b|\b(?:may|could)\s+(?:be|have|represent|indicate)\b', re.I)
+    return tuple(part.strip() for part in parts if part.strip() and not uncertain.search(part))
+
+
 @lru_cache(maxsize=256)
 def _patterns(feature: str):
     return [re.compile(pattern, re.I) for pattern in ALIASES.get(feature.lower(), [])]
@@ -88,6 +103,7 @@ def _patterns(feature: str):
 
 def concept_present(feature: str, texts: list[str]) -> bool:
     feature = feature.lower()
+    texts = [" ; ".join(asserted_clauses(text)) for text in texts]
     if feature == "periumbilical pain migrating to right lower quadrant":
         # Bind locations to an explicit temporal/migration description within one observation.
         for text in texts:
@@ -107,6 +123,8 @@ def concept_present(feature: str, texts: list[str]) -> bool:
     use_raw=feature in {'absent breath sounds','unilateral absent breath sounds'}
     for text in texts:
         for clause in ([text] if use_raw else positive_clauses(text)):
+            if use_raw and re.search(r"\b(?:no|not|without|denies)\s+(?:any\s+)?(?:absent|absence)\b", clause, re.I):
+                continue
             if any(p.search(clause) for p in patterns): return True
     return False
 
@@ -114,6 +132,7 @@ def concept_present(feature: str, texts: list[str]) -> bool:
 def objective_findings(entry: dict, state) -> list[str]:
     """Keep source compartments: CSF leukocytes are not blood or urine leukocytes."""
     results={**state.physical_examinations, **state.laboratory_tests, **state.imaging}
+    results = {key: ' ; '.join(asserted_clauses(value)) for key,value in results.items()}
     allowed=set(entry.get('discriminating_exams',[])+entry.get('discriminating_tests',[]))
     out=[value for key,value in results.items() if key in allowed]
     # An explicit positive in a named test has semantics even if the value omits its name.
@@ -121,14 +140,15 @@ def objective_findings(entry: dict, state) -> list[str]:
             'ketones':'large ketones'}
     for key,label in labels.items():
         value=results.get(key,'')
-        if key in allowed and re.search(r'\b(?:positive|large|strongly positive)\b',value,re.I) and not re.search(r'\b(?:not|negative|pending|trace)\b',value,re.I):
+        positive_pattern = r'\blarge\b' if key == 'ketones' else r'\b(?:positive|strongly positive)\b'
+        if key in allowed and re.search(positive_pattern,value,re.I) and not re.search(r'\b(?:not|negative|pending|trace)\b',value,re.I):
             out.append(label)
     # Preserve the named procedure when a result only describes its value.
     lipase=results.get('lipase','') if 'lipase' in allowed else ''
     if re.search(r'\b(?:elevated|raised|high|increased)\b',lipase,re.I) and not re.search(r'\b(?:not|no|normal|pending)\b',lipase,re.I):
         out.append('elevated lipase')
     csf=results.get('lumbar_puncture','') if 'lumbar_puncture' in allowed else ''
-    if re.search(r'\b(?:elevated|increased|high)\b.{0,20}\b(?:white|wbc|leukocyte|cell)',csf,re.I):
+    if any(re.search(r'\b(?:elevated|increased|high)\b.{0,20}\b(?:white|wbc|leukocyte|cell)',clause,re.I) for clause in positive_clauses(csf)):
         out.append('CSF pleocytosis')
     return out
 

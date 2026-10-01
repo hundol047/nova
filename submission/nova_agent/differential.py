@@ -19,7 +19,7 @@ from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
 from nova_agent.chief_complaint import related_tags, route, expanded_tags
 from nova_agent.config import get_config
 from nova_agent.postural_evidence import postural_drop
-from nova_agent.evidence_interpreter import concept_present, objective_findings, current_symptom_findings, infection_with_circulatory_and_mental_change
+from nova_agent.evidence_interpreter import concept_present, objective_findings, asserted_clauses, current_symptom_findings, infection_with_circulatory_and_mental_change
 from nova_agent.electrolyte_evidence import extract_potassium_mmol_l, SEVERE_POTASSIUM_MMOL_L
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
@@ -88,6 +88,8 @@ FEATURE_ALIASES: dict[str, list[str]] = {
 def _present_with_aliases(phrase: str, findings: List[str]) -> bool:
     """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
     FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase."""
+    if get_config().evidence_interpretation:
+        findings = [" ; ".join(asserted_clauses(text)) for text in findings]
     if phrase in {"unilateral pulsating headache", "recurrent similar episodes"} and not any(
         feature_present("headache", [t], scrub_negated_spans=True) for t in findings):
         return False
