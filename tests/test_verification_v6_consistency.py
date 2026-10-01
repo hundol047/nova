@@ -114,14 +114,13 @@ def test_v6_new_round_e_mechanisms_are_all_recorded():
         assert key in data
 
 
-def test_current_release_pointer_matches_v6_artifact():
+def test_current_release_pointer_no_longer_points_to_v6():
+    # v7 (Round F) superseded v6 as the pointer target; v6 stays preserved and unchanged in schema.
     pointer = _load_pointer()
     data = _load_v6()
-    assert pointer["current_verification_schema"] == data["schema"]
-    assert pointer["verified_runtime_sha"] == data["verified_runtime_sha"]
-    assert pointer["current_blind_version"] == data["current_blind_version"]
-    referenced = _ROOT / pointer["current_verification_artifact"]
-    assert referenced.resolve() == _V6_PATH.resolve()
+    assert pointer["current_verification_schema"] != data["schema"]
+    assert (_ROOT / pointer["current_verification_artifact"]).resolve() != _V6_PATH.resolve()
+    assert data["schema"] == "nova-verification-v6"
 
 
 def test_current_release_pointer_preserves_v5_and_v4_and_v3_as_previous():
