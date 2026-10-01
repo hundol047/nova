@@ -19,7 +19,7 @@ from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
 from nova_agent.chief_complaint import related_tags, route, expanded_tags
 from nova_agent.config import get_config
 from nova_agent.postural_evidence import postural_drop
-from nova_agent.evidence_interpreter import concept_present, objective_findings, asserted_clauses, current_symptom_findings, infection_with_circulatory_and_mental_change
+from nova_agent.evidence_interpreter import concept_present, objective_findings, patient_symptom_findings, asserted_clauses, current_symptom_findings, infection_with_circulatory_and_mental_change
 from nova_agent.electrolyte_evidence import extract_potassium_mmol_l, SEVERE_POTASSIUM_MMOL_L
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
@@ -232,7 +232,7 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
 
     for feature in entry.get("typical_features", []):
         max_possible += FEATURE_WEIGHT
-        feature_sources = current_symptom_findings(feature, findings) if get_config().evidence_interpretation else findings
+        feature_sources = current_symptom_findings(feature, patient_symptom_findings(findings)) if get_config().evidence_interpretation else findings
         score += _score_phrase(feature, FEATURE_WEIGHT, feature_sources, negatives, supporting, contradictory, missing)
 
     for risk_factor in entry.get("risk_factors", []):

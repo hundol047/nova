@@ -6,6 +6,7 @@ features, with explicit polarity and provenance. Missing information stays unkno
 """
 from __future__ import annotations
 import re
+from nova_agent.language import normalize_clinical_text
 from functools import lru_cache
 
 # Generic concept variants, scoped to a single KB feature. No global text replacement.
@@ -132,7 +133,7 @@ def concept_present(feature: str, texts: list[str]) -> bool:
 def objective_findings(entry: dict, state) -> list[str]:
     """Keep source compartments: CSF leukocytes are not blood or urine leukocytes."""
     results={**state.physical_examinations, **state.laboratory_tests, **state.imaging}
-    results = {key: ' ; '.join(asserted_clauses(value)) for key,value in results.items()}
+    results = {key: ' ; '.join(asserted_clauses(normalize_clinical_text(value))) for key,value in results.items()}
     allowed=set(entry.get('discriminating_exams',[])+entry.get('discriminating_tests',[]))
     out=[value for key,value in results.items() if key in allowed]
     # An explicit positive in a named test has semantics even if the value omits its name.
@@ -191,3 +192,9 @@ def infection_with_circulatory_and_mental_change(state) -> list[str]:
     if infection and low_pressure and changed:
         return ['infection-compatible specimen result with recorded hypotension and mental-status change']
     return []
+
+
+def patient_symptom_findings(texts: list[str]) -> list[str]:
+    """Family-member observations may be risk factors, not current patient symptoms."""
+    return [" ; ".join(clause for clause in asserted_clauses(text)
+            if not re.search(r"\b(?:mother|father|sister|brother|family history)\b|어머니|아버지|가족력",clause,re.I)) for text in texts]

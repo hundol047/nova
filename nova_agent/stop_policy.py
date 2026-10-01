@@ -50,7 +50,7 @@ class StopPolicy:
             return StopDecision(should_diagnose=True, forced=True,
                                  reason=f"Only {state.remaining_turns} turn(s) remaining; forcing final diagnosis "
                                         "to guarantee submission within the turn limit.",
-                                 readiness_score=1.0)
+                                 readiness_score=0.0)
 
         if not differential:
             return StopDecision(should_diagnose=False, forced=False,

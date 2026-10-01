@@ -81,6 +81,7 @@ class StopPolicyConfig:
 
 @dataclass(frozen=True)
 class NovaConfig:
+    knowledge_extension: str = field(default_factory=lambda: _str_env("NOVA_KNOWLEDGE_EXTENSION", ""))
     max_turns: int = field(default_factory=lambda: _int_env("NOVA_MAX_TURNS", 60))
     top_k_differential: int = field(default_factory=lambda: _int_env("NOVA_TOP_K_DIFFERENTIAL", 5))
     broad_candidates: bool = field(default_factory=lambda: _bool_env("NOVA_BROAD_CANDIDATES", True))

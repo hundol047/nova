@@ -52,6 +52,8 @@ class DoctorAgent:
     # --- core turn loop -----------------------------------------------------------------------
 
     def decide(self, state: PatientState) -> Tuple[AgentAction, Optional[AgentTurnOutput], List[DifferentialItem]]:
+        state.decision_quality = {"band":"LOW", "probability":None, "calibrated":False,
+                                  "catalog_status":"unassessed", "reasons":["assessment_unavailable"]}
         try:
             # 1. Patient State (given) -> deterministic prior differential + safety findings.
             #    These are ALWAYS computed (never delegated to the LLM) -- they are what
@@ -142,6 +144,10 @@ class DoctorAgent:
 
             # The validated (possibly LLM-authored, possibly safety-merged) differential is what
             # PatientState/logging/clinical_summary see from here on.
+            from nova_agent.decision_quality import assess_decision
+            state.decision_quality = assess_decision(state, result.differential)
+            if result.differential and state.decision_quality["band"] == "LOW":
+                result.differential[0].confidence_band = "LOW"
             state.current_differential = [
                 DifferentialSnapshot(diagnosis=d.diagnosis, rank=d.rank, confidence_band=d.confidence_band,
                                       urgency=d.urgency, dangerous_if_missed=d.dangerous_if_missed)

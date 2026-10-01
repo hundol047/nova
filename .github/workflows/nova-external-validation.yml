@@ -1,0 +1,51 @@
+name: External frozen case validation
+on:
+  workflow_dispatch:
+    inputs:
+      cases_path:
+        description: Repository path to independently authored case JSON
+        required: true
+        type: string
+      manifest_path:
+        description: Repository path to frozen manifest
+        required: true
+        type: string
+      max_cases:
+        description: Maximum cases for this run (reported case IDs remain explicit)
+        required: true
+        default: '10'
+        type: string
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      NOVA_LLM_PROVIDER: competition
+      NOVA_COMPETITION_BASE_URL: ${{ secrets.NOVA_COMPETITION_BASE_URL }}
+      NOVA_COMPETITION_MODEL: ${{ secrets.NOVA_COMPETITION_MODEL }}
+      NOVA_COMPETITION_API_KEY: ${{ secrets.NOVA_COMPETITION_API_KEY }}
+      NOVA_CASES_PATH: ${{ inputs.cases_path }}
+      NOVA_MANIFEST_PATH: ${{ inputs.manifest_path }}
+      NOVA_CASE_LIMIT: ${{ inputs.max_cases }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements-nova.txt
+      - name: Verify case manifest before model calls
+        run: |
+          python -c 'import os; from evaluation.sealed_cases import load_frozen_cases; load_frozen_cases(os.environ["NOVA_CASES_PATH"], os.environ["NOVA_MANIFEST_PATH"])'
+      - name: Real model preflight
+        run: python scripts/preflight_competition.py
+      - name: Complete case validation (mock cannot pass)
+        run: |
+          python -m evaluation.real_llm_benchmark --require-real --cases-json "$NOVA_CASES_PATH" --case-manifest "$NOVA_MANIFEST_PATH" --max-cases "$NOVA_CASE_LIMIT" --timeout 180 --save-json external-real-report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-real-report
+          path: external-real-report.json
+          if-no-files-found: warn

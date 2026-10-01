@@ -28,6 +28,11 @@ def _load_diseases() -> Dict[str, dict]:
     for path in sorted((KNOWLEDGE_ROOT / "diseases").glob("*.json")):
         for entry in json.loads(path.read_text(encoding="utf-8")):
             diseases[entry["id"]] = entry
+    extension_path = get_config().knowledge_extension
+    if extension_path:
+        from nova_agent.knowledge.extensions import load_extension
+        for entry in load_extension(extension_path, diseases):
+            diseases[entry["id"]] = entry
     return diseases
 
 

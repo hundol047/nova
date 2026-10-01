@@ -1,5 +1,38 @@
 {
   "tuning": {
+    "confidence_reliability": {
+      "calibrated_probabilities": false,
+      "interpretation": "descriptive on supplied data; no generalization guarantee",
+      "by_evidence_band": {
+        "MEDIUM": {
+          "n": 1,
+          "correct": 1,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.20654329147389294,
+            1
+          ]
+        },
+        "HIGH": {
+          "n": 5,
+          "correct": 5,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.5655085052479191,
+            1
+          ]
+        },
+        "LOW": {
+          "n": 2,
+          "correct": 2,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.34237195288961925,
+            1
+          ]
+        }
+      }
+    },
     "scored_diagnostic_accuracy": 1.0,
     "all_case_diagnostic_accuracy": 1.0,
     "unscored_case_names": [],
@@ -22,6 +55,39 @@
     "n_critical_cases": 6
   },
   "held_out": {
+    "confidence_reliability": {
+      "calibrated_probabilities": false,
+      "interpretation": "descriptive on supplied data; no generalization guarantee",
+      "by_evidence_band": {
+        "MEDIUM": {
+          "n": 9,
+          "correct": 9,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.7008472464490407,
+            1
+          ]
+        },
+        "HIGH": {
+          "n": 4,
+          "correct": 4,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.5100999795960008,
+            1
+          ]
+        },
+        "LOW": {
+          "n": 2,
+          "correct": 2,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.34237195288961925,
+            1
+          ]
+        }
+      }
+    },
     "scored_diagnostic_accuracy": 1.0,
     "all_case_diagnostic_accuracy": 0.9444444444444444,
     "unscored_case_names": [
@@ -32,22 +98,55 @@
     "unsupported_case_success_rate": 1.0,
     "critical_diagnosis_recall": 1.0,
     "critical_miss_rate": 0.0,
-    "average_turns": 31.27777777777778,
+    "average_turns": 31.22222222222222,
     "median_turns": 32.0,
     "duplicate_action_rate": 0.0,
     "unnecessary_test_rate": 2.5555555555555554,
     "malformed_output_rate": 0.0,
     "failed_diagnosis_rate": 0.0,
     "fallback_rate": null,
-    "average_ask_count": 11.277777777777779,
+    "average_ask_count": 11.444444444444445,
     "average_exam_count": 7.444444444444445,
-    "average_test_count": 11.555555555555555,
-    "utility_score_proxy": 0.5038888888888888,
+    "average_test_count": 11.333333333333334,
+    "utility_score_proxy": 0.5044444444444444,
     "n_cases": 18,
     "n_scored_cases": 15,
     "n_critical_cases": 13
   },
   "generalization_v2": {
+    "confidence_reliability": {
+      "calibrated_probabilities": false,
+      "interpretation": "descriptive on supplied data; no generalization guarantee",
+      "by_evidence_band": {
+        "HIGH": {
+          "n": 3,
+          "correct": 3,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.43849391955098227,
+            1
+          ]
+        },
+        "MEDIUM": {
+          "n": 12,
+          "correct": 12,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.7574992425007574,
+            1
+          ]
+        },
+        "LOW": {
+          "n": 3,
+          "correct": 3,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.43849391955098227,
+            1
+          ]
+        }
+      }
+    },
     "scored_diagnostic_accuracy": 1.0,
     "all_case_diagnostic_accuracy": 1.0,
     "unscored_case_names": [],
@@ -70,6 +169,39 @@
     "n_critical_cases": 5
   },
   "stress": {
+    "confidence_reliability": {
+      "calibrated_probabilities": false,
+      "interpretation": "descriptive on supplied data; no generalization guarantee",
+      "by_evidence_band": {
+        "MEDIUM": {
+          "n": 5,
+          "correct": 5,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.5655085052479191,
+            1
+          ]
+        },
+        "HIGH": {
+          "n": 1,
+          "correct": 1,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.20654329147389294,
+            1
+          ]
+        },
+        "LOW": {
+          "n": 2,
+          "correct": 2,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.34237195288961925,
+            1
+          ]
+        }
+      }
+    },
     "scored_diagnostic_accuracy": 1.0,
     "all_case_diagnostic_accuracy": 1.0,
     "unscored_case_names": [],

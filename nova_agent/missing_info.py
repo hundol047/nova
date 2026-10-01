@@ -101,11 +101,13 @@ def _already_answered(state: PatientState, category: str) -> bool:
         return True
     if category == "past_medical_history" and state.past_medical_history:
         return True
+    if category == "associated_symptoms" and state.associated_symptoms:
+        return True
     if category == "family_history" and state.family_history:
         return True
     if category == "social_history" and state.social_history:
         return True
-    if category == "medication" and state.medications:
+    if category == "medication" and (state.medications or state.medication_text):
         return True
     if category == "allergy" and state.allergies:
         return True

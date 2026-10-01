@@ -25,12 +25,19 @@ from pathlib import Path
 from typing import List, Optional
 
 from nova_agent.config import get_config
+from nova_agent.diagnosis_normalizer import same_diagnosis
 from nova_agent.llm_client import MockLLMClient, get_llm_client
 from nova_agent.orchestrator import DoctorAgent
 
 from evaluation.cases import SyntheticCase
 from evaluation.held_out_cases import HELD_OUT_CASES
 from evaluation.simulator import CaseResult, PatientSimulator, _relevant_test_ids
+
+
+def all_decisions_real(state) -> bool:
+    """Strict evaluation: every decision used a successful real call, no fallback/budget gaps."""
+    return (state.turn_count > 0 and state.llm_success_count >= state.turn_count
+            and state.llm_failure_count == 0 and state.llm_fallback_count == 0)
 
 
 def run_one_case(agent: DoctorAgent, case: SyntheticCase, timeout_seconds: Optional[float]) -> tuple:
@@ -78,7 +85,7 @@ def run_one_case(agent: DoctorAgent, case: SyntheticCase, timeout_seconds: Optio
 
     relevant_tests = _relevant_test_ids(case)
     unnecessary_tests = sum(1 for t in tests_performed if t not in relevant_tests)
-    correct = bool(state.final_diagnosis) and same_diagnosis(state.final_diagnosis, case.ground_truth_diagnosis)
+    correct = bool(state.final_diagnosis) and any(same_diagnosis(state.final_diagnosis, label) for label in [case.ground_truth_diagnosis, *case.acceptable_diagnoses])
 
     result = CaseResult(
         case_id=case.case_id, category=case.category, scoring_expected=case.scoring_expected,
@@ -99,12 +106,14 @@ def main() -> None:
     parser.add_argument("--provider", default=None,
                          help="Override NOVA_LLM_PROVIDER for this run only (e.g. competition, "
                               "openai_compatible, anthropic). Defaults to whatever is already configured.")
+    parser.add_argument("--cases-json", help="External case bundle JSON")
+    parser.add_argument("--case-manifest", help="Frozen manifest from evaluation.sealed_cases")
     parser.add_argument("--cases", default=None,
                          help="Comma-separated case_ids to run (default: all held-out cases).")
     parser.add_argument("--max-cases", type=int, default=None, help="Cap the number of cases run.")
     parser.add_argument("--timeout", type=float, default=None, help="Soft per-case wall-time budget in seconds.")
     parser.add_argument("--save-json", default=None, help="Path to write structured per-case + summary results.")
-    parser.add_argument("--require-real", action="store_true", help="Fail unless every case completes with a successful real model response.")
+    parser.add_argument("--require-real", action="store_true", help="Fail unless every decision completes with a successful real model response and no fallback.")
     parser.add_argument("--resume", action="store_true",
                          help="With --save-json pointing at an existing file, skip case_ids already recorded in it.")
     args = parser.parse_args()
@@ -144,7 +153,13 @@ def main() -> None:
             print("Refusing to run a real-LLM benchmark against an endpoint that failed preflight.", file=sys.stderr)
             sys.exit(1)
 
+    case_metadata = {"role":"reused development"}
+    if bool(args.cases_json) != bool(args.case_manifest):
+        parser.error("--cases-json and --case-manifest must be supplied together")
     cases = HELD_OUT_CASES
+    if args.cases_json:
+        from evaluation.sealed_cases import load_frozen_cases
+        cases, case_metadata = load_frozen_cases(args.cases_json, args.case_manifest)
     if args.cases:
         wanted = set(args.cases.split(","))
         unknown = wanted - {c.case_id for c in cases}
@@ -166,10 +181,12 @@ def main() -> None:
     for key in list(config_values):
         if "api_key" in key:
             config_values.pop(key)
-    run_config = {"provider": cfg.llm_provider, "model": getattr(client, "model", None),
+    from nova_agent.knowledge.retrieval import all_diseases
+    catalog_sha256 = hashlib.sha256(json.dumps(all_diseases(), sort_keys=True).encode()).hexdigest()
+    run_config = {"real_verification_mode": "every_decision" if args.require_real else "at_least_one_call", "catalog_sha256": catalog_sha256, "provider": cfg.llm_provider, "model": getattr(client, "model", None),
         "source_sha256": digest.hexdigest(), "timeout": args.timeout,
         "config_sha256": hashlib.sha256(repr(sorted(config_values.items())).encode()).hexdigest(),
-        "case_ids": [c.case_id for c in cases], "metric_version": "independent_allowlist_v2"}
+        "case_manifest": case_metadata, "case_ids": [c.case_id for c in cases], "metric_version": "independent_allowlist_v2"}
     already_done = {}
     if args.resume and args.save_json and Path(args.save_json).exists():
         existing = json.loads(Path(args.save_json).read_text(encoding="utf-8"))
@@ -185,6 +202,8 @@ def main() -> None:
         print(f"Running {case.case_id}...", file=sys.stderr)
         result, wall_seconds, timed_out, state = run_one_case(agent, case, args.timeout)
         record = {
+            "decision_quality": state.decision_quality, "scoring_expected": case.scoring_expected,
+            "coexisting_differential_recall": (sum(any(same_diagnosis(d.diagnosis,label) for d in state.current_differential) for label in case.coexisting_diagnoses)/len(case.coexisting_diagnoses) if case.coexisting_diagnoses else None),
             "case_id": result.case_id, "ground_truth": result.ground_truth,
             "final_diagnosis": result.final_diagnosis, "correct": result.correct,
             "critical": result.critical, "critical_miss": result.critical_miss,
@@ -195,6 +214,7 @@ def main() -> None:
             "llm_successes": state.llm_success_count,
             "llm_parse_failure_turns": state.llm_parse_failure_turns,
             "real_llm_verified": state.real_llm_ever_succeeded is True,
+            "all_decisions_real": all_decisions_real(state),
             "failed_to_diagnose": result.failed_to_diagnose,
             "malformed_turns": result.malformed_turns,
             "avg_llm_latency_seconds": state.llm_avg_latency_seconds,
@@ -208,17 +228,19 @@ def main() -> None:
               f"turns={record['turns']}, llm_calls={record['llm_calls']}, "
               f"fallbacks={record['fallback_count']})", file=sys.stderr)
         if args.save_json:
+            from evaluation.reliability import summarize_reliability
             Path(args.save_json).write_text(
                 json.dumps({"provider": cfg.llm_provider, "provider_is_real": provider_is_real,
                             "model": getattr(client, "model", None), "run_config": run_config,
+                            "confidence_reliability": summarize_reliability(case_records),
                             "cases": case_records, "verification_passed": provider_is_real and all(
-                                r["real_llm_verified"] and not r["failed_to_diagnose"] and not r["timed_out"]
+                                r["real_llm_verified"] and (not args.require_real or r.get("all_decisions_real", False)) and not r["failed_to_diagnose"] and not r["timed_out"]
                                 for r in case_records)}, indent=2),
                 encoding="utf-8",
             )
 
     verification_passed = provider_is_real and bool(case_records) and all(
-        r["real_llm_verified"] and not r["failed_to_diagnose"] and not r["timed_out"] for r in case_records)
+        r["real_llm_verified"] and (not args.require_real or r.get("all_decisions_real", False)) and not r["failed_to_diagnose"] and not r["timed_out"] for r in case_records)
     n = len(case_records) or 1
     critical = [r for r in case_records if r["critical"]]
     print(f"\n=== Real-LLM benchmark summary ({len(case_records)} cases, provider_is_real={provider_is_real}) ===")

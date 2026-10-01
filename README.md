@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 195 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 208 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -27,6 +27,35 @@ what is *not* yet verified.
 > Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
+
+## Validation readiness — 2026-10-02 (Asia/Seoul)
+
+The latest revision adds external frozen-case loading, real-model workflow support, bounded
+Korean/English normalization, offline catalog extensions, uncertainty reporting, and repeat-question
+suppression. It does **not** complete independent clinical validation or probability calibration.
+Full setup and the six remaining boundaries are in [Validation readiness](docs/VALIDATION_READINESS.md).
+
+- External case JSON/manifest contents are checked before use; missing responses stay unknown.
+  Authorship and clinical review are declarations, never inferred from a file hash.
+- The real-model runner accepts these frozen cases, records case/catalog hashes for resume,
+  requires a successful real response for every decision with `--require-real` (no fallback or
+  budget-skipped decisions), and reports reliability by qualitative evidence band.
+  A manual GitHub workflow is available but has not been dispatched with a live model here.
+- Original Korean observations are preserved while explicit phrases, negation, abbreviations
+  and vital labels get bounded normalization. Family observations do not become patient symptoms.
+- `NOVA_KNOWLEDGE_EXTENSION` accepts validated offline definitions; overrides and invented test
+  keys are rejected. The built-in catalog remains 34 diseases. Outside-catalog and companion
+  diagnoses now have explicit evaluation/reporting fields; no broad coverage claim is made.
+- Unsupported/novel, conflicting, tied or forced decisions are flagged LOW with reasons;
+  probability is null and calibration false. Forcing a final answer no longer implies readiness 1.
+- Existing medication text and associated symptoms suppress repeat questions. A broader pruning
+  experiment reduced V5 to 42/44 and was rejected; it is not enabled or shipped as an option.
+
+208 tests pass. Local mock regressions retain V3 32/32, V4 34/34, V5 44/44, existing scored
+49/49 and reused V6 12/12. The example external loader executes under mock and correctly reports
+real verification false. Preflight remains NOT READY without a live endpoint. Full results,
+confidence buckets and the rejected experiment are in `evaluation/readiness_results.json`.
+The reports below are historical; all 100% figures are development/mock results.
 
 ## Assertion handling — 2026-10-02 (Asia/Seoul)
 
@@ -375,7 +404,7 @@ goes stale against a fresh `evaluation/latest_results.json`.
 | Set | Scored Accuracy | All-Case Accuracy | Critical Recall | Critical Miss Rate | Avg Turns |
 |---|---|---|---|---|---|
 | Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 27.8 |
-| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 31.3 |
+| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 31.2 |
 | Development generalization (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 27.6 |
 | Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 31.0 |
 | Blind v3 reference (32 cases, all scored, 14 critical) | 62.5% | 62.5% | 57.1% | 42.9% | 20.9 |

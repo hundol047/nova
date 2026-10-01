@@ -41,6 +41,8 @@ class PatientSimulator:
 
 
 class CaseResult(BaseModel):
+    decision_quality: dict = {}
+    coexisting_differential_recall: Optional[float] = None
     case_id: str
     category: str = "standard"
     scoring_expected: bool = True
@@ -139,7 +141,7 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
     relevant_tests = _relevant_test_ids(case, seen_diagnosis_ids)
     unnecessary_tests = sum(1 for t in tests_performed if t not in relevant_tests)
 
-    correct = bool(state.final_diagnosis) and same_diagnosis(state.final_diagnosis, case.ground_truth_diagnosis)
+    correct = bool(state.final_diagnosis) and any(same_diagnosis(state.final_diagnosis, label) for label in [case.ground_truth_diagnosis, *case.acceptable_diagnoses])
     result_obj = CaseResult(
         case_id=case.case_id, category=case.category, scoring_expected=case.scoring_expected,
         ground_truth=case.ground_truth_diagnosis, final_diagnosis=state.final_diagnosis,
@@ -150,7 +152,8 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
         failed_to_diagnose=failed_to_diagnose,
         llm_call_count=state.llm_call_count, llm_success_count=state.llm_success_count,
         llm_failure_count=state.llm_failure_count, llm_fallback_count=state.llm_fallback_count,
-        differential_trajectory=trajectory,
+        differential_trajectory=trajectory, decision_quality=state.decision_quality,
+        coexisting_differential_recall=(sum(any(same_diagnosis(d.diagnosis,label) for d in state.current_differential) for label in case.coexisting_diagnoses)/len(case.coexisting_diagnoses) if case.coexisting_diagnoses else None),
     )
     if logger is not None:
         logger.log_final(state, "correct" if correct else "incorrect")

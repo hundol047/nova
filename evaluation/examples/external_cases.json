@@ -1,0 +1,15 @@
+{
+  "author": "repository implementer",
+  "provenance": "synthetic plumbing example; not independent validation",
+  "cases": [
+    {
+      "case_id": "example_external",
+      "chief_complaint": "I feel unwell",
+      "demographics": {},
+      "ground_truth_diagnosis": "Undifferentiated presentation",
+      "critical_override": false,
+      "scoring_expected": false,
+      "notes": "Demonstrates unknown defaults; not an accuracy benchmark."
+    }
+  ]
+}

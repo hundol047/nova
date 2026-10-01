@@ -274,7 +274,8 @@ def _scores(chief_complaint_text: str) -> List[Tuple[str, float, MatchType]]:
 def route(chief_complaint_text: str) -> ChiefComplaintRoutingResult:
     """The full structured routing decision: which tag(s) are plausible, how sure the match is,
     and (via `confidence`) how differential.py should size the resulting candidate pool."""
-    scored = _scores(chief_complaint_text)
+    from nova_agent.language import normalize_clinical_text
+    scored = _scores(normalize_clinical_text(chief_complaint_text))
     if not scored:
         return ChiefComplaintRoutingResult(primary_tag="other", primary_score=0.0,
                                             secondary_tags=[], score_margin=0.0,
