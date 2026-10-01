@@ -142,3 +142,58 @@ def test_strict_live_validation_rejects_fallback_or_budget_skipped_turns():
     state.llm_success_count=3
     assert all_decisions_real(state)
     assert not all_decisions_real(PatientState())
+
+
+@pytest.mark.parametrize('field,value', [
+    ('critical_override', None), ('critical_override', 'false'),
+    ('critical_override', 0), ('scoring_expected', 'false'),
+    ('case_id', '  '), ('chief_complaint', ''),
+    ('ground_truth_diagnosis', '\t'), ('acceptable_diagnoses', ['']),
+    ('coexisting_diagnoses', [' ']), ('relevant_test_ids', ['invented_test']),
+])
+def test_external_cases_reject_ambiguous_or_invalid_metadata(tmp_path, field, value):
+    path, data = bundle(tmp_path)
+    data['cases'][0][field] = value
+    path.write_text(json.dumps(data))
+    with pytest.raises(ValueError):
+        read_cases(path)
+
+
+@pytest.mark.parametrize('author', [[], {}, 12, '   '])
+def test_external_provenance_requires_nonempty_text(tmp_path, author):
+    path, data = bundle(tmp_path)
+    data['author'] = author
+    path.write_text(json.dumps(data))
+    with pytest.raises(ValueError):
+        read_cases(path)
+
+
+def test_external_cases_reject_whitespace_duplicate_ids_and_nonobjects(tmp_path):
+    path, data = bundle(tmp_path)
+    data['cases'].append({**data['cases'][0], 'case_id': ' external '})
+    path.write_text(json.dumps(data))
+    with pytest.raises(ValueError, match='Duplicate'):
+        read_cases(path)
+    data['cases'] = [None]
+    path.write_text(json.dumps(data))
+    with pytest.raises(ValueError, match='JSON object'):
+        read_cases(path)
+
+
+@pytest.mark.parametrize('field,value', [
+    ('typical_features', ['']), ('confirmatory_findings', ['  ']),
+    ('aliases', ['']), ('id', ' asthma'), ('id', 'novel:asthma'),
+    ('sources', ['https://']), ('sources', ['https:///missing-host']),
+    ('sources', ['https://bad host/path']), ('sources', ['https://example.org:bad']),
+    ('sources', ['https://user:password@example.org']),
+])
+def test_extension_rejects_empty_evidence_and_malformed_sources(tmp_path, field, value):
+    from nova_agent.knowledge.extensions import load_extension
+    entry = {'id': 'new_condition', 'name': 'Test condition', 'evidence_level': 'test_fixture',
+             'sources': ['https://example.org/test'], 'dangerous': False, 'urgency': 'LOW',
+             'typical_features': ['example finding']}
+    entry[field] = value
+    path = tmp_path / 'extension.json'
+    path.write_text(json.dumps([entry]))
+    with pytest.raises(ValueError):
+        load_extension(path, set())

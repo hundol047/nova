@@ -68,3 +68,16 @@ cases cannot establish generalization; report denominators and intervals with th
 The rejected action-pruning experiment retained only rank 1/positive-score candidates (plus
 existing safety flags). V5 scored 42/44 (95.5%), mean 25.95 turns. That logic was removed.
 The accepted changes retain the broader search and only avoid already-provided questions.
+
+## Input validation follow-up
+
+External bundles reject null or coerced boolean labels, blank identifiers/complaints/diagnoses,
+blank alternative or companion labels, non-object cases, whitespace-equivalent duplicate IDs,
+and unknown relevant-test IDs. Authorship and provenance declarations must be nonempty text.
+This prevents malformed inputs from silently changing critical-miss or accuracy denominators.
+
+Catalog extensions reject empty evidence and alias strings, noncanonical diagnosis IDs,
+and malformed HTTPS source URLs (including missing hosts, invalid ports, whitespace and
+embedded credentials). URL syntax checks do not establish source authority or clinical validity.
+The submitted runtime uses the same loader. Validation: 233 tests pass, including 25 new
+malformed-input regressions; standalone submission build/import smoke passes.
