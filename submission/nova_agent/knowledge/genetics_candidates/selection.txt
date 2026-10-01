@@ -1,0 +1,408 @@
+10q26 deletion syndrome
+15q11-q13 duplication syndrome
+15q24 microdeletion
+16p11.2 duplication
+16p12.2 microdeletion
+17 alpha-hydroxylase/17,20-lyase deficiency
+17q12 duplication
+19p13.13 deletion syndrome
+1q21.1 microduplication
+2-hydroxyglutaric aciduria
+22q11.2 deletion syndrome
+3-beta-hydroxysteroid dehydrogenase deficiency
+3-M syndrome
+46,XX testicular difference of sex development
+48,XXXY syndrome
+5-alpha reductase deficiency
+7q11.23 duplication syndrome
+Aarskog-Scott syndrome
+Acatalasemia
+Aceruloplasminemia
+Achondroplasia
+Achromatopsia
+Acromicric dysplasia
+Actin-accumulation myopathy
+Adenine phosphoribosyltransferase deficiency
+Adenosine monophosphate deaminase deficiency
+Adolescent idiopathic scoliosis
+Adult-onset leukoencephalopathy with axonal spheroids and pigmented glia
+Aicardi syndrome
+Aicardi-Goutières syndrome
+ALG1-congenital disorder of glycosylation
+Allan-Herndon-Dudley syndrome
+Alpha thalassemia X-linked intellectual disability syndrome
+Alpha-N-acetylgalactosaminidase deficiency
+Alport syndrome
+Alström syndrome
+Amish lethal microcephaly
+Andermann syndrome
+Anhidrotic ectodermal dysplasia with immune deficiency
+Anophthalmia/Microphthalmia
+Arginine vasopressin deficiency
+Arginine:glycine amidinotransferase deficiency
+Aromatase deficiency
+Aromatase excess syndrome
+Arts syndrome
+Aspartylglucosaminuria
+Asphyxiating thoracic dystrophy
+Ataxia with oculomotor apraxia
+Ataxia with vitamin E deficiency
+Atelosteogenesis type 2
+Au-Kline syndrome
+Auriculocondylar syndrome
+Autosomal dominant congenital stationary night blindness
+Autosomal dominant hyper-IgE syndrome
+Autosomal dominant hypocalcemia
+Autosomal dominant leukodystrophy with autonomic disease
+Autosomal dominant vitreoretinochoroidopathy
+Autosomal recessive congenital methemoglobinemia
+Autosomal recessive hypotrichosis
+Beckwith-Wiedemann syndrome
+Benign essential blepharospasm
+Benign recurrent intrahepatic cholestasis
+Bernard-Soulier syndrome
+Beta-mannosidosis
+Beta-propeller protein-associated neurodegeneration
+Beta-ureidopropionase deficiency
+Blepharocheilodontic syndrome
+Brody myopathy
+Burn-McKeown syndrome
+C3 glomerulopathy
+Campomelic dysplasia
+Cap myopathy
+Carnitine palmitoyltransferase I deficiency
+Carpenter syndrome
+Cartilage-hair hypoplasia
+Catecholaminergic polymorphic ventricular tachycardia
+CATSPER1-related nonsyndromic male infertility
+Central precocious puberty
+Cerebral autosomal dominant arteriopathy with subcortical infarcts and leukoencephalopathy
+Char syndrome
+Charcot-Marie-Tooth disease
+Cherubism
+CHILD syndrome
+Childhood myocerebrohepatopathy spectrum
+Chorea-acanthocytosis
+Choroideremia
+Chronic granulomatous disease
+CHST3-related skeletal dysplasia
+CLN10 disease
+CLN11 disease
+Cockayne syndrome
+Coffin-Lowry syndrome
+Cold-induced sweating syndrome
+Color vision deficiency
+Combined malonic and methylmalonic aciduria
+Common variable immune deficiency
+Complement factor I deficiency
+Congenital bilateral absence of the vas deferens
+Congenital bile acid synthesis defect type 2
+Congenital cataracts, facial dysmorphism, and neuropathy
+Congenital central hypoventilation syndrome
+Congenital deafness with labyrinthine aplasia, microtia, and microdontia
+Congenital diaphragmatic hernia
+Congenital generalized lipodystrophy
+Congenital insensitivity to pain with anhidrosis
+Congenital leptin deficiency
+Congenital mirror movement disorder
+Congenital plasminogen deficiency
+Corticosteroid-binding globulin deficiency
+Corticosterone methyloxidase deficiency
+Costeff syndrome
+Craniometaphyseal dysplasia
+Cri-du-chat syndrome
+Crouzon syndrome
+Crouzon syndrome with acanthosis nigricans
+CUL3-related neurodevelopmental disorder
+Cytochrome P450 oxidoreductase deficiency
+Danon disease
+Desmosterolosis
+Dihydropyrimidine dehydrogenase deficiency
+Dilated cardiomyopathy with ataxia syndrome
+Distal hereditary motor neuropathy, type II
+Distal hereditary motor neuropathy, type V
+Distal myopathy 2
+DOCK8 immunodeficiency syndrome
+DOLK-congenital disorder of glycosylation
+Donnai-Barrow syndrome
+Dopamine beta-hydroxylase deficiency
+Dopamine transporter deficiency syndrome
+Duane-radial ray syndrome
+Dupuytren contracture
+Dyserythropoietic anemia and thrombocytopenia
+Ehlers-Danlos syndrome
+Emanuel syndrome
+Eosinophil peroxidase deficiency
+Epidermolysis bullosa simplex
+Epidermolytic hyperkeratosis
+Erythrokeratodermia variabilis et progressiva
+Essential tremor
+Ethylmalonic encephalopathy
+Ewing sarcoma
+Familial acute myeloid leukemia with mutated CEBPA
+Familial candidiasis
+Familial encephalopathy with neuroserpin inclusion bodies
+Familial glucocorticoid deficiency
+Familial hemiplegic migraine
+Familial hemophagocytic lymphohistiocytosis
+Familial hypobetalipoproteinemia
+Familial isolated pituitary adenoma
+Familial lipoprotein lipase deficiency
+Familial paroxysmal kinesigenic dyskinesia
+Familial restrictive cardiomyopathy
+Floating-Harbor syndrome
+FOXP2-related speech and language disorder
+Friedreich ataxia
+Frontonasal dysplasia
+Fryns syndrome
+Fumarase deficiency
+Fundus albipunctatus
+Galactosemia
+Geleophysic dysplasia
+Generalized pustular psoriasis
+Genetic epilepsy with febrile seizures plus
+Genitopatellar syndrome
+Ghosal hematodiaphyseal dysplasia
+Giant congenital melanocytic nevus
+Glanzmann thrombasthenia
+Glucose-galactose malabsorption
+Glutathione synthetase deficiency
+Glycogen storage disease type IX
+Glycogen storage disease type VI
+Glycogen storage disease type VII
+Glycoprotein VI deficiency
+GM3 synthase deficiency
+Gnathodiaphyseal dysplasia
+GNE myopathy
+Gordon Holmes syndrome
+GRIN2B-related neurodevelopmental disorder
+GRN-related frontotemporal lobar degeneration
+Guanidinoacetate methyltransferase deficiency
+Hartsfield syndrome
+Head and neck squamous cell carcinoma
+Hennekam syndrome
+Hepatic lipase deficiency
+Hereditary fibrosing poikiloderma with tendon contractures, myopathy, and pulmonary fibrosis
+Hereditary fructose intolerance
+Hereditary hemorrhagic telangiectasia
+Hereditary leiomyomatosis and renal cell cancer
+Hereditary paraganglioma-pheochromocytoma
+Hereditary sensory and autonomic neuropathy type IE
+Hereditary xanthinuria
+Hirschsprung disease
+Histiocytosis-lymphadenopathy plus syndrome
+Horizontal gaze palsy with progressive scoliosis
+Hutchinson-Gilford progeria syndrome
+Hyperkalemic periodic paralysis
+Hyperparathyroidism-jaw tumor syndrome
+Hyperphosphatemic familial tumoral calcinosis
+Hypochondroplasia
+Hypochromic microcytic anemia with iron overload
+Hypohidrotic ectodermal dysplasia
+Hystrix-like ichthyosis with deafness
+Idiopathic inflammatory myopathy
+IMAGe syndrome
+Imerslund-Gräsbeck syndrome
+Infantile-onset ascending hereditary spastic paralysis
+Intrahepatic cholestasis of pregnancy
+Intranuclear rod myopathy
+Isolated congenital asplenia
+Isolated Duane retraction syndrome
+Isolated growth hormone deficiency
+Isolated hyperchlorhidrosis
+Isolated lissencephaly sequence
+Isolated Pierre Robin sequence
+Isolated sulfite oxidase deficiency
+Jervell and Lange-Nielsen syndrome
+Juvenile myoclonic epilepsy
+Juvenile polyposis syndrome
+Keratitis-ichthyosis-deafness syndrome
+Keratoconus
+Kindler epidermolysis bullosa
+Kleefstra syndrome
+Klinefelter syndrome
+Knobloch syndrome
+Kuskokwim syndrome
+L1 syndrome
+Lactate dehydrogenase deficiency
+Lamellar ichthyosis
+Langer mesomelic dysplasia
+Langerhans cell histiocytosis
+Laron syndrome
+Lateral meningocele syndrome
+Leber hereditary optic neuropathy
+Lennox-Gastaut syndrome
+Long-chain 3-hydroxyacyl-CoA dehydrogenase deficiency
+Lymphedema-distichiasis syndrome
+Macrozoospermia
+Maffucci syndrome
+Majeed syndrome
+Mandibuloacral dysplasia
+Maturity-onset diabetes of the young
+MECP2-related severe neonatal encephalopathy
+Meesmann corneal dystrophy
+Megalencephalic leukoencephalopathy with subcortical cysts
+Meier-Gorlin syndrome
+Melnick-Needles syndrome
+Melorheostosis
+Menkes syndrome
+Metachromatic leukodystrophy
+Metatropic dysplasia
+Microcephalic osteodysplastic primordial dwarfism type II
+Microcephaly, seizures, and developmental delay
+Microvillus inclusion disease
+Miller syndrome
+Milroy disease
+Mitochondrial complex I deficiency
+Mitochondrial encephalomyopathy, lactic acidosis, and stroke-like episodes
+Mitochondrial neurogastrointestinal encephalopathy disease
+Motion sickness
+Moyamoya disease
+Mucolipidosis II alpha/beta
+Mucolipidosis III gamma
+Mucolipidosis type IV
+Muenke syndrome
+Multicentric osteolysis, nodulosis, and arthropathy
+Multiminicore disease
+Multiple familial trichoepithelioma
+Multiple system atrophy
+MUTYH-associated polyposis 
+MyD88 deficiency
+Myoclonus-dystonia
+Myosin storage myopathy
+Müllerian aplasia and hyperandrogenism
+Naegeli-Franceschetti-Jadassohn syndrome/dermatopathia pigmentosa reticularis
+Nearsightedness
+Nemaline myopathy
+Netherton syndrome
+Neuroblastoma
+Neutral lipid storage disease with myopathy
+NGLY1-congenital disorder of deglycosylation
+Nicolaides-Baraitser syndrome
+Nonsyndromic congenital nail disorder 10
+Nonsyndromic dilated cardiomyopathy
+Nonsyndromic hearing loss
+Nonsyndromic holoprosencephaly
+Noonan syndrome with multiple lentigines
+Norrie disease
+Oculofaciocardiodental syndrome
+Ollier disease
+Omenn syndrome
+Ophthalmo-acromelic syndrome
+Opioid addiction
+Opitz G/BBB syndrome
+Optic atrophy type 1
+Osteogenesis imperfecta
+Osteopetrosis
+Otospondylomegaepiphyseal dysplasia
+Otulipenia
+Pachyonychia congenita
+Pallister-Hall syndrome
+Palmoplantar keratoderma with deafness
+Paramyotonia congenita
+Partington syndrome
+PDGFRB-associated chronic eosinophilic leukemia
+Pearson syndrome
+Pelizaeus-Merzbacher-like disease type 1
+Pendred syndrome
+Peroxisomal acyl-CoA oxidase deficiency
+Perry syndrome
+Persistent Müllerian duct syndrome
+Peters anomaly
+Peutz-Jeghers syndrome
+PGM3-congenital disorder of glycosylation
+Phosphoglycerate kinase deficiency
+Poikiloderma with neutropenia
+Pol III-related leukodystrophy
+Polycystic kidney disease
+Polymicrogyria
+Popliteal pterygium syndrome
+Potassium-aggravated myotonia
+Potocki-Lupski syndrome
+Primary carnitine deficiency
+Primary hyperoxaluria
+Primary myelofibrosis
+Primary spontaneous pneumothorax
+Prion disease
+Progressive external ophthalmoplegia
+Progressive osseous heteroplasia
+Protein S deficiency
+Prothrombin deficiency
+Proximal 18q deletion syndrome
+Pseudoachondroplasia
+Pseudohypoaldosteronism type 1
+Pseudoxanthoma elasticum
+Pulmonary veno-occlusive disease
+PURA syndrome
+Pyle disease
+Pyridoxine-dependent epilepsy
+Recombinant 8 syndrome
+Renal coloboma syndrome
+Renal hypouricemia
+Restless legs syndrome
+Retinoblastoma
+Rett syndrome
+Rhabdoid tumor predisposition syndrome
+Rubinstein-Taybi syndrome
+SADDAN
+Scalp-ear-nipple syndrome
+Schwartz-Jampel syndrome
+Seasonal affective disorder
+Senior-Løken syndrome
+Septo-optic dysplasia
+Severe congenital neutropenia
+Sheldon-Hall syndrome
+Short QT syndrome
+Short-chain acyl-CoA dehydrogenase deficiency
+Short/branched chain acyl-CoA dehydrogenase deficiency
+Shprintzen-Goldberg syndrome
+Sialuria
+Sick sinus syndrome
+SLC35A2-congenital disorder of glycosylation
+SLC4A1-associated distal renal tubular acidosis
+Small fiber neuropathy
+Smith-Kingsmore syndrome
+Smith-Magenis syndrome
+SOST-related sclerosing bone dysplasia
+Sotos syndrome
+Spastic paraplegia type 2
+Spastic paraplegia type 8
+Spinal muscular atrophy
+Spinal muscular atrophy with respiratory distress type 1
+Spinocerebellar ataxia type 6
+STING-associated vasculopathy with onset in infancy
+Stormorken syndrome
+Succinyl-CoA:3-ketoacid CoA transferase deficiency
+SUCLA2-related mitochondrial DNA depletion syndrome
+Tay-Sachs disease
+Tetra-amelia syndrome
+Tetrasomy 18p
+Thiamine-responsive megaloblastic anemia syndrome
+Thiopurine S-methyltransferase deficiency
+Thrombotic thrombocytopenic purpura
+Tibial muscular dystrophy
+Timothy syndrome
+TK2-related mitochondrial DNA depletion syndrome, myopathic form
+Townes-Brocks Syndrome
+Transcobalamin deficiency
+Trichohepatoenteric syndrome
+Trichorhinophalangeal syndrome type I
+Trimethylaminuria
+Triosephosphate isomerase deficiency
+Trisomy 13
+TUBB4A-related leukodystrophy
+Tuberous sclerosis complex
+Tumor necrosis factor receptor-associated periodic syndrome
+Uncombable hair syndrome
+VACTERL association
+Wagner syndrome
+Waldenström macroglobulinemia
+Warsaw breakage syndrome
+Williams syndrome
+Wilson disease
+X-linked acrogigantism
+X-linked agammaglobulinemia
+X-linked chondrodysplasia punctata 1
+X-linked lymphoproliferative disease
+X-linked sideroblastic anemia
+Xeroderma pigmentosum

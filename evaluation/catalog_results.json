@@ -4113,12 +4113,12 @@
   },
   "passed": true,
   "catalog_inventory": {
-    "total_entries": 272,
+    "total_entries": 680,
     "rule_supported_entries": 68,
-    "reference_only_entries": 204,
+    "reference_only_entries": 612,
     "clinically_validated_entries": 0,
     "reference_autonomous_diagnosis_enabled": false
   },
-  "reference_catalog_sha256": "d122ff758fbd8cf2fac92e45788b72fe45d533c8173cc779dc652e9fa70cccac",
+  "reference_catalog_sha256": "1bfb8a1626b3a4caca1f150884d8a9b7979d0ab070ff38cfff7d28eb17e9000a",
   "reference_only_diagnostic_accuracy": null
 }

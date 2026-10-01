@@ -1,0 +1,15 @@
+{
+  "source_url": "https://medlineplus.gov/download/ghr-summaries.xml",
+  "source_sha256": "fdc8bd614310c12718379cef6569962e5d0e791cecabcc355b53a72816ac263a",
+  "source_sha256_scope": "uncompressed_xml_bytes",
+  "catalog_sha256": "165128beca0a80e89ec41b466fac60ac1135849752cf6b32b9585225154c0c50",
+  "selection_sha256": "4e1dc9d30db5b4871c221988ef6421482897ab9594bc04e6859ec3263e88d0ae",
+  "n_reference_candidates": 408,
+  "source_kind": "genetics_condition",
+  "attribution": "Source: MedlinePlus, National Library of Medicine.",
+  "reuse_terms": "https://medlineplus.gov/about/using/usingcontent/",
+  "content_scope": "Public-domain Genetics condition descriptions and synonyms only; no gene/chromosome pages or external database content",
+  "selection_method": "Frozen 408-name engineering selection; stable SHA256 name ordering after normalized name/alias overlap exclusion; not prevalence or clinical priority",
+  "clinical_validation": false,
+  "diagnostic_accuracy_measured": false
+}

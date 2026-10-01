@@ -95,3 +95,15 @@ It is separate from the 68 scored disease rules. NLM source authority is not cli
 validation of this agent. See `docs/CATALOG_272_READINESS.md` and the bundled manifest
 for attribution, reuse terms, immutable hashes, the selected title list and validation limits.
 No A.D.A.M. encyclopedia content, third-party images or drug monographs are imported.
+
+
+## Additional Genetics condition references (2026-10-02 Asia/Seoul)
+
+Source: MedlinePlus, National Library of Medicine. `genetics_candidates/` contains 408
+public-domain Genetics condition descriptions and synonyms from the official summaries XML.
+Only health-condition-summary descriptions are used, excluding gene/chromosome pages and
+external database text. Together with the unchanged 204 health-topic references and 68
+rules, the inventory contains 680 entries. All 612 references remain non-autonomous and
+clinically unvalidated. See `docs/CATALOG_680_READINESS.md` and both bundle manifests for
+selection, source hashes, attribution, source review dates and limitations. Rare/genetic
+conditions are emphasized; this is not clinically prioritized or complete disease coverage.

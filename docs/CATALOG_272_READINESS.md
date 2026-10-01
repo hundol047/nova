@@ -1,4 +1,7 @@
-# 272-entry reference and diagnostic-rule inventory
+# 272-entry reference and diagnostic-rule inventory (historical)
+
+This documents the earlier 272-entry revision. Current scope and reports are described in
+[the 680-entry revision](CATALOG_680_READINESS.md). Counts and checks below refer to the earlier revision.
 
 **This revision does not enable 272 autonomous diagnoses.** It preserves the existing 68
 rule-supported entries and adds 204 sourced reference candidates for differential exploration.

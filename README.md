@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 604 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 1022 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -28,19 +28,20 @@ what is *not* yet verified.
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
 
-## 272-entry inventory — 2026-10-02 (Asia/Seoul)
+## 680-entry inventory — 2026-10-02 (Asia/Seoul)
 
-**68 rule-supported entries + 204 MedlinePlus reference-only candidates = 272 entries.**
-This is not 272 autonomous or clinically validated diagnoses. The added material is sourced
-public-domain health-topic context for differential exploration, with explicit attribution,
-status and confidence/finalization guards. It cannot turn itself into patient evidence or
-enter the deterministic scorer. [Scope, full list and unfinished validation](docs/CATALOG_272_READINESS.md).
+**68 rule-supported entries + 612 reference-only candidates = 680 entries.**
+This expands the previous 272-entry inventory by 408 sourced MedlinePlus Genetics condition
+references (2.5x total). Existing rules and the previous 204 references are preserved.
+This is not 680 autonomous or clinically validated diagnoses. All reference candidates remain
+ineligible for autonomous final diagnosis; their text never becomes patient evidence or a
+rule score. [Selection, full added list and validation limits](docs/CATALOG_680_READINESS.md).
 
-Validation: 604 unit tests passed; the existing mock regression retained 205/205 scored
-cases (three additional cases are unscored). These results do not measure clinical accuracy.
-The 204/204 title lookup result is a catalog test, not diagnostic accuracy. New-condition
-clinical accuracy remains unmeasured; the existing regression gate covers the original 68
-rule-supported entries only. Fourfold **verified diagnostic ability** has not been established.
+Validation: **1,022 unit tests passed; existing mock regression 205/205 scored cases passed**
+(three additional cases are unscored). This does not measure clinical accuracy.
+The 612/612 title lookup result is a catalog test, not diagnostic accuracy. New-condition
+clinical accuracy remains unmeasured; the mock regression gate covers the existing 68 rules.
+Real-model non-inferiority remains unproven. [Earlier 272-entry scope](docs/CATALOG_272_READINESS.md).
 
 ## Earlier 68-entry rule catalog expansion — 2026-10-02 (Asia/Seoul)
 

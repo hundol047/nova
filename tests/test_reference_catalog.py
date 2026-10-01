@@ -18,8 +18,8 @@ ENTRIES=list(reference_candidates().values())
 
 
 def test_inventory_does_not_misrepresent_reference_topics_as_validated_diagnoses():
-    assert catalog_inventory()=={'total_entries':272,'rule_supported_entries':68,
-        'reference_only_entries':204,'clinically_validated_entries':0,
+    assert catalog_inventory()=={'total_entries':680,'rule_supported_entries':68,
+        'reference_only_entries':612,'clinically_validated_entries':0,
         'reference_autonomous_diagnosis_enabled':False}
     assert not set(reference_candidates()).intersection(all_diseases())
     assert all(e['summary'] and e['attribution'] and e['source_url'] for e in ENTRIES)
@@ -147,3 +147,77 @@ def test_reference_guard_does_not_match_any_original_rule_identity():
         assert not reference_mentions(id), id
         assert not reference_mentions(e['name']), e['name']
         assert all(not reference_mentions(alias) for alias in e['aliases']), e['aliases']
+
+
+def test_added_genetics_identities_do_not_duplicate_prior_candidates_or_rules():
+    from nova_agent.knowledge.reference_catalog import clean
+    old = [e for e in ENTRIES if not e['id'].startswith('medlineplus_genetics_')]
+    old.extend(all_diseases().values())
+    occupied = {clean(n) for e in old for n in [e['name'], *e['aliases']]}
+    added = [e for e in ENTRIES if e['id'].startswith('medlineplus_genetics_')]
+    assert len(added) == 408
+    for entry in added:
+        names = {clean(n) for n in [entry['name'], *entry['aliases']]}
+        assert not names & occupied, entry['name']
+        occupied.update(names)
+
+
+@pytest.mark.parametrize('mutation', ['gene_page', 'wrong_condition', 'promotion', 'duplicate', 'selection', 'checksum'])
+def test_genetics_bundle_rejects_wrong_scope_corruption_and_promotion(mutation):
+    from nova_agent.knowledge.reference_catalog import GENETICS_ROOT
+    raw = (GENETICS_ROOT / 'catalog.json').read_bytes()
+    manifest = json.loads((GENETICS_ROOT / 'manifest.json').read_text())
+    selection = (GENETICS_ROOT / 'selection.txt').read_bytes()
+    data = json.loads(raw)
+    if mutation == 'gene_page': data[0]['source_url'] = 'https://medlineplus.gov/genetics/gene/brca1/'
+    if mutation == 'wrong_condition': data[0]['source_url'] = data[1]['source_url']
+    if mutation == 'promotion': data[0]['clinical_review_verified'] = True
+    if mutation == 'duplicate': data[1] = data[0]
+    raw = json.dumps(data).encode()
+    manifest['catalog_sha256'] = hashlib.sha256(raw).hexdigest()
+    if mutation == 'checksum': raw += b' '
+    if mutation == 'selection': selection += b'Extra condition\n'
+    with pytest.raises(ValueError):
+        validate_bundle(raw, manifest, selection, expected_count=408, source_kind='genetics_condition')
+
+
+def test_new_genetics_candidate_cannot_authorize_final_diagnosis():
+    entry = next(e for e in ENTRIES if e['id'].startswith('medlineplus_genetics_'))
+    _, output = proposed_reference()
+    output.differential[0].diagnosis = entry['name']
+    output.differential[0].diagnosis_id = entry['id']
+    output.selected_action.key = entry['id']
+    output.selected_action.content = 'Likely ' + entry['name']
+    validator = SafetyValidator()
+    merged = validator.merge_differential(output, [], [])
+    assert merged[0].confidence_band == 'LOW'
+    action = AgentAction(action_type='ASK', key='onset', content='Onset?', rationale='collect evidence')
+    result = validator.validate_action(PatientState(turn_count=20), output, {}, action, merged,
+        StopDecision(should_diagnose=True, forced=False, reason='fixture', readiness_score=1))
+    assert result.overridden and result.action.action_type == 'ASK'
+
+
+def test_genetics_importer_excludes_gene_pages_and_non_description_text(tmp_path):
+    from scripts.import_genetics_candidates import read_conditions
+    xml = tmp_path / 'source.xml'
+    xml.write_text('''<summaries xmlns="https://medlineplus.gov/download/test.xsd">
+      <gene-summary><name>GENE1</name><ghr-page>https://medlineplus.gov/genetics/gene/gene1</ghr-page></gene-summary>
+      <health-condition-summary><name>Example condition</name>
+        <ghr-page>https://medlineplus.gov/genetics/condition/example-condition</ghr-page>
+        <text-list>
+          <text><text-role>description</text-role><html><p>Preserved <b>condition</b> description.</p></html></text>
+          <text><text-role>frequency</text-role><html><p>Not imported.</p></html></text>
+        </text-list>
+      </health-condition-summary></summaries>''')
+    _, entries = read_conditions(xml)
+    assert len(entries) == 1
+    assert entries[0]['summary'] == 'Preserved condition description.'
+    assert entries[0]['autonomous_diagnosis_enabled'] is False
+
+
+def test_genetics_importer_rejects_external_entity_declarations(tmp_path):
+    from scripts.import_genetics_candidates import read_conditions
+    xml = tmp_path / 'source.xml'
+    xml.write_text('<!DOCTYPE summaries [<!ENTITY x SYSTEM "file:///nonexistent">]><summaries/>')
+    with pytest.raises(ValueError, match='entity declaration'):
+        read_conditions(xml)
