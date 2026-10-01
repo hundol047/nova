@@ -86,6 +86,15 @@ class ActionSelector:
         for cand in raw_candidates:
             dangerous_involved = bool(set(cand.disease_ids_discriminated) & dangerous_ids)
             utility, components = self._utility(cand, dangerous_involved, differential)
+            if get_config().strategic_questions:
+                # Bounded baseline information gathering, at most five actions. No hidden
+                # case label or simulator fields enter this selection.
+                core = {("EXAM", "vital_signs"): 10.0, ("ASK", "associated_symptoms"): 8.0,
+                        ("ASK", "onset"): 7.0, ("ASK", "past_medical_history"): 6.0,
+                        ("ASK", "medication"): 5.0}
+                gain = core.get((cand.action_type, cand.key), 0.0)
+                utility += gain
+                components["baseline_information_gain"] = gain
             content = cand.content_ko if lang == "ko" else cand.content_en
             scored.append(ScoredCandidate(action_type=cand.action_type, key=cand.key, content=content,
                                            utility=round(utility, 3), components=components))
@@ -110,6 +119,11 @@ class ActionSelector:
         )
         all_candidates = scored + [diagnose_candidate]
 
+        core_pending = get_config().strategic_questions and any(
+            c.components.get("baseline_information_gain", 0) for c in scored)
+        if core_pending and not stop_decision.forced:
+            stop_decision = StopDecision(should_diagnose=False, forced=False,
+                reason="Collect available baseline history and vital signs before committing.", readiness_score=stop_decision.readiness_score)
         if stop_decision.should_diagnose or not scored:
             action = AgentAction(action_type="DIAGNOSE", key=diagnose_candidate.key,
                                   content=top_diagnosis_name, rationale=stop_decision.reason)

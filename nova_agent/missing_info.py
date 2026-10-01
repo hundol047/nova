@@ -18,7 +18,8 @@ from nova_agent.knowledge.retrieval import disease_by_id
 from nova_agent.safety import SafetyFinding, SafetyLayer
 from nova_agent.resolution import is_resolved, required_workup
 from nova_agent.state import PatientState
-from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG, disease_specific_question
+from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG, QUESTION_CATALOG, disease_specific_question
+from nova_agent.config import get_config
 
 CandidateActionType = Literal["ASK", "EXAM", "TEST"]
 
@@ -177,6 +178,22 @@ class MissingInformationAnalyzer:
                 ))
                 cand.disease_ids_discriminated.append(item.diagnosis_id)
                 cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
+
+        if get_config().strategic_questions:
+            # Core observations are not dependent on the current (possibly wrong) top diagnoses.
+            for key in ("onset", "associated_symptoms", "past_medical_history", "medication"):
+                if not state.question_asked(key) and not _already_answered(state, key):
+                    spec = QUESTION_CATALOG[key]
+                    ask_candidates.setdefault("ask:" + key, CandidateInfo(action_type="ASK", key=key,
+                        content_en=spec["text_en"], content_ko=spec["text_ko"], disease_ids_discriminated=[],
+                        diagnostic_discrimination=0, safety_relevance=0, information_gain=0,
+                        redundancy=0, turn_cost=spec["turn_cost"]))
+            if not state.exam_done("vital_signs"):
+                spec = EXAM_CATALOG["vital_signs"]
+                exam_candidates.setdefault("vital_signs", CandidateInfo(action_type="EXAM", key="vital_signs",
+                    content_en=spec["name_en"], content_ko=spec["name_ko"], disease_ids_discriminated=[],
+                    diagnostic_discrimination=0, safety_relevance=0, information_gain=0,
+                    redundancy=0, turn_cost=spec["turn_cost"]))
 
         flagged_ids = {f.diagnosis_id for f in safety_findings}
         unresolved_ids = {d.diagnosis_id for d in top_k if d.dangerous_if_missed

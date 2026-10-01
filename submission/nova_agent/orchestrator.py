@@ -19,6 +19,7 @@ from nova_agent.action_selector import ActionSelector, AgentAction
 from nova_agent.chief_complaint import classify as classify_chief_complaint
 from nova_agent.clinical_summary import build_clinical_summary
 from nova_agent.config import get_config
+from nova_agent.final_review import review_differential
 from nova_agent.differential import DifferentialEngine, DifferentialItem
 from nova_agent.knowledge.retrieval import retrieve_turn_context
 from nova_agent.llm_client import BaseLLMClient, TurnContext, get_llm_client
@@ -92,7 +93,9 @@ class DoctorAgent:
                 ctx = TurnContext(summary=summary, differential=deterministic_differential,
                                    safety_findings=safety_findings, candidates=candidates,
                                    chosen_action=deterministic_action, stop_decision=stop_decision,
-                                   retrieved_context=retrieved_context)
+                                   retrieved_context=retrieved_context,
+                                   final_review_notes=(review_differential(state, deterministic_differential)
+                                       if cfg.final_review and deterministic_action.action_type == "DIAGNOSE" else []))
                 llm_output = self.llm_client.generate_turn_output(ctx)
 
                 # LLM reliability metrics (spec: a failing real LLM must never be invisible behind

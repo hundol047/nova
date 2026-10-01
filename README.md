@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 151 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 160 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -27,6 +27,52 @@ what is *not* yet verified.
 > Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
+
+## Accuracy revision — 2026-10-01
+
+**The 90% generalization target is not established.** All results below use the deterministic
+`mock` provider, not the competition LLM. These results supersede the earlier review below.
+
+| Evaluation | Correct | Accuracy | Interpretation |
+|---|---:|---:|---|
+| V5 development | 44/44 | 100.0% | Used to diagnose failures and implement fixes; not blind |
+| V4 reused reference | 29/34 | 85.3% | Not tuned in this revision; below the target |
+| V6 new synthetic validation | 12/12 | 100.0% | Same author, frozen before first run; small and not externally adjudicated |
+| Existing scored development cases | 48/49 | 98.0% | Regression data; generalization-v2 appendicitis now misses |
+
+V5 critical-case recall is 20/20, V4 is 13/14, and V6 is 6/6. Do not pool these
+sets to hide the V4 shortfall or present development accuracy as real clinical accuracy.
+V5 average turns increased from 25.1 to 29.7; test efficiency remains a limitation.
+
+Implemented changes:
+- Send history, medications, allergies, symptom timing, and supporting/contradicting evidence
+  to the LLM; preserve unknown and explicitly denied facts.
+- Re-score the complete 34-diagnosis catalog every turn, allowing candidates outside the
+  initial complaint route to enter when evidence appears.
+- Interpret scoped clinical synonyms and procedure-specific objective findings; prevent CSF
+  findings from becoming urinary/blood evidence. Replace six-character token truncation,
+  enforce anatomical anchors, and interpret posture-bound numeric blood-pressure changes.
+- Gather missing vital signs, onset, associated symptoms, medical history and medications
+  alongside disease-discriminating workup before an early diagnosis.
+- Add a final evidence-review checklist and the valid action catalog to the existing LLM
+  request. This introduces no extra LLM call; its accuracy effect is unverified under mock.
+
+V5 leave-one-feature-out accuracy: full 100.0%; without broad candidates 93.2%; without
+new evidence interpretation 65.9%; without strategic questions 97.7%; without final-review
+prompt 100.0% (expected under mock). These are feature comparisons within the new code,
+not a recreation of the original baseline. Full case results, failures, and limitations are
+recorded in `evaluation/accuracy_results.json`.
+
+```bash
+python -m evaluation.accuracy_experiments --suite v5 --ablate --save-json v5-report.json
+python -m evaluation.accuracy_experiments --suite v4 --save-json v4-report.json
+python -m evaluation.accuracy_experiments --suite v6 --save-json v6-report.json
+```
+
+The V6 runner verifies its frozen file hash. Runtime code never imports evaluation cases.
+Live competition-model evaluation and an independently authored, sufficiently large held-out
+set are still needed to establish the requested target. Official API compatibility remains
+unverified. The following review records the previous revision, not current accuracy.
 
 ## Review revision — 2026-10-01
 
@@ -212,10 +258,10 @@ goes stale against a fresh `evaluation/latest_results.json`.
 
 | Set | Scored Accuracy | All-Case Accuracy | Critical Recall | Critical Miss Rate | Avg Turns |
 |---|---|---|---|---|---|
-| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 24.2 |
-| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 26.6 |
-| Development generalization (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 23.7 |
-| Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 26.1 |
+| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 27.1 |
+| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 30.8 |
+| Development generalization (18 cases, all scored, 5 critical) | 94.4% | 94.4% | 100.0% | 0.0% | 27.7 |
+| Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 30.2 |
 | Blind v3 reference (32 cases, all scored, 14 critical) | 62.5% | 62.5% | 57.1% | 42.9% | 20.9 |
 | Blind v4 reference (34 cases, all scored, 14 critical) | 64.7% | 64.7% | 71.4% | 28.6% | 19.8 |
 | **Untouched Blind v5 (44 cases, all scored, 20 critical)** | **52.3%** | **52.3%** | **40.0%** | **60.0%** | 20.7 |

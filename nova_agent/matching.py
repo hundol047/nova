@@ -9,13 +9,13 @@ finding regardless of relevance, and would otherwise register as a match. So:
   - stopwords and domain-generic words (pain, ache, discomfort, ...) never count toward overlap.
   - a short phrase (<=2 remaining content words) requires ALL of them present, not just some.
   - a longer phrase requires most (>=60%) of them present.
-  - words are lightly stemmed (truncated to 6 chars) so "exertional"/"exertion" etc. still match
-    without a full NLP stemmer dependency.
+  - explicit inflection aliases preserve matching without conflating different disease names.
 """
 
 from __future__ import annotations
 
 import re
+from functools import lru_cache
 from typing import List, Set
 
 _STOPWORDS = {
@@ -42,14 +42,24 @@ _NEGATED_SPAN_PATTERN = re.compile(
 
 
 def _stem(word: str) -> str:
-    return word[:6] if len(word) > 6 else word
+    # Fixed-width truncation conflated hypertension, hyperthyroidism and
+    # hypertriglyceridemia. Only known inflections share a token now.
+    equivalents = {"exertional":"exertion", "exerting":"exertion", "radiating":"radiate",
+        "radiates":"radiate", "radiation":"radiate", "vomiting":"vomit", "vomited":"vomit",
+        "coughing":"cough", "coughed":"cough", "swollen":"swelling", "dizzy":"dizziness",
+        "nauseated":"nausea", "nauseous":"nausea", "confused":"confusion",
+        "palpitations":"palpitation", "seizures":"seizure", "ketones":"ketone",
+        "waves":"wave", "sounds":"sound", "findings":"finding"}
+    return equivalents.get(word, word)
 
 
+@lru_cache(maxsize=8192)
 def _content_words(text: str) -> Set[str]:
     words = re.split(r"[^a-z0-9가-힣]+", text.lower())
-    return {_stem(w) for w in words if w and w not in _IGNORED}
+    return frozenset(_stem(w) for w in words if w and w not in _IGNORED)
 
 
+@lru_cache(maxsize=4096)
 def _strip_negated_spans(text: str) -> str:
     return _NEGATED_SPAN_PATTERN.sub(" ", text)
 
@@ -75,7 +85,14 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
             return True
         if not feature_content:
             continue
-        overlap = feature_content & _content_words(finding_lower)
+        finding_words = _content_words(finding_lower)
+        anchors = {"headache": {"headache", "head", "cephalgia"},
+                   "chest": {"chest", "substernal", "sternum", "thoracic"},
+                   "abdominal": {"abdominal", "abdomen", "belly", "stomach", "epigastric"}}
+        if any(anchor in feature_content and not (alternatives & finding_words)
+               for anchor, alternatives in anchors.items()):
+            continue
+        overlap = feature_content & finding_words
         if len(feature_content) <= 2:
             if overlap == feature_content:
                 return True

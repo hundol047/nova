@@ -18,6 +18,8 @@ from pydantic import BaseModel
 from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
 from nova_agent.chief_complaint import related_tags, route, expanded_tags
 from nova_agent.config import get_config
+from nova_agent.postural_evidence import postural_drop
+from nova_agent.evidence_interpreter import concept_present, objective_findings
 from nova_agent.electrolyte_evidence import extract_potassium_mmol_l, SEVERE_POTASSIUM_MMOL_L
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
@@ -86,6 +88,8 @@ FEATURE_ALIASES: dict[str, list[str]] = {
 def _present_with_aliases(phrase: str, findings: List[str]) -> bool:
     """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
     FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase."""
+    if get_config().evidence_interpretation and concept_present(phrase, findings):
+        return True
     if feature_present(phrase, findings, scrub_negated_spans=True):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
@@ -135,7 +139,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         # underlying thing being explicitly PRESENT instead CONTRADICTS it.
         if feature_present(underlying, negatives):
             supporting.append(phrase)
-            return weight
+            return 0.15 if get_config().evidence_interpretation else weight
         if feature_present(underlying, findings, scrub_negated_spans=True):
             contradictory.append(phrase)
             return -CONTRADICTION_PENALTY
@@ -143,7 +147,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         return 0.0
     if feature_denied(phrase, negatives):
         contradictory.append(phrase)
-        return -CONTRADICTION_PENALTY
+        return -(0.25 if get_config().evidence_interpretation and weight == FEATURE_WEIGHT else CONTRADICTION_PENALTY)
     if _present_with_aliases(phrase, findings):
         supporting.append(phrase)
         return weight
@@ -226,9 +230,10 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 
+    confirmation_sources = objective_findings(entry, state) if get_config().evidence_interpretation else findings
     for finding in entry.get("confirmatory_findings", []):
         max_possible += CONFIRMATORY_WEIGHT
-        score += _score_phrase(finding, CONFIRMATORY_WEIGHT, findings, negatives, supporting, contradictory, missing)
+        score += _score_phrase(finding, CONFIRMATORY_WEIGHT, confirmation_sources, negatives, supporting, contradictory, missing)
 
     # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
     # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in
@@ -248,6 +253,13 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
         max_possible += CONFIRMATORY_WEIGHT
     score += _score_lactate(entry["id"], extract_lactate_mmol_l(state.laboratory_tests.get("lactate")),
                              supporting, missing)
+
+    if get_config().evidence_interpretation and entry["id"] == "orthostatic_hypotension":
+        drop = postural_drop(state.physical_examinations.get("vital_signs", ""))
+        max_possible += CONFIRMATORY_WEIGHT
+        if drop:
+            score += CONFIRMATORY_WEIGHT
+            supporting.append(f"postural blood pressure drop {drop[0]}/{drop[1]} mmHg; timing not inferred")
 
     if entry["id"] == "severe_electrolyte_disorder":
         max_possible += CONFIRMATORY_WEIGHT
@@ -421,6 +433,10 @@ class DifferentialEngine:
             if entry and not any(d["id"] == entry["id"] for d in candidates):
                 candidates.append(entry)
 
+        routed_ids = {e["id"] for e in candidates}
+        if get_config().broad_candidates:
+            candidates = list(all_diseases().values())
+
         scored = []
         for entry in candidates:
             score, max_possible, supporting, contradictory, missing = _score_disease(entry, state)
@@ -428,8 +444,12 @@ class DifferentialEngine:
             band = _confidence_band(score_ratio, state.turn_count, len(supporting))
             scored.append((score, score_ratio, entry, supporting, contradictory, missing, band))
 
-        scored.sort(key=lambda t: t[0], reverse=True)
+        scored.sort(key=lambda t: (t[0], t[2]["id"] in routed_ids), reverse=True)
         top_k = get_config().top_k_differential
+        if get_config().broad_candidates:
+            # Retain more hypotheses while observations are sparse; never turn score ties
+            # into an irreversible diagnostic exclusion. All diseases are rescored next turn.
+            top_k = max(top_k, 12 if state.turn_count < 6 else 8)
         items: List[DifferentialItem] = []
         for rank, (score, score_ratio, entry, supporting, contradictory, missing, band) in enumerate(scored[:top_k], start=1):
             items.append(DifferentialItem(

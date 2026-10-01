@@ -83,6 +83,10 @@ class StopPolicyConfig:
 class NovaConfig:
     max_turns: int = field(default_factory=lambda: _int_env("NOVA_MAX_TURNS", 60))
     top_k_differential: int = field(default_factory=lambda: _int_env("NOVA_TOP_K_DIFFERENTIAL", 5))
+    broad_candidates: bool = field(default_factory=lambda: _bool_env("NOVA_BROAD_CANDIDATES", True))
+    evidence_interpretation: bool = field(default_factory=lambda: _bool_env("NOVA_EVIDENCE_INTERPRETATION", True))
+    strategic_questions: bool = field(default_factory=lambda: _bool_env("NOVA_STRATEGIC_QUESTIONS", True))
+    final_review: bool = field(default_factory=lambda: _bool_env("NOVA_FINAL_REVIEW", True))
     candidate_pool_size: int = field(default_factory=lambda: _int_env("NOVA_CANDIDATE_POOL_SIZE", 8))
 
     rag_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RAG_ENABLED", True))
