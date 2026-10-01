@@ -122,3 +122,56 @@ def apply_multilingual_aliases(concept_aliases: Dict[str, List[str]]) -> Dict[st
             if phrase not in merged[tag]:
                 merged[tag].append(phrase)
     return merged
+
+
+# Bare, COMPLETE clinical nouns (>= 2 characters, never fragments) added after Blind v16 showed the
+# sentence-ending-only phrases above miss natural variants ("下痢がひどいです" vs "下痢をしています").
+_BARE_CLINICAL_NOUNS: Dict[str, List[str]] = {
+    "abdominal_pain": ["복통", "腹痛"], "chest_pain": ["흉통", "胸痛"], "headache": ["두통", "頭痛"],
+    "weakness": ["무력감", "脱力"], "numbness": ["저림", "しびれ", "痺れ"], "dyspnea": ["호흡곤란", "息切れ", "息苦しい"],
+    "fever": ["발열", "発熱"], "vomiting": ["구토", "嘔吐", "吐き気"], "diarrhea": ["설사", "下痢"],
+    "gi_bleeding": ["토혈", "혈변", "吐血", "下血"], "dizziness": ["어지럼", "めまい", "眩暈"], "syncope": ["실신", "失神"],
+}
+for _concept, _nouns in _BARE_CLINICAL_NOUNS.items():
+    MULTILINGUAL_CONCEPT_ALIASES[_concept] = list(MULTILINGUAL_CONCEPT_ALIASES[_concept]) + [
+        n for n in _nouns if n not in MULTILINGUAL_CONCEPT_ALIASES[_concept]]
+
+# A localized symptom immediately followed by one of these is DENIED, not present.
+_NEGATION_MARKERS = ("없", "않", "ありません", "ない", "なし", "ませんでした", "ないです", "なかっ")
+
+
+# Canonical ENGLISH evidence wording for each concept above. Routing/pool selection already uses the
+# localized phrases directly, but differential scoring matches knowledge-base typical_features by
+# English word overlap, so a Korean/Japanese complaint earned ZERO score (Blind v16: both Japanese-
+# mixed cases never moved their differential at all). Appending the canonical term to the evidence
+# bag makes a localized symptom count the same as the English patient saying it -- no translation
+# API, no per-language reasoning, and English-only input is completely unaffected.
+_CANONICAL_ENGLISH_EVIDENCE: Dict[str, str] = {
+    "abdominal_pain": "abdominal pain", "chest_pain": "chest pain", "headache": "headache",
+    "weakness": "weakness", "numbness": "numbness", "dyspnea": "shortness of breath", "fever": "fever",
+    "vomiting": "vomiting", "diarrhea": "diarrhea", "gi_bleeding": "gi bleeding", "dizziness": "dizziness",
+    "syncope": "syncope",
+}
+
+
+def _present_not_negated(phrase: str, text: str) -> bool:
+    start = text.find(phrase)
+    while start != -1:
+        tail = text[start + len(phrase): start + len(phrase) + 8]
+        if not any(m in tail for m in _NEGATION_MARKERS):
+            return True
+        start = text.find(phrase, start + 1)
+    return False
+
+
+def english_evidence_for(text: str) -> List[str]:
+    """Canonical English symptom phrases for every localized (non-ASCII) clinical phrase present in
+    `text`. Only phrases containing a non-ASCII character can fire, so plain English never changes."""
+    if not text or text.isascii():
+        return []
+    found: List[str] = []
+    for concept, phrases in MULTILINGUAL_CONCEPT_ALIASES.items():
+        english = _CANONICAL_ENGLISH_EVIDENCE.get(concept)
+        if english and english not in found and any((not p.isascii()) and _present_not_negated(p, text) for p in phrases):
+            found.append(english)
+    return found

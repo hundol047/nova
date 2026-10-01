@@ -416,7 +416,13 @@ class PatientState(BaseModel):
         out += list(self.laboratory_tests.values())
         out += list(self.medication_text) + list(self.allergy_text)
         out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
-        return [t for t in out if t]
+        out = [t for t in out if t]
+        # Localized (ko/ja) symptom phrases also count as their canonical English wording, so
+        # scoring (which matches English KB features) treats them like the English patient.
+        from nova_agent.multilingual_concepts import english_evidence_for
+        for t in list(out):
+            out += [e for e in english_evidence_for(t) if e not in out]
+        return out
 
     def objective_findings_text(self) -> List[str]:
         """Narrower than all_findings_text(): only text that came from an EXAM/TEST actually
