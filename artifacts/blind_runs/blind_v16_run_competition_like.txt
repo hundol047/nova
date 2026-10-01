@@ -1,0 +1,82 @@
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+Blind16_01_SoreThroatAndSneezes common                YES       44      0          NO             
+Blind16_02_UrgencyAndStinging   common                YES       44      0          NO             
+Blind16_03_FamilyBBQAftermath   common                YES       39      0          NO             
+Blind16_04_TightCapHeadache     common                YES       48      0          NO             
+Blind16_05_CoughAfterTheCold    common                NO        41      0          NO             
+Blind16_06_JawAchingAtTheGroceryStorecritical              YES       16      0          NO             
+Blind16_07_WordsWontComeOut     critical              YES       37      0          NO             
+Blind16_08_SnappedLikeALightningcritical              YES       39      0          NO             
+Blind16_09_PneumoniaTurnedBad   critical              YES       43      0          NO             
+Blind16_10_LongHaulThenGasping  critical              YES       39      0          NO             
+Blind16_11_PurpleSpotsAndStiffNeckcritical              YES       46      0          NO             
+Blind16_12_HivesAfterTheAntibioticcritical              YES       40      0          NO             
+Blind16_13_BoardLikeBelly       critical              YES       48      0          NO             
+Blind16_14_BackAndBellyTearing  dangerous_mimic       YES       40      0          NO             
+Blind16_15_TallThinGuyCollapsedLungdangerous_mimic       NO        50      0          YES            
+Blind16_16_CoffeeGroundVomit    dangerous_mimic       YES       10      0          NO             
+Blind16_17_FaintedAtWork        dangerous_mimic       NO        5       0          YES            
+Blind16_18_StrainedChestWall    benign_mimic          NO        38      0          NO             
+Blind16_19_DizzyLyingBackDown   benign_mimic          YES       49      0          NO             
+Blind16_20_PanicInTheElevator   benign_mimic          YES       39      0          NO             
+Blind16_21_AcidAtBedtime        benign_mimic          YES       40      0          NO             
+Blind16_22_BloodDrawFaint       benign_mimic          YES       49      0          NO             
+Blind16_23_AuraThenPounding     benign_mimic          YES       39      0          NO             
+Blind16_24_RattlyChestAndBurningunseen_lay_phrasing   YES       45      0          NO             
+Blind16_25_ThirstyAndSweetBreathunseen_lay_phrasing   YES       46      0          NO             
+Blind16_26_ShakyAndSweatyBeforeLunchunseen_lay_phrasing   YES       42      0          NO             
+Blind16_27_BoringPainToTheBackAfterBingeobjective_evidence    YES       15      0          NO             
+Blind16_28_RacingIrregularBeat  objective_evidence    YES       41      0          NO             
+Blind16_29_WavesOfFlankPain     objective_evidence    NO        42      0          NO             
+Blind16_30_WarfarinAndBlackStoolmedication_risk       YES       43      0          NO             
+Blind16_31_WaterPillsAndVomitingpolypharmacy          YES       42      0          NO             
+Blind16_32_NewBPPillDizzy       negative_evidence_heavyYES       39      0          NO             
+Blind16_33_JustExhaustedAndQueasyatypical_presentation YES       16      0          NO             
+Blind16_34_SpinningWithDoubleVisionatypical_presentation YES       46      0          NO             
+Blind16_35_DementiaQuieterThanUsualelderly               YES       44      0          NO             
+Blind16_36_SchoolAgeWheeze      pediatric             YES       39      0          NO             
+Blind16_37_ToddlerVomitingAndRunnyStoolpediatric             YES       39      0          NO             
+Blind16_38_PregnantFeverAndFlankpregnancy             YES       44      0          NO             
+Blind16_39_SulfonylureaPlusAntibioticpolypharmacy          NO        42      0          NO             
+Blind16_40_HeartFailureDiabetesAndWheezemultimorbidity        NO        42      0          NO             
+Blind16_41_KoreanMixedPleuriticAfterSurgerymultilingual_korean   YES       40      0          NO             
+Blind16_42_KoreanMixedWorstHeadachemultilingual_korean   YES       41      0          NO             
+Blind16_43_JapaneseMixedVomitingDiarrheamultilingual_japanese NO        39      0          NO             
+Blind16_44_JapaneseMixedSpinningmultilingual_japanese NO        39      0          NO             
+Blind16_45_KoreanMixedFaintAfterStandingmixed_language        YES       49      0          NO             
+Blind16_46_DizzyWithShoulderTipPainreproductive_age_emergencyYES       42      0          NO             
+Blind16_47_YoungWomanRLQPainWithNauseareproductive_age_emergencyNO        46      0          NO             
+Blind16_48_ShockLikeVitalsWithRashAndStiffNeckspecific_vs_generic_severity_conflictYES       46      0          NO             
+Blind16_49_CrushedByTrafficThenGaspingspecific_vs_generic_severity_conflictYES       39      0          NO             
+Blind16_50_ChestPressureWithLowBPspecific_vs_generic_severity_conflictYES       26      0          NO             
+Blind16_51_BackPainRadiatingNotMuscularfuzzy_phrase_collision_trapYES       41      0          NO             
+Blind16_52_WorseAfterExertionNotMealsfuzzy_phrase_collision_trapYES       24      0          NO             
+Blind16_53_PalpitationsBeforeTheBlackoutfuzzy_phrase_collision_trapYES       43      0          NO             
+Blind16_54_LongTailBlisteringBandlong_tail             NO (not scored)37      0          NO             
+Blind16_55_LongTailBloatedAndNoWindlong_tail             NO (not scored)45      0          NO             
+Blind16_56_LongTailPainfulRedEyelong_tail             NO (not scored)41      0          NO             
+Blind16_57_LongTailPelvicPainAndDischargelong_tail             NO (not scored)44      0          NO             
+Blind16_58_VagueTiredAllSeason  unknown_ood           NO (not scored)49      0          NO             
+Blind16_59_AskingAboutVitamins  unknown_ood           NO (not scored)49      0          NO             
+Blind16_60_SideAcheThatIsActuallyTheKidneyrouting_trap          YES       49      0          NO             
+Blind16_61_ClassicVasovagalNotArrhythmiaover_testing_trap     YES       42      0          NO             
+Blind16_62_QuietFluLikeStartThenDKApremature_diagnosis_trapYES       40      0          NO             
+Blind16_63_ManyIssuesButSepsisIsTheAnswerlate_diagnosis_trap   YES       44      0          NO             
+Blind16_64_ReassuringECGButTroponinRisingconflicting_evidence  YES       42      0          NO             
+Blind16_65_ThinDetailBladder    sparse_evidence       YES       40      0          NO             
+
+Blind v16 summary (65 cases, 59 scored, 28 critical)
+  Scored Diagnostic Accuracy:   83.1%  (excludes: Blind16_54_LongTailBlisteringBand, Blind16_55_LongTailBloatedAndNoWind, Blind16_56_LongTailPainfulRedEye, Blind16_57_LongTailPelvicPainAndDischarge, Blind16_58_VagueTiredAllSeason, Blind16_59_AskingAboutVitamins)
+  All-Case Diagnostic Accuracy: 75.4%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (safe handling of excluded cases: diagnosed, no critical miss)
+  Critical Diagnosis Recall:    92.9%
+  Critical Miss Rate:           7.1%
+  Average / Median Turns:       39.8 / 42.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        6.48 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        11.0 / 9.7 / 18.0
+  Utility Score Proxy:          0.017  (informal local metric, evaluation/scoring.py -- not an official competition score)
