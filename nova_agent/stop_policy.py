@@ -79,7 +79,7 @@ class StopPolicy:
         severity_keeps_alternative_active = severity >= _SEVERITY_KEEPS_ALTERNATIVE_ACTIVE_THRESHOLD
         unresolved_dangerous = [
             d for d in differential[1:]
-            if d.dangerous_if_missed and not d.contradictory_evidence
+            if d.dangerous_if_missed
             and (d.confidence_band != "LOW" or (severity_keeps_alternative_active and d.supporting_evidence))
         ]
         differential_by_id = {d.diagnosis_id: d for d in differential}
@@ -101,7 +101,7 @@ class StopPolicy:
         should_diagnose = enough_turns_gathered and (
             (readiness_score >= cfg.diagnose_threshold and gap_ratio >= cfg.min_gap_rank1_rank2
              and not dangerous_alternative_exists)
-            or no_more_value
+            or (no_more_value and not dangerous_alternative_exists)
         )
 
         if should_diagnose:

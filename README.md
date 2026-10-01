@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 121 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 151 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -27,6 +27,51 @@ what is *not* yet verified.
 > Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
+
+## Review revision — 2026-10-01
+
+This section supersedes the historical implementation notes below. The four development
+benchmark rows in section 6 are current; the original Blind v3/v4/v5 rows are historical.
+
+- Chief-complaint routing now removes denied clauses, preserves multiple affirmed concepts,
+  expands neurologic/pelvic/GI-bleeding coverage, and accepts up to three validated optional
+  `complaint_tags` from the LLM to expand low-confidence candidate pools on the next turn.
+- Dangerous alternatives are no longer discharged by an ungrounded LLM contradiction or
+  a positive/pending/empty result marked "completed". Resolution requires recorded,
+  diagnosis-specific exclusion or explicit normal/negative minimum-workup observations.
+  This remains a conservative synthetic-evaluation heuristic, not a clinical rule-out protocol.
+- A blocked diagnosis now selects a remaining nonduplicate evidence action instead of
+  returning the same blocked diagnosis. Zero-information-gain cannot bypass unresolved danger.
+- Candidate utilities prioritize missing minimum-workup actions for supported dangerous
+  candidates; safety-flagged diagnoses can contribute actions even outside the top five.
+  **Efficiency is not solved:** the stricter evidence gate increases average turns versus the
+  old implementation. Do not claim fewer tests or faster diagnosis from these changes.
+- Numeric BMP potassium contributes disease-specific evidence, with unsupported units,
+  ranges and unreliable samples rejected. The threshold source is documented in
+  `nova_agent/electrolyte_evidence.py`; the parser is deliberately limited.
+- Test relevance uses a fixed knowledge-base/case-authored allowlist, never the agent's own
+  ranking history. Both benchmark runners share it. Old unnecessary-test scores are not
+  comparable to the new metric (`independent_allowlist_v2`).
+- Full-case real-model validation supports `--require-real`, tracks JSON parse failures,
+  call successes, fallback, latency and reported tokens, and rejects incompatible resumed runs.
+  A competition diagnosis requires `real_llm_ever_succeeded is True`, including when zero
+  calls were attempted. Configured CI now runs three complete real-model cases.
+
+```bash
+python -m evaluation.real_llm_benchmark --provider competition --require-real --timeout 180 --save-json real-llm-report.json
+```
+
+**Live model and official adapter remain NOT VERIFIED** in this workspace: no endpoint/key was
+configured and the official protocol adapter is still a placeholder. No live-model accuracy is
+claimed. Model-provided symptom tags and actual inference latency still need live validation.
+The 52 development cases are regression data, not an untouched generalization claim.
+
+Post-change re-evaluation of the existing Blind v5 set: **25/44 correct (56.8%)**, **10/20
+critical cases correct (50.0%)**, average **25.1 turns**. Previous recorded values were 52.3%,
+40.0%, and 20.7 turns. V5 is now a reused reference set, **not a new untouched holdout**;
+its aggregate analysis informed this review. No v5 case text or expected label was edited.
+Remaining misses are substantial. The safety/efficiency tradeoff remains open; this is not
+competition-readiness or clinical-validation evidence. See `evaluation/review_validation.json`.
 
 ## 1. Why an agent, not just a prompt
 
@@ -110,7 +155,7 @@ nothing in this repo cites a fabricated external source.
 ## 6. Evaluation & results
 
 ```bash
-pytest tests/ -v                        # 121 tests
+pytest tests/ -v                        # 151 tests
 python -m evaluation.benchmark --generalization-v2 --stress  # tuning + held-out + generalization-v2 + stress, full metrics
 python -m evaluation.benchmark --held-out-only
 python -m evaluation.generalization_benchmark
@@ -167,10 +212,10 @@ goes stale against a fresh `evaluation/latest_results.json`.
 
 | Set | Scored Accuracy | All-Case Accuracy | Critical Recall | Critical Miss Rate | Avg Turns |
 |---|---|---|---|---|---|
-| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 14.2 |
-| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 17.9 |
-| Development generalization (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 16.1 |
-| Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 16.9 |
+| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 24.2 |
+| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 26.6 |
+| Development generalization (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 23.7 |
+| Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 26.1 |
 | Blind v3 reference (32 cases, all scored, 14 critical) | 62.5% | 62.5% | 57.1% | 42.9% | 20.9 |
 | Blind v4 reference (34 cases, all scored, 14 critical) | 64.7% | 64.7% | 71.4% | 28.6% | 19.8 |
 | **Untouched Blind v5 (44 cases, all scored, 20 critical)** | **52.3%** | **52.3%** | **40.0%** | **60.0%** | 20.7 |
@@ -428,7 +473,7 @@ evaluation/       Local benchmark harness: tuning + held-out cases, simulator, b
                   ablation, adversarial, tune, scoring (all synthetic vignettes, never real patient data)
 submission/       Standalone, backend-independent deployable package (run.py entrypoint)
 scripts/          build_nova_submission.py, preflight_competition.py, smoke_real_llm.py
-tests/            pytest suite (64 tests)
+tests/            pytest suite (151 tests)
 ```
 
 Module-by-module responsibility and full LLM-provider config are documented in

@@ -67,30 +67,19 @@ class CaseResult(BaseModel):
 
 
 def _relevant_test_ids(case: SyntheticCase, seen_diagnosis_ids: Optional[set] = None) -> set:
-    """Tests considered 'necessary' for scoring purposes: those tied to the ground-truth disease,
-    to any critical condition relevant to this case's chief complaint (since ruling a dangerous
-    diagnosis out is legitimate, not wasteful, testing), or to any diagnosis the agent's OWN
-    differential engine actually surfaced in its top-K ranking at some point during the case
-    (`seen_diagnosis_ids`, spec section 12). That last set matters because the first two only ever
-    look at CRITICAL/dangerous diseases -- a plausible, evidence-driven alternative that happens to
-    be non-dangerous (e.g. investigating a urinary source in an elderly patient with weakness or
-    dyspnea, the way the existing Fever03_DiabeticUrosepsis tuning case expects) was previously
-    always counted as 'unnecessary' purely because of that KB metadata flag, not because the test
-    was actually unjustified by the evidence gathered so far."""
-    relevant = set()
+    """Fixed KB/case-authored allowlist; model rankings cannot change its own score.
+
+    seen_diagnosis_ids remains an ignored compatibility argument. This is still a
+    heuristic metric; compare runs using the same metric version and case data.
+    """
+    relevant = set(case.relevant_test_ids)
     gt = disease_by_id(case.ground_truth_diagnosis)
     if gt:
         relevant.update(gt.get("discriminating_tests", []))
-        relevant.update(gt.get("discriminating_exams", []))
-    for cid in critical_condition_ids():
-        entry = disease_by_id(cid)
-        if entry and set(entry.get("chief_complaint_tags", [])) & set(
-                disease_by_id(case.ground_truth_diagnosis).get("chief_complaint_tags", []) if gt else []):
-            relevant.update(entry.get("discriminating_tests", []))
-    for diagnosis_id in (seen_diagnosis_ids or ()):
-        entry = disease_by_id(diagnosis_id)
-        if entry:
-            relevant.update(entry.get("discriminating_tests", []))
+        for cid in critical_condition_ids():
+            entry = disease_by_id(cid)
+            if entry and set(entry.get("chief_complaint_tags", [])) & set(gt.get("chief_complaint_tags", [])):
+                relevant.update(entry.get("discriminating_tests", []))
     return relevant
 
 

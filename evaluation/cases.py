@@ -21,6 +21,8 @@ class SyntheticCase(BaseModel):
     answers: Dict[str, str] = Field(default_factory=dict)
     exam_results: Dict[str, str] = Field(default_factory=dict)
     test_results: Dict[str, str] = Field(default_factory=dict)
+    # Authored independently of the agent trajectory; optional case-specific alternatives.
+    relevant_test_ids: list[str] = Field(default_factory=list)
     default_answer: str = "No, I don't have that."
     default_exam_result: str = "Unremarkable, within normal limits."
     default_test_result: str = "Normal / negative."

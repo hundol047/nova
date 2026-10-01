@@ -17,6 +17,7 @@ an estimated number presented as if it were real).
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -29,7 +30,7 @@ from nova_agent.orchestrator import DoctorAgent
 
 from evaluation.cases import SyntheticCase
 from evaluation.held_out_cases import HELD_OUT_CASES
-from evaluation.simulator import CaseResult, PatientSimulator
+from evaluation.simulator import CaseResult, PatientSimulator, _relevant_test_ids
 
 
 def run_one_case(agent: DoctorAgent, case: SyntheticCase, timeout_seconds: Optional[float]) -> tuple:
@@ -75,8 +76,7 @@ def run_one_case(agent: DoctorAgent, case: SyntheticCase, timeout_seconds: Optio
             failed_to_diagnose = False
             break
 
-    gt_entry = disease_by_id(case.ground_truth_diagnosis)
-    relevant_tests = set(gt_entry.get("discriminating_tests", [])) if gt_entry else set()
+    relevant_tests = _relevant_test_ids(case)
     unnecessary_tests = sum(1 for t in tests_performed if t not in relevant_tests)
     correct = bool(state.final_diagnosis) and same_diagnosis(state.final_diagnosis, case.ground_truth_diagnosis)
 
@@ -104,9 +104,12 @@ def main() -> None:
     parser.add_argument("--max-cases", type=int, default=None, help="Cap the number of cases run.")
     parser.add_argument("--timeout", type=float, default=None, help="Soft per-case wall-time budget in seconds.")
     parser.add_argument("--save-json", default=None, help="Path to write structured per-case + summary results.")
+    parser.add_argument("--require-real", action="store_true", help="Fail unless every case completes with a successful real model response.")
     parser.add_argument("--resume", action="store_true",
                          help="With --save-json pointing at an existing file, skip case_ids already recorded in it.")
     args = parser.parse_args()
+    if args.resume and not args.save_json:
+        parser.error("--resume requires --save-json")
 
     if args.provider:
         import os
@@ -116,6 +119,13 @@ def main() -> None:
     client = get_llm_client()
     provider_is_real = not isinstance(client, MockLLMClient)
     cfg = get_config()
+
+    if args.require_real and not provider_is_real:
+        parser.error("--require-real requires a real model provider; mock is not verification")
+    if args.timeout is not None and args.timeout <= 0:
+        parser.error("--timeout must be positive")
+    if args.max_cases is not None and args.max_cases <= 0:
+        parser.error("--max-cases must be positive")
 
     if not provider_is_real:
         print(
@@ -137,13 +147,34 @@ def main() -> None:
     cases = HELD_OUT_CASES
     if args.cases:
         wanted = set(args.cases.split(","))
+        unknown = wanted - {c.case_id for c in cases}
+        if unknown:
+            parser.error("Unknown case IDs: " + ", ".join(sorted(unknown)))
         cases = [c for c in cases if c.case_id in wanted]
     if args.max_cases:
         cases = cases[: args.max_cases]
 
+    # Resume only an identical run definition: never mix mock/real, code versions or case data.
+    source_root = Path(__file__).resolve().parents[1]
+    digest = hashlib.sha256()
+    for directory in ("nova_agent", "evaluation"):
+        for path in sorted((source_root / directory).rglob("*")):
+            if path.suffix in {".py", ".json"} and "latest_results" not in path.name:
+                digest.update(str(path.relative_to(source_root)).encode())
+                digest.update(path.read_bytes())
+    config_values = dict(vars(cfg))
+    for key in list(config_values):
+        if "api_key" in key:
+            config_values.pop(key)
+    run_config = {"provider": cfg.llm_provider, "model": getattr(client, "model", None),
+        "source_sha256": digest.hexdigest(), "timeout": args.timeout,
+        "config_sha256": hashlib.sha256(repr(sorted(config_values.items())).encode()).hexdigest(),
+        "case_ids": [c.case_id for c in cases], "metric_version": "independent_allowlist_v2"}
     already_done = {}
     if args.resume and args.save_json and Path(args.save_json).exists():
         existing = json.loads(Path(args.save_json).read_text(encoding="utf-8"))
+        if existing.get("run_config") != run_config:
+            parser.error("Resume report configuration differs from this run; use a new output file")
         already_done = {r["case_id"]: r for r in existing.get("cases", [])}
         cases = [c for c in cases if c.case_id not in already_done]
         print(f"Resuming: {len(already_done)} case(s) already recorded, {len(cases)} remaining.", file=sys.stderr)
@@ -161,6 +192,11 @@ def main() -> None:
             "test_count": result.test_count, "unnecessary_tests": result.unnecessary_tests,
             "llm_calls": state.llm_call_count, "llm_failures": state.llm_failure_count,
             "fallback_count": state.llm_fallback_count,
+            "llm_successes": state.llm_success_count,
+            "llm_parse_failure_turns": state.llm_parse_failure_turns,
+            "real_llm_verified": state.real_llm_ever_succeeded is True,
+            "failed_to_diagnose": result.failed_to_diagnose,
+            "malformed_turns": result.malformed_turns,
             "avg_llm_latency_seconds": state.llm_avg_latency_seconds,
             "total_case_latency_seconds": round(wall_seconds, 3),
             "input_tokens": state.llm_total_input_tokens if state.llm_token_usage_available else None,
@@ -174,12 +210,16 @@ def main() -> None:
         if args.save_json:
             Path(args.save_json).write_text(
                 json.dumps({"provider": cfg.llm_provider, "provider_is_real": provider_is_real,
-                            "model": getattr(client, "model", None), "cases": case_records}, indent=2),
+                            "model": getattr(client, "model", None), "run_config": run_config,
+                            "cases": case_records, "verification_passed": provider_is_real and all(
+                                r["real_llm_verified"] and not r["failed_to_diagnose"] and not r["timed_out"]
+                                for r in case_records)}, indent=2),
                 encoding="utf-8",
             )
 
+    verification_passed = provider_is_real and bool(case_records) and all(
+        r["real_llm_verified"] and not r["failed_to_diagnose"] and not r["timed_out"] for r in case_records)
     n = len(case_records) or 1
-    scored = [r for r in case_records if r["correct"] or r["final_diagnosis"] is not None]
     critical = [r for r in case_records if r["critical"]]
     print(f"\n=== Real-LLM benchmark summary ({len(case_records)} cases, provider_is_real={provider_is_real}) ===")
     print(f"  Accuracy (all-case):     {sum(r['correct'] for r in case_records) / n * 100:.1f}%")
@@ -188,6 +228,7 @@ def main() -> None:
         print(f"  Critical miss rate:      {sum(r['critical_miss'] for r in critical) / len(critical) * 100:.1f}%")
     print(f"  Avg turns:               {sum(r['turns'] for r in case_records) / n:.1f}")
     print(f"  Avg LLM calls/case:      {sum(r['llm_calls'] for r in case_records) / n:.1f}")
+    print(f"  JSON parse failure turns: {sum(r['llm_parse_failure_turns'] for r in case_records)}")
     fallback_total = sum(r['fallback_count'] for r in case_records)
     call_total = sum(r['llm_calls'] for r in case_records)
     print(f"  Fallback rate:           {(fallback_total / call_total * 100) if call_total else 0:.1f}%")
@@ -199,6 +240,10 @@ def main() -> None:
               f"{sum(r['output_tokens'] for r in token_records) / len(token_records):.0f}")
     else:
         print("  Avg input/output tokens: NOT VERIFIED (endpoint did not report token usage)")
+
+    print(f"  Real model verification: {'PASS' if verification_passed else 'NOT VERIFIED'}")
+    if (args.require_real or provider_is_real) and not verification_passed:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

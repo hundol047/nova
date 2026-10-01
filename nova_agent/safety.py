@@ -12,7 +12,7 @@ from typing import Dict, List
 
 from pydantic import BaseModel
 
-from nova_agent.chief_complaint import classify as classify_chief_complaint
+from nova_agent.chief_complaint import route, expanded_tags
 from nova_agent.differential import DifferentialItem
 from nova_agent.knowledge.retrieval import (
     critical_condition_ids,
@@ -39,7 +39,8 @@ class SafetyFinding(BaseModel):
 class SafetyLayer:
     def assess(self, state: PatientState, differential: List[DifferentialItem]) -> List[SafetyFinding]:
         findings: List[SafetyFinding] = []
-        tag = classify_chief_complaint(state.chief_complaint)
+        routing = route(state.chief_complaint)
+        tags = set(expanded_tags([routing.primary_tag, *routing.secondary_tags]))
         differential_ids = {d.diagnosis_id for d in differential}
         findings_text = state.all_findings_text()
 
@@ -47,7 +48,7 @@ class SafetyLayer:
             entry = disease_by_id(diagnosis_id)
             if entry is None:
                 continue
-            relevant = tag in entry.get("chief_complaint_tags", []) or diagnosis_id in differential_ids
+            relevant = bool(tags.intersection(entry.get("chief_complaint_tags", []))) or diagnosis_id in differential_ids
             if not relevant:
                 continue
             matched_keywords = [kw for kw in entry.get("red_flag_keywords", [])
@@ -70,7 +71,7 @@ class SafetyLayer:
                         entry = disease_by_id(diagnosis_id)
                         if entry is None:
                             continue
-                        if tag not in entry.get("chief_complaint_tags", []) and diagnosis_id not in differential_ids:
+                        if not tags.intersection(entry.get("chief_complaint_tags", [])) and diagnosis_id not in differential_ids:
                             continue  # not relevant to this case -- do not raise a flag for it
                         findings.append(SafetyFinding(
                             diagnosis_id=diagnosis_id, condition=entry["name"],
@@ -83,7 +84,7 @@ class SafetyLayer:
         # has come up -- still gated to the matching chief-complaint tag, never a blanket check.
         demographics = state.demographics
         for rule in demographic_risk_rules():
-            if tag not in rule.get("chief_complaint_tags", []):
+            if not tags.intersection(rule.get("chief_complaint_tags", [])):
                 continue
             if rule.get("requires_sex") and (demographics.sex or "").lower() != rule["requires_sex"]:
                 continue
@@ -108,7 +109,7 @@ class SafetyLayer:
         medication_text_blob = " ".join(state.medication_text + [m.name for m in state.medications]).lower()
         if medication_text_blob:
             for rule in medication_risk_rules():
-                if tag not in rule.get("chief_complaint_tags", []):
+                if not tags.intersection(rule.get("chief_complaint_tags", [])):
                     continue
                 matched = [kw for kw in rule["trigger_keywords"] if kw in medication_text_blob]
                 if not matched:

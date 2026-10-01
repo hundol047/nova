@@ -16,6 +16,7 @@ from pydantic import BaseModel
 from nova_agent.differential import DifferentialItem
 from nova_agent.knowledge.retrieval import disease_by_id
 from nova_agent.safety import SafetyFinding, SafetyLayer
+from nova_agent.resolution import is_resolved, required_workup
 from nova_agent.state import PatientState
 from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG, disease_specific_question
 
@@ -47,6 +48,7 @@ class CandidateInfo(BaseModel):
     information_gain: float
     redundancy: float
     turn_cost: int
+    unresolved_workup_gain: float = 0.0
 
 
 def _diagnosis_prior(differential: List[DifferentialItem]) -> Dict[str, float]:
@@ -111,7 +113,17 @@ def _already_answered(state: PatientState, category: str) -> bool:
 class MissingInformationAnalyzer:
     def analyze(self, state: PatientState, differential: List[DifferentialItem],
                 safety_findings: List[SafetyFinding]) -> List[CandidateInfo]:
-        top_k = differential
+        top_k = list(differential)
+        present_ids = {d.diagnosis_id for d in top_k}
+        for finding in safety_findings:
+            if finding.diagnosis_id in present_ids or is_resolved(finding.diagnosis_id, [], state):
+                continue
+            entry = disease_by_id(finding.diagnosis_id)
+            if entry is not None:
+                top_k.append(DifferentialItem(diagnosis=entry["name"], diagnosis_id=entry["id"],
+                    rank=len(top_k)+1, score=0, score_ratio=0, supporting_evidence=finding.evidence,
+                    urgency=entry.get("urgency", "CRITICAL"), dangerous_if_missed=True, confidence_band="LOW"))
+                present_ids.add(finding.diagnosis_id)
         top_k_count = len(top_k) or 1
         safety = SafetyLayer()
 
@@ -166,10 +178,20 @@ class MissingInformationAnalyzer:
                 cand.disease_ids_discriminated.append(item.diagnosis_id)
                 cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
 
+        flagged_ids = {f.diagnosis_id for f in safety_findings}
+        unresolved_ids = {d.diagnosis_id for d in top_k if d.dangerous_if_missed
+            and (d.diagnosis_id in flagged_ids or d.supporting_evidence)
+            and not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)}
         prior = _diagnosis_prior(top_k)
         all_candidates = list(ask_candidates.values()) + list(exam_candidates.values()) + list(test_candidates.values())
         for cand in all_candidates:
             affected_ids = set(cand.disease_ids_discriminated)
+            cand.unresolved_workup_gain = sum(
+                1.0 / max(1, len([key for key in required_workup(did)
+                    if not state.test_done(key) and not state.exam_done(key)]))
+                for did in affected_ids & unresolved_ids
+                if cand.action_type in {"EXAM", "TEST"} and cand.key in required_workup(did)
+            )
             n = len(affected_ids)
             # Peaks when the item splits the top-K roughly in half (maximally discriminative);
             # low when it's either irrelevant (n=0, filtered out already) or shared by every

@@ -16,8 +16,9 @@ from typing import List, Literal, Optional
 from pydantic import BaseModel
 
 from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
-from nova_agent.chief_complaint import related_tags, route
+from nova_agent.chief_complaint import related_tags, route, expanded_tags
 from nova_agent.config import get_config
+from nova_agent.electrolyte_evidence import extract_potassium_mmol_l, SEVERE_POTASSIUM_MMOL_L
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
     HYPOGLYCEMIA_THRESHOLD_MG_DL,
@@ -248,6 +249,13 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
     score += _score_lactate(entry["id"], extract_lactate_mmol_l(state.laboratory_tests.get("lactate")),
                              supporting, missing)
 
+    if entry["id"] == "severe_electrolyte_disorder":
+        max_possible += CONFIRMATORY_WEIGHT
+        potassium = extract_potassium_mmol_l(state.laboratory_tests.get("bmp"))
+        if potassium is not None and potassium >= SEVERE_POTASSIUM_MMOL_L:
+            score += CONFIRMATORY_WEIGHT
+            supporting.append(f"severe hyperkalemia (potassium {potassium:g} mmol/L)")
+
     # Diagnostic evidence stops here, deliberately -- everything above is specific to THIS disease
     # (its own typical_features/risk_factors/confirmatory_findings/numeric labs). Patient-level
     # physiologic severity (shock, hypoxemia, high lactate, AMS, ...) is a real and important
@@ -338,7 +346,7 @@ class DifferentialEngine:
         def _pool_for_tags(tags: List[str]) -> list:
             seen_ids: set = set()
             merged: list = []
-            for tag in tags:
+            for tag in expanded_tags(tags):
                 for entry in diseases_for_tag(tag):
                     if entry["id"] not in seen_ids:
                         merged.append(entry)
@@ -381,7 +389,7 @@ class DifferentialEngine:
         elif routing.confidence == "MEDIUM":
             # An exact/alias tie between two concepts, or a fuzzy hit with a real margin -- merge
             # the top 2 plausible concepts rather than hard-routing to just the primary.
-            tags = [routing.primary_tag] + routing.secondary_tags[:1]
+            tags = [routing.primary_tag] + routing.secondary_tags
             candidates = _pool_for_tags(tags)
             if not candidates:
                 candidates = _pool_for_tags(related_tags(routing.primary_tag))
@@ -400,7 +408,18 @@ class DifferentialEngine:
         elif add_cross_cutting:
             candidates = _ensure_cross_cutting_dangerous_diagnoses(candidates)
 
+        if routing.confidence != "HIGH" and state.llm_complaint_tags:
+            by_id = {entry["id"]: entry for entry in candidates}
+            for entry in _pool_for_tags(state.llm_complaint_tags):
+                by_id.setdefault(entry["id"], entry)
+            candidates = list(by_id.values())
+
         candidates = _ensure_decisive_lab_evidence_diagnoses(candidates, state)
+        potassium = extract_potassium_mmol_l(state.laboratory_tests.get("bmp"))
+        if potassium is not None and potassium >= SEVERE_POTASSIUM_MMOL_L:
+            entry = disease_by_id("severe_electrolyte_disorder")
+            if entry and not any(d["id"] == entry["id"] for d in candidates):
+                candidates.append(entry)
 
         scored = []
         for entry in candidates:

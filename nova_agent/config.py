@@ -57,6 +57,7 @@ class UtilityWeights:
             - rho   * redundancy
     """
 
+    workup_gain_weight: float = field(default_factory=lambda: _float_env("NOVA_WORKUP_GAIN_WEIGHT", 1.0))
     info_gain_weight: float = field(default_factory=lambda: _float_env("NOVA_INFO_GAIN_WEIGHT", 1.0))
     discrimination_weight: float = field(default_factory=lambda: _float_env("NOVA_DISCRIMINATION_WEIGHT", 1.2))
     safety_weight: float = field(default_factory=lambda: _float_env("NOVA_SAFETY_WEIGHT", 1.5))

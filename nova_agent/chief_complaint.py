@@ -43,6 +43,7 @@ that only need the single best tag or a ranked list, without the full structured
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from typing import List, Literal, Tuple
 
@@ -72,11 +73,17 @@ CANONICAL_TERMS = {
     "cough": ["cough"],
     "back_pain": ["back pain", "flank pain"],
     "leg_swelling": ["leg swelling", "edema"],
+    "focal_neurology": ["aphasia", "dysarthria", "facial droop", "slurred speech"],
+    "pelvic_pain": ["pelvic pain", "vaginal bleeding"],
+    "gi_bleeding": ["melena", "hematemesis", "rectal bleeding"],
 }
 
 # Generic lay-language aliases only -- each phrase describes how an ordinary patient would plausibly
 # word the concept, never a sentence reused from a specific evaluation vignette.
 CONCEPT_ALIASES = {
+    "focal_neurology": ["word finding difficulty", "difficulty speaking", "trouble speaking", "cannot speak", "one sided weakness", "말이 어눌", "언어장애"],
+    "pelvic_pain": ["pain in my pelvis", "골반 통증", "질 출혈"],
+    "gi_bleeding": ["black stool", "black stools", "dark stools", "maroon stools", "blood in stool", "vomiting blood", "흑변", "혈변", "토혈"],
     "chest_pain": ["chest tightness", "chest pressure", "chest hurts", "chest discomfort",
                    "pain in my chest",
                    "흉통", "가슴 통증", "가슴이 아프"],
@@ -89,7 +96,7 @@ CONCEPT_ALIASES = {
     "fever": ["chills", "high temperature", "burning up", "running a temperature", "feverish",
               "temperature is high", "hot and shivery",
               "열", "발열", "오한"],
-    "dyspnea": ["breathless", "can't breathe", "cant breathe", "can't catch my breath",
+    "dyspnea": ["short of breath", "breathless", "can't breathe", "cant breathe", "can't catch my breath",
                 "out of breath", "winded", "hard to breathe", "unable to breathe comfortably",
                 "not getting enough air", "air hunger", "struggling to breathe", "throat feels tight",
                 "throat is tightening", "gasping for air", "harder to breathe",
@@ -114,7 +121,7 @@ CONCEPT_ALIASES = {
                       "두근거림", "심계항진"],
     "vomiting": ["throwing up", "nausea and vomiting", "puking",
                  "구토", "토했"],
-    "weakness": ["feeling weak", "muscle weakness", "no energy", "can't move", "no strength",
+    "weakness": ["feeling weak", "muscle weakness", "no energy", "lack of energy", "can't move", "no strength", "lack of strength",
                  "body feels heavy", "drained of energy", "feel completely exhausted",
                  "무기력", "힘이 없"],
     "cough": ["coughing", "productive cough",
@@ -135,6 +142,9 @@ CHIEF_COMPLAINT_KEYWORDS = CONCEPT_PHRASES
 # related tag(s) so the candidate pool stays targeted instead of falling through to the entire
 # knowledge base.
 RELATED_TAGS = {
+    "focal_neurology": ["headache", "altered_mental_status"],
+    "pelvic_pain": ["abdominal_pain"],
+    "gi_bleeding": ["abdominal_pain", "weakness"],
     "syncope": ["dizziness", "chest_pain"],
     "palpitations": ["chest_pain", "dizziness"],
     "vomiting": ["abdominal_pain"],
@@ -214,16 +224,41 @@ class ChiefComplaintRoutingResult:
     confidence: Confidence = "LOW"
 
 
+def affirmed_complaint(text: str) -> str:
+    """Remove denied complaint clauses before exact AND fuzzy matching.
+
+    Keep lexical symptoms such as 'no energy' and 'can't breathe'. This is a
+    bounded deterministic parser, not a general medical language model.
+    """
+    clauses = re.split(r"[.;,]|\b(?:but|however|although)\b|하지만|그러나", text.lower())
+    kept = []
+    for clause in clauses:
+        clause = re.sub(r"\bno (energy|strength)\b", r"lack of \1", clause)
+        # A new affirmative subject starts a separate span ('no fever and I feel dizzy').
+        spans = re.split(r"\band (?=(?:i|he|she|the patient)\b)", clause)
+        for span in spans:
+            span = re.sub(r"\b(?:no|denies|denied|without|negative for|not experiencing|do not have|don't have)\b.*$", "", span)
+            if re.search(r"없(?:음|습니다|어요|다)|아니", span):
+                continue
+            if span.strip():
+                kept.append(span.strip())
+    return "; ".join(kept)
+
+
+def expanded_tags(tags: List[str]) -> List[str]:
+    return list(dict.fromkeys(t for tag in tags for t in [tag, *related_tags(tag)]))
+
+
 def _scores(chief_complaint_text: str) -> List[Tuple[str, float, MatchType]]:
     """Every tag that scored anything against `chief_complaint_text`, highest first, each tagged
     with HOW it matched. An exact/alias hit always outranks a fuzzy-only match (scored in a
     disjoint, higher range) so fuzzy matching can only ever ADD coverage for phrasing exact/alias
     terms miss, never override a real hit."""
-    lowered = (chief_complaint_text or "").lower()
+    lowered = affirmed_complaint(chief_complaint_text or "")
     text_words = _meaningful_words(_content_words(lowered))
     scored: List[Tuple[str, float, MatchType]] = []
     for tag, phrases in CONCEPT_PHRASES.items():
-        matched = [p for p in phrases if p.lower() in lowered]
+        matched = [p for p in phrases if re.search(r"(?<![a-z])" + re.escape(p.lower()) + r"(?![a-z])", lowered)]
         if matched:
             exact_hits = sum(1 for p in matched if p.lower() in _CANONICAL_SET[tag])
             match_type: MatchType = "exact" if exact_hits > 0 else "alias"
@@ -255,6 +290,9 @@ def route(chief_complaint_text: str) -> ChiefComplaintRoutingResult:
             else "MEDIUM"
     else:  # fuzzy
         confidence = "MEDIUM" if margin >= _FUZZY_MEDIUM_MARGIN else "LOW"
+
+    if len([item for item in scored if item[2] in ("exact", "alias")]) > 1:
+        confidence = "MEDIUM"
 
     return ChiefComplaintRoutingResult(primary_tag=primary_tag, primary_score=primary_score,
                                         secondary_tags=secondary_tags, score_margin=margin,

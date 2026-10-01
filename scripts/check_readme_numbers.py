@@ -1,73 +1,31 @@
 #!/usr/bin/env python3
-"""Verifies README.md's benchmark numbers actually match evaluation/latest_results.json (spec
-section 25: never let a stale hand-typed figure linger after the code that produced it changes).
-
-    python -m evaluation.benchmark --generalization-v2 --stress --save-json evaluation/latest_results.json
-    python scripts/check_readme_numbers.py
-
-Checks a small, explicit set of (JSON path, README percentage) pairs -- not every number in the
-README, just the headline accuracy/critical-miss/recall figures in its Results table, which are
-the ones most likely to silently drift. Exits non-zero with a clear diff if any mismatch.
-"""
-
-from __future__ import annotations
-
+"""Check each current results-table row, including turn counts, against saved metrics."""
 import json
 import re
 import sys
 from pathlib import Path
-
 ROOT = Path(__file__).resolve().parents[1]
+ROWS = {'tuning': 'Tuning (8 cases)', 'held_out': 'Held-out (18 cases, 15 scored, 13 critical)',
+        'generalization_v2': 'Development generalization (18 cases, all scored, 5 critical)',
+        'stress': 'Targeted stress (8 cases, all scored, 5 critical)'}
+METRICS = ['scored_diagnostic_accuracy', 'all_case_diagnostic_accuracy',
+           'critical_diagnosis_recall', 'critical_miss_rate', 'average_turns']
 
-# Each entry: (JSON key path, README section label used only in error messages). The check reads
-# the number as a percentage (0-100, one decimal place, matching print_summary()'s own "%.1f"
-# formatting) and confirms that exact string appears somewhere in README.md.
-CHECKS = [
-    (("tuning", "scored_diagnostic_accuracy"), "Tuning scored accuracy"),
-    (("held_out", "scored_diagnostic_accuracy"), "Held-out scored accuracy"),
-    (("held_out", "all_case_diagnostic_accuracy"), "Held-out all-case accuracy"),
-    (("held_out", "critical_diagnosis_recall"), "Held-out critical recall"),
-    (("held_out", "critical_miss_rate"), "Held-out critical miss rate"),
-    (("generalization_v2", "scored_diagnostic_accuracy"), "Generalization v2 scored accuracy"),
-    (("generalization_v2", "critical_diagnosis_recall"), "Generalization v2 critical recall"),
-    (("generalization_v2", "critical_miss_rate"), "Generalization v2 critical miss rate"),
-    (("stress", "scored_diagnostic_accuracy"), "Stress set scored accuracy"),
-    (("stress", "all_case_diagnostic_accuracy"), "Stress set all-case accuracy"),
-    (("stress", "critical_diagnosis_recall"), "Stress set critical recall"),
-    (("stress", "critical_miss_rate"), "Stress set critical miss rate"),
-]
+def main():
+    data = json.loads((ROOT/'evaluation/latest_results.json').read_text())
+    readme = (ROOT/'README.md').read_text()
+    errors = []
+    for key, label in ROWS.items():
+        match = re.search(r'^\| ' + re.escape(label) + r' \|(.+)$', readme, re.M)
+        actual = [value.strip() for value in match.group(1).split('|') if value.strip()] if match else []
+        expected = [f'{data[key][m]*100:.1f}%' if m != 'average_turns' else f'{data[key][m]:.1f}' for m in METRICS]
+        if actual != expected:
+            errors.append(f'{label}: expected {expected}; found {actual}')
+    if errors:
+        print('\n'.join(errors), file=sys.stderr)
+        return 1
+    print('README current result rows match evaluation/latest_results.json.')
+    return 0
 
-
-def main() -> None:
-    results_path = ROOT / "evaluation" / "latest_results.json"
-    if not results_path.exists():
-        print(f"NOT READY: {results_path} does not exist. Run:\n"
-              "  python -m evaluation.benchmark --save-json evaluation/latest_results.json", file=sys.stderr)
-        sys.exit(1)
-
-    results = json.loads(results_path.read_text(encoding="utf-8"))
-    readme_text = (ROOT / "README.md").read_text(encoding="utf-8")
-
-    mismatches = []
-    for (top_key, metric_key), label in CHECKS:
-        value = results.get(top_key, {}).get(metric_key)
-        if value is None:
-            mismatches.append(f"{label}: {metric_key!r} missing from latest_results.json")
-            continue
-        expected_pct = f"{value * 100:.1f}%"
-        if expected_pct not in readme_text:
-            mismatches.append(f"{label}: expected {expected_pct!r} (from latest_results.json) not found in README.md")
-
-    if mismatches:
-        print("README.md benchmark numbers are STALE:", file=sys.stderr)
-        for m in mismatches:
-            print(f"  - {m}", file=sys.stderr)
-        print("\nRe-run `python -m evaluation.benchmark --save-json evaluation/latest_results.json` "
-              "and update README.md's Results table.", file=sys.stderr)
-        sys.exit(1)
-
-    print("README.md benchmark numbers match evaluation/latest_results.json.")
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    sys.exit(main())

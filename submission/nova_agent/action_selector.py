@@ -60,7 +60,8 @@ class ActionSelector:
         w = get_config().weights
         management_relevance = self._management_relevance(cand, dangerous_involved, differential)
         utility = (
-            w.info_gain_weight * cand.information_gain
+            w.workup_gain_weight * cand.unresolved_workup_gain
+            + w.info_gain_weight * cand.information_gain
             + w.discrimination_weight * cand.diagnostic_discrimination
             + w.safety_weight * cand.safety_relevance
             + w.management_relevance_weight * management_relevance
@@ -68,6 +69,7 @@ class ActionSelector:
             - w.redundancy_penalty * cand.redundancy
         )
         components = {
+            "unresolved_workup_gain": cand.unresolved_workup_gain,
             "information_gain": cand.information_gain, "diagnostic_discrimination": cand.diagnostic_discrimination,
             "safety_relevance": cand.safety_relevance, "management_relevance": management_relevance,
             "turn_cost": cand.turn_cost, "redundancy": cand.redundancy,

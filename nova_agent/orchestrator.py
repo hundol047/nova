@@ -104,6 +104,8 @@ class DoctorAgent:
                 # outside this branch would double-count a call that was never made this turn.
                 if getattr(self.llm_client, "_last_call_was_real", False):
                     state.llm_call_count += 1
+                    if getattr(self.llm_client, "_last_parse_failed", False):
+                        state.llm_parse_failure_turns += 1
                     if getattr(self.llm_client, "_last_call_succeeded", False):
                         state.llm_success_count += 1
                     else:
@@ -119,6 +121,12 @@ class DoctorAgent:
                         state.llm_total_input_tokens += input_tokens
                         state.llm_total_output_tokens += output_tokens
                         state.llm_token_usage_available = True
+
+            if llm_output is not None:
+                from nova_agent.chief_complaint import CONCEPT_PHRASES
+                state.llm_complaint_tags = list(dict.fromkeys(
+                    tag for tag in llm_output.complaint_tags if tag in CONCEPT_PHRASES
+                ))[:3]
 
             # 6/7. Deterministic Safety Validation + Structured Action Validation.
             merged_differential = self.safety_validator.merge_differential(

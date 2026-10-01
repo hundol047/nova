@@ -110,6 +110,7 @@ class PatientState(BaseModel):
     demographics: Demographics = Field(default_factory=Demographics)
 
     chief_complaint: str = ""
+    llm_complaint_tags: List[str] = Field(default_factory=list)
     symptoms: List[str] = Field(default_factory=list)
     symptom_onset: Optional[str] = None
     duration: Optional[str] = None
@@ -173,6 +174,7 @@ class PatientState(BaseModel):
     llm_call_count: int = 0
     llm_success_count: int = 0
     llm_failure_count: int = 0
+    llm_parse_failure_turns: int = 0
     llm_fallback_count: int = 0
     llm_total_latency_seconds: float = 0.0
     llm_latency_sample_count: int = 0
