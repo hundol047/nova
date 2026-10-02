@@ -32,6 +32,7 @@
   "errors": [],
   "duplicate_candidate_ids": {},
   "duplicate_candidate_names": {},
+  "shared_reference_groups_requiring_semantic_review": 294,
   "existing_runtime_duplicate_names": {
     "ectopic pregnancy": [
       "core:ectopic_pregnancy",

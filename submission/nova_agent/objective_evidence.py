@@ -39,6 +39,7 @@ from typing import Dict, List, Optional
 from nova_agent.glucose_evidence import extract_glucose_mg_dl
 from nova_agent.severity_evidence import extract_lactate_mmol_l
 from nova_agent.state import PatientState
+from nova_agent.assertion_status import is_uncertain
 from nova_agent.unit_safety import value_is_in_disallowed_unit, unit_present
 
 Direction = str  # "high" | "low" -- which side of normal counts as abnormal for a given lab
@@ -243,7 +244,7 @@ def _current_result_texts(raw_texts: List[str]) -> List[str]:
     """Remove explicitly historical/reference clauses, never guess their chronology."""
     return [clause for text in raw_texts
             for clause in re.split(r"[;,\n]|\b(?:but|however)\b", text, flags=re.I)
-            if not re.search(r"\b(?:previously|historical|baseline|last (?:year|month|week)|"
+            if not is_uncertain(clause) and not re.search(r"\b(?:previously|historical|baseline|last (?:year|month|week)|"
                              r"prior result|old result|reference range)\b", clause, re.I)]
 
 

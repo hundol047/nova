@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import re
 from typing import List, Set
+from nova_agent.assertion_status import is_uncertain
 
 _STOPWORDS = {
     "a", "an", "the", "to", "of", "in", "on", "or", "and", "with", "is", "are", "was", "were",
@@ -60,6 +61,8 @@ def _strip_negated_spans(text: str) -> str:
     clauses = re.split(r"[;,\n]|(?<=[a-z])\.(?=\s|$)|\b(?:but|however)\b", text, flags=re.I)
     positive = []
     for clause in clauses:
+        if is_uncertain(clause):
+            continue
         # Reports often place the negation after the finding. Scrubbing only
         # from "not" onward would leave the denied finding looking positive.
         if re.search(r"(?:\b(?:is|are|was|were)\s+|:\s*)(?:absent|negative|not (?:present|seen|detected))\b"

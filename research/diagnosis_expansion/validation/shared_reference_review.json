@@ -1,0 +1,1732 @@
+{
+  "status": "REVIEW_REQUIRED_NOT_PROVEN_DUPLICATES",
+  "explanation": "A shared reference can be broader, related, or equivalent. Do not merge or delete automatically.",
+  "groups": {
+    "ICD9:1288": [
+      "review:mondo:0000299",
+      "review:mondo:0019143"
+    ],
+    "ICD9:47879": [
+      "review:mondo:0000485",
+      "review:mondo:0008017",
+      "review:mondo:0020974"
+    ],
+    "ICD9:33399": [
+      "review:mondo:0000487",
+      "review:mondo:0006732",
+      "review:mondo:0007435",
+      "review:mondo:0011841"
+    ],
+    "ICD9:20380": [
+      "review:mondo:0000659",
+      "review:mondo:0002754",
+      "review:mondo:0021334"
+    ],
+    "ICD9:558": [
+      "review:mondo:0000706",
+      "review:mondo:0000707"
+    ],
+    "ICD9:5589": [
+      "review:mondo:0000706",
+      "review:mondo:0000707",
+      "review:mondo:0005533"
+    ],
+    "ICD9:5283": [
+      "review:mondo:0000739",
+      "review:mondo:0006576"
+    ],
+    "ICD9:9953": [
+      "review:mondo:0000807",
+      "review:mondo:0005202"
+    ],
+    "ICD9:2141": [
+      "review:mondo:0000964",
+      "review:mondo:0000970"
+    ],
+    "ICD9:2148": [
+      "review:mondo:0000971",
+      "review:mondo:0000974",
+      "review:mondo:0007909",
+      "review:mondo:0012296"
+    ],
+    "ICD9:503": [
+      "review:mondo:0001001",
+      "review:mondo:0017638"
+    ],
+    "ICD9:502": [
+      "review:mondo:0001003",
+      "review:mondo:0001004",
+      "review:mondo:0001005",
+      "review:mondo:0021804"
+    ],
+    "ICD9:25639": [
+      "review:mondo:0001119",
+      "review:mondo:0044338"
+    ],
+    "ICD9:04189": [
+      "review:mondo:0001226",
+      "review:mondo:0020487"
+    ],
+    "ICD9:3569": [
+      "review:mondo:0001408",
+      "review:mondo:0002960"
+    ],
+    "ICD9:1869": [
+      "review:mondo:0001472",
+      "review:mondo:0021282"
+    ],
+    "ICD9:5278": [
+      "review:mondo:0001598",
+      "review:mondo:0006864"
+    ],
+    "ICD9:3574": [
+      "review:mondo:0001765",
+      "review:mondo:0003084"
+    ],
+    "ICD9:1369": [
+      "review:mondo:0001771",
+      "review:mondo:0011716"
+    ],
+    "ICD9:3518": [
+      "review:mondo:0001818",
+      "review:mondo:0005769"
+    ],
+    "ICD9:2397": [
+      "review:mondo:0001884",
+      "review:mondo:0002101",
+      "review:mondo:0002626",
+      "review:mondo:0002642",
+      "review:mondo:0021389"
+    ],
+    "ICD9:27903": [
+      "review:mondo:0001901",
+      "review:mondo:0003738",
+      "review:mondo:0004165",
+      "review:mondo:0008613",
+      "review:mondo:0010019"
+    ],
+    "ICD9:51919": [
+      "review:mondo:0001911",
+      "review:mondo:0002568"
+    ],
+    "ICD9:59389": [
+      "review:mondo:0001922",
+      "review:mondo:0008628",
+      "review:mondo:0012725",
+      "review:mondo:0021390",
+      "review:mondo:0056796"
+    ],
+    "NANDO:2200388": [
+      "review:mondo:0001969",
+      "review:mondo:0015779"
+    ],
+    "ICD9:22809": [
+      "review:mondo:0001974",
+      "review:mondo:0001975",
+      "review:mondo:0003083",
+      "review:mondo:0003341",
+      "review:mondo:0006280",
+      "review:mondo:0015317",
+      "review:mondo:0021542",
+      "review:mondo:0021543"
+    ],
+    "ICD9:64680": [
+      "review:mondo:0001976",
+      "review:mondo:0006558"
+    ],
+    "ICD9:3330": [
+      "review:mondo:0002017",
+      "review:mondo:0008193",
+      "review:mondo:0008695",
+      "review:mondo:0011638",
+      "review:mondo:0013674"
+    ],
+    "ICD9:6929": [
+      "review:mondo:0002138",
+      "review:mondo:0002987",
+      "review:mondo:0006589",
+      "review:mondo:0008523"
+    ],
+    "ICD9:1719": [
+      "review:mondo:0002141",
+      "review:mondo:0003595",
+      "review:mondo:0003596",
+      "review:mondo:0004557",
+      "review:mondo:0004559",
+      "review:mondo:0005238",
+      "review:mondo:0009994",
+      "review:mondo:0016757",
+      "review:mondo:0020562",
+      "review:mondo:0020563"
+    ],
+    "ICD9:59589": [
+      "review:mondo:0002287",
+      "review:mondo:0023073"
+    ],
+    "ICD9:37239": [
+      "review:mondo:0002308",
+      "review:mondo:0009009"
+    ],
+    "ICD9:34580": [
+      "review:mondo:0002338",
+      "review:mondo:0020307"
+    ],
+    "ICD9:2159": [
+      "review:mondo:0002383",
+      "review:mondo:0002548",
+      "review:mondo:0002555",
+      "review:mondo:0002559",
+      "review:mondo:0003301",
+      "review:mondo:0003302",
+      "review:mondo:0003304",
+      "review:mondo:0003640",
+      "review:mondo:0004482",
+      "review:mondo:0006086",
+      "review:mondo:0006211",
+      "review:mondo:0006442",
+      "review:mondo:0011927",
+      "review:mondo:0016442",
+      "review:mondo:0018933"
+    ],
+    "ICD9:60020": [
+      "review:mondo:0002450",
+      "review:mondo:0021532"
+    ],
+    "NANDO:2200089": [
+      "review:mondo:0002540",
+      "review:mondo:0002543"
+    ],
+    "ICDO:9740/1": [
+      "review:mondo:0002726",
+      "review:mondo:0019025"
+    ],
+    "NANDO:2200090": [
+      "review:mondo:0002794",
+      "review:mondo:0002797"
+    ],
+    "ICD9:53540": [
+      "review:mondo:0002840",
+      "review:mondo:0002844",
+      "review:mondo:0022196"
+    ],
+    "ICD9:4578": [
+      "review:mondo:0002968",
+      "review:mondo:0003069"
+    ],
+    "ICD9:27789": [
+      "review:mondo:0002984",
+      "review:mondo:0009173",
+      "review:mondo:0012994",
+      "review:mondo:0013208",
+      "review:mondo:0013543",
+      "review:mondo:0017711",
+      "review:mondo:0018153",
+      "review:mondo:0020518",
+      "review:mondo:0020519",
+      "review:mondo:0045022"
+    ],
+    "ICD9:1890": [
+      "review:mondo:0003010",
+      "review:mondo:0008682"
+    ],
+    "ICDO:0000/0": [
+      "review:mondo:0003011",
+      "review:mondo:0006131",
+      "review:mondo:0006397"
+    ],
+    "ICD9:58389": [
+      "review:mondo:0003140",
+      "review:mondo:0019396"
+    ],
+    "ICD9:1629": [
+      "review:mondo:0003181",
+      "review:mondo:0004973",
+      "review:mondo:0006049",
+      "review:mondo:0006275",
+      "review:mondo:0006281",
+      "review:mondo:0020555",
+      "review:mondo:0020556",
+      "review:mondo:0020557"
+    ],
+    "ICD9:0498": [
+      "review:mondo:0003336",
+      "review:mondo:0019384"
+    ],
+    "ICD9:23989": [
+      "review:mondo:0003453",
+      "review:mondo:0005398",
+      "review:mondo:0019957"
+    ],
+    "NANDO:2200065": [
+      "review:mondo:0003585",
+      "review:mondo:0003587"
+    ],
+    "ICD9:5839": [
+      "review:mondo:0003652",
+      "review:mondo:0008071",
+      "review:mondo:0008242"
+    ],
+    "ICD9:47819": [
+      "review:mondo:0003753",
+      "review:mondo:0019108"
+    ],
+    "ICD9:2538": [
+      "review:mondo:0003962",
+      "review:mondo:0006740",
+      "review:mondo:0009881",
+      "review:mondo:0015663",
+      "review:mondo:0019835"
+    ],
+    "ICDO:9831/3": [
+      "review:mondo:0004234",
+      "review:mondo:0019469"
+    ],
+    "ICD9:43310": [
+      "review:mondo:0004450",
+      "review:mondo:0005189",
+      "review:mondo:0006690"
+    ],
+    "ICD9:35929": [
+      "review:mondo:0004495",
+      "review:mondo:0008055",
+      "review:mondo:0008195"
+    ],
+    "ICD9:2392": [
+      "review:mondo:0004560",
+      "review:mondo:0018893"
+    ],
+    "ICD9:2662": [
+      "review:mondo:0004575",
+      "review:mondo:0013110"
+    ],
+    "ICD9:2000": [
+      "review:mondo:0004638",
+      "review:mondo:0009975"
+    ],
+    "ICD9:2007": [
+      "review:mondo:0004638",
+      "review:mondo:0009975"
+    ],
+    "ICD9:6108": [
+      "review:mondo:0004808",
+      "review:mondo:0006098"
+    ],
+    "ICD9:20270": [
+      "review:mondo:0004977",
+      "review:mondo:0015809",
+      "review:mondo:0019475"
+    ],
+    "ICD9:56989": [
+      "review:mondo:0005288",
+      "review:mondo:0006912",
+      "review:mondo:0021736"
+    ],
+    "ICD9:4571": [
+      "review:mondo:0005425",
+      "review:mondo:0007916"
+    ],
+    "ICD9:0849": [
+      "review:mondo:0005625",
+      "review:mondo:0005920"
+    ],
+    "ICD9:1368": [
+      "review:mondo:0005743",
+      "review:mondo:0005978",
+      "review:mondo:0017628"
+    ],
+    "ICD9:34510": [
+      "review:mondo:0005754",
+      "review:mondo:0008045",
+      "review:mondo:0012904",
+      "review:mondo:0014633",
+      "review:mondo:0100135"
+    ],
+    "ICD9:2572": [
+      "review:mondo:0005758",
+      "review:mondo:0009421"
+    ],
+    "ICD9:01790": [
+      "review:mondo:0005787",
+      "review:mondo:0005887",
+      "review:mondo:0005903"
+    ],
+    "ICD9:5289": [
+      "review:mondo:0005887",
+      "review:mondo:0006723",
+      "review:mondo:0023605"
+    ],
+    "ICD9:51889": [
+      "review:mondo:0006277",
+      "review:mondo:0006933",
+      "review:mondo:0020554"
+    ],
+    "ICDO:9680/3": [
+      "review:mondo:0006383",
+      "review:mondo:0017346",
+      "review:mondo:0017596",
+      "review:mondo:0017597"
+    ],
+    "WIKIPEDIA:PHOTODERMATITIS": [
+      "review:mondo:0006596",
+      "review:mondo:0006598"
+    ],
+    "ICD9:7018": [
+      "review:mondo:0006610",
+      "review:mondo:0008849",
+      "review:mondo:0015665",
+      "review:mondo:0015808",
+      "review:mondo:0016439",
+      "review:mondo:0019581",
+      "review:mondo:0021654"
+    ],
+    "ICD9:4408": [
+      "review:mondo:0006659",
+      "review:mondo:0042495"
+    ],
+    "ICD9:7088": [
+      "review:mondo:0006660",
+      "review:mondo:0008632",
+      "review:mondo:0008633",
+      "review:mondo:0018304",
+      "review:mondo:0021952",
+      "review:mondo:0025513"
+    ],
+    "ICD9:2468": [
+      "review:mondo:0006666",
+      "review:mondo:0007198"
+    ],
+    "ICD9:04184": [
+      "review:mondo:0006671",
+      "review:mondo:0006765",
+      "review:mondo:0024412",
+      "review:mondo:0024414"
+    ],
+    "ICD9:3207": [
+      "review:mondo:0006753",
+      "review:mondo:0006836"
+    ],
+    "ICD9:70909": [
+      "review:mondo:0006778",
+      "review:mondo:0008095",
+      "review:mondo:0012669",
+      "review:mondo:0014234",
+      "review:mondo:0018311"
+    ],
+    "ICD9:7098": [
+      "review:mondo:0006787",
+      "review:mondo:0007446",
+      "review:mondo:0008672",
+      "review:mondo:0009219",
+      "review:mondo:0015537",
+      "review:mondo:0018592"
+    ],
+    "ICD9:34989": [
+      "review:mondo:0006811",
+      "review:mondo:0008179"
+    ],
+    "ICD9:52879": [
+      "review:mondo:0006880",
+      "review:mondo:0009237"
+    ],
+    "ICD9:78039": [
+      "review:mondo:0006891",
+      "review:mondo:0007367"
+    ],
+    "ICD9:75739": [
+      "review:mondo:0007048",
+      "review:mondo:0007358",
+      "review:mondo:0007417",
+      "review:mondo:0007422",
+      "review:mondo:0007549",
+      "review:mondo:0007551",
+      "review:mondo:0007552",
+      "review:mondo:0007554",
+      "review:mondo:0007555",
+      "review:mondo:0007556",
+      "review:mondo:0007557",
+      "review:mondo:0007758",
+      "review:mondo:0007808",
+      "review:mondo:0007809",
+      "review:mondo:0008416",
+      "review:mondo:0009178",
+      "review:mondo:0009552",
+      "review:mondo:0010592",
+      "review:mondo:0011398",
+      "review:mondo:0014227",
+      "review:mondo:0014658",
+      "review:mondo:0016441"
+    ],
+    "ICD9:75659": [
+      "review:mondo:0007055",
+      "review:mondo:0007057",
+      "review:mondo:0007244",
+      "review:mondo:0007322",
+      "review:mondo:0007489",
+      "review:mondo:0007979",
+      "review:mondo:0009031",
+      "review:mondo:0009139",
+      "review:mondo:0009274",
+      "review:mondo:0009588",
+      "review:mondo:0010650",
+      "review:mondo:0020473"
+    ],
+    "ICD9:2772": [
+      "review:mondo:0007064",
+      "review:mondo:0007068",
+      "review:mondo:0009111",
+      "review:mondo:0010130",
+      "review:mondo:0010299",
+      "review:mondo:0010533",
+      "review:mondo:0013171",
+      "review:mondo:0013461"
+    ],
+    "ICD9:2728": [
+      "review:mondo:0007070",
+      "review:mondo:0009218",
+      "review:mondo:0009530",
+      "review:mondo:0011217",
+      "review:mondo:0012725"
+    ],
+    "ICD9:25541": [
+      "review:mondo:0007071",
+      "review:mondo:0008720",
+      "review:mondo:0009279",
+      "review:mondo:0009919"
+    ],
+    "ICD9:75989": [
+      "review:mondo:0007073",
+      "review:mondo:0007226",
+      "review:mondo:0007235",
+      "review:mondo:0007301",
+      "review:mondo:0007337",
+      "review:mondo:0007352",
+      "review:mondo:0007363",
+      "review:mondo:0007387",
+      "review:mondo:0007395",
+      "review:mondo:0007400",
+      "review:mondo:0007412",
+      "review:mondo:0007443",
+      "review:mondo:0007480",
+      "review:mondo:0007604",
+      "review:mondo:0007621",
+      "review:mondo:0007635",
+      "review:mondo:0007688",
+      "review:mondo:0007698",
+      "review:mondo:0007846",
+      "review:mondo:0007866",
+      "review:mondo:0007874",
+      "review:mondo:0007875",
+      "review:mondo:0007949",
+      "review:mondo:0008016",
+      "review:mondo:0008061",
+      "review:mondo:0008108",
+      "review:mondo:0008115",
+      "review:mondo:0008209",
+      "review:mondo:0008222",
+      "review:mondo:0008305",
+      "review:mondo:0008311",
+      "review:mondo:0008318",
+      "review:mondo:0008395",
+      "review:mondo:0008396",
+      "review:mondo:0008411",
+      "review:mondo:0008497",
+      "review:mondo:0008592",
+      "review:mondo:0008596",
+      "review:mondo:0008740",
+      "review:mondo:0008763",
+      "review:mondo:0008795",
+      "review:mondo:0008874",
+      "review:mondo:0008879",
+      "review:mondo:0008984",
+      "review:mondo:0008999",
+      "review:mondo:0009104",
+      "review:mondo:0009140",
+      "review:mondo:0009143",
+      "review:mondo:0009253",
+      "review:mondo:0009271",
+      "review:mondo:0009419",
+      "review:mondo:0009449",
+      "review:mondo:0009450",
+      "review:mondo:0009479",
+      "review:mondo:0009490",
+      "review:mondo:0009560",
+      "review:mondo:0009564",
+      "review:mondo:0009582",
+      "review:mondo:0009642",
+      "review:mondo:0009664",
+      "review:mondo:0009767",
+      "review:mondo:0009774",
+      "review:mondo:0009822",
+      "review:mondo:0009903",
+      "review:mondo:0009955",
+      "review:mondo:0009962",
+      "review:mondo:0009964",
+      "review:mondo:0010010",
+      "review:mondo:0010121",
+      "review:mondo:0010193",
+      "review:mondo:0010217",
+      "review:mondo:0010220",
+      "review:mondo:0010261",
+      "review:mondo:0010278",
+      "review:mondo:0010281",
+      "review:mondo:0010477",
+      "review:mondo:0010537",
+      "review:mondo:0010545",
+      "review:mondo:0010561",
+      "review:mondo:0010571",
+      "review:mondo:0010578",
+      "review:mondo:0010589",
+      "review:mondo:0010621",
+      "review:mondo:0010623",
+      "review:mondo:0010651",
+      "review:mondo:0010671",
+      "review:mondo:0010704",
+      "review:mondo:0010742",
+      "review:mondo:0010759",
+      "review:mondo:0011240",
+      "review:mondo:0011308",
+      "review:mondo:0011365",
+      "review:mondo:0011402",
+      "review:mondo:0011640",
+      "review:mondo:0011776",
+      "review:mondo:0011939",
+      "review:mondo:0012275",
+      "review:mondo:0012316",
+      "review:mondo:0012541",
+      "review:mondo:0012853",
+      "review:mondo:0013127",
+      "review:mondo:0013252",
+      "review:mondo:0013659",
+      "review:mondo:0013873",
+      "review:mondo:0015912",
+      "review:mondo:0016004",
+      "review:mondo:0016010",
+      "review:mondo:0016013",
+      "review:mondo:0018034",
+      "review:mondo:0019336",
+      "review:mondo:0800167"
+    ],
+    "ICD9:2702": [
+      "review:mondo:0007077",
+      "review:mondo:0008244",
+      "review:mondo:0008747",
+      "review:mondo:0008753",
+      "review:mondo:0009196",
+      "review:mondo:0009283",
+      "review:mondo:0009372",
+      "review:mondo:0010162",
+      "review:mondo:0010163",
+      "review:mondo:0018136",
+      "review:mondo:0021019",
+      "review:mondo:0023094"
+    ],
+    "ICD9:27549": [
+      "review:mondo:0007078",
+      "review:mondo:0008749",
+      "review:mondo:0012912"
+    ],
+    "ICD9:5205": [
+      "review:mondo:0007092",
+      "review:mondo:0007437",
+      "review:mondo:0007442",
+      "review:mondo:0008771",
+      "review:mondo:0009007"
+    ],
+    "ICD9:27739": [
+      "review:mondo:0007097",
+      "review:mondo:0007098",
+      "review:mondo:0008778",
+      "review:mondo:0015033",
+      "review:mondo:0019439"
+    ],
+    "ICD9:2858": [
+      "review:mondo:0007109",
+      "review:mondo:0009134"
+    ],
+    "ICD9:73399": [
+      "review:mondo:0007127",
+      "review:mondo:0007414",
+      "review:mondo:0010310",
+      "review:mondo:0023035"
+    ],
+    "ICD9:37489": [
+      "review:mondo:0007198",
+      "review:mondo:0009583"
+    ],
+    "ICD9:7569": [
+      "review:mondo:0007208",
+      "review:mondo:0007738",
+      "review:mondo:0007793",
+      "review:mondo:0007987",
+      "review:mondo:0008275",
+      "review:mondo:0008322",
+      "review:mondo:0008471",
+      "review:mondo:0008521",
+      "review:mondo:0008701",
+      "review:mondo:0008827",
+      "review:mondo:0009138",
+      "review:mondo:0009227",
+      "review:mondo:0009727",
+      "review:mondo:0009914",
+      "review:mondo:0010013",
+      "review:mondo:0010024",
+      "review:mondo:0010068",
+      "review:mondo:0011939",
+      "review:mondo:0020779"
+    ],
+    "ICD9:75559": [
+      "review:mondo:0007250",
+      "review:mondo:0007340",
+      "review:mondo:0017468"
+    ],
+    "ICD9:73329": [
+      "review:mondo:0007251",
+      "review:mondo:0008881",
+      "review:mondo:0010201",
+      "review:mondo:0016071",
+      "review:mondo:0018933",
+      "review:mondo:0019665"
+    ],
+    "ICD9:5798": [
+      "review:mondo:0007252",
+      "review:mondo:0008964",
+      "review:mondo:0009174",
+      "review:mondo:0009635"
+    ],
+    "ICD9:36275": [
+      "review:mondo:0007362",
+      "review:mondo:0009007"
+    ],
+    "ICD9:37156": [
+      "review:mondo:0007376",
+      "review:mondo:0011855",
+      "review:mondo:0012401",
+      "review:mondo:0017392"
+    ],
+    "ICD9:75839": [
+      "review:mondo:0007404",
+      "review:mondo:0010886",
+      "review:mondo:0011022",
+      "review:mondo:0011929",
+      "review:mondo:0012621"
+    ],
+    "ICD9:7712": [
+      "review:mondo:0007550",
+      "review:mondo:0017372",
+      "review:mondo:0017381"
+    ],
+    "ICD9:70589": [
+      "review:mondo:0007685",
+      "review:mondo:0016040",
+      "review:mondo:0023679"
+    ],
+    "ICD9:2598": [
+      "review:mondo:0007690",
+      "review:mondo:0008310",
+      "review:mondo:0008716",
+      "review:mondo:0009517",
+      "review:mondo:0009706",
+      "review:mondo:0009874",
+      "review:mondo:0009910",
+      "review:mondo:0010196",
+      "review:mondo:0010208"
+    ],
+    "ICD9:4266": [
+      "review:mondo:0007701",
+      "review:mondo:0011474"
+    ],
+    "ICD9:28739": [
+      "review:mondo:0007708",
+      "review:mondo:0008556"
+    ],
+    "ICD9:28249": [
+      "review:mondo:0007716",
+      "review:mondo:0010328",
+      "review:mondo:0013512",
+      "review:mondo:0015579",
+      "review:mondo:0016486",
+      "review:mondo:0016487"
+    ],
+    "ICD9:2534": [
+      "review:mondo:0007794",
+      "review:mondo:0009223",
+      "review:mondo:0009911",
+      "review:mondo:0010140"
+    ],
+    "ICD9:7038": [
+      "review:mondo:0007867",
+      "review:mondo:0007900",
+      "review:mondo:0008060",
+      "review:mondo:0013592"
+    ],
+    "ICD9:7483": [
+      "review:mondo:0007876",
+      "review:mondo:0007879",
+      "review:mondo:0008888",
+      "review:mondo:0010148",
+      "review:mondo:0011340"
+    ],
+    "ICD9:28809": [
+      "review:mondo:0007883",
+      "review:mondo:0008089"
+    ],
+    "ICD9:74363": [
+      "review:mondo:0007922",
+      "review:mondo:0020461"
+    ],
+    "ICD9:75689": [
+      "review:mondo:0007970",
+      "review:mondo:0008262",
+      "review:mondo:0009724",
+      "review:mondo:0013598"
+    ],
+    "ICD9:7596": [
+      "review:mondo:0008280",
+      "review:mondo:0008501",
+      "review:mondo:0009436",
+      "review:mondo:0016986",
+      "review:mondo:0019325",
+      "review:mondo:0019326",
+      "review:mondo:0019327",
+      "review:mondo:0020783",
+      "review:mondo:0023275"
+    ],
+    "ICD9:2872": [
+      "review:mondo:0008354",
+      "review:mondo:0017943"
+    ],
+    "ICD9:3343": [
+      "review:mondo:0008392",
+      "review:mondo:0008938",
+      "review:mondo:0010188",
+      "review:mondo:0042964"
+    ],
+    "ICD9:33519": [
+      "review:mondo:0008408",
+      "review:mondo:0009673",
+      "review:mondo:0010056",
+      "review:mondo:0011436"
+    ],
+    "ICD9:35989": [
+      "review:mondo:0008409",
+      "review:mondo:0009683",
+      "review:mondo:0010977",
+      "review:mondo:0012301",
+      "review:mondo:0019949",
+      "review:mondo:0800437"
+    ],
+    "ICD9:75833": [
+      "review:mondo:0008434",
+      "review:mondo:0009532",
+      "review:mondo:0012914"
+    ],
+    "ICD9:75889": [
+      "review:mondo:0008476",
+      "review:mondo:0009145",
+      "review:mondo:0009367",
+      "review:mondo:0010078",
+      "review:mondo:0010094",
+      "review:mondo:0010235",
+      "review:mondo:0010664",
+      "review:mondo:0012726",
+      "review:mondo:0013668",
+      "review:mondo:0014708",
+      "review:mondo:0015436",
+      "review:mondo:0018067",
+      "review:mondo:0019906",
+      "review:mondo:0022991"
+    ],
+    "ICD9:7558": [
+      "review:mondo:0008518",
+      "review:mondo:0008800"
+    ],
+    "ICD9:3898": [
+      "review:mondo:0008615",
+      "review:mondo:0009968"
+    ],
+    "NANDO:2201345": [
+      "review:mondo:0008702",
+      "review:mondo:0008703"
+    ],
+    "NANDO:2201346": [
+      "review:mondo:0008703",
+      "review:mondo:0019669"
+    ],
+    "ICD9:2776": [
+      "review:mondo:0008705",
+      "review:mondo:0008729",
+      "review:mondo:0008730",
+      "review:mondo:0009737",
+      "review:mondo:0009855",
+      "review:mondo:0009908",
+      "review:mondo:0010133",
+      "review:mondo:0010399",
+      "review:mondo:0010717",
+      "review:mondo:0011093",
+      "review:mondo:0011257",
+      "review:mondo:0011426",
+      "review:mondo:0011624",
+      "review:mondo:0011642",
+      "review:mondo:0012073",
+      "review:mondo:0012526",
+      "review:mondo:0012999",
+      "review:mondo:0013164",
+      "review:mondo:0013531",
+      "review:mondo:0013571",
+      "review:mondo:0014969",
+      "review:mondo:0042970",
+      "review:mondo:0100294"
+    ],
+    "ICD9:70409": [
+      "review:mondo:0008757",
+      "review:mondo:0015261",
+      "review:mondo:0018103"
+    ],
+    "MEDDRA:10001843": [
+      "review:mondo:0008762",
+      "review:mondo:0010520"
+    ],
+    "ICD9:7585": [
+      "review:mondo:0008799",
+      "review:mondo:0012176",
+      "review:mondo:0012589",
+      "review:mondo:0016844"
+    ],
+    "ICD9:2798": [
+      "review:mondo:0008910",
+      "review:mondo:0010713",
+      "review:mondo:0012350",
+      "review:mondo:0013487",
+      "review:mondo:0014405",
+      "review:mondo:0015053",
+      "review:mondo:0022812",
+      "review:mondo:0024630"
+    ],
+    "ICD9:7578": [
+      "review:mondo:0009055",
+      "review:mondo:0013074"
+    ],
+    "ICD9:2708": [
+      "review:mondo:0009109",
+      "review:mondo:0009123",
+      "review:mondo:0009199",
+      "review:mondo:0009240",
+      "review:mondo:0009259",
+      "review:mondo:0009285",
+      "review:mondo:0009374",
+      "review:mondo:0009378",
+      "review:mondo:0009400",
+      "review:mondo:0009448",
+      "review:mondo:0009492",
+      "review:mondo:0009666",
+      "review:mondo:0009825",
+      "review:mondo:0009947",
+      "review:mondo:0010008",
+      "review:mondo:0010141",
+      "review:mondo:0010645",
+      "review:mondo:0012368",
+      "review:mondo:0012996",
+      "review:mondo:0014072"
+    ],
+    "ICD9:7428": [
+      "review:mondo:0009124",
+      "review:mondo:0015742"
+    ],
+    "ICD9:59659": [
+      "review:mondo:0009168",
+      "review:mondo:0019395"
+    ],
+    "ICD9:2863": [
+      "review:mondo:0009212",
+      "review:mondo:0009315",
+      "review:mondo:0012876",
+      "review:mondo:0013361"
+    ],
+    "ICD9:5718": [
+      "review:mondo:0009220",
+      "review:mondo:0009445"
+    ],
+    "ICD9:2869": [
+      "review:mondo:0009234",
+      "review:mondo:0012901",
+      "review:mondo:0021134",
+      "review:mondo:0024518"
+    ],
+    "ICD9:2718": [
+      "review:mondo:0009254",
+      "review:mondo:0009562",
+      "review:mondo:0009824",
+      "review:mondo:0009846",
+      "review:mondo:0011783",
+      "review:mondo:0012803",
+      "review:mondo:0013047"
+    ],
+    "ICD9:2707": [
+      "review:mondo:0009390",
+      "review:mondo:0010005"
+    ],
+    "ICD9:2588": [
+      "review:mondo:0009411",
+      "review:mondo:0010012"
+    ],
+    "ICD9:7424": [
+      "review:mondo:0009567",
+      "review:mondo:0010233",
+      "review:mondo:0015094",
+      "review:mondo:0018946",
+      "review:mondo:0020492",
+      "review:mondo:0022349"
+    ],
+    "NANDO:2201111": [
+      "review:mondo:0009609",
+      "review:mondo:0021915"
+    ],
+    "ICD9:35800": [
+      "review:mondo:0009689",
+      "review:mondo:0009690"
+    ],
+    "ICD9:58889": [
+      "review:mondo:0009818",
+      "review:mondo:0009968",
+      "review:mondo:0015294"
+    ],
+    "ICD9:7048": [
+      "review:mondo:0009848",
+      "review:mondo:0016067",
+      "review:mondo:0019330",
+      "review:mondo:0021013",
+      "review:mondo:0024283",
+      "review:mondo:0800445"
+    ],
+    "NANDO:1200866": [
+      "review:mondo:0009849",
+      "review:mondo:0012481"
+    ],
+    "ICD9:74344": [
+      "review:mondo:0009856",
+      "review:mondo:0011233",
+      "review:mondo:0020368"
+    ],
+    "ICD9:75289": [
+      "review:mondo:0009857",
+      "review:mondo:0056795",
+      "review:mondo:8000015"
+    ],
+    "ICD9:2594": [
+      "review:mondo:0009876",
+      "review:mondo:0010157"
+    ],
+    "ICD9:74749": [
+      "review:mondo:0009934",
+      "review:mondo:0011089",
+      "review:mondo:0015987",
+      "review:mondo:0020442",
+      "review:mondo:0020445",
+      "review:mondo:0020451",
+      "review:mondo:0020452"
+    ],
+    "ICD9:7507": [
+      "review:mondo:0009944",
+      "review:mondo:0016041"
+    ],
+    "ICD9:28733": [
+      "review:mondo:0010122",
+      "review:mondo:0015912"
+    ],
+    "ICD9:75881": [
+      "review:mondo:0010305",
+      "review:mondo:0010727",
+      "review:mondo:0011146",
+      "review:mondo:0015028",
+      "review:mondo:0019525",
+      "review:mondo:0019928",
+      "review:mondo:0019929",
+      "review:mondo:0020606"
+    ],
+    "ICD9:4254": [
+      "review:mondo:0010542",
+      "review:mondo:0021569"
+    ],
+    "NANDO:1200779": [
+      "review:mondo:0010619",
+      "review:mondo:0010931"
+    ],
+    "ICD9:3308": [
+      "review:mondo:0010726",
+      "review:mondo:0024457"
+    ],
+    "ICD9:25080": [
+      "review:mondo:0010785",
+      "review:mondo:0014535"
+    ],
+    "ICD9:28989": [
+      "review:mondo:0010952",
+      "review:mondo:0018945",
+      "review:mondo:0019455"
+    ],
+    "ICD9:37152": [
+      "review:mondo:0011185",
+      "review:mondo:0012043"
+    ],
+    "ICD9:4478": [
+      "review:mondo:0011208",
+      "review:mondo:0017836",
+      "review:mondo:0020326",
+      "review:mondo:0022022"
+    ],
+    "ICD9:34839": [
+      "review:mondo:0011412",
+      "review:mondo:0019390"
+    ],
+    "NANDO:1200540": [
+      "review:mondo:0011426",
+      "review:mondo:0013674"
+    ],
+    "ICD9:3438": [
+      "review:mondo:0011548",
+      "review:mondo:0011797"
+    ],
+    "NANDO:1200218": [
+      "review:mondo:0011603",
+      "review:mondo:0014945"
+    ],
+    "ICD9:74489": [
+      "review:mondo:0011723",
+      "review:mondo:0015419"
+    ],
+    "ICD9:2823": [
+      "review:mondo:0011730",
+      "review:mondo:0012747",
+      "review:mondo:0014221"
+    ],
+    "ICD10:G403": [
+      "review:mondo:0012391",
+      "review:mondo:0035161"
+    ],
+    "ICD9:3418": [
+      "review:mondo:0012514",
+      "review:mondo:0016370"
+    ],
+    "NANDO:1200541": [
+      "review:mondo:0012866",
+      "review:mondo:0017999"
+    ],
+    "ICD9:2732": [
+      "review:mondo:0015044",
+      "review:mondo:0015046",
+      "review:mondo:0024285"
+    ],
+    "ICD9:74689": [
+      "review:mondo:0015097",
+      "review:mondo:0015449",
+      "review:mondo:0019819",
+      "review:mondo:0020399",
+      "review:mondo:0020429",
+      "review:mondo:0020430",
+      "review:mondo:0020435"
+    ],
+    "ICD9:7481": [
+      "review:mondo:0015237",
+      "review:mondo:0015392",
+      "review:mondo:0015414"
+    ],
+    "ICD9:37959": [
+      "review:mondo:0015247",
+      "review:mondo:0024363"
+    ],
+    "ICD9:37049": [
+      "review:mondo:0015599",
+      "review:mondo:0019504"
+    ],
+    "ICD9:7515": [
+      "review:mondo:0015731",
+      "review:mondo:0015733"
+    ],
+    "ICD9:3239": [
+      "review:mondo:0016019",
+      "review:mondo:0019196"
+    ],
+    "ICD9:7291": [
+      "review:mondo:0016126",
+      "review:mondo:0018845"
+    ],
+    "ICD9:2827": [
+      "review:mondo:0016242",
+      "review:mondo:0016243",
+      "review:mondo:0019537",
+      "review:mondo:0020459"
+    ],
+    "NANDO:1200701": [
+      "review:mondo:0016301",
+      "review:mondo:0016303"
+    ],
+    "NANDO:1200703": [
+      "review:mondo:0016301",
+      "review:mondo:0020385"
+    ],
+    "ICD9:2581": [
+      "review:mondo:0016422",
+      "review:mondo:0016423",
+      "review:mondo:0022435"
+    ],
+    "HGNC:3627": [
+      "review:mondo:0016672",
+      "review:mondo:0018749"
+    ],
+    "HGNC:5153": [
+      "review:mondo:0016672",
+      "review:mondo:0018749"
+    ],
+    "ICDO:9471/3": [
+      "review:mondo:0016710",
+      "review:mondo:0016711"
+    ],
+    "ICDO:9506/1": [
+      "review:mondo:0016727",
+      "review:mondo:0019134"
+    ],
+    "ICD9:2240": [
+      "review:mondo:0016984",
+      "review:mondo:0021273"
+    ],
+    "ICD9:4489": [
+      "review:mondo:0017018",
+      "review:mondo:0019576"
+    ],
+    "ICD9:36210": [
+      "review:mondo:0017298",
+      "review:mondo:0019112"
+    ],
+    "ICDO:9591/3": [
+      "review:mondo:0017599",
+      "review:mondo:0017600"
+    ],
+    "NANDO:1200127": [
+      "review:mondo:0017732",
+      "review:mondo:0022424"
+    ],
+    "NANDO:2201188": [
+      "review:mondo:0017732",
+      "review:mondo:0022424"
+    ],
+    "ICD9:27949": [
+      "review:mondo:0018465",
+      "review:mondo:0019835",
+      "review:mondo:0044338"
+    ],
+    "ICD9:74687": [
+      "review:mondo:0018664",
+      "review:mondo:0019807"
+    ],
+    "ICD9:20280": [
+      "review:mondo:0018842",
+      "review:mondo:0019467",
+      "review:mondo:0019474",
+      "review:mondo:0020324"
+    ],
+    "ICD9:7292": [
+      "review:mondo:0018957",
+      "review:mondo:0021765"
+    ],
+    "ICD9:9882": [
+      "review:mondo:0019140",
+      "review:mondo:0042496"
+    ],
+    "ICD9:32381": [
+      "review:mondo:0019208",
+      "review:mondo:0800027"
+    ],
+    "ICD9:7061": [
+      "review:mondo:0019266",
+      "review:mondo:0021977"
+    ],
+    "ICD9:20480": [
+      "review:mondo:0019469",
+      "review:mondo:0019471"
+    ],
+    "ICD9:2104": [
+      "review:mondo:0021276",
+      "review:mondo:0021480",
+      "review:mondo:0021493",
+      "review:mondo:0021518"
+    ],
+    "ICD9:2339": [
+      "review:mondo:0021284",
+      "review:mondo:0021285",
+      "review:mondo:0021296"
+    ],
+    "ICD9:4718": [
+      "review:mondo:0021404",
+      "review:mondo:0021408",
+      "review:mondo:0021412",
+      "review:mondo:0021418"
+    ],
+    "ICD9:6988": [
+      "review:mondo:0021739",
+      "review:mondo:0021913"
+    ],
+    "ICD9:07989": [
+      "review:mondo:0022529",
+      "review:mondo:1010029"
+    ],
+    "ICD9:6965": [
+      "review:mondo:0024344",
+      "review:mondo:0024346",
+      "review:mondo:0024350"
+    ],
+    "ICD10:K758": [
+      "review:mondo:0035312",
+      "review:mondo:0035313"
+    ],
+    "ICD10:E274": [
+      "review:mondo:0035320",
+      "review:mondo:0035321"
+    ],
+    "ICD10:D27": [
+      "review:mondo:0035403",
+      "review:mondo:0035404",
+      "review:mondo:0035405"
+    ],
+    "ICD10:Q383": [
+      "review:mondo:0035410",
+      "review:mondo:0035411"
+    ],
+    "ICD10:C943": [
+      "review:mondo:0035444",
+      "review:mondo:0035445"
+    ],
+    "ICD10:N048": [
+      "review:mondo:0035459",
+      "review:mondo:0035460"
+    ],
+    "ICD10:G711": [
+      "review:mondo:0035646",
+      "review:mondo:0035647",
+      "review:mondo:0035648",
+      "review:mondo:0035649",
+      "review:mondo:0035650"
+    ],
+    "ICD10:G040": [
+      "review:mondo:0035669",
+      "review:mondo:0035670"
+    ],
+    "ICD10:E349": [
+      "review:mondo:0100638",
+      "review:mondo:0100646"
+    ],
+    "ICD10:E798": [
+      "review:orphanet:30",
+      "review:orphanet:3222"
+    ],
+    "ICD10:Q828": [
+      "review:orphanet:113",
+      "review:orphanet:125",
+      "review:orphanet:498474"
+    ],
+    "ICD10:C56": [
+      "review:orphanet:145",
+      "review:orphanet:206538",
+      "review:orphanet:213504",
+      "review:orphanet:289356",
+      "review:orphanet:370396",
+      "review:orphanet:398961",
+      "review:orphanet:398971",
+      "review:orphanet:398987",
+      "review:orphanet:454723",
+      "review:orphanet:876",
+      "review:orphanet:99912"
+    ],
+    "ICD10:E713": [
+      "review:orphanet:158",
+      "review:orphanet:26791",
+      "review:orphanet:26793"
+    ],
+    "ICD10:C809": [
+      "review:orphanet:178",
+      "review:orphanet:180229",
+      "review:orphanet:180234"
+    ],
+    "ICD11:2B5J": [
+      "review:orphanet:178",
+      "review:orphanet:55881"
+    ],
+    "ICD10:G318": [
+      "review:orphanet:506",
+      "review:orphanet:726"
+    ],
+    "ICD10:E762": [
+      "review:orphanet:309297",
+      "review:orphanet:309310",
+      "review:orphanet:583"
+    ],
+    "ICD10:Q871": [
+      "review:orphanet:638",
+      "review:orphanet:98793"
+    ],
+    "ICD11:LD2F1Y": [
+      "review:orphanet:228410",
+      "review:orphanet:580933",
+      "review:orphanet:638",
+      "review:orphanet:93293"
+    ],
+    "ICD10:C629": [
+      "review:orphanet:842",
+      "review:orphanet:876"
+    ],
+    "OMIM:273300": [
+      "review:orphanet:363494",
+      "review:orphanet:842",
+      "review:orphanet:876"
+    ],
+    "ICD11:2F7C": [
+      "review:orphanet:595133",
+      "review:orphanet:873"
+    ],
+    "ICD11:2C73Y": [
+      "review:orphanet:206538",
+      "review:orphanet:213504",
+      "review:orphanet:289356",
+      "review:orphanet:454723",
+      "review:orphanet:876"
+    ],
+    "ICD10:D487": [
+      "review:orphanet:178342",
+      "review:orphanet:252018",
+      "review:orphanet:883"
+    ],
+    "ICD10:Q878": [
+      "review:orphanet:1768",
+      "review:orphanet:228410",
+      "review:orphanet:2306",
+      "review:orphanet:254516",
+      "review:orphanet:464306",
+      "review:orphanet:580933",
+      "review:orphanet:652519",
+      "review:orphanet:708166",
+      "review:orphanet:93293",
+      "review:orphanet:959",
+      "review:orphanet:96169"
+    ],
+    "OMIM:607323": [
+      "review:orphanet:93293",
+      "review:orphanet:959"
+    ],
+    "ICD10:Q935": [
+      "review:orphanet:1598",
+      "review:orphanet:1600",
+      "review:orphanet:261112",
+      "review:orphanet:261197",
+      "review:orphanet:717830"
+    ],
+    "ICD10:Q923": [
+      "review:orphanet:1727",
+      "review:orphanet:238446",
+      "review:orphanet:370079",
+      "review:orphanet:96121"
+    ],
+    "ICD10:D219": [
+      "review:orphanet:2126",
+      "review:orphanet:595133"
+    ],
+    "ICD10:C857": [
+      "review:orphanet:2420",
+      "review:orphanet:314684",
+      "review:orphanet:97285"
+    ],
+    "ICD11:2C90Y": [
+      "review:orphanet:2665",
+      "review:orphanet:319298"
+    ],
+    "ICD10:Q048": [
+      "review:orphanet:268961",
+      "review:orphanet:268994",
+      "review:orphanet:2732",
+      "review:orphanet:598164",
+      "review:orphanet:615954",
+      "review:orphanet:65683"
+    ],
+    "ICD11:LD2HY": [
+      "review:orphanet:2732",
+      "review:orphanet:69739"
+    ],
+    "ICD11:LD90Y": [
+      "review:orphanet:3242",
+      "review:orphanet:464306"
+    ],
+    "ICD10:D475": [
+      "review:orphanet:314962",
+      "review:orphanet:3260"
+    ],
+    "ICD10:D695": [
+      "review:orphanet:3325",
+      "review:orphanet:698945",
+      "review:orphanet:699021",
+      "review:orphanet:699029"
+    ],
+    "ICD10:G718": [
+      "review:orphanet:25980",
+      "review:orphanet:289380"
+    ],
+    "ICD11:5C5201": [
+      "review:orphanet:26791",
+      "review:orphanet:26793",
+      "review:orphanet:391417"
+    ],
+    "ICD10:E743": [
+      "review:orphanet:35122",
+      "review:orphanet:35710"
+    ],
+    "ICD11:4A430": [
+      "review:orphanet:449563",
+      "review:orphanet:49041",
+      "review:orphanet:596448"
+    ],
+    "ICD10:D591": [
+      "review:orphanet:56425",
+      "review:orphanet:90033"
+    ],
+    "ICD10:H355": [
+      "review:orphanet:227796",
+      "review:orphanet:59181"
+    ],
+    "ICD11:LA0551": [
+      "review:orphanet:268961",
+      "review:orphanet:268994",
+      "review:orphanet:65683"
+    ],
+    "OMIM:607341": [
+      "review:orphanet:268994",
+      "review:orphanet:65683"
+    ],
+    "ICD10:E778": [
+      "review:orphanet:263494",
+      "review:orphanet:370933",
+      "review:orphanet:79326"
+    ],
+    "ICD11:5C540": [
+      "review:orphanet:263494",
+      "review:orphanet:79326"
+    ],
+    "ICD10:D898": [
+      "review:orphanet:714477",
+      "review:orphanet:86861"
+    ],
+    "ICD10:M358": [
+      "review:orphanet:444092",
+      "review:orphanet:596448",
+      "review:orphanet:90002"
+    ],
+    "ICD10:G122": [
+      "review:orphanet:454706",
+      "review:orphanet:90020"
+    ],
+    "ICD10:G118": [
+      "review:orphanet:458803",
+      "review:orphanet:94147",
+      "review:orphanet:98757"
+    ],
+    "ICD11:8A0316": [
+      "review:orphanet:94147",
+      "review:orphanet:98757"
+    ],
+    "ICD10:E668": [
+      "review:orphanet:179490",
+      "review:orphanet:98267"
+    ],
+    "ICD11:5B81Y": [
+      "review:orphanet:179490",
+      "review:orphanet:98267"
+    ],
+    "ICD11:2A600": [
+      "review:orphanet:102724",
+      "review:orphanet:402014",
+      "review:orphanet:98831"
+    ],
+    "ICD10:Q212": [
+      "review:orphanet:576227",
+      "review:orphanet:576232",
+      "review:orphanet:576235",
+      "review:orphanet:99106"
+    ],
+    "ICD10:C910": [
+      "review:orphanet:585918",
+      "review:orphanet:585929",
+      "review:orphanet:585948",
+      "review:orphanet:99860"
+    ],
+    "ICD10:D361": [
+      "review:orphanet:100002",
+      "review:orphanet:252164",
+      "review:orphanet:252183"
+    ],
+    "ICD11:2F3Y": [
+      "review:orphanet:100002",
+      "review:orphanet:252164",
+      "review:orphanet:252183"
+    ],
+    "ICD10:G310": [
+      "review:orphanet:100069",
+      "review:orphanet:100070"
+    ],
+    "ICD11:6D83": [
+      "review:orphanet:100069",
+      "review:orphanet:100070"
+    ],
+    "OMIM:172700": [
+      "review:orphanet:100069",
+      "review:orphanet:100070"
+    ],
+    "OMIM:600274": [
+      "review:orphanet:100069",
+      "review:orphanet:100070"
+    ],
+    "ICD10:C920": [
+      "review:orphanet:102724",
+      "review:orphanet:319465",
+      "review:orphanet:402014"
+    ],
+    "ICD10:D572": [
+      "review:orphanet:251359",
+      "review:orphanet:700085"
+    ],
+    "ICD11:2A000Y": [
+      "review:orphanet:251595",
+      "review:orphanet:251636",
+      "review:orphanet:251639"
+    ],
+    "ICD10:D432": [
+      "review:orphanet:251636",
+      "review:orphanet:251639"
+    ],
+    "ICD10:C729": [
+      "review:orphanet:252006",
+      "review:orphanet:252021"
+    ],
+    "ICD11:2A001Y": [
+      "review:orphanet:252006",
+      "review:orphanet:252021"
+    ],
+    "ICD11:5C5632": [
+      "review:orphanet:309297",
+      "review:orphanet:309310"
+    ],
+    "ICD10:C64": [
+      "review:orphanet:319276",
+      "review:orphanet:319298",
+      "review:orphanet:319303",
+      "review:orphanet:319319"
+    ],
+    "ICD11:2C900": [
+      "review:orphanet:319276",
+      "review:orphanet:319303",
+      "review:orphanet:319319"
+    ],
+    "OMIM:601626": [
+      "review:orphanet:319465",
+      "review:orphanet:530995"
+    ],
+    "ICD11:2A61": [
+      "review:orphanet:530995",
+      "review:orphanet:589534"
+    ],
+    "ICD11:2A70Y": [
+      "review:orphanet:585918",
+      "review:orphanet:585929",
+      "review:orphanet:585948"
+    ],
+    "ICD10:D180": [
+      "review:orphanet:675396",
+      "review:orphanet:714138"
+    ],
+    "ICD10:D818": [
+      "review:orphanet:693661",
+      "review:orphanet:718017",
+      "review:orphanet:718047"
+    ],
+    "ICD10:Q273": [
+      "review:orphanet:693815",
+      "review:orphanet:693826",
+      "review:orphanet:693832",
+      "review:orphanet:693839",
+      "review:orphanet:693846",
+      "review:orphanet:693863",
+      "review:orphanet:693869",
+      "review:orphanet:693872"
+    ],
+    "ICD11:LA903Y": [
+      "review:orphanet:693826",
+      "review:orphanet:693832",
+      "review:orphanet:693839",
+      "review:orphanet:693846",
+      "review:orphanet:693863",
+      "review:orphanet:693869",
+      "review:orphanet:693872"
+    ],
+    "ICD10:D582": [
+      "review:orphanet:707789",
+      "review:orphanet:707792",
+      "review:orphanet:715147"
+    ],
+    "ICD10:Q278": [
+      "review:orphanet:708007",
+      "review:orphanet:708046",
+      "review:orphanet:708051",
+      "review:orphanet:717564"
+    ],
+    "ICD10:G710": [
+      "review:orphanet:708123",
+      "review:orphanet:708126",
+      "review:orphanet:708129"
+    ],
+    "SCTID:268308005": [
+      "review:doid:0060326",
+      "review:doid:1088"
+    ],
+    "ICD10:Q8789": [
+      "review:doid:0110123",
+      "review:doid:0110136"
+    ],
+    "ICD10:E10": [
+      "review:doid:0110741",
+      "review:doid:0110742",
+      "review:doid:0110743",
+      "review:doid:0110744",
+      "review:doid:0110745",
+      "review:doid:0110746",
+      "review:doid:0110747",
+      "review:doid:0110749",
+      "review:doid:0110750",
+      "review:doid:0110751",
+      "review:doid:0110752",
+      "review:doid:0110753",
+      "review:doid:0110754",
+      "review:doid:0110755",
+      "review:doid:0110756",
+      "review:doid:0110757",
+      "review:doid:0110758",
+      "review:doid:0110759",
+      "review:doid:0110760",
+      "review:doid:0110761"
+    ],
+    "MESH:D003117": [
+      "review:doid:13909",
+      "review:doid:13910"
+    ],
+    "SCTID:10705005": [
+      "review:doid:2700",
+      "review:doid:6468"
+    ],
+    "SCTID:267693003": [
+      "review:doid:4873",
+      "review:doid:767"
+    ],
+    "MESH:D000230": [
+      "review:doid:4929",
+      "review:doid:5675"
+    ],
+    "MESH:D007890": [
+      "review:doid:5264",
+      "review:doid:5268"
+    ]
+  }
+}
