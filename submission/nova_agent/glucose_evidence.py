@@ -31,7 +31,7 @@ DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL = 250.0
 UNREADABLE_HIGH_SENTINEL_MG_DL = 999.0
 
 _UNREADABLE_HIGH_PATTERN = re.compile(
-    r"(unreadable|too high to read|critical high|\bHI\b|out of range)", re.IGNORECASE,
+    r"(too high to read|critical high|\bHI\b|out of range high)", re.IGNORECASE,
 )
 _NUMERIC_PATTERN = re.compile(r"(\d{2,3}(?:\.\d+)?)\s*mg\s*/\s*d?l|glucose[^0-9]{0,15}?(\d{2,3})\b",
                                re.IGNORECASE)
@@ -47,6 +47,22 @@ _NON_MGDL_UNIT_PATTERN = re.compile(r"mmol\s*/\s*l", re.IGNORECASE)
 _MGDL_UNIT_PATTERN = re.compile(r"mg\s*/\s*d?l", re.IGNORECASE)
 
 
+def current_asserted_lab_clauses(text: str) -> list[str]:
+    """Small dependency-free assertion guard for glucose and lactate readers.
+
+    Explicitly old, hypothetical or denied values cannot become a current number.
+    No temporal inference is attempted when two unqualified values conflict.
+    """
+    text = re.sub(r'[ \t]+', ' ', text)
+    clauses = re.split(r'[;,\n]|(?<=[a-z])\.(?=\s|$)|\b(?:but|however)\b', text, flags=re.I)
+    ignored = re.compile(
+        r'\b(?:historical|previously|prior (?:study|report|result)|old (?:study|report|result)|'
+        r'last (?:year|month|week)|reference range|baseline (?:glucose|lactate|result)|'
+        r'possible|possibly|suspected|suspicious for|uncertain|rule out|cannot exclude|'
+        r'not excluded|may be|might be|no|not|denies|denied|without|negative for)\b', re.I)
+    return [clause.strip() for clause in clauses if clause.strip() and not ignored.search(clause)]
+
+
 def extract_glucose_mg_dl(glucose_result_text: Optional[str]) -> Optional[float]:
     """Parses PatientState.laboratory_tests.get("glucose_point_of_care") into a mg/dL value.
     Returns None if no glucose test has been performed or the result can't be interpreted --
@@ -57,17 +73,13 @@ def extract_glucose_mg_dl(glucose_result_text: Optional[str]) -> Optional[float]
     meaning when its stated unit says otherwise."""
     if not glucose_result_text:
         return None
-    if _UNREADABLE_HIGH_PATTERN.search(glucose_result_text):
-        return UNREADABLE_HIGH_SENTINEL_MG_DL
-    # If a non-mg/dL unit is explicitly present and there is no explicit mg/dL value alongside it,
-    # refuse to interpret rather than misread the bare digit as mg/dL.
-    if _NON_MGDL_UNIT_PATTERN.search(glucose_result_text) and not _MGDL_UNIT_PATTERN.search(glucose_result_text):
-        return None
-    match = _NUMERIC_PATTERN.search(glucose_result_text)
-    if not match:
-        return None
-    raw = match.group(1) or match.group(2)
-    try:
-        return float(raw)
-    except ValueError:
-        return None
+    values = set()
+    for clause in current_asserted_lab_clauses(glucose_result_text):
+        if _UNREADABLE_HIGH_PATTERN.search(clause):
+            values.add(UNREADABLE_HIGH_SENTINEL_MG_DL)
+        # Keep the existing unit policy: never silently read mmol/L as mg/dL.
+        if _NON_MGDL_UNIT_PATTERN.search(clause) and not _MGDL_UNIT_PATTERN.search(clause):
+            return None
+        for match in _NUMERIC_PATTERN.finditer(clause):
+            values.add(float(match.group(1) or match.group(2)))
+    return next(iter(values)) if len(values) == 1 else None
