@@ -162,10 +162,11 @@ def retrieve_reference_candidates(texts, top_k=3):
     limit=max(0,min(int(top_k),5))
     if not limit:return []
     # Exact catalog-title navigation precedes clinical assertion parsing: disease names
-    # can legitimately contain commas or 'without'. No surrounding patient prose bypasses filters.
+    # can legitimately contain commas or 'without'. Preserve punctuation here:
+    # clean() would erase '?' and incorrectly bypass uncertainty filtering.
     if len(texts)==1:
         exact=reference_by_name(texts[0])
-        if exact and clean(texts[0])==clean(exact['name']):
+        if exact and ' '.join(texts[0].casefold().split())==' '.join(exact['name'].casefold().split()):
             query=set(tokens(exact['name']))
             return [_reference_hit(exact,query,1000,query,'exact_title')]
     from nova_agent.evidence_interpreter import patient_symptom_findings, asserted_clauses, positive_clauses

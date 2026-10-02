@@ -38,7 +38,7 @@ negation, family-history, tentative and historical filtering. Title resolution i
 patient diagnosis. References stay LOW confidence and cannot authorize a final diagnosis.
 Reference definitions never become patient findings or modify existing rule scores.
 
-All 4,069 automated tests passed. Title lookup and provenance checks cover all 3,560 references. The saved mock regression
+All 4,084 automated tests passed. Title lookup and provenance checks cover all 3,560 references. The saved mock regression
 covers the existing 205 scored cases (plus three unscored cases), not the newly added disorders.
 See the machine-readable reports in `evaluation/` for executed results. Passed synthetic
 cases are archived with source fingerprints; none are automatically used for training.
@@ -47,3 +47,16 @@ cases are archived with source fingerprints; none are automatically used for tra
 clinical dataset or real-model responses are available. The prior potassium parser improvement
 (20/43 to 43/43 development probes) is not clinical diagnostic accuracy. Ollama model weights
 remain unavailable in this environment; no persistent model service or retraining is running.
+
+## Follow-up: uncertain title queries
+
+The title shortcut previously used punctuation-stripping normalization. Consequently
+`Tuberculosis?` and `Tuberculosis (??)` bypassed uncertainty filtering and retrieved
+the reference as an exact title. The shortcut now ignores only case and whitespace,
+preserving punctuation. Other inputs pass through the existing assertion filters.
+
+Twelve same-author uncertain-query probes failed before the fix and passed after it;
+three positive navigation controls passed before and after. All 3,560 canonical titles
+still resolve. These are bounded development checks, not clinical accuracy or proof of
+complete natural-language coverage. No automatic diagnosis was enabled by this fix.
+See `evaluation/reference_uncertainty_results.json` and `tests/test_reference_uncertainty.py`.

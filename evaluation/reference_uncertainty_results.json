@@ -1,0 +1,16 @@
+{
+  "test_type": "same_author_development_retrieval_probes",
+  "clinical_accuracy": null,
+  "independent_validation": false,
+  "uncertain_queries": {
+    "total": 12,
+    "incorrectly_retrieved_before": 12,
+    "incorrectly_retrieved_after": 0
+  },
+  "positive_navigation_controls": {
+    "total": 3,
+    "passed_before": 3,
+    "passed_after": 3
+  },
+  "scope": "Three catalog names times four ASCII question-mark suffixes; case and whitespace navigation controls. Not a comprehensive natural-language evaluation."
+}
