@@ -36,7 +36,7 @@ def normalize_key(text: str) -> str:
 # weakness but my speech became slurred") -- splitting only on ';' (the original implementation)
 # missed every one of these, silently losing or misclassifying half the answer.
 _CLAUSE_SPLIT_PATTERN = re.compile(
-    r";|(?<=\w)\s+but\s+|(?<=\w)\s+however\s+|(?<=\w)\s+although\s+|(?<=\w)\s+except\s+(?:that\s+)?"
+    r";|\n|(?<=\w)\.(?=\s+[a-z])|(?<=\w)\s+but\s+|(?<=\w)\s+however\s+|(?<=\w)\s+although\s+|(?<=\w)\s+except\s+(?:that\s+)?"
     r"|하지만|그러나|그런데|근데|でも|しかし|だが|但是|不过|但",
     re.IGNORECASE,
 )

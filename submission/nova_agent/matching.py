@@ -56,9 +56,17 @@ def content_word_count(text: str) -> int:
 def _strip_negated_spans(text: str) -> str:
     # Negation ends at a clause boundary, not an arbitrary four-word window.
     # Keep affirmative clauses after "but"/"however" rather than erasing the entire report.
-    clauses = re.split(r"[;,\n]|\b(?:but|however)\b", text, flags=re.I)
-    return " ; ".join(re.sub(r"\b(?:no|not|denies|denied|without|absent|negative for)\b.*$", " ", clause, flags=re.I)
-                      for clause in clauses)
+    # Sentence periods are boundaries too; decimal points are not.
+    clauses = re.split(r"[;,\n]|(?<=[a-z])\.(?=\s|$)|\b(?:but|however)\b", text, flags=re.I)
+    positive = []
+    for clause in clauses:
+        # Reports often place the negation after the finding. Scrubbing only
+        # from "not" onward would leave the denied finding looking positive.
+        if re.search(r"(?:\b(?:is|are|was|were)\s+|:\s*)(?:absent|negative|not (?:present|seen|detected))\b"
+                     r"|\b(?:absent|not present|not seen|not detected)\s*[.!]?\s*$", clause, re.I):
+            continue
+        positive.append(re.sub(r"\b(?:no|not|denies|denied|without|absent|negative for)\b.*$", " ", clause, flags=re.I))
+    return " ; ".join(positive)
 
 
 def feature_present(feature: str, findings_text: List[str], scrub_negated_spans: bool = False, strict: bool = False) -> bool:
