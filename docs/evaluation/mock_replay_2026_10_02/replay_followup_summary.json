@@ -1,22 +1,22 @@
 {
   "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
   "date": "2026-10-02",
-  "runtime_commit": "b53fbb15a32866b85397d278623f86e42c1a875b",
-  "runtime_sha256": "c2bce1a2e73437239b748e1150be9e8cb39baf175afa90b1d1ae2fadb1a63971",
+  "runtime_commit": "ff76e2220f145f6a9da8776866884891e637e3d4",
+  "runtime_sha256": "fd37629751c3d219ce5fbd97e40318df7638eee7400a286991e3a8a45b50d550",
   "cases": 191,
-  "correct": 145,
-  "top1_accuracy": 0.7591623036649214,
+  "correct": 146,
+  "top1_accuracy": 0.7643979057591623,
   "top3_recall": 0.7958115183246073,
   "top5_recall": 0.837696335078534,
   "critical_target_cases": 97,
-  "critical_target_correct": 82,
-  "critical_target_sensitivity": 0.845360824742268,
-  "critical_target_false_negatives": 15,
+  "critical_target_correct": 83,
+  "critical_target_sensitivity": 0.8556701030927835,
+  "critical_target_false_negatives": 14,
   "development": {
     "cases": 156,
-    "correct": 117,
-    "accuracy": 0.75,
-    "critical_sensitivity": 0.8441558441558441
+    "correct": 118,
+    "accuracy": 0.7564102564102564,
+    "critical_sensitivity": 0.8571428571428571
   },
   "validation": {
     "cases": 35,

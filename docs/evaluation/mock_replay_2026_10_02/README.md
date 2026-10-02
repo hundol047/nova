@@ -14,19 +14,19 @@ The frozen 50,000-case benchmark was not edited or rescored.
 
 ## Follow-up replay after generic high-risk phrasing fix
 
-Commits `eca566f` and `b53fbb1` added only general multilingual/lay phrasing aliases plus a
-safety-routing regression fix; they did not add any
+Commits `eca566f`, `b53fbb1`, `3b24a6c`, and `ff76e22` refined general multilingual/lay phrasing
+aliases while rejecting an over-aggressive final-label safety override; they did not add any
 evaluation-case-specific label rule. The provenance-correct replay produced:
 
 | Slice | Result | Change vs previous replay |
 |---|---:|---:|
-| Frozen-family replay, 191 cases | 145/191 (75.92%) | +5 cases, +2.62 percentage points |
-| Critical target in that replay | 82/97 (84.54%) | +3 cases, +3.09 percentage points |
-| Development split | 117/156 (75.0%) | prior 112/156 (71.79%) |
+| Frozen-family replay, 191 cases | 146/191 (76.44%) | +6 cases, +3.14 percentage points |
+| Critical target in that replay | 83/97 (85.57%) | +4 cases, +4.12 percentage points |
+| Development split | 118/156 (75.64%) | prior 112/156 (71.79%) |
 | Validation split | 28/35 (80.0%) | unchanged |
 
-The final provenance-correct replay used commit `b53fbb1` and still has 15 critical-target misses
-and 46 non-matching cases. This is a
+The final provenance-correct replay used commit `ff76e22` and still has 14 critical-target misses
+and 45 non-matching cases. This is a
 development/replay signal, not a 100% claim or clinical performance estimate.
 
 The saved failure rows are for triage and regression review only. They must not be added to the

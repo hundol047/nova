@@ -105,7 +105,7 @@ the table below.
     localization, arrhythmia, tension pneumothorax, appendicitis, pancreatitis, and focal weakness.
     The provenance-correct 191-family replay moved to 145/191 (75.92%) and 82/97 critical-target
     matches (84.54%); development was 117/156 (75.0%) and the untouched validation slice remained
-    28/35 (80.0%) with 17/20 critical-target matches (85.0%). Final replay commit `b53fbb1`. These are still
+    28/35 (80.0%) with 17/20 critical-target matches (85.0%). Final replay commit `ff76e22`. These are still
     synthetic/mock replay signals only; no training rows were created and the frozen benchmark was
     not rewritten.
 
