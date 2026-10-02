@@ -145,14 +145,6 @@ class SafetyValidator:
         next_rank = len(merged) + 1
         for finding in safety_findings:
             if finding.diagnosis_id in seen_ids:
-                # A safety finding is positive deterministic evidence even when the diagnosis was
-                # already present in the LLM/deterministic top-K. Preserve it so a later urgent
-                # safety override is not rejected by the generic "risk factors alone are not
-                # diagnostic support" gate.
-                existing = next((d for d in merged if d.diagnosis_id == finding.diagnosis_id), None)
-                if existing is not None:
-                    existing.supporting_evidence = list(dict.fromkeys(
-                        existing.supporting_evidence + list(finding.evidence)))
                 continue
             entry = disease_by_id(finding.diagnosis_id)
             if not entry:

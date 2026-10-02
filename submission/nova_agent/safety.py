@@ -51,17 +51,6 @@ _SAFETY_FEATURE_ALIASES: dict[str, tuple[str, ...]] = {
     "hypoxia": (
         "low oxygen", "low oxygen level", "oxygen saturation is low",
     ),
-    "absent breath sounds": (
-        "absent right breath sounds", "absent left breath sounds",
-        "one-sided absent breath sounds", "breath sounds absent on one side",
-    ),
-    "tracheal deviation": (
-        "tracheal shift", "trachea shifted", "windpipe shifted", "기관이 한쪽으로 밀림", "気管偏位",
-    ),
-    "hematemesis": ("vomiting blood", "吐血", "呕血", "呕出鲜红色血液", "吐出鲜血", "토혈", "피를 토함"),
-    "melena": ("black tarry stool", "黒い便", "黒色便", "黑便", "흑변"),
-    "rigid abdomen": ("board-like rigidity", "board-like abdomen", "rigid belly", "hard abdomen"),
-    "rebound tenderness": ("rebound", "rebound pain"),
 }
 
 
