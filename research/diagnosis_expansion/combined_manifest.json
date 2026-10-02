@@ -5,13 +5,15 @@
   "icd_review_entries": 6309,
   "mondo_review_entries": 15350,
   "orphanet_review_entries": 388,
-  "total_registered_and_review_entries": 23327,
-  "requested_total": 32000,
-  "shortfall": 8673,
+  "injury_review_entries": 1195,
+  "total_registered_and_review_entries": 24522,
+  "requested_total": 34991,
+  "shortfall": 10469,
   "clinical_accuracy_verified": false,
   "files": [
     "review_candidates.json",
     "mondo_review_candidates.json",
-    "orphanet_review_candidates.json"
+    "orphanet_review_candidates.json",
+    "injury_review_candidates.json"
   ]
 }

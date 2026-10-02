@@ -1,12 +1,13 @@
 # 현재 전체 현황
 
-**기존 등록 1,280개 + ICD 6,309개 + Mondo 15,350개 + Orphanet 388개 = 총 23,327개 레코드.**
+**기존 등록 1,280개 + ICD 6,309개 + Mondo 15,350개 + Orphanet 388개 + 외상·중독 1,195개 = 총 24,522개 레코드.**
 
-신규 후보는 모두 미검증이며 자동 진단에 적용하지 않았습니다. 32,000개 목표에는 8,673개 미달합니다. 세부 질환 유형을 포함한 수치입니다.
+이번 요청의 목표는 23,327개의 1.5배인 34,991개이며, 10,469개 미달입니다. 새 항목은 모두 미검증 후보로 자동 진단에 적용하지 않았습니다.
 
-- 최신 추가 내역: [ORPHANET_IMPORT.md](ORPHANET_IMPORT.md)
-- Mondo 수집 내역: [MONDO_IMPORT.md](MONDO_IMPORT.md)
-- 전체 합계: `combined_manifest.json`
+- 최신 추가 내역: [INJURY_IMPORT.md](INJURY_IMPORT.md)
+- 이전 출처 내역: [ORPHANET_IMPORT.md](ORPHANET_IMPORT.md), [MONDO_IMPORT.md](MONDO_IMPORT.md)
+- 현재 합계: `combined_manifest.json`
+- 최신 전수 자동 검사: `validation/summary.json`, `validation/candidate_checks.jsonl`
 
 아래는 ICD 출처만의 수집 내역입니다.
 

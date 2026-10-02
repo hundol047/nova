@@ -53,6 +53,7 @@ def test_search_manifest_and_runtime_isolation():
     assert manifest['orphanet_review_entries'] == len(data['candidates'])
     runtime = build_catalog()
     assert len(runtime) == 1280
-    assert len(runtime) + len(load_candidates()) == 23327
-    assert manifest['total_registered_and_review_entries'] == 23327
+    prior = sum(len(load_candidates(s)) for s in ('icd', 'mondo', 'orphanet'))
+    assert len(runtime) + prior == 23327
+    assert manifest['total_registered_and_review_entries'] == len(runtime) + len(load_candidates())
     assert all(runtime.get_condition(r['id']) is None for r in data['candidates'])

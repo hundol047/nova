@@ -1,7 +1,7 @@
 {
   "runtime_registered": 1280,
-  "candidates_checked": 22047,
-  "combined_records": 23327,
+  "candidates_checked": 23242,
+  "combined_records": 24522,
   "source_checks": [
     {
       "file": "review_candidates.json",
@@ -16,6 +16,11 @@
     {
       "file": "orphanet_review_candidates.json",
       "records": 388,
+      "exact_source_rebuild": true
+    },
+    {
+      "file": "injury_review_candidates.json",
+      "records": 1195,
       "exact_source_rebuild": true
     }
   ],
