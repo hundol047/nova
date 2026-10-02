@@ -82,6 +82,12 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
     feature_lower = feature.lower()
     for finding in findings_text:
         finding_lower = _strip_negated_spans(finding.lower()) if scrub_negated_spans else finding.lower()
+        # Pain is excluded from specificity scoring, but it remains a required assertion.
+        # A BP report mentioning the left arm must not become 'left arm pain'.
+        if re.search(r"\b(?:pain|ache|aching)\b", feature_lower) and not re.search(
+                r"\b(?:pain|painful|ache|aches|aching|discomfort|hurt|hurts|hurting)\b|통증|아프|아파|痛|疼",
+                finding_lower):
+            continue
         # A prodrome is an explicitly preceding symptom. Preserve that temporal
         # qualifier instead of requiring patients to use the word "prodrome".
         if feature_lower.startswith("prodrome of "):

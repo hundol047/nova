@@ -327,7 +327,10 @@ def generate_candidates(presentation: ClinicalPresentation,
     # protected. ontology_broadening entries are zero-KB-evidence supplements, so they never
     # displace an evidenced KB candidate from the size budget.
     trimmable_only_sources = {"safety_candidate", "ontology_broadening"}
-    protected = [c for c in candidates if not set(c.sources).issubset(trimmable_only_sources)]
+    protected = [c for c in candidates if c.entry.get("dangerous", False)
+                 or c.id in CROSS_CUTTING_DANGEROUS_DIAGNOSES
+                 or not set(c.sources).issubset(trimmable_only_sources)]
+    # Dangerous candidates are protected even when only the safety net retrieved them.
     trimmable = [c for c in candidates if c.id not in {p.id for p in protected}]
     keep_count = max(0, TARGET_POOL_SIZE - len(protected))
     return protected + trimmable[:keep_count]

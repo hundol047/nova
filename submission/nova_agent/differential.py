@@ -51,6 +51,9 @@ _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
 # phrase it belongs to. Deliberately NOT a general medication NLP system: only the drug classes an
 # existing knowledge-base risk_factor already names.
 FEATURE_ALIASES: dict[str, list[str]] = {
+    # AHA: acute aortic pain may be described in chest, back or abdomen.
+    "tearing chest pain": ["tearing back pain", "tearing breastbone pain",
+                            "tearing abdominal pain"],
     # NIDDK GI bleeding symptoms. These are symptom support, not confirmation.
     "melena": ["black tarry stool", "black and tarry stool",
                "black tarry stools", "black and tarry stools"],

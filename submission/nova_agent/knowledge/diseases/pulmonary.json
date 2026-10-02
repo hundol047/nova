@@ -202,14 +202,15 @@
     "urgency": "MEDIUM",
     "typical_features": [
       "wheeze",
-      "known asthma or COPD",
       "worse with triggers",
       "prolonged expiration"
     ],
     "risk_factors": [
       "smoking",
       "known reactive airway disease",
-      "allergen exposure"
+      "allergen exposure",
+      "asthma",
+      "COPD"
     ],
     "discriminating_questions": [
       "past_medical_history",
@@ -229,7 +230,13 @@
       "unable to speak in full sentences",
       "hypoxia"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "evidence_references": [
+      {
+        "url": "https://www.nhlbi.nih.gov/health/copd/symptoms",
+        "scope": "Known disease is risk context; worsening respiratory symptoms require evaluation and are not confirmed by history alone."
+      }
+    ]
   },
   {
     "id": "acute_bronchitis",
