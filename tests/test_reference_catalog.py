@@ -18,8 +18,8 @@ ENTRIES=list(reference_candidates().values())
 
 
 def test_inventory_does_not_misrepresent_reference_topics_as_validated_diagnoses():
-    assert catalog_inventory()=={'total_entries':1451,'rule_supported_entries':68,
-        'reference_only_entries':1383,'clinically_validated_entries':0,
+    assert catalog_inventory()=={'total_entries':3628,'rule_supported_entries':68,
+        'reference_only_entries':3560,'clinically_validated_entries':0,
         'reference_autonomous_diagnosis_enabled':False}
     assert not set(reference_candidates()).intersection(all_diseases())
     assert all(e['summary'] and e['attribution'] and e['source_url'] for e in ENTRIES)

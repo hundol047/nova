@@ -4,9 +4,9 @@
   "clinical_accuracy": null,
   "clinical_validation": false,
   "catalog_inventory": {
-    "total_entries": 1451,
+    "total_entries": 3628,
     "rule_supported_entries": 68,
-    "reference_only_entries": 1383,
+    "reference_only_entries": 3560,
     "clinically_validated_entries": 0,
     "reference_autonomous_diagnosis_enabled": false
   },
@@ -24,7 +24,7 @@
     "total": 43,
     "clinical_accuracy_metric": false
   },
-  "unit_tests_passed": 1873,
+  "unit_tests_passed": 4069,
   "local_model_recheck": {
     "provider": "local",
     "model": "qwen3:4b-instruct",
@@ -43,5 +43,5 @@
     "No independent clinically adjudicated patient evaluation",
     "Real model endpoint unavailable; no successful model completions"
   ],
-  "catalog_report_sha256": "5ecb65ee50c9a137eab769690543a1b69125f534c926e3873f5311c3416ba514"
+  "catalog_report_sha256": "07eed9179e90477c78dc08c7bb7626841579352e53ede977ba787c9637d8dc73"
 }

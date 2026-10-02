@@ -125,3 +125,11 @@ source XML. There are now 1,179 Genetics references, 204 health-topic references
 Prior entries and reference-only eligibility are preserved. The source's excluded entries
 collided under normalized names/aliases, not a clinical equivalence review. See
 `docs/CATALOG_1451_AND_MODEL.md` for scope and model integration limitations.
+
+## Orphanet July 2026 reference definitions
+
+2,177 active disorder-level English definitions from Orphadata / Orphanet © INSERM,
+[official nomenclature pack](https://www.orphacode.org/pack-nomenclature/), reused under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). HTML removed and whitespace
+normalized. Per-entry attribution and license links are retained. No clinical validation
+or autonomous diagnosis eligibility is inferred. See `orphanet_candidates/manifest.json`.

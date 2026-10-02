@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 1873 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 4069 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -35,9 +35,17 @@ parsing defect was fixed: new development probes improved from **20/43 to 43/43*
 parser metric, not patient diagnostic accuracy. The separate full mock regression and its
 snapshots remain labeled synthetic. [Assessment, fix and limitations](docs/ACCURACY_ASSESSMENT.md).
 
+## Current 3,628-entry inventory — 2026-10-02
+
+**68 rules + 3,560 reference-only entries = 3,628**, rounded up from 1,451 × 2.5.
+Added 2,177 active disorder definitions from the official July 2026 Orphanet nomenclature.
+New entries remain reference-only, with attribution and CC BY 4.0 license links retained.
+No new autonomous diagnostic rules or clinical accuracy claims are introduced.
+[Selection, provenance and validation limits](docs/CATALOG_3628_READINESS.md).
+
 ## External candidate validation — current status
 
-The current candidate inventory contains 1,451 entries. The paired audit now checks the same complete frozen
+The current candidate inventory contains 3,628 entries. The paired audit now checks the same complete frozen
 case set on two real-model revisions, recomputes errors and critical misses, and reports
 condition-level sample counts plus sensitivity/specificity intervals. Missing cases, mock
 calls and fallbacks cannot pass. Numerical screening never enables a diagnosis automatically.
@@ -46,7 +54,7 @@ calls and fallbacks cannot pass. Numerical screening never enables a diagnosis a
 adjudicated case bundle is available. Zero new conditions have been clinically validated.
 [Commands, screening policy and remaining requirements](docs/EXTERNAL_CANDIDATE_VALIDATION.md).
 
-## 1,451-entry inventory and local model selection — 2026-10-02
+## Earlier 1,451-entry inventory and local model selection — 2026-10-02
 
 **68 rules + 1,383 reference-only candidates = 1,451 entries**, adding the remaining 431
 non-overlapping source condition candidates. New references remain ineligible for autonomous

@@ -1,0 +1,18 @@
+{
+  "source_url": "https://www.orphacode.org/data/packs/Orphanet_Nomenclature_Pack_EN.zip",
+  "source_release": "July 2026",
+  "source_generated_at": "2026-06-23 07:28:38",
+  "source_sha256": "10367923a3deaa7e629604d45ecef706470b43b0137b1a587df03fe35f157aba",
+  "source_sha256_scope": "uncompressed_ORPHAnomenclature_en_2026.xml",
+  "catalog_sha256": "5751d4656d68ae74df0282d10e022faebac7943afd3655fb038005915e70010e",
+  "selection_sha256": "1662b3a664f10ff27ece478da69113a5b2cea422dde70d67dd0b19c5c21f14f1",
+  "n_reference_candidates": 2177,
+  "source_kind": "orphanet_disorder",
+  "attribution": "Orphadata / Orphanet \u00a9 INSERM. July 2026. CC BY 4.0. Selected English definitions; HTML removed and whitespace normalized.",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "reuse_terms": "https://www.orphacode.org/pack-nomenclature/",
+  "selection_method": "Frozen engineering selection in stable SHA256 name order, excluding normalized name/alias collisions; not clinical priority",
+  "content_scope": "Active English disorder-level diseases/clinical syndromes/malformation syndromes with definitions only; no groups, subtypes, inactive/historical entities",
+  "clinical_validation": false,
+  "diagnostic_accuracy_measured": false
+}

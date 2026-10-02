@@ -211,7 +211,9 @@ def build_reasoning_prompt(ctx: TurnContext) -> str:
     context_lines = [f"[{s.get('source', '?')}] "
                      + (f"REFERENCE ONLY id={s['reference_id']} name={s['name']}. "
                         "Not patient evidence; autonomous diagnosis disabled; "
-                        + s.get('attribution', '') + " " if s.get('reference_id') else "")
+                        + s.get('attribution', '') + " "
+                        + ("License: " + s['license_url'] + " " if s.get('license_url') else "")
+                        if s.get('reference_id') else "")
                      + s.get('text', '') for s in ctx.retrieved_context]
     context_text = "\n".join(context_lines) or "(no retrieved context)"
 

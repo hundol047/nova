@@ -1,8 +1,8 @@
 # Accuracy assessment and the 99% target
 
 **Real-world diagnostic accuracy remains unknown. The requested 99% clinical target has not
-been achieved or verified.** There are 68 rule-supported diagnoses and 1,383 reference-only
-candidates, not 1,451 validated diagnostic classes. Reference title lookup and unit-test success
+been achieved or verified.** There are 68 rule-supported diagnoses and 3,560 reference-only
+candidates, not 3,628 validated diagnostic classes. Reference title lookup and unit-test success
 must never be presented as patient diagnostic accuracy.
 
 ## Measured improvement
@@ -34,7 +34,7 @@ The closed parser grammar is an engineering safeguard, not a reproduced clinical
 The full 205 scored synthetic/mock regression cases were rerun and all 205 passed; three
 additional unscored cases are not added to the accuracy denominator. Their current report is
 `evaluation/catalog_results.json`, with immutable snapshots under `evaluation/learning_archive/`.
-All 1,873 unit tests, standalone build/source synchronization, adversarial checks and the
+All 4,069 unit tests, standalone build/source synchronization, adversarial checks and the
 existing leakage scan also passed. `evaluation/accuracy_status.json` records the separate
 metrics and explicitly leaves clinical accuracy null and the 99% target unverified.
 These cases have been reused during development, so success cannot establish clinical
