@@ -12,6 +12,7 @@ reshuffle the ranking.
 from __future__ import annotations
 
 from typing import Dict, List, Literal, Optional
+import re
 
 from pydantic import BaseModel
 
@@ -157,6 +158,28 @@ def has_positive_diagnostic_support(item: DifferentialItem) -> bool:
     risk_only = {str(x).lower() for x in entry.get("risk_factors", [])}
     return any(e.lower() not in risk_only and _strip_negative_prefix(e) is None
                for e in item.supporting_evidence)
+
+
+def has_required_diagnostic_context(item: DifferentialItem, state: PatientState) -> bool:
+    """A final label may require localizing context beyond generic systemic symptoms.
+
+    This is an abstention guard, not an exclusion rule or a diagnostic criterion.
+    Candidates remain available for workup. Read actual current observations, not
+    the LLM's claimed supporting evidence or past/family history.
+    """
+    from nova_agent.knowledge.retrieval import disease_by_id
+    entry = disease_by_id(item.diagnosis_id) or {}
+    required = entry.get("required_diagnostic_context_any", [])
+    if not required:
+        return True
+    current = [state.chief_complaint, *state.symptoms, *state.associated_symptoms,
+               *state.pertinent_positives, *state.physical_examinations.values(),
+               *state.imaging.values(), *state.laboratory_tests.values()]
+    current = [clause for text in current for clause in re.split(r"[;,\n]", text)
+               if not re.search(r"\b(?:previously|historical|baseline|history of|last (?:year|month|week)|"
+                                r"prior result|old result|reference range)\b", clause, re.I)]
+    return any(feature_present(phrase, current, scrub_negated_spans=True, strict=True)
+               for phrase in required)
 
 
 def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict[str, ObjectiveFinding],

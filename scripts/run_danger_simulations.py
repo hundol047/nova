@@ -13,6 +13,7 @@ if __name__ == '__main__':
     p.add_argument('--repo', type=Path, default=ROOT)
     p.add_argument('--suite', choices=['reference','validation'], required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--fixture-folder', type=Path, default=ROOT / 'evaluation/danger_simulation_v2')
     args = p.parse_args()
     sys.path.insert(0, str(args.repo.resolve()))
     os.environ['NOVA_LLM_PROVIDER'] = 'mock'
@@ -26,7 +27,7 @@ if __name__ == '__main__':
         _verify_frozen_hash()
         cases = BLIND_CASES_V11
     else:
-        folder = ROOT / 'evaluation/danger_simulation_v2'
+        folder = args.fixture_folder
         raw = (folder / 'validation.json').read_bytes()
         manifest = json.loads((folder / 'manifest.json').read_text())
         if hashlib.sha256(raw).hexdigest() != manifest['sha256']:

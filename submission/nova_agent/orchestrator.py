@@ -153,8 +153,9 @@ class DoctorAgent:
                 if item is None:
                     item = next((d for d in result.differential
                                  if same_diagnosis(d.diagnosis_id, result.action.content)), None)
-                from nova_agent.differential import has_positive_diagnostic_support
-                if not item or not has_positive_diagnostic_support(item):
+                from nova_agent.differential import has_positive_diagnostic_support, has_required_diagnostic_context
+                if (not item or not has_positive_diagnostic_support(item)
+                        or not has_required_diagnostic_context(item, state)):
                     result.action = AgentAction(action_type="DIAGNOSE", key="unknown", content="unknown",
                                                 rationale="Insufficient diagnostic evidence; clinical review required. "
                                                 "Unresolved dangerous alternatives remain in the differential.")

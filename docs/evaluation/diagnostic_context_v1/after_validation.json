@@ -1,0 +1,2640 @@
+{
+  "scope": "synthetic_mock_only",
+  "suite": "validation",
+  "summary": {
+    "scored_diagnostic_accuracy": 1.0,
+    "all_case_diagnostic_accuracy": 1.0,
+    "unscored_case_names": [],
+    "unsupported_case_success_rate": null,
+    "critical_diagnosis_recall": null,
+    "critical_miss_rate": 0.0,
+    "average_turns": 27.5,
+    "median_turns": 28.0,
+    "duplicate_action_rate": 0.0,
+    "unnecessary_test_rate": 2.75,
+    "malformed_output_rate": 0.0,
+    "failed_diagnosis_rate": 0.0,
+    "fallback_rate": null,
+    "average_ask_count": 8.0,
+    "average_exam_count": 8.5,
+    "average_test_count": 10.0,
+    "utility_score_proxy": 0.5875,
+    "n_cases": 8,
+    "n_scored_cases": 8,
+    "n_critical_cases": 0
+  },
+  "cases": [
+    {
+      "case_id": "unlocalized_0",
+      "category": "localization_validation",
+      "scoring_expected": true,
+      "ground_truth": "unknown",
+      "final_diagnosis": "unknown",
+      "correct": true,
+      "turns": 28,
+      "ask_count": 8,
+      "exam_count": 9,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 4,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "urinary_0",
+      "category": "localization_validation",
+      "scoring_expected": true,
+      "ground_truth": "pyelonephritis",
+      "final_diagnosis": "Acute Pyelonephritis",
+      "correct": true,
+      "turns": 26,
+      "ask_count": 8,
+      "exam_count": 7,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 2,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:abdominal_ultrasound",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "DIAGNOSE:pyelonephritis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "unlocalized_1",
+      "category": "localization_validation",
+      "scoring_expected": true,
+      "ground_truth": "unknown",
+      "final_diagnosis": "unknown",
+      "correct": true,
+      "turns": 28,
+      "ask_count": 8,
+      "exam_count": 9,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 4,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "urinary_1",
+      "category": "localization_validation",
+      "scoring_expected": true,
+      "ground_truth": "pyelonephritis",
+      "final_diagnosis": "Acute Pyelonephritis",
+      "correct": true,
+      "turns": 26,
+      "ask_count": 8,
+      "exam_count": 7,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 2,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:abdominal_ultrasound",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "DIAGNOSE:pyelonephritis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Pancreatitis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "unlocalized_2",
+      "category": "localization_validation",
+      "scoring_expected": true,
+      "ground_truth": "unknown",
+      "final_diagnosis": "unknown",
+      "correct": true,
+      "turns": 28,
+      "ask_count": 8,
+      "exam_count": 9,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 4,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "urinary_2",
+      "category": "localization_validation",
+      "scoring_expected": true,
+      "ground_truth": "pyelonephritis",
+      "final_diagnosis": "Acute Pyelonephritis",
+      "correct": true,
+      "turns": 28,
+      "ask_count": 8,
+      "exam_count": 9,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 1,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "DIAGNOSE:pyelonephritis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "unlocalized_3",
+      "category": "localization_validation",
+      "scoring_expected": true,
+      "ground_truth": "unknown",
+      "final_diagnosis": "unknown",
+      "correct": true,
+      "turns": 28,
+      "ask_count": 8,
+      "exam_count": 9,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 4,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "urinary_3",
+      "category": "localization_validation",
+      "scoring_expected": true,
+      "ground_truth": "pyelonephritis",
+      "final_diagnosis": "Acute Pyelonephritis",
+      "correct": true,
+      "turns": 28,
+      "ask_count": 8,
+      "exam_count": 9,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 1,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "DIAGNOSE:pyelonephritis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        }
+      ]
+    }
+  ]
+}
