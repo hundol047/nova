@@ -27,31 +27,20 @@ def test_learning_never_imports_evaluation():
     assert not offenders, f"learning/ must not import evaluation/: {offenders}"
 
 
-def test_submission_excludes_learning_and_torch():
-    # The learning package must not be copied into the submission.
-    assert not (SUBMISSION / "learning").exists(), "submission/ must not contain the learning package"
-    # No submission file may import torch or the learning package.
-    torch_import = re.compile(r"^\s*(from|import)\s+(torch|learning)\b", re.MULTILINE)
-    offenders = []
-    for py in SUBMISSION.rglob("*.py"):
-        text = py.read_text(encoding="utf-8", errors="ignore")
-        if torch_import.search(text):
-            offenders.append(str(py.relative_to(ROOT)))
-    assert not offenders, f"submission/ must not import torch or learning: {offenders}"
-    # requirements must not declare torch.
-    req = (SUBMISSION / "requirements.txt").read_text(encoding="utf-8")
-    assert "torch" not in req.lower(), "submission/requirements.txt must not depend on torch"
+def test_submission_contains_only_runtime_learning_subset():
+    forbidden = {"training.py", "train_reranker.py", "eval_synthetic.py", "model_torch.py", "checkpoint.py"}
+    assert (SUBMISSION / "learning/pipeline.py").is_file()
+    assert not any(p.name in forbidden for p in (SUBMISSION / "learning").rglob("*.py"))
+    # No training/evaluation data or mandatory torch dependency may ship.
+    assert not (SUBMISSION / "evaluation").exists()
+    assert "torch" not in (SUBMISSION / "requirements.txt").read_text().lower()
 
 
-def test_nova_agent_does_not_import_learning_or_torch():
-    """The core reasoning package must not depend on the optional learning subsystem or torch."""
-    bad = re.compile(r"^\s*(from|import)\s+(torch|learning)\b", re.MULTILINE)
-    offenders = []
-    for py in (ROOT / "nova_agent").rglob("*.py"):
-        text = py.read_text(encoding="utf-8", errors="ignore")
-        if bad.search(text):
-            offenders.append(str(py.relative_to(ROOT)))
-    assert not offenders, f"nova_agent/ must not import torch or learning: {offenders}"
+def test_runtime_import_does_not_load_torch():
+    import subprocess, sys
+    script = "from nova_agent.catalog_context import runtime_pipeline; runtime_pipeline(); import sys; assert 'torch' not in sys.modules"
+    p = subprocess.run([sys.executable, "-c", script], cwd=SUBMISSION, capture_output=True, text=True)
+    assert p.returncode == 0, p.stderr
 
 
 # Blind / held-out / generalization data-file identifiers the learning pipeline must NEVER read as

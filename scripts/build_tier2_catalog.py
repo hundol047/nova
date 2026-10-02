@@ -407,13 +407,20 @@ def build_conditions() -> List[Dict]:
             "category": category,
             "aliases": aliases,
             "semantic_type": "DISEASE",
-            "curated": True,
+            "curated": False,
+            "clinical_validation_status": "NOT_VERIFIED",
         }
         if urgency:
             entry["urgency"] = urgency
             entry["dangerous"] = urgency in ("CRITICAL", "URGENT")
         if icd10:
-            entry["external_codes"] = [{"system": "ICD10", "code": icd10, "display": name}]
+            entry["external_codes"] = [{"system": "ICD10", "code": icd10, "display": name,
+                                        "mapping_status": "NOT_VERIFIED", "version": "UNSPECIFIED"}]
+            blocked = {'ev2_trench_foot': 'NOT_FOUND_IN_ICD10CM_FY2027', 'heat_stroke': 'NOT_FOUND_IN_ICD10CM_FY2027', 'gn3_renal_trauma': 'NOT_FOUND_IN_ICD10CM_FY2027', 'inf_chlamydia': 'NOT_FOUND_IN_ICD10CM_FY2027', 'inf_surgical_site_infection': 'NOT_FOUND_IN_ICD10CM_FY2027', 'inf_vre': 'NOT_FOUND_IN_ICD10CM_FY2027', 'status_epilepticus': 'NOT_FOUND_IN_ICD10CM_FY2027', 'ee2_thyroid_eye_disease': 'NOT_FOUND_IN_ICD10CM_FY2027', 'eye_open_angle_glaucoma': 'NOT_FOUND_IN_ICD10CM_FY2027', 'ot3_lisfranc_injury': 'NOT_FOUND_IN_ICD10CM_FY2027', 'ot3_nonunion_fracture': 'NOT_FOUND_IN_ICD10CM_FY2027', 'ethylene_glycol_poisoning': 'NOT_FOUND_IN_ICD10CM_FY2027', 'tx2_ciguatera': 'NOT_FOUND_IN_ICD10CM_FY2027', 'tx2_scombroid': 'NOT_FOUND_IN_ICD10CM_FY2027', 'acute_hepatitis': 'NAME_CODE_MISMATCH', 'vestibular_neuritis': 'UNSUPPORTED_BILATERAL_SPECIFICITY'}
+            if cid in blocked:
+                entry["quarantined_codes"] = entry.pop("external_codes")
+                entry["quarantined_codes"][0]["reason"] = blocked[cid]
+                entry["quarantined_codes"][0]["audit_reference"] = "https://ftp.cdc.gov/pub/health_statistics/nchs/publications/ICD10CM/2027/"
         return entry
 
     # Base groups: id collisions here are an authoring error and must fail loudly.
@@ -447,15 +454,23 @@ def build_conditions() -> List[Dict]:
 
 def main() -> None:
     conditions = build_conditions()
+    if OUT_PATH.exists():
+        previous = json.loads(OUT_PATH.read_text(encoding="utf-8"))
+        prior_ids = {c["id"] for c in previous.get("conditions", [])}
+        added = {c["id"] for c in conditions} - prior_ids
+        if added:
+            from check_expansion_gate import collect
+            if not collect()["further_expansion_allowed"]:
+                raise SystemExit("Expansion BLOCKED: independently validate existing entries before adding new IDs.")
     payload = {
         "schema_version": "tier2.v1",
         "description": (
             "Broad Tier-2 structured disease catalog for N.O.V.A. open-world differential. "
-            "Shallow-but-accurate: name/aliases/category/urgency/ICD-10 only. NOT a substitute for "
+            "Unverified structured metadata: name/aliases/category/urgency/ICD-10 only. NOT a substitute for "
             "the 34 Tier-1 deep profiles. Conditions with curated=false are surfaced as NOT_CURATED."
         ),
         "provenance": (
-            "Internally curated from standard clinical references; ICD-10 codes are convenience "
+            "Internally authored without per-entry clinical verification; ICD-10 codes are unverified "
             "anchors. The operator's terminology snapshot (Tier-3) is authoritative for coding."
         ),
         "count": len(conditions),

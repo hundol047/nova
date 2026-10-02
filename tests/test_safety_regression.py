@@ -645,6 +645,7 @@ def test_all_case_accuracy_metric():
         _make_result("c", correct=False),
         _make_result("d", correct=False, scoring_expected=False),  # ambiguous/unscored, and wrong
     ]
+    results[-1].ground_truth = "unknown"
     summary = compute_summary(results)
     assert summary["all_case_diagnostic_accuracy"] == pytest.approx(2 / 4)
     assert summary["scored_diagnostic_accuracy"] == pytest.approx(2 / 3)

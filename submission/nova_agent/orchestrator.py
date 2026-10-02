@@ -88,6 +88,15 @@ class DoctorAgent:
                     tag, [d.diagnosis_id for d in deterministic_differential], candidate_test_ids,
                 )
 
+                # Broad retrieval reaches the real reasoning prompt, without replacing core safety.
+                try:
+                    from nova_agent.catalog_context import retrieve_catalog_context
+                    retrieved_context.append(retrieve_catalog_context(state))
+                except Exception:
+                    log.exception("Catalog retrieval unavailable; retaining core safety reasoning")
+                    retrieved_context.append({"source": "catalog_retrieval_unavailable",
+                                              "text": "Expanded catalog unavailable; do not claim expanded coverage."})
+
                 # 4/5. LLM Differential Reasoning + LLM Candidate Actions (one combined call).
                 ctx = TurnContext(summary=summary, differential=deterministic_differential,
                                    safety_findings=safety_findings, candidates=candidates,
@@ -136,6 +145,15 @@ class DoctorAgent:
                                       urgency=d.urgency, dangerous_if_missed=d.dangerous_if_missed)
                 for d in result.differential
             ]
+            if result.action.action_type == "DIAGNOSE":
+                from nova_agent.diagnosis_normalizer import normalize_diagnosis
+                chosen = normalize_diagnosis(result.action.content)
+                item = next((d for d in result.differential
+                             if chosen.mapped and normalize_diagnosis(d.diagnosis).canonical_id == chosen.canonical_id), None)
+                if not item or not item.supporting_evidence:
+                    result.action = AgentAction(action_type="DIAGNOSE", key="unknown", content="unknown",
+                                                rationale="Insufficient diagnostic evidence; clinical review required. "
+                                                "Unresolved dangerous alternatives remain in the differential.")
             return result.action, llm_output, result.differential
         except Exception:  # noqa: BLE001 - a single bad turn must never kill the whole case/run
             log.exception("decide() failed for case=%s turn=%s; using safe fallback.", state.case_id, state.turn_count)
@@ -168,9 +186,7 @@ class DoctorAgent:
 
     def _safe_fallback(self, state: PatientState) -> AgentAction:
         if state.remaining_turns <= 1:
-            diagnosis = state.current_differential[0].diagnosis if state.current_differential else \
-                (state.chief_complaint or "Undifferentiated presentation")
-            return AgentAction(action_type="DIAGNOSE", key="fallback", content=diagnosis,
+            return AgentAction(action_type="DIAGNOSE", key="unknown", content="unknown",
                                 rationale="Safe fallback: forced diagnose to respect the turn limit after an "
                                           "internal error.")
         if not state.symptom_onset and not state.question_asked("onset"):
@@ -179,7 +195,5 @@ class DoctorAgent:
         if not state.exam_done("vital_signs"):
             return AgentAction(action_type="EXAM", key="vital_signs", content="Vital signs (BP/HR/RR/Temp/SpO2)",
                                 rationale="Safe fallback after an internal error: obtain vital signs.")
-        diagnosis = state.current_differential[0].diagnosis if state.current_differential else \
-            (state.chief_complaint or "Undifferentiated presentation")
-        return AgentAction(action_type="DIAGNOSE", key="fallback", content=diagnosis,
+        return AgentAction(action_type="DIAGNOSE", key="unknown", content="unknown",
                             rationale="Safe fallback: no further safe fallback action available.")

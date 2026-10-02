@@ -58,9 +58,9 @@ class Tier2CatalogProvider:
             codes = tuple(
                 ExternalCode(system=c["system"], code=str(c["code"]), display=c.get("display"))
                 for c in entry.get("external_codes", [])
-                if c.get("system") and c.get("code") is not None
+                if c.get("system") and c.get("code") is not None and c.get("mapping_status") == "VERIFIED"
             )
-            curated = bool(entry.get("curated", True))
+            curated = entry.get("clinical_validation_status") == "VERIFIED"
             yield ClinicalConcept(
                 concept_id=f"tier2:{cid}",
                 canonical_name=name,

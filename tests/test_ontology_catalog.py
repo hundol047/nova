@@ -44,13 +44,13 @@ def test_korean_alias_search_matches():
 
 def test_external_code_mapping_roundtrips():
     cat = _catalog()
-    # Every Tier-2 ICD-10 anchor should be resolvable via map_external_code.
-    coded = [c for c in cat.all_concepts() if c.external_codes]
-    assert coded, "expected concepts carrying ICD-10 codes"
-    sample = coded[0]
-    code = sample.external_codes[0]
-    mapped = cat.map_external_code(code.system, code.code)
-    assert sample.concept_id in {m.concept_id for m in mapped}
+    # Unreviewed anchors are retained for audit but are not authoritative runtime mappings.
+    assert not any(c.external_codes for c in cat.all_concepts() if c.tier == Tier.TIER2_STRUCTURED)
+    from nova_agent.ontology.models import ClinicalConcept, ExternalCode
+    sample = ClinicalConcept(concept_id="test:verified", canonical_name="Reviewed test concept",
+                             external_codes=(ExternalCode(system="CUSTOM", code="T1"),))
+    cat.add(sample)
+    assert cat.map_external_code("CUSTOM", "T1") == [sample]
 
 
 def test_uncurated_concept_not_marked_curated():
@@ -58,7 +58,7 @@ def test_uncurated_concept_not_marked_curated():
     for c in cat.all_concepts():
         if c.curation_status == "NOT_CURATED":
             # NOT_CURATED concepts must not masquerade as deep/structured curation.
-            assert c.tier == Tier.TIER3_ONTOLOGY
+            assert c.tier in (Tier.TIER2_STRUCTURED, Tier.TIER3_ONTOLOGY)
 
 
 def test_open_world_known_condition():

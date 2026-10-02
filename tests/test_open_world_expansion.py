@@ -33,8 +33,8 @@ def test_multi_signal_known_condition_via_fused_signals():
     r = _retriever()
     a = r.assess_multi_signal(chief_complaint="chest pain", symptoms=["dyspnea"],
                               codes=[("ICD10", "I50.9")], limit=15)
-    assert a.outcome == OpenWorldOutcome.KNOWN_CONDITION
-    assert a.top is not None and a.top.is_curated
+    assert a.outcome == OpenWorldOutcome.POSSIBLE_UNMAPPED_CONDITION
+    assert not a.top.is_curated
 
 
 def test_multi_signal_preserves_unknown_for_nonsense():
@@ -52,7 +52,7 @@ def test_multi_signal_insufficient_for_empty():
 def test_code_retrieval_direct():
     r = _retriever()
     hits = r.retrieve_by_code("ICD-10", "I50.9")  # aliased system id should normalize
-    assert hits and any(h.match_kind == "code" for h in hits)
+    assert hits == []  # unverified anchor cannot force a clinical mapping
 
 
 def test_multi_signal_fusion_recall_at_least_single():

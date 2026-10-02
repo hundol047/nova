@@ -142,6 +142,17 @@ def main() -> None:
     SUBMISSION.mkdir(exist_ok=True)
     _copy_package("nova_agent")
     _copy_package("competition")
+    runtime_files = ["__init__.py", "pipeline.py", "safety_recall.py", "_torch.py"]
+    runtime_files += [str(p.relative_to(ROOT / "learning")) for directory in ("retrieval", "routing", "rerank")
+                      for p in (ROOT / "learning" / directory).glob("*.py")
+                      if p.name not in {"eval_synthetic.py", "train_reranker.py", "checkpoint.py", "model_torch.py"}]
+    target = SUBMISSION / "learning"
+    if target.exists():
+        shutil.rmtree(target)
+    for relative in runtime_files:
+        dst = target / relative
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(ROOT / "learning" / relative, dst)
     for required in ("run.py", "requirements.txt"):
         if not (SUBMISSION / required).exists():
             raise SystemExit(f"submission/{required} is missing -- it is hand-authored and must "

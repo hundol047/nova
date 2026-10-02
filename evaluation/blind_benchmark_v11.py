@@ -43,4 +43,4 @@ if __name__ == "__main__":
     _verify_frozen_hash()
     results = run_all(BLIND_CASES_V11)
     print_case_table(results)
-    print_summary(results)
+    print_summary("blind_benchmark_v11 (reference after audit fixes)", results)
