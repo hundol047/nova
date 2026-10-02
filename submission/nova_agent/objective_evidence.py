@@ -239,11 +239,22 @@ class ObjectiveFinding:
     evidence_label: str  # human-readable, for supporting/contradictory_evidence lists
 
 
-def _extract_numeric(spec: LabSpec, raw_texts: List[str]) -> Optional[float]:
+def _current_result_texts(raw_texts: List[str]) -> List[str]:
+    """Remove explicitly historical/reference clauses, never guess their chronology."""
+    return [clause for text in raw_texts
+            for clause in re.split(r"[;,\n]|\b(?:but|however)\b", text, flags=re.I)
+            if not re.search(r"\b(?:previously|historical|baseline|last (?:year|month|week)|"
+                             r"prior result|old result|reference range)\b", clause, re.I)]
+
+
+def _extract_numeric_values(spec: LabSpec, raw_texts: List[str]) -> set[float]:
+    values = set()
     if spec.numeric_pattern is None:
-        return None
+        return values
     for text in raw_texts:
         for match in spec.numeric_pattern.finditer(text):
+            if re.search(r"\b(?:not|no|denies|without)\b[^.;,]*$", text[:match.start()], re.I):
+                continue
             # Unit context belongs to this number only, not a neighboring analyte.
             tail = text[match.end():]
             suffix = re.split(r"[;,\n]|\b(?:and|but)\b", tail, maxsplit=1, flags=re.I)[0]
@@ -257,10 +268,10 @@ def _extract_numeric(spec: LabSpec, raw_texts: List[str]) -> Optional[float]:
             elif value_is_in_disallowed_unit(suffix, spec.allowed_units, spec.disallowed_units):
                 continue
             try:
-                return float(match.group(1))
+                values.add(float(match.group(1)))
             except (ValueError, IndexError):
                 continue
-    return None
+    return values
 
 
 def _interpret_numeric(spec: LabSpec, value: float) -> str:
@@ -320,13 +331,18 @@ def normalize_one(spec: LabSpec, state: PatientState) -> Optional[ObjectiveFindi
            for t in raw_texts):
         return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), None,
                                 spec.unit, "unknown", f"{spec.display_name} (unusable specimen)")
-    value = _extract_numeric(spec, raw_texts)
+    current_texts = _current_result_texts(raw_texts)
+    values = _extract_numeric_values(spec, current_texts)
+    if len(values) > 1:
+        return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), None,
+                                spec.unit, "unknown", f"{spec.display_name} (conflicting numeric results)")
+    value = next(iter(values), None)
     if value is not None:
         interpretation = _interpret_numeric(spec, value)
         label = f"{spec.display_name} {value:g}{(' ' + spec.unit) if spec.unit else ''} ({interpretation.replace('_', ' ')})"
         return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), value,
                                  spec.unit, interpretation, label)
-    qualitative = _interpret_qualitative(spec, raw_texts)
+    qualitative = _interpret_qualitative(spec, current_texts)
     if qualitative is not None:
         label = f"{spec.display_name} ({qualitative})" if qualitative != "normal" \
             else f"{spec.display_name} not elevated"

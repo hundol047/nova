@@ -1,0 +1,48 @@
+{
+  "runtime_registered": 1280,
+  "candidates_checked": 22047,
+  "combined_records": 23327,
+  "source_checks": [
+    {
+      "file": "review_candidates.json",
+      "records": 6309,
+      "exact_source_rebuild": true
+    },
+    {
+      "file": "mondo_review_candidates.json",
+      "records": 15350,
+      "exact_source_rebuild": true
+    },
+    {
+      "file": "orphanet_review_candidates.json",
+      "records": 388,
+      "exact_source_rebuild": true
+    }
+  ],
+  "errors": [],
+  "duplicate_candidate_ids": {},
+  "duplicate_candidate_names": {},
+  "existing_runtime_duplicate_names": {
+    "ectopic pregnancy": [
+      "core:ectopic_pregnancy",
+      "tier2:og2_ectopic_pregnancy_og2"
+    ],
+    "gastroesophageal reflux disease": [
+      "core:gerd",
+      "tier2:gi_gerd_gi"
+    ],
+    "benign paroxysmal positional vertigo": [
+      "core:bppv",
+      "tier2:bppv_ent"
+    ],
+    "orthostatic hypotension": [
+      "core:orthostatic_hypotension",
+      "tier2:cir_orthostatic_hypotension_cir"
+    ]
+  },
+  "automated_status": "PASS",
+  "clinically_verified_new_candidates": 0,
+  "clinical_validation_status": "NOT_VERIFIED",
+  "runtime_activation_allowed": false,
+  "limitation": "Source fidelity and software invariants only; no clinician adjudication or clinical accuracy claim."
+}
