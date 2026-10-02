@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 1022 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 1038 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -27,6 +27,17 @@ what is *not* yet verified.
 > Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
+
+## External candidate validation — current status
+
+Candidate expansion is paused at 680. The paired audit now checks the same complete frozen
+case set on two real-model revisions, recomputes errors and critical misses, and reports
+condition-level sample counts plus sensitivity/specificity intervals. Missing cases, mock
+calls and fallbacks cannot pass. Numerical screening never enables a diagnosis automatically.
+
+**Actual external validation is blocked:** no configured real provider or independently
+adjudicated case bundle is available. Zero new conditions have been clinically validated.
+[Commands, screening policy and remaining requirements](docs/EXTERNAL_CANDIDATE_VALIDATION.md).
 
 ## 680-entry inventory — 2026-10-02 (Asia/Seoul)
 

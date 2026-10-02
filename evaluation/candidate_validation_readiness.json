@@ -1,0 +1,4779 @@
+{
+  "status": "blocked_missing_external_validation",
+  "policy": {
+    "minimum_positive_cases": 40,
+    "minimum_negative_cases": 40,
+    "minimum_wilson_lower_95": 0.9,
+    "maximum_new_paired_errors": 0,
+    "maximum_critical_misses": 0,
+    "status": "engineering_screen_not_clinically_approved"
+  },
+  "clinical_approval": false,
+  "clinical_accuracy_claim": false,
+  "numerical_screen_passed_count": 0,
+  "blockers": [
+    "No paired real-model reports on independently adjudicated cases supplied."
+  ],
+  "conditions": [
+    {
+      "id": "acute_abdomen",
+      "name": "Acute Abdomen (Surgical Abdomen)",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "gi_bleeding",
+      "name": "Gastrointestinal Bleeding",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "ectopic_pregnancy",
+      "name": "Ectopic Pregnancy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_pancreatitis",
+      "name": "Acute Pancreatitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "appendicitis",
+      "name": "Acute Appendicitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "gastroenteritis",
+      "name": "Acute Gastroenteritis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_coronary_syndrome",
+      "name": "Acute Coronary Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "aortic_dissection",
+      "name": "Aortic Dissection",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "gerd",
+      "name": "Gastroesophageal Reflux Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "musculoskeletal_chest_pain",
+      "name": "Musculoskeletal Chest Pain (Costochondritis)",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "vasovagal_syncope",
+      "name": "Vasovagal (Reflex) Syncope",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "cardiac_arrhythmia",
+      "name": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "panic_attack",
+      "name": "Panic Attack",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "diabetic_ketoacidosis",
+      "name": "Diabetic Ketoacidosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "severe_electrolyte_disorder",
+      "name": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "hypoglycemia",
+      "name": "Hypoglycemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_pericarditis",
+      "name": "Acute Pericarditis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_heart_failure",
+      "name": "Acute Heart Failure",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "pleural_effusion",
+      "name": "Pleural Effusion",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_cholecystitis",
+      "name": "Acute Cholecystitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_cholangitis",
+      "name": "Acute Cholangitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_diverticulitis",
+      "name": "Acute Diverticulitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "small_bowel_obstruction",
+      "name": "Small Bowel Obstruction",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_mesenteric_ischemia",
+      "name": "Acute Mesenteric Ischemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "ovarian_torsion",
+      "name": "Ovarian Torsion",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "pelvic_inflammatory_disease",
+      "name": "Pelvic Inflammatory Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "hemorrhagic_ovarian_cyst",
+      "name": "Hemorrhagic Ovarian Cyst",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "intracerebral_hemorrhage",
+      "name": "Intracerebral Hemorrhage",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "subdural_hematoma",
+      "name": "Subdural Hematoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "epidural_hematoma",
+      "name": "Epidural Hematoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "brain_abscess",
+      "name": "Brain Abscess",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "subdural_empyema",
+      "name": "Subdural Empyema",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "lung_abscess",
+      "name": "Lung Abscess",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "renal_infarction",
+      "name": "Renal Infarction",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "obstructive_uropathy",
+      "name": "Obstructive Uropathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_urinary_retention",
+      "name": "Acute Urinary Retention",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_kidney_injury",
+      "name": "Acute Kidney Injury",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "hyperosmolar_hyperglycemic_state",
+      "name": "Hyperosmolar Hyperglycemic State",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "iron_deficiency_anemia",
+      "name": "Iron Deficiency Anemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "primary_hypothyroidism",
+      "name": "Primary Hypothyroidism",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "hyperthyroidism",
+      "name": "Hyperthyroidism",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "deep_vein_thrombosis",
+      "name": "Deep Vein Thrombosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "cellulitis",
+      "name": "Cellulitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "herpes_zoster",
+      "name": "Herpes Zoster",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "septic_arthritis",
+      "name": "Septic Arthritis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_gout",
+      "name": "Acute Gout",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_hepatitis",
+      "name": "Acute Hepatitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "rhabdomyolysis",
+      "name": "Rhabdomyolysis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "carbon_monoxide_poisoning",
+      "name": "Carbon Monoxide Poisoning",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "influenza",
+      "name": "Influenza",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "uncomplicated_cystitis",
+      "name": "Uncomplicated Cystitis (Lower UTI)",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "pyelonephritis",
+      "name": "Acute Pyelonephritis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "nephrolithiasis",
+      "name": "Nephrolithiasis (Kidney Stone)",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "sepsis",
+      "name": "Sepsis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "anaphylaxis",
+      "name": "Anaphylaxis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "viral_uri",
+      "name": "Viral Upper Respiratory Infection",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "ischemic_stroke",
+      "name": "Ischemic Stroke",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "subarachnoid_hemorrhage",
+      "name": "Subarachnoid Hemorrhage",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "meningitis",
+      "name": "Bacterial Meningitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "migraine",
+      "name": "Migraine",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "tension_headache",
+      "name": "Tension-Type Headache",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "bppv",
+      "name": "Benign Paroxysmal Positional Vertigo",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "orthostatic_hypotension",
+      "name": "Orthostatic Hypotension",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "pulmonary_embolism",
+      "name": "Pulmonary Embolism",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "tension_pneumothorax",
+      "name": "Tension Pneumothorax",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "pneumonia",
+      "name": "Community-Acquired Pneumonia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "asthma_copd_exacerbation",
+      "name": "Asthma / COPD Exacerbation",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "acute_bronchitis",
+      "name": "Acute Bronchitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_124",
+      "name": "Acne",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1624",
+      "name": "Acoustic Neuroma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1437",
+      "name": "Acute Lymphocytic Leukemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5622",
+      "name": "Acute Myeloid Leukemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1233",
+      "name": "Addison Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3920",
+      "name": "Adhesions",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_120",
+      "name": "Alcohol Use Disorder (AUD)",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1692",
+      "name": "Alpha-1 Antitrypsin Deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_22",
+      "name": "Alzheimer's Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5273",
+      "name": "Amyloidosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_135",
+      "name": "Amyotrophic Lateral Sclerosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3791",
+      "name": "Anal Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_143",
+      "name": "Ankylosing Spondylitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4931",
+      "name": "Aortic Aneurysm",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5955",
+      "name": "Aplastic Anemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4553",
+      "name": "Arteriovenous Malformations",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5628",
+      "name": "Aspergillosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5400",
+      "name": "Atherosclerosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_151",
+      "name": "Athlete's Foot",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_152",
+      "name": "Attention Deficit Hyperactivity Disorder",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_153",
+      "name": "Autism Spectrum Disorder",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1084",
+      "name": "Behcet's Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1219",
+      "name": "Bell's Palsy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5905",
+      "name": "Bile Duct Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_600",
+      "name": "Bipolar Disorder",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_163",
+      "name": "Bladder Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_169",
+      "name": "Bone Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1557",
+      "name": "Botulism",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4926",
+      "name": "Brain Aneurysm",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_173",
+      "name": "Brain Tumors",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3",
+      "name": "Breast Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1230",
+      "name": "Bursitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4617",
+      "name": "C. diff Infections",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6046",
+      "name": "Campylobacter Infections",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3754",
+      "name": "Cardiomyopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4063",
+      "name": "Carotid Artery Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_179",
+      "name": "Carpal Tunnel Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4320",
+      "name": "Cat Scratch Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_116",
+      "name": "Cataract",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_897",
+      "name": "Celiac Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_180",
+      "name": "Cerebral Palsy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_111",
+      "name": "Cervical Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_182",
+      "name": "Chickenpox",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6345",
+      "name": "Chikungunya",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1307",
+      "name": "Chlamydia Infections",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5709",
+      "name": "Cholera",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5987",
+      "name": "Chronic Kidney Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_87",
+      "name": "Chronic Lymphocytic Leukemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5624",
+      "name": "Chronic Myeloid Leukemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_190",
+      "name": "Cirrhosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3134",
+      "name": "Colonic Polyps",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_88",
+      "name": "Colorectal Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_382",
+      "name": "Complex Regional Pain Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4867",
+      "name": "Concussion",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_198",
+      "name": "Congenital Heart Defects",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1276",
+      "name": "Coronary Artery Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3181",
+      "name": "COVID-19 (Coronavirus Disease 2019)",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1242",
+      "name": "Creutzfeldt-Jakob Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_119",
+      "name": "Crohn's Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6292",
+      "name": "Croup",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1591",
+      "name": "Cryptosporidiosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4318",
+      "name": "Cushing's Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_203",
+      "name": "Cystic Fibrosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3980",
+      "name": "Cytomegalovirus Infections",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3104",
+      "name": "Dengue",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_113",
+      "name": "Depression",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3046",
+      "name": "Diabetes Insipidus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1339",
+      "name": "Diabetes Type 1",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5930",
+      "name": "Diabetes Type 2",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1512",
+      "name": "Diphtheria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_217",
+      "name": "Down Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1252",
+      "name": "Dystonia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6202",
+      "name": "Ebola",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1215",
+      "name": "Eczema",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_241",
+      "name": "Encephalitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4316",
+      "name": "Endocarditis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_243",
+      "name": "Endometriosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6196",
+      "name": "Enlarged Prostate (BPH)",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6967",
+      "name": "Eosinophilic Esophagitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_244",
+      "name": "Epilepsy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_245",
+      "name": "Esophageal Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_32",
+      "name": "Fibromyalgia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1609",
+      "name": "Fifth Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6155",
+      "name": "G6PD Deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4645",
+      "name": "Gallbladder Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4643",
+      "name": "Gallstones",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5863",
+      "name": "Genital Herpes",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4322",
+      "name": "Genital Warts",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5615",
+      "name": "Giant Cell Arteritis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1258",
+      "name": "Giardia Infections",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_42",
+      "name": "Glaucoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3019",
+      "name": "Gonorrhea",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1447",
+      "name": "Granulomatosis with Polyangiitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1234",
+      "name": "Guillain-Barre Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3217",
+      "name": "Hantavirus Infections",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4746",
+      "name": "Hay Fever",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_330",
+      "name": "Head and Neck Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1220",
+      "name": "Hemochromatosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3115",
+      "name": "Hemophilia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1226",
+      "name": "Hemorrhoids",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1686",
+      "name": "Hepatitis A",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1687",
+      "name": "Hepatitis B",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1286",
+      "name": "Hepatitis C",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_283",
+      "name": "Hernia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_284",
+      "name": "Herniated Disk",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4370",
+      "name": "Hiatal Hernia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4363",
+      "name": "Hidradenitis Suppurativa",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_34",
+      "name": "High Blood Pressure",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5632",
+      "name": "Histoplasmosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1",
+      "name": "HIV",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1262",
+      "name": "Hodgkin Lymphoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1218",
+      "name": "Huntington's Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_607",
+      "name": "Hydrocephalus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1253",
+      "name": "Impetigo",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_298",
+      "name": "Infectious Mononucleosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6055",
+      "name": "Insomnia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1274",
+      "name": "Interstitial Cystitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_614",
+      "name": "Irritable Bowel Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1292",
+      "name": "Juvenile Arthritis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4921",
+      "name": "Kawasaki Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_301",
+      "name": "Kidney Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_898",
+      "name": "Lactose Intolerance",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_608",
+      "name": "Lead Poisoning",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1526",
+      "name": "Legionnaires' Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4070",
+      "name": "Lewy Body Dementia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1241",
+      "name": "Listeria Infections",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_309",
+      "name": "Liver Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_86",
+      "name": "Lung Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_82",
+      "name": "Lupus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_84",
+      "name": "Lyme Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4610",
+      "name": "Lymphedema",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_313",
+      "name": "Macular Degeneration",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_315",
+      "name": "Malaria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_318",
+      "name": "Measles",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_321",
+      "name": "Melanoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1674",
+      "name": "Meniere's Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4014",
+      "name": "Mesothelioma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1605",
+      "name": "Mitral Valve Prolapse",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3229",
+      "name": "Mpox",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_332",
+      "name": "Multiple Myeloma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_83",
+      "name": "Multiple Sclerosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_334",
+      "name": "Mumps",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_336",
+      "name": "Myasthenia Gravis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5550",
+      "name": "Myelodysplastic Syndromes",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1617",
+      "name": "Myositis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6103",
+      "name": "Norovirus Infections",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_471",
+      "name": "Obsessive-Compulsive Disorder",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1250",
+      "name": "Osteoarthritis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1647",
+      "name": "Osteonecrosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_37",
+      "name": "Osteoporosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_348",
+      "name": "Ovarian Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1607",
+      "name": "Paget's Disease of Bone",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_469",
+      "name": "Pancreatic Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_85",
+      "name": "Parkinson's Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4948",
+      "name": "Pemphigus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_357",
+      "name": "Peptic Ulcer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4083",
+      "name": "Peripheral Arterial Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5328",
+      "name": "Pituitary Tumors",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5912",
+      "name": "Polycystic Ovary Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1382",
+      "name": "Polymyalgia Rheumatica",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1249",
+      "name": "Porphyria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_367",
+      "name": "Post-Traumatic Stress Disorder",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_112",
+      "name": "Prostate Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_373",
+      "name": "Psoriasis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6159",
+      "name": "Psoriatic Arthritis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_378",
+      "name": "Pulmonary Fibrosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3634",
+      "name": "Pulmonary Hypertension",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_523",
+      "name": "Rabies",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_381",
+      "name": "Raynaud Phenomenon",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6141",
+      "name": "Retinal Detachment",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1232",
+      "name": "Rheumatoid Arthritis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3898",
+      "name": "Rickets",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1247",
+      "name": "Rosacea",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_387",
+      "name": "Rubella",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1213",
+      "name": "Salmonella Infections",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_389",
+      "name": "Sarcoidosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1254",
+      "name": "Scabies",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_392",
+      "name": "Schizophrenia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_394",
+      "name": "Scleroderma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_402",
+      "name": "Sickle Cell Disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_404",
+      "name": "Sinusitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_918",
+      "name": "Sjogren's Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_2784",
+      "name": "Sleep Apnea",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_412",
+      "name": "Spinal Stenosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_419",
+      "name": "Stomach Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_3017",
+      "name": "Syphilis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_434",
+      "name": "Testicular Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_435",
+      "name": "Tetanus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4239",
+      "name": "Thalassemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_438",
+      "name": "Thyroid Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6440",
+      "name": "Tonsillitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_442",
+      "name": "Tourette Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1214",
+      "name": "Toxoplasmosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_4325",
+      "name": "Trichomoniasis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_2729",
+      "name": "Trigeminal Neuralgia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_41",
+      "name": "Tuberculosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_446",
+      "name": "Ulcerative Colitis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_449",
+      "name": "Uterine Cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1222",
+      "name": "Uterine Fibroids",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_5634",
+      "name": "Valley Fever",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1306",
+      "name": "Vitiligo",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_1377",
+      "name": "West Nile Virus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_461",
+      "name": "Whooping Cough",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_6342",
+      "name": "Zika Virus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_10q26-deletion-syndrome",
+      "name": "10q26 deletion syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_15q11-q13-duplication-syndrome",
+      "name": "15q11-q13 duplication syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_15q24-microdeletion",
+      "name": "15q24 microdeletion",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_16p112-duplication",
+      "name": "16p11.2 duplication",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_16p122-microdeletion",
+      "name": "16p12.2 microdeletion",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_17-alpha-hydroxylase-17-20-lyase-deficiency",
+      "name": "17 alpha-hydroxylase/17,20-lyase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_17q12-duplication",
+      "name": "17q12 duplication",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_19p1313-deletion-syndrome",
+      "name": "19p13.13 deletion syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_1q211-microduplication",
+      "name": "1q21.1 microduplication",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_2-hydroxyglutaric-aciduria",
+      "name": "2-hydroxyglutaric aciduria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_22q112-deletion-syndrome",
+      "name": "22q11.2 deletion syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_3-beta-hydroxysteroid-dehydrogenase-deficiency",
+      "name": "3-beta-hydroxysteroid dehydrogenase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_3-m-syndrome",
+      "name": "3-M syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_46xx-testicular-difference-of-sex-development",
+      "name": "46,XX testicular difference of sex development",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_48xxxy-syndrome",
+      "name": "48,XXXY syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_5-alpha-reductase-deficiency",
+      "name": "5-alpha reductase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_7q1123-duplication-syndrome",
+      "name": "7q11.23 duplication syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_aarskog-scott-syndrome",
+      "name": "Aarskog-Scott syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_acatalasemia",
+      "name": "Acatalasemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_aceruloplasminemia",
+      "name": "Aceruloplasminemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_achondroplasia",
+      "name": "Achondroplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_achromatopsia",
+      "name": "Achromatopsia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_acromicric-dysplasia",
+      "name": "Acromicric dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_actin-accumulation-myopathy",
+      "name": "Actin-accumulation myopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_adenine-phosphoribosyltransferase-deficiency",
+      "name": "Adenine phosphoribosyltransferase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_adenosine-monophosphate-deaminase-deficiency",
+      "name": "Adenosine monophosphate deaminase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_adolescent-idiopathic-scoliosis",
+      "name": "Adolescent idiopathic scoliosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_adult-onset-leukoencephalopathy-with-axonal-spheroids-and-pigmented-glia",
+      "name": "Adult-onset leukoencephalopathy with axonal spheroids and pigmented glia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_aicardi-syndrome",
+      "name": "Aicardi syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_aicardi-goutieres-syndrome",
+      "name": "Aicardi-Gouti\u00e8res syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_alg1-congenital-disorder-of-glycosylation",
+      "name": "ALG1-congenital disorder of glycosylation",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_allan-herndon-dudley-syndrome",
+      "name": "Allan-Herndon-Dudley syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_alpha-thalassemia-x-linked-intellectual-disability-syndrome",
+      "name": "Alpha thalassemia X-linked intellectual disability syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_alpha-n-acetylgalactosaminidase-deficiency",
+      "name": "Alpha-N-acetylgalactosaminidase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_alport-syndrome",
+      "name": "Alport syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_alstrom-syndrome",
+      "name": "Alstr\u00f6m syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_amish-lethal-microcephaly",
+      "name": "Amish lethal microcephaly",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_andermann-syndrome",
+      "name": "Andermann syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_anhidrotic-ectodermal-dysplasia-with-immune-deficiency",
+      "name": "Anhidrotic ectodermal dysplasia with immune deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_anophthalmia-microphthalmia",
+      "name": "Anophthalmia/Microphthalmia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_arginine-vasopressin-deficiency",
+      "name": "Arginine vasopressin deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_arginineglycine-amidinotransferase-deficiency",
+      "name": "Arginine:glycine amidinotransferase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_aromatase-deficiency",
+      "name": "Aromatase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_aromatase-excess-syndrome",
+      "name": "Aromatase excess syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_arts-syndrome",
+      "name": "Arts syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_aspartylglucosaminuria",
+      "name": "Aspartylglucosaminuria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_asphyxiating-thoracic-dystrophy",
+      "name": "Asphyxiating thoracic dystrophy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_ataxia-with-oculomotor-apraxia",
+      "name": "Ataxia with oculomotor apraxia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_ataxia-with-vitamin-e-deficiency",
+      "name": "Ataxia with vitamin E deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_atelosteogenesis-type-2",
+      "name": "Atelosteogenesis type 2",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_au-kline-syndrome",
+      "name": "Au-Kline syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_auriculo-condylar-syndrome",
+      "name": "Auriculocondylar syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_autosomal-dominant-congenital-stationary-night-blindness",
+      "name": "Autosomal dominant congenital stationary night blindness",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_autosomal-dominant-hyper-ige-syndrome",
+      "name": "Autosomal dominant hyper-IgE syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_autosomal-dominant-hypocalcemia",
+      "name": "Autosomal dominant hypocalcemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_autosomal-dominant-leukodystrophy-with-autonomic-disease",
+      "name": "Autosomal dominant leukodystrophy with autonomic disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_autosomal-dominant-vitreoretinochoroidopathy",
+      "name": "Autosomal dominant vitreoretinochoroidopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_autosomal-recessive-congenital-methemoglobinemia",
+      "name": "Autosomal recessive congenital methemoglobinemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_autosomal-recessive-hypotrichosis",
+      "name": "Autosomal recessive hypotrichosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_beckwith-wiedemann-syndrome",
+      "name": "Beckwith-Wiedemann syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_benign-essential-blepharospasm",
+      "name": "Benign essential blepharospasm",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_benign-recurrent-intrahepatic-cholestasis",
+      "name": "Benign recurrent intrahepatic cholestasis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_bernard-soulier-syndrome",
+      "name": "Bernard-Soulier syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_beta-mannosidosis",
+      "name": "Beta-mannosidosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_beta-propeller-protein-associated-neurodegeneration",
+      "name": "Beta-propeller protein-associated neurodegeneration",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_beta-ureidopropionase-deficiency",
+      "name": "Beta-ureidopropionase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_blepharocheilodontic-syndrome",
+      "name": "Blepharocheilodontic syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_brody-myopathy",
+      "name": "Brody myopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_burn-mckeown-syndrome",
+      "name": "Burn-McKeown syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_c3-glomerulopathy",
+      "name": "C3 glomerulopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_campomelic-dysplasia",
+      "name": "Campomelic dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cap-myopathy",
+      "name": "Cap myopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_carnitine-palmitoyltransferase-i-deficiency",
+      "name": "Carnitine palmitoyltransferase I deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_carpenter-syndrome",
+      "name": "Carpenter syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cartilage-hair-hypoplasia",
+      "name": "Cartilage-hair hypoplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_catecholaminergic-polymorphic-ventricular-tachycardia",
+      "name": "Catecholaminergic polymorphic ventricular tachycardia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_catsper1-related-nonsyndromic-male-infertility",
+      "name": "CATSPER1-related nonsyndromic male infertility",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_central-precocious-puberty",
+      "name": "Central precocious puberty",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cerebral-autosomal-dominant-arteriopathy-with-subcortical-infarcts-and-leukoencephalopathy",
+      "name": "Cerebral autosomal dominant arteriopathy with subcortical infarcts and leukoencephalopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_char-syndrome",
+      "name": "Char syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_charcot-marie-tooth-disease",
+      "name": "Charcot-Marie-Tooth disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cherubism",
+      "name": "Cherubism",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_child-syndrome",
+      "name": "CHILD syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_childhood-myocerebrohepatopathy-spectrum",
+      "name": "Childhood myocerebrohepatopathy spectrum",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_chorea-acanthocytosis",
+      "name": "Chorea-acanthocytosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_choroideremia",
+      "name": "Choroideremia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_chronic-granulomatous-disease",
+      "name": "Chronic granulomatous disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_chst3-related-skeletal-dysplasia",
+      "name": "CHST3-related skeletal dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cln10-disease",
+      "name": "CLN10 disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cln11-disease",
+      "name": "CLN11 disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cockayne-syndrome",
+      "name": "Cockayne syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_coffin-lowry-syndrome",
+      "name": "Coffin-Lowry syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cold-induced-sweating-syndrome",
+      "name": "Cold-induced sweating syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_color-vision-deficiency",
+      "name": "Color vision deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_combined-malonic-and-methylmalonic-aciduria",
+      "name": "Combined malonic and methylmalonic aciduria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_common-variable-immune-deficiency",
+      "name": "Common variable immune deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_complement-factor-i-deficiency",
+      "name": "Complement factor I deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-bilateral-absence-of-the-vas-deferens",
+      "name": "Congenital bilateral absence of the vas deferens",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-bile-acid-synthesis-defect-type-2",
+      "name": "Congenital bile acid synthesis defect type 2",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-cataracts-facial-dysmorphism-and-neuropathy",
+      "name": "Congenital cataracts, facial dysmorphism, and neuropathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-central-hypoventilation-syndrome",
+      "name": "Congenital central hypoventilation syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-deafness-with-labyrinthine-aplasia-microtia-and-microdontia",
+      "name": "Congenital deafness with labyrinthine aplasia, microtia, and microdontia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-diaphragmatic-hernia",
+      "name": "Congenital diaphragmatic hernia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-generalized-lipodystrophy",
+      "name": "Congenital generalized lipodystrophy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-insensitivity-to-pain-with-anhidrosis",
+      "name": "Congenital insensitivity to pain with anhidrosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-leptin-deficiency",
+      "name": "Congenital leptin deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-mirror-movement-disorder",
+      "name": "Congenital mirror movement disorder",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_congenital-plasminogen-deficiency",
+      "name": "Congenital plasminogen deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_corticosteroid-binding-globulin-deficiency",
+      "name": "Corticosteroid-binding globulin deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_corticosterone-methyloxidase-deficiency",
+      "name": "Corticosterone methyloxidase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_costeff-syndrome",
+      "name": "Costeff syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_craniometaphyseal-dysplasia",
+      "name": "Craniometaphyseal dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cri-du-chat-syndrome",
+      "name": "Cri-du-chat syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_crouzon-syndrome",
+      "name": "Crouzon syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_crouzon-syndrome-with-acanthosis-nigricans",
+      "name": "Crouzon syndrome with acanthosis nigricans",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cul3-related-neurodevelopmental-disorder",
+      "name": "CUL3-related neurodevelopmental disorder",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_cytochrome-p450-oxidoreductase-deficiency",
+      "name": "Cytochrome P450 oxidoreductase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_danon-disease",
+      "name": "Danon disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_desmosterolosis",
+      "name": "Desmosterolosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_dihydropyrimidine-dehydrogenase-deficiency",
+      "name": "Dihydropyrimidine dehydrogenase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_dilated-cardiomyopathy-with-ataxia-syndrome",
+      "name": "Dilated cardiomyopathy with ataxia syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_distal-hereditary-motor-neuropathy-type-ii",
+      "name": "Distal hereditary motor neuropathy, type II",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_distal-hereditary-motor-neuropathy-type-v",
+      "name": "Distal hereditary motor neuropathy, type V",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_distal-myopathy-2",
+      "name": "Distal myopathy 2",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_dock8-immunodeficiency-syndrome",
+      "name": "DOCK8 immunodeficiency syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_dolk-congenital-disorder-of-glycosylation",
+      "name": "DOLK-congenital disorder of glycosylation",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_donnai-barrow-syndrome",
+      "name": "Donnai-Barrow syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_dopamine-beta-hydroxylase-deficiency",
+      "name": "Dopamine beta-hydroxylase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_dopamine-transporter-deficiency-syndrome",
+      "name": "Dopamine transporter deficiency syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_duane-radial-ray-syndrome",
+      "name": "Duane-radial ray syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_dupuytren-contracture",
+      "name": "Dupuytren contracture",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_dyserythropoietic-anemia-and-thrombocytopenia",
+      "name": "Dyserythropoietic anemia and thrombocytopenia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_ehlers-danlos-syndrome",
+      "name": "Ehlers-Danlos syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_emanuel-syndrome",
+      "name": "Emanuel syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_eosinophil-peroxidase-deficiency",
+      "name": "Eosinophil peroxidase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_epidermolysis-bullosa-simplex",
+      "name": "Epidermolysis bullosa simplex",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_epidermolytic-hyperkeratosis",
+      "name": "Epidermolytic hyperkeratosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_erythrokeratodermia-variabilis-et-progressiva",
+      "name": "Erythrokeratodermia variabilis et progressiva",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_essential-tremor",
+      "name": "Essential tremor",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_ethylmalonic-encephalopathy",
+      "name": "Ethylmalonic encephalopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_ewing-sarcoma",
+      "name": "Ewing sarcoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-acute-myeloid-leukemia-with-mutated-cebpa",
+      "name": "Familial acute myeloid leukemia with mutated CEBPA",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-candidiasis",
+      "name": "Familial candidiasis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-encephalopathy-with-neuroserpin-inclusion-bodies",
+      "name": "Familial encephalopathy with neuroserpin inclusion bodies",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-glucocorticoid-deficiency",
+      "name": "Familial glucocorticoid deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-hemiplegic-migraine",
+      "name": "Familial hemiplegic migraine",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-hemophagocytic-lymphohistiocytosis",
+      "name": "Familial hemophagocytic lymphohistiocytosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-hypobetalipoproteinemia",
+      "name": "Familial hypobetalipoproteinemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-isolated-pituitary-adenoma",
+      "name": "Familial isolated pituitary adenoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-lipoprotein-lipase-deficiency",
+      "name": "Familial lipoprotein lipase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-paroxysmal-kinesigenic-dyskinesia",
+      "name": "Familial paroxysmal kinesigenic dyskinesia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_familial-restrictive-cardiomyopathy",
+      "name": "Familial restrictive cardiomyopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_floating-harbor-syndrome",
+      "name": "Floating-Harbor syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_foxp2-related-speech-and-language-disorder",
+      "name": "FOXP2-related speech and language disorder",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_friedreich-ataxia",
+      "name": "Friedreich ataxia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_frontonasal-dysplasia",
+      "name": "Frontonasal dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_fryns-syndrome",
+      "name": "Fryns syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_fumarase-deficiency",
+      "name": "Fumarase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_fundus-albipunctatus",
+      "name": "Fundus albipunctatus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_galactosemia",
+      "name": "Galactosemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_geleophysic-dysplasia",
+      "name": "Geleophysic dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_generalized-pustular-psoriasis",
+      "name": "Generalized pustular psoriasis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_genetic-epilepsy-with-febrile-seizures-plus",
+      "name": "Genetic epilepsy with febrile seizures plus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_genitopatellar-syndrome",
+      "name": "Genitopatellar syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_ghosal-hematodiaphyseal-dysplasia",
+      "name": "Ghosal hematodiaphyseal dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_giant-congenital-melanocytic-nevus",
+      "name": "Giant congenital melanocytic nevus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_glanzmann-thrombasthenia",
+      "name": "Glanzmann thrombasthenia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_glucose-galactose-malabsorption",
+      "name": "Glucose-galactose malabsorption",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_glutathione-synthetase-deficiency",
+      "name": "Glutathione synthetase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_glycogen-storage-disease-type-ix",
+      "name": "Glycogen storage disease type IX",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_glycogen-storage-disease-type-vi",
+      "name": "Glycogen storage disease type VI",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_glycogen-storage-disease-type-vii",
+      "name": "Glycogen storage disease type VII",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_glycoprotein-vi-deficiency",
+      "name": "Glycoprotein VI deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_gm3-synthase-deficiency",
+      "name": "GM3 synthase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_gnathodiaphyseal-dysplasia",
+      "name": "Gnathodiaphyseal dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_gne-myopathy",
+      "name": "GNE myopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_gordon-holmes-syndrome",
+      "name": "Gordon Holmes syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_grin2b-related-neurodevelopmental-disorder",
+      "name": "GRIN2B-related neurodevelopmental disorder",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_grn-related-frontotemporal-lobar-degeneration",
+      "name": "GRN-related frontotemporal lobar degeneration",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_guanidinoacetate-methyltransferase-deficiency",
+      "name": "Guanidinoacetate methyltransferase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hartsfield-syndrome",
+      "name": "Hartsfield syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_head-and-neck-squamous-cell-carcinoma",
+      "name": "Head and neck squamous cell carcinoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hennekam-syndrome",
+      "name": "Hennekam syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hepatic-lipase-deficiency",
+      "name": "Hepatic lipase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hereditary-fibrosing-poikiloderma-with-tendon-contractures-myopathy-and-pulmonary-fibrosis",
+      "name": "Hereditary fibrosing poikiloderma with tendon contractures, myopathy, and pulmonary fibrosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hereditary-fructose-intolerance",
+      "name": "Hereditary fructose intolerance",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hereditary-hemorrhagic-telangiectasia",
+      "name": "Hereditary hemorrhagic telangiectasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hereditary-leiomyomatosis-and-renal-cell-cancer",
+      "name": "Hereditary leiomyomatosis and renal cell cancer",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hereditary-paraganglioma-pheochromocytoma",
+      "name": "Hereditary paraganglioma-pheochromocytoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hereditary-sensory-and-autonomic-neuropathy-type-ie",
+      "name": "Hereditary sensory and autonomic neuropathy type IE",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hereditary-xanthinuria",
+      "name": "Hereditary xanthinuria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hirschsprung-disease",
+      "name": "Hirschsprung disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_histiocytosis-lymphadenopathy-plus-syndrome",
+      "name": "Histiocytosis-lymphadenopathy plus syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_horizontal-gaze-palsy-with-progressive-scoliosis",
+      "name": "Horizontal gaze palsy with progressive scoliosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hutchinson-gilford-progeria-syndrome",
+      "name": "Hutchinson-Gilford progeria syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hyperkalemic-periodic-paralysis",
+      "name": "Hyperkalemic periodic paralysis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hyperparathyroidism-jaw-tumor-syndrome",
+      "name": "Hyperparathyroidism-jaw tumor syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hyperphosphatemic-familial-tumoral-calcinosis",
+      "name": "Hyperphosphatemic familial tumoral calcinosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hypochondroplasia",
+      "name": "Hypochondroplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hypochromic-microcytic-anemia-with-iron-overload",
+      "name": "Hypochromic microcytic anemia with iron overload",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hypohidrotic-ectodermal-dysplasia",
+      "name": "Hypohidrotic ectodermal dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_hystrix-like-ichthyosis-with-deafness",
+      "name": "Hystrix-like ichthyosis with deafness",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_idiopathic-inflammatory-myopathy",
+      "name": "Idiopathic inflammatory myopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_image-syndrome",
+      "name": "IMAGe syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_imerslund-grasbeck-syndrome",
+      "name": "Imerslund-Gr\u00e4sbeck syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_infantile-onset-ascending-hereditary-spastic-paralysis",
+      "name": "Infantile-onset ascending hereditary spastic paralysis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_intrahepatic-cholestasis-of-pregnancy",
+      "name": "Intrahepatic cholestasis of pregnancy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_intranuclear-rod-myopathy",
+      "name": "Intranuclear rod myopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_isolated-congenital-asplenia",
+      "name": "Isolated congenital asplenia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_isolated-duane-retraction-syndrome",
+      "name": "Isolated Duane retraction syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_isolated-growth-hormone-deficiency",
+      "name": "Isolated growth hormone deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_isolated-hyperchlorhidrosis",
+      "name": "Isolated hyperchlorhidrosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_isolated-lissencephaly-sequence",
+      "name": "Isolated lissencephaly sequence",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_isolated-pierre-robin-sequence",
+      "name": "Isolated Pierre Robin sequence",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_isolated-sulfite-oxidase-deficiency",
+      "name": "Isolated sulfite oxidase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_jervell-and-lange-nielsen-syndrome",
+      "name": "Jervell and Lange-Nielsen syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_juvenile-myoclonic-epilepsy",
+      "name": "Juvenile myoclonic epilepsy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_juvenile-polyposis-syndrome",
+      "name": "Juvenile polyposis syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_keratitis-ichthyosis-deafness-syndrome",
+      "name": "Keratitis-ichthyosis-deafness syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_keratoconus",
+      "name": "Keratoconus",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_kindler-epidermolysis-bullosa",
+      "name": "Kindler epidermolysis bullosa",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_kleefstra-syndrome",
+      "name": "Kleefstra syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_klinefelter-syndrome",
+      "name": "Klinefelter syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_knobloch-syndrome",
+      "name": "Knobloch syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_kuskokwim-syndrome",
+      "name": "Kuskokwim syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_l1-syndrome",
+      "name": "L1 syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_lactate-dehydrogenase-deficiency",
+      "name": "Lactate dehydrogenase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_lamellar-ichthyosis",
+      "name": "Lamellar ichthyosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_langer-mesomelic-dysplasia",
+      "name": "Langer mesomelic dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_langerhans-cell-histiocytosis",
+      "name": "Langerhans cell histiocytosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_laron-syndrome",
+      "name": "Laron syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_lateral-meningocele-syndrome",
+      "name": "Lateral meningocele syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_leber-hereditary-optic-neuropathy",
+      "name": "Leber hereditary optic neuropathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_lennox-gastaut-syndrome",
+      "name": "Lennox-Gastaut syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_long-chain-3-hydroxyacyl-coa-dehydrogenase-deficiency",
+      "name": "Long-chain 3-hydroxyacyl-CoA dehydrogenase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_lymphedema-distichiasis-syndrome",
+      "name": "Lymphedema-distichiasis syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_macrozoospermia",
+      "name": "Macrozoospermia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_maffucci-syndrome",
+      "name": "Maffucci syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_majeed-syndrome",
+      "name": "Majeed syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_mandibuloacral-dysplasia",
+      "name": "Mandibuloacral dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_maturity-onset-diabetes-of-the-young",
+      "name": "Maturity-onset diabetes of the young",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_mecp2-related-severe-neonatal-encephalopathy",
+      "name": "MECP2-related severe neonatal encephalopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_meesmann-corneal-dystrophy",
+      "name": "Meesmann corneal dystrophy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_megalencephalic-leukoencephalopathy-with-subcortical-cysts",
+      "name": "Megalencephalic leukoencephalopathy with subcortical cysts",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_meier-gorlin-syndrome",
+      "name": "Meier-Gorlin syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_melnick-needles-syndrome",
+      "name": "Melnick-Needles syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_melorheostosis",
+      "name": "Melorheostosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_menkes-syndrome",
+      "name": "Menkes syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_metachromatic-leukodystrophy",
+      "name": "Metachromatic leukodystrophy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_metatropic-dysplasia",
+      "name": "Metatropic dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_microcephalic-osteodysplastic-primordial-dwarfism-type-ii",
+      "name": "Microcephalic osteodysplastic primordial dwarfism type II",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_microcephaly-seizures-and-developmental-delay",
+      "name": "Microcephaly, seizures, and developmental delay",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_microvillus-inclusion-disease",
+      "name": "Microvillus inclusion disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_miller-syndrome",
+      "name": "Miller syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_milroy-disease",
+      "name": "Milroy disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_mitochondrial-complex-i-deficiency",
+      "name": "Mitochondrial complex I deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_mitochondrial-encephalomyopathy-lactic-acidosis-and-stroke-like-episodes",
+      "name": "Mitochondrial encephalomyopathy, lactic acidosis, and stroke-like episodes",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_mitochondrial-neurogastrointestinal-encephalopathy-disease",
+      "name": "Mitochondrial neurogastrointestinal encephalopathy disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_motion-sickness",
+      "name": "Motion sickness",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_moyamoya-disease",
+      "name": "Moyamoya disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_mucolipidosis-ii-alpha-beta",
+      "name": "Mucolipidosis II alpha/beta",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_mucolipidosis-iii-gamma",
+      "name": "Mucolipidosis III gamma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_mucolipidosis-type-iv",
+      "name": "Mucolipidosis type IV",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_muenke-syndrome",
+      "name": "Muenke syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_multicentric-osteolysis-nodulosis-and-arthropathy",
+      "name": "Multicentric osteolysis, nodulosis, and arthropathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_multiminicore-disease",
+      "name": "Multiminicore disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_multiple-familial-trichoepithelioma",
+      "name": "Multiple familial trichoepithelioma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_multiple-system-atrophy",
+      "name": "Multiple system atrophy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_mutyh-associated-polyposis",
+      "name": "MUTYH-associated polyposis ",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_myd88-deficiency",
+      "name": "MyD88 deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_myoclonus-dystonia",
+      "name": "Myoclonus-dystonia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_myosin-storage-myopathy",
+      "name": "Myosin storage myopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_mullerian-aplasia-and-hyperandrogenism",
+      "name": "M\u00fcllerian aplasia and hyperandrogenism",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_naegeli-franceschetti-jadassohn-syndrome-dermatopathia-pigmentosa-reticularis",
+      "name": "Naegeli-Franceschetti-Jadassohn syndrome/dermatopathia pigmentosa reticularis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_nearsightedness",
+      "name": "Nearsightedness",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_nemaline-myopathy",
+      "name": "Nemaline myopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_netherton-syndrome",
+      "name": "Netherton syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_neuroblastoma",
+      "name": "Neuroblastoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_neutral-lipid-storage-disease-with-myopathy",
+      "name": "Neutral lipid storage disease with myopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_ngly1-congenital-disorder-of-deglycosylation",
+      "name": "NGLY1-congenital disorder of deglycosylation",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_nicolaides-baraitser-syndrome",
+      "name": "Nicolaides-Baraitser syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_nonsyndromic-congenital-nail-disorder-10",
+      "name": "Nonsyndromic congenital nail disorder 10",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_nonsyndromic-dilated-cardiomyopathy",
+      "name": "Nonsyndromic dilated cardiomyopathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_nonsyndromic-hearing-loss",
+      "name": "Nonsyndromic hearing loss",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_nonsyndromic-holoprosencephaly",
+      "name": "Nonsyndromic holoprosencephaly",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_noonan-syndrome-with-multiple-lentigines",
+      "name": "Noonan syndrome with multiple lentigines",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_norrie-disease",
+      "name": "Norrie disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_oculofaciocardiodental-syndrome",
+      "name": "Oculofaciocardiodental syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_ollier-disease",
+      "name": "Ollier disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_omenn-syndrome",
+      "name": "Omenn syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_ophthalmo-acromelic-syndrome",
+      "name": "Ophthalmo-acromelic syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_opioid-addiction",
+      "name": "Opioid addiction",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_opitz-g-bbb-syndrome",
+      "name": "Opitz G/BBB syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_optic-atrophy-type-1",
+      "name": "Optic atrophy type 1",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_osteogenesis-imperfecta",
+      "name": "Osteogenesis imperfecta",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_osteopetrosis",
+      "name": "Osteopetrosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_otospondylomegaepiphyseal-dysplasia",
+      "name": "Otospondylomegaepiphyseal dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_otulipenia",
+      "name": "Otulipenia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pachyonychia-congenita",
+      "name": "Pachyonychia congenita",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pallister-hall-syndrome",
+      "name": "Pallister-Hall syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_palmoplantar-keratoderma-with-deafness",
+      "name": "Palmoplantar keratoderma with deafness",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_paramyotonia-congenita",
+      "name": "Paramyotonia congenita",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_partington-syndrome",
+      "name": "Partington syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pdgfrb-associated-chronic-eosinophilic-leukemia",
+      "name": "PDGFRB-associated chronic eosinophilic leukemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pearson-syndrome",
+      "name": "Pearson syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pelizaeus-merzbacher-like-disease-type-1",
+      "name": "Pelizaeus-Merzbacher-like disease type 1",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pendred-syndrome",
+      "name": "Pendred syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_peroxisomal-acyl-coa-oxidase-deficiency",
+      "name": "Peroxisomal acyl-CoA oxidase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_perry-syndrome",
+      "name": "Perry syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_persistent-mullerian-duct-syndrome",
+      "name": "Persistent M\u00fcllerian duct syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_peters-anomaly",
+      "name": "Peters anomaly",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_peutz-jeghers-syndrome",
+      "name": "Peutz-Jeghers syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pgm3-congenital-disorder-of-glycosylation",
+      "name": "PGM3-congenital disorder of glycosylation",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_phosphoglycerate-kinase-deficiency",
+      "name": "Phosphoglycerate kinase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_poikiloderma-with-neutropenia",
+      "name": "Poikiloderma with neutropenia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pol-iii-related-leukodystrophy",
+      "name": "Pol III-related leukodystrophy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_polycystic-kidney-disease",
+      "name": "Polycystic kidney disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_polymicrogyria",
+      "name": "Polymicrogyria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_popliteal-pterygium-syndrome",
+      "name": "Popliteal pterygium syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_potassium-aggravated-myotonia",
+      "name": "Potassium-aggravated myotonia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_potocki-lupski-syndrome",
+      "name": "Potocki-Lupski syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_primary-carnitine-deficiency",
+      "name": "Primary carnitine deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_primary-hyperoxaluria",
+      "name": "Primary hyperoxaluria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_primary-myelofibrosis",
+      "name": "Primary myelofibrosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_primary-spontaneous-pneumothorax",
+      "name": "Primary spontaneous pneumothorax",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_prion-disease",
+      "name": "Prion disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_progressive-external-ophthalmoplegia",
+      "name": "Progressive external ophthalmoplegia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_progressive-osseous-heteroplasia",
+      "name": "Progressive osseous heteroplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_protein-s-deficiency",
+      "name": "Protein S deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_prothrombin-deficiency",
+      "name": "Prothrombin deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_proximal-18q-deletion-syndrome",
+      "name": "Proximal 18q deletion syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pseudoachondroplasia",
+      "name": "Pseudoachondroplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pseudohypoaldosteronism-type-1",
+      "name": "Pseudohypoaldosteronism type 1",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pseudoxanthoma-elasticum",
+      "name": "Pseudoxanthoma elasticum",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pulmonary-veno-occlusive-disease",
+      "name": "Pulmonary veno-occlusive disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pura-syndrome",
+      "name": "PURA syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pyle-disease",
+      "name": "Pyle disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_pyridoxine-dependent-epilepsy",
+      "name": "Pyridoxine-dependent epilepsy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_recombinant-8-syndrome",
+      "name": "Recombinant 8 syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_renal-coloboma-syndrome",
+      "name": "Renal coloboma syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_renal-hypouricemia",
+      "name": "Renal hypouricemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_restless-legs-syndrome",
+      "name": "Restless legs syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_retinoblastoma",
+      "name": "Retinoblastoma",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_rett-syndrome",
+      "name": "Rett syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_rhabdoid-tumor-predisposition-syndrome",
+      "name": "Rhabdoid tumor predisposition syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_rubinstein-taybi-syndrome",
+      "name": "Rubinstein-Taybi syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_saddan",
+      "name": "SADDAN",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_scalp-ear-nipple-syndrome",
+      "name": "Scalp-ear-nipple syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_schwartz-jampel-syndrome",
+      "name": "Schwartz-Jampel syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_seasonal-affective-disorder",
+      "name": "Seasonal affective disorder",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_senior-loken-syndrome",
+      "name": "Senior-L\u00f8ken syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_septo-optic-dysplasia",
+      "name": "Septo-optic dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_severe-congenital-neutropenia",
+      "name": "Severe congenital neutropenia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_sheldon-hall-syndrome",
+      "name": "Sheldon-Hall syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_short-qt-syndrome",
+      "name": "Short QT syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_short-chain-acyl-coa-dehydrogenase-deficiency",
+      "name": "Short-chain acyl-CoA dehydrogenase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_short-branched-chain-acyl-coa-dehydrogenase-deficiency",
+      "name": "Short/branched chain acyl-CoA dehydrogenase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_shprintzen-goldberg-syndrome",
+      "name": "Shprintzen-Goldberg syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_sialuria",
+      "name": "Sialuria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_sick-sinus-syndrome",
+      "name": "Sick sinus syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_slc35a2-congenital-disorder-of-glycosylation",
+      "name": "SLC35A2-congenital disorder of glycosylation",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_slc4a1-associated-distal-renal-tubular-acidosis",
+      "name": "SLC4A1-associated distal renal tubular acidosis",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_small-fiber-neuropathy",
+      "name": "Small fiber neuropathy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_smith-kingsmore-syndrome",
+      "name": "Smith-Kingsmore syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_smith-magenis-syndrome",
+      "name": "Smith-Magenis syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_sost-related-sclerosing-bone-dysplasia",
+      "name": "SOST-related sclerosing bone dysplasia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_sotos-syndrome",
+      "name": "Sotos syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_spastic-paraplegia-type-2",
+      "name": "Spastic paraplegia type 2",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_spastic-paraplegia-type-8",
+      "name": "Spastic paraplegia type 8",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_spinal-muscular-atrophy",
+      "name": "Spinal muscular atrophy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_spinal-muscular-atrophy-with-respiratory-distress-type-1",
+      "name": "Spinal muscular atrophy with respiratory distress type 1",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_spinocerebellar-ataxia-type-6",
+      "name": "Spinocerebellar ataxia type 6",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_sting-associated-vasculopathy-with-onset-in-infancy",
+      "name": "STING-associated vasculopathy with onset in infancy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_stormorken-syndrome",
+      "name": "Stormorken syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_succinyl-coa3-ketoacid-coa-transferase-deficiency",
+      "name": "Succinyl-CoA:3-ketoacid CoA transferase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_sucla2-related-mitochondrial-dna-depletion-syndrome",
+      "name": "SUCLA2-related mitochondrial DNA depletion syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_tay-sachs-disease",
+      "name": "Tay-Sachs disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_tetra-amelia-syndrome",
+      "name": "Tetra-amelia syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_tetrasomy-18p",
+      "name": "Tetrasomy 18p",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_thiamine-responsive-megaloblastic-anemia-syndrome",
+      "name": "Thiamine-responsive megaloblastic anemia syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_thiopurine-s-methyltransferase-deficiency",
+      "name": "Thiopurine S-methyltransferase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_thrombotic-thrombocytopenic-purpura",
+      "name": "Thrombotic thrombocytopenic purpura",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_tibial-muscular-dystrophy",
+      "name": "Tibial muscular dystrophy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_timothy-syndrome",
+      "name": "Timothy syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_tk2-related-mitochondrial-dna-depletion-syndrome-myopathic-form",
+      "name": "TK2-related mitochondrial DNA depletion syndrome, myopathic form",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_townes-brocks-syndrome",
+      "name": "Townes-Brocks Syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_transcobalamin-deficiency",
+      "name": "Transcobalamin deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_trichohepatoenteric-syndrome",
+      "name": "Trichohepatoenteric syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_trichorhinophalangeal-syndrome-type-i",
+      "name": "Trichorhinophalangeal syndrome type I",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_trimethylaminuria",
+      "name": "Trimethylaminuria",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_triosephosphate-isomerase-deficiency",
+      "name": "Triosephosphate isomerase deficiency",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_trisomy-13",
+      "name": "Trisomy 13",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_tubb4a-related-leukodystrophy",
+      "name": "TUBB4A-related leukodystrophy",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_tuberous-sclerosis-complex",
+      "name": "Tuberous sclerosis complex",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_tumor-necrosis-factor-receptor-associated-periodic-syndrome",
+      "name": "Tumor necrosis factor receptor-associated periodic syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_uncombable-hair-syndrome",
+      "name": "Uncombable hair syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_vacterl-association",
+      "name": "VACTERL association",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_wagner-syndrome",
+      "name": "Wagner syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_waldenstrom-macroglobulinemia",
+      "name": "Waldenstr\u00f6m macroglobulinemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_warsaw-breakage-syndrome",
+      "name": "Warsaw breakage syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_williams-syndrome",
+      "name": "Williams syndrome",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_wilson-disease",
+      "name": "Wilson disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_x-linked-acrogigantism",
+      "name": "X-linked acrogigantism",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_x-linked-agammaglobulinemia",
+      "name": "X-linked agammaglobulinemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_x-linked-chondrodysplasia-punctata-1",
+      "name": "X-linked chondrodysplasia punctata 1",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_x-linked-lymphoproliferative-disease",
+      "name": "X-linked lymphoproliferative disease",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_x-linked-sideroblastic-anemia",
+      "name": "X-linked sideroblastic anemia",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    },
+    {
+      "id": "medlineplus_genetics_xeroderma-pigmentosum",
+      "name": "Xeroderma pigmentosum",
+      "external_positive_cases": 0,
+      "clinical_approval": false,
+      "enable_autonomous_diagnosis": false
+    }
+  ]
+}
