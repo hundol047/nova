@@ -226,6 +226,10 @@
       "lipase",
       "abdominal_ultrasound"
     ],
+    "confirmatory_findings": [
+      "elevated lipase",
+      "peripancreatic fluid"
+    ],
     "red_flag_keywords": [],
     "evidence_level": "internally_authored_heuristic"
   },
@@ -270,7 +274,10 @@
     ],
     "evidence_level": "internally_authored_heuristic",
     "confirmatory_findings": [
-      "appendiceal inflammation"
+      "appendiceal inflammation",
+      "McBurney's point tenderness",
+      "right lower quadrant tenderness",
+      "rebound tenderness"
     ],
     "evidence_references": [
       {

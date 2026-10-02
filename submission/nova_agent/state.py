@@ -74,13 +74,34 @@ def _split_answer_segments(answer: str) -> List[str]:
             pieces = re.split(r",\s*(?=denies\b)", part, flags=re.IGNORECASE)
             segments.extend(p.strip() for p in pieces if p.strip())
         else:
-            segments.append(part)
+            segments.extend(_expand_mixed_leading_no(part))
     return segments
 
 
 def _segment_is_negated(segment: str) -> bool:
     lowered = segment.lower()
     return any(marker in lowered for marker in _NEGATION_MARKERS)
+
+
+_MIXED_POSITIVE_CUE = re.compile(
+    r"\b(?:has|have|reports?|with|pain|nausea|vomit(?:ing)?|fever|diarr(?:hea|hoea)|"
+    r"weakness|cough|dyspnea|sweat(?:ing)?|dizzy|headache|low|mild|sharp|worse)\b"
+    r"|恶心|呕吐|低烧|低热|腹泻|疼|痛|无力|咳嗽|微热| nausea | 구역 | 구토 | 미열",
+    re.IGNORECASE,
+)
+
+
+def _expand_mixed_leading_no(segment: str) -> List[str]:
+    """Scope a leading ``no X`` to X when a comma-list continues with positive findings."""
+    match = re.match(r"^\s*(no\s+[^,;]+),\s*(.+)$", segment, re.IGNORECASE)
+    if not match:
+        return [segment]
+    negative_head, remainder = match.groups()
+    if re.search(r"\b(?:no|denies|without|not)\b|없(?:음|어요|습니다)|没有|无|否认", remainder, re.IGNORECASE):
+        return [segment]
+    if not _MIXED_POSITIVE_CUE.search(remainder):
+        return [segment]
+    return [negative_head.strip(), remainder.strip()]
 
 
 class Demographics(BaseModel):

@@ -84,12 +84,14 @@ CANONICAL_TERMS = {
 # Generic lay-language aliases only -- each phrase describes how an ordinary patient would plausibly
 # word the concept, never a sentence reused from a specific evaluation vignette.
 CONCEPT_ALIASES = {
-    "chest_pain": ["chest tightness", "chest pressure", "chest hurts", "chest discomfort",
+    "chest_pain": ["chest tightness", "chest pressure", "chest hurts", "chest discomfort", "chest is sore",
+                   "sore chest", "one spot in my chest", "chest twinge",
                    "pain in my chest",
                    "흉통", "가슴 통증", "가슴이 아프", "가슴이 아파",
                    "胸が痛い", "胸の痛み", "胸が締め付けられる",
                    "胸痛", "胸闷", "胸口疼"],
     "abdominal_pain": ["stomach pain", "belly pain", "stomach hurts", "my stomach", "tummy",
+                        "belly", "abdomen", "abdominal", "belly ache", "abdominal ache", "whole belly", "lower belly", "my abdomen",
                         # Anatomical complaint locations also retrieve abdominal candidates;
                         # routing adds possibilities, never diagnostic confirmation.
                         "right lower quadrant", "left lower quadrant", "right upper quadrant",
@@ -98,12 +100,12 @@ CONCEPT_ALIASES = {
                         "gut pain", "stomach ache", "cramping in my stomach", "pain in my gut",
                         "복통", "배가 아프", "배가 아파",
                         "お腹が痛い", "腹痛", "胃が痛い",
-                        "腹痛", "肚子疼", "胃痛"],
+                        "腹痛", "腹部疼痛", "肚子疼", "胃痛", "お腹の痛み"],
     "headache": ["head pain", "head hurts", "head is pounding", "splitting headache",
                  "head is throbbing", "pain in my head",
                  "두통", "머리가 아프", "머리가 아파",
                  "頭が痛い", "頭痛",
-                 "头痛", "头疼"],
+                 "头痛", "头疼", "band-like headache", "head feels squeezed", "머리 양쪽", "띠로 조이는 머리"],
     "fever": ["chills", "high temperature", "burning up", "running a temperature", "feverish",
               "temperature is high", "hot and shivery",
               "열", "발열", "오한", "고열", "열이 높",
@@ -133,7 +135,7 @@ CONCEPT_ALIASES = {
                           "소변", "배뇨통", "빈뇨",
                           "排尿時の痛み", "頻尿", "血尿",
                           "排尿疼痛", "尿频", "血尿"],
-    "syncope": ["passed out", "loss of consciousness", "blacked out", "went unconscious",
+    "syncope": ["passed out", "loss of consciousness", "blacked out", "went unconscious", "정신을 잃",
                 "lost consciousness", "collapsed", "everything went dark",
                 "실신", "기절",
                 "失神", "気を失った",
