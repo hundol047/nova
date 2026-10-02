@@ -18,8 +18,8 @@ ENTRIES=list(reference_candidates().values())
 
 
 def test_inventory_does_not_misrepresent_reference_topics_as_validated_diagnoses():
-    assert catalog_inventory()=={'total_entries':680,'rule_supported_entries':68,
-        'reference_only_entries':612,'clinically_validated_entries':0,
+    assert catalog_inventory()=={'total_entries':1020,'rule_supported_entries':68,
+        'reference_only_entries':952,'clinically_validated_entries':0,
         'reference_autonomous_diagnosis_enabled':False}
     assert not set(reference_candidates()).intersection(all_diseases())
     assert all(e['summary'] and e['attribution'] and e['source_url'] for e in ENTRIES)
@@ -155,7 +155,7 @@ def test_added_genetics_identities_do_not_duplicate_prior_candidates_or_rules():
     old.extend(all_diseases().values())
     occupied = {clean(n) for e in old for n in [e['name'], *e['aliases']]}
     added = [e for e in ENTRIES if e['id'].startswith('medlineplus_genetics_')]
-    assert len(added) == 408
+    assert len(added) == 748
     for entry in added:
         names = {clean(n) for n in [entry['name'], *entry['aliases']]}
         assert not names & occupied, entry['name']
@@ -178,7 +178,7 @@ def test_genetics_bundle_rejects_wrong_scope_corruption_and_promotion(mutation):
     if mutation == 'checksum': raw += b' '
     if mutation == 'selection': selection += b'Extra condition\n'
     with pytest.raises(ValueError):
-        validate_bundle(raw, manifest, selection, expected_count=408, source_kind='genetics_condition')
+        validate_bundle(raw, manifest, selection, expected_count=748, source_kind='genetics_condition')
 
 
 def test_new_genetics_candidate_cannot_authorize_final_diagnosis():

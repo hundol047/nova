@@ -38,12 +38,16 @@ def regression_failures(results):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--save-json', required=True)
+    from evaluation.learning_archive import DEFAULT_ARCHIVE
+    parser.add_argument('--archive-dir', default=str(DEFAULT_ARCHIVE))
     args=parser.parse_args()
     if get_config().llm_provider != 'mock':
         raise SystemExit('This is a MOCK regression gate; use real_llm_benchmark for live validation.')
     report={'provider':'mock','independent_validation':False,'clinical_accuracy_claim':False,
             'catalog_size':len(all_diseases()),'catalog_sha256':digest(all_diseases()),'sets':{},'passed':False}
     from nova_agent.knowledge.reference_catalog import catalog_inventory, reference_candidates
+    from evaluation.source_fingerprint import source_sha256
+    report['source_sha256'] = source_sha256()
     report['catalog_inventory'] = catalog_inventory()
     report['reference_catalog_sha256'] = digest(reference_candidates())
     report['reference_only_diagnostic_accuracy'] = None
@@ -59,6 +63,9 @@ def main():
         print(name, 'scored correct',sum(r.correct for r in results if r.scoring_expected), '/',sum(r.scoring_expected for r in results), 'failures', failures,flush=True)
     report['passed']=not failed
     Path(args.save_json).write_text(json.dumps(report,indent=2)+'\n')
+    from evaluation.learning_archive import save_snapshot
+    archive = save_snapshot(report, SETS, args.archive_dir)
+    print('Evaluation snapshot archived:', archive, flush=True)
     if failed:raise SystemExit('Catalog regression gate failed: '+', '.join(failed))
 
 if __name__=='__main__':main()

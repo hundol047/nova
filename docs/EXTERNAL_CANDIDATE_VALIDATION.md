@@ -1,6 +1,6 @@
 # External candidate validation: currently blocked
 
-The inventory remains 680 entries. This change adds **no clinically validated diagnoses**
+The inventory remains 1,020 entries. This change adds **no clinically validated diagnoses**
 and enables no reference-only diagnosis. Existing 68 rules remain operational; the new report's
 `enable_autonomous_diagnosis: false` means this audit grants no new activation authorization.
 
@@ -8,7 +8,7 @@ The available environment has no configured NOVA model provider or API credentia
 external-case bundle present is `evaluation/examples/external_cases.json`, explicitly a synthetic
 plumbing example authored by the repository implementer. It is not independent validation.
 `evaluation/candidate_validation_readiness.json` therefore reports zero reviewed passes and all
-680 conditions awaiting external evidence. No live model calls were made.
+1,020 conditions awaiting external evidence. No live model calls were made.
 
 ## Implemented comparison
 
@@ -19,7 +19,7 @@ catalog fingerprints, different model/provider, fallback, malformed and timed-ou
 It recomputes correctness from frozen labels and final diagnoses instead of trusting a report's
 `correct` field. Unknown or ambiguous gold labels are rejected; unresolved predictions are errors.
 
-Each of 680 conditions gets positive/negative case counts, true positives/negatives and separate
+Each of 1,020 conditions gets positive/negative case counts, true positives/negatives and separate
 95% Wilson intervals for sensitivity and specificity. Any new error on a case that the baseline
 answered correctly, or any candidate critical miss, blocks every numerical screen. Conditions
 without sufficient cases fail individually, even if aggregate accuracy is high.
@@ -30,7 +30,7 @@ have a lower bound above 0.90; forty cases with errors may require additional da
 a sample-size recommendation for a clinical study. Broad unrelated negatives are insufficient
 for clinical review: hard near-neighbor controls, atypical presentations, demographic subgroups,
 coexisting conditions, and representative deployment settings must be planned externally.
-Intervals are descriptive, not simultaneous across 680 conditions, and do not account for
+Intervals are descriptive, not simultaneous across 1,020 conditions, and do not account for
 patient clustering, repeated evaluation, case selection, or model stochasticity. No statistical
 claim of non-inferiority or real-world accuracy is made by this screen.
 

@@ -46,6 +46,15 @@ jobs:
       - name: Enforce 68-condition catalog regression (mock, not clinical validation)
         run: python -m evaluation.catalog_regression --save-json /tmp/nova-catalog-results.json
 
+      - name: Retain synthetic evaluation history (not clinical training approval)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nova-evaluation-history-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evaluation/learning_archive/*.json
+          if-no-files-found: error
+          retention-days: 90
+
       - name: Generalization benchmark
         run: python -m evaluation.generalization_benchmark
 

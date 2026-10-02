@@ -107,3 +107,12 @@ rules, the inventory contains 680 entries. All 612 references remain non-autonom
 clinically unvalidated. See `docs/CATALOG_680_READINESS.md` and both bundle manifests for
 selection, source hashes, attribution, source review dates and limitations. Rare/genetic
 conditions are emphasized; this is not clinically prioritized or complete disease coverage.
+
+
+## 1,020-entry revision (2026-10-02 Asia/Seoul)
+
+Added 340 further condition summaries from the same frozen official Genetics XML source,
+retaining the previous 408 entries. The Genetics bundle now contains 748 references; together
+with 204 health-topic references and 68 rules the inventory contains 1,020 entries. No new
+clinical validation or autonomous reference diagnoses are enabled. See
+`docs/CATALOG_1020_AND_LEARNING.md` for selection and archival limitations.

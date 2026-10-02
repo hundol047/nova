@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 1038 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 1389 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -30,7 +30,7 @@ what is *not* yet verified.
 
 ## External candidate validation — current status
 
-Candidate expansion is paused at 680. The paired audit now checks the same complete frozen
+The current candidate inventory contains 1,020 entries. The paired audit now checks the same complete frozen
 case set on two real-model revisions, recomputes errors and critical misses, and reports
 condition-level sample counts plus sensitivity/specificity intervals. Missing cases, mock
 calls and fallbacks cannot pass. Numerical screening never enables a diagnosis automatically.
@@ -39,7 +39,22 @@ calls and fallbacks cannot pass. Numerical screening never enables a diagnosis a
 adjudicated case bundle is available. Zero new conditions have been clinically validated.
 [Commands, screening policy and remaining requirements](docs/EXTERNAL_CANDIDATE_VALIDATION.md).
 
-## 680-entry inventory — 2026-10-02 (Asia/Seoul)
+## 1,020-entry inventory and saved evaluations — 2026-10-02
+
+**68 rules + 952 reference-only candidates = 1,020 entries**, up from 680 by 340 sourced
+Genetics condition references. Existing entries are preserved. New references cannot authorize
+automatic diagnosis, and clinical accuracy remains unmeasured.
+
+Validation: **1,389 tests passed; existing mock cases remained 205/205 correct**
+(three additional cases unscored). This is not clinical accuracy.
+
+Completed mock evaluation runs now save full synthetic cases and results to immutable,
+content-addressed archives. Passing examples are retained with provenance; failures and unscored
+cases are also kept. No weights are trained automatically, and evaluation-only records cannot
+silently become training data. CI artifacts retain future snapshots for 90 days; committed
+snapshots remain in Git history. [Details and all 340 additions](docs/CATALOG_1020_AND_LEARNING.md).
+
+## Earlier 680-entry inventory — 2026-10-02 (Asia/Seoul)
 
 **68 rule-supported entries + 612 reference-only candidates = 680 entries.**
 This expands the previous 272-entry inventory by 408 sourced MedlinePlus Genetics condition

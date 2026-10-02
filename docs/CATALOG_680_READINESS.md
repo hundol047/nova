@@ -1,4 +1,7 @@
-# 680-entry candidate inventory
+# 680-entry candidate inventory (historical)
+
+Current scope: [1,020 entries and saved evaluation history](CATALOG_1020_AND_LEARNING.md).
+Counts below describe the earlier revision; current report files have since been updated.
 
 This revision adds 408 MedlinePlus Genetics condition references to the previous 272-entry
 inventory: **68 rule-supported entries + 204 health-topic references + 408 Genetics references

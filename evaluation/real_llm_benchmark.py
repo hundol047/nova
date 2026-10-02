@@ -170,13 +170,8 @@ def main() -> None:
         cases = cases[: args.max_cases]
 
     # Resume only an identical run definition: never mix mock/real, code versions or case data.
-    source_root = Path(__file__).resolve().parents[1]
-    digest = hashlib.sha256()
-    for directory in ("nova_agent", "evaluation"):
-        for path in sorted((source_root / directory).rglob("*")):
-            if path.suffix in {".py", ".json"} and "latest_results" not in path.name:
-                digest.update(str(path.relative_to(source_root)).encode())
-                digest.update(path.read_bytes())
+    from evaluation.source_fingerprint import source_sha256
+    source_fingerprint = source_sha256()
     config_values = dict(vars(cfg))
     for key in list(config_values):
         if "api_key" in key:
@@ -187,7 +182,7 @@ def main() -> None:
     reference_sha256 = hashlib.sha256(json.dumps(reference_candidates(), sort_keys=True).encode()).hexdigest()
     run_config = {"real_verification_mode": "every_decision" if args.require_real else "at_least_one_call", "catalog_sha256": catalog_sha256, "provider": cfg.llm_provider, "model": getattr(client, "model", None),
                   "reference_catalog_sha256": reference_sha256, "reference_candidates_enabled": cfg.reference_candidates_enabled,
-        "source_sha256": digest.hexdigest(), "timeout": args.timeout,
+        "source_sha256": source_fingerprint, "timeout": args.timeout,
         "config_sha256": hashlib.sha256(repr(sorted(config_values.items())).encode()).hexdigest(),
         "case_manifest": case_metadata, "case_ids": [c.case_id for c in cases], "metric_version": "independent_allowlist_v2"}
     already_done = {}
