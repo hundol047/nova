@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "purpose": "OFFLINE_TERMINOLOGY_REVIEW_ONLY",
+  "runtime_registered": 1280,
+  "icd_review_entries": 6309,
+  "mondo_review_entries": 15350,
+  "total_registered_and_review_entries": 22939,
+  "requested_total": 32000,
+  "shortfall": 9061,
+  "clinical_accuracy_verified": false,
+  "files": [
+    "review_candidates.json",
+    "mondo_review_candidates.json"
+  ]
+}
