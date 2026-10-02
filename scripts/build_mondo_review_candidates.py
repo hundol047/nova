@@ -23,7 +23,7 @@ EXCLUDED_SUBSETS = {'not_a_disease', 'metaclass', 'disease_grouping', 'rare_grou
                     'omim_susceptibility', 'obsoletion_candidate'}
 
 
-def parse_obo(text):
+def parse_obo(text, prefix='MONDO:'):
     terms = {}
     for block in text.split('\n[Term]\n')[1:]:
         block = block.split('\n[', 1)[0]
@@ -33,7 +33,7 @@ def parse_obo(text):
                 key, value = line.split(': ', 1)
                 fields[key].append(value)
         identifier = fields['id'][0]
-        if not identifier.startswith('MONDO:'):
+        if not identifier.startswith(prefix):
             continue
         aliases = []
         for value in fields['synonym']:

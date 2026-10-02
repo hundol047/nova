@@ -14,6 +14,7 @@ def run():
     from scripts.build_mondo_review_candidates import build as mondo
     from scripts.build_orphanet_review_candidates import build as orphanet
     from scripts.build_injury_review_candidates import build as injury
+    from scripts.build_doid_review_candidates import build as doid
     from nova_agent.ontology.registry import build_catalog
     from nova_agent.ontology.normalizer import normalize
     directory = ROOT / 'research/diagnosis_expansion'
@@ -22,7 +23,7 @@ def run():
     catalog = build_catalog()
     generators = [('review_candidates.json', lambda: icd(target_total=32000, allow_source_limit=True)),
                   ('mondo_review_candidates.json', mondo), ('orphanet_review_candidates.json', orphanet),
-                  ('injury_review_candidates.json', injury)]
+                  ('injury_review_candidates.json', injury), ('doid_review_candidates.json', doid)]
     checked, errors, sources = [], [], []
     ids, names = defaultdict(list), defaultdict(list)
     for filename, generate in generators:

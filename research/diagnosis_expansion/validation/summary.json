@@ -1,7 +1,7 @@
 {
   "runtime_registered": 1280,
-  "candidates_checked": 23242,
-  "combined_records": 24522,
+  "candidates_checked": 24216,
+  "combined_records": 25496,
   "source_checks": [
     {
       "file": "review_candidates.json",
@@ -21,6 +21,11 @@
     {
       "file": "injury_review_candidates.json",
       "records": 1195,
+      "exact_source_rebuild": true
+    },
+    {
+      "file": "doid_review_candidates.json",
+      "records": 974,
       "exact_source_rebuild": true
     }
   ],
