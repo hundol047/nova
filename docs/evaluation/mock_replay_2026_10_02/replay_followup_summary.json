@@ -1,8 +1,8 @@
 {
   "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
   "date": "2026-10-02",
-  "runtime_commit": "eca566f44123610944022f19663e2f44db392a7d",
-  "runtime_sha256": "634119756bd825c99489ee53df75c5379803dee4008861a1686842f1fa8e420d",
+  "runtime_commit": "b53fbb15a32866b85397d278623f86e42c1a875b",
+  "runtime_sha256": "c2bce1a2e73437239b748e1150be9e8cb39baf175afa90b1d1ae2fadb1a63971",
   "cases": 191,
   "correct": 145,
   "top1_accuracy": 0.7591623036649214,
