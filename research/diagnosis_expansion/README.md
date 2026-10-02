@@ -1,8 +1,12 @@
 # 현재 전체 현황
 
-**기존 등록 1,280개 + ICD 검토 후보 6,309개 + Mondo 검토 후보 15,350개 = 총 22,939개 레코드.**
+**기존 등록 1,280개 + ICD 6,309개 + Mondo 15,350개 + Orphanet 388개 = 총 23,327개 레코드.**
 
-Mondo 추가 수집·중복 검사·출처는 [MONDO_IMPORT.md](MONDO_IMPORT.md), 합산 수치는 `combined_manifest.json`에 있습니다. 신규 후보는 모두 미검증이며 자동 진단에는 적용하지 않았습니다. 32,000개 목표에는 9,061개 미달합니다.
+신규 후보는 모두 미검증이며 자동 진단에 적용하지 않았습니다. 32,000개 목표에는 8,673개 미달합니다. 세부 질환 유형을 포함한 수치입니다.
+
+- 최신 추가 내역: [ORPHANET_IMPORT.md](ORPHANET_IMPORT.md)
+- Mondo 수집 내역: [MONDO_IMPORT.md](MONDO_IMPORT.md)
+- 전체 합계: `combined_manifest.json`
 
 아래는 ICD 출처만의 수집 내역입니다.
 

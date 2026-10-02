@@ -50,7 +50,7 @@ def test_import_is_reproducible_and_target_shortfall_is_honest(snapshot):
 
 def test_unified_search_and_runtime_isolation(snapshot):
     data, _ = snapshot
-    assert len(load_candidates()) == 6309 + 15350
+    assert len(load_candidates('icd') + load_candidates('mondo')) == 6309 + 15350
     first = data['candidates'][0]
     assert first in search(first['code'], source='mondo')
     assert first in search(first['canonical_name'], source='mondo')

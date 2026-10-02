@@ -157,4 +157,7 @@ if __name__ == '__main__':
         files=['review_candidates.json', 'mondo_review_candidates.json'],
     )
     (DIRECTORY / 'combined_manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+    if (DIRECTORY / 'orphanet_review_candidates.json').exists():
+        from scripts.search_review_candidates import update_manifest
+        update_manifest()
     print(json.dumps({k: v for k, v in result.items() if k != 'candidates'}, indent=2))
