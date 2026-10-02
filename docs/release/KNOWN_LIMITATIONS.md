@@ -11,6 +11,10 @@ Honest, current limitations — only what actually remains. None are hidden.
 - **Matching is keyword/entropy-based, not an embedding model** (`nova_agent/matching.py`) —
   deliberate, for determinism/testability, but misses synonym pairs neither stemmed nor
   keyword-matched.
+- **Safety lay-language aliases are scoped heuristics, not clinical NLP validation.** They improve
+  recall for a small set of red-flag phrases and are negation-aware, but can increase false-positive
+  safety flags and extra workup turns; their effect has only been checked in deterministic synthetic
+  regressions.
 - **Objective-evidence numeric interpretation is scoped** to a defined analyte registry with a
   unit-safety guard (a value in an unexpected unit is not interpreted). Analytes/units outside the
   registry are not numerically interpreted.

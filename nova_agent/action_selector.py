@@ -92,7 +92,12 @@ class ActionSelector:
     def generate_and_select(self, state: PatientState, differential: List[DifferentialItem],
                              safety_findings: List[SafetyFinding], lang: str = "en"
                              ) -> tuple[AgentAction, List[ScoredCandidate], StopDecision]:
-        dangerous_ids = {d.diagnosis_id for d in differential if d.dangerous_if_missed}
+        # SafetyLayer can actively flag a dangerous diagnosis that is below the display top-K.
+        # Treat that finding as dangerous for action utility too; otherwise the stop policy would
+        # correctly keep the case open while the selector still preferred unrelated low-safety
+        # actions because the flagged diagnosis was not present in the truncated differential.
+        dangerous_ids = ({d.diagnosis_id for d in differential if d.dangerous_if_missed}
+                         | {f.diagnosis_id for f in safety_findings})
         time_critical_ids = _time_critical_ids()
         raw_candidates = self.missing_info.analyze(state, differential, safety_findings)
 
@@ -101,6 +106,16 @@ class ActionSelector:
             dangerous_involved = bool(set(cand.disease_ids_discriminated) & dangerous_ids)
             time_critical_involved = bool(set(cand.disease_ids_discriminated) & time_critical_ids)
             utility, components = self._utility(cand, dangerous_involved, time_critical_involved, differential)
+            # Once any red flag is active, obtain structured vitals before spending a turn on a
+            # lower-yield discriminator.  This is a safety gate, not a diagnostic preference: the
+            # result is immediately consumed by SafetyLayer's numeric thresholds.  The candidate
+            # remains in the normal scored/pool path so the same rule also applies to an LLM
+            # proposal validated against the legal action set.
+            if (safety_findings and cand.action_type == "EXAM" and cand.key == "vital_signs"
+                    and not state.exam_done("vital_signs")):
+                gate_bonus = get_config().weights.safety_weight + get_config().weights.time_critical_weight
+                utility += gate_bonus
+                components["mandatory_safety_vitals"] = round(gate_bonus, 3)
             content = {"ko": cand.content_ko, "ja": cand.content_ja, "zh": cand.content_zh}.get(lang) \
                 or cand.content_en
             scored.append(ScoredCandidate(action_type=cand.action_type, key=cand.key, content=content,

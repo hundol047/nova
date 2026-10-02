@@ -26,6 +26,43 @@ from nova_agent.state import PatientState, RedFlag
 
 _OPS = {">=": lambda v, t: v >= t, "<=": lambda v, t: v <= t, ">": lambda v, t: v > t, "<": lambda v, t: v < t}
 
+# Safety red-flag entries use concise clinical terms, while a patient usually uses a lay
+# description.  Keep these aliases scoped to the one red-flag phrase they expand (never a global
+# synonym table), and run the same negation-aware matcher used by the rest of the engine.  These
+# are generic paraphrases supported by public patient-facing PE symptom guidance (for example,
+# "sudden shortness of breath" for "sudden onset dyspnea" and "racing heart" for "tachycardia").
+# They are deliberately small: this table is a safety recall bridge, not a diagnostic model.
+_SAFETY_FEATURE_ALIASES: dict[str, tuple[str, ...]] = {
+    "sudden onset dyspnea": (
+        "sudden shortness of breath", "abrupt shortness of breath",
+        "sudden difficulty breathing", "sudden trouble breathing",
+    ),
+    "tachycardia": (
+        "racing heart", "fast heartbeat", "rapid heartbeat",
+        "heart beating very fast",
+    ),
+    "pleuritic": (
+        "chest pain worse with breathing", "pain worse when i breathe",
+        "pain when breathing in", "pain with deep breaths",
+    ),
+    "hypoxia": (
+        "low oxygen", "low oxygen level", "oxygen saturation is low",
+    ),
+}
+
+
+def _safety_feature_present(keyword: str, findings: list[str]) -> bool:
+    """Match one red-flag keyword plus only its scoped lay aliases.
+
+    `feature_present(..., scrub_negated_spans=True)` remains the first check and is also used for
+    aliases, so a sentence such as "no racing heart" cannot raise a tachycardia/PE flag merely
+    because it contains the alias text.
+    """
+    if feature_present(keyword, findings, scrub_negated_spans=True):
+        return True
+    return any(feature_present(alias, findings, scrub_negated_spans=True, strict=True)
+               for alias in _SAFETY_FEATURE_ALIASES.get(keyword.lower(), ()))
+
 
 class SafetyFinding(BaseModel):
     diagnosis_id: str
@@ -59,7 +96,7 @@ class SafetyLayer:
             if not relevant:
                 continue
             matched_keywords = [kw for kw in entry.get("red_flag_keywords", [])
-                                 if feature_present(kw, findings_text, scrub_negated_spans=True)]
+                                 if _safety_feature_present(kw, findings_text)]
             if matched_keywords:
                 findings.append(SafetyFinding(
                     diagnosis_id=diagnosis_id, condition=entry["name"],

@@ -72,6 +72,16 @@ the table below.
    runtime produced 6,679 correct and 3,186/5,024 critical correct. The fixed runtime produced the
    same counts on this split; 133 trajectories changed only in turn count, with no final diagnosis
    or correctness change. The +5 pilot gain therefore does not generalize to this validation split.
+6. **P1 mixed-safety routing fix:** scoped lay aliases now connect phrases such as "sudden
+   shortness of breath" and "racing heart" to the relevant red-flag concepts with negation-aware
+   matching. A SafetyLayer finding now contributes minimum workup actions even when the diagnosis
+   is below the displayed differential top-K, and an active red flag gates structured vital-sign
+   collection before lower-yield actions. The frozen historical synthetic PE-vs-anxiety case moved
+   from the pre-fix cardiac-arrhythmia output to pulmonary embolism in a replay; this is a targeted
+   regression result, not a clinical accuracy claim. New regression coverage plus the scoped suite
+   now passes 529 tests with 1 skipped. On the untouched Blind v11 reference slice, aggregate
+   Top-1 and critical recall were unchanged (15/22 scored and 9/15 critical); average turns rose
+   from 23.0 to 23.7, so the safety gain must not be presented as a broad benchmark improvement.
 
 ## Frozen 50,000-case evaluation design
 
@@ -100,4 +110,8 @@ many abstentions on in-distribution cases, so it is not ready for a clinical OOD
    handling, split/source-family leakage checks, and explicit `calibration: NOT AVAILABLE` fields.
    **Done in `summary.json`; clinical calibration remains unavailable.**
 4. Address the highest-frequency failure class only with a new, separately frozen regression slice;
-   never tune on the validation slice. **Next P1 work; no validation tuning has been performed.**
+   never tune on the validation slice. **Done for the mixed-safety routing slice; no validation
+   tuning has been performed.**
+5. Review safety-only action fan-out and turn efficiency on a fresh, separately frozen slice. Keep
+   the 50,000-case evaluation immutable and do not trade safety recall for an unverified accuracy
+   increase.

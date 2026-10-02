@@ -121,25 +121,29 @@ class MissingInformationAnalyzer:
         exam_candidates: dict[str, CandidateInfo] = {}
         test_candidates: dict[str, CandidateInfo] = {}
 
-        for item in top_k:
-            entry = disease_by_id(item.diagnosis_id)
-            if entry is None:
-                continue
+        def add_entry(diagnosis_id: str, entry: dict) -> None:
+            """Add actions for one diagnosis, including a safety-only diagnosis.
 
+            The deterministic differential is intentionally capped at top-K for ordinary
+            ranking. A diagnosis actively raised by SafetyLayer must still contribute its
+            minimum workup actions when it ranks below that cap; otherwise a red flag could block
+            premature diagnosis but have no legal action capable of investigating it.
+            """
             for discriminator in entry.get("discriminating_questions", []):
                 category = discriminator.split(":", 1)[0]
                 key = f"ask:{discriminator}"
                 if state.question_asked(discriminator) or _already_answered(state, category):
                     continue
-                spec = disease_specific_question(item.diagnosis_id, discriminator)
+                spec = disease_specific_question(diagnosis_id, discriminator)
                 cand = ask_candidates.setdefault(key, CandidateInfo(
                     action_type="ASK", key=discriminator, content_en=spec["text_en"], content_ko=spec["text_ko"],
                     content_ja=spec.get("text_ja", ""), content_zh=spec.get("text_zh", ""),
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
-                cand.disease_ids_discriminated.append(item.diagnosis_id)
-                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
+                if diagnosis_id not in cand.disease_ids_discriminated:
+                    cand.disease_ids_discriminated.append(diagnosis_id)
+                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
 
             for exam_id in entry.get("discriminating_exams", []):
                 if state.exam_done(exam_id):
@@ -153,8 +157,9 @@ class MissingInformationAnalyzer:
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
-                cand.disease_ids_discriminated.append(item.diagnosis_id)
-                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
+                if diagnosis_id not in cand.disease_ids_discriminated:
+                    cand.disease_ids_discriminated.append(diagnosis_id)
+                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
 
             for test_id in entry.get("discriminating_tests", []):
                 if state.test_done(test_id):
@@ -168,14 +173,33 @@ class MissingInformationAnalyzer:
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
-                cand.disease_ids_discriminated.append(item.diagnosis_id)
-                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
+                if diagnosis_id not in cand.disease_ids_discriminated:
+                    cand.disease_ids_discriminated.append(diagnosis_id)
+                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
+
+        for item in top_k:
+            entry = disease_by_id(item.diagnosis_id)
+            if entry is not None:
+                add_entry(item.diagnosis_id, entry)
+
+        # Safety findings are additive: they do not rewrite the diagnostic ranking, but they keep
+        # an actively flagged dangerous condition actionable when it falls below display top-K.
+        ranked_ids = {item.diagnosis_id for item in top_k}
+        for finding in safety_findings:
+            if finding.diagnosis_id in ranked_ids:
+                continue
+            entry = disease_by_id(finding.diagnosis_id)
+            if entry is not None:
+                add_entry(finding.diagnosis_id, entry)
 
         prior = _diagnosis_prior(top_k)
         all_candidates = list(ask_candidates.values()) + list(exam_candidates.values()) + list(test_candidates.values())
         for cand in all_candidates:
             affected_ids = set(cand.disease_ids_discriminated)
-            n = len(affected_ids)
+            # A safety-only diagnosis may be added outside the display top-K.  The original
+            # split score is defined over the top-K prior, so do not let that additive safety
+            # provenance make n > top_k_count and turn the discrimination score negative.
+            n = min(len(affected_ids), top_k_count)
             # Peaks when the item splits the top-K roughly in half (maximally discriminative);
             # low when it's either irrelevant (n=0, filtered out already) or shared by every
             # candidate (doesn't separate anything, though it may still confirm/exclude the group).
