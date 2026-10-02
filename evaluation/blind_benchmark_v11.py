@@ -1,19 +1,8 @@
-"""`python -m evaluation.blind_benchmark_v11` -- runs evaluation/blind_cases_v11.py, the untouched
-final generalization check for the current code AFTER the 5,000-diagnosis retrieval-architecture
-round (embedding retrieval, multi-specialty router, safety-recall expansion, deep reranker,
-retrieval->rerank->LLM pipeline with a lexical-grounding UNKNOWN guard).
+"""Historical v11 reference, now explicitly used for hard-case development.
 
-Blind v3–v10 are now REFERENCE-ONLY (each was frozen before a later reasoning change). Blind v11 is
-authored/frozen after these changes and is the untouched check for the current code.
-
-Deliberately NOT wired into CI's regression gate: a one-shot honesty check, run exactly once,
-reported as-is, never re-tuned against. If reasoning code changes again, v11 becomes reference-only
-and a fresh v12 is authored.
-
-Cases with scoring_expected=False (rare/long-tail/Tier-2/unknown/OOD/pediatric/pregnancy/unit-safety
-targets, plus the retrieval-miss trap) are excluded from the accuracy denominator but still executed
-for safe/crash/turn-limit behavior — the point for those is retrieval + explicit uncertainty, not
-deterministic top-1.
+The fixture and its hash remain frozen; it is no longer an untouched blind test.
+All 22 named targets are scored, including Tier-2; two unknown targets are also
+included in all-case accuracy. No cases or denominators are dropped for difficulty.
 """
 
 from __future__ import annotations

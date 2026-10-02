@@ -40,7 +40,7 @@ from nova_agent.glucose_evidence import extract_glucose_mg_dl
 from nova_agent.severity_evidence import extract_lactate_mmol_l
 from nova_agent.state import PatientState
 from nova_agent.assertion_status import is_uncertain
-from nova_agent.unit_safety import value_is_in_disallowed_unit, unit_present
+from nova_agent.unit_safety import value_is_in_disallowed_unit
 
 Direction = str  # "high" | "low" -- which side of normal counts as abnormal for a given lab
 
@@ -66,12 +66,14 @@ class LabSpec:
     # (`allowed_units`) and units that would MISinterpret the bare number against those thresholds
     # (`disallowed_units`, e.g. creatinine mg/dL thresholds vs an SI umol/L value ~88x larger, or
     # hemoglobin g/dL thresholds vs a g/L value ~10x larger that could HIDE a critical low). When
-    # the raw text states a disallowed unit and no allowed unit, the numeric parse is refused
+    # the raw text states a disallowed unit with no registered conversion, parsing is refused
     # (interpretation stays "unknown"), never silently interpreted. Empty tuples => no unit guard
     # (unchanged behavior), used where the number is unit-agnostic or the units are numerically
     # equivalent (mEq/L == mmol/L for monovalent ions) or intrinsically unitless (pH).
     allowed_units: tuple = ()
     disallowed_units: tuple = ()
+    # Explicit analyte-specific conversions to `unit`; never inferred from another result.
+    unit_divisors: tuple = ()
 
 
 def _panel_pattern(*names: str) -> re.Pattern:
@@ -107,6 +109,8 @@ LAB_SPECS: Dict[str, LabSpec] = {
         raw_keys=("creatinine", "bmp", "basic_metabolic_panel"),
         numeric_pattern=_panel_pattern("creatinine"),
         allowed_units=("mg/dl",), disallowed_units=("umol/l", "mmol/l", "mg/l"),
+        # NIDDK eGFR equations: serum creatinine µmol/L / 88.4 = mg/dL.
+        unit_divisors=(("umol/l", 88.4),),
         # A single absolute cutoff is a real simplification (true AKI is defined by a RISE from a
         # patient's own baseline, not one absolute number) -- disclosed, not hidden: this flags a
         # plausibly-abnormal single value only, it is not a substitute for trend/baseline
@@ -129,9 +133,10 @@ LAB_SPECS: Dict[str, LabSpec] = {
         # Unisex conservative adult cutoff (true normal range is sex-specific) -- a disclosed
         # simplification, same spirit as the creatinine note above.
         low=12.0, critical_low=7.0,
-        # g/L (SI) is ~10x g/dL -- "hemoglobin 70 g/L" (=7.0 g/dL, critical) must NOT read as 70
+        # g/L is exactly 10x g/dL -- "hemoglobin 70 g/L" (=7.0 g/dL, critical) must NOT read as 70
         # (which would look normal and HIDE a critical anemia).
         allowed_units=("g/dl",), disallowed_units=("g/l",),
+        unit_divisors=(("g/l", 10.0),),
         qualitative_low_words=("low hemoglobin", "anemia", "hemoglobin drop"),
     ),
     "lab.platelet": LabSpec(
@@ -262,14 +267,19 @@ def _extract_numeric_values(spec: LabSpec, raw_texts: List[str]) -> set[float]:
             # Inspect only an immediately adjacent unit, before a parenthetical conversion.
             suffix = suffix.split("(", 1)[0]
             unit_match = re.match(r"\s*([a-zµμ]+\s*/\s*[a-z]+)", suffix, re.I)
+            divisor = 1.0
             if unit_match:
-                unit = unit_match.group(1)
-                if spec.allowed_units and not any(unit_present(unit, u) for u in spec.allowed_units):
+                unit = re.sub(r"\s+", "", unit_match.group(1).lower()).replace("µ", "u").replace("μ", "u")
+                conversions = dict(spec.unit_divisors)
+                if unit in conversions:
+                    divisor = conversions[unit]
+                elif spec.allowed_units and unit not in spec.allowed_units:
                     continue
             elif value_is_in_disallowed_unit(suffix, spec.allowed_units, spec.disallowed_units):
                 continue
             try:
-                values.add(float(match.group(1)))
+                # Remove floating-point noise only; distinct measured results remain conflicts.
+                values.add(round(float(match.group(1)) / divisor, 10))
             except (ValueError, IndexError):
                 continue
     return values

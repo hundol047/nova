@@ -74,7 +74,7 @@ CANONICAL_TERMS = {
     "leg_swelling": ["leg swelling", "edema"],
     "focal_weakness": ["focal weakness", "one-sided weakness"],
     "aphasia": ["aphasia", "slurred speech"],
-    "gi_bleeding": ["gi bleeding", "gastrointestinal bleeding"],
+    "gi_bleeding": ["gi bleeding", "gastrointestinal bleeding", "melena", "hematemesis", "hematochezia"],
     "pelvic_gynecologic": ["pelvic pain", "vaginal bleeding"],
     "trauma": ["trauma", "traumatic injury"],
     "allergic": ["allergic reaction", "anaphylaxis"],
@@ -90,6 +90,11 @@ CONCEPT_ALIASES = {
                    "胸が痛い", "胸の痛み", "胸が締め付けられる",
                    "胸痛", "胸闷", "胸口疼"],
     "abdominal_pain": ["stomach pain", "belly pain", "stomach hurts", "my stomach", "tummy",
+                        # Anatomical complaint locations also retrieve abdominal candidates;
+                        # routing adds possibilities, never diagnostic confirmation.
+                        "right lower quadrant", "left lower quadrant", "right upper quadrant",
+                        "left upper quadrant", "periumbilical", "배꼽", "우하복부", "좌하복부",
+                        "우상복부", "좌상복부",
                         "gut pain", "stomach ache", "cramping in my stomach", "pain in my gut",
                         "복통", "배가 아프", "배가 아파",
                         "お腹が痛い", "腹痛", "胃が痛い",

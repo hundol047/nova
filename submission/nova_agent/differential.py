@@ -51,6 +51,10 @@ _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
 # phrase it belongs to. Deliberately NOT a general medication NLP system: only the drug classes an
 # existing knowledge-base risk_factor already names.
 FEATURE_ALIASES: dict[str, list[str]] = {
+    # NIDDK GI bleeding symptoms. These are symptom support, not confirmation.
+    "melena": ["black tarry stool", "black and tarry stool",
+               "black tarry stools", "black and tarry stools"],
+    "hematemesis": ["vomiting blood", "vomited blood"],
     "appendiceal inflammation": ["inflamed appendix", "appendiceal wall thickening",
                                   "thickened appendix", "noncompressible appendix"],
     "unilateral pulsating headache": ["throbbing headache", "pounding headache", "one-sided headache",
@@ -90,7 +94,8 @@ def _present_with_aliases(phrase: str, findings: List[str], strict: bool = False
     if feature_present(phrase, findings, scrub_negated_spans=True, strict=strict):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
-        if feature_present(alias, findings, scrub_negated_spans=True, strict=strict):
+        # Require every alias content word: 'black stool' alone is not 'black tarry stool'.
+        if feature_present(alias, findings, scrub_negated_spans=True, strict=True):
             return True
     return False
 

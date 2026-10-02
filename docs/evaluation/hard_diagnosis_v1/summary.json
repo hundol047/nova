@@ -1,0 +1,105 @@
+{
+  "baseline_commit": "aad2297",
+  "scope": "synthetic_mock_development_and_regression_only",
+  "clinical_accuracy_verified": false,
+  "hard_reference": {
+    "before": {
+      "correct": 12,
+      "total": 24,
+      "critical_correct": 7,
+      "critical_total": 15
+    },
+    "after": {
+      "correct": 14,
+      "total": 24,
+      "critical_correct": 8,
+      "critical_total": 15
+    }
+  },
+  "unit_development": {
+    "before": {
+      "correct": 4,
+      "total": 8,
+      "critical_correct": 4,
+      "critical_total": 8
+    },
+    "after": {
+      "correct": 8,
+      "total": 8,
+      "critical_correct": 8,
+      "critical_total": 8
+    },
+    "source_families": 4,
+    "used_for_tuning": true
+  },
+  "regression": {
+    "dialogue_correct": 72,
+    "dialogue_total": 72,
+    "dialogue_families": 18,
+    "uncertainty_correct": 20,
+    "uncertainty_total": 20
+  },
+  "improved": [
+    "Blind11_18_MixedKoEn_MigratingRLQ",
+    "Blind11_23_Units_HemoglobinGramsPerLiter"
+  ],
+  "regressed": [],
+  "remaining_failures": [
+    {
+      "case_id": "Blind11_05_TearingInterscapular",
+      "expected": "aortic_dissection",
+      "predicted": "Acute Coronary Syndrome"
+    },
+    {
+      "case_id": "Blind11_07_RetrievalMiss_AscendingParalysis",
+      "expected": "tier2:guillain_barre",
+      "predicted": "unknown"
+    },
+    {
+      "case_id": "Blind11_09_LeanForwardPleuriticViral",
+      "expected": "tier2:pericarditis",
+      "predicted": "Acute Coronary Syndrome"
+    },
+    {
+      "case_id": "Blind11_10_SpellsHeadacheSweatHTN",
+      "expected": "tier2:pheochromocytoma",
+      "predicted": "Migraine"
+    },
+    {
+      "case_id": "Blind11_11_LongTail_Acroparesthesia",
+      "expected": "tier2:fabry_disease",
+      "predicted": "unknown"
+    },
+    {
+      "case_id": "Blind11_13_OOD_ExpeditionFevers",
+      "expected": "unknown",
+      "predicted": "Acute Pyelonephritis"
+    },
+    {
+      "case_id": "Blind11_14_Multimorbid_Breathless",
+      "expected": "asthma_copd_exacerbation",
+      "predicted": "Sepsis"
+    },
+    {
+      "case_id": "Blind11_16_Peds_BarkingCough",
+      "expected": "tier2:croup",
+      "predicted": "Sepsis"
+    },
+    {
+      "case_id": "Blind11_17_Pregnancy_HeadacheHTN",
+      "expected": "tier2:preeclampsia",
+      "predicted": "Bacterial Meningitis"
+    },
+    {
+      "case_id": "Blind11_24_Units_CreatinineSI",
+      "expected": "tier2:acute_kidney_injury",
+      "predicted": "Acute Pancreatitis"
+    }
+  ],
+  "tests": {
+    "passed": 513,
+    "skipped": 1,
+    "warnings": 1,
+    "log": "tests_final.txt"
+  }
+}

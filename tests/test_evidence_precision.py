@@ -61,7 +61,8 @@ def test_unknown_specimen_value_is_not_used():
 
 
 def test_cross_analyte_allowed_units_do_not_override_wrong_unit():
-    assert labs(bmp='creatinine 98 umol/L; glucose 105 mg/dL')['lab.creatinine'].value is None
+    assert labs(bmp='creatinine 98 umol/L; glucose 105 mg/dL')['lab.creatinine'].value == pytest.approx(98/88.4)
+    assert labs(bmp='creatinine 98 mmol/L; glucose 105 mg/dL')['lab.creatinine'].value is None
 
 
 def test_mg_per_liter_is_not_mg_per_deciliter():

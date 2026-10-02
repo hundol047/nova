@@ -1,0 +1,2016 @@
+{
+  "manifest": {
+    "sha256": "472d180636c3d29cd22bc8a3cd0d54e0ba59d74dbf848950e5451ec3ab7fc0af",
+    "baseline": "aad2297",
+    "scope": "8 synthetic mock dialogues; 4 families with paired units. Authored before patch; not independent clinical validation. No fixture changes after first replay."
+  },
+  "summary": {
+    "scored_diagnostic_accuracy": 0.5,
+    "all_case_diagnostic_accuracy": 0.5,
+    "unscored_case_names": [],
+    "unsupported_case_success_rate": null,
+    "critical_diagnosis_recall": 0.5,
+    "critical_miss_rate": 0.5,
+    "average_turns": 20.375,
+    "median_turns": 18.5,
+    "duplicate_action_rate": 0.0,
+    "unnecessary_test_rate": 0.375,
+    "malformed_output_rate": 0.0,
+    "failed_diagnosis_rate": 0.0,
+    "fallback_rate": null,
+    "average_ask_count": 7.875,
+    "average_exam_count": 4.5,
+    "average_test_count": 7.0,
+    "utility_score_proxy": 0.027499999999999983,
+    "n_cases": 8,
+    "n_scored_cases": 8,
+    "n_critical_cases": 8
+  },
+  "cases": [
+    {
+      "case_id": "hard_units_0_gdL",
+      "category": "unit_equivalence",
+      "scoring_expected": true,
+      "ground_truth": "gi_bleeding",
+      "final_diagnosis": "Gastrointestinal Bleeding",
+      "correct": true,
+      "turns": 17,
+      "ask_count": 7,
+      "exam_count": 4,
+      "test_count": 5,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "DIAGNOSE:gi_bleeding",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "hard_units_0_gL",
+      "category": "unit_equivalence",
+      "scoring_expected": true,
+      "ground_truth": "gi_bleeding",
+      "final_diagnosis": "unknown",
+      "correct": false,
+      "turns": 17,
+      "ask_count": 7,
+      "exam_count": 4,
+      "test_count": 5,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "hard_units_1_gdL",
+      "category": "unit_equivalence",
+      "scoring_expected": true,
+      "ground_truth": "gi_bleeding",
+      "final_diagnosis": "Gastrointestinal Bleeding",
+      "correct": true,
+      "turns": 23,
+      "ask_count": 10,
+      "exam_count": 4,
+      "test_count": 8,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:ct_abdomen",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "TEST:abdominal_ultrasound",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "DIAGNOSE:gi_bleeding",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "hard_units_1_gL",
+      "category": "unit_equivalence",
+      "scoring_expected": true,
+      "ground_truth": "gi_bleeding",
+      "final_diagnosis": "Acute Pancreatitis",
+      "correct": false,
+      "turns": 23,
+      "ask_count": 10,
+      "exam_count": 4,
+      "test_count": 8,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:ct_abdomen",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "TEST:abdominal_ultrasound",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "DIAGNOSE:acute_pancreatitis",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Gastroenteritis",
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Coronary Syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "hard_units_2_gdL",
+      "category": "unit_equivalence",
+      "scoring_expected": true,
+      "ground_truth": "gi_bleeding",
+      "final_diagnosis": "unknown",
+      "correct": false,
+      "turns": 16,
+      "ask_count": 6,
+      "exam_count": 4,
+      "test_count": 5,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "hard_units_2_gL",
+      "category": "unit_equivalence",
+      "scoring_expected": true,
+      "ground_truth": "gi_bleeding",
+      "final_diagnosis": "unknown",
+      "correct": false,
+      "turns": 16,
+      "ask_count": 6,
+      "exam_count": 4,
+      "test_count": 5,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Ischemic Stroke"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "hard_units_3_gdL",
+      "category": "unit_equivalence",
+      "scoring_expected": true,
+      "ground_truth": "gi_bleeding",
+      "final_diagnosis": "Gastrointestinal Bleeding",
+      "correct": true,
+      "turns": 31,
+      "ask_count": 8,
+      "exam_count": 9,
+      "test_count": 13,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 2,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "TEST:d_dimer",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 29,
+          "action": "TEST:ct_chest_angio",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 30,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 31,
+          "action": "DIAGNOSE:gi_bleeding",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "hard_units_3_gL",
+      "category": "unit_equivalence",
+      "scoring_expected": true,
+      "ground_truth": "gi_bleeding",
+      "final_diagnosis": "Gastrointestinal Bleeding",
+      "correct": true,
+      "turns": 20,
+      "ask_count": 9,
+      "exam_count": 3,
+      "test_count": 7,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 1,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:ct_abdomen",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:pelvic_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "TEST:beta_hcg",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:pelvic_ultrasound",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:abdominal_ultrasound",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "DIAGNOSE:gi_bleeding",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6468 @@
+{
+  "summary": {
+    "scored_diagnostic_accuracy": 0.5909090909090909,
+    "all_case_diagnostic_accuracy": 0.5833333333333334,
+    "unscored_case_names": [
+      "Blind11_12_VagueMalaise",
+      "Blind11_13_OOD_ExpeditionFevers"
+    ],
+    "unsupported_case_success_rate": 0.5,
+    "critical_diagnosis_recall": 0.5333333333333333,
+    "critical_miss_rate": 0.4666666666666667,
+    "average_turns": 22.208333333333332,
+    "median_turns": 22.0,
+    "duplicate_action_rate": 0.0,
+    "unnecessary_test_rate": 1.625,
+    "malformed_output_rate": 0.0,
+    "failed_diagnosis_rate": 0.0,
+    "fallback_rate": null,
+    "average_ask_count": 7.208333333333333,
+    "average_exam_count": 5.958333333333333,
+    "average_test_count": 8.041666666666666,
+    "utility_score_proxy": 0.13416666666666666,
+    "n_cases": 24,
+    "n_scored_cases": 22,
+    "n_critical_cases": 15
+  },
+  "cases": [
+    {
+      "case_id": "Blind11_01_ExertionalChestPressure",
+      "category": "common",
+      "scoring_expected": true,
+      "ground_truth": "acute_coronary_syndrome",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "correct": true,
+      "turns": 20,
+      "ask_count": 9,
+      "exam_count": 5,
+      "test_count": 5,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:ct_aorta",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "ASK:relieving",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "DIAGNOSE:acute_coronary_syndrome",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_02_LowerUtiWoman",
+      "category": "common",
+      "scoring_expected": true,
+      "ground_truth": "uncomplicated_cystitis",
+      "final_diagnosis": "Uncomplicated Cystitis (Lower UTI)",
+      "correct": true,
+      "turns": 24,
+      "ask_count": 7,
+      "exam_count": 7,
+      "test_count": 9,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 6,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Acute Pyelonephritis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Sepsis",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Acute Pyelonephritis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Sepsis",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Acute Pyelonephritis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Sepsis",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Acute Pyelonephritis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Sepsis",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Acute Pyelonephritis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Sepsis",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Acute Pyelonephritis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Sepsis",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Acute Pyelonephritis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Sepsis",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:d_dimer",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "DIAGNOSE:uncomplicated_cystitis",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Acute Pyelonephritis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_03_ThunderclapHeadache",
+      "category": "critical",
+      "scoring_expected": true,
+      "ground_truth": "subarachnoid_hemorrhage",
+      "final_diagnosis": "Subarachnoid Hemorrhage",
+      "correct": true,
+      "turns": 20,
+      "ask_count": 8,
+      "exam_count": 5,
+      "test_count": 6,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "DIAGNOSE:subarachnoid_hemorrhage",
+          "top5_differential": [
+            "Subarachnoid Hemorrhage",
+            "Bacterial Meningitis",
+            "Ischemic Stroke",
+            "Migraine",
+            "Tension-Type Headache"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_04_FebrileHypotensiveConfused",
+      "category": "critical",
+      "scoring_expected": true,
+      "ground_truth": "sepsis",
+      "final_diagnosis": "Sepsis",
+      "correct": true,
+      "turns": 22,
+      "ask_count": 6,
+      "exam_count": 7,
+      "test_count": 8,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:allergy",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "DIAGNOSE:sepsis",
+          "top5_differential": [
+            "Sepsis",
+            "Acute Pyelonephritis",
+            "Anaphylaxis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_05_TearingInterscapular",
+      "category": "dangerous_mimic",
+      "scoring_expected": true,
+      "ground_truth": "aortic_dissection",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "correct": false,
+      "turns": 26,
+      "ask_count": 10,
+      "exam_count": 5,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 1,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:ct_abdomen",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:pelvic_exam",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "TEST:beta_hcg",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:pelvic_ultrasound",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:abdominal_ultrasound",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "DIAGNOSE:acute_coronary_syndrome",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_06_ReproduciblePleuriticYoung",
+      "category": "benign_mimic",
+      "scoring_expected": true,
+      "ground_truth": "musculoskeletal_chest_pain",
+      "final_diagnosis": "Musculoskeletal Chest Pain (Costochondritis)",
+      "correct": true,
+      "turns": 4,
+      "ask_count": 3,
+      "exam_count": 0,
+      "test_count": 0,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "DIAGNOSE:musculoskeletal_chest_pain",
+          "top5_differential": [
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_07_RetrievalMiss_AscendingParalysis",
+      "category": "retrieval_miss_trap",
+      "scoring_expected": false,
+      "ground_truth": "tier2:guillain_barre",
+      "final_diagnosis": "unknown",
+      "correct": false,
+      "turns": 18,
+      "ask_count": 4,
+      "exam_count": 4,
+      "test_count": 9,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 3,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:ketones",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "TEST:abg",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_08_RouterMiss_EpigastricMI",
+      "category": "router_miss_trap",
+      "scoring_expected": true,
+      "ground_truth": "acute_coronary_syndrome",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "correct": true,
+      "turns": 24,
+      "ask_count": 9,
+      "exam_count": 6,
+      "test_count": 8,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 1,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Acute Coronary Syndrome",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:ct_abdomen",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "TEST:abdominal_ultrasound",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "DIAGNOSE:acute_coronary_syndrome",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Nephrolithiasis (Kidney Stone)",
+            "Community-Acquired Pneumonia"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_09_LeanForwardPleuriticViral",
+      "category": "rare",
+      "scoring_expected": false,
+      "ground_truth": "tier2:pericarditis",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "correct": false,
+      "turns": 18,
+      "ask_count": 8,
+      "exam_count": 5,
+      "test_count": 4,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 1,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "DIAGNOSE:acute_coronary_syndrome",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Tension Pneumothorax",
+            "Viral Upper Respiratory Infection",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Community-Acquired Pneumonia"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_10_SpellsHeadacheSweatHTN",
+      "category": "very_rare",
+      "scoring_expected": false,
+      "ground_truth": "tier2:pheochromocytoma",
+      "final_diagnosis": "Migraine",
+      "correct": false,
+      "turns": 21,
+      "ask_count": 7,
+      "exam_count": 7,
+      "test_count": 6,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 3,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "DIAGNOSE:migraine",
+          "top5_differential": [
+            "Migraine",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+            "Panic Attack",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Bacterial Meningitis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_11_LongTail_Acroparesthesia",
+      "category": "long_tail",
+      "scoring_expected": false,
+      "ground_truth": "tier2:fabry_disease",
+      "final_diagnosis": "unknown",
+      "correct": false,
+      "turns": 26,
+      "ask_count": 8,
+      "exam_count": 8,
+      "test_count": 9,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 2,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:ct_abdomen",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Subarachnoid Hemorrhage",
+            "Migraine",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_12_VagueMalaise",
+      "category": "unknown",
+      "scoring_expected": false,
+      "ground_truth": "unknown",
+      "final_diagnosis": "unknown",
+      "correct": true,
+      "turns": 22,
+      "ask_count": 8,
+      "exam_count": 4,
+      "test_count": 9,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 3,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:pelvic_exam",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:beta_hcg",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:pelvic_ultrasound",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:abdominal_ultrasound",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:ct_abdomen",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_13_OOD_ExpeditionFevers",
+      "category": "ood",
+      "scoring_expected": false,
+      "ground_truth": "unknown",
+      "final_diagnosis": "Acute Pyelonephritis",
+      "correct": false,
+      "turns": 23,
+      "ask_count": 7,
+      "exam_count": 7,
+      "test_count": 8,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 2,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:allergy",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Gastroenteritis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Gastroenteritis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Gastroenteritis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Gastroenteritis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Gastroenteritis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Gastroenteritis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Gastroenteritis"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Gastroenteritis"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Gastroenteritis"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "DIAGNOSE:pyelonephritis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Gastroenteritis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_14_Multimorbid_Breathless",
+      "category": "multimorbidity",
+      "scoring_expected": true,
+      "ground_truth": "asthma_copd_exacerbation",
+      "final_diagnosis": "Sepsis",
+      "correct": false,
+      "turns": 19,
+      "ask_count": 7,
+      "exam_count": 5,
+      "test_count": 6,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Acute Coronary Syndrome"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:allergy",
+          "top5_differential": [
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Sepsis",
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Sepsis",
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Sepsis",
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Sepsis",
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Sepsis",
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Sepsis",
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:abg",
+          "top5_differential": [
+            "Sepsis",
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "DIAGNOSE:sepsis",
+          "top5_differential": [
+            "Sepsis",
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_15_Polypharmacy_Drowsy",
+      "category": "polypharmacy",
+      "scoring_expected": true,
+      "ground_truth": "hypoglycemia",
+      "final_diagnosis": "Hypoglycemia",
+      "correct": true,
+      "turns": 21,
+      "ask_count": 4,
+      "exam_count": 6,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Hypoglycemia",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:ketones",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:abg",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "DIAGNOSE:hypoglycemia",
+          "top5_differential": [
+            "Hypoglycemia",
+            "Diabetic Ketoacidosis",
+            "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+            "Sepsis",
+            "Ischemic Stroke"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_16_Peds_BarkingCough",
+      "category": "pediatric",
+      "scoring_expected": false,
+      "ground_truth": "tier2:croup",
+      "final_diagnosis": "Sepsis",
+      "correct": false,
+      "turns": 21,
+      "ask_count": 6,
+      "exam_count": 6,
+      "test_count": 8,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 1,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:d_dimer",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:ct_chest_angio",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Sepsis",
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Sepsis",
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Sepsis",
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Sepsis",
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Sepsis",
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Sepsis",
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Sepsis",
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "DIAGNOSE:sepsis",
+          "top5_differential": [
+            "Sepsis",
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_17_Pregnancy_HeadacheHTN",
+      "category": "pregnancy",
+      "scoring_expected": false,
+      "ground_truth": "tier2:preeclampsia",
+      "final_diagnosis": "Bacterial Meningitis",
+      "correct": false,
+      "turns": 24,
+      "ask_count": 7,
+      "exam_count": 7,
+      "test_count": 9,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 3,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:d_dimer",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:ct_chest_angio",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "DIAGNOSE:meningitis",
+          "top5_differential": [
+            "Bacterial Meningitis",
+            "Pulmonary Embolism",
+            "Ischemic Stroke",
+            "Subarachnoid Hemorrhage",
+            "Migraine"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_18_MixedKoEn_MigratingRLQ",
+      "category": "mixed_language",
+      "scoring_expected": true,
+      "ground_truth": "appendicitis",
+      "final_diagnosis": "Acute Appendicitis",
+      "correct": true,
+      "turns": 22,
+      "ask_count": 7,
+      "exam_count": 6,
+      "test_count": 8,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 4,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Viral Upper Respiratory Infection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Viral Upper Respiratory Infection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:ct_abdomen",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "DIAGNOSE:appendicitis",
+          "top5_differential": [
+            "Acute Appendicitis",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Viral Upper Respiratory Infection",
+            "Acute Pyelonephritis",
+            "Sepsis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_19_Ja_FlankFeverDysuria",
+      "category": "mixed_language",
+      "scoring_expected": true,
+      "ground_truth": "pyelonephritis",
+      "final_diagnosis": "Acute Pyelonephritis",
+      "correct": true,
+      "turns": 26,
+      "ask_count": 8,
+      "exam_count": 7,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:allergy",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Gastroenteritis",
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Anaphylaxis",
+            "Viral Upper Respiratory Infection"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:meningeal_signs",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:lumbar_puncture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:ct_abdomen",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia",
+            "Acute Abdomen (Surgical Abdomen)"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "DIAGNOSE:pyelonephritis",
+          "top5_differential": [
+            "Acute Pyelonephritis",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Sepsis",
+            "Bacterial Meningitis",
+            "Community-Acquired Pneumonia"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_20_Atypical_SilentMI",
+      "category": "atypical",
+      "scoring_expected": true,
+      "ground_truth": "acute_coronary_syndrome",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "correct": true,
+      "turns": 30,
+      "ask_count": 8,
+      "exam_count": 9,
+      "test_count": 12,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 2,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 29,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        },
+        {
+          "turn": 30,
+          "action": "DIAGNOSE:acute_coronary_syndrome",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Community-Acquired Pneumonia",
+            "Ischemic Stroke",
+            "Sepsis",
+            "Acute Pyelonephritis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_21_Conflicting_PEvsAnxiety",
+      "category": "conflicting_findings",
+      "scoring_expected": true,
+      "ground_truth": "pulmonary_embolism",
+      "final_diagnosis": "Pulmonary Embolism",
+      "correct": true,
+      "turns": 30,
+      "ask_count": 9,
+      "exam_count": 8,
+      "test_count": 12,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:d_dimer",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:ct_chest_angio",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "TEST:ketones",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "TEST:abg",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        },
+        {
+          "turn": 29,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        },
+        {
+          "turn": 30,
+          "action": "DIAGNOSE:pulmonary_embolism",
+          "top5_differential": [
+            "Pulmonary Embolism",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_22_DataFreshness_StaleTroponin",
+      "category": "data_freshness",
+      "scoring_expected": true,
+      "ground_truth": "acute_coronary_syndrome",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "correct": true,
+      "turns": 20,
+      "ask_count": 9,
+      "exam_count": 5,
+      "test_count": 5,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:ct_aorta",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "ASK:relieving",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "DIAGNOSE:acute_coronary_syndrome",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_23_Units_HemoglobinGramsPerLiter",
+      "category": "unit_safety",
+      "scoring_expected": true,
+      "ground_truth": "gi_bleeding",
+      "final_diagnosis": "Gastrointestinal Bleeding",
+      "correct": true,
+      "turns": 28,
+      "ask_count": 6,
+      "exam_count": 8,
+      "test_count": 13,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 2,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "TEST:d_dimer",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "TEST:ct_chest_angio",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "DIAGNOSE:gi_bleeding",
+          "top5_differential": [
+            "Gastrointestinal Bleeding",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "Blind11_24_Units_CreatinineSI",
+      "category": "unit_safety",
+      "scoring_expected": false,
+      "ground_truth": "tier2:acute_kidney_injury",
+      "final_diagnosis": "Acute Pancreatitis",
+      "correct": false,
+      "turns": 24,
+      "ask_count": 8,
+      "exam_count": 6,
+      "test_count": 9,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 5,
+      "critical": true,
+      "critical_miss": true,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:ct_abdomen",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "TEST:abdominal_ultrasound",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "DIAGNOSE:acute_pancreatitis",
+          "top5_differential": [
+            "Acute Pancreatitis",
+            "Acute Appendicitis",
+            "Acute Coronary Syndrome",
+            "Nephrolithiasis (Kidney Stone)",
+            "Migraine"
+          ]
+        }
+      ]
+    }
+  ]
+}
