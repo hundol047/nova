@@ -189,7 +189,7 @@ CONCEPT_ALIASES = {
     "gi_bleeding": ["blood in my stool", "black stools", "tarry stools", "vomiting blood",
                      "blood in my vomit", "rectal bleeding", "blood when I wipe",
                      "혈변", "흑변", "토혈", "피를 토함",
-                     "吐血", "黒い便", "血便",
+                     "吐血", "呕血", "呕出鲜红色血液", "吐出鲜血", "黒い便", "血便",
                      "呕血", "黑便", "便血"],
     "pelvic_gynecologic": ["vaginal spotting", "missed period", "cramping in my pelvis",
                             "lower pelvic pain", "one-sided pelvic pain", "sharp pain on one side of the pelvis",

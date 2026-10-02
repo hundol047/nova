@@ -28,6 +28,70 @@ from nova_agent.safety_validator import SafetyValidator, build_candidate_pool
 from nova_agent.state import Demographics, DifferentialSnapshot, PatientState
 from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG
 
+
+_STRONG_SAFETY_EVIDENCE = {
+    "focal deficit", "unilateral weakness", "facial droop", "slurred speech",
+    "rebound tenderness", "rigid abdomen", "guarding", "peritoneal signs", "board-like",
+    "absent bowel sounds", "hematemesis", "melena",
+    "absent breath sounds", "tracheal deviation", "tracheal shift", "unequal blood pressure",
+    "pulse differential", "hypoxia", "tension pneumothorax", "tearing", "ripping",
+}
+_SAFETY_EVIDENCE_WEIGHTS = {
+    "tracheal deviation": 5, "absent breath sounds": 5, "focal deficit": 5,
+    "hematemesis": 5, "melena": 5, "rigid abdomen": 5, "rebound tenderness": 5,
+    "guarding": 4, "board-like": 5, "unequal blood pressure": 5, "tearing": 4,
+    "ripping": 4, "hypoxia": 1,
+}
+
+
+def _safety_evidence_score(evidence: set[str]) -> int:
+    return len(evidence) + sum(weight for text in evidence for marker, weight in _SAFETY_EVIDENCE_WEIGHTS.items() if marker in text)
+
+
+def _safety_override_action(action: AgentAction, differential: List[DifferentialItem],
+                            safety_findings) -> Optional[AgentAction]:
+    """Return a critical diagnosis when a strong red flag would otherwise be dismissed.
+
+    This is intentionally narrow. It is not a disease classifier and does not promote a diagnosis
+    from a weak symptom such as isolated tachycardia. It only prevents a benign/unknown final label
+    when the deterministic SafetyLayer already recorded a high-specificity red flag for a dangerous
+    diagnosis. The override is an urgent safety state, not a calibrated probability claim.
+    """
+    if action.action_type != "DIAGNOSE":
+        return None
+    from nova_agent.diagnosis_normalizer import same_diagnosis
+
+    chosen = next((d for d in differential if same_diagnosis(d.diagnosis_id, action.content)
+                   or d.diagnosis_id == action.key), None)
+    chosen_score = -1
+    if chosen is not None and chosen.dangerous_if_missed:
+        chosen_finding = next((f for f in safety_findings if f.diagnosis_id == chosen.diagnosis_id), None)
+        ev = {str(e).lower() for e in (chosen_finding.evidence if chosen_finding else [])}
+        chosen_score = _safety_evidence_score(ev)
+    finding_by_id = {f.diagnosis_id: f for f in safety_findings}
+    best_item = None
+    best_score = chosen_score
+    for item in differential:
+        if not item.dangerous_if_missed:
+            continue
+        finding = finding_by_id.get(item.diagnosis_id)
+        evidence = {str(e).lower() for e in (finding.evidence if finding else [])}
+        evidence.update(str(e).lower() for e in item.supporting_evidence)
+        strong_count = sum(1 for e in evidence if any(marker in e for marker in _STRONG_SAFETY_EVIDENCE))
+        if strong_count == 0:
+            continue
+        score = _safety_evidence_score(evidence)
+        if score <= best_score:
+            continue
+        best_item, best_score = item, score
+    if best_item is not None:
+        return AgentAction(
+            action_type="DIAGNOSE", key=best_item.diagnosis_id, content=best_item.diagnosis,
+            rationale=("URGENT SAFETY OVERRIDE: deterministic red-flag evidence for "
+                       f"{best_item.diagnosis} takes priority over a benign or unknown final label."),
+        )
+    return None
+
 log = logging.getLogger("nova_agent.orchestrator")
 
 
@@ -137,6 +201,10 @@ class DoctorAgent:
             result = self.safety_validator.validate_action(
                 state, llm_output, candidate_pool, deterministic_action, merged_differential, stop_decision,
             )
+
+            safety_override = _safety_override_action(result.action, result.differential, safety_findings)
+            if safety_override is not None:
+                result.action = safety_override
 
             # The validated (possibly LLM-authored, possibly safety-merged) differential is what
             # PatientState/logging/clinical_summary see from here on.
