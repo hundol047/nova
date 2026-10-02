@@ -81,3 +81,15 @@ def test_error_fallback_abstains_at_turn_limit():
     from nova_agent.orchestrator import DoctorAgent
     agent=DoctorAgent();s=agent.new_case('err','vague concern',max_turns=1)
     assert agent._safe_fallback(s).content=='unknown'
+
+
+def test_generator_blocks_new_ids_until_review(tmp_path, monkeypatch):
+    import pytest
+    from scripts import build_tier2_catalog as builder
+    output = tmp_path / "catalog.json"
+    output.write_text(json.dumps({"conditions": [{"id": "existing"}]}))
+    monkeypatch.setattr(builder, "OUT_PATH", output)
+    monkeypatch.setattr(builder, "build_conditions", lambda: [{"id": "existing"}, {"id": "new"}])
+    with pytest.raises(SystemExit, match="Expansion BLOCKED"):
+        builder.main()
+    assert len(json.loads(output.read_text())["conditions"]) == 1

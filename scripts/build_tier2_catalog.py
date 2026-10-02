@@ -459,7 +459,10 @@ def main() -> None:
         prior_ids = {c["id"] for c in previous.get("conditions", [])}
         added = {c["id"] for c in conditions} - prior_ids
         if added:
-            from check_expansion_gate import collect
+            try:
+                from check_expansion_gate import collect
+            except ImportError:
+                from scripts.check_expansion_gate import collect
             if not collect()["further_expansion_allowed"]:
                 raise SystemExit("Expansion BLOCKED: independently validate existing entries before adding new IDs.")
     payload = {
