@@ -106,7 +106,7 @@ class NovaCompetitionAgent:
         action, _llm_output, _differential = self.agent.decide(state)
         in_competition_mode = get_config().llm_provider != "mock"
 
-        if action.action_type == "DIAGNOSE" and in_competition_mode and state.real_llm_ever_succeeded is False:
+        if action.action_type == "DIAGNOSE" and in_competition_mode and state.real_llm_ever_succeeded is not True:
             # Required flow (spec section 12): bounded retry -> real LLM retry -> if it succeeds,
             # proceed normally -> if every attempt still fails, an explicit runtime failure, never
             # a disguised deterministic-only "success". Re-calling decide() on the same
@@ -117,7 +117,7 @@ class NovaCompetitionAgent:
                 if state.real_llm_ever_succeeded:
                     break
                 action, _llm_output, _differential = self.agent.decide(state)
-            if state.real_llm_ever_succeeded is False:
+            if state.real_llm_ever_succeeded is not True:
                 # Every real-LLM attempt this case failed, even after this bounded retry -- the
                 # only available answer is deterministic-fallback-only. Dev/mock mode never
                 # reaches this branch (in_competition_mode is False there), so its existing

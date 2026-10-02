@@ -16,8 +16,11 @@ from typing import List, Literal, Optional
 from pydantic import BaseModel
 
 from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
-from nova_agent.chief_complaint import related_tags, route
+from nova_agent.chief_complaint import related_tags, route, expanded_tags
 from nova_agent.config import get_config
+from nova_agent.postural_evidence import postural_drop
+from nova_agent.evidence_interpreter import concept_present, objective_findings, patient_symptom_findings, asserted_clauses, current_symptom_findings, infection_with_circulatory_and_mental_change
+from nova_agent.electrolyte_evidence import extract_potassium_mmol_l, SEVERE_POTASSIUM_MMOL_L
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
     HYPOGLYCEMIA_THRESHOLD_MG_DL,
@@ -85,6 +88,13 @@ FEATURE_ALIASES: dict[str, list[str]] = {
 def _present_with_aliases(phrase: str, findings: List[str]) -> bool:
     """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
     FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase."""
+    if get_config().evidence_interpretation:
+        findings = [" ; ".join(asserted_clauses(text)) for text in findings]
+    if phrase in {"unilateral pulsating headache", "recurrent similar episodes"} and not any(
+        feature_present("headache", [t], scrub_negated_spans=True) for t in findings):
+        return False
+    if get_config().evidence_interpretation and concept_present(phrase, findings):
+        return True
     if feature_present(phrase, findings, scrub_negated_spans=True):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
@@ -127,6 +137,11 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
     ("clear breath sounds") -- "absent"/"breath"/"sounds" word-overlaps with "clear breath sounds"
     at 2/3 content words, over the match threshold, despite the two being clinically opposite.
     Returns the score delta; appends the phrase to exactly one of supporting/contradictory/missing."""
+    # An explicitly observed pathological absence is affirmative evidence.
+    # Keep it distinct from a healthy absence such as no chest pain.
+    if get_config().evidence_interpretation and phrase in {"absent breath sounds", "unilateral absent breath sounds"} and concept_present(phrase, findings):
+        supporting.append(phrase)
+        return weight
     underlying = _strip_negative_prefix(phrase)
     if underlying is not None:
         # The phrase itself describes an ABSENCE (e.g. "no chest pain", "absent breath sounds").
@@ -134,7 +149,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         # underlying thing being explicitly PRESENT instead CONTRADICTS it.
         if feature_present(underlying, negatives):
             supporting.append(phrase)
-            return weight
+            return 0.15 if get_config().evidence_interpretation else weight
         if feature_present(underlying, findings, scrub_negated_spans=True):
             contradictory.append(phrase)
             return -CONTRADICTION_PENALTY
@@ -142,7 +157,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         return 0.0
     if feature_denied(phrase, negatives):
         contradictory.append(phrase)
-        return -CONTRADICTION_PENALTY
+        return -(0.25 if get_config().evidence_interpretation and weight == FEATURE_WEIGHT else CONTRADICTION_PENALTY)
     if _present_with_aliases(phrase, findings):
         supporting.append(phrase)
         return weight
@@ -206,6 +221,9 @@ def _score_glucose(entry_id: str, glucose_mg_dl: Optional[float],
 
 
 def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List[str], List[str], List[str]]:
+    if entry.get("evidence_rules"):
+        from nova_agent.expanded_evidence import score_expanded
+        return score_expanded(entry, state)
     findings = state.all_findings_text()
     negatives = state.pertinent_negatives
 
@@ -217,7 +235,8 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
 
     for feature in entry.get("typical_features", []):
         max_possible += FEATURE_WEIGHT
-        score += _score_phrase(feature, FEATURE_WEIGHT, findings, negatives, supporting, contradictory, missing)
+        feature_sources = current_symptom_findings(feature, patient_symptom_findings(findings)) if get_config().evidence_interpretation else findings
+        score += _score_phrase(feature, FEATURE_WEIGHT, feature_sources, negatives, supporting, contradictory, missing)
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
@@ -225,9 +244,12 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 
+    confirmation_sources = objective_findings(entry, state) if get_config().evidence_interpretation else findings
     for finding in entry.get("confirmatory_findings", []):
         max_possible += CONFIRMATORY_WEIGHT
-        score += _score_phrase(finding, CONFIRMATORY_WEIGHT, findings, negatives, supporting, contradictory, missing)
+        # Inflammatory markers are nonspecific, even when the specimen source is correct.
+        weight = 0.5 if get_config().evidence_interpretation and finding in {"elevated white blood cell count", "elevated CRP"} else CONFIRMATORY_WEIGHT
+        score += _score_phrase(finding, weight, confirmation_sources, negatives, supporting, contradictory, missing)
 
     # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
     # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in
@@ -247,6 +269,27 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
         max_possible += CONFIRMATORY_WEIGHT
     score += _score_lactate(entry["id"], extract_lactate_mmol_l(state.laboratory_tests.get("lactate")),
                              supporting, missing)
+
+    if get_config().evidence_interpretation and entry["id"] == "sepsis":
+        max_possible += CONFIRMATORY_WEIGHT
+        combined = infection_with_circulatory_and_mental_change(state)
+        if combined:
+            score += CONFIRMATORY_WEIGHT
+            supporting.extend(combined)
+
+    if get_config().evidence_interpretation and entry["id"] == "orthostatic_hypotension":
+        drop = postural_drop(state.physical_examinations.get("vital_signs", ""))
+        max_possible += CONFIRMATORY_WEIGHT
+        if drop:
+            score += CONFIRMATORY_WEIGHT
+            supporting.append(f"postural blood pressure drop {drop[0]}/{drop[1]} mmHg; timing not inferred")
+
+    if entry["id"] == "severe_electrolyte_disorder":
+        max_possible += CONFIRMATORY_WEIGHT
+        potassium = extract_potassium_mmol_l(state.laboratory_tests.get("bmp"))
+        if potassium is not None and potassium >= SEVERE_POTASSIUM_MMOL_L:
+            score += CONFIRMATORY_WEIGHT
+            supporting.append(f"severe hyperkalemia (potassium {potassium:g} mmol/L)")
 
     # Diagnostic evidence stops here, deliberately -- everything above is specific to THIS disease
     # (its own typical_features/risk_factors/confirmatory_findings/numeric labs). Patient-level
@@ -338,7 +381,7 @@ class DifferentialEngine:
         def _pool_for_tags(tags: List[str]) -> list:
             seen_ids: set = set()
             merged: list = []
-            for tag in tags:
+            for tag in expanded_tags(tags):
                 for entry in diseases_for_tag(tag):
                     if entry["id"] not in seen_ids:
                         merged.append(entry)
@@ -381,7 +424,7 @@ class DifferentialEngine:
         elif routing.confidence == "MEDIUM":
             # An exact/alias tie between two concepts, or a fuzzy hit with a real margin -- merge
             # the top 2 plausible concepts rather than hard-routing to just the primary.
-            tags = [routing.primary_tag] + routing.secondary_tags[:1]
+            tags = [routing.primary_tag] + routing.secondary_tags
             candidates = _pool_for_tags(tags)
             if not candidates:
                 candidates = _pool_for_tags(related_tags(routing.primary_tag))
@@ -400,17 +443,40 @@ class DifferentialEngine:
         elif add_cross_cutting:
             candidates = _ensure_cross_cutting_dangerous_diagnoses(candidates)
 
+        if routing.confidence != "HIGH" and state.llm_complaint_tags:
+            by_id = {entry["id"]: entry for entry in candidates}
+            for entry in _pool_for_tags(state.llm_complaint_tags):
+                by_id.setdefault(entry["id"], entry)
+            candidates = list(by_id.values())
+
         candidates = _ensure_decisive_lab_evidence_diagnoses(candidates, state)
+        potassium = extract_potassium_mmol_l(state.laboratory_tests.get("bmp"))
+        if potassium is not None and potassium >= SEVERE_POTASSIUM_MMOL_L:
+            entry = disease_by_id("severe_electrolyte_disorder")
+            if entry and not any(d["id"] == entry["id"] for d in candidates):
+                candidates.append(entry)
+
+        routed_ids = {e["id"] for e in candidates}
+        if get_config().broad_candidates:
+            candidates = list(all_diseases().values())
 
         scored = []
         for entry in candidates:
             score, max_possible, supporting, contradictory, missing = _score_disease(entry, state)
             score_ratio = max(0.0, score) / max_possible
             band = _confidence_band(score_ratio, state.turn_count, len(supporting))
+            if entry.get("evidence_rules"):
+                from nova_agent.expanded_evidence import evidence_complete
+                if not evidence_complete(entry, state):
+                    band = "LOW"
             scored.append((score, score_ratio, entry, supporting, contradictory, missing, band))
 
-        scored.sort(key=lambda t: t[0], reverse=True)
+        scored.sort(key=lambda t: (t[0], t[2]["id"] in routed_ids), reverse=True)
         top_k = get_config().top_k_differential
+        if get_config().broad_candidates:
+            # Retain more hypotheses while observations are sparse; never turn score ties
+            # into an irreversible diagnostic exclusion. All diseases are rescored next turn.
+            top_k = max(top_k, 12 if state.turn_count < 6 else 8)
         items: List[DifferentialItem] = []
         for rank, (score, score_ratio, entry, supporting, contradictory, missing, band) in enumerate(scored[:top_k], start=1):
             items.append(DifferentialItem(

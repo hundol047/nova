@@ -1,27 +1,93 @@
 {
   "tuning": {
+    "confidence_reliability": {
+      "calibrated_probabilities": false,
+      "interpretation": "descriptive on supplied data; no generalization guarantee",
+      "by_evidence_band": {
+        "MEDIUM": {
+          "n": 1,
+          "correct": 1,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.20654329147389294,
+            1
+          ]
+        },
+        "HIGH": {
+          "n": 5,
+          "correct": 5,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.5655085052479191,
+            1
+          ]
+        },
+        "LOW": {
+          "n": 2,
+          "correct": 2,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.34237195288961925,
+            1
+          ]
+        }
+      }
+    },
     "scored_diagnostic_accuracy": 1.0,
     "all_case_diagnostic_accuracy": 1.0,
     "unscored_case_names": [],
     "unsupported_case_success_rate": null,
     "critical_diagnosis_recall": 1.0,
     "critical_miss_rate": 0.0,
-    "average_turns": 14.25,
-    "median_turns": 15.0,
+    "average_turns": 28.375,
+    "median_turns": 34.0,
     "duplicate_action_rate": 0.0,
-    "unnecessary_test_rate": 0.125,
+    "unnecessary_test_rate": 2.875,
     "malformed_output_rate": 0.0,
     "failed_diagnosis_rate": 0.0,
     "fallback_rate": null,
-    "average_ask_count": 4.75,
-    "average_exam_count": 3.75,
-    "average_test_count": 4.75,
-    "utility_score_proxy": 0.85125,
+    "average_ask_count": 11.0,
+    "average_exam_count": 6.5,
+    "average_test_count": 9.875,
+    "utility_score_proxy": 0.5725,
     "n_cases": 8,
     "n_scored_cases": 8,
     "n_critical_cases": 6
   },
   "held_out": {
+    "confidence_reliability": {
+      "calibrated_probabilities": false,
+      "interpretation": "descriptive on supplied data; no generalization guarantee",
+      "by_evidence_band": {
+        "MEDIUM": {
+          "n": 9,
+          "correct": 9,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.7008472464490407,
+            1
+          ]
+        },
+        "HIGH": {
+          "n": 4,
+          "correct": 4,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.5100999795960008,
+            1
+          ]
+        },
+        "LOW": {
+          "n": 2,
+          "correct": 2,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.34237195288961925,
+            1
+          ]
+        }
+      }
+    },
     "scored_diagnostic_accuracy": 1.0,
     "all_case_diagnostic_accuracy": 0.9444444444444444,
     "unscored_case_names": [
@@ -32,61 +98,127 @@
     "unsupported_case_success_rate": 1.0,
     "critical_diagnosis_recall": 1.0,
     "critical_miss_rate": 0.0,
-    "average_turns": 17.88888888888889,
-    "median_turns": 18.5,
+    "average_turns": 32.111111111111114,
+    "median_turns": 33.0,
     "duplicate_action_rate": 0.0,
-    "unnecessary_test_rate": 0.16666666666666666,
+    "unnecessary_test_rate": 2.7777777777777777,
     "malformed_output_rate": 0.0,
     "failed_diagnosis_rate": 0.0,
     "fallback_rate": null,
-    "average_ask_count": 6.777777777777778,
-    "average_exam_count": 4.611111111111111,
-    "average_test_count": 5.5,
-    "utility_score_proxy": 0.7572222222222222,
+    "average_ask_count": 12.277777777777779,
+    "average_exam_count": 7.388888888888889,
+    "average_test_count": 11.444444444444445,
+    "utility_score_proxy": 0.4844444444444444,
     "n_cases": 18,
     "n_scored_cases": 15,
     "n_critical_cases": 13
   },
   "generalization_v2": {
+    "confidence_reliability": {
+      "calibrated_probabilities": false,
+      "interpretation": "descriptive on supplied data; no generalization guarantee",
+      "by_evidence_band": {
+        "HIGH": {
+          "n": 3,
+          "correct": 3,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.43849391955098227,
+            1
+          ]
+        },
+        "MEDIUM": {
+          "n": 12,
+          "correct": 12,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.7574992425007574,
+            1
+          ]
+        },
+        "LOW": {
+          "n": 3,
+          "correct": 3,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.43849391955098227,
+            1
+          ]
+        }
+      }
+    },
     "scored_diagnostic_accuracy": 1.0,
     "all_case_diagnostic_accuracy": 1.0,
     "unscored_case_names": [],
     "unsupported_case_success_rate": null,
     "critical_diagnosis_recall": 1.0,
     "critical_miss_rate": 0.0,
-    "average_turns": 16.11111111111111,
-    "median_turns": 19.0,
+    "average_turns": 28.555555555555557,
+    "median_turns": 32.5,
     "duplicate_action_rate": 0.0,
-    "unnecessary_test_rate": 0.0,
+    "unnecessary_test_rate": 2.7222222222222223,
     "malformed_output_rate": 0.0,
     "failed_diagnosis_rate": 0.0,
     "fallback_rate": null,
-    "average_ask_count": 6.277777777777778,
-    "average_exam_count": 3.7777777777777777,
-    "average_test_count": 5.055555555555555,
-    "utility_score_proxy": 0.8388888888888889,
+    "average_ask_count": 10.833333333333334,
+    "average_exam_count": 6.611111111111111,
+    "average_test_count": 10.11111111111111,
+    "utility_score_proxy": 0.5783333333333333,
     "n_cases": 18,
     "n_scored_cases": 18,
-    "n_critical_cases": 5
+    "n_critical_cases": 6
   },
   "stress": {
+    "confidence_reliability": {
+      "calibrated_probabilities": false,
+      "interpretation": "descriptive on supplied data; no generalization guarantee",
+      "by_evidence_band": {
+        "MEDIUM": {
+          "n": 5,
+          "correct": 5,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.5655085052479191,
+            1
+          ]
+        },
+        "HIGH": {
+          "n": 1,
+          "correct": 1,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.20654329147389294,
+            1
+          ]
+        },
+        "LOW": {
+          "n": 2,
+          "correct": 2,
+          "observed_accuracy": 1.0,
+          "wilson_95": [
+            0.34237195288961925,
+            1
+          ]
+        }
+      }
+    },
     "scored_diagnostic_accuracy": 1.0,
     "all_case_diagnostic_accuracy": 1.0,
     "unscored_case_names": [],
     "unsupported_case_success_rate": null,
     "critical_diagnosis_recall": 1.0,
     "critical_miss_rate": 0.0,
-    "average_turns": 16.875,
-    "median_turns": 20.0,
+    "average_turns": 29.625,
+    "median_turns": 32.0,
     "duplicate_action_rate": 0.0,
-    "unnecessary_test_rate": 0.25,
+    "unnecessary_test_rate": 2.0,
     "malformed_output_rate": 0.0,
     "failed_diagnosis_rate": 0.0,
     "fallback_rate": null,
-    "average_ask_count": 5.75,
-    "average_exam_count": 3.875,
-    "average_test_count": 6.25,
-    "utility_score_proxy": 0.81875,
+    "average_ask_count": 12.0,
+    "average_exam_count": 7.0,
+    "average_test_count": 9.625,
+    "utility_score_proxy": 0.60375,
     "n_cases": 8,
     "n_scored_cases": 8,
     "n_critical_cases": 5

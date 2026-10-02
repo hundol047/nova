@@ -50,13 +50,20 @@ class StopPolicy:
             return StopDecision(should_diagnose=True, forced=True,
                                  reason=f"Only {state.remaining_turns} turn(s) remaining; forcing final diagnosis "
                                         "to guarantee submission within the turn limit.",
-                                 readiness_score=1.0)
+                                 readiness_score=0.0)
 
         if not differential:
             return StopDecision(should_diagnose=False, forced=False,
                                  reason="No differential has been generated yet.", readiness_score=0.0)
 
         top = differential[0]
+        from nova_agent.knowledge.retrieval import disease_by_id
+        from nova_agent.expanded_evidence import evidence_complete
+        entry = disease_by_id(top.diagnosis_id)
+        if entry and entry.get('evidence_rules') and not evidence_complete(entry, state):
+            return StopDecision(should_diagnose=False, forced=False,
+                                reason='Expanded diagnosis lacks required source-bound evidence.',
+                                readiness_score=0.0)
         second = differential[1] if len(differential) > 1 else None
 
         band_score = {"HIGH": 1.0, "MEDIUM": 0.5, "LOW": 0.0}[top.confidence_band]
@@ -79,7 +86,7 @@ class StopPolicy:
         severity_keeps_alternative_active = severity >= _SEVERITY_KEEPS_ALTERNATIVE_ACTIVE_THRESHOLD
         unresolved_dangerous = [
             d for d in differential[1:]
-            if d.dangerous_if_missed and not d.contradictory_evidence
+            if d.dangerous_if_missed
             and (d.confidence_band != "LOW" or (severity_keeps_alternative_active and d.supporting_evidence))
         ]
         differential_by_id = {d.diagnosis_id: d for d in differential}
@@ -101,7 +108,7 @@ class StopPolicy:
         should_diagnose = enough_turns_gathered and (
             (readiness_score >= cfg.diagnose_threshold and gap_ratio >= cfg.min_gap_rank1_rank2
              and not dangerous_alternative_exists)
-            or no_more_value
+            or (no_more_value and not dangerous_alternative_exists)
         )
 
         if should_diagnose:

@@ -110,6 +110,7 @@ class PatientState(BaseModel):
     demographics: Demographics = Field(default_factory=Demographics)
 
     chief_complaint: str = ""
+    llm_complaint_tags: List[str] = Field(default_factory=list)
     symptoms: List[str] = Field(default_factory=list)
     symptom_onset: Optional[str] = None
     duration: Optional[str] = None
@@ -154,6 +155,9 @@ class PatientState(BaseModel):
 
     turn_count: int = 0
     max_turns: int = 60
+    decision_quality: dict = Field(default_factory=dict)
+    # Retrieved educational context, never included in all_findings_text / patient evidence.
+    reference_candidates: List[dict] = Field(default_factory=list)
     final_diagnosis: Optional[str] = None
     final_diagnosis_rationale: Optional[str] = None
 
@@ -173,6 +177,7 @@ class PatientState(BaseModel):
     llm_call_count: int = 0
     llm_success_count: int = 0
     llm_failure_count: int = 0
+    llm_parse_failure_turns: int = 0
     llm_fallback_count: int = 0
     llm_total_latency_seconds: float = 0.0
     llm_latency_sample_count: int = 0
@@ -254,7 +259,8 @@ class PatientState(BaseModel):
         self.conversation_history.append(turn)
         self.physical_examinations[exam_id] = result
         if exam_id == "vital_signs":
-            parsed = parse_vital_signs(result)
+            from nova_agent.language import normalize_clinical_text
+            parsed = parse_vital_signs(normalize_clinical_text(result))
             if parsed is not None:
                 self.vital_signs.append(parsed)
                 for finding in describe_vital_sign_abnormalities(parsed):
@@ -367,4 +373,5 @@ class PatientState(BaseModel):
         out += list(self.laboratory_tests.values())
         out += list(self.medication_text) + list(self.allergy_text)
         out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
-        return [t for t in out if t]
+        from nova_agent.language import normalize_clinical_text
+        return list(dict.fromkeys(t for raw in out if raw for t in (raw, normalize_clinical_text(raw)) if t))

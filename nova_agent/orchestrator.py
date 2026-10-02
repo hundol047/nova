@@ -19,6 +19,7 @@ from nova_agent.action_selector import ActionSelector, AgentAction
 from nova_agent.chief_complaint import classify as classify_chief_complaint
 from nova_agent.clinical_summary import build_clinical_summary
 from nova_agent.config import get_config
+from nova_agent.final_review import review_differential
 from nova_agent.differential import DifferentialEngine, DifferentialItem
 from nova_agent.knowledge.retrieval import retrieve_turn_context
 from nova_agent.llm_client import BaseLLMClient, TurnContext, get_llm_client
@@ -51,6 +52,9 @@ class DoctorAgent:
     # --- core turn loop -----------------------------------------------------------------------
 
     def decide(self, state: PatientState) -> Tuple[AgentAction, Optional[AgentTurnOutput], List[DifferentialItem]]:
+        state.reference_candidates = []
+        state.decision_quality = {"band":"LOW", "probability":None, "calibrated":False,
+                                  "catalog_status":"unassessed", "reasons":["assessment_unavailable"]}
         try:
             # 1. Patient State (given) -> deterministic prior differential + safety findings.
             #    These are ALWAYS computed (never delegated to the LLM) -- they are what
@@ -87,12 +91,18 @@ class DoctorAgent:
                 retrieved_context = retrieve_turn_context(
                     tag, [d.diagnosis_id for d in deterministic_differential], candidate_test_ids,
                 )
+                if cfg.rag_enabled and cfg.reference_candidates_enabled:
+                    from nova_agent.knowledge.reference_catalog import retrieve_reference_candidates
+                    state.reference_candidates = retrieve_reference_candidates(state.all_findings_text())
+                    retrieved_context.extend(state.reference_candidates)
 
                 # 4/5. LLM Differential Reasoning + LLM Candidate Actions (one combined call).
                 ctx = TurnContext(summary=summary, differential=deterministic_differential,
                                    safety_findings=safety_findings, candidates=candidates,
                                    chosen_action=deterministic_action, stop_decision=stop_decision,
-                                   retrieved_context=retrieved_context)
+                                   retrieved_context=retrieved_context,
+                                   final_review_notes=(review_differential(state, deterministic_differential)
+                                       if cfg.final_review and deterministic_action.action_type == "DIAGNOSE" else []))
                 llm_output = self.llm_client.generate_turn_output(ctx)
 
                 # LLM reliability metrics (spec: a failing real LLM must never be invisible behind
@@ -104,6 +114,8 @@ class DoctorAgent:
                 # outside this branch would double-count a call that was never made this turn.
                 if getattr(self.llm_client, "_last_call_was_real", False):
                     state.llm_call_count += 1
+                    if getattr(self.llm_client, "_last_parse_failed", False):
+                        state.llm_parse_failure_turns += 1
                     if getattr(self.llm_client, "_last_call_succeeded", False):
                         state.llm_success_count += 1
                     else:
@@ -120,6 +132,12 @@ class DoctorAgent:
                         state.llm_total_output_tokens += output_tokens
                         state.llm_token_usage_available = True
 
+            if llm_output is not None:
+                from nova_agent.chief_complaint import CONCEPT_PHRASES
+                state.llm_complaint_tags = list(dict.fromkeys(
+                    tag for tag in llm_output.complaint_tags if tag in CONCEPT_PHRASES
+                ))[:3]
+
             # 6/7. Deterministic Safety Validation + Structured Action Validation.
             merged_differential = self.safety_validator.merge_differential(
                 llm_output, deterministic_differential, safety_findings,
@@ -131,6 +149,10 @@ class DoctorAgent:
 
             # The validated (possibly LLM-authored, possibly safety-merged) differential is what
             # PatientState/logging/clinical_summary see from here on.
+            from nova_agent.decision_quality import assess_decision
+            state.decision_quality = assess_decision(state, result.differential)
+            if result.differential and state.decision_quality["band"] == "LOW":
+                result.differential[0].confidence_band = "LOW"
             state.current_differential = [
                 DifferentialSnapshot(diagnosis=d.diagnosis, rank=d.rank, confidence_band=d.confidence_band,
                                       urgency=d.urgency, dangerous_if_missed=d.dangerous_if_missed)

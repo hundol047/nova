@@ -57,7 +57,9 @@ def compute_summary(results: list[CaseResult]) -> dict:
 
     utility_proxy = statistics.mean(score_case(r) for r in results)
 
+    from evaluation.reliability import summarize_reliability
     return {
+        "confidence_reliability": summarize_reliability([r.model_dump() for r in results]),
         # Scored: only cases with a well-defined single right answer (excludes ambiguous/
         # insufficient-info/unmapped-complaint stress cases -- see each case's `scoring_expected`).
         "scored_diagnostic_accuracy": sum(r.correct for r in scored) / scored_n,

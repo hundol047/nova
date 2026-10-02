@@ -1,0 +1,268 @@
+{
+  "metric": "potassium_text_parser_correctness_only",
+  "independent_validation": false,
+  "clinical_accuracy_claim": false,
+  "role": "same-author synthetic parser probes",
+  "correct": 20,
+  "total": 43,
+  "cases": [
+    {
+      "text": "potassium 4.2",
+      "expected": 4.2,
+      "actual": 4.2,
+      "correct": true
+    },
+    {
+      "text": "potassium 4.2 mmol/L",
+      "expected": 4.2,
+      "actual": 4.2,
+      "correct": true
+    },
+    {
+      "text": "potassium 4.2 mEq/L",
+      "expected": 4.2,
+      "actual": 4.2,
+      "correct": true
+    },
+    {
+      "text": "potassium 4.2 mmol / L",
+      "expected": 4.2,
+      "actual": 4.2,
+      "correct": true
+    },
+    {
+      "text": "potassium 4.2 mol/L",
+      "expected": null,
+      "actual": 4.2,
+      "correct": false
+    },
+    {
+      "text": "potassium 4.2 mEq/dL",
+      "expected": null,
+      "actual": 4.2,
+      "correct": false
+    },
+    {
+      "text": "potassium 4.2 mmol/dL",
+      "expected": null,
+      "actual": 4.2,
+      "correct": false
+    },
+    {
+      "text": "potassium 4.2 mmol/mL",
+      "expected": null,
+      "actual": 4.2,
+      "correct": false
+    },
+    {
+      "text": "potassium 4.2 \u00b5mol/L",
+      "expected": null,
+      "actual": 4.2,
+      "correct": false
+    },
+    {
+      "text": "potassium 4.2 unknown",
+      "expected": null,
+      "actual": 4.2,
+      "correct": false
+    },
+    {
+      "text": "potassium 4.2 mg/L",
+      "expected": null,
+      "actual": null,
+      "correct": true
+    },
+    {
+      "text": "potassium 6.8",
+      "expected": 6.8,
+      "actual": 6.8,
+      "correct": true
+    },
+    {
+      "text": "potassium 6.8 mmol/L",
+      "expected": 6.8,
+      "actual": 6.8,
+      "correct": true
+    },
+    {
+      "text": "potassium 6.8 mEq/L",
+      "expected": 6.8,
+      "actual": 6.8,
+      "correct": true
+    },
+    {
+      "text": "potassium 6.8 mmol / L",
+      "expected": 6.8,
+      "actual": 6.8,
+      "correct": true
+    },
+    {
+      "text": "potassium 6.8 mol/L",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "potassium 6.8 mEq/dL",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "potassium 6.8 mmol/dL",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "potassium 6.8 mmol/mL",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "potassium 6.8 \u00b5mol/L",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "potassium 6.8 unknown",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "potassium 6.8 mg/L",
+      "expected": null,
+      "actual": null,
+      "correct": true
+    },
+    {
+      "text": "K 6,8 mmol/L",
+      "expected": null,
+      "actual": 6.0,
+      "correct": false
+    },
+    {
+      "text": "K 6.8e-3 mol/L",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "K 6.8\u20137.1 mmol/L",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "K 6.8\u20147.1 mmol/L",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "K 6.8 to 7.1 mmol/L",
+      "expected": null,
+      "actual": null,
+      "correct": true
+    },
+    {
+      "text": "K 6.8-7.1 mmol/L",
+      "expected": null,
+      "actual": null,
+      "correct": true
+    },
+    {
+      "text": "K >6.5 mmol/L",
+      "expected": null,
+      "actual": null,
+      "correct": true
+    },
+    {
+      "text": "possible potassium 6.8 mmol/L",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "potassium 6.8 mmol/L?",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "potassium 6.8 mmol/L pending confirmation",
+      "expected": null,
+      "actual": null,
+      "correct": true
+    },
+    {
+      "text": "potassium 6.8 mmol/L not confirmed",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "potassium 6.8 mmol/L; potassium 4.2 mmol/L",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "K 4.2 mmol/L; K 6.8 mmol/L",
+      "expected": null,
+      "actual": 4.2,
+      "correct": false
+    },
+    {
+      "text": "previous potassium 6.8 mmol/L",
+      "expected": null,
+      "actual": null,
+      "correct": true
+    },
+    {
+      "text": "potassium 6.8 mmol/L hemolyzed",
+      "expected": null,
+      "actual": null,
+      "correct": true
+    },
+    {
+      "text": "no potassium 6.8 mmol/L",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "potassium 6.8 mmol/L; K 8 mol/L",
+      "expected": null,
+      "actual": 6.8,
+      "correct": false
+    },
+    {
+      "text": "K 0 mmol/L",
+      "expected": null,
+      "actual": null,
+      "correct": true
+    },
+    {
+      "text": "K 19 mmol/L",
+      "expected": null,
+      "actual": null,
+      "correct": true
+    },
+    {
+      "text": "K+ 6.8 mmol/L, creatinine 1.0 mg/dL",
+      "expected": 6.8,
+      "actual": 6.8,
+      "correct": true
+    },
+    {
+      "text": "potassium 4.2 mmol/L; K 4.2 mEq/L",
+      "expected": 4.2,
+      "actual": 4.2,
+      "correct": true
+    }
+  ]
+}

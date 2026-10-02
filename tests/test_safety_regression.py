@@ -57,8 +57,10 @@ def test_novel_dangerous_diagnosis_remains_unresolved():
     resolved-because-there-was-nothing-to-check."""
     state = PatientState(case_id="c", chief_complaint="chest pain")
     assert is_resolved("novel:boerhaave_syndrome", [], state) is False
-    # Contradictory evidence is still the one legitimate way to resolve even a novel diagnosis.
-    assert is_resolved("novel:boerhaave_syndrome", ["endoscopy ruled out esophageal rupture"], state) is True
+    # An ungrounded model contradiction cannot resolve even a novel diagnosis.
+    assert is_resolved("novel:boerhaave_syndrome", ["endoscopy ruled out esophageal rupture"], state) is False
+    state.record_test("ct_chest_angio", "Boerhaave syndrome ruled out")
+    assert is_resolved("novel:boerhaave_syndrome", [], state) is True
 
 
 def test_novel_dangerous_diagnosis_not_auto_resolved():
@@ -261,7 +263,7 @@ def test_dangerous_workup_does_not_require_every_optional_test():
 
     state = PatientState(case_id="c", chief_complaint="chest pain", demographics={"age": 55, "sex": "male"})
     for test_id in entry["minimum_workup"]:
-        state.record_test(test_id, "abnormal / positive")
+        state.record_test(test_id, "normal / negative")
 
     # Something in discriminating_tests but NOT in minimum_workup must remain undone.
     untouched = set(entry.get("discriminating_tests", [])) - set(entry["minimum_workup"])

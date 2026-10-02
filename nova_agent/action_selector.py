@@ -60,7 +60,8 @@ class ActionSelector:
         w = get_config().weights
         management_relevance = self._management_relevance(cand, dangerous_involved, differential)
         utility = (
-            w.info_gain_weight * cand.information_gain
+            w.workup_gain_weight * cand.unresolved_workup_gain
+            + w.info_gain_weight * cand.information_gain
             + w.discrimination_weight * cand.diagnostic_discrimination
             + w.safety_weight * cand.safety_relevance
             + w.management_relevance_weight * management_relevance
@@ -68,6 +69,7 @@ class ActionSelector:
             - w.redundancy_penalty * cand.redundancy
         )
         components = {
+            "unresolved_workup_gain": cand.unresolved_workup_gain,
             "information_gain": cand.information_gain, "diagnostic_discrimination": cand.diagnostic_discrimination,
             "safety_relevance": cand.safety_relevance, "management_relevance": management_relevance,
             "turn_cost": cand.turn_cost, "redundancy": cand.redundancy,
@@ -84,6 +86,15 @@ class ActionSelector:
         for cand in raw_candidates:
             dangerous_involved = bool(set(cand.disease_ids_discriminated) & dangerous_ids)
             utility, components = self._utility(cand, dangerous_involved, differential)
+            if get_config().strategic_questions:
+                # Bounded baseline information gathering, at most five actions. No hidden
+                # case label or simulator fields enter this selection.
+                core = {("EXAM", "vital_signs"): 10.0, ("EXAM", "abdominal_exam"): 8.0, ("ASK", "associated_symptoms"): 8.0,
+                        ("ASK", "onset"): 7.0, ("ASK", "past_medical_history"): 6.0,
+                        ("ASK", "medication"): 5.0}
+                gain = core.get((cand.action_type, cand.key), 0.0)
+                utility += gain
+                components["baseline_information_gain"] = gain
             content = cand.content_ko if lang == "ko" else cand.content_en
             scored.append(ScoredCandidate(action_type=cand.action_type, key=cand.key, content=content,
                                            utility=round(utility, 3), components=components))
@@ -108,6 +119,11 @@ class ActionSelector:
         )
         all_candidates = scored + [diagnose_candidate]
 
+        core_pending = get_config().strategic_questions and any(
+            c.components.get("baseline_information_gain", 0) for c in scored)
+        if core_pending and not stop_decision.forced:
+            stop_decision = StopDecision(should_diagnose=False, forced=False,
+                reason="Collect available baseline history and vital signs before committing.", readiness_score=stop_decision.readiness_score)
         if stop_decision.should_diagnose or not scored:
             action = AgentAction(action_type="DIAGNOSE", key=diagnose_candidate.key,
                                   content=top_diagnosis_name, rationale=stop_decision.reason)

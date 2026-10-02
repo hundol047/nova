@@ -41,6 +41,8 @@ class PatientSimulator:
 
 
 class CaseResult(BaseModel):
+    decision_quality: dict = {}
+    coexisting_differential_recall: Optional[float] = None
     case_id: str
     category: str = "standard"
     scoring_expected: bool = True
@@ -67,30 +69,19 @@ class CaseResult(BaseModel):
 
 
 def _relevant_test_ids(case: SyntheticCase, seen_diagnosis_ids: Optional[set] = None) -> set:
-    """Tests considered 'necessary' for scoring purposes: those tied to the ground-truth disease,
-    to any critical condition relevant to this case's chief complaint (since ruling a dangerous
-    diagnosis out is legitimate, not wasteful, testing), or to any diagnosis the agent's OWN
-    differential engine actually surfaced in its top-K ranking at some point during the case
-    (`seen_diagnosis_ids`, spec section 12). That last set matters because the first two only ever
-    look at CRITICAL/dangerous diseases -- a plausible, evidence-driven alternative that happens to
-    be non-dangerous (e.g. investigating a urinary source in an elderly patient with weakness or
-    dyspnea, the way the existing Fever03_DiabeticUrosepsis tuning case expects) was previously
-    always counted as 'unnecessary' purely because of that KB metadata flag, not because the test
-    was actually unjustified by the evidence gathered so far."""
-    relevant = set()
+    """Fixed KB/case-authored allowlist; model rankings cannot change its own score.
+
+    seen_diagnosis_ids remains an ignored compatibility argument. This is still a
+    heuristic metric; compare runs using the same metric version and case data.
+    """
+    relevant = set(case.relevant_test_ids)
     gt = disease_by_id(case.ground_truth_diagnosis)
     if gt:
         relevant.update(gt.get("discriminating_tests", []))
-        relevant.update(gt.get("discriminating_exams", []))
-    for cid in critical_condition_ids():
-        entry = disease_by_id(cid)
-        if entry and set(entry.get("chief_complaint_tags", [])) & set(
-                disease_by_id(case.ground_truth_diagnosis).get("chief_complaint_tags", []) if gt else []):
-            relevant.update(entry.get("discriminating_tests", []))
-    for diagnosis_id in (seen_diagnosis_ids or ()):
-        entry = disease_by_id(diagnosis_id)
-        if entry:
-            relevant.update(entry.get("discriminating_tests", []))
+        for cid in critical_condition_ids():
+            entry = disease_by_id(cid)
+            if entry and set(entry.get("chief_complaint_tags", [])) & set(gt.get("chief_complaint_tags", [])):
+                relevant.update(entry.get("discriminating_tests", []))
     return relevant
 
 
@@ -150,7 +141,7 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
     relevant_tests = _relevant_test_ids(case, seen_diagnosis_ids)
     unnecessary_tests = sum(1 for t in tests_performed if t not in relevant_tests)
 
-    correct = bool(state.final_diagnosis) and same_diagnosis(state.final_diagnosis, case.ground_truth_diagnosis)
+    correct = bool(state.final_diagnosis) and any(same_diagnosis(state.final_diagnosis, label) for label in [case.ground_truth_diagnosis, *case.acceptable_diagnoses])
     result_obj = CaseResult(
         case_id=case.case_id, category=case.category, scoring_expected=case.scoring_expected,
         ground_truth=case.ground_truth_diagnosis, final_diagnosis=state.final_diagnosis,
@@ -161,7 +152,8 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
         failed_to_diagnose=failed_to_diagnose,
         llm_call_count=state.llm_call_count, llm_success_count=state.llm_success_count,
         llm_failure_count=state.llm_failure_count, llm_fallback_count=state.llm_fallback_count,
-        differential_trajectory=trajectory,
+        differential_trajectory=trajectory, decision_quality=state.decision_quality,
+        coexisting_differential_recall=(sum(any(same_diagnosis(d.diagnosis,label) for d in state.current_differential) for label in case.coexisting_diagnoses)/len(case.coexisting_diagnoses) if case.coexisting_diagnoses else None),
     )
     if logger is not None:
         logger.log_final(state, "correct" if correct else "incorrect")

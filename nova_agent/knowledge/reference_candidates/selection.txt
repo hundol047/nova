@@ -1,0 +1,204 @@
+Acne
+Acoustic Neuroma
+Acute Lymphocytic Leukemia
+Acute Myeloid Leukemia
+Addison Disease
+Adhesions
+Alcohol Use Disorder (AUD)
+Alpha-1 Antitrypsin Deficiency
+Alzheimer's Disease
+Amyloidosis
+Amyotrophic Lateral Sclerosis
+Anal Cancer
+Ankylosing Spondylitis
+Aortic Aneurysm
+Aplastic Anemia
+Arteriovenous Malformations
+Aspergillosis
+Atherosclerosis
+Athlete's Foot
+Attention Deficit Hyperactivity Disorder
+Autism Spectrum Disorder
+Behcet's Syndrome
+Bell's Palsy
+Bile Duct Cancer
+Bipolar Disorder
+Bladder Cancer
+Bone Cancer
+Botulism
+Brain Aneurysm
+Brain Tumors
+Breast Cancer
+Bursitis
+C. diff Infections
+Campylobacter Infections
+Cardiomyopathy
+Carotid Artery Disease
+Carpal Tunnel Syndrome
+Cat Scratch Disease
+Cataract
+Celiac Disease
+Cerebral Palsy
+Cervical Cancer
+Chickenpox
+Chikungunya
+Chlamydia Infections
+Cholera
+Chronic Kidney Disease
+Chronic Lymphocytic Leukemia
+Chronic Myeloid Leukemia
+Cirrhosis
+Colonic Polyps
+Colorectal Cancer
+Complex Regional Pain Syndrome
+Concussion
+Congenital Heart Defects
+Coronary Artery Disease
+COVID-19 (Coronavirus Disease 2019)
+Creutzfeldt-Jakob Disease
+Crohn's Disease
+Croup
+Cryptosporidiosis
+Cushing's Syndrome
+Cystic Fibrosis
+Cytomegalovirus Infections
+Dengue
+Depression
+Diabetes Insipidus
+Diabetes Type 1
+Diabetes Type 2
+Diphtheria
+Down Syndrome
+Dystonia
+Ebola
+Eczema
+Encephalitis
+Endocarditis
+Endometriosis
+Enlarged Prostate (BPH)
+Eosinophilic Esophagitis
+Epilepsy
+Esophageal Cancer
+Fibromyalgia
+Fifth Disease
+G6PD Deficiency
+Gallbladder Cancer
+Gallstones
+Genital Herpes
+Genital Warts
+Giant Cell Arteritis
+Giardia Infections
+Glaucoma
+Gonorrhea
+Granulomatosis with Polyangiitis
+Guillain-Barre Syndrome
+Hantavirus Infections
+Hay Fever
+Head and Neck Cancer
+Hemochromatosis
+Hemophilia
+Hemorrhoids
+Hepatitis A
+Hepatitis B
+Hepatitis C
+Hernia
+Herniated Disk
+Hiatal Hernia
+Hidradenitis Suppurativa
+High Blood Pressure
+Histoplasmosis
+HIV
+Hodgkin Lymphoma
+Huntington's Disease
+Hydrocephalus
+Impetigo
+Infectious Mononucleosis
+Insomnia
+Interstitial Cystitis
+Irritable Bowel Syndrome
+Juvenile Arthritis
+Kawasaki Disease
+Kidney Cancer
+Lactose Intolerance
+Lead Poisoning
+Legionnaires' Disease
+Lewy Body Dementia
+Listeria Infections
+Liver Cancer
+Lung Cancer
+Lupus
+Lyme Disease
+Lymphedema
+Macular Degeneration
+Malaria
+Measles
+Melanoma
+Meniere's Disease
+Mesothelioma
+Mitral Valve Prolapse
+Mpox
+Multiple Myeloma
+Multiple Sclerosis
+Mumps
+Myasthenia Gravis
+Myelodysplastic Syndromes
+Myositis
+Norovirus Infections
+Obsessive-Compulsive Disorder
+Osteoarthritis
+Osteonecrosis
+Osteoporosis
+Ovarian Cancer
+Paget's Disease of Bone
+Pancreatic Cancer
+Parkinson's Disease
+Pemphigus
+Peptic Ulcer
+Peripheral Arterial Disease
+Pituitary Tumors
+Polycystic Ovary Syndrome
+Polymyalgia Rheumatica
+Porphyria
+Post-Traumatic Stress Disorder
+Prostate Cancer
+Psoriasis
+Psoriatic Arthritis
+Pulmonary Fibrosis
+Pulmonary Hypertension
+Rabies
+Raynaud Phenomenon
+Retinal Detachment
+Rheumatoid Arthritis
+Rickets
+Rosacea
+Rubella
+Salmonella Infections
+Sarcoidosis
+Scabies
+Schizophrenia
+Scleroderma
+Sickle Cell Disease
+Sinusitis
+Sjogren's Syndrome
+Sleep Apnea
+Spinal Stenosis
+Stomach Cancer
+Syphilis
+Testicular Cancer
+Tetanus
+Thalassemia
+Thyroid Cancer
+Tonsillitis
+Tourette Syndrome
+Toxoplasmosis
+Trichomoniasis
+Trigeminal Neuralgia
+Tuberculosis
+Ulcerative Colitis
+Uterine Cancer
+Uterine Fibroids
+Valley Fever
+Vitiligo
+West Nile Virus
+Whooping Cough
+Zika Virus

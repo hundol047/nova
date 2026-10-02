@@ -1,0 +1,2717 @@
+{
+  "date": "2026-10-02",
+  "timezone": "Asia/Seoul",
+  "provider": "mock",
+  "tests_passed": 208,
+  "live_model_verified": false,
+  "independent_validation_completed": false,
+  "probability_calibration_completed": false,
+  "builtin_diagnoses": 34,
+  "remaining_dependencies": [
+    "independently authored/adjudicated case set",
+    "approved live model endpoint/runtime",
+    "official adapter verification",
+    "reviewed catalog extensions and broad multilingual validation"
+  ],
+  "diagnostic_regressions": {
+    "v3": {
+      "provider": "mock",
+      "role": "reused development",
+      "summary": {
+        "confidence_reliability": {
+          "calibrated_probabilities": false,
+          "interpretation": "descriptive on supplied data; no generalization guarantee",
+          "by_evidence_band": {
+            "MEDIUM": {
+              "n": 18,
+              "correct": 18,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.8241154494176252,
+                1
+              ]
+            },
+            "HIGH": {
+              "n": 1,
+              "correct": 1,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.20654329147389294,
+                1
+              ]
+            },
+            "LOW": {
+              "n": 13,
+              "correct": 13,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.7718981569447083,
+                1
+              ]
+            }
+          }
+        },
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 30.84375,
+        "median_turns": 31.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 3.0625,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 11.03125,
+        "average_exam_count": 7.59375,
+        "average_test_count": 11.21875,
+        "utility_score_proxy": 0.5384375,
+        "n_cases": 32,
+        "n_scored_cases": 32,
+        "n_critical_cases": 14
+      },
+      "cases": [
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind01_ClassicViralPharyngitis",
+          "ground_truth": "viral_uri",
+          "final_diagnosis": "Viral Upper Respiratory Infection",
+          "correct": true,
+          "turns": 25,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind02_ElderlySilentMI",
+          "ground_truth": "acute_coronary_syndrome",
+          "final_diagnosis": "Acute Coronary Syndrome",
+          "correct": true,
+          "turns": 35,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind03_WakeUpStroke",
+          "ground_truth": "ischemic_stroke",
+          "final_diagnosis": "Ischemic Stroke",
+          "correct": true,
+          "turns": 36,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind04_PostBariatricHypoglycemia",
+          "ground_truth": "hypoglycemia",
+          "final_diagnosis": "Hypoglycemia",
+          "correct": true,
+          "turns": 32,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind05_TraumaticPneumothorax",
+          "ground_truth": "tension_pneumothorax",
+          "final_diagnosis": "Tension Pneumothorax",
+          "correct": true,
+          "turns": 35,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind06_RuralEctopic",
+          "ground_truth": "ectopic_pregnancy",
+          "final_diagnosis": "Ectopic Pregnancy",
+          "correct": true,
+          "turns": 24,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind07_PeanutAnaphylaxis",
+          "ground_truth": "anaphylaxis",
+          "final_diagnosis": "Anaphylaxis",
+          "correct": true,
+          "turns": 38,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind08_DormMeningitis",
+          "ground_truth": "meningitis",
+          "final_diagnosis": "Bacterial Meningitis",
+          "correct": true,
+          "turns": 31,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind09_LiftingSAH",
+          "ground_truth": "subarachnoid_hemorrhage",
+          "final_diagnosis": "Subarachnoid Hemorrhage",
+          "correct": true,
+          "turns": 35,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind10_SilentPESyncope",
+          "ground_truth": "pulmonary_embolism",
+          "final_diagnosis": "Pulmonary Embolism",
+          "correct": true,
+          "turns": 36,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind11_ElderlyConfusedPneumonia",
+          "ground_truth": "pneumonia",
+          "final_diagnosis": "Community-Acquired Pneumonia",
+          "correct": true,
+          "turns": 27,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind12_ElderlyAtypicalAppendicitis",
+          "ground_truth": "appendicitis",
+          "final_diagnosis": "Acute Appendicitis",
+          "correct": true,
+          "turns": 32,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind13_PolypharmacyGIBleedApixaban",
+          "ground_truth": "gi_bleeding",
+          "final_diagnosis": "Gastrointestinal Bleeding",
+          "correct": true,
+          "turns": 33,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind14_PolypharmacyOrthostaticDizzy",
+          "ground_truth": "orthostatic_hypotension",
+          "final_diagnosis": "Orthostatic Hypotension",
+          "correct": true,
+          "turns": 33,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "contradictory_evidence"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind15_ACEInhibitorNSAIDHyperkalemia",
+          "ground_truth": "severe_electrolyte_disorder",
+          "final_diagnosis": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+          "correct": true,
+          "turns": 33,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind16_BenignGastroReassuring",
+          "ground_truth": "gastroenteritis",
+          "final_diagnosis": "Acute Gastroenteritis",
+          "correct": true,
+          "turns": 28,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "close_alternative"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind17_CostochondritisReassuring",
+          "ground_truth": "musculoskeletal_chest_pain",
+          "final_diagnosis": "Musculoskeletal Chest Pain (Costochondritis)",
+          "correct": true,
+          "turns": 26,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "close_alternative"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind18_ClassicBPPV",
+          "ground_truth": "bppv",
+          "final_diagnosis": "Benign Paroxysmal Positional Vertigo",
+          "correct": true,
+          "turns": 28,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind19_PancreatitisMimicsCardiac",
+          "ground_truth": "acute_pancreatitis",
+          "final_diagnosis": "Acute Pancreatitis",
+          "correct": true,
+          "turns": 27,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind20_MigratingStoneMimicsAppendicitis",
+          "ground_truth": "nephrolithiasis",
+          "final_diagnosis": "Nephrolithiasis (Kidney Stone)",
+          "correct": true,
+          "turns": 26,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind21_YoungPanicAttack",
+          "ground_truth": "panic_attack",
+          "final_diagnosis": "Panic Attack",
+          "correct": true,
+          "turns": 36,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind22_KnownSVTPalpitations",
+          "ground_truth": "cardiac_arrhythmia",
+          "final_diagnosis": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+          "correct": true,
+          "turns": 27,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind23_PostSurgicalBowelObstruction",
+          "ground_truth": "acute_abdomen",
+          "final_diagnosis": "Acute Abdomen (Surgical Abdomen)",
+          "correct": true,
+          "turns": 39,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind24_ClassicCystitis",
+          "ground_truth": "uncomplicated_cystitis",
+          "final_diagnosis": "Uncomplicated Cystitis (Lower UTI)",
+          "correct": true,
+          "turns": 32,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind25_HeartburnGERD",
+          "ground_truth": "gerd",
+          "final_diagnosis": "Gastroesophageal Reflux Disease",
+          "correct": true,
+          "turns": 25,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind26_SmokerBronchitis",
+          "ground_truth": "acute_bronchitis",
+          "final_diagnosis": "Acute Bronchitis",
+          "correct": true,
+          "turns": 21,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind27_TensionHeadacheStress",
+          "ground_truth": "tension_headache",
+          "final_diagnosis": "Tension-Type Headache",
+          "correct": true,
+          "turns": 29,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind28_NursingHomeHyponatremia",
+          "ground_truth": "severe_electrolyte_disorder",
+          "final_diagnosis": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+          "correct": true,
+          "turns": 30,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind29_YoungFemaleVasovagal",
+          "ground_truth": "vasovagal_syncope",
+          "final_diagnosis": "Vasovagal (Reflex) Syncope",
+          "correct": true,
+          "turns": 25,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "contradictory_evidence"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind30_NewOnsetTeenDKA",
+          "ground_truth": "diabetic_ketoacidosis",
+          "final_diagnosis": "Diabetic Ketoacidosis",
+          "correct": true,
+          "turns": 31,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind31_PollenAsthmaExacerbation",
+          "ground_truth": "asthma_copd_exacerbation",
+          "final_diagnosis": "Asthma / COPD Exacerbation",
+          "correct": true,
+          "turns": 35,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind32_ElderlyBPHUrosepsis",
+          "ground_truth": "sepsis",
+          "final_diagnosis": "Sepsis",
+          "correct": true,
+          "turns": 37,
+          "critical": true,
+          "critical_miss": false
+        }
+      ]
+    },
+    "v4": {
+      "provider": "mock",
+      "role": "reused development",
+      "summary": {
+        "confidence_reliability": {
+          "calibrated_probabilities": false,
+          "interpretation": "descriptive on supplied data; no generalization guarantee",
+          "by_evidence_band": {
+            "LOW": {
+              "n": 10,
+              "correct": 10,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.7224598312333834,
+                1
+              ]
+            },
+            "MEDIUM": {
+              "n": 22,
+              "correct": 22,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.8513404742740388,
+                1
+              ]
+            },
+            "HIGH": {
+              "n": 2,
+              "correct": 2,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.34237195288961925,
+                1
+              ]
+            }
+          }
+        },
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 29,
+        "median_turns": 31.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 3.6176470588235294,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 10.470588235294118,
+        "average_exam_count": 6.852941176470588,
+        "average_test_count": 10.676470588235293,
+        "utility_score_proxy": 0.5291176470588235,
+        "n_cases": 34,
+        "n_scored_cases": 34,
+        "n_critical_cases": 14
+      },
+      "cases": [
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_01_ScratchyThroatCongestion",
+          "ground_truth": "viral_uri",
+          "final_diagnosis": "Viral Upper Respiratory Infection",
+          "correct": true,
+          "turns": 32,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_02_StomachBugAfterPicnic",
+          "ground_truth": "gastroenteritis",
+          "final_diagnosis": "Acute Gastroenteritis",
+          "correct": true,
+          "turns": 16,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_03_BandLikeHeadacheStress",
+          "ground_truth": "tension_headache",
+          "final_diagnosis": "Tension-Type Headache",
+          "correct": true,
+          "turns": 27,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_04_LingeringCoughAfterCold",
+          "ground_truth": "acute_bronchitis",
+          "final_diagnosis": "Acute Bronchitis",
+          "correct": true,
+          "turns": 24,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_05_CrushingChestPressureExertion",
+          "ground_truth": "acute_coronary_syndrome",
+          "final_diagnosis": "Acute Coronary Syndrome",
+          "correct": true,
+          "turns": 32,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_06_SuddenPleuriticChestPainPostFlight",
+          "ground_truth": "pulmonary_embolism",
+          "final_diagnosis": "Pulmonary Embolism",
+          "correct": true,
+          "turns": 33,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_07_SuddenFacialDroopSlurredSpeech",
+          "ground_truth": "ischemic_stroke",
+          "final_diagnosis": "Ischemic Stroke",
+          "correct": true,
+          "turns": 38,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_08_FeverConfusionAfterIndwellingCatheter",
+          "ground_truth": "sepsis",
+          "final_diagnosis": "Sepsis",
+          "correct": true,
+          "turns": 35,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_09_TearingBackPainRadiating",
+          "ground_truth": "aortic_dissection",
+          "final_diagnosis": "Aortic Dissection",
+          "correct": true,
+          "turns": 27,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_10_WorstHeadacheOfLifeSudden",
+          "ground_truth": "subarachnoid_hemorrhage",
+          "final_diagnosis": "Subarachnoid Hemorrhage",
+          "correct": true,
+          "turns": 34,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "contradictory_evidence"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_11_FeverStiffNeckPhotophobia",
+          "ground_truth": "meningitis",
+          "final_diagnosis": "Bacterial Meningitis",
+          "correct": true,
+          "turns": 28,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_12_NewOnsetType1DiabetesVomitingFruityBreath",
+          "ground_truth": "diabetic_ketoacidosis",
+          "final_diagnosis": "Diabetic Ketoacidosis",
+          "correct": true,
+          "turns": 32,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_13_HivesThroatTightnessAfterPeanuts",
+          "ground_truth": "anaphylaxis",
+          "final_diagnosis": "Anaphylaxis",
+          "correct": true,
+          "turns": 39,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_14_SuddenChestPainAfterCarAccidentNoBreathSounds",
+          "ground_truth": "tension_pneumothorax",
+          "final_diagnosis": "Tension Pneumothorax",
+          "correct": true,
+          "turns": 37,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_15_RightLowerAbdomenPainMigrating",
+          "ground_truth": "appendicitis",
+          "final_diagnosis": "Acute Appendicitis",
+          "correct": true,
+          "turns": 31,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_16_MissedPeriodLowerAbdomenPain",
+          "ground_truth": "ectopic_pregnancy",
+          "final_diagnosis": "Ectopic Pregnancy",
+          "correct": true,
+          "turns": 28,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_17_FlankPainBloodInUrine",
+          "ground_truth": "nephrolithiasis",
+          "final_diagnosis": "Nephrolithiasis (Kidney Stone)",
+          "correct": true,
+          "turns": 11,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_18_FeverFlankPainElderly",
+          "ground_truth": "pyelonephritis",
+          "final_diagnosis": "Acute Pyelonephritis",
+          "correct": true,
+          "turns": 36,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_19_BurningUrinationYoungWoman",
+          "ground_truth": "uncomplicated_cystitis",
+          "final_diagnosis": "Uncomplicated Cystitis (Lower UTI)",
+          "correct": true,
+          "turns": 30,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_20_BlackTarryStoolsDizzy",
+          "ground_truth": "gi_bleeding",
+          "final_diagnosis": "Gastrointestinal Bleeding",
+          "correct": true,
+          "turns": 31,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "contradictory_evidence"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_21_SevereEpigastricPainRadiatingBackAlcohol",
+          "ground_truth": "acute_pancreatitis",
+          "final_diagnosis": "Acute Pancreatitis",
+          "correct": true,
+          "turns": 16,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_22_SuddenSevereAbdominalPainRigidElderly",
+          "ground_truth": "acute_abdomen",
+          "final_diagnosis": "Acute Abdomen (Surgical Abdomen)",
+          "correct": true,
+          "turns": 37,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_23_BurningChestAfterMealsLyingDown",
+          "ground_truth": "gerd",
+          "final_diagnosis": "Gastroesophageal Reflux Disease",
+          "correct": true,
+          "turns": 24,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_24_ChestWallTendernessAfterLifting",
+          "ground_truth": "musculoskeletal_chest_pain",
+          "final_diagnosis": "Musculoskeletal Chest Pain (Costochondritis)",
+          "correct": true,
+          "turns": 19,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_25_ChestTightnessAnxietyCollegeExam",
+          "ground_truth": "panic_attack",
+          "final_diagnosis": "Panic Attack",
+          "correct": true,
+          "turns": 31,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_26_FaintedAfterBloodDrawStandingLong",
+          "ground_truth": "vasovagal_syncope",
+          "final_diagnosis": "Vasovagal (Reflex) Syncope",
+          "correct": true,
+          "turns": 27,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_27_RoomSpinningRollingOverInBed",
+          "ground_truth": "bppv",
+          "final_diagnosis": "Benign Paroxysmal Positional Vertigo",
+          "correct": true,
+          "turns": 28,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_28_DizzyStandingUpElderlyPolypharmacy",
+          "ground_truth": "orthostatic_hypotension",
+          "final_diagnosis": "Orthostatic Hypotension",
+          "correct": true,
+          "turns": 34,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_29_PalpitationsElderlyIrregularPulse",
+          "ground_truth": "cardiac_arrhythmia",
+          "final_diagnosis": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+          "correct": true,
+          "turns": 24,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "contradictory_evidence"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_30_WeaknessElderlyRenalFailureDialysisMissed",
+          "ground_truth": "severe_electrolyte_disorder",
+          "final_diagnosis": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+          "correct": true,
+          "turns": 28,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_31_FeverProductiveCoughElderlyNursingHome",
+          "ground_truth": "pneumonia",
+          "final_diagnosis": "Community-Acquired Pneumonia",
+          "correct": true,
+          "turns": 37,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_32_ThrobbingOneSidedHeadacheAuraFamilyHistory",
+          "ground_truth": "migraine",
+          "final_diagnosis": "Migraine",
+          "correct": true,
+          "turns": 9,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_33_VagueUnwellElderlySulfonylureaHypoglycemia",
+          "ground_truth": "hypoglycemia",
+          "final_diagnosis": "Hypoglycemia",
+          "correct": true,
+          "turns": 38,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind4_34_WheezeNormalOxygenationNoAllergen",
+          "ground_truth": "asthma_copd_exacerbation",
+          "final_diagnosis": "Asthma / COPD Exacerbation",
+          "correct": true,
+          "turns": 33,
+          "critical": false,
+          "critical_miss": false
+        }
+      ]
+    },
+    "v5": {
+      "provider": "mock",
+      "role": "reused development",
+      "summary": {
+        "confidence_reliability": {
+          "calibrated_probabilities": false,
+          "interpretation": "descriptive on supplied data; no generalization guarantee",
+          "by_evidence_band": {
+            "HIGH": {
+              "n": 4,
+              "correct": 4,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.5100999795960008,
+                1
+              ]
+            },
+            "LOW": {
+              "n": 13,
+              "correct": 13,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.7718981569447083,
+                1
+              ]
+            },
+            "MEDIUM": {
+              "n": 27,
+              "correct": 27,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.8754409628553641,
+                1
+              ]
+            }
+          }
+        },
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 29.613636363636363,
+        "median_turns": 31.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 3.5681818181818183,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 10.704545454545455,
+        "average_exam_count": 6.909090909090909,
+        "average_test_count": 11.0,
+        "utility_score_proxy": 0.5254545454545454,
+        "n_cases": 44,
+        "n_scored_cases": 44,
+        "n_critical_cases": 20
+      },
+      "cases": [
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_01_OfficeWorkerCongestion",
+          "ground_truth": "viral_uri",
+          "final_diagnosis": "Viral Upper Respiratory Infection",
+          "correct": true,
+          "turns": 24,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_02_WeekendCookoutIllness",
+          "ground_truth": "gastroenteritis",
+          "final_diagnosis": "Acute Gastroenteritis",
+          "correct": true,
+          "turns": 18,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_03_DeadlineStressHeadache",
+          "ground_truth": "tension_headache",
+          "final_diagnosis": "Tension-Type Headache",
+          "correct": true,
+          "turns": 27,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_04_WeekLongCoughAfterColdSubsides",
+          "ground_truth": "acute_bronchitis",
+          "final_diagnosis": "Acute Bronchitis",
+          "correct": true,
+          "turns": 24,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_05_ShovelingSnowChestPressure",
+          "ground_truth": "acute_coronary_syndrome",
+          "final_diagnosis": "Acute Coronary Syndrome",
+          "correct": true,
+          "turns": 30,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_06_LongBusRideCalfPainBreathless",
+          "ground_truth": "pulmonary_embolism",
+          "final_diagnosis": "Pulmonary Embolism",
+          "correct": true,
+          "turns": 36,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_07_GardeningWordFindingDifficulty",
+          "ground_truth": "ischemic_stroke",
+          "final_diagnosis": "Ischemic Stroke",
+          "correct": true,
+          "turns": 37,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_08_NursingHomeCatheterFeverConfusion",
+          "ground_truth": "sepsis",
+          "final_diagnosis": "Sepsis",
+          "correct": true,
+          "turns": 36,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_09_InterscapularTearingPainHighBP",
+          "ground_truth": "aortic_dissection",
+          "final_diagnosis": "Aortic Dissection",
+          "correct": true,
+          "turns": 38,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_10_ThunderclapHeadacheDuringSex",
+          "ground_truth": "subarachnoid_hemorrhage",
+          "final_diagnosis": "Subarachnoid Hemorrhage",
+          "correct": true,
+          "turns": 30,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "contradictory_evidence"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_11_DormOutbreakStiffNeckLightSensitivity",
+          "ground_truth": "meningitis",
+          "final_diagnosis": "Bacterial Meningitis",
+          "correct": true,
+          "turns": 31,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_12_TeenagerFruityBreathRapidBreathing",
+          "ground_truth": "diabetic_ketoacidosis",
+          "final_diagnosis": "Diabetic Ketoacidosis",
+          "correct": true,
+          "turns": 34,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_13_BeeStingSwellingWheeze",
+          "ground_truth": "anaphylaxis",
+          "final_diagnosis": "Anaphylaxis",
+          "correct": true,
+          "turns": 36,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_14_MotorcycleCrashChestNoBreathSounds",
+          "ground_truth": "tension_pneumothorax",
+          "final_diagnosis": "Tension Pneumothorax",
+          "correct": true,
+          "turns": 34,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_15_PeriumbilicalPainMigratingRight",
+          "ground_truth": "appendicitis",
+          "final_diagnosis": "Acute Appendicitis",
+          "correct": true,
+          "turns": 28,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_16_LatePeriodOneSidedPelvicPain",
+          "ground_truth": "ectopic_pregnancy",
+          "final_diagnosis": "Ectopic Pregnancy",
+          "correct": true,
+          "turns": 23,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_17_SuddenColickyFlankPainRadiatingGroin",
+          "ground_truth": "nephrolithiasis",
+          "final_diagnosis": "Nephrolithiasis (Kidney Stone)",
+          "correct": true,
+          "turns": 11,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_18_DiabeticFlankPainShiveringElderly",
+          "ground_truth": "pyelonephritis",
+          "final_diagnosis": "Acute Pyelonephritis",
+          "correct": true,
+          "turns": 37,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_19_NewlywedBladderIrritation",
+          "ground_truth": "uncomplicated_cystitis",
+          "final_diagnosis": "Uncomplicated Cystitis (Lower UTI)",
+          "correct": true,
+          "turns": 31,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "close_alternative"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_20_MaroonStoolsFatigueOnBloodThinner",
+          "ground_truth": "gi_bleeding",
+          "final_diagnosis": "Gastrointestinal Bleeding",
+          "correct": true,
+          "turns": 33,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_21_BeerFestivalEpigastricPainToBack",
+          "ground_truth": "acute_pancreatitis",
+          "final_diagnosis": "Acute Pancreatitis",
+          "correct": true,
+          "turns": 19,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_22_RigidAbdomenElderlyDiverticulitisHistory",
+          "ground_truth": "acute_abdomen",
+          "final_diagnosis": "Acute Abdomen (Surgical Abdomen)",
+          "correct": true,
+          "turns": 31,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_23_LateNightSnackHeartburn",
+          "ground_truth": "gerd",
+          "final_diagnosis": "Gastroesophageal Reflux Disease",
+          "correct": true,
+          "turns": 28,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_24_MovingBoxesChestWallSoreness",
+          "ground_truth": "musculoskeletal_chest_pain",
+          "final_diagnosis": "Musculoskeletal Chest Pain (Costochondritis)",
+          "correct": true,
+          "turns": 19,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_25_JobInterviewChestTightnessTingling",
+          "ground_truth": "panic_attack",
+          "final_diagnosis": "Panic Attack",
+          "correct": true,
+          "turns": 18,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_26_ChurchServiceStandingFaint",
+          "ground_truth": "vasovagal_syncope",
+          "final_diagnosis": "Vasovagal (Reflex) Syncope",
+          "correct": true,
+          "turns": 29,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_27_TurningHeadInBedBriefVertigo",
+          "ground_truth": "bppv",
+          "final_diagnosis": "Benign Paroxysmal Positional Vertigo",
+          "correct": true,
+          "turns": 28,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_28_NewBPMedDizzyOnStanding",
+          "ground_truth": "orthostatic_hypotension",
+          "final_diagnosis": "Orthostatic Hypotension",
+          "correct": true,
+          "turns": 33,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_29_ThyroidHistoryFlutteryHeart",
+          "ground_truth": "cardiac_arrhythmia",
+          "final_diagnosis": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+          "correct": true,
+          "turns": 28,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "contradictory_evidence"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_30_DialysisNoShowGeneralizedWeakness",
+          "ground_truth": "severe_electrolyte_disorder",
+          "final_diagnosis": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+          "correct": true,
+          "turns": 29,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_31_AssistedLivingProductiveCoughFever",
+          "ground_truth": "pneumonia",
+          "final_diagnosis": "Community-Acquired Pneumonia",
+          "correct": true,
+          "turns": 37,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_32_FlashingLightsThenOneSidedHeadache",
+          "ground_truth": "migraine",
+          "final_diagnosis": "Migraine",
+          "correct": true,
+          "turns": 15,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_33_HomeboundElderlySkippedInsulinConfusion",
+          "ground_truth": "hypoglycemia",
+          "final_diagnosis": "Hypoglycemia",
+          "correct": true,
+          "turns": 38,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_34_ColdAirRunNormalOxygenWheeze",
+          "ground_truth": "asthma_copd_exacerbation",
+          "final_diagnosis": "Asthma / COPD Exacerbation",
+          "correct": true,
+          "turns": 30,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_35_PolypharmacyFallHeadStrikeOnBloodThinner",
+          "ground_truth": "subarachnoid_hemorrhage",
+          "final_diagnosis": "Subarachnoid Hemorrhage",
+          "correct": true,
+          "turns": 29,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_36_MultimorbidDiabeticHeartFailureShortnessOfBreath",
+          "ground_truth": "pulmonary_embolism",
+          "final_diagnosis": "Pulmonary Embolism",
+          "correct": true,
+          "turns": 42,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_37_ConflictingReassuringExamSevereAbdominalPain",
+          "ground_truth": "acute_pancreatitis",
+          "final_diagnosis": "Acute Pancreatitis",
+          "correct": true,
+          "turns": 19,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_38_SparseInformationVagueDizziness",
+          "ground_truth": "orthostatic_hypotension",
+          "final_diagnosis": "Orthostatic Hypotension",
+          "correct": true,
+          "turns": 33,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_39_ObjectiveLabConfirmedSilentDKA",
+          "ground_truth": "diabetic_ketoacidosis",
+          "final_diagnosis": "Diabetic Ketoacidosis",
+          "correct": true,
+          "turns": 32,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_40_NegativeFindingCentricReassuringChestPain",
+          "ground_truth": "musculoskeletal_chest_pain",
+          "final_diagnosis": "Musculoskeletal Chest Pain (Costochondritis)",
+          "correct": true,
+          "turns": 31,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_41_PolypharmacyAnticoagulantNosebleedWeakness",
+          "ground_truth": "gi_bleeding",
+          "final_diagnosis": "Gastrointestinal Bleeding",
+          "correct": true,
+          "turns": 33,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_42_MultimorbidElderlyVagueWeaknessSepsis",
+          "ground_truth": "sepsis",
+          "final_diagnosis": "Sepsis",
+          "correct": true,
+          "turns": 35,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_43_ConflictingFindingsNormalCTEarlyStroke",
+          "ground_truth": "ischemic_stroke",
+          "final_diagnosis": "Ischemic Stroke",
+          "correct": true,
+          "turns": 38,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "Blind5_44_SparseInformationElderlyFeverNoHistory",
+          "ground_truth": "pneumonia",
+          "final_diagnosis": "Community-Acquired Pneumonia",
+          "correct": true,
+          "turns": 31,
+          "critical": false,
+          "critical_miss": false
+        }
+      ]
+    },
+    "v6": {
+      "provider": "mock",
+      "role": "reused development",
+      "summary": {
+        "confidence_reliability": {
+          "calibrated_probabilities": false,
+          "interpretation": "descriptive on supplied data; no generalization guarantee",
+          "by_evidence_band": {
+            "MEDIUM": {
+              "n": 7,
+              "correct": 7,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.6456611570247934,
+                1
+              ]
+            },
+            "HIGH": {
+              "n": 4,
+              "correct": 4,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.5100999795960008,
+                1
+              ]
+            },
+            "LOW": {
+              "n": 1,
+              "correct": 1,
+              "observed_accuracy": 1.0,
+              "wilson_95": [
+                0.20654329147389294,
+                1
+              ]
+            }
+          }
+        },
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 26.75,
+        "median_turns": 28.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 2.9166666666666665,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 9.666666666666666,
+        "average_exam_count": 6.333333333333333,
+        "average_test_count": 9.75,
+        "utility_score_proxy": 0.5866666666666667,
+        "n_cases": 12,
+        "n_scored_cases": 12,
+        "n_critical_cases": 6
+      },
+      "cases": [
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_01",
+          "ground_truth": "acute_coronary_syndrome",
+          "final_diagnosis": "Acute Coronary Syndrome",
+          "correct": true,
+          "turns": 12,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_02",
+          "ground_truth": "pulmonary_embolism",
+          "final_diagnosis": "Pulmonary Embolism",
+          "correct": true,
+          "turns": 37,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "LOW",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": [
+              "contradictory_evidence"
+            ]
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_03",
+          "ground_truth": "meningitis",
+          "final_diagnosis": "Bacterial Meningitis",
+          "correct": true,
+          "turns": 34,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_04",
+          "ground_truth": "diabetic_ketoacidosis",
+          "final_diagnosis": "Diabetic Ketoacidosis",
+          "correct": true,
+          "turns": 15,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_05",
+          "ground_truth": "ectopic_pregnancy",
+          "final_diagnosis": "Ectopic Pregnancy",
+          "correct": true,
+          "turns": 26,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_06",
+          "ground_truth": "pyelonephritis",
+          "final_diagnosis": "Acute Pyelonephritis",
+          "correct": true,
+          "turns": 33,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_07",
+          "ground_truth": "severe_electrolyte_disorder",
+          "final_diagnosis": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+          "correct": true,
+          "turns": 30,
+          "critical": true,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_08",
+          "ground_truth": "hypoglycemia",
+          "final_diagnosis": "Hypoglycemia",
+          "correct": true,
+          "turns": 35,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_09",
+          "ground_truth": "appendicitis",
+          "final_diagnosis": "Acute Appendicitis",
+          "correct": true,
+          "turns": 13,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_10",
+          "ground_truth": "bppv",
+          "final_diagnosis": "Benign Paroxysmal Positional Vertigo",
+          "correct": true,
+          "turns": 27,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "MEDIUM",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_11",
+          "ground_truth": "orthostatic_hypotension",
+          "final_diagnosis": "Orthostatic Hypotension",
+          "correct": true,
+          "turns": 34,
+          "critical": false,
+          "critical_miss": false
+        },
+        {
+          "decision_quality": {
+            "band": "HIGH",
+            "probability": null,
+            "calibrated": false,
+            "catalog_status": "known",
+            "reasons": []
+          },
+          "coexisting_differential_recall": null,
+          "case_id": "V6_12",
+          "ground_truth": "gerd",
+          "final_diagnosis": "Gastroesophageal Reflux Disease",
+          "correct": true,
+          "turns": 25,
+          "critical": false,
+          "critical_miss": false
+        }
+      ]
+    }
+  },
+  "development": {
+    "tuning": {
+      "confidence_reliability": {
+        "calibrated_probabilities": false,
+        "interpretation": "descriptive on supplied data; no generalization guarantee",
+        "by_evidence_band": {
+          "MEDIUM": {
+            "n": 1,
+            "correct": 1,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.20654329147389294,
+              1
+            ]
+          },
+          "HIGH": {
+            "n": 5,
+            "correct": 5,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.5655085052479191,
+              1
+            ]
+          },
+          "LOW": {
+            "n": 2,
+            "correct": 2,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.34237195288961925,
+              1
+            ]
+          }
+        }
+      },
+      "scored_diagnostic_accuracy": 1.0,
+      "all_case_diagnostic_accuracy": 1.0,
+      "unscored_case_names": [],
+      "unsupported_case_success_rate": null,
+      "critical_diagnosis_recall": 1.0,
+      "critical_miss_rate": 0.0,
+      "average_turns": 27.75,
+      "median_turns": 33.0,
+      "duplicate_action_rate": 0.0,
+      "unnecessary_test_rate": 2.375,
+      "malformed_output_rate": 0.0,
+      "failed_diagnosis_rate": 0.0,
+      "fallback_rate": null,
+      "average_ask_count": 10.5,
+      "average_exam_count": 6.625,
+      "average_test_count": 9.625,
+      "utility_score_proxy": 0.60375,
+      "n_cases": 8,
+      "n_scored_cases": 8,
+      "n_critical_cases": 6
+    },
+    "held_out": {
+      "confidence_reliability": {
+        "calibrated_probabilities": false,
+        "interpretation": "descriptive on supplied data; no generalization guarantee",
+        "by_evidence_band": {
+          "MEDIUM": {
+            "n": 9,
+            "correct": 9,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.7008472464490407,
+              1
+            ]
+          },
+          "HIGH": {
+            "n": 4,
+            "correct": 4,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.5100999795960008,
+              1
+            ]
+          },
+          "LOW": {
+            "n": 2,
+            "correct": 2,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.34237195288961925,
+              1
+            ]
+          }
+        }
+      },
+      "scored_diagnostic_accuracy": 1.0,
+      "all_case_diagnostic_accuracy": 0.9444444444444444,
+      "unscored_case_names": [
+        "ChestPain03_Ambiguous",
+        "Headache02_InsufficientInfo",
+        "Unknown01_UnmappedComplaint"
+      ],
+      "unsupported_case_success_rate": 1.0,
+      "critical_diagnosis_recall": 1.0,
+      "critical_miss_rate": 0.0,
+      "average_turns": 31.22222222222222,
+      "median_turns": 32.0,
+      "duplicate_action_rate": 0.0,
+      "unnecessary_test_rate": 2.5555555555555554,
+      "malformed_output_rate": 0.0,
+      "failed_diagnosis_rate": 0.0,
+      "fallback_rate": null,
+      "average_ask_count": 11.444444444444445,
+      "average_exam_count": 7.444444444444445,
+      "average_test_count": 11.333333333333334,
+      "utility_score_proxy": 0.5044444444444444,
+      "n_cases": 18,
+      "n_scored_cases": 15,
+      "n_critical_cases": 13
+    },
+    "generalization_v2": {
+      "confidence_reliability": {
+        "calibrated_probabilities": false,
+        "interpretation": "descriptive on supplied data; no generalization guarantee",
+        "by_evidence_band": {
+          "HIGH": {
+            "n": 3,
+            "correct": 3,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.43849391955098227,
+              1
+            ]
+          },
+          "MEDIUM": {
+            "n": 12,
+            "correct": 12,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.7574992425007574,
+              1
+            ]
+          },
+          "LOW": {
+            "n": 3,
+            "correct": 3,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.43849391955098227,
+              1
+            ]
+          }
+        }
+      },
+      "scored_diagnostic_accuracy": 1.0,
+      "all_case_diagnostic_accuracy": 1.0,
+      "unscored_case_names": [],
+      "unsupported_case_success_rate": null,
+      "critical_diagnosis_recall": 1.0,
+      "critical_miss_rate": 0.0,
+      "average_turns": 27.555555555555557,
+      "median_turns": 31.5,
+      "duplicate_action_rate": 0.0,
+      "unnecessary_test_rate": 2.5555555555555554,
+      "malformed_output_rate": 0.0,
+      "failed_diagnosis_rate": 0.0,
+      "fallback_rate": null,
+      "average_ask_count": 10.38888888888889,
+      "average_exam_count": 6.388888888888889,
+      "average_test_count": 9.777777777777779,
+      "utility_score_proxy": 0.5966666666666667,
+      "n_cases": 18,
+      "n_scored_cases": 18,
+      "n_critical_cases": 5
+    },
+    "stress": {
+      "confidence_reliability": {
+        "calibrated_probabilities": false,
+        "interpretation": "descriptive on supplied data; no generalization guarantee",
+        "by_evidence_band": {
+          "MEDIUM": {
+            "n": 5,
+            "correct": 5,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.5655085052479191,
+              1
+            ]
+          },
+          "HIGH": {
+            "n": 1,
+            "correct": 1,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.20654329147389294,
+              1
+            ]
+          },
+          "LOW": {
+            "n": 2,
+            "correct": 2,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.34237195288961925,
+              1
+            ]
+          }
+        }
+      },
+      "scored_diagnostic_accuracy": 1.0,
+      "all_case_diagnostic_accuracy": 1.0,
+      "unscored_case_names": [],
+      "unsupported_case_success_rate": null,
+      "critical_diagnosis_recall": 1.0,
+      "critical_miss_rate": 0.0,
+      "average_turns": 31,
+      "median_turns": 34.5,
+      "duplicate_action_rate": 0.0,
+      "unnecessary_test_rate": 2.125,
+      "malformed_output_rate": 0.0,
+      "failed_diagnosis_rate": 0.0,
+      "fallback_rate": null,
+      "average_ask_count": 11.625,
+      "average_exam_count": 7.625,
+      "average_test_count": 10.75,
+      "utility_score_proxy": 0.58375,
+      "n_cases": 8,
+      "n_scored_cases": 8,
+      "n_critical_cases": 5
+    }
+  },
+  "external_loader_smoke": {
+    "provider": "mock",
+    "provider_is_real": false,
+    "model": null,
+    "run_config": {
+      "real_verification_mode": "at_least_one_call",
+      "catalog_sha256": "ce42f59b893e0c44091721d86e35e5c962f8a50cb472a22d662b9c539df01303",
+      "provider": "mock",
+      "model": null,
+      "source_sha256": "fdff012d9f17abf15affe67b970613b9e7bec3ae37ec86683e9a40e7a93af855",
+      "timeout": null,
+      "config_sha256": "1018b470ef7aac97718d00dd92cbc7734e38f828758ae76fd33e1da36c9bb91b",
+      "case_manifest": {
+        "sha256": "da8bb2d81d841263b94b003dc5452cbb5ffffc4174efb768004c2ae553476553",
+        "n_cases": 1,
+        "author_declared": "repository implementer",
+        "provenance_declared": "synthetic plumbing example; not independent validation",
+        "independence_verified": false,
+        "clinician_review_verified": false
+      },
+      "case_ids": [
+        "example_external"
+      ],
+      "metric_version": "independent_allowlist_v2"
+    },
+    "confidence_reliability": {
+      "calibrated_probabilities": false,
+      "interpretation": "descriptive on supplied data; no generalization guarantee",
+      "by_evidence_band": {}
+    },
+    "cases": [
+      {
+        "decision_quality": {
+          "band": "LOW",
+          "probability": null,
+          "calibrated": false,
+          "catalog_status": "known",
+          "reasons": [
+            "no_supporting_evidence",
+            "close_alternative"
+          ]
+        },
+        "scoring_expected": false,
+        "coexisting_differential_recall": null,
+        "case_id": "example_external",
+        "ground_truth": "Undifferentiated presentation",
+        "final_diagnosis": "Acute Abdomen (Surgical Abdomen)",
+        "correct": false,
+        "critical": false,
+        "critical_miss": false,
+        "turns": 31,
+        "ask_count": 13,
+        "exam_count": 6,
+        "test_count": 11,
+        "unnecessary_tests": 11,
+        "llm_calls": 0,
+        "llm_failures": 0,
+        "fallback_count": 0,
+        "llm_successes": 0,
+        "llm_parse_failure_turns": 0,
+        "real_llm_verified": false,
+        "all_decisions_real": false,
+        "failed_to_diagnose": false,
+        "malformed_turns": 0,
+        "avg_llm_latency_seconds": null,
+        "total_case_latency_seconds": 0.391,
+        "input_tokens": null,
+        "output_tokens": null,
+        "timed_out": false
+      }
+    ],
+    "verification_passed": false
+  },
+  "rejected_efficiency_experiment": {
+    "method": "retain rank 1 or positive-score candidates plus safety flags",
+    "enabled": false,
+    "v5_summary": {
+      "confidence_reliability": {
+        "calibrated_probabilities": false,
+        "interpretation": "descriptive on supplied data; no generalization guarantee",
+        "by_evidence_band": {
+          "HIGH": {
+            "n": 4,
+            "correct": 4,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.5100999795960008,
+              1
+            ]
+          },
+          "LOW": {
+            "n": 13,
+            "correct": 11,
+            "observed_accuracy": 0.8461538461538461,
+            "wilson_95": [
+              0.5776482949136899,
+              0.9567427368172621
+            ]
+          },
+          "MEDIUM": {
+            "n": 27,
+            "correct": 27,
+            "observed_accuracy": 1.0,
+            "wilson_95": [
+              0.8754409628553641,
+              1
+            ]
+          }
+        }
+      },
+      "scored_diagnostic_accuracy": 0.9545454545454546,
+      "all_case_diagnostic_accuracy": 0.9545454545454546,
+      "unscored_case_names": [],
+      "unsupported_case_success_rate": null,
+      "critical_diagnosis_recall": 0.9,
+      "critical_miss_rate": 0.1,
+      "average_turns": 25.954545454545453,
+      "median_turns": 27.0,
+      "duplicate_action_rate": 0.0,
+      "unnecessary_test_rate": 2.0,
+      "malformed_output_rate": 0.0,
+      "failed_diagnosis_rate": 0.0,
+      "fallback_rate": null,
+      "average_ask_count": 11.045454545454545,
+      "average_exam_count": 5.954545454545454,
+      "average_test_count": 7.954545454545454,
+      "utility_score_proxy": 0.5722727272727273,
+      "n_cases": 44,
+      "n_scored_cases": 44,
+      "n_critical_cases": 20
+    }
+  },
+  "strict_real_verification": "every decision must have successful real response; fallback and budget gaps fail"
+}

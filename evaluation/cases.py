@@ -6,7 +6,7 @@ metrics are all meaningfully exercised.
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Optional
 
 from pydantic import BaseModel, Field
 
@@ -17,10 +17,15 @@ class SyntheticCase(BaseModel):
     case_id: str
     chief_complaint: str
     demographics: Dict[str, object]
+    critical_override: Optional[bool] = None
+    acceptable_diagnoses: list[str] = Field(default_factory=list)
+    coexisting_diagnoses: list[str] = Field(default_factory=list)
     ground_truth_diagnosis: str
     answers: Dict[str, str] = Field(default_factory=dict)
     exam_results: Dict[str, str] = Field(default_factory=dict)
     test_results: Dict[str, str] = Field(default_factory=dict)
+    # Authored independently of the agent trajectory; optional case-specific alternatives.
+    relevant_test_ids: list[str] = Field(default_factory=list)
     default_answer: str = "No, I don't have that."
     default_exam_result: str = "Unremarkable, within normal limits."
     default_test_result: str = "Normal / negative."
@@ -37,7 +42,11 @@ class SyntheticCase(BaseModel):
 
     @property
     def critical(self) -> bool:
-        return self.ground_truth_diagnosis in critical_condition_ids()
+        if self.critical_override is not None:
+            return self.critical_override
+        from nova_agent.knowledge.retrieval import disease_by_id
+        entry = disease_by_id(self.ground_truth_diagnosis)
+        return bool(entry and entry.get("dangerous")) or self.ground_truth_diagnosis in critical_condition_ids()
 
 
 CASES = [

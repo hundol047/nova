@@ -82,16 +82,18 @@ class SafetyValidator:
             for item in llm_output.differential:
                 diagnosis_id = item.diagnosis_id or normalize_diagnosis(item.diagnosis).canonical_id
                 entry = disease_by_id(diagnosis_id) if diagnosis_id else None
+                from nova_agent.knowledge.reference_catalog import reference_by_name
+                reference = None if entry else (reference_by_name(diagnosis_id or '') or reference_by_name(item.diagnosis))
                 # Known-diagnosis metadata (dangerous/urgency) is authoritative from the local KB
                 # once matched -- the LLM can only ever ADD a dangerous flag it wasn't given
                 # credit for, never suppress one the KB already asserts.
                 dangerous = item.dangerous_if_missed or bool(entry and entry.get("dangerous"))
                 urgency = entry.get("urgency") if entry else ("CRITICAL" if dangerous else "LOW")
-                resolved_id = diagnosis_id or f"novel:{normalize_key(item.diagnosis)}"
+                resolved_id = reference['id'] if reference else (diagnosis_id or f"novel:{normalize_key(item.diagnosis)}")
                 raw_rank = item.rank if 1 <= item.rank <= 1000 else 1000
                 det_match = det_by_id.get(resolved_id)
                 score = det_match.score if det_match else 0.0
-                score_ratio = det_match.score_ratio if det_match else band_proxy[item.confidence]
+                score_ratio = det_match.score_ratio if det_match else band_proxy['LOW' if reference else item.confidence]
 
                 if resolved_id in by_id:
                     existing = by_id[resolved_id]
@@ -106,7 +108,7 @@ class SafetyValidator:
                     score_ratio=score_ratio, supporting_evidence=list(item.supporting_evidence),
                     contradictory_evidence=list(item.contradictory_evidence),
                     missing_discriminative_evidence=item.missing_information,
-                    urgency=urgency or "LOW", dangerous_if_missed=dangerous, confidence_band=item.confidence,
+                    urgency=urgency or "LOW", dangerous_if_missed=dangerous, confidence_band='LOW' if reference else item.confidence,
                 )
 
             ordered = sorted(by_id.values(), key=lambda d: d.rank)[:top_k]
@@ -146,7 +148,9 @@ class SafetyValidator:
         if stop_decision.forced:
             content = deterministic_action.content
             if llm_output is not None and llm_output.selected_action.type == "DIAGNOSE" and llm_output.selected_action.content:
-                content = llm_output.selected_action.content  # keep the LLM's phrasing/diagnosis if it agrees
+                from nova_agent.diagnosis_normalizer import same_diagnosis
+                if same_diagnosis(content, llm_output.selected_action.content):
+                    content = llm_output.selected_action.content
             action = AgentAction(action_type="DIAGNOSE", key=deterministic_action.key, content=content,
                                   rationale=stop_decision.reason)
             return ValidationResult(action=action, differential=merged_differential, overridden=False)
@@ -157,8 +161,27 @@ class SafetyValidator:
                                                       "used deterministic fallback action.")
 
         picked = llm_output.selected_action
+        fallback_action = deterministic_action
+        if deterministic_action.action_type == "DIAGNOSE":
+            legal = [c for c in candidate_pool.values() if c.action_type != "DIAGNOSE"
+                     and not state.is_duplicate(c.action_type, c.key)]
+            if legal:
+                candidate = max(legal, key=lambda c: c.utility)
+                fallback_action = AgentAction(action_type=candidate.action_type, key=candidate.key,
+                    content=candidate.content, rationale="Continue evidence gathering after blocked diagnosis.")
+            else:
+                from nova_agent.taxonomy import QUESTION_CATALOG
+                for key, spec in QUESTION_CATALOG.items():
+                    if not state.question_asked(key):
+                        fallback_action = AgentAction(action_type="ASK", key=key, content=spec["text_en"],
+                            rationale="Clarify remaining evidence before diagnosing.")
+                        break
 
         if picked.type == "DIAGNOSE":
+            from nova_agent.knowledge.reference_catalog import reference_mentions
+            if reference_mentions(picked.key) or reference_mentions(picked.content):
+                return ValidationResult(action=fallback_action, differential=merged_differential, overridden=True,
+                    override_reason='Reference-only candidate is not enabled for autonomous diagnosis; independent validation pending.')
             # DIAGNOSE key/content consistency (spec section 9): a malformed output where `key`
             # and `content` name two DIFFERENT known diagnoses (e.g. key="gerd",
             # content="Acute Myocardial Infarction") must never be trusted at face value -- reject
@@ -168,7 +191,7 @@ class SafetyValidator:
             if (key_norm and key_norm.mapped and content_norm and content_norm.mapped
                     and key_norm.canonical_id != content_norm.canonical_id):
                 return ValidationResult(
-                    action=deterministic_action, differential=merged_differential, overridden=True,
+                    action=fallback_action, differential=merged_differential, overridden=True,
                     override_reason=f"Blocked inconsistent DIAGNOSE: key {picked.key!r} resolves to "
                                      f"{key_norm.canonical_id!r} but content {picked.content!r} resolves to "
                                      f"{content_norm.canonical_id!r}.",
@@ -182,7 +205,7 @@ class SafetyValidator:
             ]
             if unresolved:
                 return ValidationResult(
-                    action=deterministic_action, differential=merged_differential, overridden=True,
+                    action=fallback_action, differential=merged_differential, overridden=True,
                     override_reason=f"Blocked premature DIAGNOSE: {unresolved[0].diagnosis} is dangerous, "
                                      "still plausible, and has not been worked up yet.",
                 )
@@ -203,7 +226,7 @@ class SafetyValidator:
             )
             if not minimally_ready:
                 return ValidationResult(
-                    action=deterministic_action, differential=merged_differential, overridden=True,
+                    action=fallback_action, differential=merged_differential, overridden=True,
                     override_reason=f"Blocked low-confidence DIAGNOSE: only {evidence_count} supporting evidence "
                                      f"item(s) for {picked.content!r} after {state.turn_count} turn(s) (need >= "
                                      f"{cfg.min_evidence_items} after >= {cfg.min_turns_before_diagnose} turns, or "
@@ -218,7 +241,7 @@ class SafetyValidator:
             return ValidationResult(action=action, differential=merged_differential, overridden=False)
 
         if picked.type not in {"ASK", "EXAM", "TEST"}:
-            return ValidationResult(action=deterministic_action, differential=merged_differential, overridden=True,
+            return ValidationResult(action=fallback_action, differential=merged_differential, overridden=True,
                                      override_reason=f"Unrecognized action type {picked.type!r}.")
 
         pool_entry = candidate_pool.get((picked.type, picked.key))
@@ -230,12 +253,12 @@ class SafetyValidator:
             canonicalized = canonicalize_action(picked.type, picked.key, picked.content, state)
             if canonicalized is not None:
                 return ValidationResult(action=canonicalized, differential=merged_differential, overridden=False)
-            return ValidationResult(action=deterministic_action, differential=merged_differential, overridden=True,
+            return ValidationResult(action=fallback_action, differential=merged_differential, overridden=True,
                                      override_reason=f"selected_action key {picked.key!r} is not a known "
                                                       f"{picked.type} in this turn's legal candidate pool, and "
                                                       "could not be canonicalized onto any real taxonomy entry.")
         if state.is_duplicate(picked.type, picked.key):
-            return ValidationResult(action=deterministic_action, differential=merged_differential, overridden=True,
+            return ValidationResult(action=fallback_action, differential=merged_differential, overridden=True,
                                      override_reason=f"selected_action {picked.type}:{picked.key!r} is a duplicate.")
 
         content = picked.content or pool_entry.content
@@ -244,7 +267,7 @@ class SafetyValidator:
         # that keyword-maps onto an already-completed item) -- catch that even though the exact
         # key itself passed the layer-1 duplicate check above.
         if content != pool_entry.content and is_semantic_duplicate(picked.type, content, state):
-            return ValidationResult(action=deterministic_action, differential=merged_differential, overridden=True,
+            return ValidationResult(action=fallback_action, differential=merged_differential, overridden=True,
                                      override_reason=f"selected_action content {content!r} semantically duplicates "
                                                       "an already-covered item.")
         action = AgentAction(action_type=picked.type, key=picked.key, content=content,

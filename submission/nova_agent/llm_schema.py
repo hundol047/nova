@@ -59,3 +59,4 @@ class AgentTurnOutput(BaseModel):
     candidate_actions: List[CandidateActionOutput] = Field(default_factory=list)
     selected_action: SelectedActionOutput
     ready_to_diagnose: bool = False
+    complaint_tags: List[str] = Field(default_factory=list, max_length=3)

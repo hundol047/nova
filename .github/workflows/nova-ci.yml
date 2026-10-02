@@ -43,6 +43,18 @@ jobs:
       - name: Benchmark (tuning + held-out + generalization-v2 + stress sets)
         run: python -m evaluation.benchmark --generalization-v2 --stress
 
+      - name: Enforce 68-condition catalog regression (mock, not clinical validation)
+        run: python -m evaluation.catalog_regression --save-json /tmp/nova-catalog-results.json
+
+      - name: Retain synthetic evaluation history (not clinical training approval)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nova-evaluation-history-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evaluation/learning_archive/*.json
+          if-no-files-found: error
+          retention-days: 90
+
       - name: Generalization benchmark
         run: python -m evaluation.generalization_benchmark
 
@@ -143,3 +155,15 @@ jobs:
 
       - name: Real-LLM smoke test (real secrets configured -- must succeed, not just fall back)
         run: python scripts/smoke_real_llm.py
+
+      - name: Real-LLM complete-case verification
+        timeout-minutes: 15
+        run: python -m evaluation.real_llm_benchmark --require-real --max-cases 3 --timeout 180 --save-json real-llm-report.json
+
+      - name: Upload real model verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-llm-verification
+          path: real-llm-report.json
+          if-no-files-found: ignore

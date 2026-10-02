@@ -16,8 +16,11 @@ from pydantic import BaseModel
 from nova_agent.differential import DifferentialItem
 from nova_agent.knowledge.retrieval import disease_by_id
 from nova_agent.safety import SafetyFinding, SafetyLayer
+from nova_agent.resolution import is_resolved, required_workup
 from nova_agent.state import PatientState
-from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG, disease_specific_question
+from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG, QUESTION_CATALOG, disease_specific_question
+from nova_agent.config import get_config
+from nova_agent.chief_complaint import route
 
 CandidateActionType = Literal["ASK", "EXAM", "TEST"]
 
@@ -47,6 +50,7 @@ class CandidateInfo(BaseModel):
     information_gain: float
     redundancy: float
     turn_cost: int
+    unresolved_workup_gain: float = 0.0
 
 
 def _diagnosis_prior(differential: List[DifferentialItem]) -> Dict[str, float]:
@@ -97,11 +101,13 @@ def _already_answered(state: PatientState, category: str) -> bool:
         return True
     if category == "past_medical_history" and state.past_medical_history:
         return True
+    if category == "associated_symptoms" and state.associated_symptoms:
+        return True
     if category == "family_history" and state.family_history:
         return True
     if category == "social_history" and state.social_history:
         return True
-    if category == "medication" and state.medications:
+    if category == "medication" and (state.medications or state.medication_text):
         return True
     if category == "allergy" and state.allergies:
         return True
@@ -111,7 +117,17 @@ def _already_answered(state: PatientState, category: str) -> bool:
 class MissingInformationAnalyzer:
     def analyze(self, state: PatientState, differential: List[DifferentialItem],
                 safety_findings: List[SafetyFinding]) -> List[CandidateInfo]:
-        top_k = differential
+        top_k = list(differential)
+        present_ids = {d.diagnosis_id for d in top_k}
+        for finding in safety_findings:
+            if finding.diagnosis_id in present_ids or is_resolved(finding.diagnosis_id, [], state):
+                continue
+            entry = disease_by_id(finding.diagnosis_id)
+            if entry is not None:
+                top_k.append(DifferentialItem(diagnosis=entry["name"], diagnosis_id=entry["id"],
+                    rank=len(top_k)+1, score=0, score_ratio=0, supporting_evidence=finding.evidence,
+                    urgency=entry.get("urgency", "CRITICAL"), dangerous_if_missed=True, confidence_band="LOW"))
+                present_ids.add(finding.diagnosis_id)
         top_k_count = len(top_k) or 1
         safety = SafetyLayer()
 
@@ -166,10 +182,42 @@ class MissingInformationAnalyzer:
                 cand.disease_ids_discriminated.append(item.diagnosis_id)
                 cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
 
+        if get_config().strategic_questions:
+            # Core observations are not dependent on the current (possibly wrong) top diagnoses.
+            for key in ("onset", "associated_symptoms", "past_medical_history", "medication"):
+                if not state.question_asked(key) and not _already_answered(state, key):
+                    spec = QUESTION_CATALOG[key]
+                    ask_candidates.setdefault("ask:" + key, CandidateInfo(action_type="ASK", key=key,
+                        content_en=spec["text_en"], content_ko=spec["text_ko"], disease_ids_discriminated=[],
+                        diagnostic_discrimination=0, safety_relevance=0, information_gain=0,
+                        redundancy=0, turn_cost=spec["turn_cost"]))
+            baseline_exams = ["vital_signs"]
+            routing = route(state.chief_complaint)
+            if "abdominal_pain" in [routing.primary_tag, *routing.secondary_tags]:
+                baseline_exams.append("abdominal_exam")
+            for baseline_exam in baseline_exams:
+                if state.exam_done(baseline_exam):
+                    continue
+                spec = EXAM_CATALOG[baseline_exam]
+                exam_candidates.setdefault(baseline_exam, CandidateInfo(action_type="EXAM", key=baseline_exam,
+                    content_en=spec["name_en"], content_ko=spec["name_ko"], disease_ids_discriminated=[],
+                    diagnostic_discrimination=0, safety_relevance=0, information_gain=0,
+                    redundancy=0, turn_cost=spec["turn_cost"]))
+
+        flagged_ids = {f.diagnosis_id for f in safety_findings}
+        unresolved_ids = {d.diagnosis_id for d in top_k if d.dangerous_if_missed
+            and (d.diagnosis_id in flagged_ids or d.supporting_evidence)
+            and not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)}
         prior = _diagnosis_prior(top_k)
         all_candidates = list(ask_candidates.values()) + list(exam_candidates.values()) + list(test_candidates.values())
         for cand in all_candidates:
             affected_ids = set(cand.disease_ids_discriminated)
+            cand.unresolved_workup_gain = sum(
+                1.0 / max(1, len([key for key in required_workup(did)
+                    if not state.test_done(key) and not state.exam_done(key)]))
+                for did in affected_ids & unresolved_ids
+                if cand.action_type in {"EXAM", "TEST"} and cand.key in required_workup(did)
+            )
             n = len(affected_ids)
             # Peaks when the item splits the top-K roughly in half (maximally discriminative);
             # low when it's either irrelevant (n=0, filtered out already) or shared by every

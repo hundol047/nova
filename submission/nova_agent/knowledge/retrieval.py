@@ -26,7 +26,19 @@ KNOWLEDGE_ROOT = Path(__file__).resolve().parent
 def _load_diseases() -> Dict[str, dict]:
     diseases: Dict[str, dict] = {}
     for path in sorted((KNOWLEDGE_ROOT / "diseases").glob("*.json")):
-        for entry in json.loads(path.read_text(encoding="utf-8")):
+        if path.name == 'expanded_v1.json':
+            from nova_agent.knowledge.extensions import load_extension
+            entries = load_extension(path, diseases)
+        else:
+            entries = json.loads(path.read_text(encoding="utf-8"))
+        for entry in entries:
+            if entry['id'] in diseases:
+                raise ValueError('Duplicate built-in diagnosis ID: ' + entry['id'])
+            diseases[entry["id"]] = entry
+    extension_path = get_config().knowledge_extension
+    if extension_path:
+        from nova_agent.knowledge.extensions import load_extension
+        for entry in load_extension(extension_path, diseases):
             diseases[entry["id"]] = entry
     return diseases
 

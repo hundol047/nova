@@ -57,6 +57,7 @@ class UtilityWeights:
             - rho   * redundancy
     """
 
+    workup_gain_weight: float = field(default_factory=lambda: _float_env("NOVA_WORKUP_GAIN_WEIGHT", 1.0))
     info_gain_weight: float = field(default_factory=lambda: _float_env("NOVA_INFO_GAIN_WEIGHT", 1.0))
     discrimination_weight: float = field(default_factory=lambda: _float_env("NOVA_DISCRIMINATION_WEIGHT", 1.2))
     safety_weight: float = field(default_factory=lambda: _float_env("NOVA_SAFETY_WEIGHT", 1.5))
@@ -80,11 +81,17 @@ class StopPolicyConfig:
 
 @dataclass(frozen=True)
 class NovaConfig:
+    knowledge_extension: str = field(default_factory=lambda: _str_env("NOVA_KNOWLEDGE_EXTENSION", ""))
     max_turns: int = field(default_factory=lambda: _int_env("NOVA_MAX_TURNS", 60))
     top_k_differential: int = field(default_factory=lambda: _int_env("NOVA_TOP_K_DIFFERENTIAL", 5))
+    broad_candidates: bool = field(default_factory=lambda: _bool_env("NOVA_BROAD_CANDIDATES", True))
+    evidence_interpretation: bool = field(default_factory=lambda: _bool_env("NOVA_EVIDENCE_INTERPRETATION", True))
+    strategic_questions: bool = field(default_factory=lambda: _bool_env("NOVA_STRATEGIC_QUESTIONS", True))
+    final_review: bool = field(default_factory=lambda: _bool_env("NOVA_FINAL_REVIEW", True))
     candidate_pool_size: int = field(default_factory=lambda: _int_env("NOVA_CANDIDATE_POOL_SIZE", 8))
 
     rag_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RAG_ENABLED", True))
+    reference_candidates_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_REFERENCE_CANDIDATES", True))
     rag_top_k: int = field(default_factory=lambda: _int_env("NOVA_RAG_TOP_K", 4))
 
     # llm_provider: 'mock' (default, offline/deterministic) | 'anthropic' | 'openai_compatible'

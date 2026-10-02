@@ -78,7 +78,7 @@ def normalize_diagnosis(text: str) -> NormalizedDiagnosis:
         # matching before a longer, more specific one already ruled it out.
         canonical_id = None
         for alias in sorted(table.keys(), key=len, reverse=True):
-            if alias and (alias in cleaned or cleaned in alias):
+            if alias and re.search(r"(?<!\w)" + re.escape(alias) + r"(?!\w)", cleaned):
                 canonical_id = table[alias]
                 break
 

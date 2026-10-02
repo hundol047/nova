@@ -1,0 +1,20 @@
+{
+  "provider": "local",
+  "model": "qwen3:4b-instruct",
+  "base_url": "http://127.0.0.1:11434/v1",
+  "preflight_passed": false,
+  "reason": "Cannot reach http://127.0.0.1:11434/v1: [Errno 111] Connection refused",
+  "smoke_requested": true,
+  "real_structured_turn_passed": false,
+  "clinical_accuracy": null,
+  "training_performed": false,
+  "clinical_validation": false,
+  "elapsed_seconds": 0.011,
+  "integration_passed": false,
+  "setup_status": "blocked_model_weights_download",
+  "runtime_installed_version": "0.35.0",
+  "model_weights_downloaded": false,
+  "model_download_error": "Ollama could not resolve the official blob redirect host: network is unreachable",
+  "persistent_service_started": false,
+  "retraining_status": "not_started"
+}

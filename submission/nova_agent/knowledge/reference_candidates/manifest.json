@@ -1,0 +1,14 @@
+{
+  "source_url": "https://medlineplus.gov/xml/mplus_topics_compressed_2026-10-01.zip",
+  "source_generated_at": "10/01/2026 12:28:56",
+  "source_sha256": "3e4f437857b64519d2c4c7c4ac181637fd6ec76d054c2f3ca0c7844a9841c15b",
+  "catalog_sha256": "6c471aa6ba49152d945df2001eae451a897fb55ea55c8dfc88ff59f0f81ea0df",
+  "selection_sha256": "ff5a9b60e0fbfd5a3552f907c225ec350dbf2689d3c35cb747cea7a8a06c068e",
+  "n_reference_candidates": 204,
+  "attribution": "Source: MedlinePlus, National Library of Medicine.",
+  "reuse_terms": "https://medlineplus.gov/about/using/usingcontent/",
+  "content_scope": "English health-topic public-domain full-summary and vocabulary only; no A.D.A.M. encyclopedia, images, or drug monographs",
+  "clinical_validation": false,
+  "diagnostic_accuracy_measured": false,
+  "source_sha256_scope": "uncompressed_xml_bytes"
+}

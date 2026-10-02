@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 121 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 4084 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -27,6 +27,327 @@ what is *not* yet verified.
 > Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
+
+## Current accuracy assessment — 2026-10-02
+
+**Clinical diagnostic accuracy is unknown; 99% is not verified.** A concrete potassium-input
+parsing defect was fixed: new development probes improved from **20/43 to 43/43**. This is a
+parser metric, not patient diagnostic accuracy. The separate full mock regression and its
+snapshots remain labeled synthetic. [Assessment, fix and limitations](docs/ACCURACY_ASSESSMENT.md).
+
+## Current 3,628-entry inventory — 2026-10-02
+
+**68 rules + 3,560 reference-only entries = 3,628**, rounded up from 1,451 × 2.5.
+Added 2,177 active disorder definitions from the official July 2026 Orphanet nomenclature.
+New entries remain reference-only, with attribution and CC BY 4.0 license links retained.
+No new autonomous diagnostic rules or clinical accuracy claims are introduced.
+[Selection, provenance and validation limits](docs/CATALOG_3628_READINESS.md).
+
+## External candidate validation — current status
+
+The current candidate inventory contains 3,628 entries. The paired audit now checks the same complete frozen
+case set on two real-model revisions, recomputes errors and critical misses, and reports
+condition-level sample counts plus sensitivity/specificity intervals. Missing cases, mock
+calls and fallbacks cannot pass. Numerical screening never enables a diagnosis automatically.
+
+**Actual external validation is blocked:** no configured real provider or independently
+adjudicated case bundle is available. Zero new conditions have been clinically validated.
+[Commands, screening policy and remaining requirements](docs/EXTERNAL_CANDIDATE_VALIDATION.md).
+
+## Earlier 1,451-entry inventory and local model selection — 2026-10-02
+
+**68 rules + 1,383 reference-only candidates = 1,451 entries**, adding the remaining 431
+non-overlapping source condition candidates. New references remain ineligible for autonomous
+diagnosis. Clinical accuracy has not been measured.
+
+Validation: **1,826 tests passed; existing mock cases stayed 205/205 correct**
+(three unscored cases). This is not a clinical accuracy measurement.
+
+Selected **Qwen3 4B Instruct / Ollama** for local research use. Configuration and a real-response
+check helper are included, but the model-weight download was blocked by this execution
+environment's network. **No real model response, persistent service or retraining is running.**
+[Exact status, setup commands and all 431 additions](docs/CATALOG_1451_AND_MODEL.md).
+
+## Earlier 1,020-entry inventory and saved evaluations — 2026-10-02
+
+**68 rules + 952 reference-only candidates = 1,020 entries**, up from 680 by 340 sourced
+Genetics condition references. Existing entries are preserved. New references cannot authorize
+automatic diagnosis, and clinical accuracy remains unmeasured.
+
+Validation: **1,389 tests passed; existing mock cases remained 205/205 correct**
+(three additional cases unscored). This is not clinical accuracy.
+
+Completed mock evaluation runs now save full synthetic cases and results to immutable,
+content-addressed archives. Passing examples are retained with provenance; failures and unscored
+cases are also kept. No weights are trained automatically, and evaluation-only records cannot
+silently become training data. CI artifacts retain future snapshots for 90 days; committed
+snapshots remain in Git history. [Details and all 340 additions](docs/CATALOG_1020_AND_LEARNING.md).
+
+## Earlier 680-entry inventory — 2026-10-02 (Asia/Seoul)
+
+**68 rule-supported entries + 612 reference-only candidates = 680 entries.**
+This expands the previous 272-entry inventory by 408 sourced MedlinePlus Genetics condition
+references (2.5x total). Existing rules and the previous 204 references are preserved.
+This is not 680 autonomous or clinically validated diagnoses. All reference candidates remain
+ineligible for autonomous final diagnosis; their text never becomes patient evidence or a
+rule score. [Selection, full added list and validation limits](docs/CATALOG_680_READINESS.md).
+
+Validation: **1,022 unit tests passed; existing mock regression 205/205 scored cases passed**
+(three additional cases are unscored). This does not measure clinical accuracy.
+The 612/612 title lookup result is a catalog test, not diagnostic accuracy. New-condition
+clinical accuracy remains unmeasured; the mock regression gate covers the existing 68 rules.
+Real-model non-inferiority remains unproven. [Earlier 272-entry scope](docs/CATALOG_272_READINESS.md).
+
+## Earlier 68-entry rule catalog expansion — 2026-10-02 (Asia/Seoul)
+
+**68 diagnostic entries (34 added), with 16 additional local examination/test procedures.**
+Source-bound evidence, conservative confidence/early-stop guards, dangerous-alternative tracking,
+and whole-phrase diagnosis mapping accompany the expansion. [Coverage, limitations and references](docs/CATALOG_EXPANSION.md).
+
+379 software tests pass. The final mock gate retains all 171/171 previously scored diagnoses
+and reaches 34/34 on new same-author development vignettes (205/205 scored in total; 3
+additional unscored cases reported separately). No critical misses, duplicate actions or
+malformed outputs occurred. The enforcing mock regression gate is
+`python -m evaluation.catalog_regression --save-json evaluation/catalog_results.json`.
+New vignettes are internally authored, vocabulary-aligned development checks; they do not
+establish real-model or clinical accuracy. Official support for the new procedures remains
+unverified. Existing case text/labels are unchanged. Earlier revision results below are historical.
+
+## Validation readiness — earlier 2026-10-02 revision (Asia/Seoul)
+
+The latest revision adds external frozen-case loading, real-model workflow support, bounded
+Korean/English normalization, offline catalog extensions, uncertainty reporting, and repeat-question
+suppression. It does **not** complete independent clinical validation or probability calibration.
+Full setup and the six remaining boundaries are in [Validation readiness](docs/VALIDATION_READINESS.md).
+
+- External case JSON/manifest contents are checked before use; missing responses stay unknown.
+  Authorship and clinical review are declarations, never inferred from a file hash.
+- The real-model runner accepts these frozen cases, records case/catalog hashes for resume,
+  requires a successful real response for every decision with `--require-real` (no fallback or
+  budget-skipped decisions), and reports reliability by qualitative evidence band.
+  A manual GitHub workflow is available but has not been dispatched with a live model here.
+- Original Korean observations are preserved while explicit phrases, negation, abbreviations
+  and vital labels get bounded normalization. Family observations do not become patient symptoms.
+- `NOVA_KNOWLEDGE_EXTENSION` accepts validated offline definitions; overrides and invented test
+  keys are rejected. The built-in catalog remains 34 diseases. Outside-catalog and companion
+  diagnoses now have explicit evaluation/reporting fields; no broad coverage claim is made.
+- Unsupported/novel, conflicting, tied or forced decisions are flagged LOW with reasons;
+  probability is null and calibration false. Forcing a final answer no longer implies readiness 1.
+- Existing medication text and associated symptoms suppress repeat questions. A broader pruning
+  experiment reduced V5 to 42/44 and was rejected; it is not enabled or shipped as an option.
+
+208 tests pass. Local mock regressions retain V3 32/32, V4 34/34, V5 44/44, existing scored
+49/49 and reused V6 12/12. The example external loader executes under mock and correctly reports
+real verification false. Preflight remains NOT READY without a live endpoint. Full results,
+confidence buckets and the rejected experiment are in `evaluation/readiness_results.json`.
+The reports below are historical; all 100% figures are development/mock results.
+
+## Assertion handling — 2026-10-02 (Asia/Seoul)
+
+This latest revision reduces false supporting evidence. On 22 newly authored, same-author
+adversarial **evidence-interpretation probes**, correct handling improved from **10/22 to 22/22**.
+This metric is not diagnostic accuracy. Positive controls verify that genuine reported findings
+still contribute support; rejecting every observation would fail the challenge.
+
+- Tentative, hypothetical, inconclusive and contaminated wording is kept in the patient history
+  and LLM summary but filtered from deterministic affirmative keyword/confirmatory matching.
+- Negated CSF white-cell elevation no longer becomes an affirmative pleocytosis label.
+- A ketone result reported only as positive is no longer promoted to large ketones.
+- Double negation such as no absent breath sounds does not count as absent breath sounds.
+- Temporal evidence spanning clauses remains linked; observed positional triggers and the month
+  May are not discarded merely because they contain conditional/modal-looking words.
+
+The interpretation remains a bounded English heuristic. It does not establish clinical
+sensitivity/specificity, solve every uncertainty or negation pattern, or supply independent
+validation. The following development diagnostic scores must not be presented as live accuracy.
+
+195 tests pass. Full-case diagnostic regressions retain V3 32/32, V4 34/34, V5 44/44,
+V6 12/12 and the existing 49/49 scored development cases. All use mock; none establish
+independent or live-model accuracy. Adversarial checks and deterministic stability also pass.
+
+Reproducible probe command:
+
+```bash
+python -m evaluation.evidence_challenge --save-json evidence-report.json
+```
+
+See `evaluation/assertion_validation_results.json` for before/after probe results and current
+full-case regressions. Previous reports below remain historical. Live model accuracy remains
+unverified because no competition endpoint/key is configured.
+
+## Evidence refinement — 2026-10-02 (Asia/Seoul)
+
+Latest executed **mock** results supersede the historical sections below. This revision fixes
+case-sensitive acronym labels hiding asthma history, migration evidence split across clauses,
+resolved nasal symptoms counted as present, and infection-compatible specimen results combined
+with recorded hypotension and mental-status change. The last pattern is bounded, uncalibrated
+support, not a SOFA score, confirmed sepsis diagnosis or a rule-out protocol.
+
+| Suite | Correct | Accuracy | Interpretation |
+|---|---:|---:|---|
+| V3 | 32/32 | 100.0% | Development; previous two errors used for fixes |
+| V4 | 34/34 | 100.0% | Development; previous bronchitis error used for fixes |
+| V5 | 44/44 | 100.0% | Development; previous appendicitis error used for fixes |
+| Existing scored development | 49/49 | 100.0% | Regression data; three other cases remain explicitly unscored |
+| V6 | 12/12 | 100.0% | Reused same-author synthetic validation |
+
+Critical-case recall is 100% in these local suites. V3/V4/V5 together have 110 cases;
+none of their original case text, labels or freeze manifests changed. The development
+accuracy is not an independent generalization claim or live clinical/model accuracy.
+All cases, costs, exclusions, and limits are recorded in `evaluation/accuracy_refinement_results.json`.
+Earlier reports are retained. Mean turns remain high: V3 30.9, V4 29.0, V5 29.6.
+
+172 tests pass, including failures for tentative cultures, isolated shock without infection,
+negated mental change, resolved symptoms and non-migratory location descriptions. Submission
+build/standalone smoke, source-sync, adversarial/stability, and README/leakage checks are executed.
+For formatting robustness, `evaluation.text_robustness` changes only capitalization and comma
+punctuation on the same development observations: all 110/110 formatting variants remain
+correct (V3 32/32, V4 34/34, V5 44/44). This is not new independent case evidence.
+
+```bash
+python -m evaluation.text_robustness --save-json formatting-report.json
+```
+
+Live competition accuracy remains **NOT VERIFIED** because no model endpoint/key is configured.
+The official protocol adapter remains unverified. Do not advertise the local 100% as a real
+competition or patient-population accuracy. See the existing live-verification commands below.
+
+## Accuracy follow-up — 2026-10-01
+
+**Local synthetic development accuracy now exceeds 90% in each reported scored suite.**
+This is not independent generalization or live competition-model verification. V3/V4/V5
+errors were analyzed during development; V6 is a reused, small same-author synthetic set.
+All runs use `mock`. The prior accuracy revision below is historical.
+
+| Evaluation | Correct | Accuracy | Status |
+|---|---:|---:|---|
+| V3 | 30/32 | 93.8% | Development, reused historical cases |
+| V4 | 33/34 | 97.1% | Development after follow-up error analysis |
+| V5 | 43/44 | 97.7% | Development; one appendicitis remains wrong |
+| Existing scored development | 49/49 | 100.0% | Includes recovery of the appendicitis regression |
+| V6 | 12/12 | 100.0% | Reused same-author synthetic validation |
+
+The held-out-named historical suite has three unscored cases; its scored denominator is 15,
+not 18. All-case accuracy and exclusion names remain visible in the detailed report.
+
+The follow-up fixes anatomical and event anchors (a pounding heart cannot imply headache;
+sudden abdominal pain cannot imply dyspnea), recognizes named lipase results, appendix CT
+findings, explicit pathological absence of breath sounds, tracheal shift and wheeze inflection,
+and ensures abdominal complaints receive a baseline abdominal exam. Nonspecific inflammatory
+markers receive less weight than disease-specific evidence. Sources and heuristic limitations
+are documented in `nova_agent/knowledge/PROVENANCE.md`; this is not complete clinical criteria.
+
+There are remaining errors, including urosepsis on V3. V5 decreased from 44/44 to 43/44
+while V4 improved from 29/34 to 33/34 and generalization-v2 recovered from 17/18 to 18/18.
+These tradeoffs are retained rather than selecting only favorable evaluations. Mean turns:
+V3 30.8, V4 29.0, V5 29.6; efficiency is not solved.
+
+167 tests, 12 adversarial checks, stability, submission standalone build/source sync, and
+README/evaluation-leakage checks pass locally. Full results and remaining misses are in
+`evaluation/accuracy_followup_results.json`; the earlier report is retained unchanged.
+Competition preflight is **NOT READY** because no real model is configured and the official
+adapter remains unverified. A successful live model call is still enforced before submission.
+
+To perform live complete-case verification, configure the approved competition model endpoint
+and credentials in environment variables/GitHub secrets, then run:
+
+```bash
+python scripts/preflight_competition.py
+python -m evaluation.real_llm_benchmark --provider competition --require-real --timeout 180 --save-json real-llm-report.json
+```
+
+Do not claim live or independent 90% accuracy from the local development table above.
+
+## Accuracy revision — 2026-10-01
+
+**The 90% generalization target is not established.** All results below use the deterministic
+`mock` provider, not the competition LLM. These results supersede the earlier review below.
+
+| Evaluation | Correct | Accuracy | Interpretation |
+|---|---:|---:|---|
+| V5 development | 44/44 | 100.0% | Used to diagnose failures and implement fixes; not blind |
+| V4 reused reference | 29/34 | 85.3% | Not tuned in this revision; below the target |
+| V6 new synthetic validation | 12/12 | 100.0% | Same author, frozen before first run; small and not externally adjudicated |
+| Existing scored development cases | 48/49 | 98.0% | Regression data; generalization-v2 appendicitis now misses |
+
+V5 critical-case recall is 20/20, V4 is 13/14, and V6 is 6/6. Do not pool these
+sets to hide the V4 shortfall or present development accuracy as real clinical accuracy.
+V5 average turns increased from 25.1 to 29.7; test efficiency remains a limitation.
+
+Implemented changes:
+- Send history, medications, allergies, symptom timing, and supporting/contradicting evidence
+  to the LLM; preserve unknown and explicitly denied facts.
+- Re-score the complete 34-diagnosis catalog every turn, allowing candidates outside the
+  initial complaint route to enter when evidence appears.
+- Interpret scoped clinical synonyms and procedure-specific objective findings; prevent CSF
+  findings from becoming urinary/blood evidence. Replace six-character token truncation,
+  enforce anatomical anchors, and interpret posture-bound numeric blood-pressure changes.
+- Gather missing vital signs, onset, associated symptoms, medical history and medications
+  alongside disease-discriminating workup before an early diagnosis.
+- Add a final evidence-review checklist and the valid action catalog to the existing LLM
+  request. This introduces no extra LLM call; its accuracy effect is unverified under mock.
+
+V5 leave-one-feature-out accuracy: full 100.0%; without broad candidates 93.2%; without
+new evidence interpretation 65.9%; without strategic questions 97.7%; without final-review
+prompt 100.0% (expected under mock). These are feature comparisons within the new code,
+not a recreation of the original baseline. Full case results, failures, and limitations are
+recorded in `evaluation/accuracy_results.json`.
+
+```bash
+python -m evaluation.accuracy_experiments --suite v5 --ablate --save-json v5-report.json
+python -m evaluation.accuracy_experiments --suite v4 --save-json v4-report.json
+python -m evaluation.accuracy_experiments --suite v6 --save-json v6-report.json
+```
+
+The V6 runner verifies its frozen file hash. Runtime code never imports evaluation cases.
+Live competition-model evaluation and an independently authored, sufficiently large held-out
+set are still needed to establish the requested target. Official API compatibility remains
+unverified. The following review records the previous revision, not current accuracy.
+
+## Review revision — 2026-10-01
+
+This section supersedes the historical implementation notes below. The four development
+benchmark rows in section 6 are current; the original Blind v3/v4/v5 rows are historical.
+
+- Chief-complaint routing now removes denied clauses, preserves multiple affirmed concepts,
+  expands neurologic/pelvic/GI-bleeding coverage, and accepts up to three validated optional
+  `complaint_tags` from the LLM to expand low-confidence candidate pools on the next turn.
+- Dangerous alternatives are no longer discharged by an ungrounded LLM contradiction or
+  a positive/pending/empty result marked "completed". Resolution requires recorded,
+  diagnosis-specific exclusion or explicit normal/negative minimum-workup observations.
+  This remains a conservative synthetic-evaluation heuristic, not a clinical rule-out protocol.
+- A blocked diagnosis now selects a remaining nonduplicate evidence action instead of
+  returning the same blocked diagnosis. Zero-information-gain cannot bypass unresolved danger.
+- Candidate utilities prioritize missing minimum-workup actions for supported dangerous
+  candidates; safety-flagged diagnoses can contribute actions even outside the top five.
+  **Efficiency is not solved:** the stricter evidence gate increases average turns versus the
+  old implementation. Do not claim fewer tests or faster diagnosis from these changes.
+- Numeric BMP potassium contributes disease-specific evidence, with unsupported units,
+  ranges and unreliable samples rejected. The threshold source is documented in
+  `nova_agent/electrolyte_evidence.py`; the parser is deliberately limited.
+- Test relevance uses a fixed knowledge-base/case-authored allowlist, never the agent's own
+  ranking history. Both benchmark runners share it. Old unnecessary-test scores are not
+  comparable to the new metric (`independent_allowlist_v2`).
+- Full-case real-model validation supports `--require-real`, tracks JSON parse failures,
+  call successes, fallback, latency and reported tokens, and rejects incompatible resumed runs.
+  A competition diagnosis requires `real_llm_ever_succeeded is True`, including when zero
+  calls were attempted. Configured CI now runs three complete real-model cases.
+
+```bash
+python -m evaluation.real_llm_benchmark --provider competition --require-real --timeout 180 --save-json real-llm-report.json
+```
+
+**Live model and official adapter remain NOT VERIFIED** in this workspace: no endpoint/key was
+configured and the official protocol adapter is still a placeholder. No live-model accuracy is
+claimed. Model-provided symptom tags and actual inference latency still need live validation.
+The 52 development cases are regression data, not an untouched generalization claim.
+
+Post-change re-evaluation of the existing Blind v5 set: **25/44 correct (56.8%)**, **10/20
+critical cases correct (50.0%)**, average **25.1 turns**. Previous recorded values were 52.3%,
+40.0%, and 20.7 turns. V5 is now a reused reference set, **not a new untouched holdout**;
+its aggregate analysis informed this review. No v5 case text or expected label was edited.
+Remaining misses are substantial. The safety/efficiency tradeoff remains open; this is not
+competition-readiness or clinical-validation evidence. See `evaluation/review_validation.json`.
 
 ## 1. Why an agent, not just a prompt
 
@@ -110,7 +431,7 @@ nothing in this repo cites a fabricated external source.
 ## 6. Evaluation & results
 
 ```bash
-pytest tests/ -v                        # 121 tests
+pytest tests/ -v                        # 151 tests
 python -m evaluation.benchmark --generalization-v2 --stress  # tuning + held-out + generalization-v2 + stress, full metrics
 python -m evaluation.benchmark --held-out-only
 python -m evaluation.generalization_benchmark
@@ -167,10 +488,10 @@ goes stale against a fresh `evaluation/latest_results.json`.
 
 | Set | Scored Accuracy | All-Case Accuracy | Critical Recall | Critical Miss Rate | Avg Turns |
 |---|---|---|---|---|---|
-| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 14.2 |
-| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 17.9 |
-| Development generalization (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 16.1 |
-| Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 16.9 |
+| Tuning (8 cases) | 100.0% | 100.0% | 100.0% | 0.0% | 28.4 |
+| Held-out (18 cases, 15 scored, 13 critical) | 100.0% | 94.4% | 100.0% | 0.0% | 32.1 |
+| Development generalization (18 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 28.6 |
+| Targeted stress (8 cases, all scored, 5 critical) | 100.0% | 100.0% | 100.0% | 0.0% | 29.6 |
 | Blind v3 reference (32 cases, all scored, 14 critical) | 62.5% | 62.5% | 57.1% | 42.9% | 20.9 |
 | Blind v4 reference (34 cases, all scored, 14 critical) | 64.7% | 64.7% | 71.4% | 28.6% | 19.8 |
 | **Untouched Blind v5 (44 cases, all scored, 20 critical)** | **52.3%** | **52.3%** | **40.0%** | **60.0%** | 20.7 |
@@ -293,7 +614,7 @@ ships; nothing else needs to change, since `nova_agent/`, `evaluation/`, `submis
 
 ## 8. Known Limitations
 
-- **Knowledge base breadth**: 34 diagnoses across 15 chief-complaint tags -- far from exhaustive;
+- **Knowledge base breadth**: 68 diagnostic entries across the existing chief-complaint tags -- far from exhaustive;
   the LLM can introduce diagnoses outside this set, but the deterministic prior only covers these.
 - **Generalization v2 was 88.9%, with two real misses, as of the previous round** -- both were
   root-caused (not patched around the specific case text) and are now fixed, verified at 100.0% on
@@ -428,7 +749,7 @@ evaluation/       Local benchmark harness: tuning + held-out cases, simulator, b
                   ablation, adversarial, tune, scoring (all synthetic vignettes, never real patient data)
 submission/       Standalone, backend-independent deployable package (run.py entrypoint)
 scripts/          build_nova_submission.py, preflight_competition.py, smoke_real_llm.py
-tests/            pytest suite (64 tests)
+tests/            pytest suite (151 tests)
 ```
 
 Module-by-module responsibility and full LLM-provider config are documented in
