@@ -29,6 +29,23 @@ The final provenance-correct replay used commit `ff76e22` and still has 14 criti
 and 45 non-matching cases. This is a
 development/replay signal, not a 100% claim or clinical performance estimate.
 
+## Follow-up 2: feature-local multilingual aliases
+
+Added only feature-local aliases for high-value phrases such as Chinese point tenderness,
+palpation-reproduced pain, vasovagal prodrome, brief syncope, and rapid recovery. No diagnosis
+label or frozen case was hardcoded. On the same 191-case replay this changed only two previously
+unknown benign outputs to their matching diagnoses and produced no observed regressions:
+
+| Slice | Result | Change vs alias-only baseline |
+|---|---:|---:|
+| Frozen-family replay, 191 cases | 148/191 (77.49%) | +2 cases |
+| Critical target in that replay | 83/97 (85.57%) | unchanged |
+| Development split | 120/156 (76.92%) | +2 cases |
+| Validation split | 28/35 (80.0%) | unchanged |
+
+This remains a synthetic/mock replay and is not clinical accuracy. The change is retained only
+because the full slice showed no regression and the targeted multilingual tests passed.
+
 The saved failure rows are for triage and regression review only. They must not be added to the
 training set or used to claim population accuracy, calibrated probabilities, or clinical
 sensitivity/specificity.

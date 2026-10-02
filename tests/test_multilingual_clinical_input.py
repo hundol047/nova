@@ -106,3 +106,15 @@ def test_multilingual_feature_aliases_handle_cjk_joining_and_negation():
     negative = ["高熱はありません", "黒色便はありません"]
     assert not _present_with_aliases("fever", negative)
     assert not _present_with_aliases("melena", negative)
+
+
+@pytest.mark.parametrize("feature,phrase", [
+    ("localized tenderness", "局部压痛，按压时疼痛可以复现"),
+    ("reproducible with palpation", "pain reproduced by pressing"),
+    ("prodrome of lightheadedness", "先觉恶心出汗，视野变窄"),
+    ("brief loss of consciousness", "短暂晕厥后很快清醒"),
+])
+def test_high_value_multilingual_differential_aliases(feature, phrase):
+    from nova_agent.differential import _present_with_aliases
+
+    assert _present_with_aliases(feature, [phrase])
