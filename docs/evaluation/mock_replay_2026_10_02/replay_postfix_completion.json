@@ -1,0 +1,28 @@
+{
+  "run_metadata": {
+    "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+    "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+    "runtime_sha256": "dfa78311ab58484627742a1ee9da134c564113ede3ef85f02ba350035038dc60",
+    "runner_sha256": "5db13c0fcc623c6d7cf73fd720051836f1bd8bc6716b6eb8463a19ac7c517ddc",
+    "cache_sha256": "a72dba51b16d87abd8d385aef819254638f625b58ac13655cb6489e764cf0581",
+    "response_adapter_sha256": "236d16512b02e5df9433a86b8fdf6a8ae2cd7caa8d14459b54845a334e298f20",
+    "response_policy": "mapped_unknown_missing",
+    "simulator_sha256": "20b04a18b009bcea55f233aab27a1655cef412135ed285a78fa48084ffbada81",
+    "runtime_commit": "52934ae6c6455e4677a560b90d8d0a941571c23f",
+    "split": "all",
+    "limit_per_family": 1,
+    "memoized": false,
+    "cases": 191,
+    "families": 191,
+    "real_llm_provider": false
+  },
+  "counts": {
+    "cases": 191,
+    "correct": 140,
+    "critical": 97,
+    "critical_correct": 79,
+    "real_llm_calls": 0
+  },
+  "elapsed_seconds": 127.24232499500795,
+  "completed": true
+}

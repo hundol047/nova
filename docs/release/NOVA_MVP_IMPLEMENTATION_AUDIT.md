@@ -79,7 +79,7 @@ the table below.
    collection before lower-yield actions. The frozen historical synthetic PE-vs-anxiety case moved
    from the pre-fix cardiac-arrhythmia output to pulmonary embolism in a replay; this is a targeted
    regression result, not a clinical accuracy claim. New regression coverage plus the scoped suite
-   now passes 532 tests with 1 skipped. Multi-concept safety relevance also now considers
+   now passes 536 tests with 1 skipped. Multi-concept safety relevance also now considers
    secondary presentation concepts rather than only the single primary router tag.
 7. **P1 qualitative lab parsing:** D-dimer qualitative matching now accepts common word order and
    alignment whitespace (for example `d-dimer elevated` and `D-DIMER  MARKEDLY  ELEVATED`) while
@@ -93,6 +93,13 @@ the table below.
    turns 23.7/24.0 (the pre-safety-only baseline was 23.0/22.0). The targeted replay gain therefore
    does not generalize to this small reference slice and must not be presented as a broad accuracy
    improvement.
+9. **P1 multilingual evidence recovery:** Generic Japanese/English focal-neurologic, meningitis,
+   GI-bleeding, and pregnancy phrases now survive concept extraction and feature scoring; CJK/Hangul
+   substring matching is guarded by a local multilingual-negation window. The 191-family synthetic
+   replay moved from 135/191 (70.68%) and 74/97 critical-target matches to 140/191 (73.30%) and
+   79/97 (81.44%); a post-fix validation family slice is 28/35 (80.0%) with 17/20 critical-target
+   matches (85.0%). These are development/mock replays, not clinical validation, and the frozen
+   50,000-case score was not rewritten.
 
 ## Frozen 50,000-case evaluation design
 
@@ -114,7 +121,7 @@ many abstentions on in-distribution cases, so it is not ready for a clinical OOD
 ## Immediate queue
 
 1. Freeze and commit the P0/P1 code plus submission mirror only after the scoped regression suite,
-   safety regression, and build smoke pass. **Done in commit `e1555ec`.**
+   safety regression, and build smoke pass. **Done in commit `52934ae`.**
 2. Run the full frozen corpus and a separately recorded 10,000-case validation comparison without
    changing runtime code during either run. **Done; both outputs are complete.**
 3. Extend the result summary with top-3/top-5 recall, critical false negatives, unknown/OOD
