@@ -100,6 +100,14 @@ the table below.
    79/97 (81.44%); a post-fix validation family slice is 28/35 (80.0%) with 17/20 critical-target
    matches (85.0%). These are development/mock replays, not clinical validation, and the frozen
    50,000-case score was not rewritten.
+10. **P1 generic high-risk phrasing recovery:** Feature-local aliases now cover general lay and
+    multilingual expressions for airway tightness/allergen exposure, GI bleeding, ectopic-pregnancy
+    localization, arrhythmia, tension pneumothorax, appendicitis, pancreatitis, and focal weakness.
+    The provenance-correct 191-family replay moved to 145/191 (75.92%) and 82/97 critical-target
+    matches (84.54%); development was 117/156 (75.0%) and the untouched validation slice remained
+    28/35 (80.0%) with 17/20 critical-target matches (85.0%). Commit `eca566f`. These are still
+    synthetic/mock replay signals only; no training rows were created and the frozen benchmark was
+    not rewritten.
 
 ## Frozen 50,000-case evaluation design
 

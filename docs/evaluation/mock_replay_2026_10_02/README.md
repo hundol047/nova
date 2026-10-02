@@ -12,6 +12,21 @@ The frozen 50,000-case benchmark was not edited or rescored.
 | Critical target in that replay | 74/97 (76.29%) | 79/97 (81.44%) | exact target match, synthetic labels |
 | Post-fix validation family slice | — | 28/35 (80.0%) | critical target 17/20 (85.0%) |
 
+## Follow-up replay after generic high-risk phrasing fix
+
+Commit `eca566f` added only general multilingual/lay phrasing aliases and did not add any
+evaluation-case-specific label rule. The provenance-correct replay produced:
+
+| Slice | Result | Change vs previous replay |
+|---|---:|---:|
+| Frozen-family replay, 191 cases | 145/191 (75.92%) | +5 cases, +2.62 percentage points |
+| Critical target in that replay | 82/97 (84.54%) | +3 cases, +3.09 percentage points |
+| Development split | 117/156 (75.0%) | prior 112/156 (71.79%) |
+| Validation split | 28/35 (80.0%) | unchanged |
+
+The follow-up still has 15 critical-target misses and 46 non-matching cases. This is a
+development/replay signal, not a 100% claim or clinical performance estimate.
+
 The saved failure rows are for triage and regression review only. They must not be added to the
 training set or used to claim population accuracy, calibrated probabilities, or clinical
 sensitivity/specificity.

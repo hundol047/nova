@@ -1,0 +1,30 @@
+{
+  "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+  "date": "2026-10-02",
+  "runtime_commit": "eca566f44123610944022f19663e2f44db392a7d",
+  "runtime_sha256": "634119756bd825c99489ee53df75c5379803dee4008861a1686842f1fa8e420d",
+  "cases": 191,
+  "correct": 145,
+  "top1_accuracy": 0.7591623036649214,
+  "top3_recall": 0.7958115183246073,
+  "top5_recall": 0.837696335078534,
+  "critical_target_cases": 97,
+  "critical_target_correct": 82,
+  "critical_target_sensitivity": 0.845360824742268,
+  "critical_target_false_negatives": 15,
+  "development": {
+    "cases": 156,
+    "correct": 117,
+    "accuracy": 0.75,
+    "critical_sensitivity": 0.8441558441558441
+  },
+  "validation": {
+    "cases": 35,
+    "correct": 28,
+    "accuracy": 0.8,
+    "critical_sensitivity": 0.85
+  },
+  "real_llm_calls": 0,
+  "independent_clinical_validation": false,
+  "training_eligible_rows": 0
+}

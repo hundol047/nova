@@ -109,8 +109,6 @@ FEATURE_ALIASES: dict[str, list[str]] = {
         "へそから右下腹部へ痛みが移る"],
     "epigastric pain radiating to back": ["upper abdominal pain going to the back", "upper belly pain to the back",
                                           "명치 통증이 등으로 뻗음", "上腹部痛が背中に放散"],
-    "sudden onset dyspnea": ["sudden shortness of breath", "suddenly cannot breathe", "突然息苦しい",
-                             "갑자기 숨이 참"],
     "unilateral absent breath sounds": ["one-sided absent breath sounds", "breath sounds absent on one side",
                                         "片側の呼吸音が聞こえない"],
     "tracheal deviation": ["windpipe shifted", "trachea shifted", "기관이 한쪽으로 밀림", "気管偏位"],
