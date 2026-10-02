@@ -12,13 +12,30 @@ from typing import Optional
 SEVERE_POTASSIUM_MMOL_L = 6.5
 
 def extract_potassium_mmol_l(text: Optional[str]) -> Optional[float]:
-    if not text or re.search(r'hemoly|haemoly|pending|previous|historical|yesterday|reference|not available', text, re.I):
+    """Accept only unambiguous point values in supported units, never guess a conversion."""
+    if not text or re.search(r'hemoly|haemoly|pending|previous|historical|yesterday|reference|not available|'
+                             r'possibl|suspect|unconfirmed|not confirmed|inconclusive|\?', text, re.I):
         return None
-    match = re.search(r'\b(?:potassium|K\+?)\s*(?:is|of|=|:)?\s*(\d+(?:\.\d+)?)(?![\d.])\s*([^,;]*)', text, re.I)
-    if not match:
+    matches = list(re.finditer(r'\b(?:potassium|K\+?)\s*(?:is|of|=|:)?\s*'
+                               r'(\d+(?:\.\d+)?)(?![\d.])\s*([^,;\n]*)', text, re.I))
+    if not matches:
         return None
-    tail = match.group(2).strip()
-    if re.match(r'(?:-|to\b|mg|g/)', tail, re.I):
-        return None
-    value = float(match.group(1))
-    return value if 0 < value <= 15 else None
+    values = []
+    for match in matches:
+        prefix = re.split(r'[,;\n]', text[:match.start()])[-1]
+        if re.search(r'\b(?:no|not|without|denies)\b', prefix, re.I):
+            return None
+        # Decimal commas cannot be silently truncated to an integer.
+        if re.match(r',\d', text[match.end():]):
+            return None
+        tail = match.group(2).strip()
+        # A closed unit grammar rejects mol/L, mEq/dL, ranges and scientific notation.
+        # Missing units retain the existing BMP mmol/L convention.
+        if not re.fullmatch(r'(?:(?:mmol|mEq)\s*/\s*L)?\s*(?:high|elevated|normal|low)?\s*\.?', tail, re.I):
+            return None
+        value = float(match.group(1))
+        if not 0 < value <= 15:
+            return None
+        values.append(value)
+    # Conflicting repeats require clarification; taking the first can reverse the result.
+    return values[0] if len(set(values)) == 1 else None

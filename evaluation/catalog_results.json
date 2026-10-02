@@ -4112,7 +4112,7 @@
     }
   },
   "passed": true,
-  "source_sha256": "463d03776984bbec9b0173a6796f794ea6eb7e9e73b536bf3b48adb6b45a159e",
+  "source_sha256": "fa0e60802f8a0c640d3e9404b69ea433be7d4454c51dbcb9974657460147e737",
   "catalog_inventory": {
     "total_entries": 1451,
     "rule_supported_entries": 68,

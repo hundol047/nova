@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 1826 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 1873 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -27,6 +27,13 @@ what is *not* yet verified.
 > Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
 > explicit adapter pattern), so the real interface can be dropped in without touching the clinical
 > reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
+
+## Current accuracy assessment — 2026-10-02
+
+**Clinical diagnostic accuracy is unknown; 99% is not verified.** A concrete potassium-input
+parsing defect was fixed: new development probes improved from **20/43 to 43/43**. This is a
+parser metric, not patient diagnostic accuracy. The separate full mock regression and its
+snapshots remain labeled synthetic. [Assessment, fix and limitations](docs/ACCURACY_ASSESSMENT.md).
 
 ## External candidate validation — current status
 

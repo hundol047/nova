@@ -1,0 +1,47 @@
+{
+  "target_clinical_accuracy": 0.99,
+  "target_verified": false,
+  "clinical_accuracy": null,
+  "clinical_validation": false,
+  "catalog_inventory": {
+    "total_entries": 1451,
+    "rule_supported_entries": 68,
+    "reference_only_entries": 1383,
+    "clinically_validated_entries": 0,
+    "reference_autonomous_diagnosis_enabled": false
+  },
+  "mock_diagnostic_evaluation": {
+    "provider": "mock",
+    "scored_cases": 205,
+    "correct": 205,
+    "observed_accuracy": 1.0,
+    "unscored_cases": 3,
+    "independent_validation": false
+  },
+  "potassium_parser_development_probes": {
+    "correct_before": 20,
+    "correct_after": 43,
+    "total": 43,
+    "clinical_accuracy_metric": false
+  },
+  "unit_tests_passed": 1873,
+  "local_model_recheck": {
+    "provider": "local",
+    "model": "qwen3:4b-instruct",
+    "base_url": "http://127.0.0.1:11434/v1",
+    "preflight_passed": false,
+    "reason": "Cannot reach http://127.0.0.1:11434/v1: [Errno 111] Connection refused",
+    "smoke_requested": true,
+    "real_structured_turn_passed": false,
+    "clinical_accuracy": null,
+    "training_performed": false,
+    "clinical_validation": false,
+    "elapsed_seconds": 0.004,
+    "integration_passed": false
+  },
+  "blockers": [
+    "No independent clinically adjudicated patient evaluation",
+    "Real model endpoint unavailable; no successful model completions"
+  ],
+  "catalog_report_sha256": "5ecb65ee50c9a137eab769690543a1b69125f534c926e3873f5311c3416ba514"
+}
