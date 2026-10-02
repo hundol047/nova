@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "purpose": "OFFLINE_EVIDENCE_REVIEW_ONLY",
+  "runtime_eligible": false,
+  "clinical_accuracy_verified": false,
+  "profiles": [
+    {
+      "id": "tier2:guillain_barre",
+      "name": "Guillain–Barré syndrome",
+      "feature_groups": [
+        [
+          "progressive_bilateral_limb_weakness"
+        ],
+        [
+          "reduced_or_absent_tendon_reflexes"
+        ]
+      ],
+      "additional_features": [
+        "recent_infection",
+        "csf_protein_elevated_without_pleocytosis",
+        "supportive_electrodiagnostics",
+        "bulbar_or_respiratory_weakness"
+      ],
+      "confirmation_needed": [
+        "Document progression and neurologic examination; assess alternatives.",
+        "CSF and electrophysiology support evaluation; normal early findings do not exclude GBS."
+      ],
+      "mimics_for_review": [
+        "spinal cord disease",
+        "electrolyte disorder",
+        "neuromuscular junction disorder"
+      ],
+      "limits": [
+        "Pattern covers typical motor presentations, not all variants; reflexes may initially be preserved.",
+        "Rapid, bulbar or respiratory progression needs urgent clinical assessment."
+      ],
+      "sources": [
+        {
+          "title": "EAN/PNS GBS guideline (2023)",
+          "url": "https://onlinelibrary.wiley.com/doi/full/10.1111/ene.16073",
+          "section": "Diagnosis; Table 1",
+          "accessed_at": "2026-10-02"
+        }
+      ],
+      "clinical_validation_status": "NOT_VERIFIED",
+      "runtime_eligible": false,
+      "independent_review_status": "PENDING",
+      "rule_origin": "AUTHOR_DESIGNED_REVIEW_PATTERN_NOT_VALIDATED_DIAGNOSTIC_CRITERIA"
+    },
+    {
+      "id": "tier2:pericarditis",
+      "name": "Acute pericarditis",
+      "feature_groups": [
+        [
+          "pleuritic_or_positional_chest_pain"
+        ],
+        [
+          "pericardial_rub",
+          "diffuse_st_or_pr_changes",
+          "new_or_worsening_pericardial_effusion",
+          "imaging_pericardial_inflammation",
+          "inflammatory_markers_elevated"
+        ]
+      ],
+      "additional_features": [
+        "recent_viral_illness",
+        "troponin_elevated"
+      ],
+      "confirmation_needed": [
+        "Review ECG, cardiac biomarkers and echocardiography in clinical context.",
+        "Assess alternative chest-pain emergencies and myocardial involvement."
+      ],
+      "mimics_for_review": [
+        "acute coronary syndrome",
+        "pulmonary embolism",
+        "myocarditis"
+      ],
+      "limits": [
+        "A suggestive pattern is not a final diagnosis; no calibrated probability is derived.",
+        "Reconcile full 2025 ACC and ESC guidance during independent review."
+      ],
+      "sources": [
+        {
+          "title": "ACC pericarditis consensus summary (2025)",
+          "url": "https://www.acc.org/latest-in-cardiology/journal-scans/2025/08/05/19/05/new-concise-clinical",
+          "section": "Clinical evaluation",
+          "accessed_at": "2026-10-02"
+        },
+        {
+          "title": "ESC myocarditis and pericarditis guideline (2025)",
+          "url": "https://www.escardio.org/guidelines/clinical-practice-guidelines/all-esc-practice-guidelines/myocarditis-and-pericarditis/",
+          "section": "Full guideline reconciliation pending",
+          "accessed_at": "2026-10-02"
+        }
+      ],
+      "clinical_validation_status": "NOT_VERIFIED",
+      "runtime_eligible": false,
+      "independent_review_status": "PENDING",
+      "rule_origin": "AUTHOR_DESIGNED_REVIEW_PATTERN_NOT_VALIDATED_DIAGNOSTIC_CRITERIA"
+    },
+    {
+      "id": "tier2:pheochromocytoma",
+      "name": "Pheochromocytoma",
+      "feature_groups": [
+        [
+          "episodic_hypertension"
+        ],
+        [
+          "episodic_headache"
+        ],
+        [
+          "episodic_palpitations",
+          "episodic_sweating"
+        ]
+      ],
+      "additional_features": [
+        "plasma_free_metanephrines_elevated",
+        "urinary_fractionated_metanephrines_elevated"
+      ],
+      "confirmation_needed": [
+        "Evaluate plasma free or urinary fractionated metanephrines with sampling and confounders reviewed.",
+        "Positive biochemical findings require appropriate clinical follow-up; symptoms alone do not confirm a tumor."
+      ],
+      "mimics_for_review": [
+        "panic episodes",
+        "thyroid disease",
+        "medication or stimulant effects"
+      ],
+      "limits": [
+        "This narrow spells pattern is an author-designed review aid, not a diagnostic or exclusion criterion."
+      ],
+      "sources": [
+        {
+          "title": "Endocrine Society PPGL guideline (2014)",
+          "url": "https://academic.oup.com/jcem/article/99/6/1915/2537399",
+          "section": "Biochemical testing recommendations",
+          "accessed_at": "2026-10-02"
+        }
+      ],
+      "clinical_validation_status": "NOT_VERIFIED",
+      "runtime_eligible": false,
+      "independent_review_status": "PENDING",
+      "rule_origin": "AUTHOR_DESIGNED_REVIEW_PATTERN_NOT_VALIDATED_DIAGNOSTIC_CRITERIA"
+    },
+    {
+      "id": "tier2:fabry_disease",
+      "name": "Fabry disease",
+      "feature_groups": [
+        [
+          "acral_neuropathic_pain"
+        ],
+        [
+          "angiokeratoma",
+          "reduced_sweating",
+          "cornea_verticillata"
+        ]
+      ],
+      "additional_features": [
+        "proteinuria",
+        "unexplained_ventricular_hypertrophy",
+        "low_alpha_galactosidase_a",
+        "pathogenic_gla_variant",
+        "normal_alpha_galactosidase_a"
+      ],
+      "confirmation_needed": [
+        "Review alpha-galactosidase A activity and GLA molecular testing in the appropriate sex and phenotype context.",
+        "Normal enzyme activity in a female does not exclude Fabry; variant interpretation is required."
+      ],
+      "mimics_for_review": [
+        "other neuropathies",
+        "other causes of angiokeratoma",
+        "other renal or cardiac disease"
+      ],
+      "limits": [
+        "Classic phenotype only; absent pain or skin findings does not exclude later-onset disease.",
+        "No gene variant is interpreted automatically."
+      ],
+      "sources": [
+        {
+          "title": "GeneReviews Fabry disease (revised 2024-04-11)",
+          "url": "https://www.ncbi.nlm.nih.gov/sites/books/NBK1292/",
+          "section": "Suggestive findings; establishing the diagnosis",
+          "accessed_at": "2026-10-02"
+        }
+      ],
+      "clinical_validation_status": "NOT_VERIFIED",
+      "runtime_eligible": false,
+      "independent_review_status": "PENDING",
+      "rule_origin": "AUTHOR_DESIGNED_REVIEW_PATTERN_NOT_VALIDATED_DIAGNOSTIC_CRITERIA"
+    },
+    {
+      "id": "tier2:croup",
+      "name": "Croup",
+      "feature_groups": [
+        [
+          "barking_cough"
+        ],
+        [
+          "inspiratory_stridor",
+          "hoarse_voice"
+        ]
+      ],
+      "additional_features": [
+        "respiratory_distress",
+        "toxic_appearance",
+        "drooling",
+        "hypoxia"
+      ],
+      "confirmation_needed": [
+        "Clinical assessment of airway severity and alternative causes; typical croup does not need routine tests."
+      ],
+      "mimics_for_review": [
+        "foreign body",
+        "bacterial tracheitis",
+        "epiglottitis",
+        "anaphylaxis"
+      ],
+      "limits": [
+        "Typical pediatric pattern; do not infer severity from stridor volume alone.",
+        "Hypoxia is a late sign. Avoid distressing examination of a child with upper-airway obstruction."
+      ],
+      "sources": [
+        {
+          "title": "Royal Children’s Hospital croup guideline (2024-09)",
+          "url": "https://www.rch.org.au/clinicalguide/guideline_index/croup_laryngotracheobronchitis/",
+          "section": "Assessment; differential diagnoses; investigations",
+          "accessed_at": "2026-10-02"
+        }
+      ],
+      "clinical_validation_status": "NOT_VERIFIED",
+      "runtime_eligible": false,
+      "independent_review_status": "PENDING",
+      "rule_origin": "AUTHOR_DESIGNED_REVIEW_PATTERN_NOT_VALIDATED_DIAGNOSTIC_CRITERIA"
+    },
+    {
+      "id": "tier2:preeclampsia",
+      "name": "Pre-eclampsia",
+      "feature_groups": [
+        [
+          "new_hypertension_after_20_weeks"
+        ],
+        [
+          "new_proteinuria",
+          "new_maternal_organ_dysfunction",
+          "new_uteroplacental_dysfunction"
+        ]
+      ],
+      "additional_features": [
+        "severe_headache",
+        "visual_disturbance",
+        "epigastric_pain"
+      ],
+      "confirmation_needed": [
+        "Verify gestation, blood-pressure measurements, urine protein and relevant organ/placental assessment.",
+        "Evaluate severe features and maternal/fetal wellbeing."
+      ],
+      "mimics_for_review": [
+        "gestational hypertension",
+        "chronic hypertension",
+        "pre-existing renal disease"
+      ],
+      "limits": [
+        "Proteinuria is not mandatory when qualifying new organ/placental dysfunction is present.",
+        "Antepartum new-onset pattern only; postpartum and superimposed disease need separate review."
+      ],
+      "sources": [
+        {
+          "title": "NICE NG133 (2019; amended 2023)",
+          "url": "https://www.nice.org.uk/guidance/ng133/chapter/recommendations",
+          "section": "Terms used in this guideline: pre-eclampsia",
+          "accessed_at": "2026-10-02"
+        }
+      ],
+      "clinical_validation_status": "NOT_VERIFIED",
+      "runtime_eligible": false,
+      "independent_review_status": "PENDING",
+      "rule_origin": "AUTHOR_DESIGNED_REVIEW_PATTERN_NOT_VALIDATED_DIAGNOSTIC_CRITERIA"
+    },
+    {
+      "id": "tier2:acute_kidney_injury",
+      "name": "Acute kidney injury",
+      "feature_groups": [
+        [
+          "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+          "creatinine_at_least_1_5_times_baseline_within_7d",
+          "urine_output_below_0_5_ml_kg_h_for_at_least_6h"
+        ]
+      ],
+      "additional_features": [
+        "isolated_creatinine_elevated",
+        "reported_low_urine_output",
+        "nephrotoxin_exposure"
+      ],
+      "confirmation_needed": [
+        "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+        "Assess cause and distinguish acute change from chronic kidney dysfunction."
+      ],
+      "mimics_for_review": [
+        "chronic kidney disease",
+        "measurement or unit error"
+      ],
+      "limits": [
+        "An isolated high creatinine or subjective low urine output cannot establish the time-dependent criteria.",
+        "Use the published 2012 criteria here; the 2026 public-review draft is not treated as final guidance."
+      ],
+      "sources": [
+        {
+          "title": "KDIGO AKI guideline (2012)",
+          "url": "https://kdigo.org/wp-content/uploads/2016/10/KDIGO-2012-AKI-Guideline-English.pdf",
+          "section": "Recommendation 2.1.1; chapter 2.4",
+          "accessed_at": "2026-10-02"
+        }
+      ],
+      "clinical_validation_status": "NOT_VERIFIED",
+      "runtime_eligible": false,
+      "independent_review_status": "PENDING",
+      "rule_origin": "AUTHOR_DESIGNED_REVIEW_PATTERN_NOT_VALIDATED_DIAGNOSTIC_CRITERIA"
+    }
+  ]
+}

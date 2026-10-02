@@ -11,7 +11,7 @@ def load_candidates(source='all'):
     directory = ROOT / 'research/diagnosis_expansion'
     files = {'icd': 'review_candidates.json', 'mondo': 'mondo_review_candidates.json',
              'orphanet': 'orphanet_review_candidates.json', 'injury': 'injury_review_candidates.json',
-             'doid': 'doid_review_candidates.json'}
+             'doid': 'doid_review_candidates.json', 'ncit': 'ncit_review_candidates.json'}
     rows = []
     for key, filename in files.items():
         if source in ('all', key):
@@ -24,18 +24,24 @@ def load_candidates(source='all'):
 
 def update_manifest():
     from nova_agent.ontology.registry import build_catalog
+    from nova_agent.ontology.normalizer import normalize
     directory = ROOT / 'research/diagnosis_expansion'
     counts = {source + '_review_entries': len(load_candidates(source))
-              for source in ('icd', 'mondo', 'orphanet', 'injury', 'doid')}
-    runtime = len(build_catalog())
+              for source in ('icd', 'mondo', 'orphanet', 'injury', 'doid', 'ncit')}
+    catalog = build_catalog()
+    runtime = len(catalog)
     total = runtime + sum(counts.values())
+    distinct = {normalize(c.canonical_name) for c in catalog.all_concepts()}
+    distinct.update(normalize(c['canonical_name']) for c in load_candidates())
     manifest = dict(schema_version=1, purpose='OFFLINE_TERMINOLOGY_REVIEW_ONLY',
                     runtime_registered=runtime, **counts,
                     total_registered_and_review_entries=total,
-                    requested_total=34991, shortfall=max(0, 34991 - total),
+                    distinct_normalized_names=len(distinct),
+                    requested_total=35000, shortfall=max(0, 35000 - len(distinct)),
                     clinical_accuracy_verified=False,
                     files=['review_candidates.json', 'mondo_review_candidates.json',
-                           'orphanet_review_candidates.json', 'injury_review_candidates.json', 'doid_review_candidates.json'])
+                           'orphanet_review_candidates.json', 'injury_review_candidates.json',
+                           'doid_review_candidates.json', 'ncit_review_candidates.json'])
     (directory / 'combined_manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
 
 
@@ -50,7 +56,7 @@ def search(query, source='all', category=None):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('query', help='English name/alias fragment or ICD-10-CM/MONDO code')
-    p.add_argument('--source', choices=['all', 'icd', 'mondo', 'orphanet', 'injury', 'doid'], default='all')
+    p.add_argument('--source', choices=['all', 'icd', 'mondo', 'orphanet', 'injury', 'doid', 'ncit'], default='all')
     p.add_argument('--category')
     p.add_argument('--limit', type=int, default=20)
     args = p.parse_args()

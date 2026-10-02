@@ -27,7 +27,9 @@ def test_rebuild_counts_and_search():
     assert data['added_review_entries'] == len(data['candidates']) > 0
     rows = load_candidates()
     assert len({r['id'] for r in rows}) == len(rows)
-    assert len(build_catalog()) + len(rows) == data['combined_registered_and_review_entries']
+    # This source snapshot records the cumulative count at DOID import time.
+    prior = [r for source in ('icd','mondo','orphanet','injury','doid') for r in load_candidates(source)]
+    assert len(build_catalog()) + len(prior) == data['combined_registered_and_review_entries']
     row = data['candidates'][0]
     assert row in search(row['code'], source='doid')
 

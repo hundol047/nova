@@ -7,15 +7,18 @@
   "orphanet_review_entries": 388,
   "injury_review_entries": 1195,
   "doid_review_entries": 974,
-  "total_registered_and_review_entries": 25496,
-  "requested_total": 34991,
-  "shortfall": 9495,
+  "ncit_review_entries": 9508,
+  "total_registered_and_review_entries": 35004,
+  "distinct_normalized_names": 35000,
+  "requested_total": 35000,
+  "shortfall": 0,
   "clinical_accuracy_verified": false,
   "files": [
     "review_candidates.json",
     "mondo_review_candidates.json",
     "orphanet_review_candidates.json",
     "injury_review_candidates.json",
-    "doid_review_candidates.json"
+    "doid_review_candidates.json",
+    "ncit_review_candidates.json"
   ]
 }

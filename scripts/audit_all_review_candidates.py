@@ -15,6 +15,7 @@ def run():
     from scripts.build_orphanet_review_candidates import build as orphanet
     from scripts.build_injury_review_candidates import build as injury
     from scripts.build_doid_review_candidates import build as doid
+    from scripts.build_ncit_review_candidates import build as ncit
     from nova_agent.ontology.registry import build_catalog
     from nova_agent.ontology.normalizer import normalize
     from scripts.build_doid_review_candidates import code_key
@@ -24,7 +25,8 @@ def run():
     catalog = build_catalog()
     generators = [('review_candidates.json', lambda: icd(target_total=32000, allow_source_limit=True)),
                   ('mondo_review_candidates.json', mondo), ('orphanet_review_candidates.json', orphanet),
-                  ('injury_review_candidates.json', injury), ('doid_review_candidates.json', doid)]
+                  ('injury_review_candidates.json', injury), ('doid_review_candidates.json', doid),
+                  ('ncit_review_candidates.json', ncit)]
     checked, errors, sources = [], [], []
     ids, names = defaultdict(list), defaultdict(list)
     references = defaultdict(set)
@@ -72,8 +74,18 @@ def run():
     runtime_names = defaultdict(list)
     for c in catalog.all_concepts():
         runtime_names[normalize(c.canonical_name)].append(c.concept_id)
+    distinct_names = len(set(runtime_names) | set(names))
+    runtime_candidate_overlap = sorted(set(runtime_names) & set(names))
+    if runtime_candidate_overlap:
+        errors.append('candidate canonical labels overlap runtime labels')
+    if manifest.get('distinct_normalized_names') != distinct_names:
+        errors.append('combined manifest distinct-name count mismatch')
+    if manifest.get('shortfall') != max(0, manifest['requested_total'] - distinct_names):
+        errors.append('combined manifest shortfall mismatch')
     summary = dict(runtime_registered=len(catalog), candidates_checked=len(checked),
-        combined_records=total, source_checks=sources, errors=errors,
+        combined_records=total, distinct_normalized_names=distinct_names,
+        runtime_candidate_name_overlap=runtime_candidate_overlap,
+        source_checks=sources, errors=errors,
         duplicate_candidate_ids=repeated_ids, duplicate_candidate_names=repeated_names,
         shared_reference_groups_requiring_semantic_review=len(shared),
         existing_runtime_duplicate_names={k: v for k, v in runtime_names.items() if len(v) > 1},

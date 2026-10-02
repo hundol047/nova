@@ -1,15 +1,19 @@
 # 현재 전체 현황
 
-**기존 등록 1,280개 + ICD 6,309개 + Mondo 15,350개 + Orphanet 388개 + 외상·중독 1,195개 + DOID 974개 = 총 25,496개 레코드.**
+**기존 등록 1,280개 + 검토 후보 33,724개 = 총 35,004개 레코드, 서로 다른 정규화 명칭 35,000개.**
 
-목표 34,991개에는 9,495개 미달입니다. 모든 신규 후보는 미검증 상태이며 자동 진단에 활성화하지 않았습니다.
+최신 요청인 명칭 35,000개 목표를 충족했습니다. 기존 동일 명칭 4쌍은 새 명칭으로 세지 않았습니다.
+공식 분류의 세부 유형·병기·상위 분류도 포함하므로 독립된 질병 35,000개 또는
+검증된 자동 진단 35,000개를 뜻하지 않습니다. 모든 신규 후보는 임상 미검증 상태입니다.
 
-- 최신 추가 내역: [DOID_IMPORT.md](DOID_IMPORT.md)
-- 이전 수집: [INJURY_IMPORT.md](INJURY_IMPORT.md), [ORPHANET_IMPORT.md](ORPHANET_IMPORT.md), [MONDO_IMPORT.md](MONDO_IMPORT.md)
+- 최신 추가: NCIt 9,508개 — [NCIT_IMPORT.md](NCIT_IMPORT.md)
+- 이전 후보: ICD 6,309개, Mondo 15,350개, Orphanet 388개, 외상·중독 1,195개, DOID 974개
+- 이전 수집: [DOID_IMPORT.md](DOID_IMPORT.md), [INJURY_IMPORT.md](INJURY_IMPORT.md), [ORPHANET_IMPORT.md](ORPHANET_IMPORT.md), [MONDO_IMPORT.md](MONDO_IMPORT.md)
 - 현재 합계: `combined_manifest.json`
 - 최신 전수 자동 검사: `validation/summary.json`, `validation/candidate_checks.jsonl`
+- 고난도 7개 질환 근거 초안: [clinical review](../clinical_review/hard_seven/README.md)
 
-아래는 ICD 출처만의 수집 내역입니다.
+아래는 ICD 출처만의 과거 수집 내역이며 당시 목표·결과를 보존합니다.
 
 # 진단명 후보 추가 확장 — 공식 원본 한계 — 2026-10-02
 

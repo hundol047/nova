@@ -1,0 +1,10 @@
+{
+  "decision": "BLOCKED",
+  "registered_entries": 1246,
+  "missing_independent_clinical_review": 1246,
+  "unverified_mapping_entries": 1226,
+  "quarantined_mapping_entries": 16,
+  "clinical_accuracy_verified": false,
+  "further_expansion_allowed": false,
+  "reason": "Clinical performance and expert review must be independently verified; metadata is insufficient."
+}

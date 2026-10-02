@@ -1,7 +1,9 @@
 {
   "runtime_registered": 1280,
-  "candidates_checked": 24216,
-  "combined_records": 25496,
+  "candidates_checked": 33724,
+  "combined_records": 35004,
+  "distinct_normalized_names": 35000,
+  "runtime_candidate_name_overlap": [],
   "source_checks": [
     {
       "file": "review_candidates.json",
@@ -26,6 +28,11 @@
     {
       "file": "doid_review_candidates.json",
       "records": 974,
+      "exact_source_rebuild": true
+    },
+    {
+      "file": "ncit_review_candidates.json",
+      "records": 9508,
       "exact_source_rebuild": true
     }
   ],

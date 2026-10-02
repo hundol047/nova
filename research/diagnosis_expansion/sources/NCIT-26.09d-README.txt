@@ -1,0 +1,78 @@
+26.09d
+Editing of NCI Thesaurus 26.09d was completed on Sep 28, 2026.  Version 26.09d
+was September's fourth build in our development cycle.
+
+This directory contains files:
+
+	ReadMe.txt			This file
+	Thesaurus_26.09d.FLAT.zip	The NCI Thesaurus 26.09d in flat file format
+	Thesaurus.FLAT.zip		Same as above but without a version tag
+	Thesaurus_26.09d.OWL.zip	The NCI Thesaurus 26.09d in OWL2
+	Thesaurus.OWL.zip		Same as above but without a version tag
+	ThesaurusInf_26.09d.OWL.zip	The NCI Thesaurus 26.09d, inferred, in OWL2 format
+	ThesaurusInf.OWL.zip		Same as above but without a version tag
+
+
+The zip files unpack the following files:
+
+	Thesaurus_26.09d.FLAT.zip	Thesaurus.txt
+	Thesaurus.FLAT.zip		Thesaurus.txt
+	Thesaurus_26.09d.OWL.zip	Thesaurus.owl
+	Thesaurus.OWL.zip		Thesaurus.owl
+	ThesaurusInf.OWL.zip		ThesaurusInferred.owl
+	ThesaurusInf_26.09d.OWL.zip	ThesaurusInferred.owl
+
+In the first two formats below, the relations are as stated by the editors, no inferred
+relations are specified.
+
+The Thesaurus.txt flat file is in tab-delimited format.  Included in this format
+are all the terms associated with NCI Thesaurus concepts (names and synonyms), a text
+definition of the concept (if one is present), and stated parent-child relations, sufficient
+to reconstruct the hierarchy.  The fields are:
+
+	code <tab> concept IRI <tab> parents <tab> synonyms <tab> definition <tab> display name <tab> concept status <tab> semantic type <tab> concept in subset <EOL>
+
+The "parents" field contains the codes of the superconcept(s).
+If a field contains multiple entries, these are pipe-delimited.
+For root concepts without "parents", this field is empty.  The first entry in the "synonyms" field is the preferred name of the concept. The "definition" field contains only one definition if more than one definition is associated with the concept; not all concepts contain definitions.
+A "display_name", "concept status" or "concept in subset" may contain zero values.
+The "semantic type" field is guaranteed to contain one or more values.
+
+Please see the OWL2_Announcement.txt for details on the changes made to comply with OWL2:
+https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/OWL2_Announcement.txt
+
+The Thesaurus.owl file contains the entire terminology expressed in the
+Web Ontology Language (OWL), and the rdf:about (rdf:ID) utilizes semantically
+meaningless identifiers, e.g. "C123456", which is the value of the "code"
+property.  Relations are as stated by the
+editors; no inferred relations are specified.  Annotations of use only to the
+EVS (for example, editor's notes) are absent in the released terminology.
+The rdf:about of annotation and object properties are also replaced with
+their corresponding codes.
+
+The unzipped Thesaurus.owl is available directly at http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl
+
+The ThesaurusInferred.owl file contains the terminology from the NCI Thesaurus but 
+excludes retired concepts and includes inferred relationships. This file is created for 
+import into the UMLS and NCI Metathesaurus. Properties of use only to the EVS (e.g. editor 
+notes) are absent in the released terminology.  It also uses semantically meaningless
+rdf:about identifiers as described above.
+
+The file nci_code_cui_map_202402.dat contains the map of NCI Thesaurus (NCIt) codes
+to NCI Metathesaurus (NCIMeta) CUIs (concept unique identifier).  The format of the
+file is code <pipe> CUI <pipe>.  The CUIs are either derived from the UMLS Metathesaurus
+(CUIs that begin with "C-digit") or specific to the NCI Metathesaurus (CUIs that begin
+with "CL").  This mapping file is created for each release of the NCIMeta, which is
+published on a biannually schedule hence is not current with every release of NCIt which
+is published monthly.  Newly created Thesaurus concepts will not appear in this file
+until the next release of the Metathesaurus, and newly retired Thesaurus concepts will
+continue to appear until the next release of the Metathesaurus.  Archived mapping files
+may be found in the archives directory beneath the last release of Thesaurus it was
+generated from.  The current mapping file is derived from NCIt version 26.09d and
+NCIMeta version 202402.
+
+For previous releases of the NCI Thesaurus please see the archives at
+ftp://ftp1.nci.nih.gov/pub/cacore/EVS/NCI_Thesaurus/archive/
+
+For additional information, please see the LexEVS summary page.
+(https://wiki.nci.nih.gov/display/EVS/LexEVS+Servers+and+APIs+Summary)

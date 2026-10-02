@@ -1,0 +1,947 @@
+{
+  "scope": "SYNTHETIC_SOFTWARE_PROBES_NOT_DIAGNOSTIC_ACCURACY",
+  "independent_clinical_validation": false,
+  "cases": [
+    {
+      "id": "guillain_barre_positive",
+      "profile": "tier2:guillain_barre",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "progressive_bilateral_limb_weakness",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "reduced_or_absent_tendon_reflexes",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "guillain_barre_absent",
+      "profile": "tier2:guillain_barre",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "progressive_bilateral_limb_weakness",
+          "status": "absent",
+          "temporality": "current"
+        },
+        {
+          "feature": "reduced_or_absent_tendon_reflexes",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "guillain_barre_uncertain",
+      "profile": "tier2:guillain_barre",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "progressive_bilateral_limb_weakness",
+          "status": "uncertain",
+          "temporality": "current"
+        },
+        {
+          "feature": "reduced_or_absent_tendon_reflexes",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "guillain_barre_historical",
+      "profile": "tier2:guillain_barre",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "progressive_bilateral_limb_weakness",
+          "status": "present",
+          "temporality": "historical"
+        },
+        {
+          "feature": "reduced_or_absent_tendon_reflexes",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "guillain_barre_missing",
+      "profile": "tier2:guillain_barre",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "reduced_or_absent_tendon_reflexes",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "guillain_barre_conflicting",
+      "profile": "tier2:guillain_barre",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "progressive_bilateral_limb_weakness",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "reduced_or_absent_tendon_reflexes",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "progressive_bilateral_limb_weakness",
+          "status": "absent",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "pericarditis_positive",
+      "profile": "tier2:pericarditis",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "pleuritic_or_positional_chest_pain",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "pericardial_rub",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "pericarditis_absent",
+      "profile": "tier2:pericarditis",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "pleuritic_or_positional_chest_pain",
+          "status": "absent",
+          "temporality": "current"
+        },
+        {
+          "feature": "pericardial_rub",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "pericarditis_uncertain",
+      "profile": "tier2:pericarditis",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "pleuritic_or_positional_chest_pain",
+          "status": "uncertain",
+          "temporality": "current"
+        },
+        {
+          "feature": "pericardial_rub",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "pericarditis_historical",
+      "profile": "tier2:pericarditis",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "pleuritic_or_positional_chest_pain",
+          "status": "present",
+          "temporality": "historical"
+        },
+        {
+          "feature": "pericardial_rub",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "pericarditis_missing",
+      "profile": "tier2:pericarditis",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "pericardial_rub",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "pericarditis_conflicting",
+      "profile": "tier2:pericarditis",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "pleuritic_or_positional_chest_pain",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "pericardial_rub",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "pleuritic_or_positional_chest_pain",
+          "status": "absent",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "pheochromocytoma_positive",
+      "profile": "tier2:pheochromocytoma",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "episodic_hypertension",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_headache",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_palpitations",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "pheochromocytoma_absent",
+      "profile": "tier2:pheochromocytoma",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "episodic_hypertension",
+          "status": "absent",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_headache",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_palpitations",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "pheochromocytoma_uncertain",
+      "profile": "tier2:pheochromocytoma",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "episodic_hypertension",
+          "status": "uncertain",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_headache",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_palpitations",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "pheochromocytoma_historical",
+      "profile": "tier2:pheochromocytoma",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "episodic_hypertension",
+          "status": "present",
+          "temporality": "historical"
+        },
+        {
+          "feature": "episodic_headache",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_palpitations",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "pheochromocytoma_missing",
+      "profile": "tier2:pheochromocytoma",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "episodic_headache",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_palpitations",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "pheochromocytoma_conflicting",
+      "profile": "tier2:pheochromocytoma",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "episodic_hypertension",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_headache",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_palpitations",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "episodic_hypertension",
+          "status": "absent",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "fabry_disease_positive",
+      "profile": "tier2:fabry_disease",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "acral_neuropathic_pain",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "angiokeratoma",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "fabry_disease_absent",
+      "profile": "tier2:fabry_disease",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "acral_neuropathic_pain",
+          "status": "absent",
+          "temporality": "current"
+        },
+        {
+          "feature": "angiokeratoma",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "fabry_disease_uncertain",
+      "profile": "tier2:fabry_disease",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "acral_neuropathic_pain",
+          "status": "uncertain",
+          "temporality": "current"
+        },
+        {
+          "feature": "angiokeratoma",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "fabry_disease_historical",
+      "profile": "tier2:fabry_disease",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "acral_neuropathic_pain",
+          "status": "present",
+          "temporality": "historical"
+        },
+        {
+          "feature": "angiokeratoma",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "fabry_disease_missing",
+      "profile": "tier2:fabry_disease",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "angiokeratoma",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "fabry_disease_conflicting",
+      "profile": "tier2:fabry_disease",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "acral_neuropathic_pain",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "angiokeratoma",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "acral_neuropathic_pain",
+          "status": "absent",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "croup_positive",
+      "profile": "tier2:croup",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "barking_cough",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "inspiratory_stridor",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "croup_absent",
+      "profile": "tier2:croup",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "barking_cough",
+          "status": "absent",
+          "temporality": "current"
+        },
+        {
+          "feature": "inspiratory_stridor",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "croup_uncertain",
+      "profile": "tier2:croup",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "barking_cough",
+          "status": "uncertain",
+          "temporality": "current"
+        },
+        {
+          "feature": "inspiratory_stridor",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "croup_historical",
+      "profile": "tier2:croup",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "barking_cough",
+          "status": "present",
+          "temporality": "historical"
+        },
+        {
+          "feature": "inspiratory_stridor",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "croup_missing",
+      "profile": "tier2:croup",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "inspiratory_stridor",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "croup_conflicting",
+      "profile": "tier2:croup",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "barking_cough",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "inspiratory_stridor",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "barking_cough",
+          "status": "absent",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "preeclampsia_positive",
+      "profile": "tier2:preeclampsia",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "new_hypertension_after_20_weeks",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "new_proteinuria",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "preeclampsia_absent",
+      "profile": "tier2:preeclampsia",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "new_hypertension_after_20_weeks",
+          "status": "absent",
+          "temporality": "current"
+        },
+        {
+          "feature": "new_proteinuria",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "preeclampsia_uncertain",
+      "profile": "tier2:preeclampsia",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "new_hypertension_after_20_weeks",
+          "status": "uncertain",
+          "temporality": "current"
+        },
+        {
+          "feature": "new_proteinuria",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "preeclampsia_historical",
+      "profile": "tier2:preeclampsia",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "new_hypertension_after_20_weeks",
+          "status": "present",
+          "temporality": "historical"
+        },
+        {
+          "feature": "new_proteinuria",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "preeclampsia_missing",
+      "profile": "tier2:preeclampsia",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "new_proteinuria",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "preeclampsia_conflicting",
+      "profile": "tier2:preeclampsia",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "new_hypertension_after_20_weeks",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "new_proteinuria",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "new_hypertension_after_20_weeks",
+          "status": "absent",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "acute_kidney_injury_positive",
+      "profile": "tier2:acute_kidney_injury",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "acute_kidney_injury_absent",
+      "profile": "tier2:acute_kidney_injury",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+          "status": "absent",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "acute_kidney_injury_uncertain",
+      "profile": "tier2:acute_kidney_injury",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+          "status": "uncertain",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "acute_kidney_injury_historical",
+      "profile": "tier2:acute_kidney_injury",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+          "status": "present",
+          "temporality": "historical"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "acute_kidney_injury_missing",
+      "profile": "tier2:acute_kidney_injury",
+      "kind": "structured_observation_semantics",
+      "observations": [],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "acute_kidney_injury_conflicting",
+      "profile": "tier2:acute_kidney_injury",
+      "kind": "structured_observation_semantics",
+      "observations": [
+        {
+          "feature": "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+          "status": "absent",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "aki_single_high_value",
+      "profile": "tier2:acute_kidney_injury",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "isolated_creatinine_elevated",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "nephrotoxin_exposure",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "aki_subjective_oliguria",
+      "profile": "tier2:acute_kidney_injury",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "reported_low_urine_output",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "aki_timed_measured_oliguria",
+      "profile": "tier2:acute_kidney_injury",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "urine_output_below_0_5_ml_kg_h_for_at_least_6h",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "aki_serial_ratio",
+      "profile": "tier2:acute_kidney_injury",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "creatinine_at_least_1_5_times_baseline_within_7d",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "preeclampsia_without_proteinuria",
+      "profile": "tier2:preeclampsia",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "new_hypertension_after_20_weeks",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "new_maternal_organ_dysfunction",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "hypertension_only",
+      "profile": "tier2:preeclampsia",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "new_hypertension_after_20_weeks",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "chest_pain_only",
+      "profile": "tier2:pericarditis",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "pleuritic_or_positional_chest_pain",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "chest_pain_and_imaging",
+      "profile": "tier2:pericarditis",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "pleuritic_or_positional_chest_pain",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "imaging_pericardial_inflammation",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "stridor_only",
+      "profile": "tier2:croup",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "inspiratory_stridor",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    },
+    {
+      "id": "barking_and_hoarseness",
+      "profile": "tier2:croup",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "barking_cough",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "hoarse_voice",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "fabry_normal_enzyme_not_exclusion",
+      "profile": "tier2:fabry_disease",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "acral_neuropathic_pain",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "angiokeratoma",
+          "status": "present",
+          "temporality": "current"
+        },
+        {
+          "feature": "normal_alpha_galactosidase_a",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": true
+    },
+    {
+      "id": "metanephrines_alone_need_review",
+      "profile": "tier2:pheochromocytoma",
+      "kind": "author_designed_evidence_contrast",
+      "observations": [
+        {
+          "feature": "plasma_free_metanephrines_elevated",
+          "status": "present",
+          "temporality": "current"
+        }
+      ],
+      "expected_pattern_supported": false
+    }
+  ]
+}
