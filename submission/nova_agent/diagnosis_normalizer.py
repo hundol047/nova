@@ -96,6 +96,13 @@ def same_diagnosis(a: str, b: str) -> bool:
     strings are NEVER considered equal (each is only equal to itself would be a false positive
     for evaluation scoring -- an unmapped guess must not accidentally 'match' an unmapped ground
     truth just because both failed to normalize)."""
+    from nova_agent.ontology.registry import get_default_catalog
+    from nova_agent.ontology.normalizer import normalize
+    cat = get_default_catalog()
+    for key, name in ((a, b), (b, a)):
+        c = cat.get_condition(key.strip()) or cat.get_condition("core:" + key.strip())
+        if c is not None and normalize(c.canonical_name) == normalize(name):
+            return True
     na, nb = normalize_diagnosis(a), normalize_diagnosis(b)
     if na.mapped and nb.mapped:
         return na.canonical_id == nb.canonical_id

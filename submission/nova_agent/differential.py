@@ -51,6 +51,8 @@ _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
 # phrase it belongs to. Deliberately NOT a general medication NLP system: only the drug classes an
 # existing knowledge-base risk_factor already names.
 FEATURE_ALIASES: dict[str, list[str]] = {
+    "appendiceal inflammation": ["inflamed appendix", "appendiceal wall thickening",
+                                  "thickened appendix", "noncompressible appendix"],
     "unilateral pulsating headache": ["throbbing headache", "pounding headache", "one-sided headache",
                                        "one sided headache", "pounding pain", "throbbing pain",
                                        "pulsating pain"],
@@ -82,13 +84,13 @@ FEATURE_ALIASES: dict[str, list[str]] = {
 }
 
 
-def _present_with_aliases(phrase: str, findings: List[str]) -> bool:
+def _present_with_aliases(phrase: str, findings: List[str], strict: bool = False) -> bool:
     """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
     FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase."""
-    if feature_present(phrase, findings, scrub_negated_spans=True):
+    if feature_present(phrase, findings, scrub_negated_spans=True, strict=strict):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
-        if feature_present(alias, findings, scrub_negated_spans=True):
+        if feature_present(alias, findings, scrub_negated_spans=True, strict=strict):
             return True
     return False
 
@@ -139,6 +141,16 @@ class DifferentialItem(BaseModel):
     candidate_sources: List[str] = []
 
 
+
+def has_positive_diagnostic_support(item: DifferentialItem) -> bool:
+    """Risk factors and absent symptoms can adjust a differential, not establish it alone."""
+    from nova_agent.knowledge.retrieval import disease_by_id
+    entry = disease_by_id(item.diagnosis_id) or {}
+    risk_only = {str(x).lower() for x in entry.get("risk_factors", [])}
+    return any(e.lower() not in risk_only and _strip_negative_prefix(e) is None
+               for e in item.supporting_evidence)
+
+
 def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict[str, ObjectiveFinding],
                              supporting: List[str], contradictory: List[str],
                              missing: List[str]) -> Optional[float]:
@@ -171,7 +183,7 @@ def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict
 
 
 def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: List[str],
-                   supporting: List[str], contradictory: List[str], missing: List[str]) -> float:
+                   supporting: List[str], contradictory: List[str], missing: List[str], strict: bool = False) -> float:
     """Negation-aware scoring for ONE typical_feature or confirmatory_finding phrase. Shared by
     both loops in _score_disease() below -- confirmatory_findings previously used a naive
     present-or-not check with no negation awareness at all, which let a phrase like "absent breath
@@ -195,7 +207,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
     if feature_denied(phrase, negatives):
         contradictory.append(phrase)
         return -CONTRADICTION_PENALTY
-    if _present_with_aliases(phrase, findings):
+    if _present_with_aliases(phrase, findings, strict=strict):
         supporting.append(phrase)
         return weight
     missing.append(phrase)
@@ -281,14 +293,22 @@ def _score_disease(entry: dict, state: PatientState,
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 
+    # A past/family report is risk context, not a current objective test result.
+    objective_text = list(state.physical_examinations.values()) + list(state.imaging.values()) + list(state.laboratory_tests.values())
+    seen_lab_evidence = set()
     for finding in entry.get("confirmatory_findings", []):
+        lab_key = CONFIRMATORY_PHRASE_TO_LAB.get(finding.lower())
+        if lab_key is not None:
+            if lab_key in seen_lab_evidence:
+                continue
+            seen_lab_evidence.add(lab_key)
         max_possible += CONFIRMATORY_WEIGHT
         lab_aware_delta = _score_lab_aware_phrase(finding, CONFIRMATORY_WEIGHT, objective_findings,
                                                    supporting, contradictory, missing)
         if lab_aware_delta is not None:
             score += lab_aware_delta
         else:
-            score += _score_phrase(finding, CONFIRMATORY_WEIGHT, findings, negatives, supporting, contradictory, missing)
+            score += _score_phrase(finding, CONFIRMATORY_WEIGHT, objective_text, negatives, supporting, contradictory, missing, strict=True)
 
     # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
     # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in

@@ -36,9 +36,6 @@ _OVERLAP_RATIO_THRESHOLD = 0.6
 # or word-overlap match is attempted, so neither path can see words that were only ever mentioned
 # to be denied. Only removes the local clause, not the rest of a longer finding string, so an
 # unrelated earlier/later clause in the same finding is unaffected.
-_NEGATED_SPAN_PATTERN = re.compile(
-    r"\b(?:no|not|denies|denied|without|absent|negative for)\s+(?:[a-z]+\s*){1,4}", re.IGNORECASE,
-)
 
 
 def _stem(word: str) -> str:
@@ -57,10 +54,14 @@ def content_word_count(text: str) -> int:
 
 
 def _strip_negated_spans(text: str) -> str:
-    return _NEGATED_SPAN_PATTERN.sub(" ", text)
+    # Negation ends at a clause boundary, not an arbitrary four-word window.
+    # Keep affirmative clauses after "but"/"however" rather than erasing the entire report.
+    clauses = re.split(r"[;,\n]|\b(?:but|however)\b", text, flags=re.I)
+    return " ; ".join(re.sub(r"\b(?:no|not|denies|denied|without|absent|negative for)\b.*$", " ", clause, flags=re.I)
+                      for clause in clauses)
 
 
-def feature_present(feature: str, findings_text: List[str], scrub_negated_spans: bool = False) -> bool:
+def feature_present(feature: str, findings_text: List[str], scrub_negated_spans: bool = False, strict: bool = False) -> bool:
     """`scrub_negated_spans=True` is for checking against a general finding bag (e.g.
     state.all_findings_text()) that can contain an EXAM/TEST result embedding an unrelated
     negation in the same string. Leave it False (the default) when checking against
@@ -70,6 +71,16 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
     feature_lower = feature.lower()
     for finding in findings_text:
         finding_lower = _strip_negated_spans(finding.lower()) if scrub_negated_spans else finding.lower()
+        # A prodrome is an explicitly preceding symptom. Preserve that temporal
+        # qualifier instead of requiring patients to use the word "prodrome".
+        if feature_lower.startswith("prodrome of "):
+            symptom = _content_words(feature_lower[len("prodrome of "):])
+            for clause in re.split(r"[;,\n]", finding_lower):
+                before = re.search(r"\b(?:before|preceding|prior to)\b", clause)
+                if before and not re.search(r"\bafter\b", clause[:before.start()]):
+                    preceding_words = _content_words(clause[:before.start()])
+                    if symptom and symptom <= preceding_words:
+                        return True
         # Only the feature-contained-in-finding direction is a safe substring shortcut (a longer
         # finding sentence happens to contain the whole feature phrase verbatim, e.g. feature
         # "diaphoresis" in finding "diaphoresis, nausea, ..."). The reverse direction (finding
@@ -77,12 +88,12 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
         # complaint text "headache" is trivially a substring of almost any longer feature phrase
         # that happens to contain that word (e.g. "worst headache of life"), which would falsely
         # match every such feature regardless of relevance -- so it is deliberately not checked.
-        if feature_lower in finding_lower:
+        if re.search(r"(?<!\w)" + re.escape(feature_lower) + r"(?!\w)", finding_lower):
             return True
         if not feature_content:
             continue
         overlap = feature_content & _content_words(finding_lower)
-        if len(feature_content) <= 2:
+        if strict or len(feature_content) <= 2:
             if overlap == feature_content:
                 return True
         elif len(overlap) / len(feature_content) >= _OVERLAP_RATIO_THRESHOLD:

@@ -1,0 +1,186 @@
+{
+  "scope": "Internally authored synthetic complete-state checks, frozen after implementation. Not clinician-reviewed or a real-patient accuracy estimate. No case is excluded.",
+  "cases": [
+    {
+      "id": "PH01",
+      "complaint": "substernal pressure during exertion",
+      "expected": "acute_coronary_syndrome",
+      "critical": true,
+      "positives": [
+        "diaphoresis",
+        "nausea"
+      ],
+      "tests": {
+        "ecg": "ST elevation in contiguous leads",
+        "troponin": "elevated troponin"
+      }
+    },
+    {
+      "id": "PH02",
+      "complaint": "sudden tearing chest pain radiating to back",
+      "expected": "aortic_dissection",
+      "critical": true,
+      "positives": [
+        "unequal blood pressure between arms"
+      ],
+      "imaging": {
+        "ct_aorta": "Intimal flap demonstrated in the thoracic aorta."
+      }
+    },
+    {
+      "id": "PH03",
+      "complaint": "weakness with confusion",
+      "expected": "hypoglycemia",
+      "critical": false,
+      "tests": {
+        "glucose_point_of_care": "glucose 47 mg/dL"
+      }
+    },
+    {
+      "id": "PH04",
+      "complaint": "generalized weakness",
+      "expected": "severe_electrolyte_disorder",
+      "critical": true,
+      "tests": {
+        "bmp": "Na: 138; K: 7.1 mEq/L"
+      }
+    },
+    {
+      "id": "PH05",
+      "complaint": "abdominal pain",
+      "expected": "appendicitis",
+      "critical": false,
+      "positives": [
+        "periumbilical pain migrating to right lower quadrant",
+        "anorexia"
+      ],
+      "exams": {
+        "abdominal_exam": "Localized right lower quadrant tenderness"
+      },
+      "imaging": {
+        "ct_abdomen": "Appendiceal wall thickening and surrounding inflammatory change."
+      }
+    },
+    {
+      "id": "PH06",
+      "complaint": "black stools and dizziness",
+      "expected": "gi_bleeding",
+      "critical": true,
+      "positives": [
+        "melena",
+        "hematemesis"
+      ],
+      "tests": {
+        "cbc": "Hb: 6.4 g/dL"
+      }
+    },
+    {
+      "id": "PH07",
+      "complaint": "dysuria and urinary frequency",
+      "expected": "uncomplicated_cystitis",
+      "critical": false,
+      "positives": [
+        "urinary urgency",
+        "suprapubic discomfort"
+      ],
+      "negatives": [
+        "no fever",
+        "no flank pain"
+      ],
+      "tests": {
+        "urinalysis": "positive leukocyte esterase; positive nitrites"
+      }
+    },
+    {
+      "id": "PH08",
+      "complaint": "fever with flank pain",
+      "expected": "pyelonephritis",
+      "critical": false,
+      "positives": [
+        "dysuria",
+        "nausea and vomiting"
+      ],
+      "exams": {
+        "costovertebral_tenderness": "costovertebral angle tenderness"
+      },
+      "tests": {
+        "urinalysis": "positive leukocyte esterase; positive nitrites",
+        "cbc": "WBC 17.3"
+      }
+    },
+    {
+      "id": "PH09",
+      "complaint": "cough and fever",
+      "expected": "pneumonia",
+      "critical": false,
+      "positives": [
+        "productive cough",
+        "pleuritic chest pain"
+      ],
+      "imaging": {
+        "cxr": "Focal consolidation in a lower lobe."
+      }
+    },
+    {
+      "id": "PH10",
+      "complaint": "unilateral pulsating headache",
+      "expected": "migraine",
+      "critical": false,
+      "positives": [
+        "photophobia",
+        "phonophobia",
+        "recurrent similar episodes"
+      ],
+      "exams": {
+        "neurological_exam": "no focal neurological deficit"
+      }
+    },
+    {
+      "id": "PH11",
+      "complaint": "routine assessment",
+      "expected": "unknown",
+      "critical": false,
+      "negatives": [
+        "no fever",
+        "no flank pain"
+      ],
+      "tests": {
+        "urinalysis": "negative leukocyte esterase; negative nitrites"
+      }
+    },
+    {
+      "id": "PH12",
+      "complaint": "routine assessment",
+      "expected": "unknown",
+      "critical": false,
+      "tests": {
+        "troponin": "not elevated troponin"
+      },
+      "exams": {
+        "cardiac_auscultation": "regular heart rhythm"
+      }
+    },
+    {
+      "id": "PH13",
+      "complaint": "routine assessment",
+      "expected": "unknown",
+      "critical": false,
+      "family_history": [
+        "A parent had ST elevation with a heart attack."
+      ],
+      "tests": {
+        "ecg": "Normal tracing",
+        "troponin": "negative troponin"
+      }
+    },
+    {
+      "id": "PH14",
+      "complaint": "routine assessment",
+      "expected": "unknown",
+      "critical": false,
+      "tests": {
+        "potassium": "potassium 7.4; specimen hemolyzed, redraw requested"
+      }
+    }
+  ]
+}

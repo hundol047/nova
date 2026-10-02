@@ -1,0 +1,124 @@
+{
+  "fixture_sha256": "60dddfd8265bcbf02d5e8063845b55e7966e17a10e6553052ef837c3dce94e2e",
+  "scope": "synthetic_complete_state_mock",
+  "total": 14,
+  "correct": 14,
+  "critical_total": 4,
+  "critical_correct": 4,
+  "unknown_total": 4,
+  "unknown_correct": 4,
+  "rows": [
+    {
+      "id": "PH01",
+      "expected": "acute_coronary_syndrome",
+      "actual": "Acute Coronary Syndrome",
+      "correct": true,
+      "critical": true,
+      "returned_key": "acute_coronary_syndrome"
+    },
+    {
+      "id": "PH02",
+      "expected": "aortic_dissection",
+      "actual": "Aortic Dissection",
+      "correct": true,
+      "critical": true,
+      "returned_key": "aortic_dissection"
+    },
+    {
+      "id": "PH03",
+      "expected": "hypoglycemia",
+      "actual": "Hypoglycemia",
+      "correct": true,
+      "critical": false,
+      "returned_key": "hypoglycemia"
+    },
+    {
+      "id": "PH04",
+      "expected": "severe_electrolyte_disorder",
+      "actual": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+      "correct": true,
+      "critical": true,
+      "returned_key": "severe_electrolyte_disorder"
+    },
+    {
+      "id": "PH05",
+      "expected": "appendicitis",
+      "actual": "Acute Appendicitis",
+      "correct": true,
+      "critical": false,
+      "returned_key": "appendicitis"
+    },
+    {
+      "id": "PH06",
+      "expected": "gi_bleeding",
+      "actual": "Gastrointestinal Bleeding",
+      "correct": true,
+      "critical": true,
+      "returned_key": "gi_bleeding"
+    },
+    {
+      "id": "PH07",
+      "expected": "uncomplicated_cystitis",
+      "actual": "Uncomplicated Cystitis (Lower UTI)",
+      "correct": true,
+      "critical": false,
+      "returned_key": "uncomplicated_cystitis"
+    },
+    {
+      "id": "PH08",
+      "expected": "pyelonephritis",
+      "actual": "Acute Pyelonephritis",
+      "correct": true,
+      "critical": false,
+      "returned_key": "pyelonephritis"
+    },
+    {
+      "id": "PH09",
+      "expected": "pneumonia",
+      "actual": "Community-Acquired Pneumonia",
+      "correct": true,
+      "critical": false,
+      "returned_key": "pneumonia"
+    },
+    {
+      "id": "PH10",
+      "expected": "migraine",
+      "actual": "Migraine",
+      "correct": true,
+      "critical": false,
+      "returned_key": "migraine"
+    },
+    {
+      "id": "PH11",
+      "expected": "unknown",
+      "actual": "unknown",
+      "correct": true,
+      "critical": false,
+      "returned_key": "unknown"
+    },
+    {
+      "id": "PH12",
+      "expected": "unknown",
+      "actual": "unknown",
+      "correct": true,
+      "critical": false,
+      "returned_key": "unknown"
+    },
+    {
+      "id": "PH13",
+      "expected": "unknown",
+      "actual": "unknown",
+      "correct": true,
+      "critical": false,
+      "returned_key": "unknown"
+    },
+    {
+      "id": "PH14",
+      "expected": "unknown",
+      "actual": "unknown",
+      "correct": true,
+      "critical": false,
+      "returned_key": "unknown"
+    }
+  ]
+}

@@ -146,11 +146,15 @@ class DoctorAgent:
                 for d in result.differential
             ]
             if result.action.action_type == "DIAGNOSE":
-                from nova_agent.diagnosis_normalizer import normalize_diagnosis
-                chosen = normalize_diagnosis(result.action.content)
+                from nova_agent.diagnosis_normalizer import same_diagnosis
                 item = next((d for d in result.differential
-                             if chosen.mapped and normalize_diagnosis(d.diagnosis).canonical_id == chosen.canonical_id), None)
-                if not item or not item.supporting_evidence:
+                             if d.diagnosis_id == result.action.key
+                             and same_diagnosis(d.diagnosis_id, result.action.content)), None)
+                if item is None:
+                    item = next((d for d in result.differential
+                                 if same_diagnosis(d.diagnosis_id, result.action.content)), None)
+                from nova_agent.differential import has_positive_diagnostic_support
+                if not item or not has_positive_diagnostic_support(item):
                     result.action = AgentAction(action_type="DIAGNOSE", key="unknown", content="unknown",
                                                 rationale="Insufficient diagnostic evidence; clinical review required. "
                                                 "Unresolved dangerous alternatives remain in the differential.")

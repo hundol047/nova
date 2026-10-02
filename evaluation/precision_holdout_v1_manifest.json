@@ -1,0 +1,11 @@
+{
+  "file_sha256": "60dddfd8265bcbf02d5e8063845b55e7966e17a10e6553052ef837c3dce94e2e",
+  "baseline_commit": "91e76ac",
+  "frozen_before_first_execution": true,
+  "validation_status": "INTERNAL_SYNTHETIC_REGRESSION_ONLY",
+  "limitations": [
+    "Authored after initial fixes; no independent clinical adjudication.",
+    "Final prodrome/reference-range semantic fixes occurred after the first replay; final results are reference replays, not an untouched holdout.",
+    "Complete observations supplied at a forced final turn; autonomous information gathering is not tested."
+  ]
+}

@@ -22,7 +22,8 @@ from typing import Iterable, Optional
 # Canonical unit token patterns. Kept as word/symbol-boundary-ish regexes so "mg/dl" matches
 # "mg/dL", "mg / dL", "mg/dl" but not a substring of another token.
 _UNIT_PATTERNS = {
-    "mg/dl": re.compile(r"mg\s*/\s*d?l", re.IGNORECASE),
+    "mg/dl": re.compile(r"\bmg\s*/\s*dl\b", re.IGNORECASE),
+    "mg/l": re.compile(r"\bmg\s*/\s*l\b", re.IGNORECASE),
     "mmol/l": re.compile(r"mmol\s*/\s*l", re.IGNORECASE),
     "umol/l": re.compile(r"(?:umol|µmol|μmol)\s*/\s*l", re.IGNORECASE),
     "meq/l": re.compile(r"meq\s*/\s*l", re.IGNORECASE),
