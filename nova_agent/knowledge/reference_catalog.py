@@ -61,7 +61,7 @@ def validate_bundle(raw, manifest, selection, *, expected_count=204, source_kind
 @lru_cache(maxsize=1)
 def reference_candidates():
     combined = {}
-    for directory, count, kind in ((ROOT, 204, 'health_topic'), (GENETICS_ROOT, 748, 'genetics_condition')):
+    for directory, count, kind in ((ROOT, 204, 'health_topic'), (GENETICS_ROOT, 1179, 'genetics_condition')):
         entries = validate_bundle((directory/'catalog.json').read_bytes(),
             json.loads((directory/'manifest.json').read_text()), (directory/'selection.txt').read_bytes(),
             expected_count=count, source_kind=kind)

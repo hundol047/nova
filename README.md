@@ -12,7 +12,7 @@ standalone subprocess run of `submission/`) -- see [Known Limitations](#8-known-
 what is *not* yet verified.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 1389 unit tests, the full local benchmark suite (tuning, held-out,
+- **Code / test CI**: READY -- 1826 unit tests, the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
@@ -30,7 +30,7 @@ what is *not* yet verified.
 
 ## External candidate validation — current status
 
-The current candidate inventory contains 1,020 entries. The paired audit now checks the same complete frozen
+The current candidate inventory contains 1,451 entries. The paired audit now checks the same complete frozen
 case set on two real-model revisions, recomputes errors and critical misses, and reports
 condition-level sample counts plus sensitivity/specificity intervals. Missing cases, mock
 calls and fallbacks cannot pass. Numerical screening never enables a diagnosis automatically.
@@ -39,7 +39,21 @@ calls and fallbacks cannot pass. Numerical screening never enables a diagnosis a
 adjudicated case bundle is available. Zero new conditions have been clinically validated.
 [Commands, screening policy and remaining requirements](docs/EXTERNAL_CANDIDATE_VALIDATION.md).
 
-## 1,020-entry inventory and saved evaluations — 2026-10-02
+## 1,451-entry inventory and local model selection — 2026-10-02
+
+**68 rules + 1,383 reference-only candidates = 1,451 entries**, adding the remaining 431
+non-overlapping source condition candidates. New references remain ineligible for autonomous
+diagnosis. Clinical accuracy has not been measured.
+
+Validation: **1,826 tests passed; existing mock cases stayed 205/205 correct**
+(three unscored cases). This is not a clinical accuracy measurement.
+
+Selected **Qwen3 4B Instruct / Ollama** for local research use. Configuration and a real-response
+check helper are included, but the model-weight download was blocked by this execution
+environment's network. **No real model response, persistent service or retraining is running.**
+[Exact status, setup commands and all 431 additions](docs/CATALOG_1451_AND_MODEL.md).
+
+## Earlier 1,020-entry inventory and saved evaluations — 2026-10-02
 
 **68 rules + 952 reference-only candidates = 1,020 entries**, up from 680 by 340 sourced
 Genetics condition references. Existing entries are preserved. New references cannot authorize

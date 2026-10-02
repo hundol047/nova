@@ -1,14 +1,14 @@
 {
   "catalog_inventory": {
-    "total_entries": 1020,
+    "total_entries": 1451,
     "rule_supported_entries": 68,
-    "reference_only_entries": 952,
+    "reference_only_entries": 1383,
     "clinically_validated_entries": 0,
     "reference_autonomous_diagnosis_enabled": false
   },
   "test_type": "title_lookup_and_provenance_integrity_only",
-  "title_queries": 952,
-  "title_lookup_successes": 952,
+  "title_queries": 1383,
+  "title_lookup_successes": 1383,
   "diagnostic_accuracy": null,
   "independent_clinical_cases": 0,
   "live_model_calls": 0,
@@ -31,14 +31,14 @@
       "source_url": "https://medlineplus.gov/download/ghr-summaries.xml",
       "source_sha256": "fdc8bd614310c12718379cef6569962e5d0e791cecabcc355b53a72816ac263a",
       "source_sha256_scope": "uncompressed_xml_bytes",
-      "catalog_sha256": "ec2b02347dce84b3f0aca29a9a1184b5d1230b586259cfedb8a643133d1d71a7",
-      "selection_sha256": "983820a63501998fa44b3063479fe968625e8eaad294eed0d37cfdd61563346a",
-      "n_reference_candidates": 748,
+      "catalog_sha256": "499f9c86c3447418f627c83ae506c86535b676f66f8d25e5a12895a18e8ba627",
+      "selection_sha256": "fb7f500c523813be828b69058b52cdc023fadfc50773cbb226ec5e2abb407734",
+      "n_reference_candidates": 1179,
       "source_kind": "genetics_condition",
       "attribution": "Source: MedlinePlus, National Library of Medicine.",
       "reuse_terms": "https://medlineplus.gov/about/using/usingcontent/",
       "content_scope": "Public-domain Genetics condition descriptions and synonyms only; no gene/chromosome pages or external database content",
-      "selection_method": "Frozen 748-name engineering selection; stable SHA256 name ordering after normalized name/alias overlap exclusion; not prevalence or clinical priority",
+      "selection_method": "Frozen 1179-name engineering selection; stable SHA256 name ordering after normalized name/alias overlap exclusion; not prevalence or clinical priority",
       "clinical_validation": false,
       "diagnostic_accuracy_measured": false
     }
@@ -4802,6 +4802,2161 @@
     {
       "reference_id": "medlineplus_genetics_zellweger-spectrum-disorder",
       "name": "Zellweger spectrum disorder",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_15q133-microdeletion",
+      "name": "15q13.3 microdeletion",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_17-beta-hydroxysteroid-dehydrogenase-3-deficiency",
+      "name": "17-beta hydroxysteroid dehydrogenase 3 deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_17q12-deletion-syndrome",
+      "name": "17q12 deletion syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_1q211-microdeletion",
+      "name": "1q21.1 microdeletion",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_22q112-duplication",
+      "name": "22q11.2 duplication",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_22q133-deletion-syndrome",
+      "name": "22q13.3 deletion syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_2q37-deletion-syndrome",
+      "name": "2q37 deletion syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_3-hydroxy-3-methylglutaryl-coa-lyase-deficiency",
+      "name": "3-hydroxy-3-methylglutaryl-CoA lyase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_3-methylglutaconyl-coa-hydratase-deficiency",
+      "name": "3-methylglutaconyl-CoA hydratase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_3mc-syndrome",
+      "name": "3MC syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_3q29-microduplication-syndrome",
+      "name": "3q29 microduplication syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_48xxyy-syndrome",
+      "name": "48,XXYY syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_5q-minus-syndrome",
+      "name": "5q minus syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_5q313-microdeletion-syndrome",
+      "name": "5q31.3 microdeletion syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_6q24-related-transient-neonatal-diabetes-mellitus",
+      "name": "6q24-related transient neonatal diabetes mellitus",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_9q223-microdeletion",
+      "name": "9q22.3 microdeletion",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_abdominal-wall-defect",
+      "name": "Abdominal wall defect",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_achondrogenesis",
+      "name": "Achondrogenesis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_activated-pi3k-delta-syndrome",
+      "name": "Activated PI3K-delta syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_acute-necrotizing-encephalopathy-type-1",
+      "name": "Acute necrotizing encephalopathy type 1",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_acute-promyelocytic-leukemia",
+      "name": "Acute promyelocytic leukemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_adams-oliver-syndrome",
+      "name": "Adams-Oliver syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_adcy5-related-dyskinesia",
+      "name": "ADCY5-related dyskinesia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_adenosine-deaminase-2-deficiency",
+      "name": "Adenosine deaminase 2 deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_adenosine-deaminase-deficiency",
+      "name": "Adenosine deaminase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_adiposis-dolorosa",
+      "name": "Adiposis dolorosa",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_adult-polyglucosan-body-disease",
+      "name": "Adult polyglucosan body disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_age-related-hearing-loss",
+      "name": "Age-related hearing loss",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_aldosterone-producing-adenoma",
+      "name": "Aldosterone-producing adenoma",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_alg6-congenital-disorder-of-glycosylation",
+      "name": "ALG6-congenital disorder of glycosylation",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_alpha-mannosidosis",
+      "name": "Alpha-mannosidosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_alveolar-capillary-dysplasia-with-misalignment-of-pulmonary-veins",
+      "name": "Alveolar capillary dysplasia with misalignment of pulmonary veins",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_amelogenesis-imperfecta",
+      "name": "Amelogenesis imperfecta",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_androgenetic-alopecia",
+      "name": "Androgenetic alopecia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_anencephaly",
+      "name": "Anencephaly",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_aniridia",
+      "name": "Aniridia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_ankyrin-b-syndrome",
+      "name": "Ankyrin-B syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_anonychia-congenita",
+      "name": "Anonychia congenita",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_apert-syndrome",
+      "name": "Apert syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_arginase-deficiency",
+      "name": "Arginase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_arginine-vasopressin-resistance",
+      "name": "Arginine vasopressin resistance",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_argininosuccinic-aciduria",
+      "name": "Argininosuccinic aciduria",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_aromatic-l-amino-acid-decarboxylase-deficiency",
+      "name": "Aromatic l-amino acid decarboxylase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_arterial-tortuosity-syndrome",
+      "name": "Arterial tortuosity syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_asparagine-synthetase-deficiency",
+      "name": "Asparagine synthetase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_ataxia-pancytopenia-syndrome",
+      "name": "Ataxia-pancytopenia syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_ataxia-telangiectasia",
+      "name": "Ataxia-telangiectasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_atelosteogenesis-type-3",
+      "name": "Atelosteogenesis type 3",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_autoimmune-addison-disease",
+      "name": "Autoimmune Addison disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_autoimmune-lymphoproliferative-syndrome",
+      "name": "Autoimmune lymphoproliferative syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_autosomal-dominant-cerebellar-ataxia-deafness-and-narcolepsy",
+      "name": "Autosomal dominant cerebellar ataxia, deafness, and narcolepsy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_autosomal-dominant-epilepsy-with-auditory-features",
+      "name": "Autosomal dominant epilepsy with auditory features",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_autosomal-dominant-tubulointerstitial-kidney-disease-umod",
+      "name": "Autosomal dominant tubulointerstitial kidney disease-UMOD",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_autosomal-recessive-axonal-neuropathy-with-neuromyotonia",
+      "name": "Autosomal recessive axonal neuropathy with neuromyotonia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_autosomal-recessive-primary-microcephaly",
+      "name": "Autosomal recessive primary microcephaly",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_axenfeld-rieger-syndrome",
+      "name": "Axenfeld-Rieger syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_baller-gerold-syndrome",
+      "name": "Baller-Gerold syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_bap1-tumor-predisposition-syndrome",
+      "name": "BAP1 tumor predisposition syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_baraitser-winter-syndrome",
+      "name": "Baraitser-Winter syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_bardet-biedl-syndrome",
+      "name": "Bardet-Biedl syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_bare-lymphocyte-syndrome-type-ii",
+      "name": "Bare lymphocyte syndrome type II",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_bartter-syndrome",
+      "name": "Bartter syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_birt-hogg-dube-syndrome",
+      "name": "Birt-Hogg-Dub\u00e9 syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_blepharophimosis-ptosis-and-epicanthus-inversus-syndrome",
+      "name": "Blepharophimosis, ptosis, and epicanthus inversus syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_boomerang-dysplasia",
+      "name": "Boomerang dysplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_bosma-arhinia-microphthalmia-syndrome",
+      "name": "Bosma arhinia microphthalmia syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_boucher-neuhauser-syndrome",
+      "name": "Boucher-Neuh\u00e4user syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_bowen-conradi-syndrome",
+      "name": "Bowen-Conradi syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_bradyopsia",
+      "name": "Bradyopsia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_brain-lung-thyroid-syndrome",
+      "name": "Brain-lung-thyroid syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_branchio-oculo-facial-syndrome",
+      "name": "Branchio-oculo-facial syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_brugada-syndrome",
+      "name": "Brugada syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cantu-syndrome",
+      "name": "Cant\u00fa syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_capillary-malformation-arteriovenous-malformation-syndrome",
+      "name": "Capillary malformation-arteriovenous malformation syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cardiofaciocutaneous-syndrome",
+      "name": "Cardiofaciocutaneous syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_carnitine-palmitoyltransferase-ii-deficiency",
+      "name": "Carnitine palmitoyltransferase II deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_carnitine-acylcarnitine-translocase-deficiency",
+      "name": "Carnitine-acylcarnitine translocase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cask-related-intellectual-disability",
+      "name": "CASK-related intellectual disability",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cav3-related-distal-myopathy",
+      "name": "CAV3-related distal myopathy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cdkl5-deficiency-disorder",
+      "name": "CDKL5 deficiency disorder",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cerebral-autosomal-recessive-arteriopathy-with-subcortical-infarcts-and-leukoencephalopathy",
+      "name": "Cerebral autosomal recessive arteriopathy with subcortical infarcts and leukoencephalopathy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cerebral-cavernous-malformation",
+      "name": "Cerebral cavernous malformation",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cerebral-folate-transport-deficiency",
+      "name": "Cerebral folate transport deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cerebrotendinous-xanthomatosis",
+      "name": "Cerebrotendinous xanthomatosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_chanarin-dorfman-syndrome",
+      "name": "Chanarin-Dorfman syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_channelopathy-associated-congenital-insensitivity-to-pain",
+      "name": "Channelopathy-associated congenital insensitivity to pain",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_charge-syndrome",
+      "name": "CHARGE syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_chd2-myoclonic-encephalopathy",
+      "name": "CHD2 myoclonic encephalopathy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_chediak-higashi-syndrome",
+      "name": "Chediak-Higashi syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_chops-syndrome",
+      "name": "CHOPS syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_chordoma",
+      "name": "Chordoma",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_chronic-atrial-and-intestinal-dysrhythmia",
+      "name": "Chronic atrial and intestinal dysrhythmia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_chylomicron-retention-disease",
+      "name": "Chylomicron retention disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_citrullinemia",
+      "name": "Citrullinemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_clcn2-related-leukoencephalopathy",
+      "name": "CLCN2-related leukoencephalopathy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cleidocranial-dysplasia",
+      "name": "Cleidocranial dysplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cln1-disease",
+      "name": "CLN1 disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cln3-disease",
+      "name": "CLN3 disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cln4-disease",
+      "name": "CLN4 disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cln6-disease",
+      "name": "CLN6 disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_clouston-syndrome",
+      "name": "Clouston syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_coats-plus-syndrome",
+      "name": "Coats plus syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cog5-congenital-disorder-of-glycosylation",
+      "name": "COG5-congenital disorder of glycosylation",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cohen-syndrome",
+      "name": "Cohen syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_col4a1-related-brain-small-vessel-disease",
+      "name": "COL4A1-related brain small-vessel disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_collagen-vi-related-myopathy",
+      "name": "Collagen VI-related dystrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_coloboma",
+      "name": "Coloboma",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_combined-pituitary-hormone-deficiency",
+      "name": "Combined pituitary hormone deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_complement-component-2-deficiency",
+      "name": "Complement component 2 deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_complement-component-8-deficiency",
+      "name": "Complement component 8 deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_complete-lcat-deficiency",
+      "name": "Complete LCAT deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_complete-plasminogen-activator-inhibitor-1-deficiency",
+      "name": "Complete plasminogen activator inhibitor 1 deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_congenital-adrenal-hyperplasia-due-to-11-beta-hydroxylase-deficiency",
+      "name": "Congenital adrenal hyperplasia due to 11-beta-hydroxylase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_congenital-bile-acid-synthesis-defect-type-1",
+      "name": "Congenital bile acid synthesis defect type 1",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_congenital-contractural-arachnodactyly",
+      "name": "Congenital contractural arachnodactyly",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_congenital-dyserythropoietic-anemia",
+      "name": "Congenital dyserythropoietic anemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_congenital-hyperinsulinism",
+      "name": "Congenital hyperinsulinism",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_congenital-hypothyroidism",
+      "name": "Congenital hypothyroidism",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_congenital-myasthenic-syndrome",
+      "name": "Congenital myasthenic syndromes",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_congenital-nephrotic-syndrome",
+      "name": "Congenital nephrotic syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_congenital-sucrase-isomaltase-deficiency",
+      "name": "Congenital sucrase-isomaltase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_constitutional-mismatch-repair-deficiency-syndrome",
+      "name": "Constitutional mismatch repair deficiency syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_core-binding-factor-acute-myeloid-leukemia",
+      "name": "Core binding factor acute myeloid leukemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_costello-syndrome",
+      "name": "Costello syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_craniofacial-microsomia",
+      "name": "Craniofacial microsomia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_craniofacial-deafness-hand-syndrome",
+      "name": "Craniofacial-deafness-hand syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_critical-congenital-heart-disease",
+      "name": "Critical congenital heart disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cryptogenic-cirrhosis",
+      "name": "Cryptogenic cirrhosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cyclic-neutropenia",
+      "name": "Cyclic neutropenia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cyclic-vomiting-syndrome",
+      "name": "Cyclic vomiting syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cystinosis",
+      "name": "Cystinosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cystinuria",
+      "name": "Cystinuria",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_cytogenetically-normal-acute-myeloid-leukemia",
+      "name": "Cytogenetically normal acute myeloid leukemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_d-bifunctional-protein-deficiency",
+      "name": "D-bifunctional protein deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_darier-disease",
+      "name": "Darier disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_deafness-dystonia-optic-neuronopathy-syndrome",
+      "name": "Deafness-dystonia-optic neuronopathy syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_deafness-infertility-syndrome",
+      "name": "Deafness-infertility syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_dent-disease",
+      "name": "Dent disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_denys-drash-syndrome",
+      "name": "Denys-Drash syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_dermatofibrosarcoma-protuberans",
+      "name": "Dermatofibrosarcoma protuberans",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_desmoid-tumor",
+      "name": "Desmoid tumor",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_developmental-and-epileptic-encephalopathy-1",
+      "name": "Developmental and epileptic encephalopathy 1",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_diamond-blackfan-anemia",
+      "name": "Diamond-Blackfan anemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_diastrophic-dysplasia",
+      "name": "Diastrophic dysplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_dicer1-syndrome",
+      "name": "DICER1 syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_distal-arthrogryposis-type-1",
+      "name": "Distal arthrogryposis type 1",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_donohue-syndrome",
+      "name": "Donohue syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_dubin-johnson-syndrome",
+      "name": "Dubin-Johnson syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_dysequilibrium-syndrome",
+      "name": "Dysequilibrium syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_dystonia-6",
+      "name": "Dystonia 6",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_dystrophic-epidermolysis-bullosa",
+      "name": "Dystrophic epidermolysis bullosa",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_early-onset-glaucoma",
+      "name": "Early-onset glaucoma",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_early-onset-isolated-dystonia",
+      "name": "Early-onset isolated dystonia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_ellis-van-creveld-syndrome",
+      "name": "Ellis-van Creveld syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_encephalocraniocutaneous-lipomatosis",
+      "name": "Encephalocraniocutaneous lipomatosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_epidermal-nevus",
+      "name": "Epidermal nevus",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_epilepsy-aphasia-spectrum",
+      "name": "Epilepsy-aphasia spectrum",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_erdheim-chester-disease",
+      "name": "Erdheim-Chester disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_erythromelalgia",
+      "name": "Erythromelalgia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_essential-pentosuria",
+      "name": "Essential pentosuria",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_essential-thrombocythemia",
+      "name": "Essential thrombocythemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_fabry-disease",
+      "name": "Fabry disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_facioscapulohumeral-muscular-dystrophy",
+      "name": "Facioscapulohumeral muscular dystrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_factor-v-deficiency",
+      "name": "Factor V deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_factor-v-leiden-thrombophilia",
+      "name": "Factor V Leiden thrombophilia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_factor-vii-deficiency",
+      "name": "Factor VII deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_factor-x-deficiency",
+      "name": "Factor X deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_factor-xiii-deficiency",
+      "name": "Factor XIII deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_familial-adenomatous-polyposis",
+      "name": "Familial adenomatous polyposis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_familial-atrial-fibrillation",
+      "name": "Familial atrial fibrillation",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_familial-dysautonomia",
+      "name": "Familial dysautonomia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_familial-exudative-vitreoretinopathy",
+      "name": "Familial exudative vitreoretinopathy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_familial-focal-epilepsy-with-variable-foci",
+      "name": "Familial focal epilepsy with variable foci",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_familial-isolated-hyperparathyroidism",
+      "name": "Familial isolated hyperparathyroidism",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_familial-paroxysmal-nonkinesigenic-dyskinesia",
+      "name": "Familial paroxysmal nonkinesigenic dyskinesia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_familial-pityriasis-rubra-pilaris",
+      "name": "Familial pityriasis rubra pilaris",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_farber-lipogranulomatosis",
+      "name": "Farber lipogranulomatosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_fatty-acid-hydroxylase-associated-neurodegeneration",
+      "name": "Fatty acid hydroxylase-associated neurodegeneration",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_feingold-syndrome",
+      "name": "Feingold syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_fg-syndrome",
+      "name": "FG syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_fibrochondrogenesis",
+      "name": "Fibrochondrogenesis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_fish-eye-disease",
+      "name": "Fish-eye disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_focal-dermal-hypoplasia",
+      "name": "Focal dermal hypoplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_fragile-x-syndrome",
+      "name": "Fragile X syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_fragile-x-associated-primary-ovarian-insufficiency",
+      "name": "Fragile X-associated primary ovarian insufficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_fragile-x-associated-tremor-ataxia-syndrome",
+      "name": "Fragile X-associated tremor/ataxia syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_frasier-syndrome",
+      "name": "Frasier syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_free-sialic-acid-storage-disorder",
+      "name": "Free sialic acid storage disorder",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_fukuyama-congenital-muscular-dystrophy",
+      "name": "Fukuyama congenital muscular dystrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_gaba-transaminase-deficiency",
+      "name": "GABA-transaminase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_galactosialidosis",
+      "name": "Galactosialidosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_generalized-arterial-calcification-of-infancy",
+      "name": "Generalized arterial calcification of infancy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_gestational-diabetes",
+      "name": "Gestational diabetes",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_giant-axonal-neuropathy",
+      "name": "Giant axonal neuropathy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_gilbert-syndrome",
+      "name": "Gilbert syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_gillespie-syndrome",
+      "name": "Gillespie syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_globozoospermia",
+      "name": "Globozoospermia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_glutaric-acidemia-type-i",
+      "name": "Glutaric acidemia type I",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_glutaric-acidemia-type-ii",
+      "name": "Glutaric acidemia type II",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_glycogen-storage-disease-type-0",
+      "name": "Glycogen storage disease type 0",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_gm2-activator-deficiency",
+      "name": "GM2 activator deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_gracile-syndrome",
+      "name": "GRACILE syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_grange-syndrome",
+      "name": "Grange syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_graves-disease",
+      "name": "Graves' disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_greenberg-dysplasia",
+      "name": "Greenberg dysplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_greig-cephalopolysyndactyly-syndrome",
+      "name": "Greig cephalopolysyndactyly syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_gyrate-atrophy-of-the-choroid-and-retina",
+      "name": "Gyrate atrophy of the choroid and retina",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hailey-hailey-disease",
+      "name": "Hailey-Hailey disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hajdu-cheney-syndrome",
+      "name": "Hajdu-Cheney syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_harlequin-ichthyosis",
+      "name": "Harlequin ichthyosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hereditary-diffuse-gastric-cancer",
+      "name": "Hereditary diffuse gastric cancer",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hereditary-folate-malabsorption",
+      "name": "Hereditary folate malabsorption",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hereditary-myopathy-with-early-respiratory-failure",
+      "name": "Hereditary myopathy with early respiratory failure",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hereditary-pancreatitis",
+      "name": "Hereditary pancreatitis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_heterotaxy-syndrome",
+      "name": "Heterotaxy syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hivep2-related-intellectual-disability",
+      "name": "HIVEP2-related intellectual disability",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_holocarboxylase-synthetase-deficiency",
+      "name": "Holocarboxylase synthetase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_homocystinuria",
+      "name": "Homocystinuria",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_horner-syndrome",
+      "name": "Horner syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hsd10-disease",
+      "name": "HSD10 disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hyperferritinemia-cataract-syndrome",
+      "name": "Hyperferritinemia-cataract syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hypermanganesemia-with-dystonia",
+      "name": "Hypermanganesemia with dystonia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hyperprolinemia",
+      "name": "Hyperprolinemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hypomagnesemia-with-secondary-hypocalcemia",
+      "name": "Hypomagnesemia with secondary hypocalcemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hypomyelination-with-brainstem-and-spinal-cord-involvement-and-leg-spasticity",
+      "name": "Hypomyelination with brainstem and spinal cord involvement and leg spasticity",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_hypophosphatasia",
+      "name": "Hypophosphatasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_immune-dysregulation-polyendocrinopathy-enteropathy-x-linked-syndrome",
+      "name": "Immune dysregulation, polyendocrinopathy, enteropathy, X-linked syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_incontinentia-pigmenti",
+      "name": "Incontinentia pigmenti",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_infantile-neuroaxonal-dystrophy",
+      "name": "Infantile neuroaxonal dystrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_iron-refractory-iron-deficiency-anemia",
+      "name": "Iron-refractory iron deficiency anemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_isobutyryl-coa-dehydrogenase-deficiency",
+      "name": "Isobutyryl-CoA dehydrogenase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_jacobsen-syndrome",
+      "name": "Jacobsen syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_jak3-deficient-severe-combined-immunodeficiency",
+      "name": "JAK3-deficient severe combined immunodeficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_joubert-syndrome",
+      "name": "Joubert syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_junctional-epidermolysis-bullosa",
+      "name": "Junctional epidermolysis bullosa",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_juvenile-paget-disease",
+      "name": "Juvenile Paget disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_juvenile-primary-osteoporosis",
+      "name": "Juvenile primary osteoporosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_kabuki-syndrome",
+      "name": "Kabuki syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_kaufman-oculocerebrofacial-syndrome",
+      "name": "Kaufman oculocerebrofacial syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_kbg-syndrome",
+      "name": "KBG syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_kearns-sayre-syndrome",
+      "name": "Kearns-Sayre syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_kniest-dysplasia",
+      "name": "Kniest dysplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_koolen-de-vries-syndrome",
+      "name": "Koolen-de Vries syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_krabbe-disease",
+      "name": "Krabbe disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_lacrimo-auriculo-dento-digital-syndrome",
+      "name": "Lacrimo-auriculo-dento-digital syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_larsen-syndrome",
+      "name": "Larsen syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_lattice-corneal-dystrophy-type-i",
+      "name": "Lattice corneal dystrophy type I",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_lattice-corneal-dystrophy-type-ii",
+      "name": "Lattice corneal dystrophy type II",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_left-ventricular-noncompaction",
+      "name": "Left ventricular noncompaction",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_legius-syndrome",
+      "name": "Legius syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_leigh-syndrome",
+      "name": "Leigh syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_leprosy",
+      "name": "Leprosy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_leptin-receptor-deficiency",
+      "name": "Leptin receptor deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_leukocyte-adhesion-deficiency-type-1",
+      "name": "Leukocyte adhesion deficiency type 1",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_leukoencephalopathy-with-vanishing-white-matter",
+      "name": "Leukoencephalopathy with vanishing white matter",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_li-fraumeni-syndrome",
+      "name": "Li-Fraumeni syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_liddle-syndrome",
+      "name": "Liddle syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_limb-girdle-muscular-dystrophy",
+      "name": "Limb-girdle muscular dystrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_lmna-related-congenital-muscular-dystrophy",
+      "name": "LMNA-related congenital muscular dystrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_loeys-dietz-syndrome",
+      "name": "Loeys-Dietz syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_lowe-syndrome",
+      "name": "Lowe syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_lymphangioleiomyomatosis",
+      "name": "Lymphangioleiomyomatosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_lysosomal-acid-lipase-deficiency",
+      "name": "Lysosomal acid lipase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_leri-weill-dyschondrosteosis",
+      "name": "L\u00e9ri-Weill dyschondrosteosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mainzer-saldino-syndrome",
+      "name": "Mainzer-Saldino syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mannose-binding-lectin-deficiency",
+      "name": "Mannose-binding lectin deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_marfan-syndrome",
+      "name": "Marfan syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_maternally-inherited-diabetes-and-deafness",
+      "name": "Maternally inherited diabetes and deafness",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mayer-rokitansky-kuster-hauser-syndrome",
+      "name": "Mayer-Rokitansky-K\u00fcster-Hauser syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mccune-albright-syndrome",
+      "name": "McCune-Albright syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mcleod-neuroacanthocytosis-syndrome",
+      "name": "McLeod neuroacanthocytosis syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_med13l-syndrome",
+      "name": "MED13L syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_megalencephaly-capillary-malformation-syndrome",
+      "name": "Megalencephaly-capillary malformation syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_megalencephaly-polymicrogyria-polydactyly-hydrocephalus-syndrome",
+      "name": "Megalencephaly-polymicrogyria-polydactyly-hydrocephalus syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_megdel-syndrome",
+      "name": "MEGDEL syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_metabolic-dysfunction-associated-steatotic-liver-disease",
+      "name": "Metabolic dysfunction-associated steatotic liver disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_methylmalonic-acidemia-with-homocystinuria",
+      "name": "Methylmalonic acidemia with homocystinuria",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_microcephaly-capillary-malformation-syndrome",
+      "name": "Microcephaly-capillary malformation syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mitochondrial-membrane-protein-associated-neurodegeneration",
+      "name": "Mitochondrial membrane protein-associated neurodegeneration",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_moebius-syndrome",
+      "name": "Moebius syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_monoamine-oxidase-a-deficiency",
+      "name": "Monoamine oxidase A deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mosaic-variegated-aneuploidy-syndrome",
+      "name": "Mosaic variegated aneuploidy syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mowat-wilson-syndrome",
+      "name": "Mowat-Wilson syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mpv17-related-hepatocerebral-mitochondrial-dna-depletion-syndrome",
+      "name": "MPV17-related hepatocerebral mitochondrial DNA depletion syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mucopolysaccharidosis-type-i",
+      "name": "Mucopolysaccharidosis type I",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mucopolysaccharidosis-type-ii",
+      "name": "Mucopolysaccharidosis type II",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mucopolysaccharidosis-type-iv",
+      "name": "Mucopolysaccharidosis type IV",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_multiple-cutaneous-and-mucosal-venous-malformations",
+      "name": "Multiple cutaneous and mucosal venous malformations",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_multiple-endocrine-neoplasia",
+      "name": "Multiple endocrine neoplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_multiple-mitochondrial-dysfunctions-syndrome",
+      "name": "Multiple mitochondrial dysfunctions syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_multiple-sulfatase-deficiency",
+      "name": "Multiple sulfatase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_mycosis-fungoides",
+      "name": "Mycosis fungoides",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_myhre-syndrome",
+      "name": "Myhre syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_myopathy-with-deficiency-of-iron-sulfur-cluster-assembly-enzyme",
+      "name": "Myopathy with deficiency of iron-sulfur cluster assembly enzyme",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_nager-syndrome",
+      "name": "Nager syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_nail-patella-syndrome",
+      "name": "Nail-patella syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_nakajo-nishimura-syndrome",
+      "name": "Nakajo-Nishimura syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_narcolepsy",
+      "name": "Narcolepsy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_neurofibromatosis-type-1",
+      "name": "Neurofibromatosis type 1",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_neurofibromatosis-type-2",
+      "name": "Neurofibromatosis type 2",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_neuromyelitis-optica",
+      "name": "Neuromyelitis optica",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_neuropathy-ataxia-and-retinitis-pigmentosa",
+      "name": "Neuropathy, ataxia, and retinitis pigmentosa",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_niemann-pick-disease",
+      "name": "Niemann-Pick disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_nonbullous-congenital-ichthyosiform-erythroderma",
+      "name": "Nonbullous congenital ichthyosiform erythroderma",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_obstructive-sleep-apnea",
+      "name": "Obstructive sleep apnea",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_oculodentodigital-dysplasia",
+      "name": "Oculodentodigital dysplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_oculopharyngeal-muscular-dystrophy",
+      "name": "Oculopharyngeal muscular dystrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_ohdo-syndrome-maat-kievit-brunner-type",
+      "name": "Ohdo syndrome, Maat-Kievit-Brunner type",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_ohdo-syndrome-say-barber-biesecker-young-simpson-variant",
+      "name": "Ohdo syndrome, Say-Barber-Biesecker-Young-Simpson variant",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_oral-facial-digital-syndrome",
+      "name": "Oral-facial-digital syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_pacs1-syndrome",
+      "name": "PACS1 syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_pantothenate-kinase-associated-neurodegeneration",
+      "name": "Pantothenate kinase-associated neurodegeneration",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_parathyroid-cancer",
+      "name": "Parathyroid cancer",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_parkes-weber-syndrome",
+      "name": "Parkes Weber syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_paroxysmal-extreme-pain-disorder",
+      "name": "Paroxysmal extreme pain disorder",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_pdgfra-associated-chronic-eosinophilic-leukemia",
+      "name": "PDGFRA-associated chronic eosinophilic leukemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_peeling-skin-syndrome-2",
+      "name": "Peeling skin syndrome 2",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_pelizaeus-merzbacher-disease",
+      "name": "Pelizaeus-Merzbacher disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_permanent-neonatal-diabetes-mellitus",
+      "name": "Permanent neonatal diabetes mellitus",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_perrault-syndrome",
+      "name": "Perrault syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_phosphoglycerate-mutase-deficiency",
+      "name": "Phosphoglycerate mutase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_phosphoribosylpyrophosphate-synthetase-superactivity",
+      "name": "Phosphoribosylpyrophosphate synthetase superactivity",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_pilomatricoma",
+      "name": "Pilomatricoma",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_platyspondylic-dysplasia-torrance-type",
+      "name": "Platyspondylic dysplasia, Torrance type",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_polycystic-lipomembranous-osteodysplasia-with-sclerosing-leukoencephalopathy",
+      "name": "Polycystic lipomembranous osteodysplasia with sclerosing leukoencephalopathy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_pontocerebellar-hypoplasia",
+      "name": "Pontocerebellar hypoplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_potocki-shaffer-syndrome",
+      "name": "Potocki-Shaffer syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_ppp2r5d-related-intellectual-disability",
+      "name": "PPP2R5D-related intellectual disability",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_prader-willi-syndrome",
+      "name": "Prader-Willi syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_preeclampsia",
+      "name": "Preeclampsia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_prekallikrein-deficiency",
+      "name": "Prekallikrein deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_prickle1-related-progressive-myoclonus-epilepsy-with-ataxia",
+      "name": "PRICKLE1-related progressive myoclonus epilepsy with ataxia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_primary-ciliary-dyskinesia",
+      "name": "Primary ciliary dyskinesia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_primary-coenzyme-q10-deficiency",
+      "name": "Primary coenzyme Q10 deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_primary-familial-brain-calcification",
+      "name": "Primary familial brain calcification",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_primary-localized-cutaneous-amyloidosis",
+      "name": "Primary localized cutaneous amyloidosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_primary-macronodular-adrenal-hyperplasia",
+      "name": "Primary macronodular adrenal hyperplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_progressive-familial-heart-block",
+      "name": "Progressive familial heart block",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_progressive-pseudorheumatoid-dysplasia",
+      "name": "Progressive pseudorheumatoid dysplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_prolidase-deficiency",
+      "name": "Prolidase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_protein-c-deficiency",
+      "name": "Protein C deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_proteus-syndrome",
+      "name": "Proteus syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_pseudocholinesterase-deficiency",
+      "name": "Pseudocholinesterase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_pseudohypoaldosteronism-type-2",
+      "name": "Pseudohypoaldosteronism type 2",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_purine-nucleoside-phosphorylase-deficiency",
+      "name": "Purine nucleoside phosphorylase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_pyruvate-carboxylase-deficiency",
+      "name": "Pyruvate carboxylase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_recurrent-hydatidiform-mole",
+      "name": "Recurrent hydatidiform mole",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_refsum-disease",
+      "name": "Refsum disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_renal-tubular-acidosis-with-deafness",
+      "name": "Renal tubular acidosis with deafness",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_renpenning-syndrome",
+      "name": "Renpenning syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_retinal-arterial-macroaneurysm-with-supravalvular-pulmonic-stenosis",
+      "name": "Retinal arterial macroaneurysm with supravalvular pulmonic stenosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_retinitis-pigmentosa",
+      "name": "Retinitis pigmentosa",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_rigid-spine-muscular-dystrophy",
+      "name": "Rigid spine muscular dystrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_rippling-muscle-disease",
+      "name": "Rippling muscle disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_rnase-t2-deficient-leukoencephalopathy",
+      "name": "RNAse T2-deficient leukoencephalopathy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_roberts-syndrome",
+      "name": "Roberts syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_saethre-chotzen-syndrome",
+      "name": "Saethre-Chotzen syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_sandhoff-disease",
+      "name": "Sandhoff disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_saul-wilson-syndrome",
+      "name": "Saul-Wilson syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_schimke-immuno-osseous-dysplasia",
+      "name": "Schimke immuno-osseous dysplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_schizoaffective-disorder",
+      "name": "Schizoaffective disorder",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_schwannomatosis",
+      "name": "Schwannomatosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_short-stature-hyperextensibility-hernia-ocular-depression-rieger-anomaly-and-teething-delay",
+      "name": "Short stature, hyperextensibility, hernia, ocular depression, Rieger anomaly, and teething delay",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_sialidosis",
+      "name": "Sialidosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_silver-syndrome",
+      "name": "Silver syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spastic-paraplegia-type-15",
+      "name": "Spastic paraplegia type 15",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spastic-paraplegia-type-3a",
+      "name": "Spastic paraplegia type 3A",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spastic-paraplegia-type-4",
+      "name": "Spastic paraplegia type 4",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spastic-paraplegia-type-5a",
+      "name": "Spastic paraplegia type 5A",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spastic-paraplegia-type-7",
+      "name": "Spastic paraplegia type 7",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spina-bifida",
+      "name": "Spina bifida",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spinal-and-bulbar-muscular-atrophy",
+      "name": "Spinal and bulbar muscular atrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spinocerebellar-ataxia-type-2",
+      "name": "Spinocerebellar ataxia type 2",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spinocerebellar-ataxia-type-36",
+      "name": "Spinocerebellar ataxia type 36",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spondyloenchondrodysplasia-with-immune-dysregulation",
+      "name": "Spondyloenchondrodysplasia with immune dysregulation",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spondyloepiphyseal-dysplasia-congenita",
+      "name": "Spondyloepiphyseal dysplasia congenita",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spondyloepiphyseal-dysplasia-with-marked-metaphyseal-changes",
+      "name": "Spondyloepiphyseal dysplasia with marked metaphyseal changes",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spondyloepiphyseal-dysplasia-with-metatarsal-shortening",
+      "name": "Spondyloepiphyseal dysplasia with metatarsal shortening",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_spondyloperipheral-dysplasia",
+      "name": "Spondyloperipheral dysplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_sporadic-hemiplegic-migraine",
+      "name": "Sporadic hemiplegic migraine",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_stac3-disorder",
+      "name": "STAC3 disorder",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_steatocystoma-multiplex",
+      "name": "Steatocystoma multiplex",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_stevens-johnson-syndrome-toxic-epidermal-necrolysis",
+      "name": "Stevens-Johnson syndrome/toxic epidermal necrolysis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_stickler-syndrome",
+      "name": "Stickler syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_stxbp1-encephalopathy",
+      "name": "STXBP1 encephalopathy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_subcortical-band-heterotopia",
+      "name": "Subcortical band heterotopia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_succinic-semialdehyde-dehydrogenase-deficiency",
+      "name": "Succinic semialdehyde dehydrogenase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_supravalvular-aortic-stenosis",
+      "name": "Supravalvular aortic stenosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_swyer-syndrome",
+      "name": "Swyer syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_syngap1-related-intellectual-disability",
+      "name": "SYNGAP1-related intellectual disability",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_systemic-mastocytosis",
+      "name": "Systemic mastocytosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_sezary-syndrome",
+      "name": "S\u00e9zary syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_tangier-disease",
+      "name": "Tangier disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_task-specific-focal-dystonia",
+      "name": "Task-specific focal dystonia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_tetrahydrobiopterin-deficiency",
+      "name": "Tetrahydrobiopterin deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_thanatophoric-dysplasia",
+      "name": "Thanatophoric dysplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_thrombocytopenia-absent-radius-syndrome",
+      "name": "Thrombocytopenia-absent radius syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_tietz-syndrome",
+      "name": "Tietz syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_trichothiodystrophy",
+      "name": "Trichothiodystrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_trisomy-x",
+      "name": "Trisomy X",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_tyrosine-hydroxylase-deficiency",
+      "name": "Tyrosine hydroxylase deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_unc80-deficiency",
+      "name": "UNC80 deficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_usher-syndrome",
+      "name": "Usher syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_uv-sensitive-syndrome",
+      "name": "UV-sensitive syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_vexas-syndrome",
+      "name": "VEXAS syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_vitamin-d-dependent-rickets",
+      "name": "Vitamin D-dependent rickets",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_vitelliform-macular-dystrophy",
+      "name": "Vitelliform macular dystrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_vohwinkel-syndrome",
+      "name": "Vohwinkel syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_von-hippel-lindau-syndrome",
+      "name": "Von Hippel-Lindau syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_von-willebrand-disease",
+      "name": "Von Willebrand disease",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_waardenburg-syndrome",
+      "name": "Waardenburg syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_walker-warburg-syndrome",
+      "name": "Walker-Warburg syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_warfarin-resistance",
+      "name": "Warfarin resistance",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_warfarin-sensitivity",
+      "name": "Warfarin sensitivity",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_weyers-acrofacial-dysostosis",
+      "name": "Weyers acrofacial dysostosis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_white-sponge-nevus",
+      "name": "White sponge nevus",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_white-sutton-syndrome",
+      "name": "White-Sutton syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_wilms-tumor",
+      "name": "Wilms tumor",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_winchester-syndrome",
+      "name": "Winchester syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-adrenal-hypoplasia-congenita",
+      "name": "X-linked adrenal hypoplasia congenita",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-dilated-cardiomyopathy",
+      "name": "X-linked dilated cardiomyopathy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-hyper-igm-syndrome",
+      "name": "X-linked hyper IgM syndrome",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-hypophosphatemia",
+      "name": "X-linked hypophosphatemia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-immunodeficiency-with-magnesium-defect-epstein-barr-virus-infection-and-neoplasia",
+      "name": "X-linked immunodeficiency with magnesium defect, Epstein-Barr virus infection, and neoplasia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-infantile-spinal-muscular-atrophy",
+      "name": "X-linked infantile spinal muscular atrophy",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-intellectual-disability-siderius-type",
+      "name": "X-linked intellectual disability, Siderius type",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-juvenile-retinoschisis",
+      "name": "X-linked juvenile retinoschisis",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-severe-combined-immunodeficiency",
+      "name": "X-linked severe combined immunodeficiency",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-spondyloepiphyseal-dysplasia-tarda",
+      "name": "X-linked spondyloepiphyseal dysplasia tarda",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_x-linked-thrombocytopenia",
+      "name": "X-linked thrombocytopenia",
+      "retrieved_first": true
+    },
+    {
+      "reference_id": "medlineplus_genetics_yuan-harel-lupski-syndrome",
+      "name": "Yuan-Harel-Lupski syndrome",
       "retrieved_first": true
     }
   ]

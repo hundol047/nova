@@ -1,0 +1,13 @@
+{
+  "provider": "local",
+  "model": "qwen3:4b-instruct",
+  "base_url": "http://127.0.0.1:11434/v1",
+  "temperature": 0.0,
+  "max_tokens": 2048,
+  "timeout_seconds": 180,
+  "max_retries": 0,
+  "clinical_validation": false,
+  "automatic_training_enabled": false,
+  "purpose": "Research integration and evaluation only; not a clinically validated diagnostic model",
+  "model_source": "https://ollama.com/library/qwen3:4b-instruct"
+}

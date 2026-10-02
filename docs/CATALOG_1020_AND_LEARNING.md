@@ -1,4 +1,7 @@
-# 1,020-entry candidate inventory and reusable evaluation archive
+# 1,020-entry candidate inventory and reusable evaluation archive (historical)
+
+Current inventory and model status: [1,451 entries](CATALOG_1451_AND_MODEL.md). Counts below
+describe the earlier revision; current report files have since been updated.
 
 The previous 680 entries are preserved and 340 Genetics condition references are added:
 **68 diagnostic rules + 204 health-topic references + 748 Genetics references = 1,020 entries**.

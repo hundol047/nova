@@ -53,8 +53,8 @@ def read_conditions(path):
 def build(path, destination=DEST):
     raw, available = read_conditions(path)
     selected = (destination / 'selection.txt').read_text().splitlines()
-    if len(selected) != 748 or len(set(selected)) != 748:
-        raise ValueError('Expected 748 distinct selected conditions')
+    if len(selected) != 1179 or len(set(selected)) != 1179:
+        raise ValueError('Expected 1179 distinct selected conditions')
     by_name = {e['name']: e for e in available}
     entries = [by_name[name] for name in selected]
     payload = (json.dumps(entries, ensure_ascii=False, indent=2) + '\n').encode()
@@ -65,7 +65,7 @@ def build(path, destination=DEST):
         'n_reference_candidates': len(entries), 'source_kind': 'genetics_condition',
         'attribution': ATTRIBUTION, 'reuse_terms': 'https://medlineplus.gov/about/using/usingcontent/',
         'content_scope': 'Public-domain Genetics condition descriptions and synonyms only; no gene/chromosome pages or external database content',
-        'selection_method': 'Frozen 748-name engineering selection; stable SHA256 name ordering after normalized name/alias overlap exclusion; not prevalence or clinical priority',
+        'selection_method': 'Frozen 1179-name engineering selection; stable SHA256 name ordering after normalized name/alias overlap exclusion; not prevalence or clinical priority',
         'clinical_validation': False, 'diagnostic_accuracy_measured': False}
     (destination / 'catalog.json').write_bytes(payload)
     (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')

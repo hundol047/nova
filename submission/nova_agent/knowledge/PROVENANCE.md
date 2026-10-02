@@ -116,3 +116,12 @@ retaining the previous 408 entries. The Genetics bundle now contains 748 referen
 with 204 health-topic references and 68 rules the inventory contains 1,020 entries. No new
 clinical validation or autonomous reference diagnoses are enabled. See
 `docs/CATALOG_1020_AND_LEARNING.md` for selection and archival limitations.
+
+
+## 1,451-entry revision (2026-10-02 Asia/Seoul)
+
+Added the remaining 431 non-overlapping Genetics condition references from the same retained
+source XML. There are now 1,179 Genetics references, 204 health-topic references and 68 rules.
+Prior entries and reference-only eligibility are preserved. The source's excluded entries
+collided under normalized names/aliases, not a clinical equivalence review. See
+`docs/CATALOG_1451_AND_MODEL.md` for scope and model integration limitations.

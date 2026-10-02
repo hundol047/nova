@@ -4112,14 +4112,14 @@
     }
   },
   "passed": true,
-  "source_sha256": "9e6cd5bdec78146a854ebe92d6df2e5aff3c19c900922f182f5b5082d525c259",
+  "source_sha256": "463d03776984bbec9b0173a6796f794ea6eb7e9e73b536bf3b48adb6b45a159e",
   "catalog_inventory": {
-    "total_entries": 1020,
+    "total_entries": 1451,
     "rule_supported_entries": 68,
-    "reference_only_entries": 952,
+    "reference_only_entries": 1383,
     "clinically_validated_entries": 0,
     "reference_autonomous_diagnosis_enabled": false
   },
-  "reference_catalog_sha256": "69ae616da1c34327e2c2b064df93c62259c944ae4262c20042395d30b545682c",
+  "reference_catalog_sha256": "f41fcfda04aed653b8d386b28fd5ab67a117ad96a40bea7fb1fb4eb7ae6c58ba",
   "reference_only_diagnostic_accuracy": null
 }

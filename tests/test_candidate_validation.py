@@ -26,7 +26,7 @@ def test_numerical_pass_is_not_clinical_approval_and_recomputes_correctness():
     assert r['numerical_screen_passed_count'] == 2
     assert not r['clinical_approval'] and not r['clinical_accuracy_claim']
     assert all(not x['enable_autonomous_diagnosis'] for x in r['conditions'])
-    assert len(r['conditions']) == 1020
+    assert len(r['conditions']) == 1451
 
 
 @pytest.mark.parametrize('mutation', ['mock','partial','duplicate','fallback','missing_counts',
@@ -70,5 +70,5 @@ def test_small_perfect_sample_does_not_pass():
 
 def test_empty_readiness_does_not_claim_any_validated_conditions():
     r=readiness()
-    assert len(r['conditions'])==1020
+    assert len(r['conditions'])==1451
     assert r['numerical_screen_passed_count']==0 and not r['clinical_approval']
