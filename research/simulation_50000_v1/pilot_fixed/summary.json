@@ -11,6 +11,59 @@
     "accuracy": 0.6722756410256411,
     "critical_recall": 0.7207792207792207
   },
+  "dataset_provenance": {
+    "dataset_type": "synthetic_mock",
+    "train_cases": 0,
+    "development_cases": 1248,
+    "validation_cases": 0,
+    "independent_cases": 0,
+    "clinical_adjudication": false,
+    "real_llm_calls": 0
+  },
+  "metrics_v2": {
+    "top1_accuracy": 0.6722756410256411,
+    "top3_recall": 0.7628205128205128,
+    "top5_recall": 0.8076923076923077,
+    "classification_micro": {
+      "precision": 0.6722756410256411,
+      "recall": 0.6722756410256411,
+      "f1": 0.6722756410256411
+    },
+    "classification_macro": {
+      "precision": 0.5258622226822338,
+      "recall": 0.40651573129251706,
+      "f1": 0.43525525466156717,
+      "labels": 42
+    },
+    "critical": {
+      "tp": 498,
+      "fp": 69,
+      "fn": 118,
+      "tn": 563,
+      "precision": 0.8783068783068783,
+      "recall": 0.8084415584415584,
+      "specificity": 0.8908227848101266,
+      "false_negative_rate": 0.19155844155844157
+    },
+    "ood": {
+      "tp": 16,
+      "fp": 227,
+      "fn": 0,
+      "tn": 1005,
+      "precision": 0.06584362139917696,
+      "recall": 1.0,
+      "specificity": 0.8157467532467533,
+      "false_negative_rate": 0.0
+    },
+    "calibration": "NOT_AVAILABLE_NO_CALIBRATOR",
+    "followup_effect": {
+      "cases_with_trajectory": 1248,
+      "first_final_top1_changed": 686,
+      "first_top3_hit": 640,
+      "final_top3_hit": 952,
+      "interpretation": "descriptive trajectory change; not causal gain"
+    }
+  },
   "breakdown": {
     "difficulty": {
       "high": {
@@ -2219,6 +2272,13 @@
     "unimplemented_deep_target_requires_review": 40,
     "incorrect_named_output": 150,
     "abstention_on_named_target": 219
+  },
+  "failure_signals": {
+    "expected_in_final_top3": 129,
+    "expected_in_final_top5": 185,
+    "returned_unknown": 227,
+    "critical_false_negative": 172,
+    "reached_turn_limit": 0
   },
   "independent_clinical_validation": false,
   "limitation": "Correlated synthetic variants with inherited unverified labels; not population accuracy or calibrated probabilities."

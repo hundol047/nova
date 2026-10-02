@@ -62,6 +62,16 @@ the table below.
 3. **P1 same-protocol comparison:** under `mapped_unknown_missing`, the fixed engine improved the
    development pilot from 834/1,248 to 839/1,248 and critical recall from 439/616 to 444/616.
    This is a mock synthetic pilot, not clinical accuracy.
+4. **Frozen full run completed:** `research/simulation_50000_v1/full_fixed/` contains 50,000/50,000
+   completed cases with runtime hash
+   `a162a35fbb42d154f1454e0ea13d66c230331c4368e2c6c08e44ff438b226312`, zero real-LLM calls,
+   and no runtime-hash drift.
+   Overall Top-1/Top-3/Top-5 were 65.73% / 75.29% / 79.87%. The exact critical-target sensitivity
+   was 69.88% with 7,318 critical false negatives out of 24,299 synthetic critical cases.
+5. **Held-out comparison completed:** the same frozen 10,000 validation cases under the previous
+   runtime produced 6,679 correct and 3,186/5,024 critical correct. The fixed runtime produced the
+   same counts on this split; 133 trajectories changed only in turn count, with no final diagnosis
+   or correctness change. The +5 pilot gain therefore does not generalize to this validation split.
 
 ## Frozen 50,000-case evaluation design
 
@@ -75,16 +85,19 @@ unverified labels. There is no real TRAIN set and no independent clinical test s
 The term “low” describes the corpus construction recipe, not low urgency. Likewise, a correct
 result means agreement with an inherited synthetic label, not a confirmed patient diagnosis.
 Calibration and population-level uncertainty metrics are intentionally unavailable until suitable
-independent data exists.
+independent data exists. In the completed run, the failure triage counted 9,772 named-target
+abstentions and 6,155 incorrect named outputs; these are development signals, not clinical root
+causes. The OOD detector had no positive unknown cases in this grouped validation split and showed
+many abstentions on in-distribution cases, so it is not ready for a clinical OOD claim.
 
 ## Immediate queue
 
 1. Freeze and commit the P0/P1 code plus submission mirror only after the scoped regression suite,
-   safety regression, and build smoke pass.
+   safety regression, and build smoke pass. **Done in commit `e1555ec`.**
 2. Run the full frozen corpus and a separately recorded 10,000-case validation comparison without
-   changing runtime code during either run.
+   changing runtime code during either run. **Done; both outputs are complete.**
 3. Extend the result summary with top-3/top-5 recall, critical false negatives, unknown/OOD
    handling, split/source-family leakage checks, and explicit `calibration: NOT AVAILABLE` fields.
-4. After the result is frozen, address the highest-frequency failure class with a new, separately
-   frozen regression slice; never tune on the validation slice.
-
+   **Done in `summary.json`; clinical calibration remains unavailable.**
+4. Address the highest-frequency failure class only with a new, separately frozen regression slice;
+   never tune on the validation slice. **Next P1 work; no validation tuning has been performed.**
