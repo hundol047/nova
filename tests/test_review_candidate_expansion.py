@@ -1,6 +1,7 @@
 """Source fidelity and runtime isolation, not clinical performance tests."""
 import hashlib
 import json
+import pytest
 
 from scripts.build_review_candidates import DEFAULT_SOURCE, OUTPUT, EXCLUDED, build, chapter, source_rows
 from nova_agent.ontology.normalizer import normalize
@@ -8,12 +9,15 @@ from nova_agent.ontology.registry import build_catalog
 from scripts.check_expansion_gate import collect
 
 
-def test_review_queue_has_exact_target_without_fabricated_names_or_codes():
+def test_review_queue_reports_source_limit_without_fabricated_names_or_codes():
     data = json.loads(OUTPUT.read_text())
     source = {code: (name, terminal) for code, name, terminal in source_rows(DEFAULT_SOURCE)}
     rows = data['candidates']
-    assert len(rows) == 5120
-    assert data['combined_registered_and_review_entries'] == 6400
+    assert len(rows) == 6309
+    assert data['combined_registered_and_review_entries'] == 7589
+    assert data['requested_total_entries'] == 32000
+    assert data['requested_target_reached'] is False
+    assert data['shortfall_entries'] == 24411
     assert data['source_sha256'] == hashlib.sha256(DEFAULT_SOURCE.read_bytes()).hexdigest()
     assert len({c['id'] for c in rows}) == len(rows)
     assert len({normalize(c['canonical_name']) for c in rows}) == len(rows)
@@ -27,7 +31,19 @@ def test_review_queue_has_exact_target_without_fabricated_names_or_codes():
 
 
 def test_rebuild_is_deterministic():
-    assert build() == json.loads(OUTPUT.read_text())
+    assert build(target_total=32000, allow_source_limit=True) == json.loads(OUTPUT.read_text())
+
+
+def test_unreachable_request_fails_without_explicit_partial_output():
+    with pytest.raises(ValueError, match='Insufficient eligible'):
+        build(target_total=32000)
+
+
+def test_all_previous_candidates_preserved():
+    previous = {c['id'] for c in build()['candidates']}
+    current = {c['id'] for c in json.loads(OUTPUT.read_text())['candidates']}
+    assert len(previous) == 5120
+    assert previous < current
 
 
 def test_source_labels_do_not_duplicate_existing_names_or_aliases():

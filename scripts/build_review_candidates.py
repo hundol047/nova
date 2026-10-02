@@ -44,7 +44,7 @@ def source_rows(archive):
         yield line[6:13].strip(), line[77:].strip(), line[14] == '1'
 
 
-def build(archive=DEFAULT_SOURCE, multiplier=5):
+def build(archive=DEFAULT_SOURCE, multiplier=5, *, target_total=None, allow_source_limit=False):
     from nova_agent.ontology.registry import build_catalog
     from nova_agent.ontology.normalizer import normalize
     catalog = build_catalog()
@@ -70,9 +70,12 @@ def build(archive=DEFAULT_SOURCE, multiplier=5):
     # Round-robin chapter selection prevents alphabetic truncation from
     # excluding whole specialties; shorter codes take precedence within each.
     queues = {k: deque(sorted(v, key=lambda x: (len(x[0]), x[0]))) for k, v in sorted(groups.items())}
-    target = len(existing) * (multiplier - 1)
-    if multiplier < 2 or sum(map(len, queues.values())) < target:
+    requested_total = target_total if target_total is not None else len(existing) * multiplier
+    target = requested_total - len(existing)
+    available = sum(map(len, queues.values()))
+    if target <= 0 or (available < target and not allow_source_limit):
         raise ValueError('Insufficient eligible source entries; do not fabricate rows')
+    target = min(target, available)
     selected = []
     while len(selected) < target:
         for group, q in queues.items():
@@ -96,7 +99,12 @@ def build(archive=DEFAULT_SOURCE, multiplier=5):
         baseline_registered_entries=len(existing),
         baseline_distinct_normalized_names=len({normalize(c.canonical_name) for c in existing}),
         baseline_ids=sorted(c.concept_id for c in existing),
-        requested_multiplier=multiplier, added_review_entries=len(selected),
+        requested_total_entries=requested_total,
+        eligible_source_entries=available,
+        requested_target_reached=len(existing) + len(selected) == requested_total,
+        source_limited=len(existing) + len(selected) < requested_total,
+        shortfall_entries=max(0, requested_total - len(existing) - len(selected)),
+        added_review_entries=len(selected),
         combined_registered_and_review_entries=len(existing) + len(selected),
         category_counts=dict(sorted(Counter(x['category'] for x in selected).items())),
         limitations=[
@@ -112,8 +120,11 @@ def build(archive=DEFAULT_SOURCE, multiplier=5):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source', type=Path, default=DEFAULT_SOURCE)
+    p.add_argument('--target-total', type=int, default=32000)
+    p.add_argument('--allow-source-limit', action='store_true',
+                   help='Save all eligible rows if the requested count exceeds the source; report the shortfall')
     args = p.parse_args()
-    result = build(args.source)
+    result = build(args.source, target_total=args.target_total, allow_source_limit=args.allow_source_limit)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps({k: v for k, v in result.items() if k not in ('candidates', 'baseline_ids')}, indent=2))
