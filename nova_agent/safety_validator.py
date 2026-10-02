@@ -103,9 +103,21 @@ class SafetyValidator:
 
                 by_id[resolved_id] = DifferentialItem(
                     diagnosis=item.diagnosis, diagnosis_id=resolved_id, rank=raw_rank, score=score,
-                    score_ratio=score_ratio, supporting_evidence=list(item.supporting_evidence),
-                    contradictory_evidence=list(item.contradictory_evidence),
-                    missing_discriminative_evidence=item.missing_information,
+                    score_ratio=score_ratio,
+                    # Preserve deterministic evidence when the LLM restates the differential.
+                    # The LLM may add or reorder evidence, but it must not erase a finding the
+                    # local parser already extracted (especially multilingual/negation-aware
+                    # evidence). This keeps the final support gate and safety checks grounded in
+                    # the same structured state that produced the deterministic score.
+                    supporting_evidence=list(dict.fromkeys(
+                        (det_match.supporting_evidence if det_match else [])
+                        + list(item.supporting_evidence))),
+                    contradictory_evidence=list(dict.fromkeys(
+                        (det_match.contradictory_evidence if det_match else [])
+                        + list(item.contradictory_evidence))),
+                    missing_discriminative_evidence=list(dict.fromkeys(
+                        (det_match.missing_discriminative_evidence if det_match else [])
+                        + list(item.missing_information))),
                     urgency=urgency or "LOW", dangerous_if_missed=dangerous, confidence_band=item.confidence,
                     # Carry the deterministic pool's provenance through the LLM-authored rebuild --
                     # without this, safety.py's "already evidence-backed in the differential" check

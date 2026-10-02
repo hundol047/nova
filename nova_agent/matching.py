@@ -27,6 +27,30 @@ _GENERIC_MEDICAL_WORDS = {"pain", "ache", "aching", "discomfort", "feeling", "sy
 _IGNORED = _STOPWORDS | _GENERIC_MEDICAL_WORDS
 _OVERLAP_RATIO_THRESHOLD = 0.6
 
+# CJK/Hangul text often has no whitespace between a clinical phrase and its surrounding
+# inflection/punctuation (e.g. "高熱と頭痛", "黒色便が出る"). ASCII word-boundary matching would
+# therefore miss a scoped multilingual alias even when the phrase is plainly present. Keep this
+# separate from the English matcher and guard it with nearby multilingual negation markers so a
+# phrase such as "高熱はありません" does not become positive evidence.
+_NON_LATIN_RE = re.compile(r"[가-힣一-龯々ぁ-んァ-ヶ]")
+_NON_LATIN_NEGATION_RE = re.compile(
+    r"(?:없|아니|않|안|아닌|ない|ません|ありません|無い|なし|没有|无|否认|否定)"
+)
+
+
+def _non_latin_phrase_present(feature: str, finding: str) -> bool:
+    if not _NON_LATIN_RE.search(feature):
+        return False
+    for match in re.finditer(re.escape(feature), finding):
+        # A short local window catches suffix negation ("発熱はありません") and prefix negation
+        # ("没有发热") without treating distant unrelated clauses as negations.
+        before = finding[max(0, match.start() - 10):match.start()]
+        after = finding[match.end():match.end() + 12]
+        if _NON_LATIN_NEGATION_RE.search(before) or _NON_LATIN_NEGATION_RE.search(after):
+            continue
+        return True
+    return False
+
 # EXAM/TEST result strings routinely embed a negation in the SAME string as a positive finding
 # (e.g. "clear breath sounds, no focal consolidation") -- unlike ASK answers, this text is never
 # clause-split into PatientState.pertinent_negatives at all (see state.py's _absorb_answer vs.
@@ -105,7 +129,8 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
         # complaint text "headache" is trivially a substring of almost any longer feature phrase
         # that happens to contain that word (e.g. "worst headache of life"), which would falsely
         # match every such feature regardless of relevance -- so it is deliberately not checked.
-        if re.search(r"(?<!\w)" + re.escape(feature_lower) + r"(?!\w)", finding_lower):
+        if re.search(r"(?<!\w)" + re.escape(feature_lower) + r"(?!\w)", finding_lower) \
+                or _non_latin_phrase_present(feature_lower, finding_lower):
             return True
         if not feature_content:
             continue

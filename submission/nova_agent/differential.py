@@ -52,19 +52,33 @@ _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
 # phrase it belongs to. Deliberately NOT a general medication NLP system: only the drug classes an
 # existing knowledge-base risk_factor already names.
 FEATURE_ALIASES: dict[str, list[str]] = {
+    # Generic multilingual equivalents for high-value neurologic/infectious signs. These are
+    # feature-local aliases: they help only the canonical feature named on the left and never act
+    # as a global synonym table across unrelated diagnoses.
+    "fever": ["high fever", "高熱", "発熱", "熱がある", "열이 나다", "고열"],
+    "neck stiffness": ["stiff neck", "首が硬い", "首が硬く", "首がこわばる", "首が動かしにくい", "項部硬直", "경부강직"],
+    "headache": ["激しい頭痛", "頭痛", "頭が痛い", "열과 두통"],
+    "sudden onset focal weakness": [
+        "sudden arm weakness", "arm weakness", "right arm weakness", "left arm weakness",
+        "right arm drift", "left arm drift", "突然腕に力が入らない", "急に腕が動かしにくい",
+        "右腕 weakness", "左腕 weakness",
+    ],
+    "slurred speech": ["言葉が出にくい", "言葉が出にく", "言葉がうまく出ない", "word-finding difficulty", "difficulty finding words", "ろれつが回らない"],
+    "vaginal bleeding": ["vaginal spotting", "spotting", "light spotting", "膣出血", "膣から出血"],
+    "missed period": ["period is late", "late period", "missed period", "生理が遅れている", "月経が遅い"],
     # AHA: acute aortic pain may be described in chest, back or abdomen.
     "tearing chest pain": ["tearing back pain", "tearing breastbone pain",
                             "tearing abdominal pain"],
     # NIDDK GI bleeding symptoms. These are symptom support, not confirmation.
     "melena": ["black tarry stool", "black and tarry stool",
-               "black tarry stools", "black and tarry stools"],
+               "black tarry stools", "black and tarry stools", "黒い便", "黒色便", "タール便", "便が黒い"],
     "hematemesis": ["vomiting blood", "vomited blood"],
     "appendiceal inflammation": ["inflamed appendix", "appendiceal wall thickening",
                                   "thickened appendix", "noncompressible appendix"],
     "unilateral pulsating headache": ["throbbing headache", "pounding headache", "one-sided headache",
                                        "one sided headache", "pounding pain", "throbbing pain",
                                        "pulsating pain"],
-    "photophobia": ["sensitive to light", "light sensitivity", "light bothers me"],
+    "photophobia": ["sensitive to light", "light sensitivity", "light bothers me", "光がまぶしい", "光がつらい"],
     "phonophobia": ["sensitive to sound", "sound sensitivity", "noise bothers me"],
     "aura": ["shimmering lights", "visual aura", "flashing lights", "seeing spots before",
              "zigzag lines", "blind spot in my vision", "jagged lines"],

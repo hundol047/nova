@@ -17,6 +17,7 @@ from nova_agent.action_canonicalizer import canonicalize_action
 from nova_agent.config import get_config
 from nova_agent.llm_client import CompetitionLLMClient, MockLLMClient, get_llm_client
 from nova_agent.llm_schema import AgentTurnOutput, DifferentialItemOutput, SelectedActionOutput
+from nova_agent.differential import DifferentialItem
 from nova_agent.resolution import is_resolved
 from nova_agent.safety_validator import SafetyValidator, build_candidate_pool
 from nova_agent.state import PatientState
@@ -189,6 +190,26 @@ def test_duplicate_diagnosis_alias_merge():
     assert len(acs_entries) == 1, "duplicate diagnosis entries must be merged, not left side by side"
     assert "ST elevation" in acs_entries[0].supporting_evidence
     assert "elevated troponin" in acs_entries[0].supporting_evidence
+
+
+def test_llm_restatement_cannot_erase_deterministic_evidence():
+    """A model restatement may add evidence, but must not erase parsed local evidence."""
+    deterministic = DifferentialItem(
+        diagnosis="Acute Coronary Syndrome", diagnosis_id="acute_coronary_syndrome", rank=1,
+        score=4.0, score_ratio=0.8, supporting_evidence=["ST elevation"],
+        contradictory_evidence=[], missing_discriminative_evidence=[], urgency="CRITICAL",
+        dangerous_if_missed=True, confidence_band="HIGH", candidate_sources=["objective_finding"],
+    )
+    llm_output = AgentTurnOutput(
+        summary="restated without evidence", differential=[DifferentialItemOutput(
+            diagnosis="Acute Coronary Syndrome", diagnosis_id="acute_coronary_syndrome", rank=1,
+            supporting_evidence=[], confidence="HIGH", dangerous_if_missed=True,
+        )], red_flags=[], candidate_actions=[],
+        selected_action=SelectedActionOutput(type="ASK", key="onset", content="When did it start?"),
+        ready_to_diagnose=False,
+    )
+    merged = SafetyValidator().merge_differential(llm_output, [deterministic], [])
+    assert merged[0].supporting_evidence == ["ST elevation"]
 
 
 # --- test_dangerous_workup_does_not_require_every_optional_test ---------------------------------
