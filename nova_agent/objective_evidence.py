@@ -173,7 +173,8 @@ LAB_SPECS: Dict[str, LabSpec] = {
     "lab.d_dimer": LabSpec(
         canonical_id="lab.d_dimer", display_name="D-dimer", unit="",
         raw_keys=("d_dimer",), numeric_pattern=None,
-        qualitative_high_words=("elevated d-dimer", "elevated d dimer", "markedly elevated",
+        qualitative_high_words=("elevated d-dimer", "elevated d dimer", "d-dimer elevated",
+                                "d dimer elevated", "markedly elevated",
                                  "positive"),
         qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal"),
     ),
@@ -298,6 +299,13 @@ def _interpret_numeric(spec: LabSpec, value: float) -> str:
 
 
 def _interpret_qualitative(spec: LabSpec, raw_texts: List[str]) -> Optional[str]:
+    def term_pattern(term: str) -> re.Pattern:
+        # Lab reports often contain alignment whitespace ("D-DIMER  MARKEDLY  ELEVATED").
+        # Match whitespace flexibly without widening any clinical vocabulary or changing the
+        # assertion/negation handling below.
+        parts = [part for part in re.split(r"\s+", term.strip()) if part]
+        return re.compile(r"(?<!\w)" + r"\s+".join(re.escape(part) for part in parts) + r"(?!\w)")
+
     directions = set()
     for text in raw_texts:
         for clause in re.split(r"[;,\n]|\b(?:but|however)\b", text.lower()):
@@ -308,7 +316,7 @@ def _interpret_qualitative(spec: LabSpec, raw_texts: List[str]) -> Optional[str]
             for direction, terms in (("high", spec.qualitative_high_words),
                                      ("low", spec.qualitative_low_words)):
                 for word in terms:
-                    for match in re.finditer(r"(?<!\w)" + re.escape(word) + r"(?!\w)", clause):
+                    for match in term_pattern(word).finditer(clause):
                         abnormal_spans.append(match.span())
                         prefix = clause[:match.start()]
                         suffix = clause[match.end():]
@@ -316,7 +324,7 @@ def _interpret_qualitative(spec: LabSpec, raw_texts: List[str]) -> Optional[str]
                                    or re.match(r"\s*(?:is\s+|was\s+)?(?:negative|absent|not detected)\b", suffix))
                         clause_directions.add("normal" if negated else direction)
             for term in spec.qualitative_normal_words:
-                for match in re.finditer(r"(?<!\w)" + re.escape(term) + r"(?!\w)", clause):
+                for match in term_pattern(term).finditer(clause):
                     # "normal" inside "above the upper limit of normal" is
                     # part of the abnormal assertion, not a second result.
                     if any(start <= match.start() and match.end() <= end

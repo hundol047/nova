@@ -91,6 +91,15 @@ class TestObjectiveEvidenceUnknownGuard:
         assert pot is not None and pot.value == 6.8
         assert pot.interpretation in ("high", "critical_high")  # 6.8 is hyperkalemic (crit_high 6.5)
 
+    def test_d_dimer_qualitative_spacing_and_word_order_are_safe(self):
+        from nova_agent.state import PatientState
+        for text in ("d-dimer elevated", "D-DIMER  MARKEDLY  ELEVATED", "positive d-dimer"):
+            state = PatientState(case_id="ue-d-dimer", chief_complaint="shortness of breath")
+            state.record_test("d_dimer", text)
+            findings = normalize_objective_evidence(state)
+            d_dimer = findings.get("lab.d_dimer")
+            assert d_dimer is not None and d_dimer.interpretation == "high"
+
 
 
 # --- Area 1: build_clinical_presentation must not re-inject denied findings as positives ---------

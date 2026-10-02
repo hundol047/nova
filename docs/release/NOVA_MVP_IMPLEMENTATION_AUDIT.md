@@ -79,9 +79,20 @@ the table below.
    collection before lower-yield actions. The frozen historical synthetic PE-vs-anxiety case moved
    from the pre-fix cardiac-arrhythmia output to pulmonary embolism in a replay; this is a targeted
    regression result, not a clinical accuracy claim. New regression coverage plus the scoped suite
-   now passes 529 tests with 1 skipped. On the untouched Blind v11 reference slice, aggregate
-   Top-1 and critical recall were unchanged (15/22 scored and 9/15 critical); average turns rose
-   from 23.0 to 23.7, so the safety gain must not be presented as a broad benchmark improvement.
+   now passes 532 tests with 1 skipped. Multi-concept safety relevance also now considers
+   secondary presentation concepts rather than only the single primary router tag.
+7. **P1 qualitative lab parsing:** D-dimer qualitative matching now accepts common word order and
+   alignment whitespace (for example `d-dimer elevated` and `D-DIMER  MARKEDLY  ELEVATED`) while
+   retaining the existing assertion/negation guard. In a retrospective six-case replay selected
+   from separate synthetic PE false-negative families, the pre-fix runtime returned 0/6 PE labels
+   and the post-fix runtime returned 5/6. This is a targeted failure replay, not an independent
+   validation or clinical accuracy estimate; a sparse case still appropriately remains unresolved
+   by the available evidence.
+8. **P1 scope check:** A fresh run of the untouched Blind v11 reference slice after the latest
+   parser and multi-concept changes remains 15/22 scored and 9/15 critical, with average/median
+   turns 23.7/24.0 (the pre-safety-only baseline was 23.0/22.0). The targeted replay gain therefore
+   does not generalize to this small reference slice and must not be presented as a broad accuracy
+   improvement.
 
 ## Frozen 50,000-case evaluation design
 
@@ -110,8 +121,8 @@ many abstentions on in-distribution cases, so it is not ready for a clinical OOD
    handling, split/source-family leakage checks, and explicit `calibration: NOT AVAILABLE` fields.
    **Done in `summary.json`; clinical calibration remains unavailable.**
 4. Address the highest-frequency failure class only with a new, separately frozen regression slice;
-   never tune on the validation slice. **Done for the mixed-safety routing slice; no validation
-   tuning has been performed.**
+   never tune on the validation slice. **Done for the mixed-safety and qualitative D-dimer replay;
+   no validation tuning has been performed.**
 5. Review safety-only action fan-out and turn efficiency on a fresh, separately frozen slice. Keep
    the 50,000-case evaluation immutable and do not trade safety recall for an unverified accuracy
    increase.
