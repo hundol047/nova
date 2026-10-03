@@ -10,15 +10,16 @@ import json
 from pathlib import Path
 
 from evaluation.blind_cases_v16 import BLIND_CASES_V16
-from evaluation.current_blind import ALL_BLIND_VERSIONS, CURRENT_BLIND_VERSION
+from evaluation.current_blind import ALL_BLIND_VERSIONS, CURRENT_BLIND_VERSION, reference_only_versions
 from nova_agent.knowledge.retrieval import all_diseases, disease_by_id
 from nova_agent.ontology.registry import get_default_catalog
 
 _ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_current_blind_version_is_v16():
-    assert CURRENT_BLIND_VERSION == "v16"
+def test_v16_is_historical_reference_only():
+    assert CURRENT_BLIND_VERSION == "v17"
+    assert "v16" in reference_only_versions()
     assert "v16" in ALL_BLIND_VERSIONS
     assert "v15" in ALL_BLIND_VERSIONS  # reference-only, still known
 

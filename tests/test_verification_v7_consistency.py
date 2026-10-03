@@ -42,10 +42,10 @@ def test_v7_runtime_unchanged_since_freeze():
     assert d["runtime_files_changed_after_verification"] is False
 
 
-def test_pointer_matches_v7():
+def test_pointer_supersedes_historical_v7():
     p = json.loads(_POINTER.read_text())
     d = _v7()
-    assert p["current_verification_schema"] == d["schema"]
-    assert p["current_blind_version"] == d["current_blind_version"]
-    assert (_ROOT / p["current_verification_artifact"]).resolve() == _V7.resolve()
+    assert p["current_verification_schema"] == "nova-verification-v8"
+    assert p["current_blind_version"] == "v17"
+    assert str(_V7.relative_to(_ROOT)) in p["previous_verification_artifacts"]
     assert not any(k.endswith("_commit_sha") for k in p)

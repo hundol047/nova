@@ -1,0 +1,8 @@
+{
+  "schema": "nova-verification-v8",
+  "status": "PENDING_BLIND_RUN",
+  "verified_runtime_sha": "1046986c04e40d1c8b0d995adf1ab0e866724f3d",
+  "current_blind_version": "v17",
+  "runtime_changed_after_freeze": false,
+  "note": "Provisional consistent pointer; final verification requires the declared one-shot result."
+}
