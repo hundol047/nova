@@ -9,6 +9,10 @@ without a code change.
 
 from __future__ import annotations
 
+# Official rules checked 2026-10-03: https://nova.snubhai.org/rules/
+EXPECTED_COMPETITION_MODEL = "openai/gpt-oss-20b"
+EXPECTED_COMPETITION_REVISION = "4d7ae4984b7db7de8f8457170b3f1a419ee76d52"
+
 import os
 from dataclasses import dataclass, field
 
@@ -188,13 +192,10 @@ class NovaConfig:
     llm_base_url: str = field(default_factory=lambda: _str_env("NOVA_LLM_BASE_URL", "http://localhost:8000/v1"))
     llm_api_key: str = field(default_factory=lambda: _str_env("NOVA_LLM_API_KEY", ""))
 
-    # Competition runtime settings (provider='competition'). Defaults assume the officially
-    # discussed 'openai/gpt-oss-20b' served through an OpenAI-compatible local/offline endpoint;
-    # override every one of these from the environment once the official rules are published --
-    # nothing else in the codebase needs to change (see CompetitionLLMClient).
-    competition_base_url: str = field(
-        default_factory=lambda: _str_env("NOVA_COMPETITION_BASE_URL", "http://localhost:8000/v1")
-    )
+    # Competition model/revision are confirmed in the public rules. The serving contract
+    # remains provisional: explicitly configure the authorized endpoint; absence is NOT_CONFIGURED.
+    # The current OpenAI-compatible transport is not an official API contract.
+    competition_base_url: str = field(default_factory=lambda: _str_env("NOVA_COMPETITION_BASE_URL", ""))
     competition_model: str = field(
         default_factory=lambda: _str_env("NOVA_COMPETITION_MODEL", "openai/gpt-oss-20b")
     )

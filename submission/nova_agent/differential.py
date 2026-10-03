@@ -29,6 +29,7 @@ from nova_agent.matching import (
     content_word_count,
     content_words,
     feature_denied,
+    explicitly_denied_in_findings,
     feature_present,
     feature_present_with_aliases,
 )
@@ -343,7 +344,10 @@ def _score_disease(entry: dict, state: PatientState,
     # advantage whichever one happened to be eligible for the bonus).
 
     for reassuring in entry.get("reassuring_if_present", []):
-        if feature_present(reassuring, findings, scrub_negated_spans=False):
+        negative_target = _strip_negative_prefix(reassuring)
+        matched = (explicitly_denied_in_findings(negative_target, findings) if negative_target
+                   else feature_present(reassuring, findings, scrub_negated_spans=True))
+        if matched:
             contradictory.append(reassuring)
             score -= CONTRADICTION_PENALTY
 

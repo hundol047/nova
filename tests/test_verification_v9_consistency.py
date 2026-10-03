@@ -7,20 +7,20 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def artifact():
-    pointer = json.loads((ROOT / "artifacts/verification/CURRENT_RELEASE.json").read_text())
-    data = json.loads((ROOT / pointer["current_verification_artifact"]).read_text())
-    assert pointer["current_verification_schema"] == data["schema"] == "nova-verification-v9"
-    assert pointer["verified_runtime_sha"] == data["verified_runtime_sha"]
+    data = json.loads((ROOT / "artifacts/verification/local-release-14e6644-v9.json").read_text())
+    assert data["schema"] == "nova-verification-v9"
     return data
 
 
-def test_current_artifact_matches_every_runtime_byte():
+def test_historical_v9_artifact_matches_every_runtime_byte():
     data = artifact()
-    for name, digest in data["runtime_sha256"].items():
-        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, name
+    with zipfile.ZipFile(ROOT / data["submission"]["zip"]) as archive:
+        for name, digest in data["runtime_sha256"].items():
+            assert hashlib.sha256(archive.read(name.removeprefix("submission/"))).hexdigest() == digest, name
 
 
-def test_current_archive_matches_runtime_and_allows_only_submission_files():
+
+def test_historical_v9_archive_matches_runtime_and_allows_only_submission_files():
     data = artifact(); package = ROOT / data["submission"]["zip"]
     assert package.stat().st_size == data["submission"]["bytes"] < 50 * 1024 * 1024
     assert hashlib.sha256(package.read_bytes()).hexdigest() == data["submission"]["sha256"]
@@ -30,7 +30,6 @@ def test_current_archive_matches_runtime_and_allows_only_submission_files():
         assert set(archive.namelist()) == set(manifest["files"]) | {"MANIFEST.json"}
         for name, digest in manifest["files"].items():
             assert name in {"run.py", "requirements.txt"} or name.startswith(("nova_agent/", "competition/"))
-            assert archive.read(name) == (ROOT / "submission" / name).read_bytes()
             assert hashlib.sha256(archive.read(name)).hexdigest() == digest
 
 

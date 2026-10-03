@@ -11,8 +11,7 @@ Provider selection: unlike local development (where NOVA_LLM_PROVIDER defaults t
 entrypoint defaults to `competition` when NOVA_LLM_PROVIDER is not explicitly set, so a submission
 run actually attempts real LLM clinical reasoning by default rather than silently reasoning
 entirely on the deterministic mock fallback. `competition` (nova_agent/config.py's
-`competition_base_url`) defaults to `http://localhost:8000/v1` -- localhost only, never an
-arbitrary remote/internet endpoint guessed on your behalf -- override every NOVA_COMPETITION_*
+`competition_base_url`) has no default endpoint; an unset value fails NOT_CONFIGURED -- override every NOVA_COMPETITION_*
 variable via the environment once the official competition runtime contract is known; nothing in
 this file needs to change.
 

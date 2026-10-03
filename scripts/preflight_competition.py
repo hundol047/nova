@@ -79,14 +79,19 @@ def main() -> int:
     client = get_llm_client()
     from urllib.parse import urlsplit
     endpoint = getattr(client, "base_url", "")
-    host = urlsplit(endpoint).hostname or "unconfigured"
+    try:
+        host = urlsplit(endpoint).hostname or "unconfigured"
+    except ValueError:
+        host = "invalid-configuration"
     endpoint_label = f"host={host}"  # no query, userinfo or credential-bearing endpoint path
-    model = getattr(client, "model", cfg.llm_model)
+    model = getattr(client, "MODEL_TARGET", "unverified-provider")
     if provider != "competition":
         check("llm_health", False, "skipped (provider=mock has no real endpoint to check)")
     else:
         ok, reason = client.preflight()
         check("llm_health", ok, f"provider={provider} model={model!r} endpoint={endpoint_label} -- {reason}")
+        from competition.readiness import readiness_report
+        print("PREFLIGHT_STATE=" + json.dumps(readiness_report(client), sort_keys=True))
 
     # --- structured JSON output + legal action validation + real-LLM-success gate --------------
     # Two DISTINCT checks, deliberately not folded into one: a well-formed action can come from
@@ -138,6 +143,8 @@ def main() -> int:
 
     # --- turn limit -----------------------------------------------------------------------------
     check("turn_limit_configured", 1 <= cfg.max_turns <= 60, f"NOVA_MAX_TURNS={cfg.max_turns}")
+
+    print("OFFICIAL_API = NOT VERIFIED")
 
     # --- official submission readiness (blocks until evidenced) --------------------------------
     check("official_competition_schema", False,

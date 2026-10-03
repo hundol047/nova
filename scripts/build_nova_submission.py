@@ -134,6 +134,8 @@ def _build_zip_and_manifest() -> None:
         for p in files:
             zf.write(p, arcname=p.relative_to(SUBMISSION))
         zf.write(SUBMISSION / "MANIFEST.json", arcname="MANIFEST.json")
+    if zip_path.stat().st_size >= 50_000_000:
+        raise SystemExit("submission.zip exceeds the conservative 50 MB release limit")
     size_mb = zip_path.stat().st_size / (1024 * 1024)
     print(f"submission.zip built: {len(files)} files, {size_mb:.2f} MB -- {zip_path}")
 

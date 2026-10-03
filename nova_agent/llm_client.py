@@ -46,6 +46,7 @@ import re
 import time
 import urllib.error
 import urllib.request
+from urllib.parse import urlsplit
 from abc import ABC, abstractmethod
 from typing import List, Optional, Tuple
 
@@ -53,7 +54,8 @@ from pydantic import BaseModel, ValidationError
 
 from nova_agent.action_selector import AgentAction, ScoredCandidate
 from nova_agent.clinical_summary import ClinicalSummary
-from nova_agent.config import get_config
+from nova_agent.config import get_config, EXPECTED_COMPETITION_MODEL, EXPECTED_COMPETITION_REVISION
+from nova_agent.llm_preflight import PreflightStatus, PreflightResult, ProbeFailure
 from nova_agent.differential import DifferentialItem
 from nova_agent.llm_schema import (
     AgentTurnOutput,
@@ -155,13 +157,18 @@ def _best_effort_json_parse(text: str) -> Optional[dict]:
     try:
         import ast
 
-        python_literal_text = re.sub(r"\btrue\b", "True", text)
-        python_literal_text = re.sub(r"\bfalse\b", "False", python_literal_text)
-        python_literal_text = re.sub(r"\bnull\b", "None", python_literal_text)
+        import io
+        import tokenize
+        # Repair literal tokens only; never replace words inside medical/free-text strings.
+        tokens = list(tokenize.generate_tokens(io.StringIO(text).readline))
+        literals = {"true": "True", "false": "False", "null": "None"}
+        tokens = [t._replace(string=literals[t.string])
+                  if t.type == tokenize.NAME and t.string in literals else t for t in tokens]
+        python_literal_text = tokenize.untokenize(tokens)
         data = ast.literal_eval(python_literal_text)
         if isinstance(data, dict):
             return data
-    except (ValueError, SyntaxError, TypeError):
+    except (ValueError, SyntaxError, TypeError, tokenize.TokenError):
         pass
     return None
 
@@ -172,7 +179,7 @@ def parse_agent_turn_output(raw: str) -> Optional[AgentTurnOutput]:
     enum casing -- all pure syntax/schema repair, never a correction of clinical content (an
     unknown test/diagnosis name is never invented or substituted here). Returns None (never
     raises) on any failure so callers can fall back to the deterministic path."""
-    if not raw or not raw.strip():
+    if not isinstance(raw, str) or not raw.strip():
         return None
     candidate_text = _extract_json_candidate_text(raw.strip())
     data = _best_effort_json_parse(candidate_text)
@@ -182,7 +189,7 @@ def parse_agent_turn_output(raw: str) -> Optional[AgentTurnOutput]:
     try:
         return AgentTurnOutput.model_validate(_normalize_action_type_casing(data))
     except (ValidationError, TypeError) as exc:
-        log.warning("Failed to validate LLM structured output against the schema: %s", exc)
+        log.warning("Failed to validate LLM structured output against the schema: %s", type(exc).__name__)
         return None
 
 
@@ -385,6 +392,9 @@ class OpenAICompatibleLLMClient(BaseLLMClient):
             headers["Authorization"] = f"Bearer {self.api_key}"
         return headers
 
+    def _open_request(self, request):
+        return urllib.request.urlopen(request, timeout=self.timeout)
+
     def _post_chat_completion(self, messages: list, *, max_tokens: Optional[int] = None) -> Tuple[str, dict]:
         """POSTs one Chat Completions request. Returns (content_text, raw_response_dict). Raises
         on any failure (network, HTTP status, JSON decode, unexpected shape) -- callers handle
@@ -397,7 +407,8 @@ class OpenAICompatibleLLMClient(BaseLLMClient):
         request = urllib.request.Request(
             f"{self.base_url}/chat/completions", data=body, headers=self._headers(), method="POST",
         )
-        with urllib.request.urlopen(request, timeout=self.timeout) as response:
+        with self._open_request(request) as response:
+            self._last_http_status_category = f"{response.status // 100}xx"
             raw = json.loads(response.read().decode("utf-8"))
         content = raw["choices"][0]["message"]["content"] or ""
         return content, raw
@@ -459,56 +470,120 @@ class LocalLLMClient(OpenAICompatibleLLMClient):
 
 
 class CompetitionLLMClient(OpenAICompatibleLLMClient):
-    """Reads the separate NOVA_COMPETITION_* settings (base URL / model / API key) instead of the
-    generic NOVA_LLM_* ones, so the official competition runtime endpoint can be configured
-    independently of local development settings. Defaults to a local, offline OpenAI-compatible
-    endpoint serving openai/gpt-oss-20b (the model named in the publicly discussed N.O.V.A.
-    qualifier requirements at implementation time) -- override every value from the environment
-    once the official rules are published; no other file needs to change."""
+    """Explicitly configured target; OpenAI-compatible transport is still provisional.
 
-    def __init__(self) -> None:
+    Official observation/action JSON belongs exclusively to competition/. Model identity here
+    is server-reported. Missing revision is not a failure and never causes a revision parameter
+    to be sent. No startup call is credited to any patient's counters.
+    """
+    MODEL_TARGET = EXPECTED_COMPETITION_MODEL
+    EXPECTED_REVISION = EXPECTED_COMPETITION_REVISION
+
+    def __init__(self):
         cfg = get_config()
         super().__init__(base_url=cfg.competition_base_url, model=cfg.competition_model,
-                          api_key=cfg.competition_api_key)
+                         api_key=cfg.competition_api_key)
+        # Parent's generic development default must not disguise missing competition config.
+        self.base_url = cfg.competition_base_url.rstrip("/")
+        self.last_preflight = PreflightResult(PreflightStatus.NOT_CONFIGURED, bool(self.base_url),
+            model=self.MODEL_TARGET, expected_revision=self.EXPECTED_REVISION)
+        self._revision_status = "NOT_VERIFIABLE_FROM_RUNTIME"
 
-    MODEL_TARGET = "openai/gpt-oss-20b"
+    def _configuration_status(self):
+        if not self.base_url:
+            return PreflightStatus.NOT_CONFIGURED
+        try:
+            url = urlsplit(self.base_url)
+            if (url.scheme not in {"http", "https"} or not url.hostname or url.username
+                    or url.password or url.query or url.fragment):
+                return PreflightStatus.INVALID_CONFIGURATION
+            _ = url.port
+        except ValueError:
+            return PreflightStatus.INVALID_CONFIGURATION
+        if self.model != self.MODEL_TARGET:
+            return PreflightStatus.MODEL_MISMATCH
+        if not (0 < self.timeout <= 120 and 0 <= self.max_retries <= 3):
+            return PreflightStatus.INVALID_CONFIGURATION
+        return None
+
+    def _open_request(self, request):
+        class NoRedirect(urllib.request.HTTPRedirectHandler):
+            def redirect_request(self, *args, **kwargs):
+                return None  # Never forward a configured Authorization header to another URL.
+        return urllib.request.build_opener(NoRedirect).open(request, timeout=self.timeout)
 
     def _post_chat_completion(self, messages: list, *, max_tokens: Optional[int] = None) -> Tuple[str, dict]:
-        # Response identity is a server assertion, NOT proof of weights/revision or official API.
-        # Strict until the official serving contract documents model aliases/revision handling.
-        if self.model != self.MODEL_TARGET:
-            raise ValueError("competition_model_target_mismatch")
-        if not (0 < self.timeout <= 120 and 0 <= self.max_retries <= 3):
-            raise ValueError("competition_timeout_or_retry_configuration_invalid")
+        invalid = self._configuration_status()
+        if invalid:
+            raise ProbeFailure(invalid)
         content, raw = super()._post_chat_completion(messages, max_tokens=max_tokens)
         if raw.get("model") != self.MODEL_TARGET:
-            raise ValueError("competition_response_model_missing_or_mismatched")
+            raise ProbeFailure(PreflightStatus.MODEL_MISMATCH)
+        # These response fields are optional compatibility conventions, NOT a confirmed
+        # official schema. Validate if exposed, report non-verifiability otherwise.
+        revisions = [raw[k] for k in ("revision", "model_revision") if raw.get(k) is not None]
+        if any(revision != self.EXPECTED_REVISION for revision in revisions):
+            raise ProbeFailure(PreflightStatus.REVISION_MISMATCH)
+        self._revision_status = "PASS_SERVER_REPORTED" if revisions else "NOT_VERIFIABLE_FROM_RUNTIME"
         parsed = parse_agent_turn_output(content)
         if parsed is None or not parsed.selected_action.content.strip():
-            raise ValueError("competition_structured_action_missing_or_empty")
+            raise ProbeFailure(PreflightStatus.STRUCTURED_OUTPUT_FAILED)
         return content, raw
 
-    def preflight(self) -> Tuple[bool, str]:
-        """Bounded structured transport probe; never credits any patient's real-call counter."""
+    def preflight(self):
+        invalid = self._configuration_status()
+        try:
+            host = urlsplit(self.base_url).hostname if self.base_url else None
+        except ValueError:
+            host = None
+        report = PreflightResult(invalid or PreflightStatus.REAL_CALL_FAILED, bool(self.base_url),
+            host=host, model=self.MODEL_TARGET, expected_revision=self.EXPECTED_REVISION)
+        self.last_preflight = report
         self._preflight_structured_success = False
-        prompt = ('Return only JSON with selected_action containing type ASK, key onset, '
-                  'content "When did symptoms start?", and differential an empty list.')
-        # Validate configuration before looping (a negative/huge retry value must not bypass bounds).
-        if self.model != self.MODEL_TARGET or not (0 < self.timeout <= 120 and 0 <= self.max_retries <= 3):
-            return False, "Invalid competition model, timeout (0,120], or retries [0,3]."
-        reason = "structured_output_parse_failed"
-        for _ in range(self.max_retries + 1):
+        if invalid:
+            return False, report.status.value
+        # Development synthetic symptom context; this startup probe does not satisfy a real case.
+        prompt = ('Synthetic integration check: an adult reports a new cough. Return only JSON '
+                  'with differential an empty list and selected_action containing type ASK, '
+                  'key onset, and content "When did the cough start?".')
+        for attempt in range(self.max_retries + 1):
+            report.attempts = attempt + 1
+            started = time.perf_counter()
+            self._last_http_status_category = None
             try:
-                content, _raw = self._post_chat_completion([{"role": "user", "content": prompt}])
-                if parse_agent_turn_output(content) is not None:
-                    self._preflight_structured_success = True
-                    return True, "Structured response and server-reported model identity checked; weights NOT VERIFIED."
-            except Exception as exc:
-                reason = type(exc).__name__  # no credentials, response body or patient text in logs
-        return False, f"Competition endpoint/identity/structured probe failed: {reason}."
+                content, raw = self._post_chat_completion([{"role": "user", "content": prompt}])
+                report.status = PreflightStatus.REAL_CALL_VERIFIED
+                report.http_status_category = "2xx"
+                report.revision_status = self._revision_status
+                usage = raw.get("usage", {})
+                if isinstance(usage, dict):
+                    for field, key in (("input_tokens", "prompt_tokens"), ("output_tokens", "completion_tokens")):
+                        value = usage.get(key)
+                        if isinstance(value, int) and not isinstance(value, bool) and value >= 0:
+                            setattr(report, field, value)
+                self._preflight_structured_success = True
+                return True, report.status.value + "; server identity only, weights NOT VERIFIED"
+            except ProbeFailure as exc:
+                report.status = exc.status
+            except urllib.error.HTTPError as exc:
+                report.http_status_category = f"{exc.code // 100}xx"
+                report.status = PreflightStatus.AUTH_FAILED if exc.code in {401, 403} else PreflightStatus.REAL_CALL_FAILED
+                if exc.code in {401, 403}:
+                    break
+            except (urllib.error.URLError, TimeoutError, ConnectionError, OSError):
+                report.status = PreflightStatus.ENDPOINT_UNREACHABLE
+            except (json.JSONDecodeError, KeyError, IndexError, TypeError, ValueError):
+                report.status = PreflightStatus.STRUCTURED_OUTPUT_FAILED
+            except Exception:
+                report.status = PreflightStatus.REAL_CALL_FAILED
+            finally:
+                report.latency_seconds = time.perf_counter() - started
+                if self._last_http_status_category:
+                    report.http_status_category = self._last_http_status_category
+        return False, report.status.value
 
-    def generate_turn_output(self, ctx: TurnContext) -> AgentTurnOutput:
-        if self.model != self.MODEL_TARGET or not (0 < self.timeout <= 120 and 0 <= self.max_retries <= 3):
+    def generate_turn_output(self, ctx):
+        if self._configuration_status():
             self._last_call_was_real = False
             self._last_call_succeeded = False
             return _deterministic_turn_output(ctx)

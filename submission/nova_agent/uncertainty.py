@@ -39,6 +39,14 @@ _PATIENT_SIGNAL = re.compile(
 _NON_EVIDENCE_SOURCES = {"safety_candidate", "contextual_safety", "zero_evidence_fallback",
                          "ontology_broadening", "ontology_retrieval"}
 
+# Request scope is orthogonal to medical evidence. Administrative and medication-information
+# tasks are outside this diagnostic workflow, not necessarily outside the medical domain.
+_REQUEST = re.compile(r"\b(draft|summarize|translate|reschedule|cancel|send|explain|book|renew)\b|변경|취소|예약|번역|요약|보관|予約|翻訳", re.I)
+_NONDIAGNOSTIC_OBJECT = re.compile(r"\b(letter|agenda|menu|appointment|invoice|certificate|leaflet|instructions)\b|예약|서류|영수증|설명서|予約|書類", re.I)
+_MEDICATION_INFORMATION = re.compile(r"\b(storage|store|label|leaflet|instructions|expiry|expiration)\b|보관|설명서|유효기간|保存|説明書", re.I)
+_MEDICATION_NOUN = re.compile(r"\b(medication|medicine|inhaler|tablet|prescription)\b|이 약|약품|吸入|薬", re.I)
+_EXPOSURE_RISK = re.compile(r"\b(overdose|poison\w*|accidentally|too many|double dose)\b|과다|잘못 먹|중독|過量", re.I)
+
 
 def assess_evidence(state: PatientState, differential: list[DifferentialItem],
                     selected_id: str | None = None) -> EvidenceAssessment:
@@ -64,8 +72,11 @@ def assess_evidence(state: PatientState, differential: list[DifferentialItem],
                      or state.vital_signs or state.vital_sign_findings)
     clinical = bool(concepts or state.symptoms or state.associated_symptoms
                     or state.pertinent_positives or objective or _PATIENT_SIGNAL.search(state.chief_complaint))
+    clinical = clinical or bool(_EXPOSURE_RISK.search(state.chief_complaint))
     domain = bool(_NONMEDICAL_DOMAIN.search(state.chief_complaint))
     task = bool(_TASK_INTENT.search(state.chief_complaint))
+    request = bool(_REQUEST.search(state.chief_complaint) and _NONDIAGNOSTIC_OBJECT.search(state.chief_complaint))
+    medication_info = bool(_MEDICATION_INFORMATION.search(state.chief_complaint) and _MEDICATION_NOUN.search(state.chief_complaint))
     contradictions = len(set(selected.contradictory_evidence)) if selected else 0
     signals = {
         "meaningful_evidence_items": len(evidence), "contradiction_count": contradictions,
@@ -73,11 +84,12 @@ def assess_evidence(state: PatientState, differential: list[DifferentialItem],
         "selected_matches_rank1": bool(selected and top and selected.diagnosis_id == top.diagnosis_id),
         "candidate_sources": sorted(sources), "objective_observations_present": objective,
         "nonmedical_domain": domain, "task_intent": task, "clinical_signal_present": clinical,
+        "nondiagnostic_request": request, "medication_information_request": medication_info,
         "retrieval_confidence": None, "independent_candidate_agreement": None,
     }
-    if domain and task and not clinical:
+    if ((domain and task) or request or medication_info) and not clinical:
         return EvidenceAssessment(internal_result="OUT_OF_DOMAIN",
-            reasons=["nonmedical_task_without_patient_evidence"], signals=signals)
+            reasons=["outside_diagnostic_task_without_patient_evidence"], signals=signals)
     reasons = []
     if not selected or selected.fallback_candidate:
         reasons.append("no_evidenced_selected_candidate")

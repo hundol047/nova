@@ -274,6 +274,17 @@ def feature_denied(feature: str, negatives: List[str]) -> bool:
     return feature_present(feature, negatives)
 
 
+def explicitly_denied_in_findings(feature: str, findings: List[str]) -> bool:
+    """Match only locally negated spans, never infer a denial from shared content words.
+
+    General findings contain positive AND negative statements; unlike pertinent_negatives,
+    they cannot be passed wholesale to feature_denied(). Clause boundaries remain bounded by
+    the existing negation parser. This is an English-text helper, not a full language model.
+    """
+    spans = [m.group(0) for finding in findings for m in _NEGATED_SPAN_PATTERN.finditer(finding)]
+    return feature_present(feature, spans)
+
+
 # Feature-local aliases (spec section 6, Option A): alternate phrasings tried ONLY when evaluating
 # the ONE exact knowledge-base phrase they are keyed to -- never a global finding-text substitution
 # like the earlier clinical_synonyms.py attempt (reverted after it let unrelated findings that

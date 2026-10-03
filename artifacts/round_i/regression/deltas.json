@@ -1,0 +1,26 @@
+{
+  "tuning": {
+    "accuracy_delta": 0.0,
+    "critical_delta": 0.0
+  },
+  "held_out": {
+    "accuracy_delta": 0.0,
+    "critical_delta": 0.0
+  },
+  "generalization_v2": {
+    "accuracy_delta": 0.0,
+    "critical_delta": 0.0
+  },
+  "stress": {
+    "accuracy_delta": 0.0,
+    "critical_delta": 0.0
+  },
+  "dev_round_d": {
+    "accuracy_delta": 0.0,
+    "critical_delta": 0.0
+  },
+  "dev_round_e": {
+    "accuracy_delta": 0.0,
+    "critical_delta": 0.0
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "counts": {
+    "passed": 828,
+    "failed": 0,
+    "skipped": 1,
+    "skip_reasons": [
+      {
+        "type": "pytest.skip",
+        "message": "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"
+      }
+    ]
+  },
+  "source": "Executed pytest JUnit XML",
+  "utc": "2026-10-03T10:32:52.016976+00:00"
+}

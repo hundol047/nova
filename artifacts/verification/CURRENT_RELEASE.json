@@ -14,7 +14,7 @@
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
   "updated_utc": "2026-10-03T09:54:26.921179+00:00",
-  "status": "LOCAL_VERIFICATION_COMPLETED_EXTERNAL_BLOCKED",
-  "reason": "v9 verifies frozen local runtime, uncertainty development and standalone wiring; external gates remain blocked.",
+  "status": "STALE_RUNTIME_CHANGED",
+  "reason": "Round I integration work in progress; v9 verifies historical runtime only.",
   "current_blind_status": "REFERENCE-ONLY"
 }

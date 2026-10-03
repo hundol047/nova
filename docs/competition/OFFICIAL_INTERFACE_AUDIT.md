@@ -1,0 +1,76 @@
+# Official interface audit — 2026-10-03
+
+Primary sources inspected: [overview](https://nova.snubhai.org/),
+[evaluation](https://nova.snubhai.org/evaluation/), [rules](https://nova.snubhai.org/rules/),
+[FAQ](https://nova.snubhai.org/faq/). Public links and searches for participant API/starter/example
+material did not locate an executable interface specification. FAQ Q9 says the participant
+guide will be announced before the preliminary round. This does not prove that private
+participant mail contains no additional material; no such material was supplied here.
+
+Each row has exactly one status. An official action name does not establish its JSON encoding.
+
+| Element | Status | Evidence or current boundary |
+| --- | --- | --- |
+| ASK / EXAM / TEST / DIAGNOSE names | CONFIRMED_OFFICIAL | Evaluation: 진행 방식 |
+| ASK meaning | CONFIRMED_OFFICIAL | Questions for history and symptoms |
+| EXAM meaning | CONFIRMED_OFFICIAL | Physical examination selection |
+| TEST meaning | CONFIRMED_OFFICIAL | Laboratory / imaging selection |
+| DIAGNOSE meaning | CONFIRMED_OFFICIAL | Final diagnosis submission |
+| Initial information scope | CONFIRMED_OFFICIAL | Basic patient information and initial symptoms |
+| Required observation JSON | PLACEHOLDER | `CompetitionObservation` is our local contract |
+| Required action JSON | PLACEHOLDER | `CompetitionAction` is our local contract |
+| Per-action payload encoding | PLACEHOLDER | Current key/content/metadata fields are not documented officially |
+| case_id semantics | PLACEHOLDER | Local per-case key only |
+| turn field semantics | PLACEHOLDER | Local protocol convention only |
+| Maximum interactions | CONFIRMED_OFFICIAL | Evaluation: maximum 60 turns per case |
+| LLM endpoint and route | NOT_AVAILABLE | `/chat/completions` is a provisional transport assumption |
+| Authentication method / token delivery | NOT_AVAILABLE | Rules mention issued API credits/tokens, not header syntax |
+| JSON model-selection field | PLACEHOLDER | Current OpenAI-compatible `model` field |
+| Preliminary model identifier | CONFIRMED_OFFICIAL | Rules: `openai/gpt-oss-20b` |
+| Expected model revision | CONFIRMED_OFFICIAL | Rules: `4d7ae4984b7db7de8f8457170b3f1a419ee76d52` |
+| Revision parameter / response field | NOT_AVAILABLE | No request revision parameter is sent |
+| Abstention legality | NOT_AVAILABLE | No published INSUFFICIENT_INFORMATION / OOD action found |
+| stdout/stderr framing | PLACEHOLDER | JSON-lines stdout and diagnostics stderr are local assumptions |
+| ZIP contents | CONFIRMED_OFFICIAL | Evaluation: run.py and requirements.txt |
+| ZIP maximum | CONFIRMED_OFFICIAL | Evaluation: 50 MB; local gate conservatively uses < 50,000,000 bytes |
+| run.py callable/CLI interface | NOT_AVAILABLE | Filename confirmed, invocation signature unavailable |
+| requirements.txt package rules | DOCUMENTED_BUT_AMBIGUOUS | Rules allow open-source libraries; installer/version/platform limits unavailable |
+| Submission encoding / language | CONFIRMED_OFFICIAL | Rules: UTF-8 and Python |
+| Network boundary | CONFIRMED_OFFICIAL | Submitted inference must not call external APIs/LLMs |
+| Fixed-model case call requirement | CONFIRMED_OFFICIAL | Rules: at least one response to a case-containing prompt per case |
+| Case isolation | CONFIRMED_OFFICIAL | Other cases' information/predictions/statistics must not influence a case |
+| Official starter / submission example | NOT_AVAILABLE | None linked in inspected public pages or returned by targeted search |
+
+No official observation/action contract was found: `OFFICIAL_API = NOT VERIFIED` and
+`SCHEMA_STATUS = PLACEHOLDER`. Only the adapter boundary may be updated when that contract arrives.
+The stricter local success gate additionally requires parseable structured output. Probe success
+is not credited to any case. Fine-tuning or loading adapters for the preliminary fixed model is
+prohibited; this submission includes neither learned weights nor training dependencies.
+
+Optional response fields `revision` / `model_revision` are compatibility checks, not confirmed
+official field names. If present they must match the expected revision; if absent the result is
+`NOT_VERIFIABLE_FROM_RUNTIME`. Server model/revision strings do not attest the actual weights.
+
+## Configuration and external blockers
+
+Set these only from the organizer's authorized configuration:
+
+```sh
+export NOVA_LLM_PROVIDER=competition
+export NOVA_COMPETITION_BASE_URL="<organizer-provided base URL>"
+export NOVA_COMPETITION_API_KEY="<organizer-provided token, if required>"
+export NOVA_COMPETITION_MODEL=openai/gpt-oss-20b
+python scripts/preflight_competition.py
+python scripts/smoke_real_llm.py
+```
+
+Do not paste real credentials into git, issue comments or logs. An unset URL produces
+NOT_CONFIGURED without a network request. A local configured stub can verify wiring but never
+establishes official readiness. Nonlocal endpoints must be those authorized by the organizer;
+the public documents do not yet provide an allowlist. Redirects are rejected to avoid forwarding
+credentials elsewhere. Official schema readiness is not an environment-variable override.
+
+After official documentation arrives: implement its JSON/call interface in `competition/` and
+`submission/run.py`, add official-example contract tests, update evidence-backed schema constants,
+then re-run preflight and a short case. Mere environment configuration cannot resolve an unknown
+wire contract; this remains an explicit external blocker.

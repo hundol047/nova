@@ -285,7 +285,7 @@ def test_competition_provider_preflight():
     assert reason and isinstance(reason, str)
 
 
-def test_real_llm_client_bounded_retry_across_transient_failure_modes():
+def test_real_llm_client_bounded_retry_across_transient_failure_modes(monkeypatch):
     """Seven distinct real-world HTTP/network/parsing failure modes -- 429, a temporary 5xx,
     timeout, connection reset, invalid JSON, and truncated JSON -- must each be absorbed by
     generate_turn_output()'s bounded retry, never propagate as an unhandled exception out of
@@ -300,12 +300,17 @@ def test_real_llm_client_bounded_retry_across_transient_failure_modes():
     from nova_agent.llm_client import CompetitionLLMClient
     from nova_agent.orchestrator import DoctorAgent
 
+    monkeypatch.setenv("NOVA_COMPETITION_BASE_URL", "http://127.0.0.1:1/v1")
+    from nova_agent.config import get_config
+    get_config(reload=True)
+
     class _FakeResponse:
         """Minimal context-manager stand-in for urllib's response object, for the two failure
         modes that need a 200-looking response with a bad body rather than a raised exception."""
 
         def __init__(self, body: bytes) -> None:
             self._body = body
+            self.status = 200
 
         def read(self):
             return self._body
@@ -343,7 +348,7 @@ def test_real_llm_client_bounded_retry_across_transient_failure_modes():
                 return effect
             raise effect
 
-        with patch("nova_agent.llm_client.urllib.request.urlopen", side_effect=_fake_urlopen):
+        with patch.object(client, "_open_request", side_effect=_fake_urlopen):
             action, _llm_output, _differential = agent.decide(state)
 
         assert action.action_type in {"ASK", "EXAM", "TEST", "DIAGNOSE"}, \

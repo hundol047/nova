@@ -1,4 +1,4 @@
-> **Current local verification: current-issues fix / v9.** [Report](docs/current_issues/FINAL_REPORT.md) · [release pointer](artifacts/verification/CURRENT_RELEASE.json). Frozen runtime `14e6644`; 798 tests passed, 1 skipped. v17 is **REFERENCE-ONLY**, with no rerun or new blind this round. Real GPT-OSS and official API remain **NOT VERIFIED**. OOD development heuristics and stub wiring are not clinical validation. Older benchmark sections below are historical references.
+> **Round I integration development:** fresh synthetic development accuracy 17/19 (89.47%), critical 8/8; these are not clinical or real-model accuracy. Explicit endpoint/preflight states and official revision checks added. Full pre-freeze regression: 828 passed, 1 skipped. v17 remains reference-only; v18 will be authored after runtime freeze. [Official interface audit](docs/competition/OFFICIAL_INTERFACE_AUDIT.md). Official API and real GPT-OSS remain NOT VERIFIED. Older results below are historical.
 
 # N.O.V.A. 2026 Doctor Agent
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## Round I / integration readiness
+
+- Distinguish absent endpoint, unreachable transport, failed auth/model/revision, invalid structure and verified transport; official schema readiness remains separately blocked.
+- Preserve per-case parsed real-call gating, reject credential-bearing URLs/redirects, repair syntax without changing strings, and record optional token/latency facts.
+- Fix positive focal findings incorrectly counted as an explicit reassuring denial; preserve retrieval, safety and stop policies.
+- Evaluate fresh request-scope OOD controls and 20 diagnostic development cases; preserve every error trajectory.
+- Public rules confirm the fixed model revision; no undocumented revision request parameter is sent.
+
 ## Current-issues fix / verification v9
 
 - Separate deterministic evidence support, insufficient information and bounded nonmedical OOD detection from protocol-forced diagnosis labels.
