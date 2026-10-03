@@ -1,4 +1,4 @@
-> **Current development: Round J structural repair.** [Report](docs/round_j/FINAL_REPORT.md) · [release pointer](artifacts/verification/CURRENT_RELEASE.json). Round J synthetic development: 47/52 → 48/52; critical 20/20 retained. v18 is **REFERENCE-ONLY**, preserved and not rerun; no v19 created. Real GPT-OSS / official API remain **NOT VERIFIED / EXTERNAL BLOCKED**. These are same-author mock results, not clinical accuracy.
+> **Current verification: Round J / v11, frozen runtime `f315fbf`.** 849 tests passed, 1 skipped. [Report](docs/round_j/FINAL_REPORT.md) · [release pointer](artifacts/verification/CURRENT_RELEASE.json). Round J synthetic development: 47/52 → 48/52; critical 20/20 retained. v18 is **REFERENCE-ONLY**, preserved and not rerun; no v19 created. Real GPT-OSS / official API remain **NOT VERIFIED / EXTERNAL BLOCKED**. These are same-author mock results, not clinical accuracy.
 
 # N.O.V.A. 2026 Doctor Agent
 

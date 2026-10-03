@@ -1,11 +1,12 @@
 {
   "note": "Pointer file (spec: a single, unambiguous place to find the CURRENT verification artifact, so a reader never has to guess which SHA-suffixed local-release-*.json file in this directory is current). This file itself is always updated in the SAME commit as the verification artifact it points to -- never a separate follow-up.",
-  "current_verification_artifact": "artifacts/verification/local-release-d6e2b84-v10.json",
-  "current_verification_schema": "nova-verification-v10",
-  "verified_runtime_sha": "d6e2b84aa2bb90c198fae39dade3870d6575c6f4",
+  "current_verification_artifact": "artifacts/verification/local-release-f315fbf-v11.json",
+  "current_verification_schema": "nova-verification-v11",
+  "verified_runtime_sha": "f315fbf27bafaaeecb43344428ac61d7fe1a7a05",
   "current_blind_version": "v18",
   "current_blind_manifest": "evaluation/blind_v18_manifest.json",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-d6e2b84-v10.json",
     "artifacts/verification/local-release-14e6644-v9.json",
     "artifacts/verification/local-release-1046986-v8.json",
     "artifacts/verification/local-release-659c7dc-v7.json",
@@ -14,8 +15,8 @@
     "artifacts/verification/local-release-faa1701-v4.json",
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
-  "updated_utc": "2026-10-03T12:31:06.005594+00:00",
+  "updated_utc": "2026-10-03T13:44:18.819403+00:00",
   "status": "LOCAL_VERIFICATION_COMPLETED_EXTERNAL_BLOCKED",
-  "reason": "Final local completion pass: preserved one v18 run and frozen runtime; post-run package and organizer handoff verified; external gates blocked.",
-  "current_blind_status": "CURRENT"
+  "reason": "Round J structural repair verified locally. v18 preserved reference-only; no v19; real model/API remain unverified.",
+  "current_blind_status": "REFERENCE-ONLY"
 }

@@ -1,6 +1,8 @@
 # Changelog
 
-## Round J / structural deficiency repair
+## Round J / structural deficiency repair / verification v11
+
+- Freeze reasoning at `f315fbf`; final full suite 849 passed, 1 skipped. Publish verified source/mirror/package hashes.
 
 - Preserve observed symptom wording through candidate generation and retain deep KB profiles for core retrieval hits.
 - Recognize objective absence; apply negative penalties after positive evidence saturation.
