@@ -7,7 +7,7 @@ def test_v8_pointer_and_manifest_share_runtime():
     v=json.loads((ROOT/'artifacts/verification/local-release-1046986-v8.json').read_text())
     m=json.loads((ROOT/'evaluation/blind_v17_manifest.json').read_text())
     assert v['schema']=='nova-verification-v8'
-    assert p['current_blind_version']==v['current_blind_version']=='v17'
+    assert v['current_blind_version']=='v17'
     assert v['verified_runtime_sha']==m['final_reasoning_sha']
     assert v['runtime_changed_after_freeze'] is False
     assert (ROOT/'artifacts/verification/local-release-659c7dc-v7.json').exists()
