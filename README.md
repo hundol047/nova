@@ -699,3 +699,7 @@ flags decreased; see the report for non-independent data provenance and remainin
 
 [Current imaging-evidence evaluation](docs/evaluation/accuracy_cycle3/REPORT.md): paired synthetic
 cohorts improved to 384/400 and 388/400. This is development replay, not independent clinical accuracy.
+
+Experimental neural training now requires recorded candidate evidence (no hash pseudo-features).
+[Readiness and blockers](docs/learning/RECORDED_SIGNALS_READINESS.md): no new clinical weights were
+trained or activated; approved data, independent evaluation and a PyTorch environment are still needed.

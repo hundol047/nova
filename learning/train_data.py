@@ -1,23 +1,13 @@
-"""Training-data adaptation for the candidate ranker (dependency-free).
+"""Candidate ranker rows use recorded inference-time evidence, retrieval and prior.
 
-Converts TrainingExamples into the per-candidate rows the model scores, plus the index of the
-correct (labelled) candidate within each candidate set. This is the SAME per-candidate row layout
-TorchRanker._candidate_row uses at inference (feature_vector + [base_evidence, retrieval, prior]),
-so training and inference agree on the input contract.
-
-Because the immutable snapshot stores only candidate_concept_ids + label_concept_id (not per-
-candidate evidence scores), we derive deterministic, leakage-free per-candidate signals here:
-  - retrieval_score : 1.0 for the labelled candidate is NOT used (that would leak the label);
-                      instead a stable hash-based pseudo-feature keeps candidates distinguishable
-                      without encoding the answer. Real deployments replace this with the actual
-                      engine-computed base_evidence/retrieval/prior captured alongside the outcome.
-The point of this module is a correct, runnable TRAINING CONTRACT; feature richness improves as the
-outcome store captures real per-candidate evidence (see docs/learning/DATA_GOVERNANCE.md).
+No hash pseudo-features, label-derived scores or automatic feature padding. Legacy
+snapshots remain readable but cannot train until real candidate signals are recorded.
+Signals must be captured before outcome adjudication; schema checks cannot verify provenance.
 """
 
 from __future__ import annotations
 
-import hashlib
+import math
 from dataclasses import dataclass
 from typing import List, Sequence, Tuple
 
@@ -26,30 +16,23 @@ from learning.encoder import FEATURE_DIM
 from learning.schemas import TrainingExample
 
 
-def _pseudo_candidate_signal(example_id: str, concept_id: str) -> List[float]:
-    """Deterministic, label-free per-candidate signal of length PER_CANDIDATE_EXTRA in [0,1].
-
-    Derived only from (example_id, concept_id) so it is stable and does NOT encode which candidate
-    is correct. Stands in for the real base_evidence/retrieval/prior captured at inference time."""
-    out = []
-    for salt in range(PER_CANDIDATE_EXTRA):
-        h = hashlib.sha256(f"{salt}|{example_id}|{concept_id}".encode("utf-8")).hexdigest()
-        out.append((int(h[:8], 16) % 1000) / 1000.0)
-    return out
-
-
 def candidate_rows(example: TrainingExample) -> Tuple[List[List[float]], int]:
     """Return (rows, label_index). rows[i] is the model input for candidate i; label_index is the
     position of label_concept_id within candidate_concept_ids. Raises if the label is absent."""
     fv = list(example.feature_vector)
-    if len(fv) != FEATURE_DIM:
-        # Pad/truncate defensively so a snapshot from a slightly different encoder version still
-        # yields the fixed model input dim (mismatch is separately caught by checkpoint guard).
-        fv = (fv + [0.0] * FEATURE_DIM)[:FEATURE_DIM]
+    if len(fv) != FEATURE_DIM or any(type(v) not in (int, float) or not math.isfinite(v) for v in fv):
+        raise ValueError("Invalid patient feature vector; explicit schema migration required")
+    if len(set(example.candidate_concept_ids)) != len(example.candidate_concept_ids):
+        raise ValueError("Duplicate candidate IDs")
+    if set(example.candidate_signals) != set(example.candidate_concept_ids):
+        raise ValueError("Recorded candidate signals required; hash pseudo-features are not training evidence")
     rows = []
     label_index = -1
     for i, cid in enumerate(example.candidate_concept_ids):
-        rows.append(fv + _pseudo_candidate_signal(example.example_id, cid))
+        signals = list(example.candidate_signals[cid])
+        if len(signals) != PER_CANDIDATE_EXTRA or any(type(v) not in (int, float) or not math.isfinite(v) for v in signals):
+            raise ValueError("Candidate signals must be finite [base_evidence, retrieval, prior]")
+        rows.append(fv + signals)
         if cid == example.label_concept_id:
             label_index = i
     if label_index < 0:

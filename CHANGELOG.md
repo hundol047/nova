@@ -29,3 +29,9 @@ ICD-11 2026 reference registration: [18,375 ordinary categories plus separately 
 - Recognize lobar/localized lung consolidation as the existing focal-consolidation feature; reuse current-result filtering for objective exam/imaging scoring.
 - Paired synthetic cohorts improved 383/400→384/400 and 387/400→388/400, with zero previously correct cases becoming incorrect. Safety warning misses did not increase. These correlated development cases do not establish clinical accuracy.
 - Regression: 646 passed, 1 skipped; known API TestClient blocker excluded. Evidence: `docs/evaluation/accuracy_cycle3/REPORT.md`.
+
+## 2026-10-03 — recorded evidence for experimental neural training
+
+- Removed hash-derived per-candidate pseudo-features from neural training. Require recorded evidence/retrieval/prior signals matching inference, strict feature validation and immutable snapshot hash verification.
+- Bumped checkpoint schema to sched.v2; old experimental checkpoints must not be reused as if trained on actual signals. Renamed early-stopping evaluation output to validation metrics.
+- No clinical dataset or PyTorch execution environment available: no new trained model or accuracy claim. Competition fixed-model weights remain unchanged. See `docs/learning/RECORDED_SIGNALS_READINESS.md`.

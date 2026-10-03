@@ -21,6 +21,7 @@ CI / a torch environment runs the real loop). Nothing here is a claim of real cl
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -55,10 +56,7 @@ def _prepare_rows(examples: List[TrainingExample]) -> List[Tuple[List[List[float
     """Per-example (candidate rows, correct index); skips degenerate (<2 candidate) examples."""
     prepared = []
     for ex in examples:
-        try:
-            rows, li = candidate_rows(ex)
-        except ValueError:
-            continue
+        rows, li = candidate_rows(ex)
         if len(rows) >= 2:
             prepared.append((rows, li))
     return prepared
@@ -190,7 +188,14 @@ def main(argv=None) -> int:
 
     seed_everything(args.seed)
 
-    examples = load_snapshot(Path(args.snapshot))
+    snapshot_path = Path(args.snapshot)
+    manifest_path = snapshot_path.with_suffix(".manifest.json")
+    if not manifest_path.is_file():
+        raise SystemExit("Missing immutable snapshot manifest")
+    manifest = json.loads(manifest_path.read_text())
+    if hashlib.sha256(snapshot_path.read_bytes()).hexdigest() != manifest.get("content_sha256"):
+        raise SystemExit("Snapshot content hash mismatch")
+    examples = load_snapshot(snapshot_path)
     _assert_no_forbidden_labels(examples)
 
     if args.split == "temporal":
@@ -236,7 +241,7 @@ def main(argv=None) -> int:
     for h in history:
         print(f"  epoch {h['epoch']:3d} train_loss={h['train_loss']} val_loss={h['val_loss']}"
               + (" [early_stop]" if h.get("early_stop") else ""))
-    print("held-out metrics:", json.dumps({k: round(v, 4) for k, v in metrics.items()}))
+    print("validation metrics (used for early stopping; NOT independent test):", json.dumps({k: round(v, 4) for k, v in metrics.items()}))
 
     out_dir = Path(args.output_dir)
     model_version = args.model_version or f"ranker-{Path(args.snapshot).stem}"

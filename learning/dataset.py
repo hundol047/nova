@@ -60,6 +60,7 @@ def raw_to_example(raw: Dict) -> TrainingExample:
         candidate_concept_ids=list(raw.get("candidate_ids", [])),
         label_concept_id=str(raw["label_concept_id"]),
         label_source=LabelSource(str(raw["label_source"])),
+        candidate_signals={str(k): list(v) for k, v in raw.get("candidate_signals", {}).items()},
     )
 
 
@@ -113,5 +114,6 @@ def load_snapshot(path: Path) -> List[TrainingExample]:
             candidate_concept_ids=list(d["candidate_concept_ids"]),
             label_concept_id=d["label_concept_id"],
             label_source=LabelSource(d["label_source"]),
+            candidate_signals={str(k): list(v) for k, v in d.get("candidate_signals", {}).items()},
         ))
     return rows

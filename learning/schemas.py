@@ -107,6 +107,7 @@ class TrainingExample:
     candidate_concept_ids: List[str]
     label_concept_id: str
     label_source: LabelSource
+    candidate_signals: Dict[str, List[float]] = field(default_factory=dict)
 
     def as_dict(self) -> dict:
         return {
@@ -117,4 +118,5 @@ class TrainingExample:
             "candidate_concept_ids": self.candidate_concept_ids,
             "label_concept_id": self.label_concept_id,
             "label_source": self.label_source.value,
+            "candidate_signals": self.candidate_signals,
         }

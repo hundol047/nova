@@ -28,7 +28,7 @@ from learning.encoder import FEATURE_DIM
 # Bump these when the corresponding contract changes; a checkpoint carrying an older value is
 # refused by check_compatibility() rather than silently loaded.
 FEATURE_VERSION = "feat.v1"      # encoder feature layout
-SCHEMA_VERSION = "sched.v1"      # TrainingExample / candidate-row schema
+SCHEMA_VERSION = "sched.v2"      # TrainingExample / candidate-row schema
 MODEL_ARCH = "candidate_scorer_mlp.v1"
 
 # Per-candidate model input = encoder feature vector (FEATURE_DIM) + [base_evidence, retrieval, prior]
