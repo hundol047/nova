@@ -1,0 +1,84 @@
+{
+  "part": 2,
+  "counts": {
+    "cases": 20,
+    "correct": 20,
+    "critical": 7,
+    "critical_correct": 7,
+    "real_llm_calls": 0
+  },
+  "case_ids": [
+    "SIM50_low_validation_00214",
+    "SIM50_low_development_06130",
+    "SIM50_low_development_01016",
+    "SIM50_low_development_05182",
+    "SIM50_low_development_16767",
+    "SIM50_low_validation_01872",
+    "SIM50_low_development_09555",
+    "SIM50_low_development_17494",
+    "SIM50_low_development_15181",
+    "SIM50_low_development_06507",
+    "SIM50_low_validation_02572",
+    "SIM50_low_validation_01353",
+    "SIM50_low_development_16617",
+    "SIM50_low_development_18704",
+    "SIM50_low_development_09559",
+    "SIM50_low_development_14080",
+    "SIM50_low_validation_02703",
+    "SIM50_low_development_14414",
+    "SIM50_low_development_14485",
+    "SIM50_low_validation_00853"
+  ],
+  "elapsed_seconds": 7.9152509619998455,
+  "run_metadata": {
+    "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+    "selection": "200 per difficulty; deterministic round-robin source families; no prediction filtering",
+    "seed": "balanced400-v1",
+    "excluded_inputs": 0,
+    "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+    "selected_sha256": "72e2ef03392c5a2b2ef2cdc397fbcc9c0c7518027dfffaa9ba57ba3f4342ae2c",
+    "runtime_sha256": "c124764185f39c5e652526a83e9ae6ade043e479bc21e62215d24b16efb0926b",
+    "runtime_commit": "fb36c5745174d11813a904282622e86b014e8409",
+    "runner_sha256": "9a3fdc526d792212139de7ad8104fa99416b7211ce3f47f0eda9e95e154e0f1a",
+    "response_policy": "mapped_unknown_missing",
+    "memoized": true,
+    "cases": 400,
+    "independent_test": false,
+    "clinical_validation": false,
+    "training": false,
+    "limitation": "Previously development-exposed synthetic source families and correlated variants; English scripted dialogues; not ICD-11-wide coverage."
+  },
+  "output_sha256": "1d46c78b0f069d5c9b4e47f7dd59c1b02272117a6f8d0cb149c58dd5fab4a996",
+  "cache_stats": {
+    "_content_words": {
+      "hits": 153873,
+      "misses": 1215,
+      "maxsize": 16384,
+      "currsize": 1215
+    },
+    "_strip_negated_spans": {
+      "hits": 60659,
+      "misses": 224,
+      "maxsize": 16384,
+      "currsize": 224
+    },
+    "feature_finding_pair": {
+      "hits": 3206852,
+      "misses": 65279,
+      "maxsize": 131072,
+      "currsize": 65279
+    },
+    "catalog_context": {
+      "hits": 213,
+      "misses": 202,
+      "maxsize": 2048,
+      "currsize": 202
+    },
+    "catalog_search": {
+      "hits": 492,
+      "misses": 46,
+      "maxsize": 8192,
+      "currsize": 46
+    }
+  }
+}

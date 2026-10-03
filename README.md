@@ -696,3 +696,6 @@ ICD-11 2026 reference registration: [18,375 ordinary categories plus separately 
 Latest synthetic safety replay: [2026-10-03 cycle 2](docs/evaluation/safety_cycle2/RESULTS.md).
 Across two 400-input cohorts, exact diagnosis agreement was unchanged while missed final safety
 flags decreased; see the report for non-independent data provenance and remaining limitations.
+
+[Current imaging-evidence evaluation](docs/evaluation/accuracy_cycle3/REPORT.md): paired synthetic
+cohorts improved to 384/400 and 388/400. This is development replay, not independent clinical accuracy.

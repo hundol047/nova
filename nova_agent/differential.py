@@ -25,7 +25,7 @@ from nova_agent.glucose_evidence import (
     extract_glucose_mg_dl,
 )
 from nova_agent.matching import content_word_count, feature_denied, feature_present
-from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding, normalize_objective_evidence
+from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding, normalize_objective_evidence, _current_result_texts
 from nova_agent.severity_evidence import ELEVATED_LACTATE_MMOL_L, extract_lactate_mmol_l
 from nova_agent.state import DifferentialSnapshot, PatientState
 
@@ -52,6 +52,10 @@ _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
 # phrase it belongs to. Deliberately NOT a general medication NLP system: only the drug classes an
 # existing knowledge-base risk_factor already names.
 FEATURE_ALIASES: dict[str, list[str]] = {
+    "focal consolidation": [
+        "lobar consolidation", "right upper lobe consolidation", "right middle lobe consolidation",
+        "right lower lobe consolidation", "left upper lobe consolidation", "left lower lobe consolidation",
+    ],
     "fever": ["high fever", "高熱", "発熱", "熱がある", "열이 나다", "고열"],
     "neck stiffness": ["stiff neck", "首が硬い", "首が硬く", "首がこわばる", "首が動かしにくい", "項部硬直", "경부강직"],
     "headache": ["激しい頭痛", "頭痛", "頭が痛い", "열과 두통"],
@@ -426,6 +430,9 @@ def _score_disease(entry: dict, state: PatientState,
 
     # A past/family report is risk context, not a current objective test result.
     objective_text = list(state.physical_examinations.values()) + list(state.imaging.values()) + list(state.laboratory_tests.values())
+    # Reuse the laboratory assertion policy for exam/imaging evidence too: an
+    # explicitly historical or hypothetical report is not a current observation.
+    objective_text = _current_result_texts(objective_text)
     seen_lab_evidence = set()
     for finding in entry.get("confirmatory_findings", []):
         lab_key = CONFIRMATORY_PHRASE_TO_LAB.get(finding.lower())

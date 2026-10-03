@@ -23,3 +23,9 @@ ICD-11 2026 reference registration: [18,375 ordinary categories plus separately 
 - Evaluated two 400-input synthetic cohorts before and after: warning misses 22→15 and 19→13, without increasing noncritical warning counts. Exact diagnosis agreement remained 95.75% and 96.75%; no diagnostic-accuracy improvement claimed.
 - Rejected broader evidence and cold-sweat alias attempts because they increased warnings on noncritical cases. Regression: 633 passed, 1 skipped; pre-existing API TestClient issue excluded.
 - Evidence and limitations: `docs/evaluation/safety_cycle2/RESULTS.md` and `README.md`. No training, clinical validation or deployment.
+
+## 2026-10-03 — current regional imaging evidence
+
+- Recognize lobar/localized lung consolidation as the existing focal-consolidation feature; reuse current-result filtering for objective exam/imaging scoring.
+- Paired synthetic cohorts improved 383/400→384/400 and 387/400→388/400, with zero previously correct cases becoming incorrect. Safety warning misses did not increase. These correlated development cases do not establish clinical accuracy.
+- Regression: 646 passed, 1 skipped; known API TestClient blocker excluded. Evidence: `docs/evaluation/accuracy_cycle3/REPORT.md`.

@@ -1,0 +1,84 @@
+{
+  "part": 0,
+  "counts": {
+    "cases": 20,
+    "correct": 20,
+    "critical": 10,
+    "critical_correct": 10,
+    "real_llm_calls": 0
+  },
+  "case_ids": [
+    "SIM50_low_development_00113",
+    "SIM50_low_development_02434",
+    "SIM50_low_development_03925",
+    "SIM50_low_development_13532",
+    "SIM50_low_development_17369",
+    "SIM50_low_validation_03518",
+    "SIM50_low_validation_01919",
+    "SIM50_low_validation_02241",
+    "SIM50_low_validation_01128",
+    "SIM50_low_development_12266",
+    "SIM50_low_development_00644",
+    "SIM50_low_development_17070",
+    "SIM50_low_development_19462",
+    "SIM50_low_development_00100",
+    "SIM50_low_development_17334",
+    "SIM50_low_development_14071",
+    "SIM50_low_development_02641",
+    "SIM50_low_development_13205",
+    "SIM50_low_development_18654",
+    "SIM50_low_validation_04884"
+  ],
+  "elapsed_seconds": 7.446174255997903,
+  "run_metadata": {
+    "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+    "selection": "200 per difficulty; deterministic round-robin source families; no prediction filtering",
+    "seed": "safety-cycle2",
+    "excluded_inputs": 400,
+    "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+    "selected_sha256": "5c588bc82ee223984f7e3d63abf79cdd7c4311c7524b7ce3685dee59395e648a",
+    "runtime_sha256": "c124764185f39c5e652526a83e9ae6ade043e479bc21e62215d24b16efb0926b",
+    "runtime_commit": "fb36c5745174d11813a904282622e86b014e8409",
+    "runner_sha256": "9a3fdc526d792212139de7ad8104fa99416b7211ce3f47f0eda9e95e154e0f1a",
+    "response_policy": "mapped_unknown_missing",
+    "memoized": true,
+    "cases": 400,
+    "independent_test": false,
+    "clinical_validation": false,
+    "training": false,
+    "limitation": "Previously development-exposed synthetic source families and correlated variants; English scripted dialogues; not ICD-11-wide coverage."
+  },
+  "output_sha256": "8e5c7e05e6bbf45f2a0eb59c7ccea223854a298009abaf83f665e42081dcab56",
+  "cache_stats": {
+    "_content_words": {
+      "hits": 152080,
+      "misses": 1224,
+      "maxsize": 16384,
+      "currsize": 1224
+    },
+    "_strip_negated_spans": {
+      "hits": 61640,
+      "misses": 237,
+      "maxsize": 16384,
+      "currsize": 237
+    },
+    "feature_finding_pair": {
+      "hits": 2801619,
+      "misses": 65579,
+      "maxsize": 131072,
+      "currsize": 65579
+    },
+    "catalog_context": {
+      "hits": 192,
+      "misses": 188,
+      "maxsize": 2048,
+      "currsize": 188
+    },
+    "catalog_search": {
+      "hits": 449,
+      "misses": 49,
+      "maxsize": 8192,
+      "currsize": 49
+    }
+  }
+}
