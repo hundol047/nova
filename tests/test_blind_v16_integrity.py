@@ -18,7 +18,7 @@ _ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_v16_is_historical_reference_only():
-    assert CURRENT_BLIND_VERSION == "v17"
+    assert CURRENT_BLIND_VERSION != "v16"
     assert "v16" in reference_only_versions()
     assert "v16" in ALL_BLIND_VERSIONS
     assert "v15" in ALL_BLIND_VERSIONS  # reference-only, still known

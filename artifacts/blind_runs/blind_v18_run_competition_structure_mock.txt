@@ -1,0 +1,81 @@
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+V18_01                          critical;atypical     YES       13      0          NO             
+V18_02                          critical;ranking_trap YES       35      0          NO             
+V18_03                          critical;dangerous_mimicYES       24      0          NO             
+V18_04                          critical;sparse       NO        36      0          YES            
+V18_05                          critical;sparse       NO        37      0          YES            
+V18_06                          critical;early_stop_trapYES       18      0          NO             
+V18_07                          critical;infection    YES       40      0          NO             
+V18_08                          critical;source_systemic;multimorbidityYES       40      0          NO             
+V18_09                          critical;dangerous_mimicYES       10      0          NO             
+V18_10                          critical;medication   YES       26      0          NO             
+V18_11                          critical;metabolic    YES       30      0          NO             
+V18_12                          critical;medication;objectiveYES       13      0          NO             
+V18_13                          critical;etiology_rhythmYES       10      0          NO             
+V18_14                          critical;metabolic    YES       37      0          NO             
+V18_15                          critical;medication_exposureYES       43      0          NO             
+V18_16                          critical;objective    YES       29      0          NO             
+V18_17                          critical;multimorbidity;ranking_trapYES       38      0          NO             
+V18_18                          critical;negative_evidenceYES       12      0          NO             
+V18_19                          critical;benign_history_trapNO        35      0          YES            
+V18_20                          critical;high_risk_feverYES       35      0          NO             
+V18_21                          rhythm;objective      YES       36      0          NO             
+V18_22                          rhythm;negative_evidenceYES       36      0          NO             
+V18_23                          common;infection_sourceYES       37      0          NO             
+V18_24                          infection;atypical    YES       42      0          NO             
+V18_25                          source_systemic;commonYES       40      0          NO             
+V18_26                          objective;late_evidenceYES       36      0          NO             
+V18_27                          common;progression    NO        40      0          NO             
+V18_28                          benign_mimic;objectiveNO        38      0          NO             
+V18_29                          common;over_testing_trapYES       40      0          NO             
+V18_30                          common;negative_evidenceYES       29      0          NO             
+V18_31                          common;over_testing_trapYES       5       0          NO             
+V18_32                          common;negative_evidenceYES       37      0          NO             
+V18_33                          common;medication     NO        36      0          NO             
+V18_34                          benign_mimic;over_testing_trapYES       38      0          NO             
+V18_35                          benign_mimic;negative_evidenceNO        35      0          NO             
+V18_36                          benign_mimic;early_stop_trapYES       38      0          NO             
+V18_37                          medication;negative_evidenceNO        44      0          NO             
+V18_38                          benign_mimic;over_testing_trapYES       35      0          NO             
+V18_39                          common;negative_evidenceYES       44      0          NO             
+V18_40                          common;over_testing_trapNO        43      0          NO             
+V18_41                          benign_mimic;negative_evidenceNO        35      0          NO             
+V18_42                          Korean;critical       YES       11      0          NO             
+V18_43                          Korean;negation       YES       38      0          NO             
+V18_44                          Japanese;infection    YES       8       0          NO             
+V18_45                          Japanese;rhythm       YES       36      0          NO             
+V18_46                          mixed_language;criticalYES       14      0          NO             
+V18_47                          mixed_language;benign_mimicNO        35      0          NO             
+V18_48                          medication;objective;ranking_trapYES       37      0          NO             
+V18_49                          sparse;late_evidence;early_stop_trapYES       20      0          NO             
+V18_50                          objective_heavy;ranking_trapYES       36      0          NO             
+V18_51                          benign_mimic;over_testing_trapNO        35      0          NO             
+V18_52                          source_systemic;negative_evidenceYES       41      0          NO             
+V18_53                          long_tail             NO        45      0          NO             
+V18_54                          long_tail;dangerous_mimicNO        36      0          NO             
+V18_55                          long_tail;objective   NO        44      0          NO             
+V18_56                          long_tail;sparse      NO        45      0          NO             
+V18_57                          OOD;nonmedical        NO (not scored)45      0          NO             
+V18_58                          OOD;administrative    NO (not scored)45      0          NO             
+V18_59                          OOD;medication_informationNO (not scored)45      0          NO             
+V18_60                          unsupported;sparse    NO (not scored)45      0          NO             
+V18_61                          nonsense;insufficient NO (not scored)45      0          NO             
+V18_62                          unsupported;insufficientNO (not scored)45      0          NO             
+V18_63                          mixed_task;critical;early_stop_trapYES       37      0          NO             
+V18_64                          long_tail;negative_evidenceNO        36      0          NO             
+
+Blind v18: one declared mock run (64 cases, 58 scored, 25 critical)
+  Scored Diagnostic Accuracy:   70.7%  (excludes: V18_57, V18_58, V18_59, V18_60, V18_61, V18_62)
+  All-Case Diagnostic Accuracy: 64.1%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (safe handling of excluded cases: diagnosed, no critical miss)
+  Critical Diagnosis Recall:    88.0%
+  Critical Miss Rate:           12.0%
+  Average / Median Turns:       33.6 / 36.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        5.52 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        9.6 / 8.9 / 14.1
+  Utility Score Proxy:          0.006  (informal local metric, evaluation/scoring.py -- not an official competition score)

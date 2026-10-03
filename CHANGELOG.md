@@ -1,5 +1,13 @@
 # Changelog
 
+## Round I / verification v10
+
+- Published reasoning freeze `d6e2b84` before authoring 64 new synthetic v18 cases; published case/runner/runtime hashes before the single declared mock run.
+- v18: 41/58 scored correct, 22/25 critical correct, three critical misses, mean 33.578125 turns and 14.125 tests. No runtime tuning after execution.
+- Final full suite: 833 passed, 1 skipped (optional torch missing). Archived 257390-byte submission, exact source/mirror/runtime hashes and updated CURRENT_RELEASE to v10.
+- Preserve all historical verification archives and v17 cases/results. Update historical-version test assertions for v18 without changing their preserved hashes.
+- Report remaining ranking/coverage errors and unavailable official endpoint/schema; no clinical or real-model accuracy claim.
+
 ## Round I / integration readiness
 
 - Distinguish absent endpoint, unreachable transport, failed auth/model/revision, invalid structure and verified transport; official schema readiness remains separately blocked.

@@ -1,0 +1,8 @@
+{
+  "manifest_sha256": "304d6b48c6e3656f8a7e0ffbbb83b6814bddf263490c4e1a6376598d870fba71",
+  "runtime_sha": "d6e2b84aa2bb90c198fae39dade3870d6575c6f4",
+  "authoring_sha": "6f7bd2748c29b46d762953477ace316dc83bb75c",
+  "started_utc": "2026-10-03T10:49:58.314843+00:00",
+  "configuration": "COMPETITION-STRUCTURE / MOCK-LLM",
+  "status": "STARTED"
+}
