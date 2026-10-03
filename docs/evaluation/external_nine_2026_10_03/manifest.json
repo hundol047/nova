@@ -1,0 +1,18 @@
+{
+  "scope": "EXTERNAL_PUBLIC_RESEARCH_CASES_MOCK_RUNTIME_ADAPTER_EVALUATION",
+  "provider": "mock",
+  "training": false,
+  "clinical_validation": false,
+  "independent_unseen_test": false,
+  "selection": "previously inspected nine final-label term matches",
+  "source_sha256": "01d98c001860eca34c1eb9b2256bc6e7bf501aa3b271de1adf4a5ae605a5e09e",
+  "input_sha256": "52b5cf5d9d30b3ada17c53aa5a1795032f8834fa317dd1bfac17bfcbdd444232",
+  "runtime_sha256": "ed1a53cfbc593eb984809da973df05325c5e37adbf2149f5e7b61069c82a4fee",
+  "runtime_commit": "fdf7ea52184f54a99a1a8e8e475287243a1dab74",
+  "runner_sha256": "d2bbf56739b2e59420229df2077254438cfb9b88baf540faa1077f7511848b72",
+  "input_policy": "unmodified source clinical fields up front; no gold/options",
+  "response_policy": "Additional information is not available in the supplied case.",
+  "scoring": "normalized complete final diagnosis exact match; no synonym or component credit",
+  "safety_metrics": "NOT_SCORED: no expert triage labels",
+  "terms": "Research/model evaluation only; not clinical decision-making or medical diagnosis"
+}

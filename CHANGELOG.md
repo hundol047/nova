@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-03 — first external nine-case replay
+
+- Run the nine previously selected DiagnosisArena research cases through the mock DoctorAgent with gold/options excluded and missing follow-up data kept unknown.
+- Complete-label exact match: 0/9; one abstention, eight different labels, zero real LLM calls. This small unsupported-case adapter evaluation is not overall clinical accuracy.
+- Preserve inputs, traces, hashes and [limitations/failure analysis](docs/evaluation/external_nine_2026_10_03/REPORT.md). No training or runtime changes.
+
 ## 2026-10-03 — external expert-reviewed evidence intake
 
 - Preserve MedXpertQA Text (2,455 rows) and the public DiagnosisArena subset (915 rows), original answer keys, source notices, fixed dataset revisions and SHA-256 manifests.
