@@ -49,6 +49,7 @@ _SAFETY_FEATURE_ALIASES: dict[str, tuple[str, ...]] = {
         "pain when breathing in", "pain with deep breaths", "sharp pain with breathing",
         "숨 쉴 때 가슴이 아프", "숨쉴 때 가슴이 아프", "호흡할 때 가슴 통증",
     ),
+    "slurred speech": ("dysarthria", "어눌한 말", "말이 어눌"),
     "hypoxia": (
         "low oxygen", "low oxygen level", "oxygen saturation is low",
     ),
@@ -94,10 +95,21 @@ class SafetyLayer:
         # layer's own stated purpose ("never a blanket test-everything-dangerous reflex") and
         # measurably inflating turn counts by keeping irrelevant diagnoses "actively flagged"
         # purely because they exist somewhere in the pool.
-        differential_ids = {d.diagnosis_id for d in differential if d.candidate_sources != ["safety_candidate"]}
         # Symptom triggers use current observations only. History/medication risk
         # remains available to the separate demographic and medication rules below.
         findings_text = state.all_findings_text(include_context=False)
+        differential_ids = {d.diagnosis_id for d in differential
+                            if d.candidate_sources != ["safety_candidate"]}
+        # Specific current bleeding / focal neurological signs establish relevance
+        # even if language routing missed the complaint. Generic sweating, nausea,
+        # tachycardia or candidate score must NOT bypass complaint relevance.
+        direct_signs = {
+            "gi_bleeding": ("melena", "hematemesis", "hematochezia"),
+            "ischemic_stroke": ("facial droop", "slurred speech", "unilateral weakness", "focal deficit"),
+        }
+        for diagnosis_id, signs in direct_signs.items():
+            if any(_safety_feature_present(sign, findings_text) for sign in signs):
+                differential_ids.add(diagnosis_id)
 
         for diagnosis_id in critical_condition_ids():
             entry = disease_by_id(diagnosis_id)

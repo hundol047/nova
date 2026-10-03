@@ -1,4 +1,5 @@
 """Frozen, source-balanced 200 easy + 200 hard synthetic replay; no training."""
+import argparse
 import gzip
 import hashlib
 import json
@@ -16,7 +17,17 @@ from scripts.run_large_simulation import initialize, execute_job, runtime_digest
 
 
 def main():
-    output = ROOT / 'docs/evaluation/balanced_400_2026_10_03'
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--output', type=Path, default=ROOT / 'docs/evaluation/balanced_400_2026_10_03')
+    parser.add_argument('--seed', default='balanced400-v1')
+    parser.add_argument('--exclude', type=Path)
+    args = parser.parse_args()
+    output = args.output
+    if (output / 'completion.json').exists():
+        raise ValueError('Use a fresh output directory')
+    excluded = set()
+    if args.exclude:
+        excluded = {json.loads(line)['input_sha256'] for line in args.exclude.read_text().splitlines()}
     output.mkdir(parents=True, exist_ok=True)
     corpus = ROOT / 'research/simulation_50000_v1/cases.jsonl.gz'
     manifest = json.loads(corpus.with_name('manifest.json').read_text())
@@ -26,13 +37,14 @@ def main():
     with gzip.open(corpus, 'rt') as stream:
         for line in stream:
             row = json.loads(line)
-            pools[row['difficulty']][row['source_family']].append(row)
+            if row['input_sha256'] not in excluded:
+                pools[row['difficulty']][row['source_family']].append(row)
     selected = []
     for difficulty in ('low', 'high'):
         groups = pools[difficulty]
         for rows in groups.values():
-            rows.sort(key=lambda r: hashlib.sha256(('balanced400-v1:' + r['id']).encode()).hexdigest())
-        names = sorted(groups, key=lambda n: hashlib.sha256(('balanced400-v1:' + n).encode()).hexdigest())
+            rows.sort(key=lambda r: hashlib.sha256((args.seed + ':' + r['id']).encode()).hexdigest())
+        names = sorted(groups, key=lambda n: hashlib.sha256((args.seed + ':' + n).encode()).hexdigest())
         chosen = []
         index = 0
         while len(chosen) < 200:
@@ -48,7 +60,7 @@ def main():
     payload = ''.join(json.dumps(r, ensure_ascii=False) + '\n' for r in selected)
     metadata = dict(scope='SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY',
                     selection='200 per difficulty; deterministic round-robin source families; no prediction filtering',
-                    corpus_sha256=digest, selected_sha256=hashlib.sha256(payload.encode()).hexdigest(),
+                    seed=args.seed, excluded_inputs=len(excluded), corpus_sha256=digest, selected_sha256=hashlib.sha256(payload.encode()).hexdigest(),
                     runtime_sha256=runtime_digest(ROOT),
                     runtime_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
                     runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
