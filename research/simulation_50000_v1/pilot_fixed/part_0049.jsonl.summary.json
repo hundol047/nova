@@ -1,0 +1,71 @@
+{
+  "part": 49,
+  "counts": {
+    "cases": 8,
+    "correct": 0,
+    "critical": 8,
+    "critical_correct": 0,
+    "real_llm_calls": 0
+  },
+  "case_ids": [
+    "SIM50_high_development_00068",
+    "SIM50_high_development_00187",
+    "SIM50_high_development_00306",
+    "SIM50_high_development_00425",
+    "SIM50_high_development_00544",
+    "SIM50_high_development_00663",
+    "SIM50_high_development_00782",
+    "SIM50_high_development_00901"
+  ],
+  "elapsed_seconds": 2.108110408000357,
+  "run_metadata": {
+    "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+    "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+    "runtime_sha256": "a162a35fbb42d154f1454e0ea13d66c230331c4368e2c6c08e44ff438b226312",
+    "runner_sha256": "5db13c0fcc623c6d7cf73fd720051836f1bd8bc6716b6eb8463a19ac7c517ddc",
+    "cache_sha256": "a72dba51b16d87abd8d385aef819254638f625b58ac13655cb6489e764cf0581",
+    "response_adapter_sha256": "236d16512b02e5df9433a86b8fdf6a8ae2cd7caa8d14459b54845a334e298f20",
+    "response_policy": "mapped_unknown_missing",
+    "simulator_sha256": "20b04a18b009bcea55f233aab27a1655cef412135ed285a78fa48084ffbada81",
+    "runtime_commit": "1c44c6797381cb6b77a77397f872aca8af9d10f5",
+    "split": "development",
+    "limit_per_family": 8,
+    "memoized": true,
+    "cases": 1248,
+    "families": 156,
+    "real_llm_provider": false
+  },
+  "output_sha256": "6070fcff5c2dba8fae4d9687a3712ac60117a7d0a97c39d7702d735dc73d0af7",
+  "cache_stats": {
+    "_content_words": {
+      "hits": 224112,
+      "misses": 881,
+      "maxsize": 16384,
+      "currsize": 881
+    },
+    "_strip_negated_spans": {
+      "hits": 53665,
+      "misses": 176,
+      "maxsize": 16384,
+      "currsize": 176
+    },
+    "feature_finding_pair": {
+      "hits": 5690027,
+      "misses": 57211,
+      "maxsize": 131072,
+      "currsize": 57211
+    },
+    "catalog_context": {
+      "hits": 898,
+      "misses": 680,
+      "maxsize": 2048,
+      "currsize": 680
+    },
+    "catalog_search": {
+      "hits": 1561,
+      "misses": 60,
+      "maxsize": 8192,
+      "currsize": 60
+    }
+  }
+}

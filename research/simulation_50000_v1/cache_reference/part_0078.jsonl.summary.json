@@ -1,0 +1,30 @@
+{
+  "part": 78,
+  "counts": {
+    "cases": 1,
+    "correct": 1,
+    "critical": 0,
+    "critical_correct": 0,
+    "real_llm_calls": 0
+  },
+  "case_ids": [
+    "SIM50_high_development_00097"
+  ],
+  "elapsed_seconds": 1.5360777169989888,
+  "run_metadata": {
+    "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+    "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+    "runtime_sha256": "75e454c6950da1269bc6fe562b4ce9187b16c6439d6f4ff76e7262030564cc91",
+    "runner_sha256": "4f5551b37a209fd3d0937b7660d998b2871a1a10fd1a2c0d5c3e90f3afc9c705",
+    "cache_sha256": "a72dba51b16d87abd8d385aef819254638f625b58ac13655cb6489e764cf0581",
+    "runtime_commit": "1c44c6797381cb6b77a77397f872aca8af9d10f5",
+    "split": "development",
+    "limit_per_family": 1,
+    "memoized": false,
+    "cases": 156,
+    "families": 156,
+    "real_llm_provider": false
+  },
+  "output_sha256": "4f6af38b86b0cf07c5e5899051f3e4fab5b4ef64dbacd4b9b0768b016eade657",
+  "cache_stats": {}
+}

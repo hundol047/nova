@@ -1,0 +1,19 @@
+{
+  "baseline_commit": "10b7f22",
+  "scenarios": 104,
+  "source_families": 26,
+  "before_correct": 98,
+  "after_correct": 104,
+  "critical_before_correct": 43,
+  "critical_after_correct": 44,
+  "critical_total": 44,
+  "v11_correct": 12,
+  "v11_total": 24,
+  "v11_critical_correct": 7,
+  "v11_critical_total": 15,
+  "tests_passed": 472,
+  "tests_skipped": 1,
+  "real_llm_calls": 0,
+  "clinical_accuracy_verified": false,
+  "expansion_allowed": false
+}

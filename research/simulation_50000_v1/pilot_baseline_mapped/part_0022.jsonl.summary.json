@@ -1,0 +1,71 @@
+{
+  "part": 22,
+  "counts": {
+    "cases": 8,
+    "correct": 8,
+    "critical": 8,
+    "critical_correct": 8,
+    "real_llm_calls": 0
+  },
+  "case_ids": [
+    "SIM50_high_development_00041",
+    "SIM50_high_development_00160",
+    "SIM50_high_development_00279",
+    "SIM50_high_development_00398",
+    "SIM50_high_development_00517",
+    "SIM50_high_development_00636",
+    "SIM50_high_development_00755",
+    "SIM50_high_development_00874"
+  ],
+  "elapsed_seconds": 2.13980449000519,
+  "run_metadata": {
+    "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+    "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+    "runtime_sha256": "75e454c6950da1269bc6fe562b4ce9187b16c6439d6f4ff76e7262030564cc91",
+    "runner_sha256": "5db13c0fcc623c6d7cf73fd720051836f1bd8bc6716b6eb8463a19ac7c517ddc",
+    "cache_sha256": "a72dba51b16d87abd8d385aef819254638f625b58ac13655cb6489e764cf0581",
+    "response_adapter_sha256": "236d16512b02e5df9433a86b8fdf6a8ae2cd7caa8d14459b54845a334e298f20",
+    "response_policy": "mapped_unknown_missing",
+    "simulator_sha256": "20b04a18b009bcea55f233aab27a1655cef412135ed285a78fa48084ffbada81",
+    "runtime_commit": "1c44c6797381cb6b77a77397f872aca8af9d10f5",
+    "split": "development",
+    "limit_per_family": 8,
+    "memoized": true,
+    "cases": 1248,
+    "families": 156,
+    "real_llm_provider": false
+  },
+  "output_sha256": "fb80105d80729baa3a035e5da346600af152704650eef56b60b4b0d1ad5460ae",
+  "cache_stats": {
+    "_content_words": {
+      "hits": 119319,
+      "misses": 708,
+      "maxsize": 16384,
+      "currsize": 708
+    },
+    "_strip_negated_spans": {
+      "hits": 24220,
+      "misses": 80,
+      "maxsize": 16384,
+      "currsize": 80
+    },
+    "feature_finding_pair": {
+      "hits": 2555861,
+      "misses": 26395,
+      "maxsize": 131072,
+      "currsize": 26395
+    },
+    "catalog_context": {
+      "hits": 354,
+      "misses": 326,
+      "maxsize": 2048,
+      "currsize": 326
+    },
+    "catalog_search": {
+      "hits": 934,
+      "misses": 33,
+      "maxsize": 8192,
+      "currsize": 33
+    }
+  }
+}
