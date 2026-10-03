@@ -1,0 +1,12 @@
+=== Failure analysis: 1/18 held-out case(s) not correct ===
+
+--- Headache02_InsufficientInfo (insufficient_info) ---
+  Ground truth:        tension_headache
+  Final diagnosis:     'Bacterial Meningitis'
+  Critical / Miss:     False / False
+  Turns:               20
+  Unnecessary tests:   0
+  Miss categories:     excluded_from_scoring_stress_case, wrong_ranking
+  Final top-5:         ['Bacterial Meningitis', 'Ischemic Stroke', 'Subarachnoid Hemorrhage', 'Migraine', 'Tension-Type Headache']
+  Actions taken:       ['ASK:character', 'TEST:ct_head', 'ASK:onset', 'ASK:past_medical_history', 'EXAM:mental_status_exam', 'EXAM:meningeal_signs', 'EXAM:neuro_exam', 'ASK:associated_symptoms', 'EXAM:vital_signs', 'TEST:lumbar_puncture', 'EXAM:skin_exam', 'TEST:blood_culture', 'TEST:cbc', 'ASK:severity', 'TEST:glucose_point_of_care', 'TEST:mri_brain', 'ASK:family_history', 'ASK:location', 'ASK:aggravating', 'DIAGNOSE:meningitis']
+

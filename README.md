@@ -1,4 +1,4 @@
-> **Current-issues fix / verification v9 in preparation.** Internal evidence assessment and fail-closed competition startup are implemented. v17 is **REFERENCE-ONLY** for historical runtime `1046986`; it was neither edited nor rerun. Real GPT-OSS and the official API remain **NOT VERIFIED**. [Release status](artifacts/verification/CURRENT_RELEASE.json). Older benchmark sections below are historical references.
+> **Current local verification: current-issues fix / v9.** [Report](docs/current_issues/FINAL_REPORT.md) · [release pointer](artifacts/verification/CURRENT_RELEASE.json). Frozen runtime `14e6644`; 798 tests passed, 1 skipped. v17 is **REFERENCE-ONLY**, with no rerun or new blind this round. Real GPT-OSS and official API remain **NOT VERIFIED**. OOD development heuristics and stub wiring are not clinical validation. Older benchmark sections below are historical references.
 
 # N.O.V.A. 2026 Doctor Agent
 

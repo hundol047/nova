@@ -1,0 +1,2 @@
+Executed pytest JUnit result: 798 passed, 1 skipped, 0 failed.
+See pytest_summary.json; this is a parsed summary, not a captured stdout transcript.

@@ -1,0 +1,8 @@
+{
+  "command": "python -m pytest tests -q --junitxml=<local XML>",
+  "passed": 798,
+  "skipped": 1,
+  "failed": 0,
+  "runtime_boundary_test_count": 13,
+  "source": "Parsed executed pytest JUnit XML; no test counts hardcoded"
+}

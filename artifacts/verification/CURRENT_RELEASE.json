@@ -1,19 +1,20 @@
 {
   "note": "Pointer file (spec: a single, unambiguous place to find the CURRENT verification artifact, so a reader never has to guess which SHA-suffixed local-release-*.json file in this directory is current). This file itself is always updated in the SAME commit as the verification artifact it points to -- never a separate follow-up.",
-  "current_verification_artifact": "artifacts/verification/local-release-1046986-v8.json",
-  "current_verification_schema": "nova-verification-v8",
-  "verified_runtime_sha": "1046986c04e40d1c8b0d995adf1ab0e866724f3d",
+  "current_verification_artifact": "artifacts/verification/local-release-14e6644-v9.json",
+  "current_verification_schema": "nova-verification-v9",
+  "verified_runtime_sha": "14e6644d5f0def1516ce165a7a5e1c7164cbc405",
   "current_blind_version": "v17",
   "current_blind_manifest": "evaluation/blind_v17_manifest.json",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-1046986-v8.json",
     "artifacts/verification/local-release-659c7dc-v7.json",
     "artifacts/verification/local-release-659c7dc-v6.json",
     "artifacts/verification/local-release-202ed76-v5.json",
     "artifacts/verification/local-release-faa1701-v4.json",
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
-  "updated_utc": "2026-10-03T09:04:28.335046+00:00",
-  "status": "STALE_RUNTIME_CHANGED",
-  "reason": "Current-issues runtime changes in progress; v8/v17 verify only historical runtime 1046986. No current blind evaluation.",
+  "updated_utc": "2026-10-03T09:54:26.921179+00:00",
+  "status": "LOCAL_VERIFICATION_COMPLETED_EXTERNAL_BLOCKED",
+  "reason": "v9 verifies frozen local runtime, uncertainty development and standalone wiring; external gates remain blocked.",
   "current_blind_status": "REFERENCE-ONLY"
 }
