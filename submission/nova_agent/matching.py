@@ -104,8 +104,21 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
     "denies chest pain"), so scrubbing them would erase the very text being matched against."""
     feature_content = _content_words(feature)
     feature_lower = feature.lower()
-    for finding in findings_text:
-        finding_lower = _strip_negated_spans(finding.lower()) if scrub_negated_spans else finding.lower()
+    # Match within one assertion, not a whole report. Otherwise words from unrelated
+    # sentences ("left arm BP ... abdominal pain") invent "left arm pain". Negation
+    # scrubbing also inserts semicolons for commas, so split ORIGINAL assertions first.
+    # Comma-linked qualifiers ("can't breathe, came on suddenly") stay together.
+    clauses = (
+        clause
+        for finding in findings_text
+        for clause in re.split(
+            r"[;\n]|(?<=\w)\.(?=\s|$)",
+            finding.lower(),
+        )
+    )
+    for finding_lower in clauses:
+        if scrub_negated_spans:
+            finding_lower = _strip_negated_spans(finding_lower)
         # Pain is excluded from specificity scoring, but it remains a required assertion.
         # A BP report mentioning the left arm must not become 'left arm pain'.
         if re.search(r"\b(?:pain|ache|aching)\b", feature_lower) and not re.search(

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-03 — preserve assertion boundaries in evidence matching
+
+- Prevent feature overlap from joining unrelated sentences, semicolons or newline-delimited findings; preserve comma-linked modifiers and decimal numbers.
+- Add 13 focused tests. Non-API regression: 685 passed, 1 skipped. Existing production API tests remain excluded because of the previously observed TestClient hang.
+- Frozen 400-case synthetic replay remains 385/400 (96.25%), with identical final predictions and safety flags; no clinical accuracy improvement is claimed.
+- Preserve the rejected over-splitting experiment and final evaluation artifacts under `docs/evaluation/assertion_cycle7/`.
+
 ## 2026-10-03 — first external nine-case replay
 
 - Run the nine previously selected DiagnosisArena research cases through the mock DoctorAgent with gold/options excluded and missing follow-up data kept unknown.

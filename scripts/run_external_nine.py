@@ -5,6 +5,7 @@ Requests for additional information receive unknown, never fabricated normals.
 This is an adapter smoke evaluation, not the published DiagnosisArena protocol.
 """
 import hashlib
+import argparse
 import json
 import os
 from pathlib import Path
@@ -25,8 +26,11 @@ def normalize(text):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--output', type=Path, default=ROOT / 'docs/evaluation/external_nine_2026_10_03')
+    args = parser.parse_args()
     source = ROOT / 'research/external_evidence/target_cases_9.jsonl'
-    out = ROOT / 'docs/evaluation/external_nine_2026_10_03'
+    out = args.output
     out.mkdir(parents=True, exist_ok=False)
     records = [json.loads(line)['original_record'] for line in source.read_text().splitlines()]
     # Strict allowlist: omit Final Diagnosis, Options and Right Option.
