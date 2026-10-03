@@ -60,3 +60,17 @@ def test_action_focus_keeps_unresolved_critical_and_releases_resolved(monkeypatc
     after=analyzer.analyze(s,[leader,critical],[])
     assert not any('acute_coronary_syndrome' in x.disease_ids_discriminated for x in after)
     assert len([leader,critical])==2  # focus does not mutate the caller's safety differential
+
+
+def test_candidate_drops_then_reenters_when_objective_evidence_changes(monkeypatch):
+    monkeypatch.setenv('NOVA_COMPETITION_RETRIEVAL','1')
+    s=PatientState(case_id='serial-observation',chief_complaint='headache')
+    engine=DifferentialEngine()
+    def ids():return {d.diagnosis_id for d in engine.update(s)}
+    s.laboratory_tests['beta_hcg']='positive beta-hCG'
+    assert 'ectopic_pregnancy' in ids()
+    # A corrected/replaced external observation must be re-evaluated, not sticky forever.
+    s.laboratory_tests['beta_hcg']='negative beta-hCG'
+    assert 'ectopic_pregnancy' not in ids()
+    s.laboratory_tests['beta_hcg']='positive beta-hCG'
+    assert 'ectopic_pregnancy' in ids()

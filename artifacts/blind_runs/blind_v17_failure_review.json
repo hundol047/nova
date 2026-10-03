@@ -1,0 +1,76 @@
+{
+  "note": "Review queue only. Runtime remains frozen; future work must use newly authored development cases and fresh holdout.",
+  "failures": [
+    {
+      "case_id": "Blind17_09",
+      "expected": "bppv",
+      "actual": "Vasovagal (Reflex) Syncope",
+      "critical": false,
+      "stage": "NOT PROVEN; outcome mismatch only, no post-blind rerun or tuning"
+    },
+    {
+      "case_id": "Blind17_20",
+      "expected": "asthma_copd_exacerbation",
+      "actual": "Acute Coronary Syndrome",
+      "critical": false,
+      "stage": "NOT PROVEN; outcome mismatch only, no post-blind rerun or tuning"
+    },
+    {
+      "case_id": "Blind17_23",
+      "expected": "appendicitis",
+      "actual": "Acute Pyelonephritis",
+      "critical": false,
+      "stage": "NOT PROVEN; outcome mismatch only, no post-blind rerun or tuning"
+    },
+    {
+      "case_id": "Blind17_31",
+      "expected": "severe_electrolyte_disorder",
+      "actual": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+      "critical": true,
+      "stage": "NOT PROVEN; outcome mismatch only, no post-blind rerun or tuning"
+    },
+    {
+      "case_id": "Blind17_32",
+      "expected": "panic_attack",
+      "actual": "Acute Coronary Syndrome",
+      "critical": false,
+      "stage": "NOT PROVEN; outcome mismatch only, no post-blind rerun or tuning"
+    },
+    {
+      "case_id": "Blind17_33",
+      "expected": "musculoskeletal_chest_pain",
+      "actual": "Acute Abdomen (Surgical Abdomen)",
+      "critical": false,
+      "stage": "NOT PROVEN; outcome mismatch only, no post-blind rerun or tuning"
+    },
+    {
+      "case_id": "Blind17_34",
+      "expected": "acute_bronchitis",
+      "actual": "Viral Upper Respiratory Infection",
+      "critical": false,
+      "stage": "NOT PROVEN; outcome mismatch only, no post-blind rerun or tuning"
+    }
+  ],
+  "unscored_outcomes": [
+    {
+      "case_id": "Blind17_56",
+      "final": "Ectopic Pregnancy"
+    },
+    {
+      "case_id": "Blind17_57",
+      "final": "Acute Abdomen (Surgical Abdomen)"
+    },
+    {
+      "case_id": "Blind17_58",
+      "final": "Diabetic Ketoacidosis"
+    },
+    {
+      "case_id": "Blind17_59",
+      "final": "Acute Abdomen (Surgical Abdomen)"
+    },
+    {
+      "case_id": "Blind17_60",
+      "final": "Acute Abdomen (Surgical Abdomen)"
+    }
+  ]
+}

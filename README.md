@@ -1,3 +1,5 @@
+> **Latest local verification: Round G / v8 / Blind v17.** [Report](docs/round_g/FINAL_REPORT.md) · [release pointer](artifacts/verification/CURRENT_RELEASE.json). Frozen runtime `1046986`; one post-freeze synthetic Mock-LLM run: 48/55 scored, 24/25 KB-critical. These are not clinical validation results. Real GPT-OSS and official API remain NOT VERIFIED. Earlier benchmark sections below are historical references, not current blind results.
+
 # N.O.V.A. 2026 Doctor Agent
 
 A conversational medical-diagnosis agent (**ASK / EXAM / TEST / DIAGNOSE**) built for the N.O.V.A.

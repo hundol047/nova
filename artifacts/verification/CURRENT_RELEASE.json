@@ -12,8 +12,8 @@
     "artifacts/verification/local-release-faa1701-v4.json",
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
-  "updated_utc": "2026-10-03T08:53:45.824403+00:00",
-  "status": "PENDING_BLIND_RUN",
-  "reason": "Runtime regression passed; v17 is frozen but not yet executed.",
+  "updated_utc": "2026-10-03T09:04:28.335046+00:00",
+  "status": "COMPLETED",
+  "reason": "v8 records the frozen runtime, one-shot synthetic v17, submission and explicit unverified external dependencies.",
   "current_blind_status": "CURRENT"
 }
