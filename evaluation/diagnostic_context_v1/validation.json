@@ -1,0 +1,154 @@
+[
+  {
+    "case_id": "unlocalized_0",
+    "category": "localization_validation",
+    "chief_complaint": "fever and chills",
+    "demographics": {
+      "age": 37,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "onset": "since yesterday",
+      "associated_symptoms": "chills and nausea"
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 90, RR 17, Temp 38.7, SpO2 98%"
+    },
+    "test_results": {}
+  },
+  {
+    "case_id": "urinary_0",
+    "category": "localization_validation",
+    "chief_complaint": "fever and chills",
+    "demographics": {
+      "age": 37,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pyelonephritis",
+    "answers": {
+      "onset": "since yesterday",
+      "associated_symptoms": "chills and nausea; flank pain"
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 90, RR 17, Temp 38.7, SpO2 98%"
+    },
+    "test_results": {
+      "urinalysis": "pyuria with positive nitrites"
+    }
+  },
+  {
+    "case_id": "unlocalized_1",
+    "category": "localization_validation",
+    "chief_complaint": "fever with rigors",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "onset": "since yesterday",
+      "associated_symptoms": "chills and nausea"
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 90, RR 17, Temp 38.7, SpO2 98%"
+    },
+    "test_results": {}
+  },
+  {
+    "case_id": "urinary_1",
+    "category": "localization_validation",
+    "chief_complaint": "fever with rigors",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pyelonephritis",
+    "answers": {
+      "onset": "since yesterday",
+      "associated_symptoms": "chills and nausea; flank pain"
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 90, RR 17, Temp 38.7, SpO2 98%"
+    },
+    "test_results": {
+      "urinalysis": "positive leukocyte esterase"
+    }
+  },
+  {
+    "case_id": "unlocalized_2",
+    "category": "localization_validation",
+    "chief_complaint": "high fever and nausea",
+    "demographics": {
+      "age": 55,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "onset": "since yesterday",
+      "associated_symptoms": "chills and nausea"
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 90, RR 17, Temp 38.7, SpO2 98%"
+    },
+    "test_results": {}
+  },
+  {
+    "case_id": "urinary_2",
+    "category": "localization_validation",
+    "chief_complaint": "high fever and nausea",
+    "demographics": {
+      "age": 55,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pyelonephritis",
+    "answers": {
+      "onset": "since yesterday",
+      "associated_symptoms": "chills and nausea; denies painful urination"
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 90, RR 17, Temp 38.7, SpO2 98%"
+    },
+    "test_results": {
+      "urinalysis": "pyuria"
+    }
+  },
+  {
+    "case_id": "unlocalized_3",
+    "category": "localization_validation",
+    "chief_complaint": "fever with shivering",
+    "demographics": {
+      "age": 64,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "onset": "since yesterday",
+      "associated_symptoms": "chills and nausea"
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 90, RR 17, Temp 38.7, SpO2 98%"
+    },
+    "test_results": {}
+  },
+  {
+    "case_id": "urinary_3",
+    "category": "localization_validation",
+    "chief_complaint": "fever with shivering",
+    "demographics": {
+      "age": 64,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pyelonephritis",
+    "answers": {
+      "onset": "since yesterday",
+      "associated_symptoms": "chills and nausea; denies painful urination"
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 90, RR 17, Temp 38.7, SpO2 98%"
+    },
+    "test_results": {
+      "urinalysis": "positive nitrites"
+    }
+  }
+]

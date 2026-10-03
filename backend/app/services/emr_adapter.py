@@ -329,7 +329,8 @@ class FHIRAdapter(BaseEMRAdapter):
             eff=_fhir_date(o.get('effectiveDateTime'))
             text=code.get('text') or coding[0].get('display')
             if value is not None and eff is not None and text:
-                labs.append(Lab(name=text, value=value.get('value',0), unit=value.get('unit',''), date=eff))
+                labs.append(Lab(name=text, value=value.get('value',0), unit=value.get('unit',''), date=eff,
+                                 loinc=loinc))
         if not labs:missing.append('observations/labs (none returned)')
         # height_cm/weight_kg only feed the 3D viewer's body-scale approximation, never the risk
         # model or rule engine -- but a missing/unrecognized-unit Observation is still disclosed
@@ -367,7 +368,8 @@ class FHIRAdapter(BaseEMRAdapter):
         return Patient(id=pid, name=display_name, age=age, sex=sex or 'unspecified',
                         diagnosis=conditions[0] if conditions else '', scenario='',
                         medications=medications, conditions=conditions, allergies=allergies,
-                        labs=labs, history=[], missing=missing, demo=True,
+                        labs=labs, history=[], missing=missing,
+                        data_source='fhir', is_synthetic=False,
                         height_cm=height_cm, weight_kg=weight_kg,
                         encounters=encounters, diagnostic_reports=diagnostic_reports,
                         imaging_studies=imaging_studies)

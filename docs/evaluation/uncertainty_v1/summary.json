@@ -1,0 +1,17 @@
+{
+  "uncertainty_before_correct": 4,
+  "uncertainty_after_correct": 40,
+  "uncertainty_total": 40,
+  "robustness_correct": 104,
+  "robustness_total": 104,
+  "v11_correct": 12,
+  "v11_total": 24,
+  "v11_critical_correct": 7,
+  "v11_critical_total": 15,
+  "software_tests_passed": 488,
+  "software_tests_skipped": 1,
+  "review_candidates": 24216,
+  "shared_reference_groups": 294,
+  "clinical_accuracy_verified": false,
+  "real_llm_calls": 0
+}

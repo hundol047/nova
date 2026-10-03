@@ -1,0 +1,51 @@
+[
+  {
+    "expected": "tier2:guillain_barre",
+    "case_id": "Blind11_07_RetrievalMiss_AscendingParalysis",
+    "in_deterministic_knowledge_base": false,
+    "clinical_review": "NOT_VERIFIED",
+    "action": "source-based rule design and independent clinical review needed; no forced label or gate bypass"
+  },
+  {
+    "expected": "tier2:pericarditis",
+    "case_id": "Blind11_09_LeanForwardPleuriticViral",
+    "in_deterministic_knowledge_base": false,
+    "clinical_review": "NOT_VERIFIED",
+    "action": "source-based rule design and independent clinical review needed; no forced label or gate bypass"
+  },
+  {
+    "expected": "tier2:pheochromocytoma",
+    "case_id": "Blind11_10_SpellsHeadacheSweatHTN",
+    "in_deterministic_knowledge_base": false,
+    "clinical_review": "NOT_VERIFIED",
+    "action": "source-based rule design and independent clinical review needed; no forced label or gate bypass"
+  },
+  {
+    "expected": "tier2:fabry_disease",
+    "case_id": "Blind11_11_LongTail_Acroparesthesia",
+    "in_deterministic_knowledge_base": false,
+    "clinical_review": "NOT_VERIFIED",
+    "action": "source-based rule design and independent clinical review needed; no forced label or gate bypass"
+  },
+  {
+    "expected": "tier2:croup",
+    "case_id": "Blind11_16_Peds_BarkingCough",
+    "in_deterministic_knowledge_base": false,
+    "clinical_review": "NOT_VERIFIED",
+    "action": "source-based rule design and independent clinical review needed; no forced label or gate bypass"
+  },
+  {
+    "expected": "tier2:preeclampsia",
+    "case_id": "Blind11_17_Pregnancy_HeadacheHTN",
+    "in_deterministic_knowledge_base": false,
+    "clinical_review": "NOT_VERIFIED",
+    "action": "source-based rule design and independent clinical review needed; no forced label or gate bypass"
+  },
+  {
+    "expected": "tier2:acute_kidney_injury",
+    "case_id": "Blind11_24_Units_CreatinineSI",
+    "in_deterministic_knowledge_base": false,
+    "clinical_review": "NOT_VERIFIED",
+    "action": "source-based rule design and independent clinical review needed; no forced label or gate bypass"
+  }
+]

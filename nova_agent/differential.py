@@ -11,20 +11,21 @@ reshuffle the ranking.
 
 from __future__ import annotations
 
-from typing import List, Literal, Optional
+from typing import Dict, List, Literal, Optional
+import re
 
 from pydantic import BaseModel
 
-from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
-from nova_agent.chief_complaint import related_tags, route
+from nova_agent.candidate_generator import generate_candidates
+from nova_agent.clinical_presentation import build_clinical_presentation
 from nova_agent.config import get_config
 from nova_agent.glucose_evidence import (
     DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL,
     HYPOGLYCEMIA_THRESHOLD_MG_DL,
     extract_glucose_mg_dl,
 )
-from nova_agent.knowledge.retrieval import all_diseases, disease_by_id, diseases_for_tag
-from nova_agent.matching import feature_denied, feature_present
+from nova_agent.matching import content_word_count, feature_denied, feature_present
+from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding, normalize_objective_evidence, _current_result_texts
 from nova_agent.severity_evidence import ELEVATED_LACTATE_MMOL_L, extract_lactate_mmol_l
 from nova_agent.state import DifferentialSnapshot, PatientState
 
@@ -51,23 +52,139 @@ _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
 # phrase it belongs to. Deliberately NOT a general medication NLP system: only the drug classes an
 # existing knowledge-base risk_factor already names.
 FEATURE_ALIASES: dict[str, list[str]] = {
+    "infiltrate": ["airspace opacity", "airspace opacities"],
+    "worsening dyspnea": ["worsening breathlessness", "increasing breathlessness", "more breathless",
+        "worsening shortness of breath", "increasing shortness of breath"],
+    "focal consolidation": [
+        "lobar consolidation", "right upper lobe consolidation", "right middle lobe consolidation",
+        "right lower lobe consolidation", "left upper lobe consolidation", "left lower lobe consolidation",
+    ],
+    "fever": ["high fever", "高熱", "発熱", "熱がある", "열이 나다", "고열"],
+    "neck stiffness": ["stiff neck", "首が硬い", "首が硬く", "首がこわばる", "首が動かしにくい", "項部硬直", "경부강직"],
+    "headache": ["激しい頭痛", "頭痛", "頭が痛い", "열과 두통"],
+    "slurred speech": ["言葉が出にくい", "言葉が出にく", "言葉がうまく出ない", "word-finding difficulty",
+        "difficulty finding words", "ろれつが回らない", "expressive aphasia", "word-finding trouble", "실어증"],
+    "vaginal bleeding": ["vaginal spotting", "spotting", "light spotting", "膣出血", "膣から出血"],
+    "missed period": ["period is late", "late period", "missed period", "生理が遅れている", "月経が遅い"],
+    "unilateral pelvic pain": ["one-sided pelvic pain", "sharp pain on one side of the pelvis",
+        "한쪽 골반 통증", "片側の骨盤痛"],
+    "tearing chest pain": ["tearing back pain", "tearing breastbone pain", "tearing abdominal pain",
+        "tearing pain", "tearing between the shoulder blades", "tearing pain moving toward the back",
+        "가슴에서 등으로 찢어지는 통증"],
+    "melena": ["black tarry stool", "black and tarry stool", "black tarry stools",
+        "black and tarry stools", "黒い便", "黒色便", "黒くてタール状の便", "タール便", "タール状便", "便が黒い", "검은 변", "흑변",
+        "黑色便", "黑便"],
+    "hematemesis": ["vomiting blood", "vomited blood", "吐血", "血を吐く", "토혈", "피를 토함", "呕血", "呕出鲜红色血液",
+        "吐出鲜血", "呕吐鲜血"],
+    "liver disease": ["cirrhosis", "肝硬化", "간경변"],
+    "alcohol use": ["长期饮酒", "长期喝酒", "heavy drinking", "chronic alcohol use"],
+    "appendiceal inflammation": ["inflamed appendix", "appendiceal wall thickening",
+        "thickened appendix", "noncompressible appendix"],
     "unilateral pulsating headache": ["throbbing headache", "pounding headache", "one-sided headache",
-                                       "one sided headache", "pounding pain", "throbbing pain",
-                                       "pulsating pain"],
-    "photophobia": ["sensitive to light", "light sensitivity", "light bothers me"],
+        "one sided headache", "pounding pain", "throbbing pain", "pulsating pain"],
+    "photophobia": ["sensitive to light", "light sensitivity", "light bothers me", "光がまぶしい", "光がつらい"],
     "phonophobia": ["sensitive to sound", "sound sensitivity", "noise bothers me"],
     "aura": ["shimmering lights", "visual aura", "flashing lights", "seeing spots before",
-             "zigzag lines", "blind spot in my vision", "jagged lines"],
+        "zigzag lines", "blind spot in my vision", "jagged lines"],
     "recurrent similar episodes": ["similar to headaches", "happened before", "same as before",
-                                    "feels the same as last time", "this feels the same",
-                                    "gets these", "a few times a year", "has had these before"],
+        "feels the same as last time", "this feels the same", "gets these", "a few times a year",
+        "has had these before"],
     "family history of migraine": ["mother gets migraines", "father gets migraines",
-                                    "mother has migraines", "parent gets migraines", "runs in my family",
-                                    "sister gets migraines", "sister has migraines", "brother gets migraines"],
+        "mother has migraines", "parent gets migraines", "runs in my family", "sister gets migraines",
+        "sister has migraines", "brother gets migraines"],
     "known migraine history": ["diagnosed with migraines", "history of migraines", "has migraines before"],
     "syncope": ["passed out", "fainted"],
     "palpitations": ["racing heartbeat", "heart racing"],
-    # Medication-class normalization (spec section 4).
+    "throat tightness": ["throat feels like it is closing", "throat feels like it's closing",
+        "throat closing", "throat swelling", "喉が締め付けられる", "喉が詰まる", "목이 조이는 느낌", "목이 붓는 느낌", "喉咙发紧"],
+    "recent allergen exposure": ["after eating", "after taking a new medication", "after a new drug",
+        "after an antibiotic", "new medication", "new antibiotic", "食後", "新しい薬の後", "薬を飲んだ後", "새 약을 먹은 후"],
+    "sudden onset urticaria": ["hives", "widespread hives", "urticaria", "じんましん", "蕁麻疹", "두드러기", "荨麻疹"],
+    "bilateral band-like pressure": ["bilateral pressure", "pressure on both sides",
+        "tight band around my head", "양쪽 머리를 누르는 느낌", "양측성 지속적 압박감", "띠로 조이는 듯한 둔통", "两侧像被带子勒住",
+        "两侧压迫感", "両側の圧迫感"],
+    "stress related": ["시험 기간", "스트레스와 오래 앉아", "工作压力大", "压力大", "stress-related"],
+    "localized tenderness": ["point tenderness", "tender in one spot", "one spot is tender",
+        "point tender", "국소 압통", "한 곳을 누르면 아픔", "局部压痛"],
+    "reproducible with palpation": ["reproduced on palpation", "pain reproduced by pressing",
+        "reproduced by pressing", "누르면 통증 재현", "按压可诱发疼痛"],
+    "lightheadedness on standing up": ["dizzy when standing", "lightheaded when I stand", "어지러울 때 일어남",
+        "立ち上がるとふらつく", "gray out each time I stand", "only on standing", "站起来就眼前发黑", "일어날 때마다 눈앞이 캄캄"],
+    "prodrome of lightheadedness": ["先觉恶心出汗", "眼前发黑", "视野变窄", "先有恶心出汗", "메스꺼움과 식은땀", "시야가 좁아짐",
+        "prodrome of warmth and nausea"],
+    "triggered by standing or pain or fear": ["站立时", "闷热环境站立", "standing in a hot room",
+        "triggered while standing", "standing in a hot crowded hall", "fainted standing", "채혈 중",
+        "주사 맞을 때", "서 있다가"],
+    "brief loss of consciousness": ["短暂晕厥", "briefly fainted", "briefly passed out", "잠깐 의식을 잃음",
+        "잠깐 정신을 잃"],
+    "rapid spontaneous recovery": ["很快清醒", "quickly came around", "rapidly recovered",
+        "recovered in seconds", "금방 깨어"],
+    "sudden onset palpitations": ["sudden heart racing", "sudden fluttering", "갑자기 심장이 두근", "突然の動悸",
+        "突然心脏狂跳", "突然心臓がバクバク", "palpitations just before", "palpitations immediately before",
+        "심장이 두근거린 직후"],
+    "periumbilical pain migrating to right lower quadrant": [
+        "pain moved from the belly button to the right lower abdomen",
+        "pain started around the navel and moved right", "배꼽에서 오른쪽 아랫배로 통증이 이동", "へそから右下腹部へ痛みが移る",
+        "脐周痛转到右下腹", "从肚脐转到右下腹"],
+    "epigastric pain radiating to back": ["upper abdominal pain going to the back",
+        "upper belly pain to the back", "명치 통증이 등으로 뻗음", "上腹部痛が背中に放散"],
+    "unilateral absent breath sounds": ["one-sided absent breath sounds",
+        "breath sounds absent on one side", "片側の呼吸音が聞こえない", "absent right breath sounds",
+        "right breath sounds absent", "右侧呼吸音消失", "오른쪽 호흡음 소실"],
+    "tracheal deviation": ["windpipe shifted", "trachea shifted", "기관이 한쪽으로 밀림", "気管偏位",
+        "tracheal shift", "tracheal shift to the left", "气管向左偏移", "기관이 왼쪽으로 밀림"],
+    "sudden onset focal weakness": ["sudden arm weakness", "arm weakness", "right arm weakness",
+        "left arm weakness", "right arm drift", "left arm drift", "突然腕に力が入らない", "急に腕が動かしにくい",
+        "右腕 weakness", "左腕 weakness", "片側 weakness", "new focal deficit",
+        "new focal neurological deficit", "새로운 국소 신경학적 결손"],
+    "burning chest pain": ["胸口烧灼感", "胸口灼热", "烧心", "명치 위가 타는 듯", "가슴이 타는 느낌"],
+    "worse after meals": ["饭后加重", "餐后加重", "吃夜宵后加重", "食後に悪化", "식후 악화"],
+    "worse lying down": ["平躺加重", "躺下后加重", "横になると悪化", "누우면 악화"],
+    "relieved by antacids": ["吃抑酸药就好转", "抑酸药有效", "antacid helps", "제산제로 호전"],
+    "sour taste": ["反酸", "酸水", "口に酸っぱい", "신물이 올라옴", "신물"],
+    "McBurney's point tenderness": ["McBurney's point", "rebound at McBurney's point", "McBurney 압통"],
+    "right lower quadrant tenderness": ["RLQ tenderness", "RLQ guarding",
+        "right lower quadrant guarding", "右下腹压痛", "右下腹压痛伴肌紧张"],
+    "anorexia": ["食欲差", "没有食欲", "没胃口", "식욕 저하", "食欲がない"],
+    "low grade fever": ["低烧", "低热", "微热", "微熱", "미열"],
+    "nausea": ["恶心", "吐き気", "구역질"],
+    "diffuse crampy abdominal pain": ["肚子绞痛", "腹部绞痛", "복통이 쥐어짜듯"],
+    "diarrhea": ["水样腹泻", "腹泻", "설사", "下痢"],
+    "vomiting": ["呕吐", "上吐下泻", "구토", "嘔吐"],
+    "recent similar illness contact": ["同桌有人也腹泻", "同伴也有类似症状", "家人也腹泻", "同席者も下痢",
+        "sick contacts with similar symptoms"],
+    "rhinorrhea": ["鼻水", "流鼻涕", "鼻涕", "鼻水が出る", "콧물"],
+    "sore throat": ["喉の痛み", "咽喉痛", "喉が痛い", "목이 아픔", "인후통"],
+    "mild symptoms": ["轻微症状", "轻い症状", "軽い症状", "가벼운 증상"],
+    "productive cough": ["白痰", "白色痰", "少量白痰", "가래가 나오는 기침", "痰が出る咳"],
+    "no focal consolidation": ["无实变体征", "没有实变", "実変なし", "경화 없음"],
+    "recent viral illness": ["感冒后", "風邪の後", "감기 후"],
+    "irregular heartbeat": ["脈が速くて不規則", "不整な頻脈", "不规则心跳", "맥박이 불규칙"],
+    "racing heart": ["心臓がバクバク", "胸がドキドキ", "心跳很快", "가슴이 두근"],
+    "associated lightheadedness": ["lightheadedness with palpitations", "dizziness with palpitations",
+        "心悸伴头晕", "動悸を伴うめまい", "두근거림을 동반한 어지러움"],
+    "atrial fibrillation on ecg": ["atrial fibrillation with rapid ventricular response", "心房颤动",
+        "心房細動", "심방세동"],
+    "sudden onset dyspnea": ["突然呼吸困难", "突然息苦しい", "갑자기 숨이 참"],
+    "calf swelling": ["one leg swollen", "一条腿肿", "한쪽 다리 붓기", "片脚の腫れ"],
+    "rigid abdomen": ["board-like rigidity", "boardlike abdomen", "board-like abdomen",
+        "diffuse rigidity", "복부가 판자처럼 단단함"],
+    "rebound tenderness": ["diffuse rebound", "rebound and guarding", "diffuse rebound and guarding",
+        "반발통", "반발 압통"],
+    "crackles on auscultation": ["basal crackles", "right basal crackles", "bibasal crackles",
+        "fine crackles", "기저부 수포음", "수포음"],
+    "wheeze": ["wheezing", "diffuse wheeze", "expiratory wheeze", "호기성 천명", "쌕쌕거림"],
+    "prolonged expiration": ["prolonged expiratory phase", "호기 연장", "呼気延長"],
+    "ripping pain": ["ripping back pain", "ripping pain through to the back"],
+    "pain radiates to back": ["moving down toward my back", "radiating to the back",
+        "through to my back", "등으로 뻗는 통증"],
+    "pulse differential": ["unequal radial pulses", "different radial pulses", "unequal pulses"],
+    "unequal blood pressure between arms": ["different blood pressure between arms",
+        "blood pressure difference between arms", "higher pressure in the right arm than the left"],
+    "hemoglobin drop": ["hemoglobin fallen", "hemoglobin fell", "drop in hemoglobin", "血红蛋白下降"],
+    "brief episodic vertigo": ["几秒天旋地转", "brief seconds-long spinning", "短暂旋转性眩晕"],
+    "triggered by head position change": ["누웠다 일어날 때", "머리 위치 바꿀 때", "头位改变时", "頭の位置を変えると"],
+    "improves with sitting or lying down": ["resolves sitting", "坐起来缓解", "앉으면 호전"],
     "sulfonylurea use": ["glipizide", "glyburide", "glimepiride", "sulfonylurea"],
     "insulin use": ["insulin", "lantus", "humalog", "novolog", "glargine"],
     "known diabetes on insulin": ["insulin", "lantus", "humalog", "novolog", "glargine"],
@@ -78,19 +195,40 @@ FEATURE_ALIASES: dict[str, list[str]] = {
     "immunosuppressant use": ["prednisone", "methotrexate", "tacrolimus", "cyclosporine", "azathioprine"],
     "oral contraceptive use": ["birth control", "oral contraceptive", "the pill"],
     "missed meal": ["hasn't eaten", "hasn't eaten much", "poor oral intake", "not eating today",
-                     "skipped a meal", "skipped meals"],
+        "skipped a meal", "skipped meals"],
 }
 
 
-def _present_with_aliases(phrase: str, findings: List[str]) -> bool:
+def _present_with_aliases(phrase: str, findings: List[str], strict: bool = False) -> bool:
     """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
     FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase."""
-    if feature_present(phrase, findings, scrub_negated_spans=True):
+    if feature_present(phrase, findings, scrub_negated_spans=True, strict=strict):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
-        if feature_present(alias, findings, scrub_negated_spans=True):
+        # Require every alias content word: 'black stool' alone is not 'black tarry stool'.
+        if feature_present(alias, findings, scrub_negated_spans=True, strict=True):
             return True
     return False
+
+
+_SPECIFICITY_STEP = 0.25
+_SPECIFICITY_CAP = 2.0
+
+
+def _specificity_multiplier(phrase: str) -> float:
+    """A `typical_features` phrase's own word count as a proxy for how DISCRIMINATIVE a match on
+    it is. A bare one-word overlap like "cough" is weak, non-specific evidence -- it is, by
+    definition, a `typical_feature` of every disease the knowledge base tags with it, several of
+    which any single case might match at once -- whereas a precise multi-word phrase like "chest
+    wall soreness from coughing" found verbatim is far stronger, disease-specific evidence. Purely
+    a function of the KB phrase's own content-word count (via matching.py's shared stemmer/
+    stopword logic, so it agrees with what actually counted toward the match) -- never tied to any
+    particular disease id or evaluation case. Capped so no single feature can dominate a disease's
+    whole score, and floored at the original flat FEATURE_WEIGHT for a single-word phrase (this
+    change only ever ADDS weight for a longer, more specific phrase, never removes any for the
+    previously-flat case)."""
+    word_count = max(1, content_word_count(phrase))
+    return min(_SPECIFICITY_CAP, 1.0 + _SPECIFICITY_STEP * (word_count - 1))
 
 
 def _strip_negative_prefix(feature: str) -> Optional[str]:
@@ -116,10 +254,74 @@ class DifferentialItem(BaseModel):
     urgency: str
     dangerous_if_missed: bool
     confidence_band: ConfidenceBand
+    candidate_sources: List[str] = []
+
+
+
+def has_positive_diagnostic_support(item: DifferentialItem) -> bool:
+    """Risk factors and absent symptoms can adjust a differential, not establish it alone."""
+    from nova_agent.knowledge.retrieval import disease_by_id
+    entry = disease_by_id(item.diagnosis_id) or {}
+    risk_only = {str(x).lower() for x in entry.get("risk_factors", [])}
+    return any(e.lower() not in risk_only and _strip_negative_prefix(e) is None
+               for e in item.supporting_evidence)
+
+
+def has_required_diagnostic_context(item: DifferentialItem, state: PatientState) -> bool:
+    """A final label may require localizing context beyond generic systemic symptoms.
+
+    This is an abstention guard, not an exclusion rule or a diagnostic criterion.
+    Candidates remain available for workup. Read actual current observations, not
+    the LLM's claimed supporting evidence or past/family history.
+    """
+    from nova_agent.knowledge.retrieval import disease_by_id
+    entry = disease_by_id(item.diagnosis_id) or {}
+    required = entry.get("required_diagnostic_context_any", [])
+    if not required:
+        return True
+    current = [state.chief_complaint, *state.symptoms, *state.associated_symptoms,
+               *state.pertinent_positives, *state.physical_examinations.values(),
+               *state.imaging.values(), *state.laboratory_tests.values()]
+    current = [clause for text in current for clause in re.split(r"[;,\n]", text)
+               if not re.search(r"\b(?:previously|historical|baseline|history of|last (?:year|month|week)|"
+                                r"prior result|old result|reference range)\b", clause, re.I)]
+    return any(_present_with_aliases(phrase, current, strict=True)
+               for phrase in required)
+
+
+def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict[str, ObjectiveFinding],
+                             supporting: List[str], contradictory: List[str],
+                             missing: List[str]) -> Optional[float]:
+    """If `phrase` is one of the confirmatory-finding phrases objective_evidence.py knows maps to
+    a specific lab (see CONFIRMATORY_PHRASE_TO_LAB), scores it from that lab's actual numeric/
+    qualitative INTERPRETATION rather than plain word-overlap against the finding text -- so a raw
+    "potassium 6.9 mEq/L" result correctly supports "hyperkalemia" even though the finding text
+    never contains the word "hyperkalemia"/"elevated" itself (the same class of gap
+    glucose_evidence.py/severity_evidence.py's lactate handling already closed for those two
+    labs). Returns None (never 0.0) when `phrase` has no lab mapping at all, so the caller falls
+    back to the plain word-overlap `_score_phrase()` path unchanged for every other phrase."""
+    mapping = CONFIRMATORY_PHRASE_TO_LAB.get(phrase.lower())
+    if mapping is None:
+        return None
+    lab_id, direction = mapping
+    finding = objective_findings.get(lab_id)
+    if finding is None or finding.interpretation == "unknown":
+        missing.append(phrase)
+        return 0.0
+    abnormal = {"high": ("high", "critical_high"), "low": ("low", "critical_low")}[direction]
+    opposite = {"high": ("low", "critical_low"), "low": ("high", "critical_high")}[direction]
+    if finding.interpretation in abnormal:
+        supporting.append(phrase)
+        return weight
+    if finding.interpretation in opposite:
+        contradictory.append(phrase)
+        return -CONTRADICTION_PENALTY
+    missing.append(phrase)
+    return 0.0
 
 
 def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: List[str],
-                   supporting: List[str], contradictory: List[str], missing: List[str]) -> float:
+                   supporting: List[str], contradictory: List[str], missing: List[str], strict: bool = False) -> float:
     """Negation-aware scoring for ONE typical_feature or confirmatory_finding phrase. Shared by
     both loops in _score_disease() below -- confirmatory_findings previously used a naive
     present-or-not check with no negation awareness at all, which let a phrase like "absent breath
@@ -143,7 +345,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
     if feature_denied(phrase, negatives):
         contradictory.append(phrase)
         return -CONTRADICTION_PENALTY
-    if _present_with_aliases(phrase, findings):
+    if _present_with_aliases(phrase, findings, strict=strict):
         supporting.append(phrase)
         return weight
     missing.append(phrase)
@@ -205,7 +407,10 @@ def _score_glucose(entry_id: str, glucose_mg_dl: Optional[float],
     return 0.0
 
 
-def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List[str], List[str], List[str]]:
+def _score_disease(entry: dict, state: PatientState,
+                    objective_findings: Optional[Dict[str, ObjectiveFinding]] = None) -> tuple[float, float, List[str], List[str], List[str]]:
+    if objective_findings is None:
+        objective_findings = normalize_objective_evidence(state)
     findings = state.all_findings_text()
     negatives = state.pertinent_negatives
 
@@ -216,8 +421,9 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
     max_possible = 0.0
 
     for feature in entry.get("typical_features", []):
-        max_possible += FEATURE_WEIGHT
-        score += _score_phrase(feature, FEATURE_WEIGHT, findings, negatives, supporting, contradictory, missing)
+        weight = FEATURE_WEIGHT * _specificity_multiplier(feature)
+        max_possible += weight
+        score += _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
@@ -225,9 +431,25 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 
+    # A past/family report is risk context, not a current objective test result.
+    objective_text = list(state.physical_examinations.values()) + list(state.imaging.values()) + list(state.laboratory_tests.values())
+    # Reuse the laboratory assertion policy for exam/imaging evidence too: an
+    # explicitly historical or hypothetical report is not a current observation.
+    objective_text = _current_result_texts(objective_text)
+    seen_lab_evidence = set()
     for finding in entry.get("confirmatory_findings", []):
+        lab_key = CONFIRMATORY_PHRASE_TO_LAB.get(finding.lower())
+        if lab_key is not None:
+            if lab_key in seen_lab_evidence:
+                continue
+            seen_lab_evidence.add(lab_key)
         max_possible += CONFIRMATORY_WEIGHT
-        score += _score_phrase(finding, CONFIRMATORY_WEIGHT, findings, negatives, supporting, contradictory, missing)
+        lab_aware_delta = _score_lab_aware_phrase(finding, CONFIRMATORY_WEIGHT, objective_findings,
+                                                   supporting, contradictory, missing)
+        if lab_aware_delta is not None:
+            score += lab_aware_delta
+        else:
+            score += _score_phrase(finding, CONFIRMATORY_WEIGHT, objective_text, negatives, supporting, contradictory, missing, strict=True)
 
     # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
     # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in
@@ -258,7 +480,14 @@ def _score_disease(entry: dict, state: PatientState) -> tuple[float, float, List
     # advantage whichever one happened to be eligible for the bonus).
 
     for reassuring in entry.get("reassuring_if_present", []):
-        if feature_present(reassuring, findings, scrub_negated_spans=False):
+        # Reassuring phrases are usually multi-word objective negatives (for example,
+        # "no focal neurological deficit").  They must match as a complete phrase: the
+        # ordinary overlap matcher would otherwise let "new focal deficit" partially match
+        # this opposite finding and penalize ischemic stroke in an actually focal exam.
+        pattern = r"(?<!\w)" + r"\s+".join(re.escape(w) for w in reassuring.split()) + r"(?!\w)"
+        if any(not re.search(r"\b(?:not|without|denies|previously|historical)\b", finding[:match.start()], re.I)
+               for finding in state.physical_examinations.values()
+               for match in re.finditer(pattern, finding, re.I)):
             contradictory.append(reassuring)
             score -= CONTRADICTION_PENALTY
 
@@ -276,135 +505,40 @@ def _confidence_band(score_ratio: float, turn_count: int, supporting_count: int)
     return "LOW"
 
 
-def _ensure_cross_cutting_dangerous_diagnoses(candidates: list) -> list:
-    """Can't-miss diagnoses (spec section 4/6: unknown-routing safety net) must always compete in
-    scoring, not only when routing produced no pool at all. A confident tag match narrows the pool
-    by presenting symptom -- but symptom-based routing is exactly the mechanism that fails for an
-    ATYPICAL presentation of a dangerous diagnosis (e.g. hypoglycemia presenting as palpitations
-    and jitteriness routes cleanly to a cardiac-tag pool that has no symptom-level reason to
-    include hypoglycemia at all). Riding a small, fixed list of dangerous diagnoses along with
-    every routed pool -- not just the empty-pool fallback -- means their own scoring (risk factors,
-    labs, exam findings gathered later in the case) still gets a chance to surface them, without
-    ever letting them replace or narrow whatever routing already found."""
-    present_ids = {entry["id"] for entry in candidates}
-    extended = list(candidates)
-    for diagnosis_id in CROSS_CUTTING_DANGEROUS_DIAGNOSES:
-        if diagnosis_id not in present_ids:
-            entry = disease_by_id(diagnosis_id)
-            if entry is not None:
-                extended.append(entry)
-                present_ids.add(diagnosis_id)
-    return extended
-
-
-def _ensure_decisive_lab_evidence_diagnoses(candidates: list, state: PatientState) -> list:
-    """Chief-complaint routing narrows the candidate pool by presenting symptom, but a decisive
-    objective lab result must never be excluded just because the routed pool didn't happen to
-    include the diagnosis it confirms -- objective evidence outranks a keyword/routing signal, the
-    same priority order the scoring hierarchy already enforces within a pool (confirmatory finding
-    > exam/lab > symptom > risk factor). Glucose is the one lab this codebase already interprets
-    numerically (glucose_evidence.py, standard ADA thresholds, not fitted to any specific case) --
-    when it has actually been drawn and crosses a diagnostic threshold, the diagnosis it confirms
-    must be reachable by scoring even if chief-complaint routing pointed elsewhere (e.g. atypical
-    hypoglycemia presenting as palpitations/jitteriness routes to a cardiac-tag pool that has no
-    reason to include hypoglycemia by symptom text alone -- the lab result is the reason)."""
-    glucose = extract_glucose_mg_dl(state.laboratory_tests.get("glucose_point_of_care"))
-    if glucose is None:
-        return candidates
-    present_ids = {entry["id"] for entry in candidates}
-    forced_ids = []
-    if glucose < HYPOGLYCEMIA_THRESHOLD_MG_DL and "hypoglycemia" not in present_ids:
-        forced_ids.append("hypoglycemia")
-    if glucose >= DKA_HYPERGLYCEMIA_THRESHOLD_MG_DL and "diabetic_ketoacidosis" not in present_ids:
-        forced_ids.append("diabetic_ketoacidosis")
-    if not forced_ids:
-        return candidates
-    extended = list(candidates)
-    for diagnosis_id in forced_ids:
-        entry = disease_by_id(diagnosis_id)
-        if entry is not None:
-            extended.append(entry)
-    return extended
-
-
 class DifferentialEngine:
     """Stateless ranker: call `update(state)` every turn; it recomputes from scratch off the
     current PatientState rather than incrementally patching the previous ranking, so a
     contradicted early guess is never "sticky"."""
 
     def update(self, state: PatientState) -> List[DifferentialItem]:
-        routing = route(state.chief_complaint)
-
-        def _pool_for_tags(tags: List[str]) -> list:
-            seen_ids: set = set()
-            merged: list = []
-            for tag in tags:
-                for entry in diseases_for_tag(tag):
-                    if entry["id"] not in seen_ids:
-                        merged.append(entry)
-                        seen_ids.add(entry["id"])
-            return merged
-
-        # Confidence-tiered candidate pool (spec section 2/3): how sure the routing is decides how
-        # WIDE the pool is, rather than either always hard-routing to one tag or always merging a
-        # fixed number of concepts regardless of match quality.
-        add_cross_cutting = False
-        if routing.match_type == "none":
-            # No signal at all -- broad fallback (spec: the agent must always reason toward a
-            # diagnosis, never stall for lack of a tag match). Already contains every cross-cutting
-            # diagnosis, so nothing further needs to be added here.
-            candidates = list(all_diseases().values())
-        elif routing.confidence == "HIGH" and routing.match_type == "exact":
-            # The patient used the diagnosis-adjacent concept's own canonical clinical term, with
-            # no other concept scoring anything close -- primary tag's own pool, unexpanded. If
-            # that tag has no directly-tagged disease pool, fall back to clinically related tags
-            # (spec section 8/24H) before ever reaching the untargeted whole catalog.
-            candidates = _pool_for_tags([routing.primary_tag])
-            if not candidates:
-                candidates = _pool_for_tags(related_tags(routing.primary_tag))
-        elif routing.confidence == "HIGH":
-            # HIGH confidence via a lay-language ALIAS, not the concept's own clinical term. Lexically
-            # unambiguous (no other tag scored close), but a lay phrase is still one interpretive
-            # step removed from the patient's own precise vocabulary -- measured empirically during
-            # this rewrite: hard-routing an alias hit to ONLY its primary tag's pool reintroduced a
-            # real regression (an atypical hypoglycemia presenting as "heart racing" routes
-            # confidently to palpitations/cardiac diagnoses by alias, but hypoglycemia itself has no
-            # cardiac-tag membership at all, so it silently fell out of the candidate pool and the
-            # agent never even tested for it). Keeping the small cross-cutting can't-miss list
-            # riding along for an ALIAS-only HIGH match (never for an EXACT one) restores that
-            # coverage without reintroducing the broader over-triggering this session's earlier,
-            # fully-unconditional version of the same list caused (see git history / PR review).
-            candidates = _pool_for_tags([routing.primary_tag])
-            if not candidates:
-                candidates = _pool_for_tags(related_tags(routing.primary_tag))
-            add_cross_cutting = True
-        elif routing.confidence == "MEDIUM":
-            # An exact/alias tie between two concepts, or a fuzzy hit with a real margin -- merge
-            # the top 2 plausible concepts rather than hard-routing to just the primary.
-            tags = [routing.primary_tag] + routing.secondary_tags[:1]
-            candidates = _pool_for_tags(tags)
-            if not candidates:
-                candidates = _pool_for_tags(related_tags(routing.primary_tag))
-            add_cross_cutting = True
-        else:  # LOW -- a genuinely ambiguous fuzzy tie among several concepts
-            tags = [routing.primary_tag] + routing.secondary_tags[:2]
-            candidates = _pool_for_tags(tags)
-            add_cross_cutting = True
-
-        if not candidates:
-            # Nothing via the tag(s) tried above -- fall back to the whole knowledge base rather
-            # than returning an empty differential. The LLM reasoning layer can also introduce a
-            # diagnosis outside this pool entirely (spec section 7/24 -- see
-            # safety_validator.merge_differential).
-            candidates = list(all_diseases().values())
-        elif add_cross_cutting:
-            candidates = _ensure_cross_cutting_dangerous_diagnoses(candidates)
-
-        candidates = _ensure_decisive_lab_evidence_diagnoses(candidates, state)
+        # Dynamic candidate generation (spec: no single hard-routed chief-complaint tag deciding
+        # the whole pool, and no "unmatched -> dump all 34 diseases" default). Multi-concept
+        # extraction (clinical_presentation.py) plus risk/objective/safety sourcing
+        # (candidate_generator.py) build a provenance-tagged pool from everything already known
+        # about the case, not just the presenting sentence.
+        # Rebuilt from the FULL current state every turn (chief_complaint + everything volunteered
+        # or elicited since) -- not just the original presenting sentence. See
+        # clinical_presentation.build_clinical_presentation()'s own docstring for why this is safe
+        # (only positive-evidence sources are scanned) and why it degrades to the old
+        # chief-complaint-only behavior on a case's first turn.
+        presentation = build_clinical_presentation(state)
+        objective_findings = normalize_objective_evidence(state)
+        _cfg = get_config()
+        candidate_records = generate_candidates(
+            presentation,
+            glucose_result_text=state.laboratory_tests.get("glucose_point_of_care"),
+            lactate_result_text=state.laboratory_tests.get("lactate"),
+            objective_findings=objective_findings,
+            imaging_text=list(state.imaging.values()),
+            ontology_broadening=_cfg.ontology_broadening_enabled,
+            ontology_broadening_max=_cfg.ontology_broadening_max,
+        )
+        candidates = [c.entry for c in candidate_records]
+        sources_by_id = {c.id: c.sources for c in candidate_records}
 
         scored = []
         for entry in candidates:
-            score, max_possible, supporting, contradictory, missing = _score_disease(entry, state)
+            score, max_possible, supporting, contradictory, missing = _score_disease(entry, state, objective_findings)
             score_ratio = max(0.0, score) / max_possible
             band = _confidence_band(score_ratio, state.turn_count, len(supporting))
             scored.append((score, score_ratio, entry, supporting, contradictory, missing, band))
@@ -419,6 +553,7 @@ class DifferentialEngine:
                 supporting_evidence=supporting, contradictory_evidence=contradictory,
                 missing_discriminative_evidence=missing, urgency=entry.get("urgency", "LOW"),
                 dangerous_if_missed=bool(entry.get("dangerous", False)), confidence_band=band,
+                candidate_sources=sources_by_id.get(entry["id"], []),
             ))
 
         state.current_differential = [

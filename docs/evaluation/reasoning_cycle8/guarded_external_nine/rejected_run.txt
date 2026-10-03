@@ -1,0 +1,15 @@
+{"id": "87", "final_diagnosis": "Acute Coronary Syndrome", "turns": 22}
+{"id": "140", "final_diagnosis": "Pulmonary Embolism", "turns": 26}
+{"id": "514", "final_diagnosis": "unknown", "turns": 30}
+{"id": "586", "final_diagnosis": "Nephrolithiasis (Kidney Stone)", "turns": 25}
+{"id": "628", "final_diagnosis": "Acute Coronary Syndrome", "turns": 25}
+{"id": "697", "final_diagnosis": "Asthma / COPD Exacerbation", "turns": 26}
+{"id": "766", "final_diagnosis": "Tension Pneumothorax", "turns": 26}
+{"id": "770", "final_diagnosis": "Community-Acquired Pneumonia", "turns": 32}
+{"id": "822", "final_diagnosis": "Acute Pancreatitis", "turns": 32}
+Traceback (most recent call last):
+  File "/workspace/scratch/9819f121b13b/nova/scripts/run_external_nine.py", line 96, in <module>
+    main()
+  File "/workspace/scratch/9819f121b13b/nova/scripts/run_external_nine.py", line 82, in main
+    raise RuntimeError('Runtime changed during evaluation')
+RuntimeError: Runtime changed during evaluation

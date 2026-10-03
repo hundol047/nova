@@ -1,0 +1,7 @@
+# Production API runtime dependencies ONLY -- layered on top of requirements-nova.txt
+# (nova_agent's own runtime deps), never merged into it and never referenced by
+# scripts/build_nova_submission.py (see production/__init__.py's isolation-principle docstring).
+# The competition submission artifact must never require FastAPI/uvicorn.
+-r ../requirements-nova.txt
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1

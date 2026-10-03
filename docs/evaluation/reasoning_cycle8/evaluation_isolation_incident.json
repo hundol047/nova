@@ -1,0 +1,11 @@
+{
+  "stable_runtime_sha256": "83e6441bdc22c1042c83052a5572144618729abfb2524635b79ba661c28eb203",
+  "with_temporary_secret_scan_fixture_sha256": "1fc946c261ab02e43691348afd477c1f2bf20cc79a819f6065e42f48597b7fbc",
+  "cause": "Temporary secret-scan test fixture persisted after concurrent command execution; only the known synthetic fixture was removed.",
+  "invalidated_runs": [
+    "guarded_external_nine",
+    "final_original",
+    "final_external_nine"
+  ],
+  "action": "Re-evaluate stable runtime after all test commands completed."
+}

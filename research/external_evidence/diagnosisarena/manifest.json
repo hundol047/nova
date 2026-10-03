@@ -1,0 +1,37 @@
+{
+  "dataset": "SII-SPIRAL-MED/DiagnosisArena",
+  "revision": "64bb873fe651e1c71cd8b0958104dd911f042872",
+  "retrieved_at": "2026-10-03",
+  "purpose": "RESEARCH_EVALUATION_ONLY_NOT_CLINICAL_USE",
+  "runtime_eligible": false,
+  "files": [
+    {
+      "path": "test.parquet",
+      "url": "https://huggingface.co/datasets/SII-SPIRAL-MED/DiagnosisArena/resolve/64bb873fe651e1c71cd8b0958104dd911f042872/data/test-00000-of-00001.parquet",
+      "sha256": "de980033fa681d9cb5bf4138f04dea204c1326d18017a752a137458195c36520",
+      "bytes": 870485
+    },
+    {
+      "path": "DATASET_CARD.md",
+      "url": "https://huggingface.co/datasets/SII-SPIRAL-MED/DiagnosisArena/resolve/64bb873fe651e1c71cd8b0958104dd911f042872/README.md",
+      "sha256": "c12f85604f0c99d4169406fff9fde90cef7ed41dbf11aaa8bc44ef44deb0dba9",
+      "bytes": 2276
+    },
+    {
+      "path": "PROJECT_README.md",
+      "url": "https://raw.githubusercontent.com/SPIRAL-MED/DiagnosisArena/main/README.md",
+      "sha256": "72a7f9e5ce4d79634dd7efb583effe84080d2dfd0423bc46a765a8328ff03bd4",
+      "bytes": 7228
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/SPIRAL-MED/DiagnosisArena/main/LICENSE",
+      "sha256": "7df4499f13af3f744f51256e5b947bf23c78db7382c0d62552e6e94b4277c679",
+      "bytes": 1067
+    }
+  ],
+  "training_eligible": false,
+  "source_expert_review": "AUTHOR_REPORTED_BOARD_CERTIFIED_PHYSICIAN_REVIEW",
+  "nova_clinical_adjudication": "PENDING",
+  "terms": "Research and model evaluation only; must not be used for clinical decision-making or medical diagnosis."
+}

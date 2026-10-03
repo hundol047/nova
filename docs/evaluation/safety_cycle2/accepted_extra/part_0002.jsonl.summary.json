@@ -1,0 +1,84 @@
+{
+  "part": 2,
+  "counts": {
+    "cases": 20,
+    "correct": 20,
+    "critical": 11,
+    "critical_correct": 11,
+    "real_llm_calls": 0
+  },
+  "case_ids": [
+    "SIM50_low_development_06069",
+    "SIM50_low_development_11204",
+    "SIM50_low_development_03691",
+    "SIM50_low_development_05784",
+    "SIM50_low_development_15713",
+    "SIM50_low_development_16652",
+    "SIM50_low_development_03211",
+    "SIM50_low_development_07514",
+    "SIM50_low_development_06576",
+    "SIM50_low_development_01385",
+    "SIM50_low_validation_00014",
+    "SIM50_low_validation_01607",
+    "SIM50_low_validation_01321",
+    "SIM50_low_validation_01944",
+    "SIM50_low_development_07567",
+    "SIM50_low_development_13557",
+    "SIM50_low_development_19401",
+    "SIM50_low_development_12062",
+    "SIM50_low_development_01395",
+    "SIM50_low_development_09749"
+  ],
+  "elapsed_seconds": 7.31582098799845,
+  "run_metadata": {
+    "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+    "selection": "200 per difficulty; deterministic round-robin source families; no prediction filtering",
+    "seed": "safety-cycle2",
+    "excluded_inputs": 400,
+    "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+    "selected_sha256": "5c588bc82ee223984f7e3d63abf79cdd7c4311c7524b7ce3685dee59395e648a",
+    "runtime_sha256": "b2d01d1bfcbfc1ee8e2902fda3401cc9081430524519ed4edbf8e825f026857f",
+    "runtime_commit": "b9c2d38a1f4cb37f55cedde36e74e5e8a7575083",
+    "runner_sha256": "9a3fdc526d792212139de7ad8104fa99416b7211ce3f47f0eda9e95e154e0f1a",
+    "response_policy": "mapped_unknown_missing",
+    "memoized": true,
+    "cases": 400,
+    "independent_test": false,
+    "clinical_validation": false,
+    "training": false,
+    "limitation": "Previously development-exposed synthetic source families and correlated variants; English scripted dialogues; not ICD-11-wide coverage."
+  },
+  "output_sha256": "91311dd6c4c06f343b689c8f200a961b12e78f18fed8951213f748200989ffb3",
+  "cache_stats": {
+    "_content_words": {
+      "hits": 156201,
+      "misses": 1127,
+      "maxsize": 16384,
+      "currsize": 1127
+    },
+    "_strip_negated_spans": {
+      "hits": 62761,
+      "misses": 150,
+      "maxsize": 16384,
+      "currsize": 150
+    },
+    "feature_finding_pair": {
+      "hits": 3109819,
+      "misses": 66804,
+      "maxsize": 131072,
+      "currsize": 66804
+    },
+    "catalog_context": {
+      "hits": 198,
+      "misses": 204,
+      "maxsize": 2048,
+      "currsize": 204
+    },
+    "catalog_search": {
+      "hits": 511,
+      "misses": 54,
+      "maxsize": 8192,
+      "currsize": 54
+    }
+  }
+}

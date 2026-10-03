@@ -1,0 +1,19 @@
+{
+  "file": "evaluation/blind_cases_v8.py",
+  "case_count": 72,
+  "file_sha256": "502ea3396dd2126c198c6c3706f118c87bf588d9348ed7e6b3eef00f7ec3016a",
+  "frozen_at_utc": "2026-09-25T03:52:56Z",
+  "created_commit": "67dca297518701d36fa1e001d215f27913d7529c",
+  "language_distribution": {"en": 46, "ko": 8, "ja": 6, "zh": 7, "mixed": 5},
+  "category_distribution": {
+    "cardiac": 4, "dangerous_mimic": 8, "infectious": 4, "pulmonary": 2, "common": 8,
+    "neuro": 1, "benign_mimic": 9, "metabolic": 7, "abdominal": 5, "gi_bleeding": 2,
+    "pregnancy": 2, "mixed_language": 5, "polypharmacy": 1, "conflicting_findings": 4,
+    "data_freshness": 2, "multimorbidity": 1, "sparse_information": 2, "negative_centric": 1,
+    "trauma": 1, "atypical_infection": 2, "atypical_neuro": 1
+  },
+  "diagnosis_coverage": "all 34 knowledge-base diagnoses covered at least once; every ground_truth_diagnosis validated against nova_agent/knowledge/diseases/*.json",
+  "status": "REFERENCE-ONLY as of the independent-re-audit round: reasoning code (nova_agent/objective_evidence.py, severity_evidence.py, new unit_safety.py -- lab-unit safety generalization + lipase/urinalysis registry) was changed AFTER this set was frozen. Per the blind-set discipline, Blind v8 must NOT be used as the untouched performance measure for the current code; a fresh Blind v9 was authored (evaluation/blind_v9_manifest.json). Blind v8 remains a hash-frozen reference set.",
+  "note": "This hash was computed BEFORE evaluation.blind_benchmark_v8 was ever run. Blind v8 was authored after the pilot-readiness glucose unit-safety guard. blind_cases_v8.py must not be edited after this point. As of the independent-re-audit round it is REFERENCE-ONLY (see status above) because further reasoning code changed; use Blind v9 for the current code. Its own first run was never executed in the network-isolated authoring environment (NOT VERIFIED).",
+  "created_commit_note": "created_commit is the parent commit blind_cases_v8.py was authored on top of; the commit that actually introduces this file (visible in git history) is the authoritative proof it was never modified after this hash was recorded."
+}

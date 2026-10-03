@@ -68,28 +68,27 @@ class NormalizedDiagnosis:
 def normalize_diagnosis(text: str) -> NormalizedDiagnosis:
     if not text or not text.strip():
         return NormalizedDiagnosis(raw_text=text, canonical_id=None, canonical_name=None, mapped=False, codes=[])
-    cleaned = _clean(text)
-    table = _alias_table()
-
-    if cleaned in table:
-        canonical_id = table[cleaned]
-    else:
-        # Longest-alias-first containment match: prevents a short generic alias ("mi") from
-        # matching before a longer, more specific one already ruled it out.
-        canonical_id = None
-        for alias in sorted(table.keys(), key=len, reverse=True):
-            if alias and (alias in cleaned or cleaned in alias):
-                canonical_id = table[alias]
-                break
-
-    if canonical_id is None:
-        return NormalizedDiagnosis(raw_text=text, canonical_id=None, canonical_name=None, mapped=False, codes=[])
-
-    diseases = all_diseases()
-    canonical_name = diseases.get(canonical_id, {}).get("name", canonical_id)
-    codes = [c.to_dict() for c in normalize_condition(canonical_name)] if normalize_condition else []
-    return NormalizedDiagnosis(raw_text=text, canonical_id=canonical_id, canonical_name=canonical_name,
-                                mapped=True, codes=codes)
+    from nova_agent.ontology.registry import get_default_catalog
+    from nova_agent.ontology.normalizer import normalize
+    cat = get_default_catalog()
+    direct = cat.get_condition(text.strip()) or cat.get_condition("core:" + text.strip())
+    if direct is not None:
+        return NormalizedDiagnosis(text, direct.kb_id or direct.concept_id,
+                                   direct.canonical_name, True, [])
+    target = normalize(text)
+    matches = {c.concept_id: c for c in cat.all_concepts()
+               if any(normalize(t) == target for t in [c.canonical_name, *c.aliases])}
+    # Core IDs and explicit extra aliases are also accepted, without containment matching.
+    core_id = _alias_table().get(_clean(text))
+    if core_id:
+        for c in cat.all_concepts():
+            if c.kb_id == core_id:
+                matches[c.concept_id] = c
+    if len(matches) != 1:
+        return NormalizedDiagnosis(text, None, None, False, [])
+    c = next(iter(matches.values()))
+    return NormalizedDiagnosis(text, c.kb_id or c.concept_id, c.canonical_name, True,
+                               [code.as_dict() for code in c.external_codes])
 
 
 def same_diagnosis(a: str, b: str) -> bool:
@@ -97,6 +96,13 @@ def same_diagnosis(a: str, b: str) -> bool:
     strings are NEVER considered equal (each is only equal to itself would be a false positive
     for evaluation scoring -- an unmapped guess must not accidentally 'match' an unmapped ground
     truth just because both failed to normalize)."""
+    from nova_agent.ontology.registry import get_default_catalog
+    from nova_agent.ontology.normalizer import normalize
+    cat = get_default_catalog()
+    for key, name in ((a, b), (b, a)):
+        c = cat.get_condition(key.strip()) or cat.get_condition("core:" + key.strip())
+        if c is not None and normalize(c.canonical_name) == normalize(name):
+            return True
     na, nb = normalize_diagnosis(a), normalize_diagnosis(b)
     if na.mapped and nb.mapped:
         return na.canonical_id == nb.canonical_id

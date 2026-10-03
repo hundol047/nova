@@ -69,7 +69,8 @@
     "chief_complaint_tags": [
       "abdominal_pain",
       "vomiting",
-      "weakness"
+      "weakness",
+      "gi_bleeding"
     ],
     "category": "abdominal_gi",
     "dangerous": true,
@@ -132,7 +133,8 @@
     ],
     "chief_complaint_tags": [
       "abdominal_pain",
-      "syncope"
+      "syncope",
+      "pelvic_gynecologic"
     ],
     "category": "abdominal_gi",
     "dangerous": true,
@@ -224,6 +226,10 @@
       "lipase",
       "abdominal_ultrasound"
     ],
+    "confirmatory_findings": [
+      "elevated lipase",
+      "peripancreatic fluid"
+    ],
     "red_flag_keywords": [],
     "evidence_level": "internally_authored_heuristic"
   },
@@ -266,7 +272,23 @@
       "rebound tenderness",
       "guarding"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "appendiceal inflammation",
+      "McBurney's point tenderness",
+      "right lower quadrant tenderness",
+      "rebound tenderness"
+    ],
+    "evidence_references": [
+      {
+        "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/appendicitis/diagnosis",
+        "scope": "Imaging evidence of appendiceal enlargement or inflammation supports evaluation of appendicitis; not a standalone diagnostic guarantee."
+      },
+      {
+        "url": "https://link.springer.com/article/10.1186/s13017-016-0090-5",
+        "scope": "Imaging findings including wall thickening and noncompressibility suggest appendicitis."
+      }
+    ]
   },
   {
     "id": "gastroenteritis",

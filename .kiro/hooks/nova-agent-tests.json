@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "nova_agent change → tests + leakage scan",
+      "trigger": "PostFileSave",
+      "matcher": "nova_agent/.*\\.py$",
+      "action": {
+        "type": "agent",
+        "prompt": "A file under nova_agent/ was changed. Before considering this work complete, run the relevant nova_agent test suite (python -m pytest tests/ -q, excluding tests/test_production_*.py) and the evaluation leakage scan (python scripts/check_eval_leakage.py). If the environment cannot run them (no pydantic installed / network-isolated), say so explicitly and rely on CI to run them — do NOT claim they passed without evidence. Also remember: after any nova_agent/ change, submission/ must be regenerated with python scripts/build_nova_submission.py."
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import json,os,logging
+import json,os,logging,sys,time,uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Optional
@@ -14,7 +14,7 @@ from .services.risk_inference import RiskEngine
 from .services.rule_engine import CATALOG, DRUGS
 from .services.emr_adapter import DemoAdapter, FHIRAdapter, SmartOAuthClient, SmartSessionTokenProvider, SmartAuthRequired
 from .services.clinical_agent import ClinicalAgent
-from .services.audit import AuditStore
+from .services.audit import build_audit_store
 from .services.terminology_mapper import patient_terminology
 from .services.data_quality import assess as assess_data_quality
 from .services.cds_hooks import SERVICES_DOC, build_cards
@@ -33,6 +33,16 @@ from .services.results import unified_results
 from .services.vitals import assess as assess_vitals
 from .services.demo_seed import seed_demo_clinical_data
 from .services.idempotency import IdempotencyStore, IdempotencyConflict, IdempotencyTimeout
+from .services.nova_service import NovaService, NovaServiceError
+from .services.production_guard import ProductionConfigError, environment_label, is_production, validate_production_startup
+from .services.nova_observability import log_event as nova_log_event, get_nova_metrics
+from nova_agent.i18n import translate_diagnosis
+from .nova_schemas import (NovaCaseCreateRequest, NovaCaseCreatedResponse, NovaObservationRequest,
+                            NovaObservationResponse, NovaDecideResponse, NovaDifferentialItemOut,
+                            NovaRecommendedActionOut, NovaVersionsOut, NovaCaseStateResponse,
+                            NovaCloseRequest, NovaCloseResponse, NovaConversationTurnOut,
+                            NovaCaseSummaryOut, NovaCaseListResponse,
+                            NovaLocaleUpdateRequest, NovaLocaleUpdateResponse)
 from fastapi import Depends, Cookie, Header
 from fastapi.responses import RedirectResponse
 import hashlib
@@ -69,10 +79,15 @@ def build_adapter():
 
 @asynccontextmanager
 async def lifespan(app):
+    # Fail fast: NOVA_ENV=production refuses to start serving on a demo-shaped configuration
+    # (AUTH_MODE=demo, NOVA_LLM_PROVIDER=mock, EMR_MODE=demo without an explicit override, missing
+    # OIDC/CDS/audit-persistence config) -- see services/production_guard.py. A no-op in every other
+    # NOVA_ENV.
+    validate_production_startup()
     app.state.engine=RiskEngine()
     app.state.agent=ClinicalAgent(app.state.engine)
     app.state.adapter=build_adapter()
-    app.state.audit=AuditStore()
+    app.state.audit=build_audit_store()
     # Clinical Workspace repositories -- see services/repositories.py. All wrap app.state.adapter,
     # so EMR_MODE=fhir naturally gets NotImplementedError from adapter.mutate() on any write (no
     # local write-back to a real hospital system), translated to 501 by call() below.
@@ -82,6 +97,7 @@ async def lifespan(app):
     app.state.medication_order_repo=MedicationOrderRepository(app.state.adapter)
     app.state.lab_order_repo=LabOrderRepository(app.state.adapter)
     app.state.idempotency=IdempotencyStore()
+    app.state.nova_service=NovaService()
     if isinstance(app.state.adapter,DemoAdapter):
         # Seed each bundled demo patient with one past Encounter+Vitals+Diagnosis+signed Note --
         # see services/demo_seed.py. Runs through the same repository methods a real API call
@@ -162,7 +178,7 @@ def save_analysis(result,event='analysis_completed'):
     audit.record(result['patient_id'],event,{'analysis_id':result['analysis_id'],'risk_probability':result['risk']['risk_probability'],'model_sha256':result['risk']['model_sha256'],'rules_sha256':result['rules_sha256']})
 
 @app.get('/health')
-def health():return {'status':'ok','demo':True,**app.state.engine.health()}
+def health():return {'status':'ok','environment':environment_label(),**app.state.engine.health()}
 
 @app.get('/health/subsystems')
 def health_subsystems():
@@ -176,6 +192,7 @@ def health_subsystems():
     except Exception as e:
         model={'error':str(e)};model_status='down'
     return {
+        'environment':environment_label(),
         'emr':{'status':'ok','mode':emr_mode,'adapter':type(app.state.adapter).__name__},
         'terminology':{'status':'ok','note':'fixed reference tables; see services/terminology_mapper.py'},
         'rule_engine':{'status':'ok','rules_version':RULE_METADATA['rules_version'],'evidence_level':RULE_METADATA['evidence_level']},
@@ -183,6 +200,49 @@ def health_subsystems():
         'auth':{'status':'ok','mode':os.getenv('AUTH_MODE','demo').lower()},
         'imaging':imaging_health(),
     }
+
+@app.get('/ready')
+def ready():
+    """Separate from /health (process-alive only). /ready additionally checks: auth is actually
+    configured for this NOVA_ENV, the N.O.V.A. case repository/service initialized, the N.O.V.A.
+    knowledge base loads (kb_fingerprint() succeeds), the EMR adapter responds, and -- in
+    NOVA_ENV=production only -- that the real LLM provider is configured (a mock-provider
+    deployment is 'ready' in dev/test, never in production: spec section 23). Never includes
+    patient data."""
+    checks=[]
+    def check(name,ok,detail=None):checks.append({'name':name,'ok':bool(ok),'detail':detail})
+
+    auth_mode=os.getenv('AUTH_MODE','demo').lower()
+    check('auth_configured',not is_production() or auth_mode=='oidc',f'AUTH_MODE={auth_mode}')
+
+    try:
+        app.state.nova_service.repository.list_for_patient('__readiness_probe__')
+        check('nova_service_initialized',True)
+    except Exception as e:
+        check('nova_service_initialized',False,str(e))
+
+    try:
+        from .services.nova_service import kb_fingerprint
+        fp=kb_fingerprint()
+        check('nova_kb_loaded',bool(fp),fp)
+    except Exception as e:
+        check('nova_kb_loaded',False,str(e))
+
+    nova_provider=os.getenv('NOVA_LLM_PROVIDER','mock').lower()
+    check('nova_llm_configured',not is_production() or nova_provider!='mock',f'NOVA_LLM_PROVIDER={nova_provider}')
+
+    try:
+        app.state.adapter.list()
+        check('emr_adapter_ready',True,type(app.state.adapter).__name__)
+    except NotImplementedError:
+        # FHIRAdapter.list() is intentionally unimplemented (no bulk roster query against a real
+        # hospital FHIR server by design) -- that is expected, not a readiness failure.
+        check('emr_adapter_ready',True,type(app.state.adapter).__name__)
+    except Exception as e:
+        check('emr_adapter_ready',False,str(e))
+
+    is_ready=all(c['ok'] for c in checks)
+    return JSONResponse(status_code=200 if is_ready else 503,content={'ready':is_ready,'checks':checks})
 
 @app.get('/catalog')
 def catalog():return CATALOG
@@ -594,6 +654,222 @@ def clinical_summary(pid:str,user:User=Depends(require('patient:read'))):
     events=with_ai_warnings(events,app.state.audit.list(pid))
     return build_summary(p,lab_order_repo=app.state.lab_order_repo,ai_warning_events=events)
 
+# --- N.O.V.A. Decision Support: /v1/nova/* -----------------------------------------------------
+# Separate namespace from every endpoint above (Clinical Workspace CRUD, SynexAgent medication
+# risk). backend/app/services/nova_service.py is the ONLY code that touches nova_agent internals --
+# every endpoint below just translates HTTP <-> NovaService calls, the same separation main.py
+# already keeps for services/rule_engine.py and services/repositories.py. N.O.V.A. never places,
+# modifies, or cancels a MedicationOrder/LabOrder -- no endpoint below calls
+# app.state.medication_order_repo/app.state.lab_order_repo at all.
+
+def request_id(x_request_id:Optional[str]=Header(default=None,alias='X-Request-ID'))->str:
+    """Every /v1/nova/* request gets a request_id, propagated into audit/logs/the response body --
+    an incoming X-Request-ID is reused when present (so a caller's own tracing id threads through
+    unchanged), a fresh one is minted otherwise. Never trusted for anything security-sensitive
+    (it's caller-suppliable), purely a correlation id."""
+    return x_request_id or uuid.uuid4().hex
+
+def nova_call(component,event,fn,*args,request_id='',case_id='',**kwargs):
+    """Same shape as call() above, for NovaServiceError subclasses: each carries its own
+    http_status/error_code (see nova_service.py), translated here into a structured error body
+    (spec: validation_error/auth_error/permission_error/case_not_found/case_conflict/
+    LLM_unavailable/storage_error/internal_error, each with a stable code, never just a bare
+    500/HTTPException(detail=str)). Also the single choke point for /v1/nova/*'s structured
+    logging + metrics (spec section 50/51): every call through here counts toward
+    nova_requests_total/nova_errors_total and nova_latency, logged with the same request_id/case_id
+    the response body and audit record carry -- never patient free text (see
+    nova_observability.log_event's own docstring on why)."""
+    metrics=get_nova_metrics();metrics.increment('nova_requests_total');start=time.perf_counter()
+    try:
+        result=fn(*args,**kwargs)
+    except NovaServiceError as e:
+        latency_ms=round((time.perf_counter()-start)*1000,2)
+        metrics.increment('nova_errors_total');metrics.observe('nova_latency_ms',latency_ms)
+        nova_log_event(component,event,request_id=request_id,case_id=case_id,severity='WARNING',
+                        latency_ms=latency_ms,error_code=e.error_code)
+        raise HTTPException(e.http_status,{'error':{'code':e.error_code,'message':str(e),'retryable':e.http_status in (503,504)}})
+    except NotImplementedError as e:
+        # Same 501 translation call() above already gives every Clinical Workspace write against a
+        # real FHIR adapter -- kept consistent here rather than leaking as a bare 500.
+        latency_ms=round((time.perf_counter()-start)*1000,2)
+        metrics.increment('nova_errors_total');metrics.observe('nova_latency_ms',latency_ms)
+        nova_log_event(component,event,request_id=request_id,case_id=case_id,severity='WARNING',
+                        latency_ms=latency_ms,error_code='EMR_unavailable')
+        raise HTTPException(501,{'error':{'code':'EMR_unavailable','message':str(e),'retryable':False}})
+    else:
+        latency_ms=round((time.perf_counter()-start)*1000,2)
+        metrics.observe('nova_latency_ms',latency_ms)
+        nova_log_event(component,event,request_id=request_id,case_id=case_id,severity='INFO',latency_ms=latency_ms)
+        return result
+
+def _nova_differential_out(differential,locale:str='en'):
+    return [NovaDifferentialItemOut(diagnosis=d.diagnosis,
+                display_diagnosis=translate_diagnosis(d.diagnosis_id,locale,d.diagnosis),
+                diagnosis_id=d.diagnosis_id,rank=d.rank,
+                confidence_band=d.confidence_band,urgency=d.urgency,dangerous_if_missed=d.dangerous_if_missed,
+                supporting_evidence=d.supporting_evidence,contradictory_evidence=d.contradictory_evidence,
+                missing_discriminative_evidence=d.missing_discriminative_evidence,
+                candidate_sources=d.candidate_sources) for d in differential]
+
+@app.get('/v1/nova/patients/{patient_id}/cases',response_model=NovaCaseListResponse)
+def nova_list_patient_cases(patient_id:str,status:str=None,encounter_id:str=None,
+                             user:User=Depends(require('nova:read')),rid:str=Depends(request_id)):
+    # Cases already known for this patient -- powers the frontend "resume an open case" flow.
+    # patient(pid) 404s consistently with every other /patients/{pid}/... endpoint (a case for an
+    # unknown patient is never listed). status/encounter_id are optional filters; a case is scoped
+    # to a patient AND encounter, so passing encounter_id keeps a different encounter's case from
+    # being offered as a resume candidate (encounter-aware resume).
+    patient(patient_id)
+    if status is not None and status not in ('open','closed'):
+        raise HTTPException(422,{'error':{'code':'invalid_status','message':"status must be 'open' or 'closed'",'retryable':False}})
+    records=nova_call('nova_service','list_cases_for_patient',app.state.nova_service.list_cases_for_patient,
+                       patient_id,request_id=rid,status=status,encounter_id=encounter_id)
+    cases=[NovaCaseSummaryOut(case_id=r.case_id,patient_id=r.patient_id,encounter_id=r.encounter_id,
+        status=r.status,turn_count=r.state.turn_count,max_turns=r.state.max_turns,
+        chief_complaint=r.state.chief_complaint,locale=r.state.locale,
+        created_at=r.created_at or '',updated_at=r.updated_at or '') for r in records]
+    return NovaCaseListResponse(request_id=rid,patient_id=patient_id,cases=cases)
+
+@app.post('/v1/nova/cases',response_model=NovaCaseCreatedResponse,status_code=201)
+def nova_create_case(req:NovaCaseCreateRequest,user:User=Depends(require('nova:invoke')),
+                      rid:str=Depends(request_id)):
+    pid=req.patient_id
+    patient(pid)  # 404s consistently with every other /patients/{pid}/... endpoint
+    encounter=None
+    if req.encounter_id:
+        _,encounter=call(app.state.encounter_repo.get_by_id,req.encounter_id)
+        if encounter.patient_id!=pid:raise HTTPException(404,'Encounter not found for this patient')
+    record=nova_call('nova_service','create_case',app.state.nova_service.create_case,request_id=rid,
+                      adapter=app.state.adapter,patient_id=pid,
+                      encounter=encounter,chief_complaint=req.chief_complaint,created_by=user.id,
+                      max_turns=req.max_turns,locale=req.locale)
+    app.state.audit.record(pid,'nova_case_created',{'case_id':record.case_id,'encounter_id':record.encounter_id,
+        'request_id':rid,'locale':record.state.locale},user_id=user.id,role=user.role)
+    return NovaCaseCreatedResponse(case_id=record.case_id,request_id=rid,patient_id=pid,
+        encounter_id=record.encounter_id,turn_count=record.state.turn_count,max_turns=record.state.max_turns,
+        status=record.status)
+
+@app.post('/v1/nova/cases/{case_id}/observations',response_model=NovaObservationResponse)
+def nova_add_observation(case_id:str,req:NovaObservationRequest,user:User=Depends(require('nova:invoke')),
+                          rid:str=Depends(request_id)):
+    record,applied=nova_call('nova_service','add_observation',app.state.nova_service.add_observation,case_id,
+                              request_id=rid,case_id=case_id,observation_id=req.observation_id,
+                              action_type=req.action_type,key=req.key,result=req.result)
+    app.state.audit.record(record.patient_id,'nova_observation_added' if applied else 'nova_observation_replayed',
+        {'case_id':case_id,'observation_id':req.observation_id,'action_type':req.action_type,'key':req.key,
+         'applied':applied,'request_id':rid},user_id=user.id,role=user.role)
+    return NovaObservationResponse(case_id=case_id,request_id=rid,applied=applied,turn_count=record.state.turn_count)
+
+@app.post('/v1/nova/cases/{case_id}/decide',response_model=NovaDecideResponse)
+def nova_decide(case_id:str,user:User=Depends(require('nova:invoke')),rid:str=Depends(request_id)):
+    result=nova_call('nova_service','decide',app.state.nova_service.decide,case_id,request_id=rid,case_id=case_id)
+    state=result.record.state
+    metrics=get_nova_metrics()
+    metrics.observe('nova_turn_count',state.turn_count)
+    critical_blocks=sum(1 for d in result.differential if d.dangerous_if_missed)
+    # nova_critical_blocks is the canonical name (R9.1). nova_safety_blocks is kept as an alias for
+    # back-compat with any existing dashboard/scrape that already references it.
+    metrics.increment('nova_critical_blocks',critical_blocks)
+    metrics.increment('nova_safety_blocks',critical_blocks)
+    if state.llm_call_count:
+        metrics.increment('nova_llm_calls_total',state.llm_call_count)
+        metrics.increment('nova_llm_success_total',state.llm_success_count)
+        metrics.increment('nova_llm_fallback_total',state.llm_fallback_count)
+        # A real LLM call that did not succeed is, for this backend, an output the parse/repair/
+        # schema-validation path could not turn into a usable structured turn (it then fell back to
+        # deterministic reasoning). Surface that as nova_parse_failure so a failing/misbehaving
+        # model is visible as its own signal, not only inside the fallback rate. (llm_failure_count
+        # == real calls attempted minus real successes for this case's turn set.)
+        parse_failures=state.llm_call_count-state.llm_success_count
+        if parse_failures>0:
+            metrics.increment('nova_parse_failure',parse_failures)
+        if state.llm_latency_sample_count:
+            metrics.observe('nova_llm_latency_ms',(state.llm_total_latency_seconds/state.llm_latency_sample_count)*1000)
+    top=result.differential[0] if result.differential else None
+    limitations=['This output has not undergone institutional clinical validation or regulatory review.',
+                 'Suggestions are based on a limited structured evidence model, not the full clinical picture.']
+    if top and top.missing_discriminative_evidence:
+        limitations.append('Missing discriminative evidence for the leading diagnosis: '
+                            +'; '.join(top.missing_discriminative_evidence[:5]))
+    if result.llm_circuit_open:
+        limitations.append('The real AI model is currently degraded/unavailable; this turn used the '
+                            'deterministic safety-guard reasoning path only, not AI-augmented re-ranking.')
+    red_flags=[f'{d.diagnosis}: dangerous if missed' for d in result.differential if d.dangerous_if_missed]
+    if result.llm_circuit_open:
+        # Explicit, separately-queryable audit event (R9.3): a degraded/fallback decision must be
+        # visible in the audit trail, never disguised as a normal AI-backed decide.
+        app.state.audit.record(result.record.patient_id,'nova_llm_degraded',{'case_id':case_id,
+            'request_id':rid,'reason':'llm_circuit_open'},user_id=user.id,role=user.role)
+    app.state.audit.record(result.record.patient_id,'nova_decide',{'case_id':case_id,'request_id':rid,
+        'action_type':result.action.action_type,'action_key':result.action.key,'locale':state.locale,
+        'top_diagnosis':top.diagnosis if top else None,'top_diagnosis_id':top.diagnosis_id if top else None,
+        'llm_circuit_open':result.llm_circuit_open,
+        **result.versions},user_id=user.id,role=user.role)
+    locale=state.locale
+    display_content=(translate_diagnosis(result.action.key,locale,result.action.content)
+                      if result.action.action_type=='DIAGNOSE' else result.action.content)
+    return NovaDecideResponse(case_id=case_id,request_id=rid,turn_count=state.turn_count,
+        remaining_turns=state.remaining_turns,differential=_nova_differential_out(result.differential,locale),
+        recommended_next_action=NovaRecommendedActionOut(action_type=result.action.action_type,
+            key=result.action.key,content=result.action.content,display_content=display_content,
+            rationale=result.action.rationale),
+        red_flags=red_flags,confidence_band=top.confidence_band if top else None,limitations=limitations,
+        llm_degraded=result.llm_circuit_open,versions=NovaVersionsOut(**result.versions))
+
+@app.get('/v1/nova/cases/{case_id}',response_model=NovaCaseStateResponse)
+def nova_get_case(case_id:str,user:User=Depends(require('nova:read')),rid:str=Depends(request_id)):
+    record=nova_call('nova_service','get_case',app.state.nova_service.get_case,case_id,request_id=rid,case_id=case_id)
+    state=record.state
+    # DifferentialSnapshot (state.current_differential) carries no real diagnosis_id, only the
+    # display name (a pre-existing limitation of that lightweight mirror, unrelated to locale) --
+    # display_diagnosis is left equal to diagnosis rather than attempting a translate_diagnosis()
+    # lookup keyed on a display string, which would either silently miss or risk a wrong match.
+    differential=[NovaDifferentialItemOut(diagnosis=d.diagnosis,display_diagnosis=d.diagnosis,
+        diagnosis_id=d.diagnosis,rank=d.rank,
+        confidence_band=d.confidence_band,urgency=d.urgency,dangerous_if_missed=d.dangerous_if_missed)
+        for d in state.current_differential]
+    conversation_history=[NovaConversationTurnOut(turn=c.turn,action_type=c.action_type,
+        content=c.content,result=c.result,timestamp=getattr(c,'timestamp','') or '')
+        for c in getattr(state,'conversation_history',[])]
+    return NovaCaseStateResponse(case_id=case_id,request_id=rid,patient_id=record.patient_id,
+        encounter_id=record.encounter_id,chief_complaint=state.chief_complaint,status=record.status,
+        turn_count=state.turn_count,max_turns=state.max_turns,final_diagnosis=state.final_diagnosis,
+        differential=differential,conversation_history=conversation_history)
+
+@app.post('/v1/nova/cases/{case_id}/close',response_model=NovaCloseResponse)
+def nova_close_case(case_id:str,req:NovaCloseRequest,user:User=Depends(require('nova:review')),
+                     rid:str=Depends(request_id)):
+    # Clinician acknowledgement (accept/modify/reject) on the case's final recommendation --
+    # recorded to audit as a review-queue entry, never fed back into nova_agent's reasoning or any
+    # automatic retraining/rule-adjustment (spec: clinician feedback is offline review data only).
+    record=nova_call('nova_service','close_case',app.state.nova_service.close_case,case_id,request_id=rid,
+                      case_id=case_id,reason=f'{req.disposition}: {req.reason}'.strip())
+    app.state.audit.record(record.patient_id,'nova_case_closed',{'case_id':case_id,'request_id':rid,
+        'disposition':req.disposition,'reason':req.reason,'locale':record.state.locale,
+        'agent_version':AGENT_VERSION,'kb_version':kb_fingerprint()},user_id=user.id,role=user.role)
+    return NovaCloseResponse(case_id=case_id,request_id=rid,status=record.status,disposition=req.disposition)
+
+@app.patch('/v1/nova/cases/{case_id}/locale',response_model=NovaLocaleUpdateResponse)
+def nova_update_locale(case_id:str,req:NovaLocaleUpdateRequest,user:User=Depends(require('nova:invoke')),
+                        rid:str=Depends(request_id)):
+    # Mid-case language switch (spec: never starts a new case -- only the UI/explanation language
+    # changes; the existing case's reasoning state, evidence, and differential are untouched. The
+    # NEXT decide() call picks up the new locale automatically since nova_service.decide()
+    # constructs DoctorAgent(lang=record.state.locale) fresh every turn).
+    record=nova_call('nova_service','update_locale',app.state.nova_service.update_locale,case_id,
+                      request_id=rid,case_id=case_id,locale=req.locale)
+    app.state.audit.record(record.patient_id,'nova_locale_updated',{'case_id':case_id,'request_id':rid,
+        'locale':req.locale},user_id=user.id,role=user.role)
+    return NovaLocaleUpdateResponse(case_id=case_id,request_id=rid,locale=record.state.locale)
+
+@app.get('/v1/nova/metrics')
+def nova_metrics(user:User=Depends(require('user:admin'))):
+    """In-process counters/latency percentiles only (nova_requests_total/nova_errors_total/
+    nova_latency/nova_llm_latency/nova_llm_success_rate/nova_llm_fallback_rate/nova_turn_count/
+    nova_safety_blocks -- see nova_observability.py). Admin-only (not clinician-facing) and never
+    includes patient data -- no case_id/patient_id/chief_complaint appears in this response."""
+    return get_nova_metrics().snapshot()
+
 # --- CDS Hooks: https://cds-hooks.org/ -------------------------------------------------------
 # Discovery stays PUBLIC in every mode -- a CDS Hooks client is expected to discover available
 # services before any authentication handshake, per the CDS Hooks spec. Only the EXECUTION endpoint
@@ -659,6 +935,25 @@ def session_context(synex_session:Optional[str]=Cookie(default=None)):
     if not synex_session:return {'patient_id':None}
     ctx=SESSIONS.context(synex_session)
     return {'patient_id':ctx['patient_id'] if ctx else None}
+
+# --- Admin-only continual-learning surface (RBAC: 'learning:admin', ADMIN role only). These expose
+# ONLY PHI-free governance/registry/coverage-gap data — never patient data, never a clinician or
+# patient endpoint. The learning subsystem is opt-in and default-disabled; these are inspection
+# reads plus explicit, gated model lifecycle operations (promote/rollback). --------------------
+@app.get('/v1/admin/learning/status')
+def admin_learning_status(user:User=Depends(require('learning:admin'))):
+    from .services.learning_admin import learning_status
+    return learning_status()
+
+@app.get('/v1/admin/learning/coverage-gaps')
+def admin_learning_coverage_gaps(limit:int=50,user:User=Depends(require('learning:admin'))):
+    from .services.learning_admin import coverage_gaps
+    return {'coverage_gaps':coverage_gaps(limit=limit)}
+
+@app.get('/v1/admin/learning/models')
+def admin_learning_models(user:User=Depends(require('learning:admin'))):
+    from .services.learning_admin import list_models
+    return {'models':list_models()}
 
 DIST=Path(__file__).resolve().parents[2]/'frontend'/'dist'
 # Served straight from frontend/public (not the dist copy Vite makes on build) so the real

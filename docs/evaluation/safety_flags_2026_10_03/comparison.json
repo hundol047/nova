@@ -1,0 +1,20 @@
+{
+  "diagnostic_improvements": [],
+  "diagnostic_regressions": [],
+  "new_critical_flags": [
+    "SIM50_high_development_00118",
+    "SIM50_high_development_00037",
+    "SIM50_high_development_00055",
+    "SIM50_high_development_00058",
+    "SIM50_high_development_00059",
+    "SIM50_high_development_00084",
+    "SIM50_high_development_00088",
+    "SIM50_high_development_00091",
+    "SIM50_high_development_00018",
+    "SIM50_high_development_00034",
+    "SIM50_low_development_00030",
+    "SIM50_low_development_00033",
+    "SIM50_low_development_00034"
+  ],
+  "lost_critical_flags": []
+}

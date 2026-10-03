@@ -1,0 +1,100 @@
+{
+  "baseline": "8eca54a",
+  "scope": "synthetic_mock_only",
+  "clinical_accuracy_verified": false,
+  "reference": {
+    "before": {
+      "correct": 14,
+      "total": 24,
+      "critical_correct": 8,
+      "critical_total": 15,
+      "average_turns": 22.208333333333332
+    },
+    "after": {
+      "correct": 16,
+      "total": 24,
+      "critical_correct": 9,
+      "critical_total": 15,
+      "average_turns": 23.041666666666668
+    }
+  },
+  "frozen_new_validation": {
+    "before": {
+      "correct": 11,
+      "total": 12,
+      "critical_correct": 5,
+      "critical_total": 6,
+      "average_turns": 20.916666666666668
+    },
+    "after": {
+      "correct": 12,
+      "total": 12,
+      "critical_correct": 6,
+      "critical_total": 6,
+      "average_turns": 23.583333333333332
+    }
+  },
+  "improved": [
+    "Blind11_05_TearingInterscapular",
+    "Blind11_14_Multimorbid_Breathless"
+  ],
+  "regressed": [],
+  "remaining_failures": [
+    {
+      "case_id": "Blind11_07_RetrievalMiss_AscendingParalysis",
+      "expected": "tier2:guillain_barre",
+      "predicted": "unknown"
+    },
+    {
+      "case_id": "Blind11_09_LeanForwardPleuriticViral",
+      "expected": "tier2:pericarditis",
+      "predicted": "Acute Coronary Syndrome"
+    },
+    {
+      "case_id": "Blind11_10_SpellsHeadacheSweatHTN",
+      "expected": "tier2:pheochromocytoma",
+      "predicted": "Migraine"
+    },
+    {
+      "case_id": "Blind11_11_LongTail_Acroparesthesia",
+      "expected": "tier2:fabry_disease",
+      "predicted": "unknown"
+    },
+    {
+      "case_id": "Blind11_13_OOD_ExpeditionFevers",
+      "expected": "unknown",
+      "predicted": "Acute Pyelonephritis"
+    },
+    {
+      "case_id": "Blind11_16_Peds_BarkingCough",
+      "expected": "tier2:croup",
+      "predicted": "Sepsis"
+    },
+    {
+      "case_id": "Blind11_17_Pregnancy_HeadacheHTN",
+      "expected": "tier2:preeclampsia",
+      "predicted": "Bacterial Meningitis"
+    },
+    {
+      "case_id": "Blind11_24_Units_CreatinineSI",
+      "expected": "tier2:acute_kidney_injury",
+      "predicted": "Acute Pancreatitis"
+    }
+  ],
+  "final_regression": {
+    "correct": 72,
+    "total": 72,
+    "source_families": 18,
+    "critical_correct": 20,
+    "critical_total": 20
+  },
+  "final_dialogue_scenarios": 108,
+  "tests": {
+    "total": 527,
+    "passed": 526,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0,
+    "source": "tests.xml"
+  }
+}

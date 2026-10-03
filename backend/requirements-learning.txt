@@ -1,0 +1,14 @@
+# OPTIONAL learning-subsystem dependencies for the N.O.V.A. deep-learning candidate ranker
+# (learning/ package). These are for TRAINING/experimentation ONLY and are deliberately NOT part
+# of:
+#   - the core runtime (backend/requirements-core.txt),
+#   - the competition submission (submission/requirements.txt — pydantic only),
+#   - the Jetson deployment images.
+#
+# The learning package imports torch LAZILY (learning/_torch.py); everything except the actual
+# neural train/inference path runs without these installed. Install only in a dedicated learning
+# environment:
+#
+#   pip install -r backend/requirements-learning.txt
+#
+torch>=2.2,<3

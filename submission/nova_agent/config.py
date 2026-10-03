@@ -53,6 +53,7 @@ class UtilityWeights:
             + beta  * diagnostic_separation
             + gamma * safety_gain
             + delta * expected_management_relevance
+            + tau   * time_critical_bonus
             - lam   * turn_cost
             - rho   * redundancy
     """
@@ -63,6 +64,15 @@ class UtilityWeights:
     management_relevance_weight: float = field(
         default_factory=lambda: _float_env("NOVA_MANAGEMENT_RELEVANCE_WEIGHT", 0.5)
     )
+    # A candidate action that helps discriminate a "time is tissue/brain/myocardium" diagnosis
+    # (stroke/ACS/sepsis/anaphylaxis-class -- see action_selector.py's `_time_critical_ids()`)
+    # gets a small additional priority bump on top of the existing safety_weight, reflecting that
+    # minutes matter more for these specifically than for "merely" dangerous_if_missed diagnoses
+    # in general. Deliberately small relative to safety_weight/discrimination_weight -- this
+    # breaks a close tie toward the more time-sensitive question, never overrides genuine
+    # evidence-based prioritization. Purely a question/test PRIORITIZATION weight -- never
+    # triggers or implies any treatment/auto-treatment action.
+    time_critical_weight: float = field(default_factory=lambda: _float_env("NOVA_TIME_CRITICAL_WEIGHT", 0.4))
     turn_cost_weight: float = field(default_factory=lambda: _float_env("NOVA_TURN_COST", 0.3))
     redundancy_penalty: float = field(default_factory=lambda: _float_env("NOVA_REDUNDANCY_PENALTY", 5.0))
 
@@ -86,6 +96,28 @@ class NovaConfig:
 
     rag_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RAG_ENABLED", True))
     rag_top_k: int = field(default_factory=lambda: _int_env("NOVA_RAG_TOP_K", 4))
+
+    # ontology_broadening_enabled: OPT-IN open-world broadening of the candidate pool with Tier-2
+    # structured concepts from the DiseaseCatalog (nova_agent/ontology). DEFAULT FALSE so the closed
+    # 34-disease behavior — and every existing test/benchmark — is byte-identical unless a deployer
+    # turns it on. When true, candidate_generator adds broad ontology candidates ONLY as a thin,
+    # provenance-tagged supplement; it never removes a KB candidate and never changes scoring.
+    ontology_broadening_enabled: bool = field(
+        default_factory=lambda: _bool_env("NOVA_ONTOLOGY_BROADENING", False))
+    ontology_broadening_max: int = field(
+        default_factory=lambda: _int_env("NOVA_ONTOLOGY_BROADENING_MAX", 5))
+
+    # --- Optional ML ranker (HOSPITAL deployment only; NEVER in the competition submission) ------
+    # ml_ranker_enabled: master switch for the optional deep-learning candidate ranker. DEFAULT
+    # FALSE. When false the ML subsystem is never consulted and behavior is unchanged.
+    # ml_shadow_mode: when true (default), the ML ranker runs in SHADOW — its ordering is computed
+    # and audited but NEVER changes the clinician-facing result. Active (non-shadow) mode requires
+    # BOTH ml_ranker_enabled=true AND ml_shadow_mode=false AND an approved model, and even then the
+    # deterministic Safety Guard remains authoritative (Safety Guard > ML Ranker > LLM).
+    # ml_model_path: filesystem path to an approved checkpoint (.pt + .json sidecar). Empty => no model.
+    ml_ranker_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ML_RANKER_ENABLED", False))
+    ml_shadow_mode: bool = field(default_factory=lambda: _bool_env("NOVA_ML_SHADOW_MODE", True))
+    ml_model_path: str = field(default_factory=lambda: _str_env("NOVA_ML_MODEL_PATH", ""))
 
     # llm_provider: 'mock' (default, offline/deterministic) | 'anthropic' | 'openai_compatible'
     # (any OpenAI Chat Completions-compatible HTTP endpoint: local vLLM/llama.cpp/ollama, or a

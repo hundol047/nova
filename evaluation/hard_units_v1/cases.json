@@ -1,0 +1,162 @@
+[
+  {
+    "case_id": "hard_units_0_gdL",
+    "category": "unit_equivalence",
+    "chief_complaint": "I have black and tarry stools with dizziness",
+    "demographics": {
+      "age": 55,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "gi_bleeding",
+    "answers": {
+      "onset": "started today",
+      "past_medical_history": "naproxen daily"
+    },
+    "exam_results": {
+      "vital_signs": "BP 105/65, HR 104, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {
+      "cbc": "hemoglobin 6.4 g/dL"
+    }
+  },
+  {
+    "case_id": "hard_units_0_gL",
+    "category": "unit_equivalence",
+    "chief_complaint": "I have black and tarry stools with dizziness",
+    "demographics": {
+      "age": 55,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "gi_bleeding",
+    "answers": {
+      "onset": "started today",
+      "past_medical_history": "naproxen daily"
+    },
+    "exam_results": {
+      "vital_signs": "BP 105/65, HR 104, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {
+      "cbc": "hemoglobin 64 g/L"
+    }
+  },
+  {
+    "case_id": "hard_units_1_gdL",
+    "category": "unit_equivalence",
+    "chief_complaint": "I am vomiting blood and feel weak",
+    "demographics": {
+      "age": 56,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "gi_bleeding",
+    "answers": {
+      "onset": "started today",
+      "past_medical_history": "naproxen daily"
+    },
+    "exam_results": {
+      "vital_signs": "BP 105/65, HR 104, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {
+      "cbc": "hemoglobin 8.3 g/dL"
+    }
+  },
+  {
+    "case_id": "hard_units_1_gL",
+    "category": "unit_equivalence",
+    "chief_complaint": "I am vomiting blood and feel weak",
+    "demographics": {
+      "age": 56,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "gi_bleeding",
+    "answers": {
+      "onset": "started today",
+      "past_medical_history": "naproxen daily"
+    },
+    "exam_results": {
+      "vital_signs": "BP 105/65, HR 104, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {
+      "cbc": "hemoglobin 83 g/L"
+    }
+  },
+  {
+    "case_id": "hard_units_2_gdL",
+    "category": "unit_equivalence",
+    "chief_complaint": "melena with pallor and lightheadedness",
+    "demographics": {
+      "age": 57,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "gi_bleeding",
+    "answers": {
+      "onset": "started today",
+      "past_medical_history": "naproxen daily"
+    },
+    "exam_results": {
+      "vital_signs": "BP 105/65, HR 104, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {
+      "cbc": "hemoglobin 9.2 g/dL"
+    }
+  },
+  {
+    "case_id": "hard_units_2_gL",
+    "category": "unit_equivalence",
+    "chief_complaint": "melena with pallor and lightheadedness",
+    "demographics": {
+      "age": 57,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "gi_bleeding",
+    "answers": {
+      "onset": "started today",
+      "past_medical_history": "naproxen daily"
+    },
+    "exam_results": {
+      "vital_signs": "BP 105/65, HR 104, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {
+      "cbc": "hemoglobin 92 g/L"
+    }
+  },
+  {
+    "case_id": "hard_units_3_gdL",
+    "category": "unit_equivalence",
+    "chief_complaint": "hematemesis and epigastric pain",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "gi_bleeding",
+    "answers": {
+      "onset": "started today",
+      "past_medical_history": "naproxen daily"
+    },
+    "exam_results": {
+      "vital_signs": "BP 105/65, HR 104, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {
+      "cbc": "hemoglobin 6.1 g/dL"
+    }
+  },
+  {
+    "case_id": "hard_units_3_gL",
+    "category": "unit_equivalence",
+    "chief_complaint": "hematemesis and epigastric pain",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "gi_bleeding",
+    "answers": {
+      "onset": "started today",
+      "past_medical_history": "naproxen daily"
+    },
+    "exam_results": {
+      "vital_signs": "BP 105/65, HR 104, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {
+      "cbc": "hemoglobin 61 g/L"
+    }
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "file": "evaluation/blind_cases_v11.py",
+  "case_count": 24,
+  "file_sha256": "dedfec2ad42aa6f160b3a72531b941431a8b6ee2b5dc3572828955c5906392a4",
+  "frozen_at_utc": "2026-09-25T00:00:00Z",
+  "created_commit": "d2728712576e4305547a2aef1dc4ec08d8f6cdb3",
+  "language_distribution": {"en": 22, "ko_mixed": 1, "ja": 1},
+  "category_distribution": {
+    "common": 2, "critical": 2, "dangerous_mimic": 1, "benign_mimic": 1,
+    "retrieval_miss_trap": 1, "router_miss_trap": 1, "rare": 1, "very_rare": 1, "long_tail": 1,
+    "unknown": 1, "ood": 1, "multimorbidity": 1, "polypharmacy": 1, "pediatric": 1, "pregnancy": 1,
+    "mixed_language": 2, "atypical": 1, "conflicting_findings": 1, "data_freshness": 1, "unit_safety": 2
+  },
+  "diagnosis_coverage": "Representative across the axes the 5,000-diagnosis retrieval round touched, PLUS two new trap axes (retrieval-miss, router-miss). NOT an exhaustive enumeration of 5,000. Tier-1 targets use knowledge/diseases ids; Tier-2/rare/long-tail use 'tier2:<id>' with scoring_expected=false (excluded from the accuracy denominator, still checked for safe behavior); unknown/OOD use 'unknown' + scoring_expected=false.",
+  "supersedes": "Blind v3, v4, v5, v6, v8, v9, v10 are ALL REFERENCE-ONLY as of this round. This round added the 5,000-disease retrieval architecture (learning/retrieval embedding retrieval, learning/routing multi-specialty router, learning/safety_recall, learning/rerank deep reranker, learning/pipeline retrieval->rerank->LLM with a lexical-grounding UNKNOWN guard), so any set frozen before these changes can no longer be the untouched measure of the current code. Blind v11 is authored/frozen after these changes and is the untouched check for the current code.",
+  "note": "SHA-256 computed BEFORE evaluation.blind_benchmark_v11 was ever run. blind_cases_v11.py must not be edited after this point; a pre-first-run correction would require a NEW manifest entry documenting why, never a silent edit. FIRST RUN of evaluation.blind_benchmark_v11 requires a runnable Python environment (pydantic); it was NOT run in the network-isolated authoring environment and is reported NOT VERIFIED until executed exactly once in a runnable environment, then transcribed as-is and never re-tuned against. If reasoning code changes again after this freeze, v11 becomes reference-only and a fresh v12 is authored."
+}

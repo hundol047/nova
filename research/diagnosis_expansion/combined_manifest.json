@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "purpose": "OFFLINE_TERMINOLOGY_REVIEW_ONLY",
+  "runtime_registered": 1280,
+  "icd_review_entries": 6309,
+  "mondo_review_entries": 15350,
+  "orphanet_review_entries": 388,
+  "injury_review_entries": 1195,
+  "doid_review_entries": 974,
+  "ncit_review_entries": 9508,
+  "total_registered_and_review_entries": 35004,
+  "distinct_normalized_names": 35000,
+  "requested_total": 35000,
+  "shortfall": 0,
+  "clinical_accuracy_verified": false,
+  "files": [
+    "review_candidates.json",
+    "mondo_review_candidates.json",
+    "orphanet_review_candidates.json",
+    "injury_review_candidates.json",
+    "doid_review_candidates.json",
+    "ncit_review_candidates.json"
+  ]
+}

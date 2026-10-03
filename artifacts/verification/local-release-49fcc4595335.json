@@ -1,0 +1,147 @@
+{
+  "schema": "nova-verification-v2",
+  "verified_code_sha": "49fcc45953351eb7a7af23d155db3ca159a01be3",
+  "artifact_commit_sha": null,
+  "branch": "offline/nova-5000-diagnosis-expansion",
+  "remote_sha": "d2728712576e4305547a2aef1dc4ec08d8f6cdb3",
+  "current_blind_version": "v11",
+  "total_searchable_diagnoses": 5651,
+  "tier_counts": {
+    "TIER1_DEEP": 34,
+    "TIER2_STRUCTURED": 1246,
+    "TIER3_ONTOLOGY": 4371
+  },
+  "runtime_files_changed_after_verification": false,
+  "timestamp_utc": "2026-09-25T09:29:37.756145+00:00",
+  "environment": {
+    "python": "3.11.15",
+    "pydantic": false,
+    "fastapi": false,
+    "psycopg": false,
+    "torch": false,
+    "npm": true
+  },
+  "not_available": [
+    "nova_agent_tests",
+    "backend_tests",
+    "leakage_scan",
+    "submission_sync",
+    "frontend_build",
+    "frontend_unit_tests",
+    "i18n_parity",
+    "hardcoded_string_audit",
+    "blind_first_run",
+    "postgres_available",
+    "redis_available"
+  ],
+  "results": {
+    "nova_agent_tests": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed"
+    },
+    "backend_tests": {
+      "status": "NOT AVAILABLE",
+      "detail": "fastapi not installed"
+    },
+    "unit_safety_guard": {
+      "status": "PASS",
+      "detail": ".....sss.........                                                        [100%]\n14 passed, 3 skipped in 0.02s"
+    },
+    "leakage_scan": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed (blind case modules import SyntheticCase)"
+    },
+    "submission_sync": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed (sync test imports the agent)"
+    },
+    "frontend_build": {
+      "status": "NOT AVAILABLE",
+      "detail": "frontend/node_modules not installed (run `npm ci` first)"
+    },
+    "frontend_unit_tests": {
+      "status": "NOT AVAILABLE",
+      "detail": "frontend/node_modules not installed (run `npm ci` first)"
+    },
+    "i18n_parity": {
+      "status": "NOT AVAILABLE",
+      "detail": "5)\n    at prepareExecution (node:internal/process/pre_execution:159:5) {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: [ 'internal/preload' ]\n}\n\nNode.js v22.23.2\n"
+    },
+    "hardcoded_string_audit": {
+      "status": "NOT AVAILABLE",
+      "detail": "node:internal/process/pre_execution:231:5)\n    at prepareExecution (node:internal/process/pre_execution:159:5) {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: [ 'internal/preload' ]\n}\n\nNode.js v22.23.2\n"
+    },
+    "e2e_harness_present": {
+      "status": "PASS",
+      "detail": "playwright.config.js + tests/e2e/*.spec.js present (EXECUTION NOT VERIFIED here)"
+    },
+    "case_resume_wiring": {
+      "status": "PASS",
+      "detail": "open-case API + service + frontend resume/timeline restore wired"
+    },
+    "ontology_catalog_integrity": {
+      "status": "PASS",
+      "detail": "5651 concepts (34 deep + 1246 structured), bundled>=500 OK, 0 dup ids, code-map OK"
+    },
+    "disease_coverage_500": {
+      "status": "PASS",
+      "detail": "18 passed in 0.37s"
+    },
+    "terminology_import": {
+      "status": "PASS",
+      "detail": "5 passed in 0.02s"
+    },
+    "ml_runtime_and_lifecycle": {
+      "status": "PASS",
+      "detail": "39 passed, 1 skipped in 1.24s"
+    },
+    "checkpoint_roundtrip_static": {
+      "status": "PASS",
+      "detail": "checkpoint compat-guard present; torch training torch-gated (torch weight roundtrip NOT EXECUTED here -> CI/torch env)"
+    },
+    "learning_isolation": {
+      "status": "PASS",
+      "detail": "learning<->eval isolated; torch/learning absent from core+submission"
+    },
+    "learning_pipeline_tests": {
+      "status": "PASS",
+      "detail": "18 passed in 0.11s"
+    },
+    "blind_integrity": {
+      "status": "PASS",
+      "detail": "v11 hash matches frozen manifest"
+    },
+    "blind_first_run": {
+      "status": "NOT AVAILABLE",
+      "detail": "pydantic not installed; run `python -m evaluation.blind_benchmark_v11` once in a runnable env"
+    },
+    "current_blind_consistency": {
+      "status": "PASS",
+      "detail": "current blind = v11; frozen hash matches; leakage scanner includes it"
+    },
+    "reasoning_unchanged_current_blind": {
+      "status": "PASS",
+      "detail": "v11 hash matches frozen manifest"
+    },
+    "docs_current_counts": {
+      "status": "PASS",
+      "detail": "docs reflect bundled=1280, current blind=v11"
+    },
+    "verified_sha_consistency": {
+      "status": "PASS",
+      "detail": "runtime code unchanged since verified_code_sha 49fcc4595335"
+    },
+    "postgres_available": {
+      "status": "NOT AVAILABLE",
+      "detail": "psycopg not installed"
+    },
+    "redis_available": {
+      "status": "NOT AVAILABLE",
+      "detail": "redis client not installed"
+    },
+    "browser_e2e_available": {
+      "status": "SKIPPED",
+      "detail": "E2E harness present but not auto-run here"
+    }
+  }
+}

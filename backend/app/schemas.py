@@ -53,6 +53,12 @@ class Lab(StrictModel):
     date: date
     low: Optional[float] = Field(default=None, allow_inf_nan=False)
     high: Optional[float] = Field(default=None, allow_inf_nan=False)
+    # Optional LOINC code, populated by FHIRAdapter when a real Observation resource carries one
+    # (emr_adapter.py already extracts this for the height/weight special-case Observations --
+    # this field lets it be preserved for every OTHER Observation too, instead of being read and
+    # then discarded). None for DemoAdapter-sourced labs and any legacy payload that omits it --
+    # every existing patients.json entry and test fixture keeps validating unchanged.
+    loinc: Optional[str] = Field(default=None, max_length=20)
 
 class Encounter(StrictModel):
     id: str
@@ -248,7 +254,15 @@ class Patient(StrictModel):
     # layer is additive and never replaces the existing pipeline's inputs.
     problem_list: List[Diagnosis] = Field(default_factory=list, max_length=100)
     clinical_encounters: List[ClinicalEncounter] = Field(default_factory=list, max_length=100)
-    demo: Literal[True] = True
+    # Replaces the old `demo: Literal[True] = True` (spec: a real FHIR-sourced patient must never
+    # be tagged demo=True -- the old field's type literally forbade it from ever being anything
+    # else, for ANY adapter). `data_source` is the adapter that produced this Patient object;
+    # `is_synthetic` is the corresponding boolean a UI can key an environment/data-source banner
+    # off of directly, without needing to know the data_source enum's values. Both default to the
+    # DemoAdapter's own values, so every existing patients.json entry / test fixture that omits
+    # them keeps validating unchanged -- only FHIRAdapter explicitly sets them otherwise.
+    data_source: Literal['demo', 'fhir'] = 'demo'
+    is_synthetic: bool = True
 
 class PatientRequest(StrictModel):
     patient_id: str

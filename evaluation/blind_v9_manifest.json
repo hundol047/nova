@@ -1,0 +1,17 @@
+{
+  "file": "evaluation/blind_cases_v9.py",
+  "case_count": 44,
+  "file_sha256": "39b1847d50057f91c063c122a6070404943d98b3c068529222e65b6dd3d9edec",
+  "frozen_at_utc": "2026-09-25T04:50:39Z",
+  "created_commit": "1e2a987f5b997c999724a62ebec477a5ebd5cecc",
+  "language_distribution": {"en": 30, "ko": 6, "ja": 5, "zh": 3},
+  "category_distribution": {
+    "cardiac": 3, "dangerous_mimic": 5, "infectious": 4, "pulmonary": 1, "common": 6, "neuro": 1,
+    "benign_mimic": 5, "metabolic": 4, "abdominal": 3, "gi_bleeding": 1, "pregnancy": 1,
+    "unit_safety": 4, "data_freshness": 1, "anchoring": 2, "sparse_information": 1,
+    "negative_centric": 1, "conflicting_findings": 1
+  },
+  "diagnosis_coverage": "all 34 knowledge-base diagnoses covered at least once; every ground_truth_diagnosis validated against nova_agent/knowledge/diseases/*.json",
+  "supersedes": "Blind v6 and Blind v8 are REFERENCE-ONLY as of this round; v9 is the untouched check for the current code after the independent-re-audit unit-safety reasoning changes.",
+  "note": "SHA-256 computed BEFORE evaluation.blind_benchmark_v9 was ever run. blind_cases_v9.py must not be edited after this point; a pre-first-run correction would require a NEW manifest entry documenting why, never a silent edit. FIRST RUN of evaluation.blind_benchmark_v9 requires a runnable Python environment (pydantic); it was NOT run in the network-isolated authoring environment and is reported NOT VERIFIED until executed exactly once in a runnable environment (a developer machine or a future CI run when Actions budget allows), then transcribed as-is and never re-tuned against. If reasoning code changes again after this freeze, v9 becomes reference-only and a fresh v10 is authored."
+}

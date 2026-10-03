@@ -1,0 +1,65 @@
+{
+  "low": {
+    "cases": 200,
+    "source_families": 45,
+    "diagnostic_groups": 34,
+    "correct": 200,
+    "scored_cases": 200,
+    "scored_correct": 200,
+    "safety": {
+      "tp": 85,
+      "fp": 27,
+      "fn": 5,
+      "tn": 83,
+      "observed_cases": 200,
+      "uninstrumented_cases": 0,
+      "sensitivity": 0.9444444444444444,
+      "specificity": 0.7545454545454545,
+      "false_negative_rate": 0.05555555555555555,
+      "missed_case_ids": [
+        "SIM50_low_development_00100",
+        "SIM50_low_development_01395",
+        "SIM50_low_development_14974",
+        "SIM50_low_development_02098",
+        "SIM50_low_development_00063"
+      ],
+      "interpretation": "Any final SafetyLayer flag versus synthetic critical label; not condition-specific recall, triage correctness or clinical validation."
+    }
+  },
+  "high": {
+    "cases": 200,
+    "source_families": 146,
+    "diagnostic_groups": 42,
+    "correct": 187,
+    "scored_cases": 185,
+    "scored_correct": 181,
+    "safety": {
+      "tp": 93,
+      "fp": 36,
+      "fn": 14,
+      "tn": 57,
+      "observed_cases": 200,
+      "uninstrumented_cases": 0,
+      "sensitivity": 0.8691588785046729,
+      "specificity": 0.6129032258064516,
+      "false_negative_rate": 0.1308411214953271,
+      "missed_case_ids": [
+        "SIM50_high_development_07206",
+        "SIM50_high_development_12900",
+        "SIM50_high_development_01296",
+        "SIM50_high_development_02730",
+        "SIM50_high_validation_03048",
+        "SIM50_high_development_05936",
+        "SIM50_high_development_15002",
+        "SIM50_high_development_03925",
+        "SIM50_high_development_12610",
+        "SIM50_high_validation_04801",
+        "SIM50_high_development_10130",
+        "SIM50_high_development_00151",
+        "SIM50_high_development_12204",
+        "SIM50_high_development_06355"
+      ],
+      "interpretation": "Any final SafetyLayer flag versus synthetic critical label; not condition-specific recall, triage correctness or clinical validation."
+    }
+  }
+}

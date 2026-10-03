@@ -36,7 +36,8 @@ def normalize_key(text: str) -> str:
 # weakness but my speech became slurred") -- splitting only on ';' (the original implementation)
 # missed every one of these, silently losing or misclassifying half the answer.
 _CLAUSE_SPLIT_PATTERN = re.compile(
-    r";|(?<=\w)\s+but\s+|(?<=\w)\s+however\s+|(?<=\w)\s+although\s+|(?<=\w)\s+except\s+(?:that\s+)?",
+    r";|\n|(?<=\w)\.(?=\s+[a-z])|(?<=\w)\s+but\s+|(?<=\w)\s+however\s+|(?<=\w)\s+although\s+|(?<=\w)\s+except\s+(?:that\s+)?"
+    r"|하지만|그러나|그런데|근데|でも|しかし|だが|但是|不过|但",
     re.IGNORECASE,
 )
 
@@ -44,7 +45,17 @@ _NEGATION_MARKERS = [
     "denies", "denied", "no ", "none", "negative for", "not present", "without",
     "don't have", "doesn't have", "do not have", "does not have",
     "didn't have", "did not have", "never had", "not experiencing", "not having",
-    "아니", "없습니다", "없음",
+    # Korean
+    "아니", "없습니다", "없어요", "없음", "안 아파요", "하지 않아요", "부인함",
+    # Japanese
+    "ない", "ありません", "認めない", "否定", "していない",
+    # Chinese (simplified). Deliberately NOT bare "不" -- Chinese uses no word-spacing, and "不" is
+    # a substring of many unrelated words that do NOT mean a symptom is denied (e.g. "不适"
+    # discomfort, "不规则" irregular) -- a bare single-character marker would misclassify a
+    # POSITIVE finding as negated. The multi-character markers below are specific enough to avoid
+    # that false-positive class the same way English "no " (with a trailing space, not bare "no")
+    # already avoids matching inside unrelated words like "corner".
+    "没有", "无", "否认", "未出现",
 ]
 
 
@@ -59,17 +70,46 @@ def _split_answer_segments(answer: str) -> List[str]:
         part = part.strip().rstrip(".").strip()
         if not part:
             continue
-        if re.search(r"\bdenies\b", part, re.IGNORECASE):
-            pieces = re.split(r",\s*(?=denies\b)", part, flags=re.IGNORECASE)
-            segments.extend(p.strip() for p in pieces if p.strip())
+        if re.search(r"\b(?:denies|no|without|not|negative for)\b", part, re.IGNORECASE):
+            # A comma-list may switch polarity mid-clause ("palpitations just before,
+            # no aura, no tongue biting").  Split at the marker rather than classifying
+            # the whole list as negative; otherwise the positive lead-in can incorrectly
+            # support a feature such as "no palpitations before the episode".
+            pieces = re.split(
+                r",\s*(?=(?:denies\b|no\b|without\b|not\b|negative\s+for\b))",
+                part, flags=re.IGNORECASE,
+            )
+            for piece in pieces:
+                segments.extend(_expand_mixed_leading_no(piece.strip()))
         else:
-            segments.append(part)
+            segments.extend(_expand_mixed_leading_no(part))
     return segments
 
 
 def _segment_is_negated(segment: str) -> bool:
     lowered = segment.lower()
     return any(marker in lowered for marker in _NEGATION_MARKERS)
+
+
+_MIXED_POSITIVE_CUE = re.compile(
+    r"\b(?:has|have|reports?|with|pain|nausea|vomit(?:ing)?|fever|diarr(?:hea|hoea)|"
+    r"weakness|cough|dyspnea|sweat(?:ing)?|dizzy|headache|low|mild|sharp|worse)\b"
+    r"|恶心|呕吐|低烧|低热|腹泻|疼|痛|无力|咳嗽|微热| nausea | 구역 | 구토 | 미열",
+    re.IGNORECASE,
+)
+
+
+def _expand_mixed_leading_no(segment: str) -> List[str]:
+    """Scope a leading ``no X`` to X when a comma-list continues with positive findings."""
+    match = re.match(r"^\s*(no\s+[^,;]+),\s*(.+)$", segment, re.IGNORECASE)
+    if not match:
+        return [segment]
+    negative_head, remainder = match.groups()
+    if re.search(r"\b(?:no|denies|without|not)\b|없(?:음|어요|습니다)|没有|无|否认", remainder, re.IGNORECASE):
+        return [segment]
+    if not _MIXED_POSITIVE_CUE.search(remainder):
+        return [segment]
+    return [negative_head.strip(), remainder.strip()]
 
 
 class Demographics(BaseModel):
@@ -107,6 +147,13 @@ class PatientState(BaseModel):
     """Everything accumulated about the current case (spec section 2)."""
 
     case_id: str = "case"
+    # UI/output locale only -- "en" | "ko" | "ja" | "zh". Never affects internal reasoning: every
+    # canonical diagnosis_id/concept tag/lab.* key stays identical regardless of this value (spec:
+    # internal reasoning language and display language are strictly separated). Persisted with the
+    # case (not just passed once at creation) since a production backend constructs a fresh
+    # DoctorAgent(lang=...) on every decide() call -- see nova_service.py's own module docstring on
+    # why -- so this is the only place that value can durably live between turns.
+    locale: str = "en"
     demographics: Demographics = Field(default_factory=Demographics)
 
     chief_complaint: str = ""
@@ -356,15 +403,17 @@ class PatientState(BaseModel):
     def latest_vital_signs(self) -> Optional[VitalSigns]:
         return self.vital_signs[-1] if self.vital_signs else None
 
-    def all_findings_text(self) -> List[str]:
+    def all_findings_text(self, include_context: bool = True) -> List[str]:
         """Flat bag of every free-text clinical finding gathered so far, used by keyword-matching
         modules (differential.py, safety.py) as the evidence corpus."""
         out = list(self.symptoms) + list(self.associated_symptoms) + list(self.pertinent_positives)
-        out += list(self.past_medical_history) + list(self.social_history) + list(self.family_history)
+        if include_context:
+            out += list(self.past_medical_history) + list(self.social_history) + list(self.family_history)
         out += [self.chief_complaint, self.symptom_onset or "", self.severity or "", self.duration or ""]
         out += list(self.physical_examinations.values()) + list(self.imaging.values())
         out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
-        out += list(self.medication_text) + list(self.allergy_text)
-        out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
+        if include_context:
+            out += list(self.medication_text) + list(self.allergy_text)
+            out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
         return [t for t in out if t]

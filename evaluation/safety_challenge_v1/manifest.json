@@ -1,0 +1,32 @@
+{
+  "dataset_type": "SOURCE_INFORMED_SYNTHETIC_SAFETY_SNAPSHOTS",
+  "created": "2026-10-03",
+  "sources": {
+    "stroke": {
+      "url": "https://www.nhs.uk/conditions/stroke/symptoms/",
+      "organization": "NHS"
+    },
+    "anaphylaxis": {
+      "url": "https://www.nhs.uk/conditions/anaphylaxis/",
+      "organization": "NHS"
+    },
+    "bleeding": {
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/gastrointestinal-bleeding/symptoms-causes",
+      "organization": "NIDDK"
+    }
+  },
+  "cases": 24,
+  "positive": 12,
+  "negative_controls": 12,
+  "split_policy": "stroke/bleeding development; anaphylaxis validation held by disease group",
+  "label_scope": "target safety flag expected, not confirmed disease or emergency-disposition label",
+  "clinician_reviewed": false,
+  "independent": false,
+  "model_training": false,
+  "limitations": [
+    "Assistant-authored labels; source guidance does not clinically adjudicate examples.",
+    "Structured history snapshots do not prove free-text history extraction.",
+    "Validation shares source organization and negative-control templates; not independent."
+  ],
+  "sha256": "eb1c0bcce9d9bec4ce0328263e8b738c01d1c15b2cd8cb384779ed47c63aeeb9"
+}

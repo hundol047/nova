@@ -1,0 +1,62 @@
+{
+  "cases": 9,
+  "exact_matches": 0,
+  "real_llm_calls": 0,
+  "elapsed_seconds": 125.72,
+  "results": [
+    {
+      "id": "87",
+      "gold": "Myopericarditis",
+      "prediction": "Acute Coronary Syndrome",
+      "exact_match": false
+    },
+    {
+      "id": "140",
+      "gold": "Pheochromocytoma-induced cardiomyopathy",
+      "prediction": "Pulmonary Embolism",
+      "exact_match": false
+    },
+    {
+      "id": "514",
+      "gold": "Effusive-constrictive pericarditis",
+      "prediction": "unknown",
+      "exact_match": false
+    },
+    {
+      "id": "586",
+      "gold": "Rifampin-induced acute renal failure due to heme pigment-related injury",
+      "prediction": "Nephrolithiasis (Kidney Stone)",
+      "exact_match": false
+    },
+    {
+      "id": "628",
+      "gold": "Peri-infarction pericarditis (PIP)",
+      "prediction": "Acute Coronary Syndrome",
+      "exact_match": false
+    },
+    {
+      "id": "697",
+      "gold": "Valproic acid-induced aplastic crisis and Stevens-Johnson syndrome",
+      "prediction": "Asthma / COPD Exacerbation",
+      "exact_match": false
+    },
+    {
+      "id": "766",
+      "gold": "Myopericarditis with cardiac conduction system involvement due to monkeypox virus infection with concurrent Lyme disease",
+      "prediction": "Tension Pneumothorax",
+      "exact_match": false
+    },
+    {
+      "id": "770",
+      "gold": "Leptospirosis with severe pneumonia, acute kidney injury, and acute liver injury",
+      "prediction": "Community-Acquired Pneumonia",
+      "exact_match": false
+    },
+    {
+      "id": "822",
+      "gold": "Pheochromocytoma presenting as left adrenal incidentaloma with diffuse alveolar hemorrhage",
+      "prediction": "Acute Pancreatitis",
+      "exact_match": false
+    }
+  ]
+}
