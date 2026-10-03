@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-03 — external expert-reviewed evidence intake
+
+- Preserve MedXpertQA Text (2,455 rows) and the public DiagnosisArena subset (915 rows), original answer keys, source notices, fixed dataset revisions and SHA-256 manifests.
+- Index 9 DiagnosisArena final-label matches for unsupported disease review; complex diagnoses remain intact and NOVA clinician adjudication is pending.
+- Add official clinical source links and an offline integrity/coverage audit. No training, runtime change, or accuracy measurement; DiagnosisArena remains research/evaluation-only under its source terms.
+
 ## 2026-10-03
 - Fix mixed comma-list assertion scope and current-exam reassurance matching.
 - Preserve multilingual feature aliases previously overwritten by duplicate dictionary keys.

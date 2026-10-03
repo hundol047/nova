@@ -1,5 +1,7 @@
 # N.O.V.A. 2026 Doctor Agent
 
+External evidence intake (2026-10-03): [clinical sources, expert-review provenance, 3,370 downloaded benchmark rows, and remaining coverage gaps](research/external_evidence/README.md). Research/evaluation only; no training or clinical accuracy improvement is claimed.
+
 A conversational medical-diagnosis agent (**ASK / EXAM / TEST / DIAGNOSE**) built for the N.O.V.A.
 2026 competition as an independent, standalone `nova_agent` module. It reasons iteratively from a
 limited initial presentation toward a differential diagnosis, actively guards against missing
