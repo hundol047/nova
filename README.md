@@ -682,3 +682,5 @@ SynexAgent's React/Vite UI and FastAPI server -- it never needs them running.
 - **Backend (SynexAgent) tests fail after modifying `nova_agent/`**: they shouldn't -- `backend/`
   never imports from `nova_agent/`/`competition/` (only the optional reverse). Run
   `pytest backend/tests` in isolation to confirm.
+
+Latest evidence-parsing regression replay: [2026-10-03 report](docs/evaluation/mock_replay_2026_10_03/README.md) — synthetic mock Top-1 180/191 (94.24%); not clinical accuracy or independent validation.

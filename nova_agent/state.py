@@ -70,9 +70,17 @@ def _split_answer_segments(answer: str) -> List[str]:
         part = part.strip().rstrip(".").strip()
         if not part:
             continue
-        if re.search(r"\bdenies\b", part, re.IGNORECASE):
-            pieces = re.split(r",\s*(?=denies\b)", part, flags=re.IGNORECASE)
-            segments.extend(p.strip() for p in pieces if p.strip())
+        if re.search(r"\b(?:denies|no|without|not|negative for)\b", part, re.IGNORECASE):
+            # A comma-list may switch polarity mid-clause ("palpitations just before,
+            # no aura, no tongue biting").  Split at the marker rather than classifying
+            # the whole list as negative; otherwise the positive lead-in can incorrectly
+            # support a feature such as "no palpitations before the episode".
+            pieces = re.split(
+                r",\s*(?=(?:denies\b|no\b|without\b|not\b|negative\s+for\b))",
+                part, flags=re.IGNORECASE,
+            )
+            for piece in pieces:
+                segments.extend(_expand_mixed_leading_no(piece.strip()))
         else:
             segments.extend(_expand_mixed_leading_no(part))
     return segments

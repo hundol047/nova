@@ -92,6 +92,23 @@ def test_partial_confirmatory_word_overlap_is_not_confirmation():
     assert _score_disease(entry,s)[2] == []
 
 
+def test_reassuring_exam_requires_complete_phrase():
+    """A focal neurologic deficit must not partially match stroke's reassuring phrases."""
+    from nova_agent.knowledge.retrieval import disease_by_id
+
+    focal = PatientState(case_id='stroke-focal', chief_complaint='headache')
+    focal.record_exam('neuro_exam', 'Left leg weakness with a focal neurological deficit')
+    entry = disease_by_id('ischemic_stroke')
+    _score, _max_possible, _supporting, contradictory, _missing = _score_disease(entry, focal)
+    assert 'no focal neurological deficit' not in contradictory
+    assert 'normal neurologic exam' not in contradictory
+
+    normal = PatientState(case_id='stroke-normal', chief_complaint='headache')
+    normal.record_exam('neuro_exam', 'normal neurologic exam, no focal neurological deficit')
+    _score, _max_possible, _supporting, contradictory, _missing = _score_disease(entry, normal)
+    assert 'no focal neurological deficit' in contradictory
+
+
 @pytest.mark.parametrize('name,key', [('Ectopic Pregnancy','ectopic_pregnancy'),
  ('Benign Paroxysmal Positional Vertigo','bppv')])
 def test_explicit_identity_is_not_lost_because_catalog_contains_duplicate_name(name,key):
@@ -149,3 +166,39 @@ def test_prodrome_requires_affirmative_preceding_symptom(finding, expected):
     from nova_agent.matching import feature_present
     assert feature_present('prodrome of lightheadedness', [finding],
                            scrub_negated_spans=True) is expected
+
+
+@pytest.mark.parametrize('answer,positive,negative', [
+    ('cough, no fever, no vomiting', 'cough', 'no fever'),
+    ('no rash, has cough', 'has cough', 'no rash'),
+    ('dizziness, denies headache', 'dizziness', 'denies headache'),
+])
+def test_comma_polarity_keeps_both_assertions(answer, positive, negative):
+    state = PatientState(case_id='clause-test', chief_complaint='assessment')
+    state.record_ask('associated_symptoms', '?', answer)
+    assert positive in state.pertinent_positives
+    assert negative in state.pertinent_negatives
+
+
+def test_alias_dictionary_has_no_silently_overwritten_keys():
+    import ast
+    from pathlib import Path
+    tree = ast.parse((Path(__file__).parents[1] / 'nova_agent/differential.py').read_text())
+    node = next(n.value for n in tree.body if isinstance(n, ast.AnnAssign)
+                and getattr(n.target, 'id', '') == 'FEATURE_ALIASES')
+    keys = [ast.literal_eval(k) for k in node.keys]
+    assert len(keys) == len(set(keys))
+
+
+def test_reassuring_family_history_is_not_current_exam():
+    from nova_agent.knowledge.retrieval import disease_by_id
+    state = PatientState(case_id='history-normal', chief_complaint='weakness')
+    state.family_history = ['Parent had a normal neurologic exam']
+    assert not _score_disease(disease_by_id('ischemic_stroke'), state)[3]
+
+
+def test_negated_normal_exam_is_not_reassuring():
+    from nova_agent.knowledge.retrieval import disease_by_id
+    state = PatientState(case_id='abnormal-exam', chief_complaint='weakness')
+    state.record_exam('neuro_exam', 'Not a normal neurologic exam')
+    assert 'normal neurologic exam' not in _score_disease(disease_by_id('ischemic_stroke'), state)[3]
