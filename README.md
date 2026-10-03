@@ -706,3 +706,6 @@ trained or activated; approved data, independent evaluation and a PyTorch enviro
 
 [Respiratory evidence cycle](docs/evaluation/respiratory_cycle5/REPORT.md): paired hard synthetic
 cohorts improved to 92.5%, 95%, and 94%; gains share one source family and are not clinical validation.
+
+[Abstention cycle 6](docs/evaluation/abstention_cycle6/REPORT.md): 12 unsupported final names became
+unknown in 1,200 synthetic replays. Target-label agreement did not improve; safety flags were unchanged.

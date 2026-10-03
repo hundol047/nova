@@ -285,7 +285,7 @@ def has_required_diagnostic_context(item: DifferentialItem, state: PatientState)
     current = [clause for text in current for clause in re.split(r"[;,\n]", text)
                if not re.search(r"\b(?:previously|historical|baseline|history of|last (?:year|month|week)|"
                                 r"prior result|old result|reference range)\b", clause, re.I)]
-    return any(feature_present(phrase, current, scrub_negated_spans=True, strict=True)
+    return any(_present_with_aliases(phrase, current, strict=True)
                for phrase in required)
 
 

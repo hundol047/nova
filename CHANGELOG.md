@@ -41,3 +41,9 @@ ICD-11 2026 reference registration: [18,375 ordinary categories plus separately 
 - Corrected respiratory evidence categories and scoped wording for worsening dyspnea and airspace opacity. Kept nonspecific crackles as typical, not independently confirmatory pneumonia evidence.
 - Paired hard synthetic cohorts: 184→185, 188→190, 186→188 of 200 each; no previously correct case regressed across 1,200 inputs. Improvements are five variants of one source family, not independent clinical successes.
 - Safety miss counts did not increase; 663 software checks passed, 1 skipped, known API file excluded. Full evidence: `docs/evaluation/respiratory_cycle5/REPORT.md`.
+
+## 2026-10-03 — specific context before final meningitis naming
+
+- Added a final-label context guard and reused scoped aliases; workup candidates and safety flags remain available.
+- Replayed 1,200 synthetic inputs: 12 previously wrong meningitis names became unknown, with unchanged target agreement and case-level safety flags. These remain incorrect under the frozen labels; no accuracy gain claimed.
+- 672 checks passed, 1 skipped; known API file excluded. Evidence: `docs/evaluation/abstention_cycle6/REPORT.md`.
