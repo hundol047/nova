@@ -16,6 +16,7 @@ from __future__ import annotations
 # The current untouched blind set. Bump this ONLY after a fresh set has been authored, frozen
 # (SHA-256 in its manifest), and leakage-checked — never to point at an edited set.
 CURRENT_BLIND_VERSION = "v16"
+CURRENT_BLIND_STATUS = "REFERENCE-ONLY"  # Superseded runtime; fresh evaluation pending.
 
 # Every blind set this repo has authored, oldest -> newest. All except CURRENT_BLIND_VERSION are
 # REFERENCE-ONLY (each was frozen before a later reasoning change).
@@ -24,7 +25,7 @@ ALL_BLIND_VERSIONS = ("v3", "v4", "v5", "v6", "v8", "v9", "v10", "v11", "v12", "
 
 def reference_only_versions() -> tuple:
     """Blind versions that are REFERENCE-ONLY (everything except the current one)."""
-    return tuple(v for v in ALL_BLIND_VERSIONS if v != CURRENT_BLIND_VERSION)
+    return tuple(v for v in ALL_BLIND_VERSIONS if v != CURRENT_BLIND_VERSION or CURRENT_BLIND_STATUS != "CURRENT")
 
 
 def blind_module_names() -> list:

@@ -145,6 +145,14 @@ class MissingInformationAnalyzer:
     def analyze(self, state: PatientState, differential: List[DifferentialItem],
                 safety_findings: List[SafetyFinding]) -> List[CandidateInfo]:
         top_k = differential
+        from nova_agent.config import get_config
+        from nova_agent.resolution import is_resolved
+        cfg = get_config()
+        if cfg.competition_retrieval_enabled and cfg.focus_resolved_actions and differential:
+            # Action focus only: safety/stop/ranking continue to see the full differential.
+            # Never spend another discriminator on an addressed non-leading alternative.
+            top_k = [d for i, d in enumerate(differential)
+                     if i == 0 or not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)]
         top_k_count = len(top_k) or 1
         safety = SafetyLayer()
 

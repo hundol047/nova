@@ -90,6 +90,8 @@ class StopPolicyConfig:
 
 @dataclass(frozen=True)
 class NovaConfig:
+    focus_resolved_actions: bool = field(default_factory=lambda: _bool_env("NOVA_FOCUS_RESOLVED_ACTIONS", True))
+
     max_turns: int = field(default_factory=lambda: _int_env("NOVA_MAX_TURNS", 60))
     top_k_differential: int = field(default_factory=lambda: _int_env("NOVA_TOP_K_DIFFERENTIAL", 5))
     candidate_pool_size: int = field(default_factory=lambda: _int_env("NOVA_CANDIDATE_POOL_SIZE", 8))

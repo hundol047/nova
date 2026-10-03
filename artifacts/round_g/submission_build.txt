@@ -1,0 +1,7 @@
+copied /workspace/scratch/9819f121b13b/nova-competition/nova_agent -> /workspace/scratch/9819f121b13b/nova-competition/submission/nova_agent
+copied /workspace/scratch/9819f121b13b/nova-competition/competition -> /workspace/scratch/9819f121b13b/nova-competition/submission/competition
+requirements OK: ['pydantic>=2.6,<3']
+secret scan OK: no suspicious credential-shaped strings
+import/subprocess smoke test OK: submission/run.py produced a valid action standalone
+submission.zip built: 73 files, 0.24 MB -- /workspace/scratch/9819f121b13b/nova-competition/submission/submission.zip
+submission/ is ready.

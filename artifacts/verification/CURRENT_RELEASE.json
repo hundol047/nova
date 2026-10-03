@@ -11,5 +11,8 @@
     "artifacts/verification/local-release-faa1701-v4.json",
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
-  "updated_utc": "2026-10-01T04:00:00Z"
+  "updated_utc": "2026-10-01T04:00:00Z",
+  "status": "STALE_REFERENCE_ONLY",
+  "reason": "Runtime 27ded231 changed multilingual evidence after v16; v7 does not verify current runtime. v8 pending.",
+  "current_blind_status": "REFERENCE-ONLY"
 }

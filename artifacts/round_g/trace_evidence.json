@@ -1,0 +1,3272 @@
+[
+  {
+    "stage": "nova-round-g-before-final",
+    "sha256": "dabc019168fce7e5d727dcfec86c92564c40b41bb2fe72ba8a4f045d5aa84e02",
+    "selected_trajectory": [
+      {
+        "turn": 13,
+        "action": {
+          "action_type": "EXAM",
+          "key": "lung_auscultation",
+          "content": "Lung auscultation",
+          "rationale": "LLM-selected action; passed deterministic safety validation (legal, non-duplicate candidate)."
+        },
+        "candidates": [
+          {
+            "id": "acute_abdomen",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gi_bleeding",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ectopic_pregnancy",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_pancreatitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "appendicitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gastroenteritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_coronary_syndrome",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "aortic_dissection",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gerd",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "musculoskeletal_chest_pain",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "vasovagal_syncope",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "cardiac_arrhythmia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "panic_attack",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "diabetic_ketoacidosis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "severe_electrolyte_disorder",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "hypoglycemia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "uncomplicated_cystitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "pyelonephritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "nephrolithiasis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "sepsis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "anaphylaxis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "viral_uri",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ischemic_stroke",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "subarachnoid_hemorrhage",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "meningitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "migraine",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "tension_headache",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "bppv",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "orthostatic_hypotension",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "pulmonary_embolism",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "tension_pneumothorax",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "pneumonia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "asthma_copd_exacerbation",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "acute_bronchitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          }
+        ],
+        "active_count": 25,
+        "unresolved_dangerous": 14,
+        "best_information_gain": 0.625,
+        "second_information_gain": 0.547,
+        "utility_components": {
+          "information_gain": 0.273,
+          "diagnostic_discrimination": 0.11,
+          "safety_relevance": 0.0,
+          "management_relevance": 1.0,
+          "time_critical_bonus": 1.0,
+          "turn_cost": 1,
+          "redundancy": 0.0
+        },
+        "affected_diagnoses": 3,
+        "ranking_changed_since_previous": false,
+        "duplicate": false,
+        "malformed": false,
+        "safe_stop_available": false,
+        "stop_reason": "UNKNOWN_PRESENTATION: no symptom, risk, medication, history, imaging, or objective evidence has matched anything yet -- the current top-ranked entry is an artifact of candidate order, not real clinical support. Further clarifying information is required before any diagnosis can be made.",
+        "ground_truth_present": false
+      },
+      {
+        "turn": 14,
+        "action": {
+          "action_type": "EXAM",
+          "key": "general_appearance",
+          "content": "General appearance / distress level",
+          "rationale": "LLM-selected action; passed deterministic safety validation (legal, non-duplicate candidate)."
+        },
+        "candidates": [
+          {
+            "id": "acute_abdomen",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gi_bleeding",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ectopic_pregnancy",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_pancreatitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "appendicitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gastroenteritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_coronary_syndrome",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "aortic_dissection",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gerd",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "musculoskeletal_chest_pain",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "vasovagal_syncope",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "cardiac_arrhythmia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "panic_attack",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "diabetic_ketoacidosis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "severe_electrolyte_disorder",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "hypoglycemia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "uncomplicated_cystitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "pyelonephritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "nephrolithiasis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "sepsis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "anaphylaxis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "viral_uri",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ischemic_stroke",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "subarachnoid_hemorrhage",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "meningitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "migraine",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "tension_headache",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "bppv",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "orthostatic_hypotension",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "pulmonary_embolism",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "tension_pneumothorax",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 3.75,
+            "supporting": [
+              "tracheal deviation",
+              "tracheal deviation"
+            ],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "pneumonia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "asthma_copd_exacerbation",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "acute_bronchitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          }
+        ],
+        "active_count": 25,
+        "unresolved_dangerous": 14,
+        "best_information_gain": 0.586,
+        "second_information_gain": 0.481,
+        "utility_components": {
+          "information_gain": 0.481,
+          "diagnostic_discrimination": 0.11,
+          "safety_relevance": 0.0,
+          "management_relevance": 1.0,
+          "time_critical_bonus": 1.0,
+          "turn_cost": 1,
+          "redundancy": 0.0
+        },
+        "affected_diagnoses": 3,
+        "ranking_changed_since_previous": true,
+        "duplicate": false,
+        "malformed": false,
+        "safe_stop_available": false,
+        "stop_reason": "UNKNOWN_PRESENTATION: no symptom, risk, medication, history, imaging, or objective evidence has matched anything yet -- the current top-ranked entry is an artifact of candidate order, not real clinical support. Further clarifying information is required before any diagnosis can be made.",
+        "ground_truth_present": true
+      },
+      {
+        "turn": 15,
+        "action": {
+          "action_type": "ASK",
+          "key": "severity",
+          "content": "On a scale of 0 to 10, how severe is it?",
+          "rationale": "LLM-selected action; passed deterministic safety validation (legal, non-duplicate candidate)."
+        },
+        "candidates": [
+          {
+            "id": "acute_abdomen",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gi_bleeding",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ectopic_pregnancy",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_pancreatitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "appendicitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gastroenteritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_coronary_syndrome",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "aortic_dissection",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gerd",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "musculoskeletal_chest_pain",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "vasovagal_syncope",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "cardiac_arrhythmia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "panic_attack",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "diabetic_ketoacidosis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "severe_electrolyte_disorder",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "hypoglycemia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "uncomplicated_cystitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "pyelonephritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "nephrolithiasis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "sepsis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "anaphylaxis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "viral_uri",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ischemic_stroke",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "subarachnoid_hemorrhage",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "meningitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "migraine",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "tension_headache",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "bppv",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "orthostatic_hypotension",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "pulmonary_embolism",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "tension_pneumothorax",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 3.75,
+            "supporting": [
+              "tracheal deviation",
+              "tracheal deviation"
+            ],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "pneumonia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "asthma_copd_exacerbation",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "acute_bronchitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          }
+        ],
+        "active_count": 25,
+        "unresolved_dangerous": 14,
+        "best_information_gain": 0.586,
+        "second_information_gain": 0.481,
+        "utility_components": {
+          "information_gain": 0.161,
+          "diagnostic_discrimination": 0.077,
+          "safety_relevance": 0.0,
+          "management_relevance": 1.0,
+          "time_critical_bonus": 1.0,
+          "turn_cost": 1,
+          "redundancy": 0.0
+        },
+        "affected_diagnoses": 2,
+        "ranking_changed_since_previous": false,
+        "duplicate": false,
+        "malformed": false,
+        "safe_stop_available": false,
+        "stop_reason": "UNKNOWN_PRESENTATION: no symptom, risk, medication, history, imaging, or objective evidence has matched anything yet -- the current top-ranked entry is an artifact of candidate order, not real clinical support. Further clarifying information is required before any diagnosis can be made.",
+        "ground_truth_present": true
+      }
+    ]
+  },
+  {
+    "stage": "nova-round-g-after-final",
+    "sha256": "05a1d77fab06bd95a3064fd45ec6194b910bfa8f948cbdc1e86fe974e82e0eec",
+    "selected_trajectory": [
+      {
+        "turn": 13,
+        "action": {
+          "action_type": "EXAM",
+          "key": "lung_auscultation",
+          "content": "Lung auscultation",
+          "rationale": "LLM-selected action; passed deterministic safety validation (legal, non-duplicate candidate)."
+        },
+        "candidates": [
+          {
+            "id": "acute_abdomen",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gi_bleeding",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ectopic_pregnancy",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_pancreatitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "appendicitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gastroenteritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_coronary_syndrome",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "aortic_dissection",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gerd",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "musculoskeletal_chest_pain",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "vasovagal_syncope",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "cardiac_arrhythmia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "panic_attack",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "diabetic_ketoacidosis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "severe_electrolyte_disorder",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "hypoglycemia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "uncomplicated_cystitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "pyelonephritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "nephrolithiasis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "sepsis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "anaphylaxis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "viral_uri",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ischemic_stroke",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "subarachnoid_hemorrhage",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "meningitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "migraine",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "tension_headache",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "bppv",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "orthostatic_hypotension",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "pulmonary_embolism",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "tension_pneumothorax",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "pneumonia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "asthma_copd_exacerbation",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "acute_bronchitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          }
+        ],
+        "active_count": 25,
+        "unresolved_dangerous": 14,
+        "best_information_gain": 0.625,
+        "second_information_gain": 0.547,
+        "utility_components": {
+          "information_gain": 0.273,
+          "diagnostic_discrimination": 0.11,
+          "safety_relevance": 0.0,
+          "management_relevance": 1.0,
+          "time_critical_bonus": 1.0,
+          "turn_cost": 1,
+          "redundancy": 0.0
+        },
+        "affected_diagnoses": 3,
+        "ranking_changed_since_previous": false,
+        "duplicate": false,
+        "malformed": false,
+        "safe_stop_available": false,
+        "stop_reason": "UNKNOWN_PRESENTATION: no symptom, risk, medication, history, imaging, or objective evidence has matched anything yet -- the current top-ranked entry is an artifact of candidate order, not real clinical support. Further clarifying information is required before any diagnosis can be made.",
+        "ground_truth_present": false
+      },
+      {
+        "turn": 14,
+        "action": {
+          "action_type": "TEST",
+          "key": "ecg",
+          "content": "12-lead ECG",
+          "rationale": "LLM-selected action; passed deterministic safety validation (legal, non-duplicate candidate)."
+        },
+        "candidates": [
+          {
+            "id": "acute_abdomen",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gi_bleeding",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ectopic_pregnancy",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_pancreatitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "appendicitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gastroenteritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_coronary_syndrome",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "aortic_dissection",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gerd",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "musculoskeletal_chest_pain",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "vasovagal_syncope",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "cardiac_arrhythmia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "panic_attack",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "diabetic_ketoacidosis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "severe_electrolyte_disorder",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "hypoglycemia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "uncomplicated_cystitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "pyelonephritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "nephrolithiasis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "sepsis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "anaphylaxis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "viral_uri",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ischemic_stroke",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "subarachnoid_hemorrhage",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "meningitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "migraine",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "tension_headache",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "bppv",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "orthostatic_hypotension",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "pulmonary_embolism",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "tension_pneumothorax",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 3.75,
+            "supporting": [
+              "tracheal deviation",
+              "tracheal deviation"
+            ],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "pneumonia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "asthma_copd_exacerbation",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "acute_bronchitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          }
+        ],
+        "active_count": 25,
+        "unresolved_dangerous": 14,
+        "best_information_gain": 0.586,
+        "second_information_gain": 0.481,
+        "utility_components": {
+          "information_gain": 0.586,
+          "diagnostic_discrimination": 0.245,
+          "safety_relevance": 0.0,
+          "management_relevance": 1.0,
+          "time_critical_bonus": 1.0,
+          "turn_cost": 1,
+          "redundancy": 0.0
+        },
+        "affected_diagnoses": 9,
+        "ranking_changed_since_previous": true,
+        "duplicate": false,
+        "malformed": false,
+        "safe_stop_available": false,
+        "stop_reason": "Insufficient confidence, unresolved dangerous alternative, or differential too close to call.",
+        "ground_truth_present": true
+      },
+      {
+        "turn": 15,
+        "action": {
+          "action_type": "TEST",
+          "key": "cbc",
+          "content": "Complete blood count",
+          "rationale": "LLM-selected action; passed deterministic safety validation (legal, non-duplicate candidate)."
+        },
+        "candidates": [
+          {
+            "id": "acute_abdomen",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gi_bleeding",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ectopic_pregnancy",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_pancreatitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "appendicitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gastroenteritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "acute_coronary_syndrome",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "aortic_dissection",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "gerd",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "musculoskeletal_chest_pain",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "vasovagal_syncope",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "cardiac_arrhythmia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "panic_attack",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "diabetic_ketoacidosis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "severe_electrolyte_disorder",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "hypoglycemia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "uncomplicated_cystitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "pyelonephritis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "nephrolithiasis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "sepsis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "anaphylaxis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "viral_uri",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "ischemic_stroke",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "subarachnoid_hemorrhage",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "meningitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "migraine",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "tension_headache",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "bppv",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "orthostatic_hypotension",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "pulmonary_embolism",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "tension_pneumothorax",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 3.75,
+            "supporting": [
+              "tracheal deviation",
+              "tracheal deviation"
+            ],
+            "contradictions": [],
+            "dangerous": true,
+            "resolution_state": "unresolved",
+            "status": "active",
+            "drop_reason": null
+          },
+          {
+            "id": "pneumonia",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "asthma_copd_exacerbation",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          },
+          {
+            "id": "acute_bronchitis",
+            "source": [
+              "zero_evidence_fallback"
+            ],
+            "retrieval_rank": null,
+            "rerank_rank": null,
+            "score": 0.0,
+            "supporting": [],
+            "contradictions": [],
+            "dangerous": false,
+            "resolution_state": "unresolved",
+            "status": "dropped",
+            "drop_reason": "DIFFERENTIAL_DROP"
+          }
+        ],
+        "active_count": 25,
+        "unresolved_dangerous": 14,
+        "best_information_gain": 0.481,
+        "second_information_gain": 0.481,
+        "utility_components": {
+          "information_gain": 0.45,
+          "diagnostic_discrimination": 0.192,
+          "safety_relevance": 0.0,
+          "management_relevance": 1.0,
+          "time_critical_bonus": 1.0,
+          "turn_cost": 1,
+          "redundancy": 0.0
+        },
+        "affected_diagnoses": 6,
+        "ranking_changed_since_previous": false,
+        "duplicate": false,
+        "malformed": false,
+        "safe_stop_available": false,
+        "stop_reason": "Insufficient confidence, unresolved dangerous alternative, or differential too close to call.",
+        "ground_truth_present": true
+      }
+    ]
+  }
+]

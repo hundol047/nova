@@ -39,6 +39,8 @@ that one case's exact wording.
 
 from __future__ import annotations
 
+import re
+
 from typing import Dict, List
 
 # concept_tag -> list of non-English phrases (Korean + Japanese), each a complete clinical word or
@@ -137,7 +139,7 @@ for _concept, _nouns in _BARE_CLINICAL_NOUNS.items():
         n for n in _nouns if n not in MULTILINGUAL_CONCEPT_ALIASES[_concept]]
 
 # A localized symptom immediately followed by one of these is DENIED, not present.
-_NEGATION_MARKERS = ("없", "않", "ありません", "ない", "なし", "ませんでした", "ないです", "なかっ")
+_NEGATION_MARKERS = ("없", "않", "아니", "ありません", "ない", "なし", "ませんでした", "ないです", "なかっ")
 
 
 # Canonical ENGLISH evidence wording for each concept above. Routing/pool selection already uses the
@@ -157,7 +159,14 @@ _CANONICAL_ENGLISH_EVIDENCE: Dict[str, str] = {
 def _present_not_negated(phrase: str, text: str) -> bool:
     start = text.find(phrase)
     while start != -1:
-        tail = text[start + len(phrase): start + len(phrase) + 8]
+        end = start + len(phrase)
+        tail = re.split(r"[.!?。！？,，;；\n]", text[end:], maxsplit=1)[0]
+        # A denial belonging to the next symptom must not cancel this one.
+        next_concepts = [tail.find(p) for ps in _BARE_CLINICAL_NOUNS.values()
+                         for p in ps if tail.find(p) >= 0]
+        if next_concepts:
+            tail = tail[:min(next_concepts)]
+        tail = tail[:12]
         if not any(m in tail for m in _NEGATION_MARKERS):
             return True
         start = text.find(phrase, start + 1)

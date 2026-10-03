@@ -1,0 +1,11 @@
+=== chief_complaint.py / clinical_presentation.py routing benchmark ===
+
+Diseases scanned: 34
+
+  Known-route success rate:               100.0%
+  UNKNOWN fallback rate:                  100.0%
+  Specific-over-generic accuracy:         100.0%
+  Multi-concept recall:                   100.0%
+  Critical concept recall:                100.0%
+  End-to-end candidate-generation rate:   100.0%
+

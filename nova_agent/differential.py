@@ -415,6 +415,9 @@ class DifferentialEngine:
             band = _confidence_band(score_ratio, state.turn_count, len(supporting))
             scored.append((score, score_ratio, entry, supporting, contradictory, missing, band))
 
+        # Pool provenance describes retrieval, not whether later scoring found evidence.
+        is_zero_evidence_presentation = is_zero_evidence_presentation and not any(t[3] for t in scored)
+
         scored.sort(key=lambda t: t[0], reverse=True)
         # The final active-clinical-differential size: the legacy fixed 5 for any mock/legacy
         # caller (byte-identical, unchanged), or the configured reasoning_top_k (~25) once
