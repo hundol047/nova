@@ -12,6 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from evaluation.safety_metrics import safety_metrics
+
 from nova_agent.diagnosis_normalizer import normalize_diagnosis, same_diagnosis
 from nova_agent.knowledge.retrieval import critical_condition_ids, disease_by_id
 
@@ -239,6 +241,7 @@ def summarize(directory):
                    failure_signals=dict(failure_signals),
                    independent_clinical_validation=False,
                    limitation='Correlated synthetic variants with inherited unverified labels; not population accuracy or calibrated probabilities.')
+    summary['observed_safety_flags'] = safety_metrics(row['result'] for row in iter_results(directory))
     (directory / 'summary.json').write_text(json.dumps(summary, indent=2)+'\n')
     with (directory / 'failures.jsonl').open('w') as stream:
         for row in failed:

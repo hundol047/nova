@@ -13,7 +13,7 @@ from typing import Dict, List
 from pydantic import BaseModel
 
 from nova_agent.clinical_presentation import build_clinical_presentation
-from nova_agent.differential import DifferentialItem
+from nova_agent.differential import DifferentialItem, FEATURE_ALIASES
 from nova_agent.knowledge.retrieval import (
     critical_condition_ids,
     demographic_risk_rules,
@@ -22,6 +22,7 @@ from nova_agent.knowledge.retrieval import (
     vital_sign_red_flags,
 )
 from nova_agent.matching import feature_present
+from nova_agent.objective_evidence import normalize_objective_evidence
 from nova_agent.state import PatientState, RedFlag
 
 _OPS = {">=": lambda v, t: v >= t, "<=": lambda v, t: v <= t, ">": lambda v, t: v > t, "<": lambda v, t: v < t}
@@ -64,7 +65,8 @@ def _safety_feature_present(keyword: str, findings: list[str]) -> bool:
     if feature_present(keyword, findings, scrub_negated_spans=True):
         return True
     return any(feature_present(alias, findings, scrub_negated_spans=True, strict=True)
-               for alias in _SAFETY_FEATURE_ALIASES.get(keyword.lower(), ()))
+               for alias in (*_SAFETY_FEATURE_ALIASES.get(keyword.lower(), ()),
+                             *FEATURE_ALIASES.get(keyword.lower(), ())))
 
 
 class SafetyFinding(BaseModel):
@@ -131,6 +133,23 @@ class SafetyLayer:
                             reason=rule["reason"], evidence=[f"{rule['field']}={value}"],
                             source="vital_sign", urgency=entry.get("urgency", "CRITICAL"),
                         ))
+
+        # Existing numeric critical ranges are independent of chief-complaint routing.
+        # A measured critical electrolyte value must remain visible even when a patient
+        # describes only fatigue and never supplies a keyword such as "arrhythmia".
+        objective = normalize_objective_evidence(state)
+        for lab_id in ("lab.potassium", "lab.sodium"):
+            measured = objective.get(lab_id)
+            if measured is None or measured.interpretation not in {"critical_low", "critical_high"}:
+                continue
+            entry = disease_by_id("severe_electrolyte_disorder")
+            if entry is not None:
+                findings.append(SafetyFinding(
+                    diagnosis_id=entry["id"], condition=entry["name"],
+                    reason="Measured electrolyte meets the existing critical laboratory range",
+                    evidence=[measured.evidence_label], source="objective_lab",
+                    urgency=entry.get("urgency", "CRITICAL"),
+                ))
 
         # Demographic risk (spec section 15): e.g. a reproductive-age female with abdominal pain
         # gets ectopic pregnancy actively considered even before any pregnancy-specific keyword
