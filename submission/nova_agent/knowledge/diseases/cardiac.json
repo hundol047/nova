@@ -222,11 +222,15 @@
       "location"
     ],
     "discriminating_exams": [
-      "abdominal_exam",
+      "lung_auscultation",
       "vital_signs"
     ],
     "discriminating_tests": [
       "ecg"
+    ],
+    "confirmatory_findings": [
+      "point tenderness over the costochondral junction",
+      "pain reproduced by palpation"
     ],
     "red_flag_keywords": [],
     "evidence_level": "internally_authored_heuristic"
@@ -328,7 +332,10 @@
     "confirmatory_findings": [
       "irregularly irregular rhythm",
       "narrow complex tachycardia",
-      "atrial fibrillation on ecg"
+      "atrial fibrillation on ecg",
+      "high-grade AV block",
+      "second-degree AV block",
+      "bradycardia with dropped beats"
     ],
     "red_flag_keywords": [
       "hypotension",

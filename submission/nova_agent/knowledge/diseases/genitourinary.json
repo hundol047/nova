@@ -105,7 +105,29 @@
       "positive nitrites",
       "elevated white blood cell count"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "required_diagnostic_context_any": [
+      "flank pain",
+      "costovertebral angle tenderness",
+      "CVA tenderness",
+      "dysuria",
+      "painful urination",
+      "urinary frequency",
+      "pyuria",
+      "positive nitrites",
+      "nitrite positive",
+      "positive leukocyte esterase",
+      "leukocyte esterase positive",
+      "positive urine culture",
+      "urine culture positive",
+      "renal inflammation"
+    ],
+    "evidence_references": [
+      {
+        "url": "https://www.niddk.nih.gov/health-information/urologic-diseases/kidney-infection-pyelonephritis/diagnosis",
+        "scope": "History, examination and urine investigations inform diagnosis; this internal abstention guard is not a guideline diagnostic criterion."
+      }
+    ]
   },
   {
     "id": "nephrolithiasis",

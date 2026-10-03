@@ -1,5 +1,13 @@
 # N.O.V.A. Disease Coverage
 
+> **2026-10-02 audit correction: expansion is BLOCKED.** The 1,246 additional records are
+> unverified terminology candidates, not clinically validated diseases. Unreviewed code anchors
+> are excluded from runtime code mapping, and synthetic NOVASYNTH snapshots are excluded by the
+> production catalog. Historical 5,651 and curation claims below describe prior demo behavior only.
+> Run `python scripts/check_expansion_gate.py` (expected nonzero until clinical review).
+> See `docs/ontology/EXPANSION_AUDIT_FIXES.md`.
+
+
 N.O.V.A. reasons over a **tiered disease universe**, not a fixed list. Coverage numbers below are
 **reported from the actual catalog** by `scripts/report_disease_coverage.py`, never aspirational.
 

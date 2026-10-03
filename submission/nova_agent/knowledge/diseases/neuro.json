@@ -196,7 +196,21 @@
     "minimum_workup": [
       "lumbar_puncture"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "required_diagnostic_context_any": [
+      "neck stiffness",
+      "photophobia",
+      "altered mental status",
+      "CSF pleocytosis",
+      "gram-negative diplococci",
+      "gram-positive"
+    ],
+    "evidence_references": [
+      {
+        "url": "https://www.nice.org.uk/guidance/ng240/chapter/Recommendations",
+        "scope": "Clinical features and investigation results are combined; this software final-label guard does not exclude meningitis or suppress urgent evaluation."
+      }
+    ]
   },
   {
     "id": "migraine",

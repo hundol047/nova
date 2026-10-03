@@ -37,7 +37,10 @@ class SyntheticCase(BaseModel):
 
     @property
     def critical(self) -> bool:
-        return self.ground_truth_diagnosis in critical_condition_ids()
+        from nova_agent.ontology.registry import get_default_catalog
+        concept = get_default_catalog().get_condition(self.ground_truth_diagnosis)
+        return (self.ground_truth_diagnosis in critical_condition_ids()
+                or bool(concept and (concept.dangerous or concept.urgency == "CRITICAL")))
 
 
 CASES = [

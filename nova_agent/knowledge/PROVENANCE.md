@@ -43,6 +43,17 @@ standard teaching for that condition, structured for keyword-based matching (see
 `dangerous` follow conventional triage judgment (e.g. the 14 time-critical "can't-miss" diagnoses
 named in the original task spec) rather than a formal acuity scoring system.
 
+## P1 safety-language audit reference
+
+The small, scoped lay-language bridge in `nova_agent/safety.py` was checked against public
+patient-facing symptom descriptions from the U.S. CDC and NHS on 2026-10-02. It adds no copied
+clinical text, thresholds, or model weights; it only maps common phrases such as "sudden shortness
+of breath" and "racing heart" to the existing internally authored red-flag terms, with negation
+handling. These pages are an audit reference for wording, not evidence of clinical validation:
+
+- CDC, About Venous Thromboembolism: https://www.cdc.gov/blood-clots/about/index.html
+- NHS, Pulmonary embolism: https://www.nhs.uk/conditions/pulmonary-embolism/
+
 ## If official guidance becomes available
 
 If the N.O.V.A. 2026 competition rules specify a required knowledge source, an approved reference

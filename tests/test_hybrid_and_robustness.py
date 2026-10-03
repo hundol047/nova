@@ -112,6 +112,16 @@ def test_negation_scope():
         assert expect_negative_substr not in state.pertinent_positives
 
 
+def test_leading_no_list_preserves_following_positive_findings():
+    """A leading ``no`` applies to its first item in a mixed comma-list, not every later
+    symptom (e.g. ``NO APPETITE, NAUSEA, LOW FEVER``)."""
+    state = PatientState(case_id="mixed-list", chief_complaint="abdominal pain")
+    state.record_ask("associated_symptoms", "?", "NO APPETITE, NAUSEA, LOW FEVER; DENIES DIARRHEA")
+    assert any("NO APPETITE" in item for item in state.pertinent_negatives)
+    assert any("NAUSEA" in item and "LOW FEVER" in item for item in state.pertinent_positives)
+    assert any("DENIES DIARRHEA" in item for item in state.pertinent_negatives)
+
+
 # --- test_llm_can_change_differential / test_llm_can_select_valid_non_deterministic_candidate ---
 
 class _NovelDifferentialClient:

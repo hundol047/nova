@@ -64,6 +64,11 @@ class CaseResult(BaseModel):
     # Populated only when run_case(..., capture_trajectory=True) -- structured evidence summary
     # (never private chain-of-thought) for evaluation/failure_analysis.py's root-cause classifier.
     differential_trajectory: List[dict] = []
+    # None means legacy/uninstrumented, never a negative safety result.
+    safety_flag_seen: Optional[bool] = None
+    final_safety_flag: Optional[bool] = None
+    first_safety_flag_turn: Optional[int] = None
+    final_safety_conditions: List[str] = []
 
 
 def _relevant_test_ids(case: SyntheticCase, seen_diagnosis_ids: Optional[set] = None) -> set:
@@ -108,8 +113,11 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
     trajectory: List[dict] = []
     seen_diagnosis_ids: set = set()
 
+    first_safety_flag_turn = None
     for _ in range(state.max_turns):
         action, llm_output, differential = agent.decide(state)
+        if state.red_flags and first_safety_flag_turn is None:
+            first_safety_flag_turn = state.turn_count + 1
         # rank<=2 only (not the whole top-5): with sparse early evidence almost every candidate in
         # a disease pool cycles through SOME top-5 slot at some point, which would make this set --
         # and therefore what counts as a justified test -- nearly everything. Reaching rank 1/2 is
@@ -123,6 +131,7 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
                 "turn": state.turn_count + 1,
                 "action": f"{action.action_type}:{action.key}",
                 "top5_differential": [d.diagnosis for d in differential[:5]],
+                "safety_conditions": [f.condition for f in state.red_flags],
             })
 
         key_sig = (action.action_type, action.key)
@@ -162,6 +171,10 @@ def run_case(agent: DoctorAgent, case: SyntheticCase, logger: Optional[NovaCaseL
         llm_call_count=state.llm_call_count, llm_success_count=state.llm_success_count,
         llm_failure_count=state.llm_failure_count, llm_fallback_count=state.llm_fallback_count,
         differential_trajectory=trajectory,
+        safety_flag_seen=first_safety_flag_turn is not None,
+        final_safety_flag=bool(state.red_flags),
+        first_safety_flag_turn=first_safety_flag_turn,
+        final_safety_conditions=[f.condition for f in state.red_flags],
     )
     if logger is not None:
         logger.log_final(state, "correct" if correct else "incorrect")

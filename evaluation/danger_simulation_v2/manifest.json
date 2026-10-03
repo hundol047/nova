@@ -1,0 +1,5 @@
+{
+  "sha256": "5b927b4fe40378e75fabb5528f140568d66d977d9c65818d05d016f596c69d04",
+  "baseline": "8eca54a",
+  "scope": "12 author-generated synthetic dialogue scenarios; four target groups; frozen before patch; not clinician-independent clinical validation"
+}

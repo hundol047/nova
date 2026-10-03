@@ -263,7 +263,7 @@ class OpenWorldRetriever:
 
         top = candidates[0]
         curated_confident = [c for c in candidates if c.is_curated and c.match_score >= KNOWN_MATCH_THRESHOLD]
-        if curated_confident:
+        if top.is_curated and top.match_score >= KNOWN_MATCH_THRESHOLD:
             outcome = OpenWorldOutcome.KNOWN_CONDITION
             rationale = (f"Confident curated match '{curated_confident[0].concept.canonical_name}' "
                          f"across fused signals.")
@@ -330,17 +330,13 @@ class OpenWorldRetriever:
         raw = (raw_text or "").strip()
         if len(raw) < MIN_QUERY_SIGNAL_CHARS:
             return NormalizedDiagnosis(raw_text=raw, mapped=False, status="UNMAPPED_LLM_DIAGNOSIS")
-        matches = self._catalog.search_conditions(raw, limit=1, fuzzy=True)
-        if matches and matches[0].score >= KNOWN_MATCH_THRESHOLD:
+        from nova_agent.ontology.normalizer import normalize
+        matches = [m for m in self._catalog.search_conditions(raw, limit=len(self._catalog), fuzzy=False)
+                   if normalize(m.matched_term) == normalize(raw) and m.match_kind in {"exact", "alias"}]
+        if len(matches) == 1:
             m = matches[0]
-            return NormalizedDiagnosis(
-                raw_text=raw,
-                mapped=True,
-                concept=m.concept,
-                match_score=m.score,
-                match_kind=m.match_kind,
-                status="MAPPED",
-            )
+            return NormalizedDiagnosis(raw_text=raw, mapped=True, concept=m.concept,
+                                       match_score=m.score, match_kind=m.match_kind, status="MAPPED")
         # No confident concept -> preserve verbatim, do NOT coerce to a nearby disease.
         return NormalizedDiagnosis(raw_text=raw, mapped=False, status="UNMAPPED_LLM_DIAGNOSIS")
 

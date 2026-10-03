@@ -12,6 +12,7 @@ reshuffle the ranking.
 from __future__ import annotations
 
 from typing import Dict, List, Literal, Optional
+import re
 
 from pydantic import BaseModel
 
@@ -24,7 +25,7 @@ from nova_agent.glucose_evidence import (
     extract_glucose_mg_dl,
 )
 from nova_agent.matching import content_word_count, feature_denied, feature_present
-from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding, normalize_objective_evidence
+from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding, normalize_objective_evidence, _current_result_texts
 from nova_agent.severity_evidence import ELEVATED_LACTATE_MMOL_L, extract_lactate_mmol_l
 from nova_agent.state import DifferentialSnapshot, PatientState
 
@@ -51,23 +52,139 @@ _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
 # phrase it belongs to. Deliberately NOT a general medication NLP system: only the drug classes an
 # existing knowledge-base risk_factor already names.
 FEATURE_ALIASES: dict[str, list[str]] = {
+    "infiltrate": ["airspace opacity", "airspace opacities"],
+    "worsening dyspnea": ["worsening breathlessness", "increasing breathlessness", "more breathless",
+        "worsening shortness of breath", "increasing shortness of breath"],
+    "focal consolidation": [
+        "lobar consolidation", "right upper lobe consolidation", "right middle lobe consolidation",
+        "right lower lobe consolidation", "left upper lobe consolidation", "left lower lobe consolidation",
+    ],
+    "fever": ["high fever", "高熱", "発熱", "熱がある", "열이 나다", "고열"],
+    "neck stiffness": ["stiff neck", "首が硬い", "首が硬く", "首がこわばる", "首が動かしにくい", "項部硬直", "경부강직"],
+    "headache": ["激しい頭痛", "頭痛", "頭が痛い", "열과 두통"],
+    "slurred speech": ["言葉が出にくい", "言葉が出にく", "言葉がうまく出ない", "word-finding difficulty",
+        "difficulty finding words", "ろれつが回らない", "expressive aphasia", "word-finding trouble", "실어증"],
+    "vaginal bleeding": ["vaginal spotting", "spotting", "light spotting", "膣出血", "膣から出血"],
+    "missed period": ["period is late", "late period", "missed period", "生理が遅れている", "月経が遅い"],
+    "unilateral pelvic pain": ["one-sided pelvic pain", "sharp pain on one side of the pelvis",
+        "한쪽 골반 통증", "片側の骨盤痛"],
+    "tearing chest pain": ["tearing back pain", "tearing breastbone pain", "tearing abdominal pain",
+        "tearing pain", "tearing between the shoulder blades", "tearing pain moving toward the back",
+        "가슴에서 등으로 찢어지는 통증"],
+    "melena": ["black tarry stool", "black and tarry stool", "black tarry stools",
+        "black and tarry stools", "黒い便", "黒色便", "黒くてタール状の便", "タール便", "タール状便", "便が黒い", "검은 변", "흑변",
+        "黑色便", "黑便"],
+    "hematemesis": ["vomiting blood", "vomited blood", "吐血", "血を吐く", "토혈", "피를 토함", "呕血", "呕出鲜红色血液",
+        "吐出鲜血", "呕吐鲜血"],
+    "liver disease": ["cirrhosis", "肝硬化", "간경변"],
+    "alcohol use": ["长期饮酒", "长期喝酒", "heavy drinking", "chronic alcohol use"],
+    "appendiceal inflammation": ["inflamed appendix", "appendiceal wall thickening",
+        "thickened appendix", "noncompressible appendix"],
     "unilateral pulsating headache": ["throbbing headache", "pounding headache", "one-sided headache",
-                                       "one sided headache", "pounding pain", "throbbing pain",
-                                       "pulsating pain"],
-    "photophobia": ["sensitive to light", "light sensitivity", "light bothers me"],
+        "one sided headache", "pounding pain", "throbbing pain", "pulsating pain"],
+    "photophobia": ["sensitive to light", "light sensitivity", "light bothers me", "光がまぶしい", "光がつらい"],
     "phonophobia": ["sensitive to sound", "sound sensitivity", "noise bothers me"],
     "aura": ["shimmering lights", "visual aura", "flashing lights", "seeing spots before",
-             "zigzag lines", "blind spot in my vision", "jagged lines"],
+        "zigzag lines", "blind spot in my vision", "jagged lines"],
     "recurrent similar episodes": ["similar to headaches", "happened before", "same as before",
-                                    "feels the same as last time", "this feels the same",
-                                    "gets these", "a few times a year", "has had these before"],
+        "feels the same as last time", "this feels the same", "gets these", "a few times a year",
+        "has had these before"],
     "family history of migraine": ["mother gets migraines", "father gets migraines",
-                                    "mother has migraines", "parent gets migraines", "runs in my family",
-                                    "sister gets migraines", "sister has migraines", "brother gets migraines"],
+        "mother has migraines", "parent gets migraines", "runs in my family", "sister gets migraines",
+        "sister has migraines", "brother gets migraines"],
     "known migraine history": ["diagnosed with migraines", "history of migraines", "has migraines before"],
     "syncope": ["passed out", "fainted"],
     "palpitations": ["racing heartbeat", "heart racing"],
-    # Medication-class normalization (spec section 4).
+    "throat tightness": ["throat feels like it is closing", "throat feels like it's closing",
+        "throat closing", "throat swelling", "喉が締め付けられる", "喉が詰まる", "목이 조이는 느낌", "목이 붓는 느낌", "喉咙发紧"],
+    "recent allergen exposure": ["after eating", "after taking a new medication", "after a new drug",
+        "after an antibiotic", "new medication", "new antibiotic", "食後", "新しい薬の後", "薬を飲んだ後", "새 약을 먹은 후"],
+    "sudden onset urticaria": ["hives", "widespread hives", "urticaria", "じんましん", "蕁麻疹", "두드러기", "荨麻疹"],
+    "bilateral band-like pressure": ["bilateral pressure", "pressure on both sides",
+        "tight band around my head", "양쪽 머리를 누르는 느낌", "양측성 지속적 압박감", "띠로 조이는 듯한 둔통", "两侧像被带子勒住",
+        "两侧压迫感", "両側の圧迫感"],
+    "stress related": ["시험 기간", "스트레스와 오래 앉아", "工作压力大", "压力大", "stress-related"],
+    "localized tenderness": ["point tenderness", "tender in one spot", "one spot is tender",
+        "point tender", "국소 압통", "한 곳을 누르면 아픔", "局部压痛"],
+    "reproducible with palpation": ["reproduced on palpation", "pain reproduced by pressing",
+        "reproduced by pressing", "누르면 통증 재현", "按压可诱发疼痛"],
+    "lightheadedness on standing up": ["dizzy when standing", "lightheaded when I stand", "어지러울 때 일어남",
+        "立ち上がるとふらつく", "gray out each time I stand", "only on standing", "站起来就眼前发黑", "일어날 때마다 눈앞이 캄캄"],
+    "prodrome of lightheadedness": ["先觉恶心出汗", "眼前发黑", "视野变窄", "先有恶心出汗", "메스꺼움과 식은땀", "시야가 좁아짐",
+        "prodrome of warmth and nausea"],
+    "triggered by standing or pain or fear": ["站立时", "闷热环境站立", "standing in a hot room",
+        "triggered while standing", "standing in a hot crowded hall", "fainted standing", "채혈 중",
+        "주사 맞을 때", "서 있다가"],
+    "brief loss of consciousness": ["短暂晕厥", "briefly fainted", "briefly passed out", "잠깐 의식을 잃음",
+        "잠깐 정신을 잃"],
+    "rapid spontaneous recovery": ["很快清醒", "quickly came around", "rapidly recovered",
+        "recovered in seconds", "금방 깨어"],
+    "sudden onset palpitations": ["sudden heart racing", "sudden fluttering", "갑자기 심장이 두근", "突然の動悸",
+        "突然心脏狂跳", "突然心臓がバクバク", "palpitations just before", "palpitations immediately before",
+        "심장이 두근거린 직후"],
+    "periumbilical pain migrating to right lower quadrant": [
+        "pain moved from the belly button to the right lower abdomen",
+        "pain started around the navel and moved right", "배꼽에서 오른쪽 아랫배로 통증이 이동", "へそから右下腹部へ痛みが移る",
+        "脐周痛转到右下腹", "从肚脐转到右下腹"],
+    "epigastric pain radiating to back": ["upper abdominal pain going to the back",
+        "upper belly pain to the back", "명치 통증이 등으로 뻗음", "上腹部痛が背中に放散"],
+    "unilateral absent breath sounds": ["one-sided absent breath sounds",
+        "breath sounds absent on one side", "片側の呼吸音が聞こえない", "absent right breath sounds",
+        "right breath sounds absent", "右侧呼吸音消失", "오른쪽 호흡음 소실"],
+    "tracheal deviation": ["windpipe shifted", "trachea shifted", "기관이 한쪽으로 밀림", "気管偏位",
+        "tracheal shift", "tracheal shift to the left", "气管向左偏移", "기관이 왼쪽으로 밀림"],
+    "sudden onset focal weakness": ["sudden arm weakness", "arm weakness", "right arm weakness",
+        "left arm weakness", "right arm drift", "left arm drift", "突然腕に力が入らない", "急に腕が動かしにくい",
+        "右腕 weakness", "左腕 weakness", "片側 weakness", "new focal deficit",
+        "new focal neurological deficit", "새로운 국소 신경학적 결손"],
+    "burning chest pain": ["胸口烧灼感", "胸口灼热", "烧心", "명치 위가 타는 듯", "가슴이 타는 느낌"],
+    "worse after meals": ["饭后加重", "餐后加重", "吃夜宵后加重", "食後に悪化", "식후 악화"],
+    "worse lying down": ["平躺加重", "躺下后加重", "横になると悪化", "누우면 악화"],
+    "relieved by antacids": ["吃抑酸药就好转", "抑酸药有效", "antacid helps", "제산제로 호전"],
+    "sour taste": ["反酸", "酸水", "口に酸っぱい", "신물이 올라옴", "신물"],
+    "McBurney's point tenderness": ["McBurney's point", "rebound at McBurney's point", "McBurney 압통"],
+    "right lower quadrant tenderness": ["RLQ tenderness", "RLQ guarding",
+        "right lower quadrant guarding", "右下腹压痛", "右下腹压痛伴肌紧张"],
+    "anorexia": ["食欲差", "没有食欲", "没胃口", "식욕 저하", "食欲がない"],
+    "low grade fever": ["低烧", "低热", "微热", "微熱", "미열"],
+    "nausea": ["恶心", "吐き気", "구역질"],
+    "diffuse crampy abdominal pain": ["肚子绞痛", "腹部绞痛", "복통이 쥐어짜듯"],
+    "diarrhea": ["水样腹泻", "腹泻", "설사", "下痢"],
+    "vomiting": ["呕吐", "上吐下泻", "구토", "嘔吐"],
+    "recent similar illness contact": ["同桌有人也腹泻", "同伴也有类似症状", "家人也腹泻", "同席者も下痢",
+        "sick contacts with similar symptoms"],
+    "rhinorrhea": ["鼻水", "流鼻涕", "鼻涕", "鼻水が出る", "콧물"],
+    "sore throat": ["喉の痛み", "咽喉痛", "喉が痛い", "목이 아픔", "인후통"],
+    "mild symptoms": ["轻微症状", "轻い症状", "軽い症状", "가벼운 증상"],
+    "productive cough": ["白痰", "白色痰", "少量白痰", "가래가 나오는 기침", "痰が出る咳"],
+    "no focal consolidation": ["无实变体征", "没有实变", "実変なし", "경화 없음"],
+    "recent viral illness": ["感冒后", "風邪の後", "감기 후"],
+    "irregular heartbeat": ["脈が速くて不規則", "不整な頻脈", "不规则心跳", "맥박이 불규칙"],
+    "racing heart": ["心臓がバクバク", "胸がドキドキ", "心跳很快", "가슴이 두근"],
+    "associated lightheadedness": ["lightheadedness with palpitations", "dizziness with palpitations",
+        "心悸伴头晕", "動悸を伴うめまい", "두근거림을 동반한 어지러움"],
+    "atrial fibrillation on ecg": ["atrial fibrillation with rapid ventricular response", "心房颤动",
+        "心房細動", "심방세동"],
+    "sudden onset dyspnea": ["突然呼吸困难", "突然息苦しい", "갑자기 숨이 참"],
+    "calf swelling": ["one leg swollen", "一条腿肿", "한쪽 다리 붓기", "片脚の腫れ"],
+    "rigid abdomen": ["board-like rigidity", "boardlike abdomen", "board-like abdomen",
+        "diffuse rigidity", "복부가 판자처럼 단단함"],
+    "rebound tenderness": ["diffuse rebound", "rebound and guarding", "diffuse rebound and guarding",
+        "반발통", "반발 압통"],
+    "crackles on auscultation": ["basal crackles", "right basal crackles", "bibasal crackles",
+        "fine crackles", "기저부 수포음", "수포음"],
+    "wheeze": ["wheezing", "diffuse wheeze", "expiratory wheeze", "호기성 천명", "쌕쌕거림"],
+    "prolonged expiration": ["prolonged expiratory phase", "호기 연장", "呼気延長"],
+    "ripping pain": ["ripping back pain", "ripping pain through to the back"],
+    "pain radiates to back": ["moving down toward my back", "radiating to the back",
+        "through to my back", "등으로 뻗는 통증"],
+    "pulse differential": ["unequal radial pulses", "different radial pulses", "unequal pulses"],
+    "unequal blood pressure between arms": ["different blood pressure between arms",
+        "blood pressure difference between arms", "higher pressure in the right arm than the left"],
+    "hemoglobin drop": ["hemoglobin fallen", "hemoglobin fell", "drop in hemoglobin", "血红蛋白下降"],
+    "brief episodic vertigo": ["几秒天旋地转", "brief seconds-long spinning", "短暂旋转性眩晕"],
+    "triggered by head position change": ["누웠다 일어날 때", "머리 위치 바꿀 때", "头位改变时", "頭の位置を変えると"],
+    "improves with sitting or lying down": ["resolves sitting", "坐起来缓解", "앉으면 호전"],
     "sulfonylurea use": ["glipizide", "glyburide", "glimepiride", "sulfonylurea"],
     "insulin use": ["insulin", "lantus", "humalog", "novolog", "glargine"],
     "known diabetes on insulin": ["insulin", "lantus", "humalog", "novolog", "glargine"],
@@ -78,17 +195,18 @@ FEATURE_ALIASES: dict[str, list[str]] = {
     "immunosuppressant use": ["prednisone", "methotrexate", "tacrolimus", "cyclosporine", "azathioprine"],
     "oral contraceptive use": ["birth control", "oral contraceptive", "the pill"],
     "missed meal": ["hasn't eaten", "hasn't eaten much", "poor oral intake", "not eating today",
-                     "skipped a meal", "skipped meals"],
+        "skipped a meal", "skipped meals"],
 }
 
 
-def _present_with_aliases(phrase: str, findings: List[str]) -> bool:
+def _present_with_aliases(phrase: str, findings: List[str], strict: bool = False) -> bool:
     """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
     FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase."""
-    if feature_present(phrase, findings, scrub_negated_spans=True):
+    if feature_present(phrase, findings, scrub_negated_spans=True, strict=strict):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
-        if feature_present(alias, findings, scrub_negated_spans=True):
+        # Require every alias content word: 'black stool' alone is not 'black tarry stool'.
+        if feature_present(alias, findings, scrub_negated_spans=True, strict=True):
             return True
     return False
 
@@ -139,6 +257,38 @@ class DifferentialItem(BaseModel):
     candidate_sources: List[str] = []
 
 
+
+def has_positive_diagnostic_support(item: DifferentialItem) -> bool:
+    """Risk factors and absent symptoms can adjust a differential, not establish it alone."""
+    from nova_agent.knowledge.retrieval import disease_by_id
+    entry = disease_by_id(item.diagnosis_id) or {}
+    risk_only = {str(x).lower() for x in entry.get("risk_factors", [])}
+    return any(e.lower() not in risk_only and _strip_negative_prefix(e) is None
+               for e in item.supporting_evidence)
+
+
+def has_required_diagnostic_context(item: DifferentialItem, state: PatientState) -> bool:
+    """A final label may require localizing context beyond generic systemic symptoms.
+
+    This is an abstention guard, not an exclusion rule or a diagnostic criterion.
+    Candidates remain available for workup. Read actual current observations, not
+    the LLM's claimed supporting evidence or past/family history.
+    """
+    from nova_agent.knowledge.retrieval import disease_by_id
+    entry = disease_by_id(item.diagnosis_id) or {}
+    required = entry.get("required_diagnostic_context_any", [])
+    if not required:
+        return True
+    current = [state.chief_complaint, *state.symptoms, *state.associated_symptoms,
+               *state.pertinent_positives, *state.physical_examinations.values(),
+               *state.imaging.values(), *state.laboratory_tests.values()]
+    current = [clause for text in current for clause in re.split(r"[;,\n]", text)
+               if not re.search(r"\b(?:previously|historical|baseline|history of|last (?:year|month|week)|"
+                                r"prior result|old result|reference range)\b", clause, re.I)]
+    return any(_present_with_aliases(phrase, current, strict=True)
+               for phrase in required)
+
+
 def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict[str, ObjectiveFinding],
                              supporting: List[str], contradictory: List[str],
                              missing: List[str]) -> Optional[float]:
@@ -171,7 +321,7 @@ def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict
 
 
 def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: List[str],
-                   supporting: List[str], contradictory: List[str], missing: List[str]) -> float:
+                   supporting: List[str], contradictory: List[str], missing: List[str], strict: bool = False) -> float:
     """Negation-aware scoring for ONE typical_feature or confirmatory_finding phrase. Shared by
     both loops in _score_disease() below -- confirmatory_findings previously used a naive
     present-or-not check with no negation awareness at all, which let a phrase like "absent breath
@@ -195,7 +345,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
     if feature_denied(phrase, negatives):
         contradictory.append(phrase)
         return -CONTRADICTION_PENALTY
-    if _present_with_aliases(phrase, findings):
+    if _present_with_aliases(phrase, findings, strict=strict):
         supporting.append(phrase)
         return weight
     missing.append(phrase)
@@ -281,14 +431,25 @@ def _score_disease(entry: dict, state: PatientState,
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 
+    # A past/family report is risk context, not a current objective test result.
+    objective_text = list(state.physical_examinations.values()) + list(state.imaging.values()) + list(state.laboratory_tests.values())
+    # Reuse the laboratory assertion policy for exam/imaging evidence too: an
+    # explicitly historical or hypothetical report is not a current observation.
+    objective_text = _current_result_texts(objective_text)
+    seen_lab_evidence = set()
     for finding in entry.get("confirmatory_findings", []):
+        lab_key = CONFIRMATORY_PHRASE_TO_LAB.get(finding.lower())
+        if lab_key is not None:
+            if lab_key in seen_lab_evidence:
+                continue
+            seen_lab_evidence.add(lab_key)
         max_possible += CONFIRMATORY_WEIGHT
         lab_aware_delta = _score_lab_aware_phrase(finding, CONFIRMATORY_WEIGHT, objective_findings,
                                                    supporting, contradictory, missing)
         if lab_aware_delta is not None:
             score += lab_aware_delta
         else:
-            score += _score_phrase(finding, CONFIRMATORY_WEIGHT, findings, negatives, supporting, contradictory, missing)
+            score += _score_phrase(finding, CONFIRMATORY_WEIGHT, objective_text, negatives, supporting, contradictory, missing, strict=True)
 
     # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
     # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in
@@ -319,7 +480,14 @@ def _score_disease(entry: dict, state: PatientState,
     # advantage whichever one happened to be eligible for the bonus).
 
     for reassuring in entry.get("reassuring_if_present", []):
-        if feature_present(reassuring, findings, scrub_negated_spans=False):
+        # Reassuring phrases are usually multi-word objective negatives (for example,
+        # "no focal neurological deficit").  They must match as a complete phrase: the
+        # ordinary overlap matcher would otherwise let "new focal deficit" partially match
+        # this opposite finding and penalize ischemic stroke in an actually focal exam.
+        pattern = r"(?<!\w)" + r"\s+".join(re.escape(w) for w in reassuring.split()) + r"(?!\w)"
+        if any(not re.search(r"\b(?:not|without|denies|previously|historical)\b", finding[:match.start()], re.I)
+               for finding in state.physical_examinations.values()
+               for match in re.finditer(pattern, finding, re.I)):
             contradictory.append(reassuring)
             score -= CONTRADICTION_PENALTY
 
