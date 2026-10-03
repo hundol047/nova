@@ -1,0 +1,19 @@
+{
+  "source_url": "https://icdcdn.who.int/static/releasefiles/2026-01/SimpleTabulation-ICD-11-MMS-en.zip",
+  "source_sha256": "f1356588f40953a83e3af2b662deab47c5e269f944d1ea4ed0cfeb2007c7cd39",
+  "release": "2026-01",
+  "language": "en",
+  "license_url": "https://icd.who.int/en/docs/ICD11-license.pdf",
+  "attribution": "International Classification of Diseases, Eleventh Revision (ICD-11), World Health Organization (WHO) 2019. https://icd.who.int/browse11. CC BY-ND 3.0 IGO. Release 2026-01, English. No WHO endorsement of NOVA.",
+  "role": "REFERENCE_ONLY",
+  "runtime_eligible": false,
+  "clinical_validation_status": "NOT_VERIFIED",
+  "additions_origin": "NOVA adds row_kind and reference-only status; official data retained unchanged.",
+  "counts": {
+    "chapter": 28,
+    "block": 1360,
+    "mms_category": 18375,
+    "functioning": 130,
+    "extension": 17159
+  }
+}
