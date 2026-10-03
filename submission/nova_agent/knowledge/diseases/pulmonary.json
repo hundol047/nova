@@ -179,10 +179,15 @@
     "confirmatory_findings": [
       "consolidation",
       "infiltrate",
-      "focal consolidation",
-      "crackles"
+      "focal consolidation"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "evidence_references": [
+      {
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6812437/",
+        "scope": "Auscultatory signs alone are nonspecific; crackles are retained as a typical feature, not independent confirmatory evidence."
+      }
+    ]
   },
   {
     "id": "asthma_copd_exacerbation",
@@ -203,7 +208,10 @@
     "typical_features": [
       "wheeze",
       "worse with triggers",
-      "prolonged expiration"
+      "prolonged expiration",
+      "dyspnea",
+      "cough",
+      "worsening dyspnea"
     ],
     "risk_factors": [
       "smoking",

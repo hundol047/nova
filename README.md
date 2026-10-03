@@ -703,3 +703,6 @@ cohorts improved to 384/400 and 388/400. This is development replay, not indepen
 Experimental neural training now requires recorded candidate evidence (no hash pseudo-features).
 [Readiness and blockers](docs/learning/RECORDED_SIGNALS_READINESS.md): no new clinical weights were
 trained or activated; approved data, independent evaluation and a PyTorch environment are still needed.
+
+[Respiratory evidence cycle](docs/evaluation/respiratory_cycle5/REPORT.md): paired hard synthetic
+cohorts improved to 92.5%, 95%, and 94%; gains share one source family and are not clinical validation.

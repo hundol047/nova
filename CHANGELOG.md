@@ -35,3 +35,9 @@ ICD-11 2026 reference registration: [18,375 ordinary categories plus separately 
 - Removed hash-derived per-candidate pseudo-features from neural training. Require recorded evidence/retrieval/prior signals matching inference, strict feature validation and immutable snapshot hash verification.
 - Bumped checkpoint schema to sched.v2; old experimental checkpoints must not be reused as if trained on actual signals. Renamed early-stopping evaluation output to validation metrics.
 - No clinical dataset or PyTorch execution environment available: no new trained model or accuracy claim. Competition fixed-model weights remain unchanged. See `docs/learning/RECORDED_SIGNALS_READINESS.md`.
+
+## 2026-10-03 — respiratory evidence balance
+
+- Corrected respiratory evidence categories and scoped wording for worsening dyspnea and airspace opacity. Kept nonspecific crackles as typical, not independently confirmatory pneumonia evidence.
+- Paired hard synthetic cohorts: 184→185, 188→190, 186→188 of 200 each; no previously correct case regressed across 1,200 inputs. Improvements are five variants of one source family, not independent clinical successes.
+- Safety miss counts did not increase; 663 software checks passed, 1 skipped, known API file excluded. Full evidence: `docs/evaluation/respiratory_cycle5/REPORT.md`.

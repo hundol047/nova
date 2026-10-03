@@ -52,6 +52,9 @@ _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
 # phrase it belongs to. Deliberately NOT a general medication NLP system: only the drug classes an
 # existing knowledge-base risk_factor already names.
 FEATURE_ALIASES: dict[str, list[str]] = {
+    "infiltrate": ["airspace opacity", "airspace opacities"],
+    "worsening dyspnea": ["worsening breathlessness", "increasing breathlessness", "more breathless",
+        "worsening shortness of breath", "increasing shortness of breath"],
     "focal consolidation": [
         "lobar consolidation", "right upper lobe consolidation", "right middle lobe consolidation",
         "right lower lobe consolidation", "left upper lobe consolidation", "left lower lobe consolidation",
