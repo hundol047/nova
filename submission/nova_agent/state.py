@@ -403,15 +403,17 @@ class PatientState(BaseModel):
     def latest_vital_signs(self) -> Optional[VitalSigns]:
         return self.vital_signs[-1] if self.vital_signs else None
 
-    def all_findings_text(self) -> List[str]:
+    def all_findings_text(self, include_context: bool = True) -> List[str]:
         """Flat bag of every free-text clinical finding gathered so far, used by keyword-matching
         modules (differential.py, safety.py) as the evidence corpus."""
         out = list(self.symptoms) + list(self.associated_symptoms) + list(self.pertinent_positives)
-        out += list(self.past_medical_history) + list(self.social_history) + list(self.family_history)
+        if include_context:
+            out += list(self.past_medical_history) + list(self.social_history) + list(self.family_history)
         out += [self.chief_complaint, self.symptom_onset or "", self.severity or "", self.duration or ""]
         out += list(self.physical_examinations.values()) + list(self.imaging.values())
         out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
-        out += list(self.medication_text) + list(self.allergy_text)
-        out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
+        if include_context:
+            out += list(self.medication_text) + list(self.allergy_text)
+            out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
         return [t for t in out if t]

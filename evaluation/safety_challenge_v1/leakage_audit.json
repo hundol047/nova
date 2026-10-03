@@ -1,0 +1,7 @@
+{
+  "exact_duplicate_inputs": 0,
+  "family_cross_split_overlap": 0,
+  "lexical_jaccard_threshold": 0.85,
+  "flagged_cross_split_pairs": [],
+  "caveat": "Lexical screen only; same author and shared negative-control templates create correlation. Not independent validation."
+}

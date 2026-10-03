@@ -64,3 +64,22 @@ def test_safety_and_differential_share_feature_local_language(keyword, text):
     from nova_agent.safety import _safety_feature_present
     assert _safety_feature_present(keyword, [text])
     assert not _safety_feature_present(keyword, ['no ' + text])
+
+
+@pytest.mark.parametrize('category', ['family_history', 'past_medical_history'])
+def test_historical_red_flag_is_not_a_current_symptom(category):
+    from nova_agent.safety import SafetyLayer
+    state = PatientState(case_id='historical-flag', chief_complaint='abdominal discomfort')
+    state.record_ask(category, '?', 'hematemesis and melena years ago')
+    flags = SafetyLayer().assess(state, DifferentialEngine().update(state))
+    assert not any(f.diagnosis_id == 'gi_bleeding' and f.source == 'symptom_keyword' for f in flags)
+    state.record_ask('associated_symptoms', '?', 'currently vomiting blood')
+    flags = SafetyLayer().assess(state, DifferentialEngine().update(state))
+    assert any(f.diagnosis_id == 'gi_bleeding' and f.source == 'symptom_keyword' for f in flags)
+
+
+def test_context_is_still_available_for_risk_assessment():
+    state = PatientState(case_id='risk-context', chief_complaint='assessment')
+    state.family_history=['parent had a stroke']
+    assert 'parent had a stroke' in state.all_findings_text()
+    assert 'parent had a stroke' not in state.all_findings_text(include_context=False)

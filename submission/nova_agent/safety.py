@@ -95,7 +95,9 @@ class SafetyLayer:
         # measurably inflating turn counts by keeping irrelevant diagnoses "actively flagged"
         # purely because they exist somewhere in the pool.
         differential_ids = {d.diagnosis_id for d in differential if d.candidate_sources != ["safety_candidate"]}
-        findings_text = state.all_findings_text()
+        # Symptom triggers use current observations only. History/medication risk
+        # remains available to the separate demographic and medication rules below.
+        findings_text = state.all_findings_text(include_context=False)
 
         for diagnosis_id in critical_condition_ids():
             entry = disease_by_id(diagnosis_id)

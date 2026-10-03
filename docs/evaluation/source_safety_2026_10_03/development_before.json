@@ -1,0 +1,134 @@
+{
+  "split": "development",
+  "cases": 16,
+  "corpus_sha256": "eb1c0bcce9d9bec4ce0328263e8b738c01d1c15b2cd8cb384779ed47c63aeeb9",
+  "tp": 8,
+  "fp": 4,
+  "fn": 0,
+  "tn": 4,
+  "sensitivity": 1.0,
+  "specificity": 0.5,
+  "scope": "SYNTHETIC_TARGET_FLAG_TEST_NOT_DIAGNOSTIC_ACCURACY",
+  "results": [
+    {
+      "id": "stroke-active-0",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "ischemic_stroke"
+      ]
+    },
+    {
+      "id": "stroke-active-1",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "ischemic_stroke"
+      ]
+    },
+    {
+      "id": "stroke-active-2",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "ischemic_stroke"
+      ]
+    },
+    {
+      "id": "stroke-active-3",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "ischemic_stroke"
+      ]
+    },
+    {
+      "id": "stroke-family_history",
+      "expected": false,
+      "predicted": true,
+      "flags": [
+        "ischemic_stroke"
+      ]
+    },
+    {
+      "id": "stroke-past_medical_history",
+      "expected": false,
+      "predicted": true,
+      "flags": [
+        "ischemic_stroke"
+      ]
+    },
+    {
+      "id": "stroke-denied",
+      "expected": false,
+      "predicted": false,
+      "flags": []
+    },
+    {
+      "id": "stroke-unrelated",
+      "expected": false,
+      "predicted": false,
+      "flags": []
+    },
+    {
+      "id": "bleeding-active-0",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "gi_bleeding"
+      ]
+    },
+    {
+      "id": "bleeding-active-1",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "gi_bleeding"
+      ]
+    },
+    {
+      "id": "bleeding-active-2",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "gi_bleeding"
+      ]
+    },
+    {
+      "id": "bleeding-active-3",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "gi_bleeding"
+      ]
+    },
+    {
+      "id": "bleeding-family_history",
+      "expected": false,
+      "predicted": true,
+      "flags": [
+        "gi_bleeding"
+      ]
+    },
+    {
+      "id": "bleeding-past_medical_history",
+      "expected": false,
+      "predicted": true,
+      "flags": [
+        "gi_bleeding"
+      ]
+    },
+    {
+      "id": "bleeding-denied",
+      "expected": false,
+      "predicted": false,
+      "flags": []
+    },
+    {
+      "id": "bleeding-unrelated",
+      "expected": false,
+      "predicted": false,
+      "flags": []
+    }
+  ]
+}

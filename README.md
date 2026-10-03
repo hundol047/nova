@@ -688,3 +688,5 @@ Latest evidence-parsing regression replay: [2026-10-03 report](docs/evaluation/m
 Laboratory trend follow-up: [2026-10-03 report](docs/evaluation/mock_replay_2026_10_03_trends/README.md) — synthetic mock final-answer accuracy 181/191 (94.76%); no model training or clinical validation.
 
 Safety follow-up: [observed flags and tradeoffs](docs/evaluation/safety_flags_2026_10_03/README.md). Synthetic critical-case final flags: 71/97 to 84/97; exact dangerous target answers unchanged at 90/97. Not clinical sensitivity.
+
+Added 24 source-informed synthetic safety snapshots and fixed historical/family symptoms triggering current safety flags. [Evidence and limitations](docs/evaluation/source_safety_2026_10_03/README.md).
