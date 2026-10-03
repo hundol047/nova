@@ -340,7 +340,7 @@ def test_submission_run_entrypoint():
         input='{"case_id": "pytest1", "observation_type": "initial", "chief_complaint": "chest pain", '
               '"demographics": {"age": 55, "sex": "male"}}\n',
         cwd=str(submission_dir), capture_output=True, text=True, timeout=30,
-        env={"PATH": "/usr/bin:/bin"},  # deliberately minimal env, no inherited PYTHONPATH
+        env={"PATH": "/usr/bin:/bin", "NOVA_LLM_PROVIDER": "mock"},  # explicit offline, no PYTHONPATH
     )
     assert proc.returncode == 0, f"submission/run.py failed: {proc.stderr}"
     assert '"action_type"' in proc.stdout
@@ -349,8 +349,7 @@ def test_submission_run_entrypoint():
 def test_submission_stdout_contains_only_protocol_json():
     """A harness reading stdout as a JSON-lines protocol must never see anything else on it --
     not a log line, not a warning, not the preflight diagnostic -- or it breaks. Runs multiple
-    observations (including forcing the preflight-unavailable warning path, via an unreachable
-    competition endpoint) and asserts EVERY stdout line parses as the expected JSON action shape,
+    observations in explicit mock mode (unreachable competition is now a fatal startup error) and asserts EVERY stdout line parses as the expected JSON action shape,
     with every non-protocol message landing on stderr instead."""
     import json as _json
 
@@ -367,7 +366,7 @@ def test_submission_stdout_contains_only_protocol_json():
         [sys.executable, "run.py"],
         input=stdin_text, cwd=str(submission_dir), capture_output=True, text=True, timeout=30,
         env={"PATH": "/usr/bin:/bin",
-             "NOVA_LLM_PROVIDER": "competition", "NOVA_COMPETITION_BASE_URL": "http://127.0.0.1:1/v1"},
+             "NOVA_LLM_PROVIDER": "mock"},
     )
     assert proc.returncode == 0, f"submission/run.py failed: {proc.stderr}"
 
@@ -378,7 +377,7 @@ def test_submission_stdout_contains_only_protocol_json():
         parsed = _json.loads(line)  # raises if stdout carried anything non-JSON
         assert "action_type" in parsed or "error" in parsed
 
-    # The preflight-unavailable diagnostic this run should have triggered (unreachable endpoint)
-    # must have landed on stderr, never mixed into stdout.
-    assert "Competition LLM unavailable" in proc.stderr
-    assert "Competition LLM unavailable" not in proc.stdout
+    # Runtime diagnostics must stay off the protocol stdout. Failure mode is separately covered
+    # by test_isolated_submission_runtime_modes[unreachable].
+    assert "Runtime preflight passed" in proc.stderr
+    assert "Runtime preflight passed" not in proc.stdout

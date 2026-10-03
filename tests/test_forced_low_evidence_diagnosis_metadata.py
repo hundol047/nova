@@ -88,7 +88,7 @@ def test_competition_adapter_relabels_action_type_only_when_configured(monkeypat
     assert result["action_type"] == "INSUFFICIENT_INFORMATION"
 
 
-def test_competition_adapter_never_relabels_a_normal_evidence_backed_diagnosis(monkeypatch):
+def test_competition_adapter_does_not_treat_repeated_denials_as_supported_diagnosis(monkeypatch):
     import dataclasses
 
     from nova_agent import config as config_module
@@ -107,6 +107,23 @@ def test_competition_adapter_never_relabels_a_normal_evidence_backed_diagnosis(m
                "content": "Denies that symptom, nothing else to add."}
         result = agent.act(obs)
         turns += 1
-    assert result["action_type"] == "DIAGNOSE", (
-        "an ordinary, evidence-backed diagnosis must never be relabeled INSUFFICIENT_INFORMATION"
-    )
+    assert result["action_type"] == "INSUFFICIENT_INFORMATION"
+    assert result["metadata"]["internal_result"] == "INSUFFICIENT_INFORMATION"
+
+
+def test_objectively_supported_diagnosis_retains_diagnose_wire_label(monkeypatch):
+    import dataclasses
+    from nova_agent import config as config_module
+    from competition.adapter import action_to_competition
+    monkeypatch.setattr(config_module, "_config", dataclasses.replace(
+        config_module.get_config(), competition_supports_insufficient_information=True))
+    agent = DoctorAgent()
+    state = agent.new_case("supported", "Substernal pressure radiating to jaw with diaphoresis", max_turns=1)
+    state.record_test("ecg", "ST elevation")
+    state.record_test("troponin", "elevated troponin")
+    action, _, _ = agent.decide(state)
+    wire = action_to_competition("supported", action, diagnosis_quality=state.pending_diagnosis_quality,
+                                evidence_assessment=state.evidence_assessment)
+    assert wire.action_type == "DIAGNOSE"
+    assert wire.metadata["internal_result"] == "SUPPORTED_DIAGNOSIS"
+    assert wire.metadata["forced_due_to_protocol"] is False

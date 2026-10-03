@@ -109,11 +109,11 @@ def _import_smoke_test() -> None:
         input='{"case_id": "build_smoke", "observation_type": "initial", "chief_complaint": "chest pain", '
               '"demographics": {"age": 55, "sex": "male"}}\n',
         cwd=str(SUBMISSION), capture_output=True, text=True, timeout=30,
-        env={"PATH": "/usr/bin:/bin"},
+        env={"PATH": "/usr/bin:/bin", "NOVA_LLM_PROVIDER": "mock"},
     )
     if proc.returncode != 0 or '"action_type"' not in proc.stdout:
         raise SystemExit(f"submission/run.py import/smoke test FAILED (exit={proc.returncode}):\n{proc.stderr}")
-    print("import/subprocess smoke test OK: submission/run.py produced a valid action standalone")
+    print("import/subprocess smoke test OK: explicit mock standalone (real model NOT VERIFIED)")
 
 
 def _build_zip_and_manifest() -> None:

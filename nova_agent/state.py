@@ -196,6 +196,8 @@ class PatientState(BaseModel):
     final_diagnosis_zero_evidence_at_diagnosis: Optional[bool] = None
     final_diagnosis_fallback_candidate_selected: Optional[bool] = None
     pending_diagnosis_quality: Optional[Dict[str, bool]] = None
+    # JSON-safe internal epistemic result; no protocol labels or patient transcript copies.
+    evidence_assessment: Optional[dict] = None
 
     # Wall-clock case start (spec: graceful degradation as a per-case time budget runs out).
     # time.time()-based (not perf_counter) since it must be meaningful even if PatientState is

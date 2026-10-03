@@ -428,7 +428,7 @@ class OpenAICompatibleLLMClient(BaseLLMClient):
             except Exception as exc:
                 self._last_call_latency_seconds = time.perf_counter() - start
                 log.warning("%s call failed (attempt %d/%d): %s", type(self).__name__, attempt + 1,
-                            self.max_retries + 1, exc)
+                            self.max_retries + 1, type(exc).__name__)
         log.warning("Falling back to deterministic turn output after %d failed attempt(s).", self.max_retries + 1)
         return fallback
 
@@ -470,6 +470,49 @@ class CompetitionLLMClient(OpenAICompatibleLLMClient):
         cfg = get_config()
         super().__init__(base_url=cfg.competition_base_url, model=cfg.competition_model,
                           api_key=cfg.competition_api_key)
+
+    MODEL_TARGET = "openai/gpt-oss-20b"
+
+    def _post_chat_completion(self, messages: list, *, max_tokens: Optional[int] = None) -> Tuple[str, dict]:
+        # Response identity is a server assertion, NOT proof of weights/revision or official API.
+        # Strict until the official serving contract documents model aliases/revision handling.
+        if self.model != self.MODEL_TARGET:
+            raise ValueError("competition_model_target_mismatch")
+        if not (0 < self.timeout <= 120 and 0 <= self.max_retries <= 3):
+            raise ValueError("competition_timeout_or_retry_configuration_invalid")
+        content, raw = super()._post_chat_completion(messages, max_tokens=max_tokens)
+        if raw.get("model") != self.MODEL_TARGET:
+            raise ValueError("competition_response_model_missing_or_mismatched")
+        parsed = parse_agent_turn_output(content)
+        if parsed is None or not parsed.selected_action.content.strip():
+            raise ValueError("competition_structured_action_missing_or_empty")
+        return content, raw
+
+    def preflight(self) -> Tuple[bool, str]:
+        """Bounded structured transport probe; never credits any patient's real-call counter."""
+        self._preflight_structured_success = False
+        prompt = ('Return only JSON with selected_action containing type ASK, key onset, '
+                  'content "When did symptoms start?", and differential an empty list.')
+        # Validate configuration before looping (a negative/huge retry value must not bypass bounds).
+        if self.model != self.MODEL_TARGET or not (0 < self.timeout <= 120 and 0 <= self.max_retries <= 3):
+            return False, "Invalid competition model, timeout (0,120], or retries [0,3]."
+        reason = "structured_output_parse_failed"
+        for _ in range(self.max_retries + 1):
+            try:
+                content, _raw = self._post_chat_completion([{"role": "user", "content": prompt}])
+                if parse_agent_turn_output(content) is not None:
+                    self._preflight_structured_success = True
+                    return True, "Structured response and server-reported model identity checked; weights NOT VERIFIED."
+            except Exception as exc:
+                reason = type(exc).__name__  # no credentials, response body or patient text in logs
+        return False, f"Competition endpoint/identity/structured probe failed: {reason}."
+
+    def generate_turn_output(self, ctx: TurnContext) -> AgentTurnOutput:
+        if self.model != self.MODEL_TARGET or not (0 < self.timeout <= 120 and 0 <= self.max_retries <= 3):
+            self._last_call_was_real = False
+            self._last_call_succeeded = False
+            return _deterministic_turn_output(ctx)
+        return super().generate_turn_output(ctx)
 
 
 _PROVIDERS = {

@@ -16,12 +16,10 @@ arbitrary remote/internet endpoint guessed on your behalf -- override every NOVA
 variable via the environment once the official competition runtime contract is known; nothing in
 this file needs to change.
 
-Before serving any observation, this script runs `preflight()` on the configured LLM client. If it
-is not reachable, a loud, structured warning is printed to **stderr** (never stdout, which carries
-the JSON-lines protocol) and the run *continues* using nova_agent's existing per-turn deterministic
-fallback -- a crashed/exited submission produces zero diagnoses, which is worse than a degraded but
-still-safe run. This is the RUNTIME policy; for a hard pass/fail gate to check BEFORE submitting
-(e.g. in CI), use `scripts/preflight_competition.py` instead, which does fail loudly.
+Before serving any observation, the competition provider must pass a bounded structured-output
+preflight. Failure exits with NOT READY on stderr and emits no successful protocol action.
+Mock mode remains an explicit development option. A local stub verifies wiring only; neither
+its model field nor this provisional JSON-lines protocol establishes official compatibility.
 
 Two modes:
 
@@ -67,23 +65,14 @@ if not os.environ.get("NOVA_LLM_PROVIDER"):
 
 
 def _build_agent() -> DoctorAgent:
+    provider = get_config().llm_provider
+    if provider not in {"mock", "competition"}:
+        raise RealLLMUnavailableError("NOT READY: submission requires competition or explicit development mock provider.")
     client = get_llm_client()
     ok, reason = client.preflight()
-    provider = get_config().llm_provider
     if not ok:
-        print(
-            "Competition LLM unavailable\n"
-            f"Provider: {provider}\n"
-            f"Model: {getattr(client, 'model', '?')}\n"
-            f"Endpoint: {getattr(client, 'base_url', 'n/a')}\n"
-            f"Reason: {reason}\n"
-            "Continuing with nova_agent's per-turn deterministic fallback -- clinical reasoning "
-            "for this run will NOT use a real LLM. Run `python scripts/preflight_competition.py` "
-            "before submitting to catch this ahead of time.",
-            file=sys.stderr,
-        )
-    else:
-        print(f"LLM provider ready: {provider} ({reason})", file=sys.stderr)
+        raise RealLLMUnavailableError(f"NOT READY: competition preflight failed ({reason})")
+    print(f"Runtime preflight passed: {provider}. Official API NOT VERIFIED. {reason}", file=sys.stderr)
     return DoctorAgent(llm_client=client)
 
 
@@ -127,7 +116,7 @@ def run_interactive(agent: NovaCompetitionAgent) -> None:
     while True:
         action = agent.act(observation)
         print(f"\n[{action['action_type']}] {action['content']}")
-        if action["action_type"] == "DIAGNOSE":
+        if action["action_type"] in {"DIAGNOSE", "INSUFFICIENT_INFORMATION"}:
             print("\n--- Case complete ---")
             break
         answer = input("your answer/result: ").strip()
@@ -140,7 +129,11 @@ def main() -> None:
                          help="Run an interactive terminal demo instead of reading JSON lines from stdin.")
     args = parser.parse_args()
 
-    competition_agent = NovaCompetitionAgent(agent=_build_agent())
+    try:
+        competition_agent = NovaCompetitionAgent(agent=_build_agent())
+    except RealLLMUnavailableError as exc:
+        print(str(exc), file=sys.stderr)
+        raise SystemExit(1) from exc
     if args.interactive:
         run_interactive(competition_agent)
     else:

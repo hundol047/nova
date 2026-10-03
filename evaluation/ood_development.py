@@ -1,0 +1,47 @@
+"""New synthetic DEVELOPMENT probes. Not blind, independent or clinician-adjudicated data.
+
+Intentionally includes uncovered nonmedical intents and medical scope uncertainty. These are
+epistemic/safety labels, not expert-confirmed disease diagnoses. No v17 imports or case reuse.
+"""
+CASES = [
+    # OOD includes out-of-vocabulary tasks to expose limited lexical generalization.
+    {"id": "task1", "group": "ood", "text": "Please configure the router for a new wifi network."},
+    {"id": "task2", "group": "ood", "text": "Debug this Python function that formats dates."},
+    {"id": "task3", "group": "ood", "text": "Calculate the invoice total for twenty chairs."},
+    {"id": "task4", "group": "ood", "text": "프린터 연결 설정을 고쳐주세요."},
+    {"id": "task5", "group": "ood", "text": "엑셀 계산 수식을 작성해주세요."},
+    {"id": "task6", "group": "ood", "text": "プリンターの設定を修理してください。"},
+    {"id": "task7", "group": "ood", "text": "Compare two mortgage repayment schedules."},
+    {"id": "task8", "group": "ood", "text": "Compose a sonnet about autumn leaves."},
+    {"id": "vague1", "group": "insufficient", "text": "Something feels different lately."},
+    {"id": "vague2", "group": "insufficient", "text": "몸 상태를 설명하기 어려워요."},
+    {"id": "vague3", "group": "insufficient", "text": "I am tired, but cannot say when it started."},
+    {"id": "vague4", "group": "insufficient", "text": "??? ..."},
+    {"id": "scope1", "group": "unsupported_medical", "text": "My sweat has changed colour over several months."},
+    {"id": "scope2", "group": "unsupported_medical", "text": "I notice a persistent metallic smell in empty rooms."},
+    {"id": "scope3", "group": "unsupported_medical", "text": "A genetic clinic is investigating an unnamed inherited nail disorder."},
+    {"id": "scope4", "group": "unsupported_medical", "text": "My hair shafts are unusually brittle, with no other complaint."},
+    {"id": "mixed1", "group": "insufficient", "text": "My scalp itches and sometimes my knee clicks."},
+    {"id": "mixed2", "group": "insufficient", "text": "Watery eyes and a toe that tingles only in tight shoes."},
+    {"id": "mixed3", "group": "supported_sparse", "text": "I was trying to fix the router, then developed sudden chest pain."},
+    {"id": "mixed4", "group": "supported_sparse", "text": "파이썬 코드 작성 중 갑자기 숨이 차고 가슴이 아파요."},
+    {"id": "sparse1", "group": "supported_sparse", "text": "Cough started yesterday."},
+    {"id": "sparse2", "group": "supported_sparse", "text": "Dysuria this morning."},
+    {"id": "sparse3", "group": "supported_sparse", "text": "Sudden chest pressure.", "critical": True},
+    {"id": "sparse4", "group": "supported_sparse", "text": "My speech suddenly became slurred.", "critical": True},
+    {"id": "sparse5", "group": "supported_sparse", "text": "급하게 숨이 차요.", "critical": True},
+    {"id": "sparse6", "group": "supported_sparse", "text": "突然の激しい頭痛。", "critical": True},
+    {"id": "conflict1", "group": "insufficient", "text": "Chest pressure but the time course is unclear.",
+     "tests": {"ecg": "normal ECG", "troponin": "negative troponin"}},
+    {"id": "conflict2", "group": "insufficient", "text": "Painful urination reported earlier but now denied.",
+     "tests": {"urinalysis": "normal urinalysis, no pyuria or nitrites"}},
+    {"id": "strong1", "group": "supported_evidenced", "text": "Substernal chest pressure radiating to jaw with diaphoresis.",
+     "tests": {"ecg": "ST elevation", "troponin": "elevated troponin"}, "critical": True},
+    {"id": "strong2", "group": "supported_evidenced", "text": "Dysuria with urinary frequency and urgency.",
+     "tests": {"urinalysis": "nitrites positive and pyuria"}},
+    {"id": "strong3", "group": "supported_evidenced", "text": "Acute dyspnea and pleuritic chest pain.",
+     "exams": {"lung_auscultation": "unilateral absent breath sounds and tracheal deviation"},
+     "tests": {"cxr": "pneumothorax with mediastinal shift"}, "critical": True},
+    {"id": "strong4", "group": "supported_evidenced", "text": "Confusion, sweating and tremor after missing lunch while using insulin.",
+     "tests": {"glucose_point_of_care": "glucose 38 mg/dL"}, "critical": True},
+]

@@ -1,4 +1,4 @@
-> **Latest local verification: Round G / v8 / Blind v17.** [Report](docs/round_g/FINAL_REPORT.md) · [release pointer](artifacts/verification/CURRENT_RELEASE.json). Frozen runtime `1046986`; one post-freeze synthetic Mock-LLM run: 48/55 scored, 24/25 KB-critical. These are not clinical validation results. Real GPT-OSS and official API remain NOT VERIFIED. Earlier benchmark sections below are historical references, not current blind results.
+> **Current-issues fix / verification v9 in preparation.** Internal evidence assessment and fail-closed competition startup are implemented. v17 is **REFERENCE-ONLY** for historical runtime `1046986`; it was neither edited nor rerun. Real GPT-OSS and the official API remain **NOT VERIFIED**. [Release status](artifacts/verification/CURRENT_RELEASE.json). Older benchmark sections below are historical references.
 
 # N.O.V.A. 2026 Doctor Agent
 
@@ -6,14 +6,15 @@ A conversational medical-diagnosis agent (**ASK / EXAM / TEST / DIAGNOSE**) buil
 2026 competition as an independent, standalone `nova_agent` module. It reasons iteratively from a
 limited initial presentation toward a differential diagnosis, actively guards against missing
 time-critical ("can't-miss") conditions, and always submits a final diagnosis within a hard
-60-turn limit.
+60-turn limit in the provisional competition protocol. A forced wire label is explicitly
+separated from internal evidence support; it is not a confirmed clinical diagnosis.
 
 Everything below reflects verified, executed behavior (`pytest tests/`, `evaluation.benchmark`,
 `evaluation.ablation`, `evaluation.adversarial`, `scripts/preflight_competition.py`, and a real
 standalone subprocess run of `submission/`) -- see [Known Limitations](#9-known-limitations) for
 what is *not* yet verified.
 
-**Verification status** (these are three genuinely different claims -- never conflate them):
+**Historical verification status** (current local results are in the release pointer above):
 - **Code / test CI**: READY -- 520 unit tests (1 skipped), the full local benchmark suite (tuning, held-out,
   generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
   under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
@@ -408,13 +409,16 @@ Regenerate after any change to `nova_agent/`/`competition/`: `python scripts/bui
 
 `submission/run.py` defaults `NOVA_LLM_PROVIDER=competition` and runs a startup preflight
 (`client.preflight()`) before the first turn: if the real endpoint is unreachable, it prints a
-clear diagnostic to stderr and continues on the deterministic per-turn fallback (dev/runtime
-fallback policy), rather than silently spending the whole case on `mock`. Before a real run, gate
+`NOT READY` diagnostic to stderr and exits non-zero with no action on stdout. Explicit mock mode
+remains available for development. Before a real run, gate
 on `scripts/preflight_competition.py`, which prints `READY`/`NOT READY` and exits non-zero unless a
 real provider is configured, reachable, produces legal structured/action output, **and actually
 succeeded at least once** (`real_llm_success_count_at_least_1` -- deliberately distinct from
 `structured_output_and_action_validation`: the deterministic fallback alone can already produce a
-well-formed action, so that check passing is not evidence the real model said anything):
+well-formed action, so that check passing is not evidence the real model said anything).
+The script also fails the official-schema gate while the adapter is a PLACEHOLDER, even when a
+local integration stub responds successfully. Model response identity is server-reported and
+does not verify the actual weights or revision:
 
 ```bash
 NOVA_LLM_PROVIDER=competition NOVA_COMPETITION_BASE_URL=http://localhost:8000/v1 \

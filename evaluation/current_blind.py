@@ -16,7 +16,7 @@ from __future__ import annotations
 # The current untouched blind set. Bump this ONLY after a fresh set has been authored, frozen
 # (SHA-256 in its manifest), and leakage-checked — never to point at an edited set.
 CURRENT_BLIND_VERSION = "v17"
-CURRENT_BLIND_STATUS = "CURRENT"
+CURRENT_BLIND_STATUS = "REFERENCE-ONLY"
 
 # Every blind set this repo has authored, oldest -> newest. All except CURRENT_BLIND_VERSION are
 # REFERENCE-ONLY (each was frozen before a later reasoning change).

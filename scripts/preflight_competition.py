@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """Competition readiness gate (spec sections 4/22/30): `python scripts/preflight_competition.py`
 
-A hard pass/fail check meant to run BEFORE submitting (locally or in CI) -- separate from
-submission/run.py's own runtime preflight, which logs a loud warning but keeps running on the
-deterministic fallback so a live competition run never just stops. This script's job is the
-opposite: tell a human/CI truthfully whether a real competition run would actually use a real LLM,
-and refuse to say READY if it wouldn't.
+Checks runtime wiring separately from official submission readiness. The standalone entrypoint
+also fails closed if its competition endpoint fails the structured preflight. This script adds
+the official-schema gate, which remains NOT VERIFIED until documentary evidence is supplied.
 
 Exit code 0 + "READY" only when every check below passes. Otherwise exit code 1 + "NOT READY" and
 the specific reasons.
@@ -38,6 +36,9 @@ def check(name: str, ok: bool, detail: str, *, severity: str = "fail") -> None:
 
 
 def main() -> int:
+    FAIL_CHECKS.clear()
+    WARN_CHECKS.clear()
+    PASS_CHECKS.clear()
     # --- Python version ---------------------------------------------------------------------
     check("python_version", sys.version_info >= (3, 9),
           f"{sys.version.split()[0]} (requires >= 3.9)")
@@ -69,27 +70,30 @@ def main() -> int:
 
     # --- model provider / endpoint / name -----------------------------------------------------
     provider = cfg.llm_provider
-    check("llm_provider_configured", provider != "mock",
+    check("llm_provider_configured", provider == "competition",
           f"NOVA_LLM_PROVIDER={provider!r} -- a competition run needs a real provider "
-          f"(competition/openai_compatible/local/anthropic), not the offline mock stand-in.")
+          f"(competition targeting openai/gpt-oss-20b), not the offline mock stand-in.")
 
     # --- LLM health (real network check) ------------------------------------------------------
     from nova_agent.llm_client import get_llm_client
     client = get_llm_client()
-    endpoint = getattr(client, "base_url", "n/a (SDK-based client, no HTTP base_url)")
+    from urllib.parse import urlsplit
+    endpoint = getattr(client, "base_url", "")
+    host = urlsplit(endpoint).hostname or "unconfigured"
+    endpoint_label = f"host={host}"  # no query, userinfo or credential-bearing endpoint path
     model = getattr(client, "model", cfg.llm_model)
-    if provider == "mock":
+    if provider != "competition":
         check("llm_health", False, "skipped (provider=mock has no real endpoint to check)")
     else:
         ok, reason = client.preflight()
-        check("llm_health", ok, f"provider={provider} model={model!r} endpoint={endpoint} -- {reason}")
+        check("llm_health", ok, f"provider={provider} model={model!r} endpoint={endpoint_label} -- {reason}")
 
     # --- structured JSON output + legal action validation + real-LLM-success gate --------------
     # Two DISTINCT checks, deliberately not folded into one: a well-formed action can come from
     # the deterministic fallback alone (that's the whole point of the fallback -- it always
     # produces something legal), so "the action looks valid" says nothing about whether the real
     # LLM actually contributed to it. A competition submission must know both, separately.
-    if provider != "mock":
+    if provider == "competition":
         try:
             from nova_agent.orchestrator import DoctorAgent
             agent = DoctorAgent(llm_client=client)
@@ -115,9 +119,9 @@ def main() -> int:
                   f"llm_call_count={state.llm_call_count} llm_success_count={state.llm_success_count} "
                   "(bounded retry already applied per call -- see NOVA_LLM_MAX_RETRIES)")
         except Exception as exc:
-            check("structured_output_and_action_validation", False, f"live turn raised: {exc}")
-            check("structured_output_parse_success", False, f"live turn raised: {exc}")
-            check("real_llm_success_count_at_least_1", False, f"live turn raised: {exc}")
+            check("structured_output_and_action_validation", False, f"live turn raised: {type(exc).__name__}")
+            check("structured_output_parse_success", False, f"live turn raised: {type(exc).__name__}")
+            check("real_llm_success_count_at_least_1", False, f"live turn raised: {type(exc).__name__}")
     else:
         check("structured_output_and_action_validation", False, "skipped (provider=mock)")
         check("structured_output_parse_success", False, "skipped (provider=mock)")
@@ -135,11 +139,10 @@ def main() -> int:
     # --- turn limit -----------------------------------------------------------------------------
     check("turn_limit_configured", 1 <= cfg.max_turns <= 60, f"NOVA_MAX_TURNS={cfg.max_turns}")
 
-    # --- official adapter status (informational, never blocks) --------------------------------
+    # --- official submission readiness (blocks until evidenced) --------------------------------
     check("official_competition_schema", False,
           "competition/schema.py is a documented PLACEHOLDER -- no official N.O.V.A. 2026 API was "
-          "available at implementation time. Update competition/schema.py + adapter.py once published.",
-          severity="warn")
+          "available at implementation time. Update competition/schema.py + adapter.py once published.")
 
     # --- submission size ------------------------------------------------------------------------
     submission_dir = ROOT / "submission"
@@ -154,9 +157,9 @@ def main() -> int:
     if provider == "mock":
         check("endpoint_locality", True, "skipped (provider=mock has no endpoint)", severity="warn")
     else:
-        is_local = any(host in endpoint for host in ("localhost", "127.0.0.1", "0.0.0.0")) if isinstance(endpoint, str) else True
+        is_local = host in {"localhost", "127.0.0.1", "::1"}
         check("endpoint_locality", is_local,
-              f"endpoint={endpoint} is "
+              f"endpoint {endpoint_label} is "
               f"{'local/offline' if is_local else 'NOT localhost -- verify this is the official, authorized endpoint before submitting'}",
               severity="warn")
 

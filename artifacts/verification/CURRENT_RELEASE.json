@@ -13,7 +13,7 @@
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
   "updated_utc": "2026-10-03T09:04:28.335046+00:00",
-  "status": "COMPLETED",
-  "reason": "v8 records the frozen runtime, one-shot synthetic v17, submission and explicit unverified external dependencies.",
-  "current_blind_status": "CURRENT"
+  "status": "STALE_RUNTIME_CHANGED",
+  "reason": "Current-issues runtime changes in progress; v8/v17 verify only historical runtime 1046986. No current blind evaluation.",
+  "current_blind_status": "REFERENCE-ONLY"
 }

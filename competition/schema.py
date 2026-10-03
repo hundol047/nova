@@ -21,6 +21,9 @@ from typing import Any, Dict, Literal, Optional
 
 from pydantic import BaseModel, Field
 
+OFFICIAL_API_STATUS = "NOT VERIFIED"
+SCHEMA_STATUS = "PLACEHOLDER"
+
 ObservationType = Literal["initial", "ask_response", "exam_result", "test_result"]
 
 

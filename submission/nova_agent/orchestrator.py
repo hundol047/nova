@@ -27,6 +27,7 @@ from nova_agent.safety import SafetyLayer
 from nova_agent.safety_validator import SafetyValidator, build_candidate_pool
 from nova_agent.state import Demographics, DifferentialSnapshot, PatientState
 from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG
+from nova_agent.uncertainty import assess_evidence
 
 log = logging.getLogger("nova_agent.orchestrator")
 
@@ -58,6 +59,10 @@ class DoctorAgent:
     # --- core turn loop -----------------------------------------------------------------------
 
     def decide(self, state: PatientState) -> Tuple[AgentAction, Optional[AgentTurnOutput], List[DifferentialItem]]:
+        # Never reuse a prior turn's confidence if this turn fails partway through.
+        state.pending_diagnosis_quality = None
+        state.evidence_assessment = {"internal_result": "INSUFFICIENT_INFORMATION",
+                                     "reasons": ["turn_not_evaluated"], "signals": {}, "calibrated": False}
         try:
             # 1. Patient State (given) -> deterministic prior differential + safety findings.
             #    These are ALWAYS computed (never delegated to the LLM) -- they are what
@@ -143,6 +148,11 @@ class DoctorAgent:
                                       urgency=d.urgency, dangerous_if_missed=d.dangerous_if_missed)
                 for d in result.differential
             ]
+
+            state.evidence_assessment = assess_evidence(
+                state, deterministic_differential,
+                result.action.key if result.action.action_type == "DIAGNOSE" else None,
+            ).model_dump()
 
             # Round E: stage forced/low-evidence diagnosis metadata for PatientState.
             # record_diagnose() to pick up (see that field's own docstring) -- computed here, not

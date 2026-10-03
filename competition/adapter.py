@@ -73,17 +73,13 @@ def observation_to_state(obs: CompetitionObservation, agent: DoctorAgent,
 
 
 def action_to_competition(case_id: str, action: AgentAction, *, real_llm_verified: Optional[bool] = None,
-                           diagnosis_quality: Optional[Dict[str, bool]] = None) -> CompetitionAction:
-    """`diagnosis_quality` (Round E) is PatientState's own forced/zero-evidence flags (see that
-    class's field docstrings), only ever populated for a DIAGNOSE action. Always attached to
-    metadata as plain, inspectable booleans regardless of config -- a competition-readiness harness
-    can always tell "was this diagnosis forced/evidence-free" from the metadata alone, independent
-    of whether the wire action_type itself changes. The wire action_type ONLY changes to
-    "INSUFFICIENT_INFORMATION" when NovaConfig.competition_supports_insufficient_information is
-    explicitly True (default False, since no official schema confirms this label exists) AND the
-    diagnosis was genuinely forced/zero-evidence -- an ordinary, evidence-backed DIAGNOSE is never
-    relabeled, and with the flag off the action_type is always the plain "DIAGNOSE" the existing
-    forced-final-diagnosis contract already guarantees."""
+                           diagnosis_quality: Optional[Dict[str, bool]] = None,
+                           evidence_assessment: Optional[dict] = None) -> CompetitionAction:
+    """Translate internal uncertainty into the provisional, configurable wire contract.
+
+    FORCED_FINAL_DIAGNOSIS is a completion classification, never an official action label.
+    The optional abstention label remains experimental until an official schema confirms it.
+    """
     metadata = {"key": action.key, "rationale": action.rationale}
     if real_llm_verified is not None:
         # Only ever attached to a DIAGNOSE action (see NovaCompetitionAgent.act() below) -- lets a
@@ -102,7 +98,26 @@ def action_to_competition(case_id: str, action: AgentAction, *, real_llm_verifie
                 and get_config().competition_supports_insufficient_information):
             action_type = "INSUFFICIENT_INFORMATION"
 
-    return CompetitionAction(case_id=case_id, action_type=action_type, content=action.content,
+    content = action.content
+    if action.action_type == "DIAGNOSE":
+        assessment = evidence_assessment or {
+            "internal_result": "INSUFFICIENT_INFORMATION",
+            "reasons": ["evidence_assessment_unavailable"], "signals": {}, "calibrated": False}
+        unsupported = assessment["internal_result"] != "SUPPORTED_DIAGNOSIS"
+        if unsupported and get_config().competition_supports_insufficient_information:
+            action_type = "INSUFFICIENT_INFORMATION"
+        if action_type == "INSUFFICIENT_INFORMATION":
+            content = "Insufficient evidence for a supported diagnosis; further assessment is needed."
+        forced = unsupported and action_type == "DIAGNOSE"
+        metadata.update({
+            "internal_result": assessment["internal_result"],
+            "evidence_assessment": assessment,
+            "forced_due_to_protocol": forced,
+            "completion_type": "FORCED_FINAL_DIAGNOSIS" if forced else assessment["internal_result"],
+            "wire_result": action_type,
+            "protocol_status": "PLACEHOLDER",
+        })
+    return CompetitionAction(case_id=case_id, action_type=action_type, content=content,
                               metadata=metadata)
 
 
@@ -129,7 +144,7 @@ class NovaCompetitionAgent:
         action, _llm_output, _differential = self.agent.decide(state)
         in_competition_mode = get_config().llm_provider != "mock"
 
-        if action.action_type == "DIAGNOSE" and in_competition_mode and state.real_llm_ever_succeeded is False:
+        if action.action_type == "DIAGNOSE" and in_competition_mode and state.real_llm_ever_succeeded is not True:
             # Required flow (spec section 12): bounded retry -> real LLM retry -> if it succeeds,
             # proceed normally -> if every attempt still fails, an explicit runtime failure, never
             # a disguised deterministic-only "success". Re-calling decide() on the same
@@ -140,7 +155,7 @@ class NovaCompetitionAgent:
                 if state.real_llm_ever_succeeded:
                     break
                 action, _llm_output, _differential = self.agent.decide(state)
-            if state.real_llm_ever_succeeded is False:
+            if state.real_llm_ever_succeeded is not True:
                 # Every real-LLM attempt this case failed, even after this bounded retry -- the
                 # only available answer is deterministic-fallback-only. Dev/mock mode never
                 # reaches this branch (in_competition_mode is False there), so its existing
@@ -178,6 +193,7 @@ class NovaCompetitionAgent:
         # `final_diagnosis_*` fields -- those are only populated once observe() later records this
         # DIAGNOSE action (on the NEXT act() call, when the environment's reply arrives), so they
         # would still be stale/unset here.
-        diagnosis_quality = dict(state.pending_diagnosis_quality) if action.action_type == "DIAGNOSE" else None
+        diagnosis_quality = dict(state.pending_diagnosis_quality or {}) if action.action_type == "DIAGNOSE" else None
         return action_to_competition(obs.case_id, action, real_llm_verified=real_llm_verified,
-                                      diagnosis_quality=diagnosis_quality).model_dump()
+                                      diagnosis_quality=diagnosis_quality,
+                                      evidence_assessment=state.evidence_assessment).model_dump()
