@@ -131,7 +131,7 @@ class DoctorAgent:
 
             # 6/7. Deterministic Safety Validation + Structured Action Validation.
             merged_differential = self.safety_validator.merge_differential(
-                llm_output, deterministic_differential, safety_findings,
+                llm_output, deterministic_differential, safety_findings, state=state,
             )
             candidate_pool = build_candidate_pool(candidates)
             result = self.safety_validator.validate_action(
@@ -146,19 +146,27 @@ class DoctorAgent:
                 for d in result.differential
             ]
             if result.action.action_type == "DIAGNOSE":
-                from nova_agent.diagnosis_normalizer import same_diagnosis
-                item = next((d for d in result.differential
-                             if d.diagnosis_id == result.action.key
-                             and same_diagnosis(d.diagnosis_id, result.action.content)), None)
-                if item is None:
-                    item = next((d for d in result.differential
-                                 if same_diagnosis(d.diagnosis_id, result.action.content)), None)
+                from nova_agent.safety_validator import selected_diagnosis_item
+                from nova_agent.knowledge.retrieval import disease_by_id
+                from nova_agent.evidence_grounding import distinct_support_count
+                from nova_agent.resolution import is_resolved
+                item = selected_diagnosis_item(result.action.content, result.differential)
                 from nova_agent.differential import has_positive_diagnostic_support, has_required_diagnostic_context
+                novel_ready = (item is not None and (disease_by_id(item.diagnosis_id) is not None or (
+                    item.confidence_band != 'LOW' and
+                    distinct_support_count(item.supporting_evidence, state) >= get_config().stop_policy.min_evidence_items
+                    and not any(d.dangerous_if_missed and d.diagnosis_id != item.diagnosis_id
+                                and not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)
+                                for d in result.differential))))
                 if (not item or not has_positive_diagnostic_support(item)
-                        or not has_required_diagnostic_context(item, state)):
+                        or not has_required_diagnostic_context(item, state) or not novel_ready):
                     result.action = AgentAction(action_type="DIAGNOSE", key="unknown", content="unknown",
                                                 rationale="Insufficient diagnostic evidence; clinical review required. "
                                                 "Unresolved dangerous alternatives remain in the differential.")
+                else:
+                    # Forced completion can retain a deterministic key with an LLM-proposed
+                    # name. Keep the externally visible action internally consistent.
+                    result.action.key = item.diagnosis_id
             return result.action, llm_output, result.differential
         except Exception:  # noqa: BLE001 - a single bad turn must never kill the whole case/run
             log.exception("decide() failed for case=%s turn=%s; using safe fallback.", state.case_id, state.turn_count)
