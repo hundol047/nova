@@ -1,5 +1,10 @@
 # N.O.V.A. 2026 Doctor Agent
 
+Latest reasoning/evaluation cycle: [implementation, measured results and live-model blockers](docs/evaluation/reasoning_cycle8/REPORT.md).
+History/medication context, grounded quoted evidence, novel-hypothesis handling and a fixed-model
+comparison runner are implemented. External clinical accuracy and competition readiness remain
+unverified; no fixed-model training was performed.
+
 External evidence intake (2026-10-03): [clinical sources, expert-review provenance, 3,370 downloaded benchmark rows, and remaining coverage gaps](research/external_evidence/README.md). Research/evaluation only; no training or clinical accuracy improvement is claimed.
 
 A conversational medical-diagnosis agent (**ASK / EXAM / TEST / DIAGNOSE**) built for the N.O.V.A.
@@ -8,15 +13,14 @@ limited initial presentation toward a differential diagnosis, actively guards ag
 time-critical ("can't-miss") conditions, and always submits a final diagnosis within a hard
 60-turn limit.
 
-Everything below reflects verified, executed behavior (`pytest tests/`, `evaluation.benchmark`,
-`evaluation.ablation`, `evaluation.adversarial`, `scripts/preflight_competition.py`, and a real
-standalone subprocess run of `submission/`) -- see [Known Limitations](#9-known-limitations) for
-what is *not* yet verified.
+Evaluation reports record the commands, provider, data provenance and limitations of each run.
+Older benchmark sections below describe historical snapshots; use the latest linked report for
+current regression results. See [Known Limitations](#9-known-limitations) for unverified behavior.
 
 **Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / test CI**: READY -- 121 unit tests, the full local benchmark suite (tuning, held-out,
-  generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
-  under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
+- **Code / regression**: local non-API software tests and frozen mock replays are recorded in the
+  latest report. The production API test file remains excluded because of a previously observed
+  TestClient hang; a skipped neural test and mock-only tests do not establish full service readiness.
 - **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
   a real model has been observed in this environment (no GPU/API access at implementation time); the
   HTTP client, prompt construction, and parse/repair/fallback path are only unit- and
@@ -644,8 +648,8 @@ backend/app/services/nova_*.py, nova_schemas.py
                   service layer, production_guard, observability) -- see section 8, backend/tests/
                   test_nova_*.py, and docs/NOVA_*.md
 evaluation/       Local benchmark harness: tuning + held-out cases, simulator, benchmark,
-                  ablation, adversarial, tune, scoring, blind v3-v6 (all synthetic vignettes,
-                  never real patient data)
+                  ablation, adversarial, tune, scoring, blind v3-v6 (synthetic vignettes), plus
+                  model_comparison.py for separate public research-benchmark evaluation
 submission/       Standalone, backend-independent deployable package (run.py entrypoint)
 scripts/          build_nova_submission.py, preflight_competition.py, smoke_real_llm.py,
                   load_smoke.py, load_smoke_backend.py, check_eval_leakage.py, check_readme_numbers.py
@@ -653,7 +657,7 @@ docs/nova/        production/ (standalone) architecture/deployment/security/clin
                   operations/runbook docs
 docs/NOVA_*.md    backend/ (integrated) architecture/deployment/security/clinical-safety/
                   operations/runbook docs
-tests/            pytest suite (181 tests, including tests/test_production_*.py)
+tests/            pytest suite (latest executed counts and exclusions in evaluation reports)
 ```
 
 Module-by-module responsibility and full LLM-provider config are documented in

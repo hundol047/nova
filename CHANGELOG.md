@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-03 — grounded reasoning and fixed-model comparison readiness
+
+- Preserve past/family/social history, medication/allergy text, symptom timing and previous hypotheses in the model summary without presenting history as current symptoms.
+- Offer uncompleted legal catalog actions and record short evidence-gap reasons. Ask the model to distinguish primary causes from manifestations without inventing observations.
+- Match novel diagnoses by name, ground LLM evidence in quoted observations, count distinct assertions and preserve abstention for unsupported diagnoses or unresolved dangerous alternatives at forced completion.
+- Add a label-blind direct/full-information/interactive fixed-model comparison runner, integrity/leakage checks and a research-only 59/50/100 external case split. Unreviewed interactive mappings remain blocked.
+- Non-API regression: 699 passed, 1 skipped. Production API tests remain excluded because of the previously observed TestClient hang. Runtime-mutating tests must finish before performance evaluation.
+- No fixed-model training or measured live-model accuracy gain. The model endpoint and official API adapter remain unavailable/unverified; preflight reports NOT READY. See `docs/evaluation/reasoning_cycle8/REPORT.md` for measured mock results and remaining work.
+
 ## 2026-10-03 — preserve assertion boundaries in evidence matching
 
 - Prevent feature overlap from joining unrelated sentences, semicolons or newline-delimited findings; preserve comma-linked modifiers and decimal numbers.
