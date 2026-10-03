@@ -1,5 +1,15 @@
 # Changelog
 
+## Round J / structural deficiency repair
+
+- Preserve observed symptom wording through candidate generation and retain deep KB profiles for core retrieval hits.
+- Recognize objective absence; apply negative penalties after positive evidence saturation.
+- Keep pending results and soft reassurance from silently closing critical alternatives; retain unresolved confirmatory actions.
+- Add top-competitor separation, critical-resolution and specificity utility components; protect minimum workup at stop time.
+- Add 54 fresh synthetic development cases, complete compressed per-turn traces, primary failure attribution and a clinical-depth audit.
+- Round J: 47/52 → 48/52; critical 20/20 unchanged; mean turns 29.59 → 26.19, tests 12.06 → 10.81. No clinical or real-model performance claim.
+- v18 becomes REFERENCE-ONLY; case/manifest/result bytes and original archive retained. No v18 rerun or v19.
+
 ## Round I / verification v10
 
 - Published reasoning freeze `d6e2b84` before authoring 64 new synthetic v18 cases; published case/runner/runtime hashes before the single declared mock run.

@@ -116,10 +116,17 @@ class ActionSelector:
             + w.safety_weight * cand.safety_relevance
             + w.management_relevance_weight * management_relevance
             + w.time_critical_weight * time_critical_bonus
+            + w.top_competitor_weight * cand.top_competitor_separation
+            + w.critical_resolution_weight * cand.critical_resolution_gain
+            + w.specificity_gain_weight * cand.specificity_gain
             - w.turn_cost_weight * cand.turn_cost
             - w.redundancy_penalty * cand.redundancy
         )
         components = {
+            "top_competitor_separation": cand.top_competitor_separation,
+            "critical_resolution_gain": cand.critical_resolution_gain,
+            "specificity_gain": cand.specificity_gain,
+            "decision_changing_value": cand.decision_changing_value,
             "information_gain": cand.information_gain, "diagnostic_discrimination": cand.diagnostic_discrimination,
             "safety_relevance": cand.safety_relevance, "management_relevance": management_relevance,
             "time_critical_bonus": time_critical_bonus, "turn_cost": cand.turn_cost, "redundancy": cand.redundancy,
@@ -168,7 +175,9 @@ class ActionSelector:
         pool_size = get_config().candidate_pool_size
         scored = scored[:pool_size]
 
-        stop_decision = self.stop_policy.evaluate(state, differential, safety_findings, best_info_gain)
+        stop_decision = self.stop_policy.evaluate(state, differential, safety_findings, best_info_gain,
+            best_decision_value=max((c.decision_changing_value for c in raw_candidates), default=0.0)
+                if get_config().competition_retrieval_enabled else None)
 
         top_diagnosis_name = differential[0].diagnosis if differential else "Undifferentiated presentation"
         diagnose_candidate = ScoredCandidate(

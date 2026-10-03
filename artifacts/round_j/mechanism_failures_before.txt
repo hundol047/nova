@@ -1,0 +1,77 @@
+FFFFFF.                                                                  [100%]
+=================================== FAILURES ===================================
+______ test_objective_absence_is_positive_support_for_an_absence_feature _______
+
+    def test_objective_absence_is_positive_support_for_an_absence_feature():
+        s=PatientState(case_id='sign',chief_complaint='breathing discomfort')
+        s.record_exam('lung_auscultation','absent breath sounds; tracheal deviation')
+        _,_,support,contra,_=_score_disease(disease_by_id('tension_pneumothorax'),s)
+>       assert 'absent breath sounds' in support
+E       AssertionError: assert 'absent breath sounds' in ['tracheal deviation', 'tracheal deviation']
+
+tests/test_round_j_mechanisms.py:20: AssertionError
+_________ test_typical_saturation_does_not_hide_new_negative_evidence __________
+
+    def test_typical_saturation_does_not_hide_new_negative_evidence():
+        entry=dict(id='synthetic',typical_features=['nausea','vomiting','fever','rash','headache'],risk_factors=[],confirmatory_findings=[])
+        s=PatientState(case_id='saturation',chief_complaint='nausea vomiting fever rash headache')
+        before=_score_disease(entry,s)[0]
+        s.pertinent_negatives=['fever']
+>       assert _score_disease(entry,s)[0] <= before-1.2
+E       assert 2.5 <= (2.5 - 1.2)
+
+tests/test_round_j_mechanisms.py:31: AssertionError
+__________ test_unavailable_result_does_not_complete_a_safety_workup ___________
+
+    def test_unavailable_result_does_not_complete_a_safety_workup():
+        s=PatientState(case_id='pending',chief_complaint='chest pressure')
+        s.record_test('ecg','result pending');s.record_test('troponin','sample unavailable')
+>       assert not is_resolved('acute_coronary_syndrome',[],s)
+E       AssertionError: assert not True
+E        +  where True = is_resolved('acute_coronary_syndrome', [], PatientState(case_id='pending', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), chief_compl...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False))
+
+tests/test_round_j_mechanisms.py:37: AssertionError
+______ test_soft_reassurance_alone_does_not_resolve_critical_alternative _______
+
+    def test_soft_reassurance_alone_does_not_resolve_critical_alternative():
+        s=PatientState(case_id='soft',chief_complaint='new unilateral weakness')
+        s.record_exam('neuro_exam','normal neurological exam')
+>       assert not is_resolved('ischemic_stroke',['normal neurological exam'],s)
+E       AssertionError: assert not True
+E        +  where True = is_resolved('ischemic_stroke', ['normal neurological exam'], PatientState(case_id='soft', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), chief_complain...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False))
+
+tests/test_round_j_mechanisms.py:43: AssertionError
+_ test_later_specific_symptoms_can_introduce_a_diagnosis_outside_initial_route _
+
+    def test_later_specific_symptoms_can_introduce_a_diagnosis_outside_initial_route():
+        s=PatientState(case_id='late-symptoms',chief_complaint='difficult breathing')
+        s.record_ask('associated_symptoms','Additional symptoms?','tingling around the mouth or fingers')
+        s.record_ask('character','Describe the feeling?','sudden onset intense anxiety or fear')
+        d=DifferentialEngine().update(s)
+>       assert any(x.diagnosis_id=='panic_attack' and x.supporting_evidence for x in d)
+E       assert False
+E        +  where False = any(<generator object test_later_specific_symptoms_can_introduce_a_diagnosis_outside_initial_route.<locals>.<genexpr> at 0x7fd1cceb8520>)
+
+tests/test_round_j_mechanisms.py:51: AssertionError
+________ test_available_discriminator_survives_partial_negative_workup _________
+
+    def test_available_discriminator_survives_partial_negative_workup():
+        s=PatientState(case_id='competing',chief_complaint='dizziness and slurred speech')
+        s.record_test('ct_head','no hemorrhage');s.record_test('glucose_point_of_care','glucose 105 mg/dL')
+        s.record_exam('neuro_exam','focal neurological deficit and ataxia')
+        leading=DifferentialItem(diagnosis='Migraine',diagnosis_id='migraine',rank=1,score=4,score_ratio=.7,urgency='ROUTINE',dangerous_if_missed=False,confidence_band='HIGH',supporting_evidence=['headache'])
+        stroke=DifferentialItem(diagnosis='Stroke',diagnosis_id='ischemic_stroke',rank=2,score=3,score_ratio=.3,urgency='CRITICAL',dangerous_if_missed=True,confidence_band='MEDIUM',supporting_evidence=['slurred speech','ataxia'])
+        candidates=MissingInformationAnalyzer().analyze(s,[leading,stroke],[])
+>       assert any(c.key=='mri_brain' and 'ischemic_stroke' in c.disease_ids_discriminated for c in candidates)
+E       assert False
+E        +  where False = any(<generator object test_available_discriminator_survives_partial_negative_workup.<locals>.<genexpr> at 0x7fd1cd8b42b0>)
+
+tests/test_round_j_mechanisms.py:61: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_round_j_mechanisms.py::test_objective_absence_is_positive_support_for_an_absence_feature
+FAILED tests/test_round_j_mechanisms.py::test_typical_saturation_does_not_hide_new_negative_evidence
+FAILED tests/test_round_j_mechanisms.py::test_unavailable_result_does_not_complete_a_safety_workup
+FAILED tests/test_round_j_mechanisms.py::test_soft_reassurance_alone_does_not_resolve_critical_alternative
+FAILED tests/test_round_j_mechanisms.py::test_later_specific_symptoms_can_introduce_a_diagnosis_outside_initial_route
+FAILED tests/test_round_j_mechanisms.py::test_available_discriminator_survives_partial_negative_workup
+6 failed, 1 passed in 0.21s

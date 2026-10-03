@@ -91,7 +91,8 @@ def _add(pool: dict, entry: dict, source: CandidateSource) -> None:
 
 def _concept_to_kb_entry(concept) -> dict:
     """Adapt an ontology ClinicalConcept into the minimal KB-shaped dict downstream scoring expects.
-    Deliberately shallow: no concept carries discriminating exams/tests or confirmatory findings, so
+    Core catalog hits preserve the complete authoritative KB profile. Tier-2/3 adapters remain
+    deliberately shallow: those concepts carry no discriminating exams/tests or confirmatory findings, so
     those keys stay EMPTY — the concept enters the pool as a low-evidence, named possibility, never
     as if it had deep curated evidence. `id` is namespaced so it can never collide with a real
     34-KB diagnosis id.
@@ -105,6 +106,10 @@ def _concept_to_kb_entry(concept) -> dict:
     curated clinical claims (see nova_agent/open_world.py's design constraints), so it correctly
     gets NO discriminating_questions here -- it can still appear in the differential/LLM context via
     retrieval, but never generates a deterministic action of its own."""
+    if getattr(concept, "kb_id", None):
+        deep = disease_by_id(concept.kb_id)
+        if deep is not None:
+            return deep
     is_tier2_structured = concept.tier.value == "TIER2_STRUCTURED"
     discriminating_questions = (
         [f"associated_symptoms:{feature}"
@@ -400,6 +405,16 @@ def generate_candidates(presentation: ClinicalPresentation,
                 entry = disease_by_id(diagnosis_id)
                 if entry is not None:
                     _add(pool, entry, "objective_finding")
+
+    if competition_retrieval:
+        # Concept routing is intentionally coarse. Preserve observed wording as a separate
+        # path to existing deep profiles; no label-only ontology hit gains clinical evidence.
+        for entry in all_diseases().values():
+            matches = [p for p in entry.get("typical_features", [])
+                       if len(p.split()) >= 3 and not p.lower().startswith(("no ", "without ", "absent "))
+                       and feature_present_with_aliases(p, presentation.evidence_text)]
+            if matches:
+                _add(pool, entry, "symptom_match")
 
     if not pool:
         # Genuinely nothing matched anything at all via symptom/risk/objective evidence -- the

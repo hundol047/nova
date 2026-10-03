@@ -1,0 +1,8 @@
+=== Feature-match specificity audit: 34 Tier-1 diseases ===
+
+0 phrase(s) with NO distinguishing tokens (gate cannot apply -- legacy ratio-only behavior, review by hand):
+
+3 phrase(s) with a THIN distinguishing ratio (covered by the new gate, worth periodic review):
+  gerd                           typical_features       'worse after meals' [reviewed]
+  orthostatic_hypotension        typical_features       'no palpitations before the episode' [reviewed]
+  vasovagal_syncope              typical_features       'no palpitations before the episode' [reviewed]

@@ -27,6 +27,9 @@ from nova_agent.state import PatientState
 
 def is_resolved(diagnosis_id: str, contradictory_evidence: List[str], state: PatientState) -> bool:
     """True if this dangerous diagnosis no longer needs to block a DIAGNOSE / stop decision."""
+    from nova_agent.config import get_config
+    if get_config().competition_retrieval_enabled:
+        return _competition_resolved(diagnosis_id, contradictory_evidence, state)
     if contradictory_evidence:
         # Explicit evidence against it -- resolves a known OR a novel/unknown diagnosis alike.
         return True
@@ -46,3 +49,39 @@ def is_resolved(diagnosis_id: str, contradictory_evidence: List[str], state: Pat
         return True
     done = set(state.completed_examinations) | set(state.completed_tests)
     return set(required).issubset(done)
+
+
+def _competition_resolved(diagnosis_id, contradictory_evidence, state):
+    """Workup addressed != disease excluded. Soft negatives alone never close a danger.
+
+    No knowledge of simulator labels, case IDs or answer order is available here. A performed
+    action with no interpretable result is still unknown. After minimum workup, an evidenced
+    diagnosis lacking its confirmatory findings may still need a remaining discriminator.
+    """
+    import re
+    from nova_agent.differential import _score_disease, _strip_negative_prefix
+    entry = disease_by_id(diagnosis_id)
+    if entry is None:
+        return False
+    required = entry.get("minimum_workup")
+    if required is None:
+        required = list(entry.get("discriminating_exams", [])) + list(entry.get("discriminating_tests", []))
+    results = {**state.physical_examinations, **state.imaging, **state.laboratory_tests}
+    unavailable = re.compile(r"\b(pending|unavailable|unknown|not (?:done|performed|available)|insufficient sample|awaiting)\b", re.I)
+    completed = set(state.completed_examinations) | set(state.completed_tests)
+    if any(k not in completed or not str(results.get(k, '')).strip() or unavailable.search(results[k]) for k in required):
+        return False
+    if not required:
+        return True
+    confirm = set(entry.get("confirmatory_findings", []))
+    remaining = set(entry.get("discriminating_tests", [])) - completed
+    if confirm and remaining:
+        from nova_agent.severity_evidence import GENERIC_PHYSIOLOGIC_SEVERITY_WORDS
+        from nova_agent.matching import content_words
+        _, _, support, _, _ = _score_disease(entry, state)
+        specific = [p for p in support if p in entry.get("typical_features", [])
+                    and not _strip_negative_prefix(p)
+                    and not content_words(p).issubset(GENERIC_PHYSIOLOGIC_SEVERITY_WORDS)]
+        if len(specific) >= 2 and not confirm.intersection(support):
+            return False
+    return True

@@ -7,16 +7,13 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def current():
-    p = json.loads((ROOT/'artifacts/verification/CURRENT_RELEASE.json').read_text())
-    d = json.loads((ROOT/p['current_verification_artifact']).read_text())
-    assert p['current_verification_schema'] == d['schema'] == 'nova-verification-v10'
-    assert p['verified_runtime_sha'] == d['verified_runtime_sha']
-    assert p['current_blind_version'] == d['current_blind_version'] == 'v18'
-    assert 'artifacts/verification/local-release-14e6644-v9.json' in p['previous_verification_artifacts']
+    # Frozen historical release; the current runtime is verified separately by v11.
+    d = json.loads((ROOT/'artifacts/verification/local-release-d6e2b84-v10.json').read_text())
+    assert d['schema'] == 'nova-verification-v10'
     return d
 
 
-def test_v10_current_runtime_archive_and_mirrors_agree():
+def test_historical_v10_archive_and_frozen_hashes_agree():
     d=current(); package=ROOT/d['submission']['zip']
     assert package.stat().st_size == d['submission']['bytes'] < 50_000_000
     assert hashlib.sha256(package.read_bytes()).hexdigest() == d['submission']['sha256']
@@ -28,13 +25,11 @@ def test_v10_current_runtime_archive_and_mirrors_agree():
         for name,h in m['files'].items():
             assert name in {'run.py','requirements.txt'} or name.startswith(('nova_agent/','competition/'))
             assert hashlib.sha256(z.read(name)).hexdigest() == h
-            assert z.read(name) == (ROOT/'submission'/name).read_bytes()
         for name,h in d['runtime_sha256'].items():
-            assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest() == h
             assert hashlib.sha256(z.read(name.removeprefix('submission/'))).hexdigest() == h
 
 
-def test_v10_blind_attempt_manifest_result_and_current_pointer_agree():
+def test_historical_v10_blind_attempt_manifest_and_result_agree():
     d=current(); m=json.loads((ROOT/'evaluation/blind_v18_manifest.json').read_text())
     r=json.loads((ROOT/'artifacts/blind_runs/blind_v18_results.json').read_text())
     a=json.loads((ROOT/'artifacts/blind_runs/blind_v18_attempt.json').read_text())

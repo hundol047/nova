@@ -1,4 +1,4 @@
-> **Current verification: Round I / v10.** [Full report](docs/round_i/FINAL_REPORT.md) · [release pointer](artifacts/verification/CURRENT_RELEASE.json) · [official interface audit](docs/competition/OFFICIAL_INTERFACE_AUDIT.md). Frozen runtime `d6e2b84`; 833 tests passed, 1 skipped. Fresh **v18: 41/58 scored (70.69%), critical 22/25 (88.0%), 3 critical misses**, one declared competition-structure/mock run after freeze. Same-author synthetic evaluation, not independent clinical validation or real-model accuracy. v17 remains reference-only. **Real GPT-OSS and official API NOT VERIFIED; official submission EXTERNAL BLOCKED.** Older benchmark sections below are historical references.
+> **Current development: Round J structural repair.** [Report](docs/round_j/FINAL_REPORT.md) · [release pointer](artifacts/verification/CURRENT_RELEASE.json). Round J synthetic development: 47/52 → 48/52; critical 20/20 retained. v18 is **REFERENCE-ONLY**, preserved and not rerun; no v19 created. Real GPT-OSS / official API remain **NOT VERIFIED / EXTERNAL BLOCKED**. These are same-author mock results, not clinical accuracy.
 
 # N.O.V.A. 2026 Doctor Agent
 
@@ -76,12 +76,13 @@ flowchart TD
 
 ### 2.1 Open-world ontology + optional learning ranker
 
-N.O.V.A. is not limited to a fixed disease list. A **tiered disease universe** — **1,280 curated
-concepts bundled in-repo** (34 Tier-1 deep + 1,246 Tier-2 structured) and a **5,000+ searchable
+N.O.V.A. is not limited to a fixed disease list. A **tiered disease universe** — **1,280 catalog
+concepts bundled in-repo** (34 Tier-1 deep + 1,246 Tier-2 terminology entries) and a **5,000+ searchable
 disease universe** once an operator (or the reproducible synthetic) terminology snapshot is
 installed — sits alongside an **optional** deep-learning retrieval-and-rerank pipeline. N.O.V.A.
-offers a **broad, ontology-backed clinical retrieval + open-world, safety-governed differential
-diagnosis with explicit uncertainty**. It does **not** claim to diagnose "all diseases" or achieve
+offers terminology retrieval alongside a safety-governed differential with explicit uncertainty.
+The Round J depth audit found **zero populated clinical-feature/workup profiles in all 1,246 Tier-2 entries**;
+searchable names are not verified diagnostic coverage. It does **not** claim to diagnose "all diseases" or achieve
 "100% accuracy"; it is **not** a naive 5,000-way classifier, a self-learning system, or a fully
 autonomous diagnostician. Conditions outside its curated knowledge are surfaced as *possible* or
 *unknown*, never forced into a label. Coverage is reported from the actual catalog by

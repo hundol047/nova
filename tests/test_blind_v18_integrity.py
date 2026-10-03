@@ -1,4 +1,5 @@
 """Integrity only: never execute the consumed one-shot benchmark from pytest."""
+import zipfile
 import hashlib
 import json
 from pathlib import Path
@@ -12,12 +13,13 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_v18_case_manifest_runner_and_frozen_runtime_hashes():
     m = json.loads((ROOT/'evaluation/blind_v18_manifest.json').read_text())
-    assert CURRENT_BLIND_VERSION == 'v18' and CURRENT_BLIND_STATUS == 'CURRENT'
+    assert CURRENT_BLIND_VERSION == 'v18' and CURRENT_BLIND_STATUS == 'REFERENCE-ONLY'
     assert 'v17' in reference_only_versions()
     for filename,key in [('blind_cases_v18.py','file_sha256'),('blind_benchmark_v18.py','runner_sha256')]:
         assert hashlib.sha256((ROOT/'evaluation'/filename).read_bytes()).hexdigest() == m[key]
-    for name,digest in m['runtime_sha256'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest() == digest, name
+    with zipfile.ZipFile(ROOT/'artifacts/verification/nova-submission-v10-final.zip') as archive:
+        for name,digest in m['runtime_sha256'].items():
+            assert hashlib.sha256(archive.read(name.removeprefix('submission/'))).hexdigest() == digest, name
     assert len(BLIND_CASES_V18) == m['case_count'] == 64
     assert len({c.case_id for c in BLIND_CASES_V18}) == 64
     assert sum(c.scoring_expected for c in BLIND_CASES_V18) == m['scored_case_count'] == 58

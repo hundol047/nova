@@ -81,6 +81,7 @@ _BODY_REGION_BY_CONCEPT = {
 @dataclass
 class ClinicalPresentation:
     symptoms: List[str] = field(default_factory=list)            # every concept tag that scored
+    evidence_text: List[str] = field(default_factory=list)       # observed symptom wording, not labels
     onset: Optional[str] = None
     duration_hint: Optional[str] = None
     body_regions: List[str] = field(default_factory=list)
@@ -127,6 +128,7 @@ def extract_presentation(raw_text: str, *, past_medical_history: Optional[List[s
 
     return ClinicalPresentation(
         symptoms=symptoms,
+        evidence_text=[raw_text] if raw_text else [],
         onset=onset,
         duration_hint=duration_hint,
         body_regions=body_regions,

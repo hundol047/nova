@@ -143,6 +143,7 @@ class DifferentialItem(BaseModel):
     # never let stable-sort/dict-insertion order (ultimately disease KB file load order) silently
     # pick an arbitrary "winning" diagnosis out of an undifferentiated tie.
     fallback_candidate: bool = False
+    evidence_status: Dict[str, str] = {}
 
 
 def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict[str, ObjectiveFinding],
@@ -177,7 +178,7 @@ def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict
 
 
 def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: List[str],
-                   supporting: List[str], contradictory: List[str], missing: List[str]) -> float:
+                   supporting: List[str], contradictory: List[str], missing: List[str], *, objective: bool = False) -> float:
     """Negation-aware scoring for ONE typical_feature or confirmatory_finding phrase. Shared by
     both loops in _score_disease() below -- confirmatory_findings previously used a naive
     present-or-not check with no negation awareness at all, which let a phrase like "absent breath
@@ -190,7 +191,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         # The phrase itself describes an ABSENCE (e.g. "no chest pain", "absent breath sounds").
         # The patient/exam explicitly denying that underlying thing SUPPORTS this phrase; the
         # underlying thing being explicitly PRESENT instead CONTRADICTS it.
-        if feature_present(underlying, negatives):
+        if feature_present(underlying, negatives) or explicitly_denied_in_findings(underlying, findings):
             supporting.append(phrase)
             return weight
         if feature_present(underlying, findings, scrub_negated_spans=True):
@@ -198,9 +199,9 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
             return -CONTRADICTION_PENALTY
         missing.append(phrase)
         return 0.0
-    if feature_denied(phrase, negatives):
+    if feature_denied(phrase, negatives) or explicitly_denied_in_findings(phrase, findings):
         contradictory.append(phrase)
-        return -CONTRADICTION_PENALTY
+        return -(CONFIRMATORY_WEIGHT if objective else CONTRADICTION_PENALTY)
     if _present_with_aliases(phrase, findings):
         supporting.append(phrase)
         return weight
@@ -287,12 +288,14 @@ def _score_disease(entry: dict, state: PatientState,
     # phrase is still recorded in full for supporting_evidence/missing_discriminative_evidence --
     # only the numeric ranking contribution saturates, clinician-facing evidence text does not.
     typical_feature_score = 0.0
+    typical_penalty = 0.0
     for feature in entry.get("typical_features", []):
         weight = FEATURE_WEIGHT * _specificity_multiplier(feature)
         max_possible += weight
-        typical_feature_score += _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)
-    score += min(typical_feature_score, _TYPICAL_FEATURE_CONTRIBUTION_CAP) \
-        if typical_feature_score > 0 else typical_feature_score
+        delta = _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)
+        typical_feature_score += max(delta, 0.0)
+        typical_penalty += min(delta, 0.0)
+    score += min(typical_feature_score, _TYPICAL_FEATURE_CONTRIBUTION_CAP) + typical_penalty
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
@@ -313,7 +316,7 @@ def _score_disease(entry: dict, state: PatientState,
             # false-positive this closes: a merely-reported PAST diagnosis must never satisfy a
             # confirmatory finding that requires an actual current test/exam to have been performed).
             score += _score_phrase(finding, CONFIRMATORY_WEIGHT, confirmatory_evidence_pool, negatives,
-                                    supporting, contradictory, missing)
+                                    supporting, contradictory, missing, objective=True)
 
     # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
     # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in
@@ -352,6 +355,21 @@ def _score_disease(entry: dict, state: PatientState,
             score -= CONTRADICTION_PENALTY
 
     return score, max(max_possible, 1.0), supporting, contradictory, missing
+
+
+def _evidence_status(entry, state, supporting, contradictory, missing):
+    """Observed states, not a diagnostic probability or an inferred negative test result."""
+    objective = state.objective_findings_text()
+    asked = any(state.question_asked(q) for q in entry.get("discriminating_questions", []))
+    tests_done = bool(set(entry.get("discriminating_tests", [])) & set(state.completed_tests)
+                      or set(entry.get("discriminating_exams", [])) & set(state.completed_examinations))
+    states = {p: "PRESENT" for p in supporting}
+    for p in contradictory:
+        states[p] = "OBJECTIVELY_CONTRADICTED" if explicitly_denied_in_findings(p, objective) else "ABSENT"
+    for p in missing:
+        observed = tests_done if p in entry.get("confirmatory_findings", []) else asked
+        states[p] = "UNKNOWN" if observed else "NOT_ASKED"
+    return states
 
 
 def _confidence_band(score_ratio: float, turn_count: int, supporting_count: int) -> ConfidenceBand:
@@ -430,24 +448,16 @@ class DifferentialEngine:
         top_k = get_config().effective_differential_top_k()
         kept = scored[:top_k]
 
-        # Stage A -- small, fixed must-not-miss defense-in-depth. candidate_generator.py's own
-        # pool already guarantees the same small, fixed CROSS_CUTTING_DANGEROUS_DIAGNOSES list
-        # (~8 ids) is ALWAYS pool-member, regardless of matched evidence; that visibility used to
-        # reach the LLM-facing differential for free, because the pool was always sized <= top_k.
-        # It is no longer guaranteed to be (the pool can legitimately be larger), so this restores
-        # the same guarantee explicitly at differential.py's own size boundary -- deliberately
-        # un-gated by evidence (unlike Stage B below), because this is the same small, fixed, named
-        # list candidate_generator.py already always includes, not an open-ended one.
-        # Both reinjection stages are gated on competition retrieval being enabled: the legacy
-        # (non-competition) path has its own long-verified, byte-identical fixed top_k_differential
-        # (5) size guarantee (tests/test_full_catalog_not_in_prompt.py) that this must not disturb
-        # -- these stages exist to restore a guarantee the LARGER, competition-mode reasoning_top_k
-        # budget was always meant to hold, not to grow the legacy differential past its own bound.
+        # Retention is separate from score: reinject only evidenced, unresolved dangers.
+        # The fixed safety pool remains available upstream, but bare dangerous labels do not
+        # receive permanent active-differential slots or a diagnostic likelihood bonus.
         by_id = {t[2]["id"]: t for t in scored}
         kept_ids = {t[2]["id"] for t in kept}
+        from nova_agent.resolution import is_resolved
         must_not_miss_missing = [
             by_id[did] for did in CROSS_CUTTING_DANGEROUS_DIAGNOSES
-            if did in by_id and did not in kept_ids and not by_id[did][4]
+            if did in by_id and did not in kept_ids and by_id[did][3] and not by_id[did][4]
+            and not is_resolved(did, by_id[did][4], state)
         ] if _cfg.competition_retrieval_enabled else []
         if must_not_miss_missing:
             # Swap-eligible entries are restricted to ones with NO genuine supporting evidence of
@@ -494,6 +504,7 @@ class DifferentialEngine:
         dangerous_missing = [
             t for t in scored[top_k:]
             if t[2].get("dangerous") and t[3] and not t[4] and t[2]["id"] not in kept_ids
+            and not is_resolved(t[2]["id"], t[4], state)
         ] if _cfg.competition_retrieval_enabled else []
         if dangerous_missing:
             # Same swap-eligibility restriction as Stage A: only a ZERO-real-evidence non-dangerous
@@ -523,6 +534,7 @@ class DifferentialEngine:
                 dangerous_if_missed=bool(entry.get("dangerous", False)), confidence_band=band,
                 candidate_sources=sources_by_id.get(entry["id"], []),
                 fallback_candidate=is_zero_evidence_presentation,
+                evidence_status=_evidence_status(entry, state, supporting, contradictory, missing),
             ))
 
         state.current_differential = [

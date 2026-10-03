@@ -43,7 +43,8 @@ class StopDecision(BaseModel):
 
 class StopPolicy:
     def evaluate(self, state: PatientState, differential: List[DifferentialItem],
-                 safety_findings: List[SafetyFinding], best_info_gain: Optional[float] = None) -> StopDecision:
+                 safety_findings: List[SafetyFinding], best_info_gain: Optional[float] = None,
+                 best_decision_value: Optional[float] = None) -> StopDecision:
         cfg = get_config().stop_policy
 
         if state.remaining_turns <= cfg.forced_diagnose_remaining_turns:
@@ -137,6 +138,21 @@ class StopPolicy:
             (readiness_score >= cfg.diagnose_threshold and gap_ratio >= cfg.min_gap_rank1_rank2)
             or no_more_value
         )
+
+        if best_decision_value is not None:
+            # An evidenced critical Top-5 alternative with workup remaining must not be
+            # forgotten simply because its heuristic band is LOW or one soft negative exists.
+            pending_critical = any(d.dangerous_if_missed and d.supporting_evidence
+                and not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)
+                for d in differential[:5])
+            from nova_agent.knowledge.retrieval import disease_by_id
+            entry = disease_by_id(top.diagnosis_id) or {}
+            objective_confirmed = bool(set(entry.get("confirmatory_findings", [])) & set(top.supporting_evidence))
+            raw_gap = top.score - second.score if second else top.score
+            mature_low_value = (objective_confirmed and raw_gap >= 2.5
+                                and best_decision_value <= 0.15 and enough_turns_gathered)
+            should_diagnose = (should_diagnose or mature_low_value) and not (
+                dangerous_alternative_exists or pending_critical)
 
         if should_diagnose:
             reason = ("Top diagnosis is well-supported, clearly separated from the next candidate, "

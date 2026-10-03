@@ -49,6 +49,10 @@ class CandidateInfo(BaseModel):
     information_gain: float
     redundancy: float
     turn_cost: int
+    top_competitor_separation: float = 0.0
+    critical_resolution_gain: float = 0.0
+    specificity_gain: float = 0.0
+    decision_changing_value: float = 0.0
 
 
 def _diagnosis_prior(differential: List[DifferentialItem]) -> Dict[str, float]:
@@ -224,6 +228,23 @@ class MissingInformationAnalyzer:
             # confidence-weighted differential, not how highly-ranked the touched diseases happen
             # to be (that was the previous, incorrect implementation).
             cand.information_gain = round(_expected_information_gain(prior, affected_ids), 3)
+            if cfg.competition_retrieval_enabled:
+                leaders = [d for d in top_k[:3] if d.supporting_evidence or d.rank == 1]
+                pairs = [(a, b) for i, a in enumerate(leaders) for b in leaders[i+1:]]
+                cand.top_competitor_separation = (
+                    sum((a.diagnosis_id in affected_ids) != (b.diagnosis_id in affected_ids) for a,b in pairs)
+                    / len(pairs) if pairs else 0.0)
+                touched_leader = any(d.diagnosis_id in affected_ids for d in leaders)
+                # Inverse metadata coverage is a transparent specificity proxy, not an outcome
+                # likelihood. It prevents "relevant to everyone" from meaning "separates everyone".
+                cand.specificity_gain = (1.0 / len(affected_ids) if affected_ids and touched_leader
+                                         and cand.action_type in {"EXAM", "TEST"} else 0.0)
+                unresolved = [d for d in top_k[:5] if d.diagnosis_id in affected_ids
+                              and d.dangerous_if_missed and d.supporting_evidence
+                              and not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)]
+                cand.critical_resolution_gain = max((1.0 / max(d.rank, 1) for d in unresolved), default=0.0)
+                cand.decision_changing_value = max(cand.top_competitor_separation,
+                                                  cand.critical_resolution_gain, cand.specificity_gain)
             cand.redundancy = 0.0  # already-performed items were excluded above, never generated here
 
         return all_candidates

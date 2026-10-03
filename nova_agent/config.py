@@ -62,6 +62,9 @@ class UtilityWeights:
             - rho   * redundancy
     """
 
+    top_competitor_weight: float = field(default_factory=lambda: _float_env("NOVA_TOP_COMPETITOR_WEIGHT", 1.2))
+    critical_resolution_weight: float = field(default_factory=lambda: _float_env("NOVA_CRITICAL_RESOLUTION_WEIGHT", 0.8))
+    specificity_gain_weight: float = field(default_factory=lambda: _float_env("NOVA_SPECIFICITY_GAIN_WEIGHT", 0.5))
     info_gain_weight: float = field(default_factory=lambda: _float_env("NOVA_INFO_GAIN_WEIGHT", 1.0))
     discrimination_weight: float = field(default_factory=lambda: _float_env("NOVA_DISCRIMINATION_WEIGHT", 1.2))
     safety_weight: float = field(default_factory=lambda: _float_env("NOVA_SAFETY_WEIGHT", 1.5))

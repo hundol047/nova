@@ -73,7 +73,9 @@ def test_competition_retrieval_adds_provenance_tagged_ontology_retrieval_candida
                               "progressive hearing loss and ringing in the ears with vertigo", 150, 10)
     assert pool, "competition_retrieval must be able to add ontology_retrieval-sourced candidates"
     for candidate in pool.values():
-        assert candidate.id.startswith("onto::"), "ontology-sourced candidates must use the onto:: namespace"
+        from nova_agent.knowledge.retrieval import disease_by_id
+        if not candidate.id.startswith("onto::"):
+            assert candidate.entry == disease_by_id(candidate.id), "core retrieval must preserve the complete deep profile"
         assert candidate.sources == ["ontology_retrieval"]
 
 

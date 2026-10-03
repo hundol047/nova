@@ -1,0 +1,9 @@
+{
+  "absent_breath_sounds_supported": false,
+  "pending_minimum_workup_resolved": true,
+  "contradiction_penalty_hidden_by_cap": true,
+  "scores": [
+    2.5,
+    2.5
+  ]
+}

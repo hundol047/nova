@@ -1,3 +1,5 @@
+> Historical v10 handoff. The current structural-repair release is described in [Round J](../round_j/FINAL_REPORT.md) and the [release pointer](../../artifacts/verification/CURRENT_RELEASE.json). v18 is now REFERENCE-ONLY.
+
 # 주최 측 연동 정보 인계
 
 현재 로컬 릴리스는 `d6e2b84aa2bb90c198fae39dade3870d6575c6f4` 런타임을 검증합니다.
