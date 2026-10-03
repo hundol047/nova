@@ -37,3 +37,35 @@ def test_noncurrent_or_negated_number_is_not_a_current_measurement(text):
     finding = result({'potassium': text})
     assert finding.value is None
     assert finding.interpretation == 'unknown'
+
+
+@pytest.mark.parametrize('text,value,interpretation', [
+    ('hemoglobin has fallen to 8.2 g/dL', 8.2, 'low'),
+    ('hemoglobin dropped to 14.1 g/dL', 14.1, 'normal'),
+    ('Hb decreased to 82 g/L', 8.2, 'low'),
+    ('hemoglobin rose to 9.3 g/dL', 9.3, 'low'),
+])
+def test_trend_endpoint_uses_measured_value_and_unit(text, value, interpretation):
+    finding = result({'cbc': text}, 'lab.hemoglobin')
+    assert finding.value == pytest.approx(value)
+    assert finding.interpretation == interpretation
+
+
+@pytest.mark.parametrize('text', [
+    'if hemoglobin falls to 8.2 g/dL',
+    'hemoglobin could have fallen to 8.2 g/dL',
+    'expected hemoglobin dropped to 8.2 g/dL',
+    'historical hemoglobin fell to 8.2 g/dL',
+    'no hemoglobin decrease; sodium 128',
+    'hemoglobin dropped to an unspecified value; potassium 6.1',
+    'hemoglobin dropped to 82 mmol/L',
+])
+def test_unmeasured_or_invalid_trend_endpoint_stays_unknown(text):
+    finding = result({'cbc': text}, 'lab.hemoglobin')
+    assert finding.value is None
+    assert finding.interpretation == 'unknown'
+
+
+def test_trend_endpoint_conflicts_are_not_resolved_by_order():
+    finding = result({'cbc': 'Hb dropped to 8.2 g/dL; Hb 13.4 g/dL'}, 'lab.hemoglobin')
+    assert finding.interpretation == 'unknown'

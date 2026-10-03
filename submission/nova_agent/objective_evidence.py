@@ -84,7 +84,10 @@ def _panel_pattern(*names: str) -> re.Pattern:
     # Callers supply literals, never regex fragments. A value must follow this analyte,
     # not an intervening analyte name, reference range, or an unspecified pending value.
     alternation = "|".join(re.escape(n) for n in sorted(names, key=len, reverse=True))
-    return re.compile(rf"\b(?:{alternation})\b\s*(?:is\s+|of\s+|[:=]\s*)?(\d+(?:\.\d+)?)(?![\d.])", re.IGNORECASE)
+    # A reported change still contains a measured endpoint. Interpret its NUMBER, not
+    # the word "fallen" as low: a fall can end within the normal range.
+    connector = r"(?:is\s+|of\s+|[:=]\s*|(?:has\s+)?(?:fallen|fell|dropped|decreased|risen|rose|increased)\s+to\s+)?"
+    return re.compile(rf"\b(?:{alternation})\b\s*{connector}(\d+(?:\.\d+)?)(?![\d.])", re.IGNORECASE)
 
 
 LAB_SPECS: Dict[str, LabSpec] = {
@@ -251,7 +254,7 @@ def _current_result_texts(raw_texts: List[str]) -> List[str]:
     return [clause for text in raw_texts
             for clause in re.split(r"[;,\n]|\b(?:but|however)\b", text, flags=re.I)
             if not is_uncertain(clause) and not re.search(r"\b(?:previously|historical|baseline|last (?:year|month|week)|"
-                             r"prior result|old result|reference range)\b", clause, re.I)]
+                             r"prior result|old result|reference range|if|will|would|could|should|expected|predicted)\b", clause, re.I)]
 
 
 def _extract_numeric_values(spec: LabSpec, raw_texts: List[str]) -> set[float]:
