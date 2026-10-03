@@ -1,0 +1,24 @@
+{
+  "Top1": {
+    "numerator": 41,
+    "denominator": 58,
+    "rate": 0.7068965517241379
+  },
+  "Top3": {
+    "numerator": 44,
+    "denominator": 58,
+    "rate": 0.7586206896551724
+  },
+  "Top5": {
+    "numerator": 47,
+    "denominator": 58,
+    "rate": 0.8103448275862069
+  },
+  "Top10": "NOT_RECORDED",
+  "MRR": "NOT_RECORDED",
+  "median_true_rank": "NOT_IDENTIFIABLE_FROM_TRUNCATED_TOP5",
+  "observed_rank_count": 47,
+  "scope": "Final active differential Top5; distinct from final diagnosis accuracy.",
+  "source_sha256": "05809b7ae082627021fb0b00588cebee6dd8086f92ffd50ee7eb2e2e86a079c8",
+  "no_new_diagnostic_execution": true
+}

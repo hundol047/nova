@@ -1,7 +1,7 @@
 {
   "schema": "nova-verification-v10",
   "status": "LOCAL_VERIFICATION_COMPLETED_EXTERNAL_BLOCKED",
-  "generated_utc": "2026-10-03T10:58:42.625959+00:00",
+  "generated_utc": "2026-10-03T12:31:06.005594+00:00",
   "verified_runtime_sha": "d6e2b84aa2bb90c198fae39dade3870d6575c6f4",
   "runtime_changed_after_freeze": false,
   "runtime_sha256": {
@@ -197,7 +197,33 @@
       "n_scored_cases": 58,
       "n_critical_cases": 25
     },
-    "result_sha256": "05809b7ae082627021fb0b00588cebee6dd8086f92ffd50ee7eb2e2e86a079c8"
+    "result_sha256": "05809b7ae082627021fb0b00588cebee6dd8086f92ffd50ee7eb2e2e86a079c8",
+    "ranking_observed": {
+      "Top1": {
+        "numerator": 41,
+        "denominator": 58,
+        "rate": 0.7068965517241379
+      },
+      "Top3": {
+        "numerator": 44,
+        "denominator": 58,
+        "rate": 0.7586206896551724
+      },
+      "Top5": {
+        "numerator": 47,
+        "denominator": 58,
+        "rate": 0.8103448275862069
+      },
+      "Top10": "NOT_RECORDED",
+      "MRR": "NOT_RECORDED",
+      "median_true_rank": "NOT_IDENTIFIABLE_FROM_TRUNCATED_TOP5",
+      "observed_rank_count": 47,
+      "scope": "Final active differential Top5; distinct from final diagnosis accuracy.",
+      "source_sha256": "05809b7ae082627021fb0b00588cebee6dd8086f92ffd50ee7eb2e2e86a079c8",
+      "no_new_diagnostic_execution": true
+    },
+    "execution_checkout_sha": "6f7bd2748c29b46d762953477ace316dc83bb75c",
+    "result_published_sha": "bebe240d4d6a55e20f715cffe51ee40d157b753b"
   },
   "v17_cases_changed": false,
   "v17_rerun": false,
@@ -206,8 +232,8 @@
     "failed": 0,
     "skipped": 1,
     "finalized": true,
-    "source": "Parsed executed pytest JUnit XML",
-    "junit_sha256": "e4f444059508078401e89f9562d018927a0657c845a28a3b55aaf4ecb804cc27",
+    "source": "Final completion pass: executed full pytest JUnit XML",
+    "junit_sha256": "49ed17e154ad77cd6992c49bffe0aa7405c2948e6b02f2748312f49cf5a81e2d",
     "skip_reasons": [
       "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"
     ]
@@ -353,12 +379,13 @@
     "unreachable_fails_closed": "PASS",
     "local_protocol_stub": "PASS; NOT real model verification",
     "real_model": "NOT VERIFIED",
-    "official_api": "NOT VERIFIED"
+    "official_api": "NOT VERIFIED",
+    "endpoint_not_configured": "PASS / zero network attempts, empty stdout, exit 1"
   },
   "submission": {
-    "zip": "artifacts/verification/nova-submission-v10.zip",
-    "bytes": 257390,
-    "sha256": "6b0a376df6787a73c70b1ec7c0afdbcb55f3b434b55773020790581529369ed3",
+    "zip": "artifacts/verification/nova-submission-v10-final.zip",
+    "bytes": 257389,
+    "sha256": "02f7e6edf06f14fba324d31f5fccb228d4d3071d71871e63a625e7cfc8520fb7",
     "file_count": 77,
     "under_50mb": true,
     "source_sync": true,
@@ -367,7 +394,10 @@
     "dependencies": [
       "pydantic>=2.6,<3"
     ],
-    "default_provider": "competition"
+    "default_provider": "competition",
+    "built_at_utc": "2026-10-03T12:28:52.772921+00:00",
+    "built_after_blind": true,
+    "previous_zip": "artifacts/verification/nova-submission-v10.zip"
   },
   "regression_competition": {
     "tuning": {
@@ -855,5 +885,198 @@
     "Round I positional dizziness and long-tail retrieval failures remain; Round G systemic-infection miss remains.",
     "Forced final labels under the provisional protocol must not be read as confident clinical diagnoses.",
     "No model training or calibrated probability/99.99% accuracy claim."
-  ]
+  ],
+  "routing": {
+    "Known-route success rate": 1.0,
+    "UNKNOWN fallback rate": 1.0,
+    "Specific-over-generic accuracy": 1.0,
+    "Multi-concept recall": 1.0,
+    "Critical concept recall": 1.0,
+    "End-to-end candidate-generation rate": 1.0
+  },
+  "final_local_completion": {
+    "runtime_unchanged": true,
+    "v18_rerun": false,
+    "v18_result_preserved": true,
+    "round_i_preserved": true,
+    "preflight_attempts": 0,
+    "standalone_unconfigured": {
+      "status": "PASS",
+      "returncode": 1,
+      "stdout_empty": true,
+      "stderr_contains_not_configured": true,
+      "network_connect_attempts": 0,
+      "pythonpath_cleared": true,
+      "provider": "competition",
+      "isolated_package": true,
+      "probe": "socket.connect trap in isolated run.py subprocess"
+    },
+    "regression_artifacts": "artifacts/final_local_pass/regression",
+    "regression_results": {
+      "tuning": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 22,
+        "median_turns": 24.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.125,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 6.875,
+        "average_exam_count": 6.125,
+        "average_test_count": 8.0,
+        "utility_score_proxy": 0.72375,
+        "n_cases": 8,
+        "n_scored_cases": 8,
+        "n_critical_cases": 6
+      },
+      "held_out": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 0.9444444444444444,
+        "unscored_case_names": [
+          "ChestPain03_Ambiguous",
+          "Headache02_InsufficientInfo",
+          "Unknown01_UnmappedComplaint"
+        ],
+        "unsupported_case_success_rate": 1.0,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 20.27777777777778,
+        "median_turns": 20.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.4444444444444444,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 7.333333333333333,
+        "average_exam_count": 5.666666666666667,
+        "average_test_count": 6.277777777777778,
+        "utility_score_proxy": 0.7194444444444444,
+        "n_cases": 18,
+        "n_scored_cases": 15,
+        "n_critical_cases": 13
+      },
+      "generalization_v2": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 23.666666666666668,
+        "median_turns": 23.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.3333333333333333,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 7.777777777777778,
+        "average_exam_count": 6.444444444444445,
+        "average_test_count": 8.444444444444445,
+        "utility_score_proxy": 0.6966666666666667,
+        "n_cases": 18,
+        "n_scored_cases": 18,
+        "n_critical_cases": 5
+      },
+      "stress": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 22.375,
+        "median_turns": 23.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.375,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 7.375,
+        "average_exam_count": 5.75,
+        "average_test_count": 8.25,
+        "utility_score_proxy": 0.7575000000000001,
+        "n_cases": 8,
+        "n_scored_cases": 8,
+        "n_critical_cases": 5
+      },
+      "dev_round_d": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 0.8571428571428571,
+        "unscored_case_names": [
+          "Dev04_ZeroEvidenceVagueMalaise"
+        ],
+        "unsupported_case_success_rate": 1.0,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 24.142857142857142,
+        "median_turns": 23,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.8571428571428572,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 8.428571428571429,
+        "average_exam_count": 6.428571428571429,
+        "average_test_count": 8.285714285714286,
+        "utility_score_proxy": 0.5228571428571429,
+        "n_cases": 7,
+        "n_scored_cases": 6,
+        "n_critical_cases": 3
+      },
+      "dev_round_e": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 0.8571428571428571,
+        "unscored_case_names": [
+          "DevE06_ZeroEvidenceTerminalBehavior"
+        ],
+        "unsupported_case_success_rate": 1.0,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 22.714285714285715,
+        "median_turns": 21,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.7142857142857143,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 8.285714285714286,
+        "average_exam_count": 6.285714285714286,
+        "average_test_count": 7.142857142857143,
+        "utility_score_proxy": 0.5942857142857143,
+        "n_cases": 7,
+        "n_scored_cases": 6,
+        "n_critical_cases": 5
+      }
+    },
+    "routing": {
+      "Known-route success rate": 1.0,
+      "UNKNOWN fallback rate": 1.0,
+      "Specific-over-generic accuracy": 1.0,
+      "Multi-concept recall": 1.0,
+      "Critical concept recall": 1.0,
+      "End-to-end candidate-generation rate": 1.0
+    },
+    "workflow_runs": {
+      "scope": "Target branch workflow runs; all events",
+      "source_url": "https://api.github.com/repos/hundol047/nova/actions/runs?branch=offline%2Fnova-competition-agent-optimization&per_page=100",
+      "observed_utc": "2026-10-03T12:29:33.286Z",
+      "total_runs": 4,
+      "run_ids": [
+        36853770462,
+        36853323647,
+        36803318412,
+        36802858254
+      ],
+      "latest_created_at": "2026-10-01T11:11:08Z",
+      "new_runs_since_2026_10_03": 0,
+      "workflow_dispatch_requested": false
+    },
+    "organizer_handoff": "docs/competition/ORGANIZER_HANDOFF.md"
+  }
 }

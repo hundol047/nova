@@ -1,11 +1,15 @@
-# N.O.V.A. FINAL COMPETITION-INTEGRATION REPORT
+# N.O.V.A. FINAL LOCAL RELEASE REPORT
 
 로컬 개선·검증·제출 패키지 작업을 완료했습니다. 실제 모델과 공식 API 연동은 외부 정보가 없어 **EXTERNAL BLOCKED**입니다. **새 v18 정답률은 70.69%, 위험 사례 정답률은 88.0%이며 위험 사례 3개를 놓쳤습니다.** 개발군의 개선을 실제 임상 성능으로 해석하지 않습니다.
 
-BRANCH: `offline/nova-competition-agent-optimization`  
-FINAL REASONING SHA: `d6e2b84aa2bb90c198fae39dade3870d6575c6f4`  
-v18 AUTHORING SHA: `6f7bd2748c29b46d762953477ace316dc83bb75c`  
-FINAL REMOTE SHA / LOCAL == REMOTE: 최종 push 후 실제 조회한 값은 전달 메시지에 기록합니다. 이 문서와 아래 증거는 최종 결과 커밋에 포함됩니다. Main 병합은 하지 않습니다.
+BRANCH: `offline/nova-competition-agent-optimization`
+FINAL REASONING SHA: `d6e2b84aa2bb90c198fae39dade3870d6575c6f4`
+v18 AUTHORING SHA: `6f7bd2748c29b46d762953477ace316dc83bb75c`
+BLIND v18 RUN CHECKOUT SHA: `6f7bd2748c29b46d762953477ace316dc83bb75c` (작성 커밋에서 실행)
+v18 RESULT PUBLICATION SHA: `bebe240d4d6a55e20f715cffe51ee40d157b753b`
+FINAL HEAD / LOCAL == REMOTE: 이번 결과 보완 커밋 push 후 실제 조회값은 최종 전달 메시지에 기록합니다. Main 병합은 하지 않습니다.
+
+이번 최종 완료 점검은 문서와 결과 아티팩트만 보완했습니다. 기존 v18의 첫 실행은 2026-10-03 10:49:58 UTC에 시작해 10:51:33 UTC에 완료됐습니다. 이를 다시 실행하지 않았으며 진단 런타임, 사례, manifest, 실행 표식, 원본 결과·출력, Round I before/after 및 공식 감사 문서는 바이트 그대로 보존했습니다. 이전 결과 push가 미완료였던 부분은 위 결과 게시 커밋으로 복구했습니다.
 
 ## OFFICIAL DOCUMENTATION
 
@@ -90,29 +94,41 @@ Retrieval regression: **NO**. Chief-only R@20 56.8%, R@50 61.4%; chief+history 7
 | Critical recall | **22/25 = 88.0%** |
 | Critical miss | **3/25 = 12.0%** |
 | Average turns | 33.578125 |
+| Median turns | 36.0 |
+| Average ASK | 9.578125 |
+| Average EXAM | 8.875 |
 | Average TEST | 14.125 |
 | Malformed / duplicate | 0 / 0 |
+| Failed diagnosis rate | 0 |
+| Unnecessary-test proxy | 5.515625 tests/case; 임상적 불필요 검사율이 아님 |
+| Final active Top1 / Top3 / Top5 | 41/58 (70.69%) / 44/58 (75.86%) / 47/58 (81.03%) |
+| Top10 / MRR / median true rank | 미기록: 원본은 Top5만 보존하므로 전체 순위를 복원할 수 없음 |
 | Run count | **1** |
 | Case SHA-256 | `4444c4c8b8eede5534cf2f063a19a8d3d8687943639dc442d159657412f12980` |
 | Manifest SHA-256 | `304d6b48c6e3656f8a7e0ffbbb83b6814bddf263490c4e1a6376598d870fba71` |
 
+**FRESH BLIND v18 / COMPETITION-STRUCTURE / MOCK-LLM / SYNTHETIC HOLDOUT / NOT INDEPENDENT CLINICAL VALIDATION**
+
 코드 고정 커밋을 원격에 게시한 뒤 새 문장을 작성했고, 정답 식별자·스키마·중복 검증 후 사례·실행기·런타임 해시를 동결해 게시했습니다. 원자적 실행 표식을 만든 다음 한 번 실행했습니다. 기존 v17 문장과 결과로 조정하지 않았으며 v17 파일/결과는 원본 그대로입니다. 같은 개발자가 작성한 합성 평가로, 외부 독립 임상 검증이나 전문가 정답 검토는 아닙니다. 모델 학습도 하지 않았습니다.
 
-17개 채점 오답 모두 `blind_v18_failure_review.json`에 남겼습니다. 위험 오답은 긴장성 기흉 1건과 뇌졸중 2건입니다. 세 사례 모두 정답이 Top5에 있었으나 최종 선택되지 않았고, 뇌졸중 2건에서는 준비된 MRI 결과를 요청하지 않았습니다. 이 관찰만으로 정확한 점수 원인을 확정하지 않았습니다. 검색 내부 단계가 없는 holdout 기록에서 검색 실패라고 단정하지 않습니다. v18을 재실행하거나 결과에 맞춰 런타임을 수정하지 않았습니다.
+17개 채점 오답 모두 `blind_v18_failure_review.json`에 남겼습니다. 새 지시에 맞춰 사례 ID·정답·최종 선택·위험 여부·검색/재정렬/활성 후보 존재·최종 순위·추상 분류만 표기했습니다. 검색/재정렬은 NOT_RECORDED, Top5에 보이지 않는 활성 후보는 NOT_OBSERVED_IN_CAPTURED_TOP5로 남겼습니다. 전체 Top25 탈락을 단정하지 않았습니다. 위험 오답은 긴장성 기흉 1건과 뇌졸중 2건입니다. 세 사례 모두 정답이 Top5에 있었으나 최종 선택되지 않았고, 뇌졸중 2건에서는 준비된 MRI 결과를 요청하지 않았습니다. 이 관찰만으로 정확한 점수 원인을 확정하지 않았습니다. 검색 내부 단계가 없는 holdout 기록에서 검색 실패라고 단정하지 않습니다. v18을 재실행하거나 결과에 맞춰 런타임을 수정하지 않았습니다.
 
 비채점 6건의 `unsupported_case_success_rate=1.0`은 루프가 종료됐다는 기존 지표일 뿐, 올바른 임상 판단·안전한 기권 성공률이 아닙니다. 합성 기본 응답의 부정/정상 가정과 문자열 정답 매칭도 한계입니다.
 
 ## SUBMISSION
 
-ZIP: `artifacts/verification/nova-submission-v10.zip`  
-Size: **257390 bytes**, 77 archive entries including MANIFEST  
-SHA-256: `6b0a376df6787a73c70b1ec7c0afdbcb55f3b434b55773020790581529369ed3`
+ZIP: `artifacts/verification/nova-submission-v10-final.zip`
+Size: **257389 bytes**, 77 archive entries including MANIFEST
+SHA-256: `02f7e6edf06f14fba324d31f5fccb228d4d3071d71871e63a625e7cfc8520fb7`
 
 Under 50MB: YES (<50,000,000 bytes). Runtime sync: PASS. Secret scan: PASS. `run.py`, `requirements.txt` 포함. 패키지는 코어/어댑터와 필수 파일만 포함하며 learning/web/frontend/backend/가중치는 없습니다. 추가 의존성 없이 pydantic만 필요합니다. PYTHONPATH를 지운 격리 복사본으로 mock 전체 루프, 연결 실패 시 stdout 차단·비정상 종료, 로컬 HTTP stub을 검증했습니다.
 
-MOCK LOOP: PASS  
-LOCAL PROTOCOL STUB: PASS — 실제 모델 검증 아님  
-REAL MODEL: NOT VERIFIED  
+최종 ZIP은 v18 실행 완료 뒤 2026-10-03 12:28:52 UTC에 재빌드했습니다. 이전 `nova-submission-v10.zip`은 역사 파일로 그대로 보존하며, 제출 대상으로 가리키는 경로는 위 `-final.zip`입니다. 두 파일의 임상 런타임은 같고 빌드 메타데이터가 다릅니다.
+
+MOCK LOOP: PASS
+LOCAL PROTOCOL STUB: PASS — 실제 모델 검증 아님
+ENDPOINT NOT CONFIGURED: PASS — 격리 run.py에서 socket 연결 시도 0회, 빈 stdout, exit 1
+REAL MODEL: NOT VERIFIED
 OFFICIAL API: NOT VERIFIED
 
 v10은 ZIP 파일 수를 실제 아카이브 항목에서 집계합니다. 이전 v9 기록의 파일 수는 테스트 이름 수를 잘못 사용한 값이므로 현재 패키지의 근거로 사용하지 않습니다. 역사 아카이브/기록은 보존했습니다.
@@ -136,6 +152,14 @@ Schema: **nova-verification-v10**. Runtime SHA: `d6e2b84aa2bb90c198fae39dade3870
 | `tests/test_round_i_integration.py`, `test_blind_v18_integrity.py`, `test_verification_v10_consistency.py`와 역사 테스트 | 재시도·부정·사례 격리·동결/아카이브 무결성 회귀 |
 | `README.md`, `CHANGELOG.md`, `docs/competition/`, `docs/round_i/`, `artifacts/` | 실제 성능, 구현 범위, 오답, 외부 제약 공개 |
 
+## FINAL COMPLETION VERIFICATION
+
+최종 완료 점검에서도 전체 테스트 **833 passed / 0 failed / 1 skipped**입니다. Held-out/generalization/stress/adversarial/failure-analysis/retrieval/routing/specificity 명령을 재실행했고 모두 정상 종료했습니다. 근거는 `artifacts/final_local_pass/`에 분리해 기존 Round I 기록을 덮어쓰지 않았습니다. 공식 preflight와 smoke는 NOT_CONFIGURED, 시도 0회로 종료했습니다.
+
+GitHub Actions는 명시적으로 실행하지 않았습니다. API의 전체 event 조회 기준 이 브랜치 기존 실행 4개는 모두 2026-10-01 기록이며, 2026-10-03 새 실행은 **0개**입니다. 조회 시점과 ID는 `workflows_before_push.json`에 기록했고 최종 push 뒤 다시 확인합니다.
+
+주최 측 endpoint/token/schema를 받은 뒤의 절차는 [ORGANIZER_HANDOFF.md](../competition/ORGANIZER_HANDOFF.md)에 정리했습니다. 이번 작업에서 v19나 새 최적화는 만들지 않았습니다.
+
 ## REMAINING EXTERNAL BLOCKERS / 다음 우선순위
 
 1. 공식 참가자 API/입출력/run.py 규격 및 abstention 허용 여부 확보 → 경계만 변경하고 공식 예제 계약 테스트.
@@ -145,9 +169,9 @@ Schema: **nova-verification-v10**. Runtime SHA: `d6e2b84aa2bb90c198fae39dade3870
 
 ## FINAL STATUS
 
-Local software: **READY — 로컬 빌드·회귀·패키지 수준**  
-Real gpt-oss integration: **NOT VERIFIED**  
-Official API integration: **NOT VERIFIED**  
+Local software: **READY — 로컬 빌드·회귀·패키지 수준**
+Real gpt-oss integration: **NOT VERIFIED**
+Official API integration: **NOT VERIFIED**
 Official submission: **EXTERNAL BLOCKED**
 
 99.99%/100% 또는 임상 사용 준비 완료라고 주장할 근거는 없습니다.

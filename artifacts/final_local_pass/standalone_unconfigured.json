@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "returncode": 1,
+  "stdout_empty": true,
+  "stderr_contains_not_configured": true,
+  "network_connect_attempts": 0,
+  "pythonpath_cleared": true,
+  "provider": "competition",
+  "isolated_package": true,
+  "probe": "socket.connect trap in isolated run.py subprocess"
+}

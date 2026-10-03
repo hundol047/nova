@@ -1,0 +1,17 @@
+{
+  "reference_result_commit": "bebe240d4d6a55e20f715cffe51ee40d157b753b",
+  "preserved_sha256": {
+    "evaluation/blind_cases_v18.py": "4444c4c8b8eede5534cf2f063a19a8d3d8687943639dc442d159657412f12980",
+    "evaluation/blind_v18_manifest.json": "304d6b48c6e3656f8a7e0ffbbb83b6814bddf263490c4e1a6376598d870fba71",
+    "evaluation/blind_benchmark_v18.py": "a0cf53f16cd151bcf96d5e4d735a7b694a2023b0b2f404469f1fbdc321b45c4d",
+    "artifacts/blind_runs/blind_v18_results.json": "05809b7ae082627021fb0b00588cebee6dd8086f92ffd50ee7eb2e2e86a079c8",
+    "artifacts/blind_runs/blind_v18_attempt.json": "9253bb03b23a2fec2e04387e0f1cf4422b2607686cd12ed2edddf804616a767f",
+    "artifacts/blind_runs/blind_v18_run_competition_structure_mock.txt": "901e537fdc912876f1a82111b41988a1a2ffd7f8bef2b2764e73b0bd5922ac52",
+    "artifacts/round_i/baseline.json": "5e798d28a3e406198465be02f808305d3af3d83a2b41c9b3ae5f8aad5cbe6b1e",
+    "artifacts/round_i/after.json": "2d627ecdeb2681906e25b5c27fb7f7e4931812ac9158a06dffc263cb9748f584",
+    "docs/competition/OFFICIAL_INTERFACE_AUDIT.md": "5bc8a48bd155f04b835b3c57239fa867e9805f1e65363f0f8972de8feebd4c12"
+  },
+  "v18_execution_count": 1,
+  "new_v18_executions": 0,
+  "new_reasoning_changes": 0
+}

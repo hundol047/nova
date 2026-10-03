@@ -1,0 +1,26 @@
+PREFLIGHT_STATE={"model_weights_attested": false, "official_api": "NOT VERIFIED", "official_schema": "PLACEHOLDER", "official_submission_ready": false, "status": "NOT_CONFIGURED", "transport": {"attempts": 0, "endpoint_configured": false, "expected_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52", "host": null, "http_status_category": null, "identity_basis": "SERVER_REPORTED; NOT WEIGHT ATTESTATION", "input_tokens": null, "latency_seconds": null, "model": "openai/gpt-oss-20b", "output_tokens": null, "revision_status": "NOT_VERIFIABLE_FROM_RUNTIME", "runtime_ready": false, "status": "NOT_CONFIGURED"}}
+OFFICIAL_API = NOT VERIFIED
+=== Competition Preflight ===
+
+  PASS  python_version: 3.12.14 (requires >= 3.9)
+  PASS  package_pydantic: pydantic 2.13.5 importable
+  PASS  nova_agent_imports: nova_agent.orchestrator.DoctorAgent imports cleanly
+  PASS  competition_adapter_imports: competition.adapter.NovaCompetitionAgent imports cleanly
+  PASS  llm_provider_configured: NOVA_LLM_PROVIDER='competition' -- a competition run needs a real provider (competition targeting openai/gpt-oss-20b), not the offline mock stand-in.
+  PASS  structured_output_and_action_validation: one live turn produced action_type='ASK', used_real_llm_output=yes
+  PASS  knowledge_files: 7 disease knowledge file(s) found in /workspace/scratch/9819f121b13b/nova-competition/nova_agent/knowledge
+  PASS  submission_run_py: /workspace/scratch/9819f121b13b/nova-competition/submission/run.py
+  PASS  turn_limit_configured: NOVA_MAX_TURNS=60
+  PASS  submission_size: 1.7 MB (submission/ directory)
+  PASS  secret_scan: no suspicious credential-shaped strings found in nova_agent/competition
+  WARN  endpoint_locality: endpoint host=unconfigured is NOT localhost -- verify this is the official, authorized endpoint before submitting
+  FAIL  llm_health: provider=competition model='openai/gpt-oss-20b' endpoint=host=unconfigured -- NOT_CONFIGURED
+  FAIL  structured_output_parse_success: the live call either failed outright or returned output that failed to parse -- the action above came from the deterministic fallback, not the real model
+  FAIL  real_llm_success_count_at_least_1: llm_call_count=0 llm_success_count=0 (bounded retry already applied per call -- see NOVA_LLM_MAX_RETRIES)
+  FAIL  official_competition_schema: competition/schema.py is a documented PLACEHOLDER -- no official N.O.V.A. 2026 API was available at implementation time. Update competition/schema.py + adapter.py once published.
+
+NOT READY
+  - llm_health: provider=competition model='openai/gpt-oss-20b' endpoint=host=unconfigured -- NOT_CONFIGURED
+  - structured_output_parse_success: the live call either failed outright or returned output that failed to parse -- the action above came from the deterministic fallback, not the real model
+  - real_llm_success_count_at_least_1: llm_call_count=0 llm_success_count=0 (bounded retry already applied per call -- see NOVA_LLM_MAX_RETRIES)
+  - official_competition_schema: competition/schema.py is a documented PLACEHOLDER -- no official N.O.V.A. 2026 API was available at implementation time. Update competition/schema.py + adapter.py once published.
