@@ -228,5 +228,17 @@
     "source_material": "Synthetic development hypotheses, not patient evidence",
     "manual_review_status": "Not independently clinician-adjudicated",
     "bundled_in_submission": false
+  },
+  {
+    "output_file": "nova_agent/multilingual_concepts.py",
+    "tool_model": "UNRESOLVED: exact historical model/version not recoverable from repository",
+    "date": "2026-10-04T14:38:41Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "Internally authored multilingual mappings; original medical/linguistic sources UNRESOLVED",
+    "manual_review_status": "UNREVIEWED / no documented clinician or translator signoff",
+    "commit": "085070d10830ce317b9a4d684fb2bfe1e4f10c18",
+    "bundled_in_submission": true,
+    "sha256": "57e277310c3d214be36f0459511498f662b6af5a9eedde2413ebfa5f2306b339"
   }
 ]

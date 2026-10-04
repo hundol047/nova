@@ -1,0 +1,98 @@
+[
+  {
+    "package": "pydantic",
+    "version": "2.13.5",
+    "metadata_license": "MIT",
+    "source": "Installed distribution license file: pydantic-2.13.5.dist-info/licenses/LICENSE",
+    "source_urls": [
+      "Homepage, https://github.com/pydantic/pydantic",
+      "Documentation, https://docs.pydantic.dev",
+      "Funding, https://github.com/sponsors/samuelcolvin",
+      "Source, https://github.com/pydantic/pydantic",
+      "Changelog, https://docs.pydantic.dev/latest/changelog/"
+    ],
+    "license_file": "docs/compliance/dependency_licenses/pydantic-2.13.5-LICENSE.txt",
+    "sha256": "a9e186f3ca16b5eef84318e7a701721351a00cb7b8ae3a4394b67b49e3529ef3",
+    "derived_or_modified": false,
+    "bundled_in_submission": false,
+    "ai_generated_license": false,
+    "review_status": "MIT permission and notice requirement checked against included text",
+    "research_publication_permission": "MIT permits publication subject to retaining copyright and permission notice"
+  },
+  {
+    "package": "pydantic-core",
+    "version": "2.46.5",
+    "metadata_license": "MIT",
+    "source": "Installed distribution license file: pydantic_core-2.46.5.dist-info/licenses/LICENSE",
+    "source_urls": [
+      "Funding, https://github.com/sponsors/samuelcolvin",
+      "Homepage, https://github.com/pydantic",
+      "Source, https://github.com/pydantic/pydantic/tree/main/pydantic-core"
+    ],
+    "license_file": "docs/compliance/dependency_licenses/pydantic-core-2.46.5-LICENSE.txt",
+    "sha256": "2afdd30d54b4d62b6f488a6bcc1546e84ec5061f13f4209c03d012348783795a",
+    "derived_or_modified": false,
+    "bundled_in_submission": false,
+    "ai_generated_license": false,
+    "review_status": "MIT permission and notice requirement checked against included text",
+    "research_publication_permission": "MIT permits publication subject to retaining copyright and permission notice"
+  },
+  {
+    "package": "annotated-types",
+    "version": "0.8.0",
+    "metadata_license": "MIT",
+    "source": "Installed distribution license file: annotated_types-0.8.0.dist-info/licenses/LICENSE",
+    "source_urls": [
+      "Homepage, https://github.com/annotated-types/annotated-types",
+      "Source, https://github.com/annotated-types/annotated-types",
+      "Changelog, https://github.com/annotated-types/annotated-types/releases"
+    ],
+    "license_file": "docs/compliance/dependency_licenses/annotated-types-0.8.0-LICENSE.txt",
+    "sha256": "fe1049884b1a0d9342901e88e07f32925d24b3121d9972b6a6805fb9824b095d",
+    "derived_or_modified": false,
+    "bundled_in_submission": false,
+    "ai_generated_license": false,
+    "review_status": "MIT permission and notice requirement checked against included text",
+    "research_publication_permission": "MIT permits publication subject to retaining copyright and permission notice"
+  },
+  {
+    "package": "typing-extensions",
+    "version": "4.16.0",
+    "metadata_license": "PSF-2.0",
+    "source": "Installed distribution license file: typing_extensions-4.16.0.dist-info/licenses/LICENSE",
+    "source_urls": [
+      "Bug Tracker, https://github.com/python/typing_extensions/issues",
+      "Changes, https://github.com/python/typing_extensions/blob/main/CHANGELOG.md",
+      "Documentation, https://typing-extensions.readthedocs.io/",
+      "Home, https://github.com/python/typing_extensions",
+      "Q & A, https://github.com/python/typing/discussions",
+      "Repository, https://github.com/python/typing_extensions"
+    ],
+    "license_file": "docs/compliance/dependency_licenses/typing-extensions-4.16.0-LICENSE.txt",
+    "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+    "derived_or_modified": false,
+    "bundled_in_submission": false,
+    "ai_generated_license": false,
+    "review_status": "License text preserved; detailed terms review pending",
+    "research_publication_permission": "UNRESOLVED pending detailed review"
+  },
+  {
+    "package": "typing-inspection",
+    "version": "0.4.4",
+    "metadata_license": "MIT",
+    "source": "Installed distribution license file: typing_inspection-0.4.4.dist-info/licenses/LICENSE",
+    "source_urls": [
+      "Homepage, https://github.com/pydantic/typing-inspection",
+      "Documentation, https://pydantic.github.io/typing-inspection/dev/",
+      "Source, https://github.com/pydantic/typing-inspection",
+      "Changelog, https://github.com/pydantic/typing-inspection/blob/main/HISTORY.md"
+    ],
+    "license_file": "docs/compliance/dependency_licenses/typing-inspection-0.4.4-LICENSE.txt",
+    "sha256": "804b59b25f2c31bd278f9202a19ae49a3945aa2664387e2d0a128c7cacc61ec3",
+    "derived_or_modified": false,
+    "bundled_in_submission": false,
+    "ai_generated_license": false,
+    "review_status": "MIT permission and notice requirement checked against included text",
+    "research_publication_permission": "MIT permits publication subject to retaining copyright and permission notice"
+  }
+]

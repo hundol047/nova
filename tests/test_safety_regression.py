@@ -731,7 +731,9 @@ def test_build_script_aborts_on_leaked_secret():
             cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60,
         )
         assert proc.returncode != 0, "build script must exit non-zero when a secret is present"
-        assert "secret-shaped string" in proc.stdout or "secret-shaped string" in proc.stderr
+        # The staging allowlist may reject an untracked injected file before reading it.
+        assert any(reason in proc.stdout + proc.stderr for reason in
+                   ("secret-shaped string", "Unapproved staging files"))
     finally:
         leaked_file.unlink(missing_ok=True)
         # Restore submission/ to a real, non-leaked state for every other test in this session.

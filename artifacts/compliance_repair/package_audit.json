@@ -1,0 +1,62 @@
+{
+  "secret_scan": {
+    "status": "PASS",
+    "repository_findings": [
+      {
+        "file": "backend/tests/test_cds_hooks.py",
+        "line": 230,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "backend/tests/test_fhir_adapter.py",
+        "line": 199,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "backend/tests/test_fhir_adapter.py",
+        "line": 217,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "backend/tests/test_fhir_adapter.py",
+        "line": 250,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "backend/tests/test_fhir_adapter.py",
+        "line": 268,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "tests/test_safety_regression.py",
+        "line": 727,
+        "pattern": "sk-ant-[A-Za-z0-9\\-_]{16,}",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "tests/test_safety_regression.py",
+        "line": 727,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      }
+    ],
+    "submission_findings": [],
+    "scope": "Tracked UTF-8 source/config/docs; regex heuristics cannot prove absence of every credential"
+  },
+  "source_submission_byte_equivalence": true,
+  "sync_mismatches": [],
+  "forbidden_files": [],
+  "training_operations": [],
+  "utf8_failures": [],
+  "zip_bytes": 285189,
+  "zip_sha256": "961d8c2bf64812112a783e05a17a2e39ef82ec13624b6634addc947c9f6d6457",
+  "package_file_count": 80,
+  "model_weights_bundled": false,
+  "provider_boundary": "Fail closed for every network route pending organizer guide; explicit offline mock only",
+  "static_retrieval": "Local fixed KB/catalog; no patient-specific index write/update in inference path"
+}

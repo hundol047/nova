@@ -1,10 +1,13 @@
 """Read-only local package audit. Reports locations, never credential contents."""
-import ast,hashlib,json,re,subprocess,sys,zipfile
+import argparse,ast,hashlib,json,re,subprocess,sys,zipfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from scripts.build_nova_submission import _SECRET_PATTERNS,_PLACEHOLDER_HINTS
 
-def main():
+def main(argv=None):
+ parser=argparse.ArgumentParser(description=__doc__)
+ parser.add_argument('--output',default='artifacts/round_m/package_audit.json')
+ args=parser.parse_args(argv)
  files=subprocess.check_output(['git','ls-files'],cwd=ROOT,text=True).splitlines()
  hits=[]
  for name in files:
@@ -42,7 +45,8 @@ def main():
      if isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr in {'fit','partial_fit','backward','load_state_dict'}:training.append({'file':name,'line':n.lineno,'operation':n.func.attr})
   package_hits=[h for h in hits if h['file'].startswith('submission/')]
  report={'secret_scan':{'status':'PASS' if not unresolved else 'REVIEW_REQUIRED','repository_findings':hits,'submission_findings':package_hits,'scope':'Tracked UTF-8 source/config/docs; regex heuristics cannot prove absence of every credential'},'source_submission_byte_equivalence':not sync,'sync_mismatches':sync,'forbidden_files':forbidden,'training_operations':training,'utf8_failures':utf8,'zip_bytes':package.stat().st_size,'zip_sha256':hashlib.sha256(package.read_bytes()).hexdigest(),'package_file_count':len(names),'model_weights_bundled':False,'provider_boundary':'Fail closed for every network route pending organizer guide; explicit offline mock only','static_retrieval':'Local fixed KB/catalog; no patient-specific index write/update in inference path'}
- (ROOT/'artifacts/round_m/package_audit.json').write_text(json.dumps(report,indent=2)+'\n')
+ target=ROOT/args.output;target.parent.mkdir(parents=True,exist_ok=True)
+ target.write_text(json.dumps(report,indent=2)+'\n')
  print(json.dumps(report,indent=2))
- if forbidden or training or utf8 or sync or package_hits:raise SystemExit(1)
+ if forbidden or training or utf8 or sync or package_hits or unresolved:raise SystemExit(1)
 if __name__=='__main__':main()

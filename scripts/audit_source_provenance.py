@@ -9,7 +9,7 @@ rows=[];logs=[]
 for p in assets:
  hist=subprocess.check_output(['git','log','-1','--format=%H|%aI','--',str(p)],text=True).strip().split('|')
  rows.append({'file':str(p),'purpose':'Runtime clinical data / mapping / heuristic or supporting code; per-file inventory', 'original_source':'Repository internal implementation; specific medical source UNRESOLVED','source_version':hist[0],'license':'UNRESOLVED','research_publication_use_allowed':'UNRESOLVED','derived_or_modified':True,'ai_assisted_generation':'Known for enrichment/lay-language/multilingual; otherwise not independently recoverable','bundled_in_submission':True,'review_status':'No documented clinical/source-license signoff','sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
- if p.suffix=='.json' or p.name in ('lay_language.py','concept_normalizer.py'):
+ if p.suffix=='.json' or p.name in ('lay_language.py','concept_normalizer.py','multilingual_concepts.py'):
   logs.append({'output_file':str(p),'tool_model':'UNRESOLVED: historical engineering-agent attribution is not an exact model/version','date':hist[1] if len(hist)>1 else 'UNRESOLVED','date_definition':'Last repository commit, not proven generation time','instruction_prompt':'UNRESOLVED: original verbatim generation prompt not present','source_material':'General knowledge claimed; no auditable medical source supplied','manual_review_status':'UNREVIEWED / no documented clinician signoff','commit':hist[0]})
 for p in sorted(Path('evaluation').glob('*cases*.py')):
  if 'blind' in p.name:continue

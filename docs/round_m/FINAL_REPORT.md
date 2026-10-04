@@ -212,3 +212,11 @@ BLOCKERS:
 5. No current untouched fresh blind; v19 pre-execution invalidated, v20 not authored.
 
 Next cycle: official guide audit → exact adapter/schema → organizer fixed-model smoke test → public sample benchmark → final accuracy/safety/efficiency tuning → full regression → final runtime freeze → fresh blind authored after freeze → hash/leakage review → one-shot blind → final verification → official ZIP.
+
+## Compliance repair follow-up (2026-10-04 UTC)
+
+See `docs/compliance/REPAIR_EXECUTION_REPORT.md` and
+`artifacts/compliance_repair/execution_summary.json` for packaging/secret-audit fixes,
+expanded license evidence, current test results and the rejected retrieval experiment.
+The reasoning runtime and historical v12 ZIP remain byte-unchanged. The follow-up
+ZIP has explicit pre-guide-only metadata; it is not an official submission.

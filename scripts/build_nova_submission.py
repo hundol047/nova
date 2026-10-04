@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Regenerates submission/nova_agent/ and submission/competition/ from the real nova_agent/ and
 competition/ packages at the repository root (the single source of truth) -- spec section 16/24I --
-then validates the result before declaring it ready (spec section 23/24): requirements sanity,
+then validates a local PRE-GUIDE candidate: requirements sanity,
 an actual import/subprocess smoke test, a forbidden-file/secret scan, and a versioned
-submission.zip + manifest for a reproducible artifact to actually hand in.
+submission.zip + manifest for local review. This is not cleared for official submission.
 
 submission/run.py and submission/requirements.txt are hand-authored and NOT touched by this
 script. Run this after any change to nova_agent/ or competition/:
@@ -18,6 +18,7 @@ only the two packages the Doctor Agent actually imports at runtime.
 from __future__ import annotations
 
 import hashlib
+import argparse
 import json
 import re
 import shutil
@@ -56,6 +57,8 @@ _PLACEHOLDER_HINTS = ("your_", "changeme", "example", "xxxx", "<", "${", "os.env
 def _copy_package(name: str) -> None:
     src = ROOT / name
     dst = SUBMISSION / name
+    if src.is_symlink() or any(p.is_symlink() for p in src.rglob("*")):
+        raise SystemExit("Runtime package symlinks are not permitted: " + name)
     if dst.exists():
         shutil.rmtree(dst)
     shutil.copytree(src, dst, ignore=IGNORE)
@@ -74,10 +77,28 @@ def _check_requirements() -> None:
 
 
 def _submission_files() -> list:
-    return sorted(
+    files = sorted(
         p for p in SUBMISSION.rglob("*")
         if p.is_file() and "__pycache__" not in p.parts and p.name not in {"submission.zip", "MANIFEST.json"}
     )
+    # A recursive ZIP of an operator-controlled staging directory can accidentally include
+    # answers, credentials or unrelated files. Only checked-in runtime files may enter.
+    tracked = set(subprocess.check_output(
+        ["git", "ls-files", "--", "nova_agent", "competition"], cwd=ROOT, text=True,
+    ).splitlines())
+    allowed = {name for name in tracked if name.endswith(".py") or
+               (name.startswith("nova_agent/knowledge/") and name.endswith(".json"))}
+    allowed |= tracked & {"nova_agent/knowledge/PROVENANCE.md",
+                          "nova_agent/ontology/snapshots/README.md"}
+    allowed |= {"run.py", "requirements.txt"}
+    unexpected = [str(p.relative_to(SUBMISSION)) for p in files
+                  if str(p.relative_to(SUBMISSION)) not in allowed or p.is_symlink()]
+    # Reject directory symlinks as well, even when pathlib does not descend into them.
+    unexpected += [str(p.relative_to(SUBMISSION)) for p in SUBMISSION.rglob("*")
+                   if p.is_symlink() and p.is_dir()]
+    if unexpected:
+        raise SystemExit("Unapproved staging files or symlinks: " + ", ".join(sorted(set(unexpected))))
+    return files
 
 
 def _secret_scan() -> None:
@@ -119,6 +140,12 @@ def _import_smoke_test() -> None:
 def _build_zip_and_manifest() -> None:
     files = _submission_files()
     manifest = {
+        "artifact_status": "LOCAL_PRE_GUIDE_CANDIDATE_ONLY",
+        "official_submission_allowed": False,
+        "official_api_status": "NOT VERIFIED",
+        "schema_status": "PLACEHOLDER",
+        "real_model_status": "NOT VERIFIED",
+        "source_license_clearance": "UNRESOLVED",
         "built_at_utc": datetime.now(timezone.utc).isoformat(),
         "file_count": len(files),
         "files": {
@@ -140,7 +167,15 @@ def _build_zip_and_manifest() -> None:
     print(f"submission.zip built: {len(files)} files, {size_mb:.2f} MB -- {zip_path}")
 
 
-def main() -> None:
+def main(argv=None) -> None:
+    parser = argparse.ArgumentParser(description="Build a local pre-guide candidate only.")
+    parser.add_argument("--official", action="store_true",
+                        help="Reserved; refuses until official integration and provenance are verified.")
+    args = parser.parse_args(argv)
+    if args.official:
+        # No environment-variable, editable status flag, or mock smoke test can unlock this.
+        raise SystemExit("NOT READY: official guide/schema/transport, real fixed-model execution "
+                         "and source/license clearance must be integrated and verified first.")
     SUBMISSION.mkdir(exist_ok=True)
     _copy_package("nova_agent")
     _copy_package("competition")

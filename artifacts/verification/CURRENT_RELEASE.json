@@ -18,5 +18,6 @@
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
   "status": "NOT READY",
-  "reason": "Current runtime locally verified; official interface, real model and provenance/license clearance blocked."
+  "reason": "Current runtime locally verified; official interface, real model and provenance/license clearance blocked.",
+  "latest_compliance_followup": "artifacts/compliance_repair/execution_summary.json"
 }

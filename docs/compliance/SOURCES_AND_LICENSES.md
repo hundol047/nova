@@ -107,3 +107,17 @@ populate the remaining Tier-2 concepts with generated facts.
 - Installed dependency `typing-extensions` 4.16.0: metadata license `PSF-2.0`; metadata source Bug Tracker, https://github.com/python/typing_extensions/issues. License text review/research-use clearance pending.
 
 - Installed dependency `typing-inspection` 0.4.4: metadata license `MIT`; metadata source Homepage, https://github.com/pydantic/typing-inspection. License text review/research-use clearance pending.
+
+## Follow-up: exact installed dependency evidence
+
+`artifacts/compliance_repair/dependency_licenses.json` records exact installed versions,
+metadata source URLs and hashes of unmodified license texts in `dependency_licenses/`.
+Pydantic, pydantic-core, annotated-types and typing-inspection include MIT permission
+for publication with copyright/permission notice retention. typing-extensions' complete
+license text is preserved; detailed multi-part terms review remains pending. This replaces
+the earlier metadata-only uncertainty for those four installed MIT packages, not for clinical
+assets or future versions resolved by the broad requirements range. Dependencies are installed
+externally, not vendored in the ZIP. No license is inferred for our clinical knowledge assets.
+
+The executable coverage audit is `python scripts/audit_compliance_gaps.py`. It checks
+missing entries, current byte hashes and unresolved permission fields; it cannot grant clearance.

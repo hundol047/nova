@@ -42,3 +42,16 @@ no v20, no guessed organizer API, local regression, commit/push. Output: boundar
 provenance inventories, evaluation summaries and release documentation. Source: current repository,
 public rules/evaluation/FAQ. General code corrections: comma-bounded negation scope and whole-word alias matching. No new clinical facts, development labels or private evaluation labels
 were generated in this pass. Code reviewed through local tests; no clinician review claimed.
+
+## Compliance repair follow-up
+
+The historical inventory now includes `nova_agent/multilingual_concepts.py`, previously
+omitted by the generation-audit script. Original tool/model/prompt and clinical/translation
+review remain UNRESOLVED; its last commit date is not a generation timestamp.
+
+Execution date: 2026-10-04 UTC (2026-10-05 KST).
+Current instruction: `docs/compliance/REPAIR_PROMPT_KO.md`. Tool: ChatGPT Work coding
+assistant; exact model build not available. Outputs: packaging guard/tests, provenance
+audit, development retrieval-depth experiment, and execution report. Sources: repository
+code and https://nova.snubhai.org/rules/ and /evaluation/. No clinical facts, synthetic
+case labels or patient data are generated or altered by this repair.

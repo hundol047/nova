@@ -1,0 +1,82 @@
+{
+  "status": "REJECTED",
+  "reason": "No accuracy/retrieval/rerank improvement; tests and turns increased. No runtime change adopted.",
+  "baseline": "artifacts/round_m/final_summary.json",
+  "baseline_sha256": "ee8dbb0731a2fed0812939aedbbc1cc33586efb3038d71b0f0df35cbcdf938ee",
+  "experiment": "artifacts/compliance_repair/retrieval_150/final_summary.json",
+  "experiment_sha256": "be8ae687560494d9a33bdd46e70dd4ac34153f5025fa122aed63c9c91b78f2c1",
+  "cases": 128,
+  "scored": 123,
+  "critical": 43,
+  "ood_unscored": 5,
+  "same_case_file": true,
+  "same_on_disk_runtime": true,
+  "metrics": {
+    "Top1": {
+      "baseline": 0.959349593495935,
+      "experiment": 0.959349593495935,
+      "delta": 0.0
+    },
+    "Top3": {
+      "baseline": 0.983739837398374,
+      "experiment": 0.983739837398374,
+      "delta": 0.0
+    },
+    "Top5": {
+      "baseline": 0.991869918699187,
+      "experiment": 0.991869918699187,
+      "delta": 0.0
+    },
+    "Top10": {
+      "baseline": 0.991869918699187,
+      "experiment": 0.991869918699187,
+      "delta": 0.0
+    },
+    "MRR": {
+      "baseline": 0.9735772357723578,
+      "experiment": 0.9735772357723578,
+      "delta": 0.0
+    },
+    "critical_recall": {
+      "baseline": 1.0,
+      "experiment": 1.0,
+      "delta": 0.0
+    },
+    "critical_miss": {
+      "baseline": 0.0,
+      "experiment": 0.0,
+      "delta": 0.0
+    },
+    "retrieval_at150": {
+      "baseline": 0.8455284552845529,
+      "experiment": 0.8455284552845529,
+      "delta": 0.0
+    },
+    "rerank_at25": {
+      "baseline": 0.7235772357723578,
+      "experiment": 0.7235772357723578,
+      "delta": 0.0
+    },
+    "active_truth_retention": {
+      "baseline": 0.991869918699187,
+      "experiment": 0.991869918699187,
+      "delta": 0.0
+    },
+    "average_tests": {
+      "baseline": 8.9921875,
+      "experiment": 9.0390625,
+      "delta": 0.046875
+    },
+    "average_turns": {
+      "baseline": 25.8984375,
+      "experiment": 26.0390625,
+      "delta": 0.140625
+    },
+    "redundant_tests": {
+      "baseline": 0,
+      "experiment": 0,
+      "delta": 0
+    }
+  },
+  "blind_executions": 0
+}
