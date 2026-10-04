@@ -353,6 +353,24 @@ FEATURE_ALIASES: dict[str, list[str]] = {
 }
 
 
+_LAY_VARIANTS: Set[tuple] = set()
+
+
+def _strict_alias_present(alias: str, findings: List[str], scrub_negated_spans: bool) -> bool:
+    """Lay-language variants are matched STRICTLY: the literal phrase on a word boundary, or EVERY
+    one of its content words present in one finding -- never the 60% partial overlap feature_present()
+    allows for a curated knowledge-base phrase (a 3-word variant must not be satisfied by 2 words)."""
+    alias_lower = alias.lower()
+    alias_words = _content_words(alias_lower)
+    for finding in findings:
+        finding_lower = _strip_negated_spans(finding.lower()) if scrub_negated_spans else finding.lower()
+        if _exact_phrase_present(alias_lower, finding_lower):
+            return True
+        if alias_words and alias_words <= _content_words(finding_lower):
+            return True
+    return False
+
+
 def _merge_lay_aliases() -> None:
     """Merge nova_agent.lay_language.LAY_FEATURE_ALIASES into FEATURE_ALIASES (each variant stays
     scoped to its one knowledge-base phrase)."""
@@ -363,6 +381,7 @@ def _merge_lay_aliases() -> None:
         for variant in variants:
             if variant not in bucket:
                 bucket.append(variant)
+                _LAY_VARIANTS.add((phrase.lower(), variant))
 
 
 _merge_lay_aliases()
@@ -378,6 +397,9 @@ def feature_present_with_aliases(phrase: str, findings: List[str], scrub_negated
     if feature_present(phrase, findings, scrub_negated_spans=scrub_negated_spans):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
-        if feature_present(alias, findings, scrub_negated_spans=scrub_negated_spans):
+        if (phrase.lower(), alias) in _LAY_VARIANTS:
+            if _strict_alias_present(alias, findings, scrub_negated_spans):
+                return True
+        elif feature_present(alias, findings, scrub_negated_spans=scrub_negated_spans):
             return True
     return False

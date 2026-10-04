@@ -21,7 +21,7 @@ from typing import Dict, List
 _NAUSEA = ["feel sick", "feeling sick", "sick to my stomach", "queasy", "nauseated", "nauseous", "feel nauseous"]
 _VOMIT = ["throwing up", "threw up", "been sick", "vomited", "retching", "keep vomiting"]
 _SWEAT = ["sweating", "cold sweat", "clammy", "drenched in sweat", "sweaty", "breaking out in a sweat"]
-_FEVER = ["running a temperature", "high temperature", "feverish", "burning up", "slight fever", "low fever", "mild fever", "a temperature"]
+_FEVER = ["running a temperature", "high temperature", "feverish", "burning up", "slight fever", "low fever", "mild fever"]
 _CONFUSED = ["confused", "muddled", "disoriented", "not making sense", "drowsy and confused"]
 _BREATHLESS = ["short of breath", "out of breath", "breathless", "cannot catch my breath", "cannot get air in"]
 _DYSURIA = ["burning when i pee", "burns to pee", "stings to pee", "hurts to pee", "burning urination", "pee burns",
@@ -112,10 +112,10 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
                                              "settles when i sit", "better when i sit"],
     "prodrome of lightheadedness": ["felt hot and sweaty first", "felt warm and queasy first", "tunnel vision", "clammy first", "went grey",
                                      "felt hot and sweaty", "felt warm and nauseous", "hot and nauseous first", "nauseous and warm first"],
-    "triggered by standing or pain or fear": ["blood draw", "needle", "seeing blood", "standing for ages", "standing in the heat",
+    "triggered by standing or pain or fear": ["blood draw", "seeing blood", "standing for ages", "standing in the heat",
                                                "standing a long time", "standing outside in the heat", "fear of needles", "when they took my blood"],
-    "brief loss of consciousness": ["blacked out for a few seconds", "passed out briefly", "slumped", "went down for a few seconds",
-                                     "woke up within seconds", "crumpled", "blacked out"],
+    "brief loss of consciousness": ["blacked out for a few seconds", "passed out briefly", "went down for a few seconds",
+                                     "woke up within seconds", "blacked out"],
     "rapid spontaneous recovery": ["came round at once", "recovered quickly", "came round quickly", "woke up within seconds", "quick recovery",
                                     "woke within seconds", "came around quickly"],
     # --- DKA / metabolic
@@ -131,7 +131,7 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
     "tremor": ["shaky", "trembling", "shaking hands", "tremulous"],
     "known diabetes on insulin": ["takes insulin", "on insulin", "injected my insulin", "mealtime insulin", "long-acting insulin"],
     # --- ectopic / gyn
-    "lower abdominal pain": ["low belly ache", "pain low in my belly", "lower tummy pain", "low one-sided belly ache", "discomfort low on my", "ache low down"],
+    "lower abdominal pain": ["low belly ache", "pain low in my belly", "lower tummy pain", "low one-sided belly ache", "ache low down"],
     "vaginal bleeding": ["spotting", "light bleeding", "bleeding from the vagina", "brownish spotting", "light spotting"],
     "missed period": ["period is late", "period is overdue", "weeks late", "missed my period", "period is about six weeks late", "period is six weeks late",
                        "period more than a month late", "cycle is running well behind"],
@@ -184,13 +184,13 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
     "sudden onset severe headache": ["suddenly severe headache", "instant severe headache", "sudden savage headache", "skull-splitting headache"],
     "bilateral band-like pressure": ["tight band around my head", "band around my head", "pressing ache across my forehead", "tight cap",
                                       "dull tight band", "band around"],
-    "stress related": ["stressful week", "work stress", "after stress", "deadline", "stressful"],
+    "stress related": ["stressful week", "work stress", "after stress", "stressful"],
     # --- musculoskeletal
     "reproducible with palpation": ["hurts when i press on it", "tender when i poke it", "i can press on the exact spot", "pain when i poke the spot",
-                                     "tender to touch", "press on it", "poke it", "poke the spot", "press on the exact spot", "flares up if i poke"],
-    "worse with movement": ["hurts when i twist", "worse when i twist", "hurts when i move", "worse with twisting", "when i twist", "twisting"],
+                                     "tender to touch", "press on the exact spot", "flares up if i poke"],
+    "worse with movement": ["hurts when i twist", "worse when i twist", "hurts when i move", "worse with twisting"],
     "localized tenderness": ["tender over the rib", "chest wall tender", "tender spot", "chest wall tender to touch", "tenderness over the rib"],
-    "sharp pain": ["sharp ache", "sharp spot", "sharp"],
+    "sharp pain": ["sharp ache", "sharp spot"],
     # --- renal / urinary
     "colicky flank pain": ["waves of pain in my side", "cramping flank pain", "pain in waves", "comes in waves", "waves of terrible pain",
                             "comes and goes in waves", "waves of"],
@@ -199,8 +199,7 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
     "unable to find comfortable position": ["cannot get comfortable", "cannot sit still", "writhing", "cannot lie still"],
     "flank pain": ["pain in my side", "pain in my right side", "ache in my right side", "back pain on one side", "ache in my flank", "kidney area pain",
                     "side hurts", "right flank", "sore back on one side", "throbbing ache in my right side", "my back hurts on one side"],
-    "costovertebral angle tenderness": ["tender over the kidney", "tender over the right kidney", "tender in the right flank", "tender right flank",
-                                         "tender on the right"],
+    "costovertebral angle tenderness": ["tender over the kidney", "tender over the right kidney", "tender in the right flank", "tender right flank"],
     "dysuria": _DYSURIA,
     "urinary frequency": ["going often", "need to go every few minutes", "keep running to the toilet", "peeing constantly", "pee a lot",
                            "have to go constantly", "going to the bathroom all the time", "running to the toilet", "need to go every"],
@@ -216,7 +215,7 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
     "muscle weakness": ["legs feel like jelly", "weak muscles", "arms feel weak", "generalised weakness", "generalized weakness", "legs feel weak",
                          "arms and legs feel weak", "weak all over"],
     "arrhythmia": ["irregular pulse", "slow pulse", "pulse is slow", "heart skipping", "pulse seems slow"],
-    "seizure": ["fit", "convulsion", "had a seizure"],
+    "seizure": ["convulsion", "had a seizure"],
     # --- panic
     "sudden onset intense anxiety or fear": ["sudden panic", "sudden terror", "intense fear", "felt panicky", "panic came", "felt like i was going to lose it"],
     "hyperventilation": ["fast breathing", "breathing fast", "overbreathing", "cannot get air in", "cannot catch my breath", "cannot get air"],

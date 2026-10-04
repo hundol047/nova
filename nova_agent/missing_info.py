@@ -169,7 +169,15 @@ class MissingInformationAnalyzer:
             if entry is None:
                 continue
 
-            for discriminator in entry.get("discriminating_questions", []):
+            # A retrieval-only ontology candidate (no supporting evidence yet) must not spend turns on
+            # its own generic feature questions: it is in the pool for RECALL, and the case's real
+            # evidence has to earn it a place in the action budget first (Round M: enriched Tier-2
+            # entries otherwise generated dozens of unrelated "associated_symptoms:<feature>" asks).
+            if item.diagnosis_id.startswith("onto::") and not item.supporting_evidence:
+                questions = []
+            else:
+                questions = entry.get("discriminating_questions", [])
+            for discriminator in questions:
                 category = discriminator.split(":", 1)[0]
                 key = f"ask:{discriminator}"
                 if state.question_asked(discriminator) or _already_answered(state, category):

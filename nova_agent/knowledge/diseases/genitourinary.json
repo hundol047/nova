@@ -150,6 +150,12 @@
       "ct_abdomen"
     ],
     "red_flag_keywords": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "ureteral stone on imaging",
+      "hydronephrosis",
+      "blood in urine on urinalysis"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   }
 ]

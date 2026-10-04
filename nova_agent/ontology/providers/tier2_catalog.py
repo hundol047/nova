@@ -20,6 +20,8 @@ from nova_agent.ontology.models import (
     Tier,
 )
 
+_ENRICHMENT_PATH = Path(__file__).resolve().parent.parent.parent / "knowledge" / "tier2_enrichment.json"
+
 _CATALOG_PATH = (
     Path(__file__).resolve().parent.parent.parent / "knowledge" / "tier2_catalog.json"
 )
@@ -42,6 +44,17 @@ class Tier2CatalogProvider:
         except ValueError:
             return SemanticType.UNKNOWN
 
+    def _load_enrichment(self) -> dict:
+        """id -> typical_features from knowledge/tier2_enrichment.json (an engineering-agent authored,
+        NOT clinician-reviewed sidecar; its provenance block documents scope and limits)."""
+        if self._path != _CATALOG_PATH or not _ENRICHMENT_PATH.is_file():
+            return {}
+        try:
+            data = json.loads(_ENRICHMENT_PATH.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            return {}
+        return {e["id"]: list(e.get("typical_features", [])) for e in data.get("entries", []) if e.get("id")}
+
     def iter_concepts(self) -> Iterator[ClinicalConcept]:
         if not self.available():
             return
@@ -50,6 +63,7 @@ class Tier2CatalogProvider:
         except (json.JSONDecodeError, OSError):
             return
         conditions = data.get("conditions", data if isinstance(data, list) else [])
+        enrichment = self._load_enrichment()
         for entry in conditions:
             cid = entry.get("id")
             name = entry.get("name")
@@ -61,6 +75,14 @@ class Tier2CatalogProvider:
                 if c.get("system") and c.get("code") is not None
             )
             curated = bool(entry.get("curated", True))
+            features = tuple(entry.get("typical_features", []))
+            source = "tier2_catalog"
+            extra = enrichment.get(cid)
+            if extra and not features:
+                # Provenance stays visible on the concept itself: the features came from the
+                # unreviewed enrichment sidecar, not from the original catalog.
+                features = tuple(extra)
+                source = "tier2_catalog+tier2_enrichment_unreviewed"
             yield ClinicalConcept(
                 concept_id=f"tier2:{cid}",
                 canonical_name=name,
@@ -69,12 +91,12 @@ class Tier2CatalogProvider:
                 aliases=tuple(a for a in entry.get("aliases", []) if a),
                 category=entry.get("category"),
                 external_codes=codes,
-                source="tier2_catalog",
+                source=source,
                 curation_status="STRUCTURED" if curated else "NOT_CURATED",
                 urgency=entry.get("urgency"),
                 dangerous=entry.get("dangerous"),
                 chief_complaint_tags=tuple(entry.get("chief_complaint_tags", [])),
-                typical_features=tuple(entry.get("typical_features", [])),
+                typical_features=features,
             )
 
     def load(self) -> List[ClinicalConcept]:

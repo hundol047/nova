@@ -190,7 +190,11 @@
       "troponin"
     ],
     "red_flag_keywords": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "esophagitis on endoscopy"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   },
   {
     "id": "musculoskeletal_chest_pain",
@@ -229,7 +233,12 @@
       "ecg"
     ],
     "red_flag_keywords": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "reproducible chest wall tenderness",
+      "pain reproduced on palpation"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   },
   {
     "id": "vasovagal_syncope",
