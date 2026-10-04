@@ -264,6 +264,8 @@ def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
 
 
 MAX_EVIDENCED_ONTOLOGY_PROTECTED = 8
+# One bare single-word match (0.5) is not evidence enough to protect a concept from trimming.
+MIN_EVIDENCED_ONTOLOGY_WEIGHT = 1.0
 
 
 def _ontology_evidence_weight(entry: dict, evidence_text) -> float:
@@ -288,7 +290,7 @@ def _evidenced_ontology_candidates(candidates, presentation, already_protected):
         if c.id in protected_ids or not set(c.sources).issubset(ontology_only):
             continue
         weight = _ontology_evidence_weight(c.entry, presentation.evidence_text)
-        if weight > 0:
+        if weight >= MIN_EVIDENCED_ONTOLOGY_WEIGHT:
             scored.append((-weight, order, c))
     scored.sort(key=lambda t: (t[0], t[1]))
     return [c for _, _, c in scored[:MAX_EVIDENCED_ONTOLOGY_PROTECTED]]

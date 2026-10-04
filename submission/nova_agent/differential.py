@@ -35,7 +35,7 @@ from nova_agent.matching import (
     feature_present,
     feature_present_with_aliases,
 )
-from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, ObjectiveFinding, normalize_objective_evidence
+from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, NONSPECIFIC_INFLAMMATORY_LAB_IDS, ObjectiveFinding, normalize_objective_evidence
 from nova_agent.severity_evidence import (
     ELEVATED_LACTATE_MMOL_L,
     GENERIC_PHYSIOLOGIC_SEVERITY_WORDS,
@@ -177,6 +177,8 @@ def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict
     if finding is None or finding.interpretation == "unknown":
         missing.append(phrase)
         return 0.0
+    if lab_id in NONSPECIFIC_INFLAMMATORY_LAB_IDS:
+        weight = min(weight, FEATURE_WEIGHT)
     abnormal = {"high": ("high", "critical_high"), "low": ("low", "critical_low")}[direction]
     opposite = {"high": ("low", "critical_low"), "low": ("high", "critical_high")}[direction]
     if finding.interpretation in abnormal:

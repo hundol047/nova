@@ -97,6 +97,9 @@ def _expected_information_gain(prior: Dict[str, float], affected_ids: set) -> fl
     return max(0.0, prior_entropy - expected_posterior_entropy)
 
 
+MAX_TIER2_QUESTION_RANK = 6
+
+
 def _resolve_entry(diagnosis_id: str) -> Optional[dict]:
     """Resolve a differential item's diagnosis_id to a KB-shaped dict, covering BOTH real Tier-1 KB
     diseases (disease_by_id) and ontology-sourced Tier-2/3 candidates (`onto::<concept_id>`, added
@@ -173,7 +176,12 @@ class MissingInformationAnalyzer:
             # its own generic feature questions: it is in the pool for RECALL, and the case's real
             # evidence has to earn it a place in the action budget first (Round M: enriched Tier-2
             # entries otherwise generated dozens of unrelated "associated_symptoms:<feature>" asks).
-            if item.diagnosis_id.startswith("onto::") and not item.supporting_evidence:
+            if item.diagnosis_id.startswith("onto::") and (
+                    not item.supporting_evidence or item.rank > MAX_TIER2_QUESTION_RANK):
+                # ...and only while it is actually in contention (top ranks): every supported
+                # long-tail candidate otherwise adds up to four generic questions to the action
+                # pool, and since the encounter ends once no action has value left, a longer pool
+                # meant longer encounters on cases that never involved those candidates.
                 questions = []
             else:
                 questions = entry.get("discriminating_questions", [])

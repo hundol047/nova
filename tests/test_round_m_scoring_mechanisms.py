@@ -116,3 +116,9 @@ def test_specific_lab_keeps_full_confirmatory_weight():
     state.laboratory_tests["troponin"] = "troponin elevated"
     entry = {"id": "t", "name": "t", "typical_features": [], "risk_factors": [], "confirmatory_findings": ["elevated troponin"]}
     assert _score_disease(entry, state)[0] == CONFIRMATORY_WEIGHT
+
+
+def test_alias_that_names_a_generic_symptom_noun_still_requires_it():
+    # "pain after meals" must not be satisfied by an onset note that merely says "after a shared meal"
+    assert not feature_present_with_aliases("pain after eating", ["after a shared meal"])
+    assert feature_present_with_aliases("pain after eating", ["belly pain starts after meals"])

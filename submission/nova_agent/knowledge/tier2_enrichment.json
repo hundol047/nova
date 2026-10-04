@@ -645,6 +645,17 @@
    ]
   },
   {
+   "id": "cellulitis",
+   "typical_features": [
+    "red warm swollen skin",
+    "spreading redness",
+    "tender skin",
+    "fever",
+    "skin break or wound",
+    "leg most common"
+   ]
+  },
+  {
    "id": "cellulitis_derm",
    "typical_features": [
     "red warm swollen skin",
