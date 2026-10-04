@@ -1,0 +1,67 @@
+Checked 807 blind case(s) across 16 module(s) against 122 agent-core file(s).
+
+63 POTENTIAL LEAKAGE FINDING(S) -- review each by hand (a short generic phrase overlapping coincidentally is not leakage; a lifted sentence or hardcoded case-specific rule is):
+
+  - nova_agent/differential.py FEATURE_ALIASES['band-like blistering rash']: 'clusters of small blisters' shares a 26-character span with blind case 'Blind16_54_LongTailBlisteringBand''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['bilateral band-like pressure']: 'pressing ache across my forehead' shares a 24-character span with blind case 'Blind5_03_DeadlineStressHeadache''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['bilateral band-like pressure']: 'pressing ache across my forehead' shares a 32-character span with blind case 'Blind16_04_TightCapHeadache''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['bilateral band-like pressure']: 'tight band around my head' shares a 25-character span with blind case 'Blind4_03_BandLikeHeadacheStress''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['brief episodic vertigo']: 'room spins for a few seconds' shares a 28-character span with blind case 'Blind14_15_RoomSpinsWhenRollingOverInBed''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['brief episodic vertigo']: 'room spins for a few seconds' shares a 28-character span with blind case 'Blind18_ClassicBPPV''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['brief episodic vertigo']: 'room spins for a few seconds' shares a 28-character span with blind case 'Blind4_27_RoomSpinningRollingOverInBed''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['brief episodic vertigo']: 'room spins for a few seconds' shares a 28-character span with blind case 'Blind6_27_RollOverInBedSpinning''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['brief loss of consciousness']: 'blacked out for a few seconds' shares a 29-character span with blind case 'Blind10_SilentPESyncope''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['brief loss of consciousness']: 'blacked out for a few seconds' shares a 29-character span with blind case 'Blind14_56_FaintedAtTheSightOfBlood''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['burning chest pain']: 'burning behind my breastbone' shares a 24-character span with blind case 'Blind25_HeartburnGERD''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['burning chest pain']: 'burning behind my breastbone' shares a 28-character span with blind case 'Blind12_06_HeartburnMimicsACS''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['burning chest pain']: 'burning behind my breastbone' shares a 28-character span with blind case 'Blind16_21_AcidAtBedtime''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['epigastric pain radiating to back']: 'boring ache in the pit of my stomach' shares a 25-character span with blind case 'Blind11_08_RouterMiss_EpigastricMI''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['epigastric pain radiating to back']: 'boring ache in the pit of my stomach' shares a 25-character span with blind case 'Blind15_21_UpperBellyPainRadiatingToBackLipaseConfirms''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['epigastric pain radiating to back']: 'pain in the pit of my stomach' shares a 25-character span with blind case 'Blind11_08_RouterMiss_EpigastricMI''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['epigastric pain radiating to back']: 'pain in the pit of my stomach' shares a 25-character span with blind case 'Blind15_21_UpperBellyPainRadiatingToBackLipaseConfirms''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['epigastric pain radiating to back']: 'upper belly pain through to my back' shares a 24-character span with blind case 'Blind17_43''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['facial droop']: 'corner of his mouth is sagging' shares a 30-character span with blind case 'Blind16_07_WordsWontComeOut''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['pain eased by leaning forward']: 'better when i lean forward' shares a 26-character span with blind case 'Blind14_41_LongTailPericarditis''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['pain eased by leaning forward']: 'eases when i lean forward' shares a 25-character span with blind case 'Blind10_07_YoungManPleuriticFeverViral''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['pain eased by leaning forward']: 'eases when i lean forward' shares a 25-character span with blind case 'Blind11_09_LeanForwardPleuriticViral''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['pain radiates to back']: 'between my shoulder blades' shares a 26-character span with blind case 'Blind12_29_UnequalArmPressuresChestPain''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['pain radiates to back']: 'between my shoulder blades' shares a 26-character span with blind case 'Blind14_11_RippingBackPainMistakenForMuscleStrain''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['pain radiates to back']: 'between my shoulder blades' shares a 26-character span with blind case 'Blind15_12_TearingBetweenShoulderBladesCalledItAPulledMuscle''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['pain radiates to back']: 'between my shoulder blades' shares a 26-character span with blind case 'Blind4_09_TearingBackPainRadiating''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['pain radiates to back']: 'between my shoulder blades' shares a 26-character span with blind case 'Blind8_02_TearingBetweenShoulderBlades''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['pain radiates to back']: 'between my shoulder blades' shares a 26-character span with blind case 'V18_02''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'crept down to the lower right' shares a 24-character span with blind case 'Blind13_25_MigratingBellyPainDespiteFewOtherSymptoms''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'moved to the lower right' shares a 24-character span with blind case 'Blind16_47_YoungWomanRLQPainWithNausea''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'moved to the lower right' shares a 24-character span with blind case 'Blind8_19_MigratingRLQPain''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'moved to the lower right' shares a 24-character span with blind case 'Blind9_19_NavelToRLQBump''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'started around my belly button and moved' shares a 24-character span with blind case 'Blind13_50_VagueEarlyAppendicitisNeedsWorkupBeforeDiagnosing''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'started around my belly button and moved' shares a 24-character span with blind case 'Blind5_15_PeriumbilicalPainMigratingRight''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'started around my belly button and moved' shares a 26-character span with blind case 'Blind4_15_RightLowerAbdomenPainMigrating''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'started around my belly button and moved' shares a 26-character span with blind case 'Blind9_19_NavelToRLQBump''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'started around my belly button and moved' shares a 30-character span with blind case 'Blind12_17_ManyNegativesStillDiagnosable''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'started around my belly button and moved' shares a 31-character span with blind case 'Blind15_32_KoreanMixedAppendicitis''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['periumbilical pain migrating to right lower quadrant']: 'started around my belly button and moved' shares a 40-character span with blind case 'Blind13_25_MigratingBellyPainDespiteFewOtherSymptoms''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['recent allergen exposure']: 'first dose of a new antibiotic' shares a 30-character span with blind case 'Blind16_12_HivesAfterTheAntibiotic''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['reproducible with palpation']: 'hurts when i press on it' shares a 24-character span with blind case 'Blind17_CostochondritisReassuring''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['right upper quadrant pain']: 'pain under my right ribs' shares a 24-character span with blind case 'Blind13_29_ElderlyRightUpperQuadrantPainAfterFattyMeal''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['right upper quadrant pain']: 'pain under my right ribs' shares a 24-character span with blind case 'Blind14_37_LongTailCholecystitis''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['right upper quadrant pain']: 'pain under the right ribs' shares a 25-character span with blind case 'V19_45''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['substernal pressure']: 'pressure in the middle of my chest' shares a 26-character span with blind case 'Blind14_05_SubsternalPressureShoveling''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['substernal pressure']: 'tight band across my chest' shares a 26-character span with blind case 'Blind16_64_ReassuringECGButTroponinRising''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['substernal pressure']: 'tight band across my chest' shares a 26-character span with blind case 'Blind6_05_GymSquatSessionChestTightness''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['substernal pressure']: 'tight band across my chest' shares a 26-character span with blind case 'V19_81''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['sudden one-sided chest pain']: 'sudden pain on one side of my chest' shares a 24-character span with blind case 'Blind06_RuralEctopic''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['sudden onset dyspnea']: 'sudden shortness of breath' shares a 26-character span with blind case 'Blind10_20_ConflictingPEvsAnxiety''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['sudden onset palpitations']: 'heart suddenly started racing' shares a 29-character span with blind case 'Blind22_KnownSVTPalpitations''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['sudden severe lower abdominal pain on one side']: 'sudden severe lower belly pain on one side' shares a 29-character span with blind case 'V19_13''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['unilateral pelvic pain']: 'ache down low on my left' shares a 24-character span with blind case 'Blind15_36_VagueCrampyDiscomfortMissedPeriod''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['unilateral pulsating headache']: 'pounding headache on one side' shares a 24-character span with blind case 'Blind14_47_ClassicMigraineNotSAH''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['unilateral pulsating headache']: 'pounding headache on one side' shares a 29-character span with blind case 'Blind8_11_AuraThenThrob''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['unilateral pulsating headache']: 'pulsing pain behind one eye' shares a 27-character span with blind case 'V18_39''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['unilateral pulsating headache']: 'pulsing pain on one side of my head' shares a 24-character span with blind case 'Blind06_RuralEctopic''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['urinary frequency']: 'going to the bathroom all the time' shares a 24-character span with blind case 'Blind4_02_StomachBugAfterPicnic''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['urinary frequency']: 'need to go every few minutes' shares a 24-character span with blind case 'Blind13_02_UncomplicatedUTI''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['urinary frequency']: 'need to go every few minutes' shares a 28-character span with blind case 'Blind15_02_PainfulUrinationCollegeStudent''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['worst headache of life']: 'worst headache of my life' shares a 25-character span with blind case 'Blind10_03_WorstHeadacheSudden''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['worst headache of life']: 'worst headache of my life' shares a 25-character span with blind case 'Blind13_13_WorstHeadacheThoughtItWasJustAMigraine''s chief_complaint
+  - nova_agent/differential.py FEATURE_ALIASES['worst headache of life']: 'worst headache of my life' shares a 25-character span with blind case 'Blind8_09_ThunderclapAtGym''s chief_complaint
