@@ -34,6 +34,19 @@ from nova_agent.state import PatientState
 _SEVERITY_KEEPS_ALTERNATIVE_ACTIVE_THRESHOLD = 0.3
 
 
+# Decisive-lead stop (Round M). readiness_score above is built from score_ratio = score /
+# max_possible, and max_possible grows with every feature a knowledge-base entry lists, so a
+# diagnosis that is clearly ahead on ABSOLUTE evidence could still sit at a LOW band and keep the
+# encounter running until the action catalog was exhausted (Round M tracing: top-1 correct for
+# ~20 turns before the stop). The absolute lead below is the same quantity mature_low_value already
+# uses (raw score gap), generalized from "objective confirmation + 2.5 gap" to "converging evidence
+# + one typical-feature's worth of gap". It never bypasses an unresolved dangerous alternative.
+_DECISIVE_LEAD_MIN_SCORE = 2.0
+_DECISIVE_LEAD_MIN_GAP = 1.0
+_DECISIVE_LEAD_MIN_SUPPORT = 2
+_DECISIVE_LEAD_MIN_TURNS = 6
+
+
 class StopDecision(BaseModel):
     should_diagnose: bool
     forced: bool
@@ -151,8 +164,18 @@ class StopPolicy:
             raw_gap = top.score - second.score if second else top.score
             mature_low_value = (objective_confirmed and raw_gap >= 2.5
                                 and best_decision_value <= 0.15 and enough_turns_gathered)
-            should_diagnose = (should_diagnose or mature_low_value) and not (
-                dangerous_alternative_exists or pending_critical)
+            pending_critical_alternative = any(
+                d.dangerous_if_missed and d.supporting_evidence
+                and not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)
+                for d in differential[1:5])
+            decisive_lead = (state.turn_count >= _DECISIVE_LEAD_MIN_TURNS and second is not None
+                             and top.score >= _DECISIVE_LEAD_MIN_SCORE
+                             and len(top.supporting_evidence) >= _DECISIVE_LEAD_MIN_SUPPORT
+                             and raw_gap >= _DECISIVE_LEAD_MIN_GAP
+                             and not top.contradictory_evidence)
+            should_diagnose = ((should_diagnose or mature_low_value) and not (
+                dangerous_alternative_exists or pending_critical)) or (
+                decisive_lead and not (dangerous_alternative_exists or pending_critical_alternative))
 
         if should_diagnose:
             reason = ("Top diagnosis is well-supported, clearly separated from the next candidate, "
