@@ -129,7 +129,7 @@ def _concept_to_kb_entry(concept) -> dict:
         "discriminating_questions": discriminating_questions,
         "discriminating_exams": [],
         "discriminating_tests": [],
-        "confirmatory_findings": [],
+        "confirmatory_findings": list(getattr(concept, "confirmatory_findings", ()) or ()),
         "red_flag_keywords": [],
         "minimum_workup": [],
         "evidence_level": "ontology_tier2_structured" if is_tier2_structured else "ontology_tier3",

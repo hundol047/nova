@@ -127,6 +127,9 @@ _IRREGULAR_STEM_OVERRIDES = {
     "ureteral": "ureter", "thoracic": "thorax", "esophageal": "esophagus",
     # canonical nouns whose plain "-s" ending the suffix rules would otherwise strip
     "pelvis": "pelvis", "esophagus": "esophagus",
+    # swelling / swollen / swell are one clinical word that three different suffix paths stem to
+    # three different values ("swel", "swollen", "swell"); warmth/warm likewise.
+    "swelling": "swell", "swollen": "swell", "swelled": "swell", "swells": "swell", "warmth": "warm",
 }
 
 
@@ -237,6 +240,23 @@ def _exact_phrase_present(feature_lower: str, finding_lower: str) -> bool:
     return re.search(rf"\b{re.escape(feature_lower)}\b", finding_lower) is not None
 
 
+# Direction-of-change words. A feature that asserts one direction ("low blood pressure") must not be
+# satisfied by a finding asserting the OPPOSITE direction ("high blood pressure") merely because the
+# remaining words overlap: 2 of 3 content words used to clear the 60% threshold, so a history of
+# hypertension credited hypotension-defined diagnoses. Stems, so "elevated"/"increased" etc. are
+# covered through _content_words().
+_POLARITY_UP = {"high", "elevat", "increas", "rais", "rapid", "fast", "hyper"}
+_POLARITY_DOWN = {"low", "decreas", "reduc", "slow", "hypo", "drop"}
+
+
+def _opposite_polarity(feature_content: Set[str], finding_content: Set[str]) -> bool:
+    f_up, f_down = bool(feature_content & _POLARITY_UP), bool(feature_content & _POLARITY_DOWN)
+    if f_up == f_down:  # no direction word, or both (ambiguous): do not gate
+        return False
+    n_up, n_down = bool(finding_content & _POLARITY_UP), bool(finding_content & _POLARITY_DOWN)
+    return (f_up and n_down and not n_up) or (f_down and n_up and not n_down)
+
+
 def feature_present(feature: str, findings_text: List[str], scrub_negated_spans: bool = False) -> bool:
     """`scrub_negated_spans=True` is for checking against a general finding bag (e.g.
     state.all_findings_text()) that can contain an EXAM/TEST result embedding an unrelated
@@ -263,6 +283,8 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
         if not feature_content:
             continue
         finding_content = _content_words(finding_lower)
+        if _opposite_polarity(feature_content, finding_content):
+            continue
         # Round E gate (feature-match specificity hardening): a phrase's distinguishing tokens
         # (its content words minus low-information RELATIONAL connectors like "after"/"worse"/
         # "with") must independently clear the SAME two-tier presence rule the full content-word

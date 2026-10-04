@@ -62,3 +62,31 @@ def test_everyday_region_words_match_the_clinical_adjective(feature, finding):
 
 def test_ambiguous_region_word_stomach_is_not_equated_with_abdominal():
     assert content_words("stomach") != content_words("abdominal")
+
+
+@pytest.mark.parametrize("feature,finding", [
+    ("unilateral calf swelling", "one calf is swollen"),
+    ("swollen tender joint", "the joint swelling is tender"),
+    ("warmth and redness of leg", "the leg is warm and red"),
+])
+def test_swelling_family_and_warmth_forms_agree(feature, finding):
+    assert feature_present(feature, [finding])
+
+
+@pytest.mark.parametrize("feature,finding", [
+    ("low blood pressure", "history of high blood pressure"),
+    ("elevated potassium", "potassium is low"),
+    ("rapid heart rate", "heart rate is slow"),
+])
+def test_opposite_direction_finding_never_satisfies_a_directional_feature(feature, finding):
+    assert not feature_present(feature, [finding])
+
+
+@pytest.mark.parametrize("feature,finding", [
+    ("low blood pressure", "blood pressure is low"),
+    ("elevated potassium", "potassium level elevated"),
+    ("rapid heart rate", "heart rate is fast"),
+    ("high blood pressure", "her blood pressure runs high"),
+])
+def test_same_direction_still_matches(feature, finding):
+    assert feature_present(feature, [finding])

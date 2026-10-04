@@ -53,7 +53,9 @@ class Tier2CatalogProvider:
             data = json.loads(_ENRICHMENT_PATH.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
             return {}
-        return {e["id"]: list(e.get("typical_features", [])) for e in data.get("entries", []) if e.get("id")}
+        return {e["id"]: {"typical_features": list(e.get("typical_features", [])),
+                          "confirmatory_findings": list(e.get("confirmatory_findings", []))}
+                for e in data.get("entries", []) if e.get("id")}
 
     def iter_concepts(self) -> Iterator[ClinicalConcept]:
         if not self.available():
@@ -78,10 +80,12 @@ class Tier2CatalogProvider:
             features = tuple(entry.get("typical_features", []))
             source = "tier2_catalog"
             extra = enrichment.get(cid)
+            confirmatory = tuple(entry.get("confirmatory_findings", []))
             if extra and not features:
                 # Provenance stays visible on the concept itself: the features came from the
                 # unreviewed enrichment sidecar, not from the original catalog.
-                features = tuple(extra)
+                features = tuple(extra["typical_features"])
+                confirmatory = confirmatory or tuple(extra["confirmatory_findings"])
                 source = "tier2_catalog+tier2_enrichment_unreviewed"
             yield ClinicalConcept(
                 concept_id=f"tier2:{cid}",
@@ -97,6 +101,7 @@ class Tier2CatalogProvider:
                 dangerous=entry.get("dangerous"),
                 chief_complaint_tags=tuple(entry.get("chief_complaint_tags", [])),
                 typical_features=features,
+                confirmatory_findings=confirmatory,
             )
 
     def load(self) -> List[ClinicalConcept]:

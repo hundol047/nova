@@ -4,7 +4,7 @@
   "clinician_reviewed": false,
   "evidence_level": "unreviewed_general_knowledge",
   "intended_use": "retrieval recall and low-weight feature matching for otherwise empty Tier-2 entries only; makes no diagnostic claim and is NOT a substitute for the Tier-1 deep profiles",
-  "scope": "typical_features only; risk_factors, specific_features, objective_findings, contradictions and minimum_workup intentionally left empty where no reliable source was available"
+  "scope": "typical_features and (where a defining objective finding is textbook-standard) confirmatory_findings; risk_factors, specific_features, objective_findings, contradictions and minimum_workup intentionally left empty where no reliable source was available"
  },
  "entries": [
   {
@@ -16,6 +16,10 @@
     "nausea and vomiting",
     "pain radiating to right shoulder",
     "tender right upper abdomen on breathing in"
+   ],
+   "confirmatory_findings": [
+    "gallstones with gallbladder wall thickening",
+    "positive sonographic Murphy sign"
    ]
   },
   {
@@ -27,6 +31,10 @@
     "dark urine",
     "confusion in severe cases",
     "history of gallstones"
+   ],
+   "confirmatory_findings": [
+    "dilated bile ducts on imaging",
+    "elevated bilirubin"
    ]
   },
   {
@@ -58,6 +66,11 @@
     "unable to pass gas or stool",
     "previous abdominal surgery",
     "high-pitched bowel sounds"
+   ],
+   "confirmatory_findings": [
+    "dilated small bowel loops on imaging",
+    "air-fluid levels on abdominal x-ray",
+    "transition point on CT"
    ]
   },
   {
@@ -79,6 +92,10 @@
     "constipation or diarrhea",
     "nausea",
     "tender left lower abdomen"
+   ],
+   "confirmatory_findings": [
+    "colonic wall thickening with inflamed diverticula on CT",
+    "pericolic fat stranding on CT"
    ]
   },
   {
@@ -90,6 +107,10 @@
     "vomiting",
     "bloody stool late",
     "older age"
+   ],
+   "confirmatory_findings": [
+    "filling defect in the mesenteric artery on CT angiography",
+    "elevated lactate"
    ]
   },
   {
@@ -101,6 +122,9 @@
     "bloating",
     "NSAID use",
     "Helicobacter pylori infection"
+   ],
+   "confirmatory_findings": [
+    "ulcer crater seen on endoscopy"
    ]
   },
   {
@@ -221,6 +245,11 @@
     "recent viral illness",
     "fever",
     "friction rub"
+   ],
+   "confirmatory_findings": [
+    "widespread ST elevation on ECG",
+    "PR segment depression on ECG",
+    "pericardial effusion on echocardiogram"
    ]
   },
   {
@@ -232,6 +261,10 @@
     "shortness of breath",
     "fatigue",
     "raised troponin"
+   ],
+   "confirmatory_findings": [
+    "elevated troponin",
+    "myocardial edema on cardiac MRI"
    ]
   },
   {
@@ -265,6 +298,10 @@
     "recent immobility or long travel",
     "recent surgery",
     "previous clot"
+   ],
+   "confirmatory_findings": [
+    "thrombus on compression ultrasound",
+    "non-compressible vein on ultrasound"
    ]
   },
   {
@@ -380,6 +417,10 @@
     "anxiety",
     "diarrhea",
     "goiter"
+   ],
+   "confirmatory_findings": [
+    "suppressed TSH with raised free T4",
+    "diffuse goiter on examination"
    ]
   },
   {
@@ -489,6 +530,10 @@
     "recent intense exercise or crush injury",
     "statin use",
     "markedly raised creatine kinase"
+   ],
+   "confirmatory_findings": [
+    "markedly raised creatine kinase",
+    "myoglobin in urine"
    ]
   },
   {
@@ -500,6 +545,10 @@
     "fever",
     "relief on lifting the testis",
     "urethral discharge"
+   ],
+   "confirmatory_findings": [
+    "tender swollen epididymis on examination",
+    "raised epididymal blood flow on doppler ultrasound"
    ]
   },
   {
@@ -521,6 +570,10 @@
     "swollen tender testis",
     "absent cremasteric reflex",
     "adolescent male"
+   ],
+   "confirmatory_findings": [
+    "absent testicular blood flow on doppler ultrasound",
+    "twisted spermatic cord on ultrasound"
    ]
   },
   {
@@ -531,6 +584,10 @@
     "pelvic mass or cyst",
     "intermittent colicky pain",
     "history of ovarian cyst"
+   ],
+   "confirmatory_findings": [
+    "enlarged ovary with absent blood flow on doppler ultrasound",
+    "twisted ovarian pedicle on imaging"
    ]
   },
   {
@@ -542,6 +599,10 @@
     "pain with intercourse",
     "cervical motion tenderness",
     "new sexual partner"
+   ],
+   "confirmatory_findings": [
+    "cervical motion tenderness on examination",
+    "mucopurulent cervical discharge on examination"
    ]
   },
   {
@@ -743,6 +804,10 @@
     "night onset",
     "previous similar attacks",
     "high uric acid"
+   ],
+   "confirmatory_findings": [
+    "urate crystals in joint fluid",
+    "negatively birefringent needle-shaped crystals"
    ]
   },
   {
@@ -754,6 +819,9 @@
     "child pulling at ear",
     "recent cold",
     "bulging red eardrum"
+   ],
+   "confirmatory_findings": [
+    "bulging red tympanic membrane on otoscopy"
    ]
   },
   {
@@ -764,6 +832,10 @@
     "washed out colors",
     "young adult",
     "relative afferent pupillary defect"
+   ],
+   "confirmatory_findings": [
+    "optic nerve enhancement on MRI",
+    "relative afferent pupillary defect on examination"
    ]
   },
   {
@@ -774,6 +846,9 @@
     "rash following a nerve distribution",
     "tingling before rash",
     "older age or weakened immunity"
+   ],
+   "confirmatory_findings": [
+    "grouped vesicles in a dermatomal distribution on examination"
    ]
   },
   {
@@ -785,6 +860,10 @@
     "blurred vision",
     "headache with nausea and vomiting",
     "fixed mid-dilated pupil"
+   ],
+   "confirmatory_findings": [
+    "raised intraocular pressure",
+    "fixed mid-dilated pupil on examination"
    ]
   },
   {
@@ -796,6 +875,10 @@
     "visual disturbance",
     "fever and malaise",
     "high ESR"
+   ],
+   "confirmatory_findings": [
+    "positive temporal artery biopsy",
+    "temporal artery halo sign on ultrasound"
    ]
   },
   {
@@ -807,6 +890,10 @@
     "visual disturbance",
     "fever and malaise",
     "high ESR"
+   ],
+   "confirmatory_findings": [
+    "positive temporal artery biopsy",
+    "temporal artery halo sign on ultrasound"
    ]
   },
   {
@@ -817,6 +904,11 @@
     "tall thin young man or smoker",
     "reduced breath sounds on one side",
     "onset at rest"
+   ],
+   "confirmatory_findings": [
+    "pneumothorax on chest x-ray",
+    "absent lung markings on chest x-ray",
+    "reduced breath sounds on one side"
    ]
   },
   {
@@ -827,6 +919,10 @@
     "tingling in feet and hands",
     "recent infection",
     "difficulty breathing in severe cases"
+   ],
+   "confirmatory_findings": [
+    "albuminocytologic dissociation in cerebrospinal fluid",
+    "absent reflexes in affected limbs"
    ]
   },
   {
@@ -838,6 +934,11 @@
     "bilateral leg weakness or sciatica",
     "bowel incontinence",
     "reduced anal tone"
+   ],
+   "confirmatory_findings": [
+    "compression of the cauda equina on MRI",
+    "reduced anal sphincter tone",
+    "saddle sensory loss on examination"
    ]
   },
   {
@@ -848,6 +949,10 @@
     "fever",
     "single joint involvement",
     "recent joint procedure or infection"
+   ],
+   "confirmatory_findings": [
+    "purulent joint fluid",
+    "high synovial fluid white cell count"
    ]
   },
   {
@@ -858,6 +963,10 @@
     "fever",
     "single joint involvement",
     "recent joint procedure or infection"
+   ],
+   "confirmatory_findings": [
+    "purulent joint fluid",
+    "high synovial fluid white cell count"
    ]
   }
  ]
