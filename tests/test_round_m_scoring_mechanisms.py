@@ -99,3 +99,20 @@ def test_one_lab_result_is_credited_once_even_when_the_entry_names_it_twice():
              "confirmatory_findings": ["elevated troponin", "troponin elevated"]}
     once = dict(twice, confirmatory_findings=["elevated troponin"])
     assert _score_disease(twice, state)[0] == _score_disease(once, state)[0] == CONFIRMATORY_WEIGHT
+
+
+def test_nonspecific_inflammatory_lab_is_credited_at_feature_weight_not_confirmatory_weight():
+    from nova_agent.differential import FEATURE_WEIGHT
+    state = PatientState(case_id="wbc", chief_complaint="presenting")
+    state.laboratory_tests["cbc"] = "elevated white blood cell count"
+    wbc = {"id": "w", "name": "w", "typical_features": [], "risk_factors": [],
+           "confirmatory_findings": ["elevated white blood cell count"]}
+    score = _score_disease(wbc, state)[0]
+    assert score == FEATURE_WEIGHT < CONFIRMATORY_WEIGHT
+
+
+def test_specific_lab_keeps_full_confirmatory_weight():
+    state = PatientState(case_id="trop", chief_complaint="presenting")
+    state.laboratory_tests["troponin"] = "troponin elevated"
+    entry = {"id": "t", "name": "t", "typical_features": [], "risk_factors": [], "confirmatory_findings": ["elevated troponin"]}
+    assert _score_disease(entry, state)[0] == CONFIRMATORY_WEIGHT

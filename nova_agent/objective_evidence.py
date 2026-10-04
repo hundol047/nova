@@ -396,6 +396,13 @@ def normalize_objective_evidence(state: PatientState) -> Dict[str, ObjectiveFind
 # text, qualitative-only findings with no lab mapping here) on the existing plain word-overlap
 # path untouched. Keys are lower-cased KB phrase text, matched exactly against
 # disease["confirmatory_findings"]/["typical_features"] entries.
+# Labs that rise in almost any infection or inflammation. A positive result is real evidence but does
+# not discriminate between diagnoses, so it is credited at ordinary-feature weight rather than as a
+# diagnosis-defining confirmatory finding (Round M: "elevated white blood cell count" at confirmatory
+# weight made pyelonephritis and meningitis outrank diagnoses with 3-5 matched specific features
+# for any febrile patient with a CBC).
+NONSPECIFIC_INFLAMMATORY_LAB_IDS = frozenset({"lab.wbc", "lab.crp"})
+
 CONFIRMATORY_PHRASE_TO_LAB: Dict[str, tuple] = {
     "elevated troponin": ("lab.troponin", "high"),
     "troponin elevated": ("lab.troponin", "high"),
