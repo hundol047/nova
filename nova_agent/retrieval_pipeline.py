@@ -50,6 +50,14 @@ _MATCH_KIND_WEIGHT = {
 }
 _CURATION_BONUS = {"DEEP": 0.15, "STRUCTURED": 0.05, "NOT_CURATED": 0.0}
 _DANGEROUS_BONUS = 0.12
+# Fused-retrieval-rank prior (Round M). Stage 1 returns candidates already ordered by weighted RRF,
+# but the match-strength/curation/danger terms below ignored that order, so a concept retrieved 1st-5th
+# (several independent signals agreeing) could be reranked below dangerous or deeply-curated concepts
+# that merely matched one query and then be dropped before scoring. The prior decays smoothly with
+# fused rank and is capped well below an exact-name match, so it reorders near-ties without letting
+# position alone beat match strength.
+_FUSED_RANK_BONUS_MAX = 0.35
+_FUSED_RANK_HALF_LIFE = 5.0
 _CRITICAL_URGENCY_BONUS = 0.08
 
 # Stage 1 multi-query fusion. All weights/constants live here, not scattered as magic numbers.
@@ -209,9 +217,11 @@ def retrieve_high_recall(retriever: OpenWorldRetriever, *, chief_complaint: str 
     return fused
 
 
-def _rerank_score(candidate: RetrievedCandidate) -> float:
+def _rerank_score(candidate: RetrievedCandidate, fused_rank: int = 0) -> float:
     concept = candidate.concept
     score = candidate.match_score * _MATCH_KIND_WEIGHT.get(candidate.match_kind, 0.5)
+    if fused_rank > 0:
+        score += _FUSED_RANK_BONUS_MAX / (1.0 + (fused_rank - 1) / _FUSED_RANK_HALF_LIFE)
     score += _CURATION_BONUS.get(concept.curation_status, 0.0)
     if concept.dangerous is True:
         score += _DANGEROUS_BONUS
@@ -232,9 +242,9 @@ def lightweight_rerank(retrieved: List[RetrievedCandidate], *,
 
     scored = [
         RerankedCandidate(concept=c.concept, retrieval_score=c.match_score,
-                           rerank_score=round(_rerank_score(c), 4), match_kind=c.match_kind,
+                           rerank_score=round(_rerank_score(c, rank), 4), match_kind=c.match_kind,
                            reasons=[f"retrieval:{c.match_kind}"])
-        for c in retrieved
+        for rank, c in enumerate(retrieved, start=1)
     ]
     scored.sort(key=lambda rc: -rc.rerank_score)
     kept = scored[:rerank_top_k]

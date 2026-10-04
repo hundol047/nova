@@ -55,7 +55,7 @@ def analyze_case(case, *, truth_only: bool):
 
         def rerank(retrieved, **kw):
             kept = orig_rerank(retrieved, **kw)
-            captured["scored"] = {c.concept.concept_id: round(rp._rerank_score(c), 4) for c in retrieved}
+            captured["scored"] = {c.concept.concept_id: round(rp._rerank_score(c, rank), 4) for rank, c in enumerate(retrieved, 1)}
             captured["kept"] = {c.concept.concept_id for c in kept}
             return kept
 

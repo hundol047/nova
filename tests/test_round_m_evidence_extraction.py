@@ -83,3 +83,16 @@ def test_localized_followup_findings_become_english_evidence(text, expected):
 @pytest.mark.parametrize("text", ["吐き気はありません", "오한은 없어요", "血尿はなかったです"])
 def test_negated_localized_followup_finding_is_not_evidence(text):
     assert english_evidence_for(text) == []
+
+
+@pytest.mark.parametrize("text,expected", [
+    ("열이 나고 오줌 눌 때 아파요", {"fever", "dysuria painful urination"}),
+    ("右下腹部が痛くて熱が出ました", {"right lower quadrant abdominal pain", "fever"}),
+])
+def test_colloquial_korean_and_japanese_followup_wording_reaches_english_evidence(text, expected):
+    assert expected <= set(english_evidence_for(text))
+
+
+def test_negated_localized_fever_is_not_evidence():
+    assert "fever" not in english_evidence_for("熱はありません")
+    assert "fever" not in english_evidence_for("열이 없어요")
