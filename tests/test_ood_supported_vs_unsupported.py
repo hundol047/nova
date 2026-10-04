@@ -56,12 +56,10 @@ def test_internal_ood_wire_protocol_separation(monkeypatch, abstention):
     wire = action_to_competition("ood", action, diagnosis_quality=state.pending_diagnosis_quality,
                                  evidence_assessment=state.evidence_assessment)
     assert wire.metadata["internal_result"] == "OUT_OF_DOMAIN"
-    assert wire.action_type == ("INSUFFICIENT_INFORMATION" if abstention else "DIAGNOSE")
-    assert wire.metadata["forced_due_to_protocol"] == (not abstention)
-    if abstention:
-        assert wire.content != action.content
-    else:
-        assert wire.metadata["completion_type"] == "FORCED_FINAL_DIAGNOSIS"
+    assert wire.action_type == "DIAGNOSE"
+    assert wire.metadata["forced_due_to_protocol"] is True
+    assert wire.content == action.content
+    assert wire.metadata["completion_type"] == "FORCED_FINAL_DIAGNOSIS"
 
 
 def test_internal_failure_clears_stale_confidence(monkeypatch):

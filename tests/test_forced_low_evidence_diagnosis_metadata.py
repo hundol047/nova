@@ -72,7 +72,7 @@ def test_competition_adapter_always_exposes_diagnosis_quality_metadata():
     assert quality["zero_evidence_at_diagnosis"] is True
 
 
-def test_competition_adapter_relabels_action_type_only_when_configured(monkeypatch):
+def test_competition_adapter_ignores_unofficial_fifth_action_flag(monkeypatch):
     import dataclasses
 
     from nova_agent import config as config_module
@@ -85,7 +85,7 @@ def test_competition_adapter_relabels_action_type_only_when_configured(monkeypat
            "chief_complaint": "xyzzy plugh wobblefritz", "demographics": {"age": 40, "sex": "female"},
            "max_turns": 3}
     result = agent.act(obs)
-    assert result["action_type"] == "INSUFFICIENT_INFORMATION"
+    assert result["action_type"] == "DIAGNOSE"
 
 
 def test_competition_adapter_does_not_treat_repeated_denials_as_supported_diagnosis(monkeypatch):
@@ -107,7 +107,7 @@ def test_competition_adapter_does_not_treat_repeated_denials_as_supported_diagno
                "content": "Denies that symptom, nothing else to add."}
         result = agent.act(obs)
         turns += 1
-    assert result["action_type"] == "INSUFFICIENT_INFORMATION"
+    assert result["action_type"] == "DIAGNOSE"
     assert result["metadata"]["internal_result"] == "INSUFFICIENT_INFORMATION"
 
 

@@ -12,7 +12,7 @@ import time
 from datetime import datetime, timezone
 from typing import Dict, List, Literal, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 
 from nova_agent.models import Allergy, Medication, VitalSigns
 from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG
@@ -70,11 +70,11 @@ def _split_answer_segments(answer: str) -> List[str]:
         part = part.strip().rstrip(".").strip()
         if not part:
             continue
-        if re.search(r"\bdenies\b", part, re.IGNORECASE):
-            pieces = re.split(r",\s*(?=denies\b)", part, flags=re.IGNORECASE)
-            segments.extend(p.strip() for p in pieces if p.strip())
-        else:
-            segments.append(part)
+        # A new explicit negation after punctuation does not negate the preceding clause.
+        # Keep coordinated negative lists intact: "no fever, chills or cough".
+        pieces = re.split(r",\s*(?=(?:denies|denied|no|without|negative for)\b)",
+                          part, flags=re.IGNORECASE)
+        segments.extend(p.strip() for p in pieces if p.strip())
     return segments
 
 
@@ -172,6 +172,14 @@ class PatientState(BaseModel):
 
     turn_count: int = 0
     max_turns: int = 60
+    model_config = ConfigDict(validate_assignment=True)
+
+    @field_validator("max_turns", mode="before")
+    @classmethod
+    def cap_max_turns(cls, value):
+        from nova_agent.config import effective_max_turns
+        return effective_max_turns(value)
+
     final_diagnosis: Optional[str] = None
     final_diagnosis_rationale: Optional[str] = None
 

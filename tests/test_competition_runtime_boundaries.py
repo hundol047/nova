@@ -108,7 +108,7 @@ def test_isolated_submission_runtime_modes(tmp_path, mode):
                         {"case_id": "isolated", "observation_type": "exam_result", "content": "Normal findings."}]
         proc = subprocess.run([sys.executable, "run.py"], cwd=isolated, env=env,
             input="\n".join(json.dumps(x) for x in observations) + "\n", capture_output=True, text=True, timeout=15)
-        if mode == "unreachable":
+        if mode != "mock":
             assert proc.returncode == 1 and "NOT READY" in proc.stderr
             assert not proc.stdout.strip()
         else:
@@ -119,7 +119,7 @@ def test_isolated_submission_runtime_modes(tmp_path, mode):
     if mode == "stub":
         with stub() as (url, requests):
             run(url)
-            assert len(requests) >= 2  # startup and case calls separately
+            assert len(requests) == 0  # pre-guide submission must not contact even a local stub
             assert all(r["model"] == "openai/gpt-oss-20b" for r in requests)
     else:
         run("http://127.0.0.1:1/v1")

@@ -74,11 +74,11 @@ def normalize_diagnosis(text: str) -> NormalizedDiagnosis:
     if cleaned in table:
         canonical_id = table[cleaned]
     else:
-        # Longest-alias-first containment match: prevents a short generic alias ("mi") from
-        # matching before a longer, more specific one already ruled it out.
+        # Whole-phrase boundaries only. Short acronyms must never match inside unrelated
+        # names, and a fragment of an alias must not normalize to the complete disease.
         canonical_id = None
         for alias in sorted(table.keys(), key=len, reverse=True):
-            if alias and (alias in cleaned or cleaned in alias):
+            if alias and re.search(r"(?<!\w)" + re.escape(alias) + r"(?!\w)", cleaned):
                 canonical_id = table[alias]
                 break
 

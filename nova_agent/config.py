@@ -17,6 +17,17 @@ import os
 from dataclasses import dataclass, field
 
 
+def effective_max_turns(value, default=60):
+    """Reject non-integral/invalid budgets and enforce the public 60-turn ceiling."""
+    def valid(x):
+        if isinstance(x, bool): return None
+        if isinstance(x, int): return x if x > 0 else None
+        if isinstance(x, str) and x.strip().isdigit():
+            n = int(x.strip()); return n if n > 0 else None
+        return None
+    return min(valid(value) or valid(default) or 60, 60)
+
+
 def _float_env(name: str, default: float) -> float:
     raw = os.environ.get(name)
     if raw is None or raw == "":
@@ -99,7 +110,7 @@ class StopPolicyConfig:
 class NovaConfig:
     focus_resolved_actions: bool = field(default_factory=lambda: _bool_env("NOVA_FOCUS_RESOLVED_ACTIONS", True))
 
-    max_turns: int = field(default_factory=lambda: _int_env("NOVA_MAX_TURNS", 60))
+    max_turns: int = field(default_factory=lambda: effective_max_turns(os.environ.get("NOVA_MAX_TURNS")))
     top_k_differential: int = field(default_factory=lambda: _int_env("NOVA_TOP_K_DIFFERENTIAL", 5))
     candidate_pool_size: int = field(default_factory=lambda: _int_env("NOVA_CANDIDATE_POOL_SIZE", 8))
 

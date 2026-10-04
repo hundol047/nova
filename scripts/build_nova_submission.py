@@ -152,7 +152,7 @@ def main() -> None:
     _secret_scan()
     _import_smoke_test()
     _build_zip_and_manifest()
-    print("submission/ is ready.")
+    print("LOCAL PRE-GUIDE candidate only; official interface and real model NOT VERIFIED.")
 
 
 if __name__ == "__main__":

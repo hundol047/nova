@@ -18,7 +18,7 @@ from typing import List, Optional, Tuple
 from nova_agent.action_selector import ActionSelector, AgentAction
 from nova_agent.chief_complaint import classify as classify_chief_complaint
 from nova_agent.clinical_summary import build_clinical_summary
-from nova_agent.config import get_config
+from nova_agent.config import get_config, effective_max_turns
 from nova_agent.differential import DifferentialEngine, DifferentialItem
 from nova_agent.knowledge.retrieval import retrieve_turn_context
 from nova_agent.llm_client import BaseLLMClient, TurnContext, get_llm_client
@@ -53,7 +53,7 @@ class DoctorAgent:
         return PatientState(
             case_id=case_id, chief_complaint=chief_complaint,
             demographics=Demographics(**(demographics or {})),
-            max_turns=max_turns or get_config().max_turns,
+            max_turns=effective_max_turns(max_turns, get_config().max_turns),
         )
 
     # --- core turn loop -----------------------------------------------------------------------
@@ -105,6 +105,9 @@ class DoctorAgent:
                                    safety_findings=safety_findings, candidates=candidates,
                                    chosen_action=deterministic_action, stop_decision=stop_decision,
                                    retrieved_context=retrieved_context)
+                # Clear telemetry before this case call; a previous case/preflight cannot count.
+                self.llm_client._last_call_was_real = False
+                self.llm_client._last_call_succeeded = False
                 llm_output = self.llm_client.generate_turn_output(ctx)
 
                 # LLM reliability metrics (spec: a failing real LLM must never be invisible behind

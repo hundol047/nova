@@ -78,7 +78,7 @@ def action_to_competition(case_id: str, action: AgentAction, *, real_llm_verifie
     """Translate internal uncertainty into the provisional, configurable wire contract.
 
     FORCED_FINAL_DIAGNOSIS is a completion classification, never an official action label.
-    The optional abstention label remains experimental until an official schema confirms it.
+    Uncertainty stays metadata; no fifth wire action is permitted.
     """
     metadata = {"key": action.key, "rationale": action.rationale}
     if real_llm_verified is not None:
@@ -90,13 +90,6 @@ def action_to_competition(case_id: str, action: AgentAction, *, real_llm_verifie
     action_type = action.action_type
     if diagnosis_quality is not None:
         metadata["diagnosis_quality"] = diagnosis_quality
-        is_forced_or_evidence_free = (
-            diagnosis_quality.get("zero_evidence_at_diagnosis")
-            or diagnosis_quality.get("fallback_candidate_selected")
-        )
-        if (action_type == "DIAGNOSE" and is_forced_or_evidence_free
-                and get_config().competition_supports_insufficient_information):
-            action_type = "INSUFFICIENT_INFORMATION"
 
     content = action.content
     if action.action_type == "DIAGNOSE":
@@ -104,10 +97,6 @@ def action_to_competition(case_id: str, action: AgentAction, *, real_llm_verifie
             "internal_result": "INSUFFICIENT_INFORMATION",
             "reasons": ["evidence_assessment_unavailable"], "signals": {}, "calibrated": False}
         unsupported = assessment["internal_result"] != "SUPPORTED_DIAGNOSIS"
-        if unsupported and get_config().competition_supports_insufficient_information:
-            action_type = "INSUFFICIENT_INFORMATION"
-        if action_type == "INSUFFICIENT_INFORMATION":
-            content = "Insufficient evidence for a supported diagnosis; further assessment is needed."
         forced = unsupported and action_type == "DIAGNOSE"
         metadata.update({
             "internal_result": assessment["internal_result"],

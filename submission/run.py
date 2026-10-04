@@ -64,6 +64,11 @@ if not os.environ.get("NOVA_LLM_PROVIDER"):
 
 
 def _build_agent() -> DoctorAgent:
+    from competition.provider_lock import enforce_submission_provider
+    try:
+        enforce_submission_provider()
+    except RuntimeError as exc:
+        raise RealLLMUnavailableError(str(exc)) from exc
     provider = get_config().llm_provider
     if provider not in {"mock", "competition"}:
         raise RealLLMUnavailableError("NOT READY: submission requires competition or explicit development mock provider.")

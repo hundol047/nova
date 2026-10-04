@@ -19,7 +19,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 OFFICIAL_API_STATUS = "NOT VERIFIED"
 SCHEMA_STATUS = "PLACEHOLDER"
@@ -37,6 +37,13 @@ class CompetitionObservation(BaseModel):
     chief_complaint: Optional[str] = None
     demographics: Optional[Dict[str, Any]] = None
     max_turns: Optional[int] = None
+
+    @field_validator("max_turns", mode="before")
+    @classmethod
+    def cap_max_turns(cls, value):
+        from nova_agent.config import effective_max_turns
+        return effective_max_turns(value)
+
     # Present on 'ask_response' / 'exam_result' / 'test_result': the environment's reply to the
     # agent's previous action (patient's answer, exam finding, or test result, as text).
     content: Optional[str] = None
@@ -44,15 +51,9 @@ class CompetitionObservation(BaseModel):
 
 
 class CompetitionAction(BaseModel):
-    """One turn's output back to the competition environment.
-
-    "INSUFFICIENT_INFORMATION" is this repo's OWN speculative addition, never confirmed by an
-    official N.O.V.A. 2026 schema -- competition/adapter.py's action_to_competition() only ever
-    emits it when NovaConfig.competition_supports_insufficient_information is explicitly set True
-    (default False), for a genuinely forced/zero-evidence diagnosis. Never invented as if it were
-    part of a real published contract; see that config field's own docstring."""
+    """Provisional envelope; only the four publicly documented actions are permitted."""
 
     case_id: str
-    action_type: Literal["ASK", "EXAM", "TEST", "DIAGNOSE", "INSUFFICIENT_INFORMATION"]
+    action_type: Literal["ASK", "EXAM", "TEST", "DIAGNOSE"]
     content: str
     metadata: Dict[str, Any] = Field(default_factory=dict)
