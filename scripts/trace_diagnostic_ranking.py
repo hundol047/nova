@@ -22,6 +22,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from evaluation.generalization_dev_cases_round_j import ROUND_J_CASES
+import importlib
 from evaluation.simulator import PatientSimulator
 from nova_agent.orchestrator import DoctorAgent
 from nova_agent.llm_client import MockLLMClient
@@ -231,8 +232,12 @@ def archive_traces(out, rows):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--output-dir',required=True);p.add_argument('--cases',help='Comma-separated development IDs only')
+    p.add_argument('--case-module',default='evaluation.generalization_dev_cases_round_j',help='development case module (never a blind module)')
+    p.add_argument('--case-var',default='ROUND_J_CASES')
     args=p.parse_args();out=Path(args.output_dir);out.mkdir(parents=True,exist_ok=True)
-    cases=ROUND_J_CASES if not args.cases else [c for c in ROUND_J_CASES if c.case_id in args.cases.split(',')]
+    if 'blind' in args.case_module: raise SystemExit('refusing to trace a blind module')
+    mod=importlib.import_module(args.case_module);all_cases=getattr(mod,args.case_var)
+    cases=all_cases if not args.cases else [c for c in all_cases if c.case_id in args.cases.split(',')]
     rows=[]
     for case in cases:
         summary,turns=trace_case(case);target=out/(case.case_id+'.json.gz')
@@ -243,7 +248,7 @@ def main():
     result=dict(trace_archive_sha256=archive_hash, data_type='SYNTHETIC DEVELOPMENT / COMPETITION STRUCTURE / MOCK LLM',expert_reviewed=False,independent_clinical_validation=False,
         runtime_head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         runtime_dirty=bool(subprocess.check_output(['git','status','--porcelain','--','nova_agent'],cwd=ROOT,text=True).strip()),
-        case_file_sha256=hashlib.sha256((ROOT/'evaluation/generalization_dev_cases_round_j.py').read_bytes()).hexdigest(),
+        case_file_sha256=hashlib.sha256(Path(mod.__file__).read_bytes()).hexdigest(),case_module=args.case_module,
         component_definition='raw signed component sums; objective includes numeric glucose/lactate; score_residual records saturation and reassuring penalties; medication overlaps risk',
         metrics=aggregate(rows),cases=rows)
     (out/'summary.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
