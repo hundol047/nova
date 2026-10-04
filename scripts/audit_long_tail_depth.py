@@ -20,7 +20,7 @@ def audit():
     return dict(catalog_entries=len(rows),depth_counts=dict(Counter(r['diagnostic_depth'] for r in rows)),
         fields_populated={f:sum(r['counts'][f]>0 for r in rows) for f in fields},
         interpretation='Terminology retrieval is not clinical reasoning depth. No missing clinical facts were invented.',
-        enrichment_status='DEFERRED: these entries have no repo-backed clinical fields; clinical source review and adjudication required.',rows=rows)
+        enrichment_status=('PARTIAL: ' + str(sum(r['counts']['typical_features']>0 for r in rows)) + ' Tier-2 entries carry typical_features (and ' + str(sum(r['counts']['confirmatory_findings']>0 for r in rows)) + ' confirmatory_findings) from nova_agent/knowledge/tier2_enrichment.json -- agent-authored general medical-education knowledge, NOT clinician-reviewed (see source=tier2_catalog+tier2_enrichment_unreviewed); every other entry stays empty. Clinical source review and adjudication are still required.'),rows=rows)
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--output',required=True);a=p.parse_args();r=audit()
     Path(a.output).write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in r.items() if k!='rows'}))
