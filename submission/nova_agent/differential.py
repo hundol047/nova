@@ -11,6 +11,8 @@ reshuffle the ranking.
 
 from __future__ import annotations
 
+import math
+
 from typing import Dict, List, Literal, Optional
 
 from pydantic import BaseModel
@@ -59,6 +61,16 @@ CONFIRMATORY_WEIGHT = 2.5
 # more dangerous candidate (spec: converging evidence must not let simple keyword counting
 # overpower one decisive finding).
 _TYPICAL_FEATURE_CONTRIBUTION_CAP = CONFIRMATORY_WEIGHT
+_TYPICAL_FEATURE_KNEE = _TYPICAL_FEATURE_CONTRIBUTION_CAP - 0.5
+
+
+def _soft_saturate(total: float) -> float:
+    """Identity up to the knee; beyond it an exponential approach to _TYPICAL_FEATURE_CONTRIBUTION_CAP
+    (strictly increasing, never above the cap)."""
+    if total <= _TYPICAL_FEATURE_KNEE:
+        return total
+    headroom = _TYPICAL_FEATURE_CONTRIBUTION_CAP - _TYPICAL_FEATURE_KNEE
+    return _TYPICAL_FEATURE_KNEE + headroom * (1.0 - math.exp(-(total - _TYPICAL_FEATURE_KNEE) / headroom))
 
 _NEGATIVE_FEATURE_PREFIXES = ("no ", "denies ", "without ", "absent ")
 
@@ -295,7 +307,13 @@ def _score_disease(entry: dict, state: PatientState,
         delta = _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)
         typical_feature_score += max(delta, 0.0)
         typical_penalty += min(delta, 0.0)
-    score += min(typical_feature_score, _TYPICAL_FEATURE_CONTRIBUTION_CAP) + typical_penalty
+    # Soft saturation instead of a flat cap (Round M): with a hard min(), a candidate matching six
+    # typical features and one matching two both sat at exactly the cap and TIED, so rank order fell
+    # back to pool insertion order. Evidence up to the knee counts in full; beyond it the
+    # contribution rises strictly monotonically but asymptotes to the cap, so more converging
+    # evidence still orders above less while stacked weak clues can never reach (let alone exceed)
+    # one confirmatory finding's worth.
+    score += _soft_saturate(typical_feature_score) + typical_penalty
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
@@ -303,7 +321,17 @@ def _score_disease(entry: dict, state: PatientState,
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 
+    counted_labs = set()
     for finding in entry.get("confirmatory_findings", []):
+        # Several knowledge-base phrasings can name the SAME lab reading ("elevated troponin" /
+        # "troponin elevated", "positive nitrites" / "positive leukocyte esterase" / "pyuria"); one
+        # result is one piece of evidence and is credited once (Round M: ACS scored 5.0 from a single
+        # troponin by matching both phrasings).
+        lab_key = CONFIRMATORY_PHRASE_TO_LAB.get(finding.lower())
+        if lab_key is not None:
+            if lab_key in counted_labs:
+                continue
+            counted_labs.add(lab_key)
         max_possible += CONFIRMATORY_WEIGHT
         lab_aware_delta = _score_lab_aware_phrase(finding, CONFIRMATORY_WEIGHT, objective_findings,
                                                    supporting, contradictory, missing)
@@ -426,8 +454,12 @@ class DifferentialEngine:
         # "zero_evidence_fallback" and returns immediately, before any other source could ever mix
         # in (see that module's own `if not pool:` branch) -- so "every candidate's sources is
         # exactly that one tag" is both necessary and sufficient to detect this state here.
-        is_zero_evidence_presentation = bool(candidate_records) and all(
-            set(c.sources) == {"zero_evidence_fallback"} for c in candidate_records
+        # (Retrieval-only ontology candidates may ride along; they are recall, not evidence, and any
+        # that earns real scored support clears this flag below via `not any(t[3] ...)`.)
+        is_zero_evidence_presentation = (
+            bool(candidate_records)
+            and any("zero_evidence_fallback" in c.sources for c in candidate_records)
+            and all(set(c.sources) <= {"zero_evidence_fallback", "ontology_retrieval"} for c in candidate_records)
         )
 
         scored = []

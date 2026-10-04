@@ -321,7 +321,17 @@ def _score_disease(entry: dict, state: PatientState,
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 
+    counted_labs = set()
     for finding in entry.get("confirmatory_findings", []):
+        # Several knowledge-base phrasings can name the SAME lab reading ("elevated troponin" /
+        # "troponin elevated", "positive nitrites" / "positive leukocyte esterase" / "pyuria"); one
+        # result is one piece of evidence and is credited once (Round M: ACS scored 5.0 from a single
+        # troponin by matching both phrasings).
+        lab_key = CONFIRMATORY_PHRASE_TO_LAB.get(finding.lower())
+        if lab_key is not None:
+            if lab_key in counted_labs:
+                continue
+            counted_labs.add(lab_key)
         max_possible += CONFIRMATORY_WEIGHT
         lab_aware_delta = _score_lab_aware_phrase(finding, CONFIRMATORY_WEIGHT, objective_findings,
                                                    supporting, contradictory, missing)

@@ -82,6 +82,8 @@ class ClinicalConcept:
     dangerous: Optional[bool] = None
     chief_complaint_tags: Tuple[str, ...] = ()
     typical_features: Tuple[str, ...] = ()
+    # Defining OBJECTIVE findings (imaging/lab/ECG/exam), only where a reviewed-or-flagged source set them.
+    confirmatory_findings: Tuple[str, ...] = ()
     kb_id: Optional[str] = None         # id into knowledge/diseases when tier==TIER1_DEEP
 
     def all_search_terms(self) -> List[str]:
@@ -105,6 +107,7 @@ class ClinicalConcept:
             "dangerous": self.dangerous,
             "chief_complaint_tags": list(self.chief_complaint_tags),
             "typical_features": list(self.typical_features),
+            "confirmatory_findings": list(self.confirmatory_findings),
             "kb_id": self.kb_id,
         }
 

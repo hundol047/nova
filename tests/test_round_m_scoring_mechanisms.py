@@ -90,3 +90,12 @@ def test_opposite_direction_finding_never_satisfies_a_directional_feature(featur
 ])
 def test_same_direction_still_matches(feature, finding):
     assert feature_present(feature, [finding])
+
+
+def test_one_lab_result_is_credited_once_even_when_the_entry_names_it_twice():
+    state = PatientState(case_id="dedupe", chief_complaint="presenting")
+    state.laboratory_tests["troponin"] = "troponin elevated"
+    twice = {"id": "t", "name": "t", "typical_features": [], "risk_factors": [],
+             "confirmatory_findings": ["elevated troponin", "troponin elevated"]}
+    once = dict(twice, confirmatory_findings=["elevated troponin"])
+    assert _score_disease(twice, state)[0] == _score_disease(once, state)[0] == CONFIRMATORY_WEIGHT

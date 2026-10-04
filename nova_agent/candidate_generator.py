@@ -263,6 +263,39 @@ def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
         seen_names.add(concept.canonical_name.strip().lower())
 
 
+MAX_EVIDENCED_ONTOLOGY_PROTECTED = 8
+# One bare single-word match (0.5) is not evidence enough to protect a concept from trimming.
+MIN_EVIDENCED_ONTOLOGY_WEIGHT = 1.0
+
+
+def _ontology_evidence_weight(entry: dict, evidence_text) -> float:
+    """Bounded count of an ontology entry's own features matched by the patient's evidence. A
+    multi-word feature counts 1.0, a bare single-word one 0.5, a confirmatory finding 2.0; the total
+    is capped so ten weak matches cannot outrank one specific multi-feature match."""
+    total = 0.0
+    for feature in entry.get("typical_features", []):
+        if feature_present_with_aliases(feature, evidence_text):
+            total += 1.0 if len(feature.split()) >= 2 else 0.5
+    for finding in entry.get("confirmatory_findings", []):
+        if feature_present_with_aliases(finding, evidence_text):
+            total += 2.0
+    return min(total, 4.0)
+
+
+def _evidenced_ontology_candidates(candidates, presentation, already_protected):
+    protected_ids = {c.id for c in already_protected}
+    ontology_only = {"ontology_broadening", "ontology_retrieval"}
+    scored = []
+    for order, c in enumerate(candidates):
+        if c.id in protected_ids or not set(c.sources).issubset(ontology_only):
+            continue
+        weight = _ontology_evidence_weight(c.entry, presentation.evidence_text)
+        if weight >= MIN_EVIDENCED_ONTOLOGY_WEIGHT:
+            scored.append((-weight, order, c))
+    scored.sort(key=lambda t: (t[0], t[1]))
+    return [c for _, _, c in scored[:MAX_EVIDENCED_ONTOLOGY_PROTECTED]]
+
+
 def generate_candidates(presentation: ClinicalPresentation,
                          glucose_result_text: Optional[str] = None,
                          lactate_result_text: Optional[str] = None,
@@ -508,6 +541,15 @@ def generate_candidates(presentation: ClinicalPresentation,
     # never crowd out an existing Tier-1 candidate or must-not-miss diagnosis.
     trimmable_only_sources = {"safety_candidate", "contextual_safety", "ontology_broadening", "ontology_retrieval"}
     protected = [c for c in candidates if not set(c.sources).issubset(trimmable_only_sources)]
+    # Round M: an ontology candidate whose OWN typical/confirmatory features are matched by the
+    # patient's evidence is no longer a zero-evidence supplement. Trimming by insertion order cut
+    # evidence-bearing long-tail truths that retrieval ranked 1st-10th (they were appended after the
+    # fixed safety net, so they sat past the keep_count boundary and were never even scored). The
+    # best-evidenced few are protected (bounded by MAX_EVIDENCED_ONTOLOGY_PROTECTED); the rest keep
+    # the previous trimmable behavior.
+    evidenced_ontology = _evidenced_ontology_candidates(candidates, presentation, protected)
+    evidenced_ontology = evidenced_ontology[:max(0, target_size - len(protected))]  # never past the budget
+    protected = protected + evidenced_ontology
     trimmable = [c for c in candidates if c.id not in {p.id for p in protected}]
     keep_count = max(0, target_size - len(protected))
     result = protected + trimmable[:keep_count]

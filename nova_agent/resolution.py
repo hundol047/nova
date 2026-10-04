@@ -62,6 +62,8 @@ def _competition_resolved(diagnosis_id, contradictory_evidence, state):
     from nova_agent.differential import _score_disease, _strip_negative_prefix
     entry = disease_by_id(diagnosis_id)
     if entry is None:
+        if diagnosis_id.startswith("onto::"):
+            return _ontology_workup_addressed(diagnosis_id, state)
         return False
     required = entry.get("minimum_workup")
     if required is None:
@@ -85,3 +87,20 @@ def _competition_resolved(diagnosis_id, contradictory_evidence, state):
         if len(specific) >= 2 and not confirm.intersection(support):
             return False
     return True
+
+
+def _ontology_workup_addressed(diagnosis_id: str, state: PatientState) -> bool:
+    """Tier-2/3 (ontology) candidates have no exam/test workup of their own, so the only
+    discriminators that EXIST for them are their generic feature questions (missing_info generates at
+    most MAX_TIER2_DISCRIMINATING_FEATURES). Round M: they used to be unresolvable forever, so any
+    supported dangerous long-tail candidate blocked the stop until the turn budget forced a diagnosis
+    (50+ turn encounters). They are addressed once every discriminator that exists has been asked;
+    "addressed" still does not mean excluded -- a decisive lead is separately required to stop."""
+    try:
+        from nova_agent.missing_info import _resolve_entry
+        entry = _resolve_entry(diagnosis_id)
+    except Exception:
+        return False
+    if entry is None:
+        return False
+    return all(state.question_asked(q) for q in entry.get("discriminating_questions", []))
