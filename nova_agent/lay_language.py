@@ -64,7 +64,7 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
                              "pulse went wild and irregular", "pulse is uneven"],
     "racing heart": ["heart racing", "heart is pounding", "pulse is fast", "heart thumping", "heart pounding", "heart is racing"],
     "associated lightheadedness": ["feel faint", "feel light-headed", "near fainting", "feel woozy", "feel faint and woozy"],
-    "known history of arrhythmia": ["atrial fibrillation", "known afib"],
+    "known history of arrhythmia": ["known afib", "history of afib"],
     "palpitations": ["heart pounding", "heart racing", "heart thumping", "heart is pounding", "fluttering heart"],
     # --- pancreatitis
     "epigastric pain radiating to back": ["pain in the pit of my stomach", "upper belly pain through to my back", "boring ache in the pit of my stomach",
