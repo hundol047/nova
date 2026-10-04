@@ -7,7 +7,7 @@ from nova_agent.taxonomy import TEST_CATALOG,EXAM_CATALOG
 ROOT=Path(__file__).resolve().parents[1]
 
 def test_current_and_historical_sets_are_distinguished():
-    assert CURRENT_BLIND_VERSION=='v18'
+    assert CURRENT_BLIND_VERSION=='v19'
     assert 'v16' in reference_only_versions()
     assert 'v17' in reference_only_versions()
 

@@ -13,8 +13,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_v18_case_manifest_runner_and_frozen_runtime_hashes():
     m = json.loads((ROOT/'evaluation/blind_v18_manifest.json').read_text())
-    assert CURRENT_BLIND_VERSION == 'v18' and CURRENT_BLIND_STATUS == 'REFERENCE-ONLY'
-    assert 'v17' in reference_only_versions()
+    # Blind v19 (Round M) superseded v18 as the current blind set; v18 is a frozen, consumed,
+    # REFERENCE-ONLY artifact (its hashes below stay verified).
+    assert CURRENT_BLIND_VERSION == 'v19' and 'v18' in reference_only_versions() and 'v17' in reference_only_versions()
     for filename,key in [('blind_cases_v18.py','file_sha256'),('blind_benchmark_v18.py','runner_sha256')]:
         assert hashlib.sha256((ROOT/'evaluation'/filename).read_bytes()).hexdigest() == m[key]
     with zipfile.ZipFile(ROOT/'artifacts/verification/nova-submission-v10-final.zip') as archive:

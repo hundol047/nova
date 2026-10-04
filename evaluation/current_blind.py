@@ -15,12 +15,12 @@ from __future__ import annotations
 
 # The current untouched blind set. Bump this ONLY after a fresh set has been authored, frozen
 # (SHA-256 in its manifest), and leakage-checked — never to point at an edited set.
-CURRENT_BLIND_VERSION = "v18"
-CURRENT_BLIND_STATUS = "REFERENCE-ONLY"
+CURRENT_BLIND_VERSION = "v19"
+CURRENT_BLIND_STATUS = "CURRENT"
 
 # Every blind set this repo has authored, oldest -> newest. All except CURRENT_BLIND_VERSION are
 # REFERENCE-ONLY (each was frozen before a later reasoning change).
-ALL_BLIND_VERSIONS = ("v3", "v4", "v5", "v6", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v17", "v18")
+ALL_BLIND_VERSIONS = ("v3", "v4", "v5", "v6", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v17", "v18", "v19")
 
 
 def reference_only_versions() -> tuple:

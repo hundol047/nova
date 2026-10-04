@@ -1,0 +1,18 @@
+{
+  "case_count": 90,
+  "scored_count": 85,
+  "critical_count": 32,
+  "catalog_labels": "PASS",
+  "schema": "PASS",
+  "prior_unique_cases": 997,
+  "exact_or_high_lexical_overlap": [],
+  "maximum_chief_complaint_jaccard": [
+    0.5454545454545454,
+    "V19_20",
+    "RoundM_003"
+  ],
+  "case_sha256": "d2c76470346107e398f823a208767e4d019ee2f72a122130cf8369abffa5bee9",
+  "independent_clinical_validation": false,
+  "expert_reviewed": false,
+  "limitation": "Lexical check cannot prove semantic independence; same author shares development context. Labels are synthetic author hypotheses."
+}
