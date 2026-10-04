@@ -180,8 +180,13 @@ def _stem(word: str) -> str:
     return lowered
 
 
+_JOINABLE_HYPHEN = re.compile(r"\b(light|head|dizzy|nose|numb)-(headed|bleed|ness|sighted)\b")
+
+
 def _content_words(text: str) -> Set[str]:
-    words = re.split(r"[^a-z0-9가-힣]+", text.lower())
+    # A patient's hyphenation must not split one clinical word into two fragments
+    # ("light-headed" == "lightheaded").
+    words = re.split(r"[^a-z0-9가-힣]+", _JOINABLE_HYPHEN.sub(r"\1\2", text.lower()))
     return {_stem(w) for w in words if w and w not in _IGNORED}
 
 
@@ -348,6 +353,40 @@ FEATURE_ALIASES: dict[str, list[str]] = {
 }
 
 
+_LAY_VARIANTS: Set[tuple] = set()
+
+
+def _strict_alias_present(alias: str, findings: List[str], scrub_negated_spans: bool) -> bool:
+    """Lay-language variants are matched STRICTLY: the literal phrase on a word boundary, or EVERY
+    one of its content words present in one finding -- never the 60% partial overlap feature_present()
+    allows for a curated knowledge-base phrase (a 3-word variant must not be satisfied by 2 words)."""
+    alias_lower = alias.lower()
+    alias_words = _content_words(alias_lower)
+    for finding in findings:
+        finding_lower = _strip_negated_spans(finding.lower()) if scrub_negated_spans else finding.lower()
+        if _exact_phrase_present(alias_lower, finding_lower):
+            return True
+        if alias_words and alias_words <= _content_words(finding_lower):
+            return True
+    return False
+
+
+def _merge_lay_aliases() -> None:
+    """Merge nova_agent.lay_language.LAY_FEATURE_ALIASES into FEATURE_ALIASES (each variant stays
+    scoped to its one knowledge-base phrase)."""
+    from .lay_language import LAY_FEATURE_ALIASES
+
+    for phrase, variants in LAY_FEATURE_ALIASES.items():
+        bucket = FEATURE_ALIASES.setdefault(phrase.lower(), [])
+        for variant in variants:
+            if variant not in bucket:
+                bucket.append(variant)
+                _LAY_VARIANTS.add((phrase.lower(), variant))
+
+
+_merge_lay_aliases()
+
+
 def feature_present_with_aliases(phrase: str, findings: List[str], scrub_negated_spans: bool = True) -> bool:
     """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
     FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase.
@@ -358,6 +397,9 @@ def feature_present_with_aliases(phrase: str, findings: List[str], scrub_negated
     if feature_present(phrase, findings, scrub_negated_spans=scrub_negated_spans):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
-        if feature_present(alias, findings, scrub_negated_spans=scrub_negated_spans):
+        # Every alias is a PARAPHRASE of its phrase, so it is matched strictly (never by the 60%
+        # partial overlap used for curated phrases): "elevated blood pressure" used to be satisfied
+        # by "elevated white blood cell count" (2 of 3 words), crediting hypertension from a CBC.
+        if _strict_alias_present(alias, findings, scrub_negated_spans):
             return True
     return False

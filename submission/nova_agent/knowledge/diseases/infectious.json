@@ -117,7 +117,11 @@
       "hypotension"
     ],
     "minimum_workup": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "elevated tryptase"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   },
   {
     "id": "viral_uri",

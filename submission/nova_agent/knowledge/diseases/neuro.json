@@ -321,7 +321,13 @@
     ],
     "discriminating_tests": [],
     "red_flag_keywords": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "positive dix-hallpike",
+      "positional nystagmus",
+      "torsional nystagmus"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   },
   {
     "id": "orthostatic_hypotension",
@@ -363,6 +369,11 @@
     ],
     "discriminating_tests": [],
     "red_flag_keywords": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "orthostatic drop in blood pressure",
+      "blood pressure falls on standing"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   }
 ]

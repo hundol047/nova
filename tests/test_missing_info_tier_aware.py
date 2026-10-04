@@ -19,10 +19,14 @@ from nova_agent.ontology.models import ClinicalConcept, SemanticType, Tier
 from nova_agent.state import PatientState
 
 
-def _item(diagnosis_id: str, diagnosis: str = "Test Condition") -> DifferentialItem:
+def _item(diagnosis_id: str, diagnosis: str = "Test Condition", supported: bool = True) -> DifferentialItem:
+    # Round M: a Tier-2 (onto::) item only drives its own generic questions once it has at least
+    # one piece of supporting evidence; retrieval-only recall candidates do not (see
+    # test_retrieval_only_tier2_candidate_does_not_spend_the_action_budget).
     return DifferentialItem(
         diagnosis=diagnosis, diagnosis_id=diagnosis_id, rank=1, score=1.0, score_ratio=1.0,
         urgency="ROUTINE", dangerous_if_missed=False, confidence_band="MEDIUM",
+        supporting_evidence=["ear fullness"] if supported else [],
     )
 
 
@@ -154,3 +158,25 @@ def test_mixed_tier1_and_tier2_differential_generates_actions_for_both(monkeypat
     tier2_driven = [c for c in candidates if "onto::synthetic_tier2_2" in c.disease_ids_discriminated]
     assert kb_driven, "Tier-1 KB action generation must be unaffected"
     assert tier2_driven, "Tier-2 candidate must now be able to generate its own discriminating actions"
+
+
+def test_retrieval_only_tier2_candidate_does_not_spend_the_action_budget(monkeypatch):
+    """Round M: enriching Tier-2 entries with typical_features made EVERY zero-evidence retrieval
+    candidate generate generic questions, so unrelated 'associated_symptoms:<feature>' asks consumed
+    ~10 turns per case. A candidate with no supporting evidence is in the pool for recall only."""
+    concept = ClinicalConcept(
+        concept_id="synthetic_tier2_3", canonical_name="Synthetic Unsupported Condition",
+        semantic_type=SemanticType.DISEASE, tier=Tier.TIER2_STRUCTURED,
+        category="ent", curation_status="STRUCTURED", typical_features=("tinnitus", "ear fullness"),
+    )
+
+    class _FakeCatalog:
+        def get_condition(self, concept_id):
+            return concept if concept_id == "synthetic_tier2_3" else None
+
+    import nova_agent.ontology.registry as registry_module
+    monkeypatch.setattr(registry_module, "get_default_catalog", lambda: _FakeCatalog())
+    unsupported = _item("onto::synthetic_tier2_3", supported=False)
+    assert MissingInformationAnalyzer().analyze(_state(), [unsupported], []) == []
+    supported = _item("onto::synthetic_tier2_3", supported=True)
+    assert MissingInformationAnalyzer().analyze(_state(), [supported], [])

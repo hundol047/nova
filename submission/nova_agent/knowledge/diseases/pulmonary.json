@@ -230,7 +230,12 @@
       "unable to speak in full sentences",
       "hypoxia"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "reduced peak flow",
+      "hyperinflation on chest x-ray"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   },
   {
     "id": "acute_bronchitis",

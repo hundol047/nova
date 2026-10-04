@@ -397,9 +397,9 @@ def feature_present_with_aliases(phrase: str, findings: List[str], scrub_negated
     if feature_present(phrase, findings, scrub_negated_spans=scrub_negated_spans):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
-        if (phrase.lower(), alias) in _LAY_VARIANTS:
-            if _strict_alias_present(alias, findings, scrub_negated_spans):
-                return True
-        elif feature_present(alias, findings, scrub_negated_spans=scrub_negated_spans):
+        # Every alias is a PARAPHRASE of its phrase, so it is matched strictly (never by the 60%
+        # partial overlap used for curated phrases): "elevated blood pressure" used to be satisfied
+        # by "elevated white blood cell count" (2 of 3 words), crediting hypertension from a CBC.
+        if _strict_alias_present(alias, findings, scrub_negated_spans):
             return True
     return False

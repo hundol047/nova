@@ -220,7 +220,9 @@ LAB_SPECS: Dict[str, LabSpec] = {
         canonical_id="lab.beta_hcg", display_name="beta-hCG", unit="",
         raw_keys=("beta_hcg", "hcg", "pregnancy_test"), numeric_pattern=None,
         qualitative_high_words=_direction_words("high", "positive beta-hcg", "positive hcg",
-                                                 "positive pregnancy test"),
+                                                 "positive pregnancy test", "positive pregnancy hormone",
+                                                 "pregnancy test is positive", "pregnancy hormone is positive",
+                                                 "hcg is positive", "hcg positive"),
         qualitative_normal_words=("negative",) + _GENERIC_NORMAL_WORDS,
     ),
     # Lipase -- the discriminating lab for acute_pancreatitis / acute_abdomen (KB confirmatory).
@@ -292,6 +294,28 @@ def _interpret_numeric(spec: LabSpec, value: float) -> str:
     return "normal"
 
 
+# Round M: real reports state magnitude in many forms ("more than three times normal", "5x the upper
+# limit", "markedly raised") that an exact-phrase list can never enumerate. Applied ONLY to the
+# qualitative-only, high-only labs (those built with _direction_words), and only when not negated.
+_NUMBER_WORD = r"(?:\d+(?:\.\d+)?|one|two|three|four|five|six|seven|eight|nine|ten)"
+_MAGNITUDE_HIGH = re.compile(
+    rf"\b{_NUMBER_WORD}\s*(?:x|times|-?fold)\s*(?:the\s+|of\s+)?(?:normal|upper\s+(?:limit|normal)|uln|reference|baseline)", re.IGNORECASE)
+_RAISED_WORDS = re.compile(r"\b(?:markedly|significantly|greatly|very|severely)\s+(?:high|raised|increased|elevated)\b|\b(?:raised|increased|above normal|higher than normal)\b", re.IGNORECASE)
+_NEGATORS = re.compile(r"(?:\bnot\b|\bno\b|\bnever\b|\bwithout\b|n't|\bnormal\b)[^.;,]{0,14}$", re.IGNORECASE)
+
+
+def _asserts_high_magnitude(combined: str) -> bool:
+    for pattern in (_MAGNITUDE_HIGH, _RAISED_WORDS):
+        for match in pattern.finditer(combined):
+            if not _NEGATORS.search(combined[max(0, match.start() - 18):match.start()]):
+                return True
+    return False
+
+
+def _is_high_only_qualitative(spec: LabSpec) -> bool:
+    return not spec.qualitative_low_words and "out of range" in spec.qualitative_high_words
+
+
 def _interpret_qualitative(spec: LabSpec, raw_texts: List[str]) -> Optional[str]:
     combined = " ".join(t.lower() for t in raw_texts)
     for word in spec.qualitative_high_words:
@@ -300,6 +324,8 @@ def _interpret_qualitative(spec: LabSpec, raw_texts: List[str]) -> Optional[str]
     for word in spec.qualitative_low_words:
         if word in combined:
             return "low"
+    if _is_high_only_qualitative(spec) and _asserts_high_magnitude(combined):
+        return "high"
     for word in spec.qualitative_normal_words:
         if word in combined:
             return "normal"

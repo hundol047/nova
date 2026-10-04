@@ -228,7 +228,13 @@
       "abdominal_ultrasound"
     ],
     "red_flag_keywords": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "elevated lipase",
+      "pancreatic inflammation on imaging",
+      "peripancreatic fat stranding"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   },
   {
     "id": "appendicitis",
@@ -269,7 +275,15 @@
       "rebound tenderness",
       "guarding"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "inflamed appendix",
+      "appendiceal wall thickening",
+      "dilated appendix",
+      "periappendiceal fat stranding",
+      "appendicolith"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   },
   {
     "id": "gastroenteritis",

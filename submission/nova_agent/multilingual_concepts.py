@@ -156,6 +156,29 @@ _CANONICAL_ENGLISH_EVIDENCE: Dict[str, str] = {
 }
 
 
+# Direct localized-symptom -> canonical English evidence for findings that are NOT routing concepts
+# (follow-up answers such as nausea, dysuria, chills). Same discipline as above: only a non-ASCII
+# phrase can fire, a following denial marker cancels it, and plain English is never touched.
+# PROVENANCE: authored by the engineering agent from common Korean/Japanese clinical vocabulary;
+# not clinician-reviewed; one localized noun maps to one plain English symptom, no diagnostic claim.
+_DIRECT_LOCALIZED_EVIDENCE: Dict[str, str] = {
+    "메스꺼": "nausea", "구역": "nausea", "속이 안 좋": "nausea", "吐き気": "nausea", "むかむか": "nausea",
+    "배뇨통": "dysuria painful urination", "소변을 볼 때 아": "dysuria painful urination",
+    "排尿時": "dysuria painful urination", "排尿痛": "dysuria painful urination",
+    "빈뇨": "urinary frequency", "자주 소변": "urinary frequency", "頻尿": "urinary frequency",
+    "오한": "chills", "悪寒": "chills", "寒気": "chills",
+    "옆구리": "flank pain", "側腹部": "flank pain", "脇腹": "flank pain",
+    "기침": "cough", "咳": "cough", "가래": "productive cough", "痰": "productive cough",
+    "식은땀": "sweating", "冷や汗": "sweating", "발한": "sweating", "多汗": "sweating",
+    "두근": "palpitations", "動悸": "palpitations",
+    "목이 아": "sore throat", "喉の痛み": "sore throat", "のどが痛": "sore throat",
+    "혈뇨": "hematuria blood in urine", "血尿": "hematuria blood in urine",
+    "황달": "jaundice", "黄疸": "jaundice",
+    "발진": "rash", "発疹": "rash",
+    "경련": "seizure", "けいれん": "seizure", "痙攣": "seizure",
+}
+
+
 def _present_not_negated(phrase: str, text: str) -> bool:
     start = text.find(phrase)
     while start != -1:
@@ -182,5 +205,8 @@ def english_evidence_for(text: str) -> List[str]:
     for concept, phrases in MULTILINGUAL_CONCEPT_ALIASES.items():
         english = _CANONICAL_ENGLISH_EVIDENCE.get(concept)
         if english and english not in found and any((not p.isascii()) and _present_not_negated(p, text) for p in phrases):
+            found.append(english)
+    for phrase, english in _DIRECT_LOCALIZED_EVIDENCE.items():
+        if english not in found and phrase in text and _present_not_negated(phrase, text):
             found.append(english)
     return found
