@@ -398,11 +398,15 @@ def _strict_alias_present(alias: str, findings: List[str], scrub_negated_spans: 
     allows for a curated knowledge-base phrase (a 3-word variant must not be satisfied by 2 words)."""
     alias_lower = alias.lower()
     alias_words = _content_words(alias_lower)
+    # Generic symptom nouns (pain, ache...) are stripped from content words, so "pain after meals" would
+    # otherwise reduce to {after, meal} and match any "after a meal" text. They must still be present.
+    alias_generic = [w for w in re.findall(r"[a-z]+", alias_lower) if w in _GENERIC_MEDICAL_WORDS]
     for finding in findings:
         finding_lower = _strip_negated_spans(finding.lower()) if scrub_negated_spans else finding.lower()
         if _exact_phrase_present(alias_lower, finding_lower):
             return True
-        if alias_words and alias_words <= _content_words(finding_lower):
+        if alias_words and alias_words <= _content_words(finding_lower) and all(
+                re.search(rf"\b{re.escape(w)}", finding_lower) for w in alias_generic):
             return True
     return False
 
