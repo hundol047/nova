@@ -47,6 +47,30 @@ _DECISIVE_LEAD_MIN_SUPPORT = 2
 _DECISIVE_LEAD_MIN_TURNS = 6
 
 
+def _substantively_supported(item: DifferentialItem, severity_ok: bool = True) -> bool:
+    """Whether a candidate's supporting evidence is enough to keep a dangerous alternative pending.
+
+    * An ontology (Tier-2/3) item needs at least two matched features: a single generic match (e.g.
+      "fever" on a long-tail dangerous concept) is retrieval-level noise, and Tier-2 concepts have no
+      workup that could resolve it, so counting it let one stray feature hold every febrile
+      encounter open.
+    * Support made ONLY of generic physiologic-severity words (fever, tachycardia, confusion...)
+      keeps an alternative pending when the patient looks physiologically sick (`severity_ok`) or the
+      support converges (>= 3 such features); otherwise one lay-worded "confused" or "fever" kept
+      every dangerous metabolic/infectious alternative alive and drove 50-turn encounters.
+    * Any other supported Tier-1 item is pending, as before."""
+    support = list(item.supporting_evidence)
+    if not support:
+        return False
+    if item.diagnosis_id.startswith("onto::") and len(support) < 2:
+        return False
+    from nova_agent.matching import content_words
+    from nova_agent.severity_evidence import GENERIC_PHYSIOLOGIC_SEVERITY_WORDS
+    generic_only = all(content_words(p) and content_words(p).issubset(GENERIC_PHYSIOLOGIC_SEVERITY_WORDS)
+                       for p in support)
+    return not generic_only or severity_ok or len(support) >= 3
+
+
 class StopDecision(BaseModel):
     should_diagnose: bool
     forced: bool
@@ -116,7 +140,7 @@ class StopPolicy:
         unresolved_dangerous = [
             d for d in differential[1:]
             if d.dangerous_if_missed and not d.contradictory_evidence
-            and (d.confidence_band != "LOW" or (severity_keeps_alternative_active and d.supporting_evidence))
+            and (d.confidence_band != "LOW" or (severity_keeps_alternative_active and _substantively_supported(d, True)))
         ]
         differential_by_id = {d.diagnosis_id: d for d in differential}
         active_safety_flags = [
@@ -155,7 +179,7 @@ class StopPolicy:
         if best_decision_value is not None:
             # An evidenced critical Top-5 alternative with workup remaining must not be
             # forgotten simply because its heuristic band is LOW or one soft negative exists.
-            pending_critical = any(d.dangerous_if_missed and d.supporting_evidence
+            pending_critical = any(d.dangerous_if_missed and _substantively_supported(d, severity_keeps_alternative_active)
                 and not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)
                 for d in differential[:5])
             from nova_agent.knowledge.retrieval import disease_by_id
@@ -165,7 +189,7 @@ class StopPolicy:
             mature_low_value = (objective_confirmed and raw_gap >= 2.5
                                 and best_decision_value <= 0.15 and enough_turns_gathered)
             pending_critical_alternative = any(
-                d.dangerous_if_missed and d.supporting_evidence
+                d.dangerous_if_missed and _substantively_supported(d, severity_keeps_alternative_active)
                 and not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)
                 for d in differential[1:5])
             decisive_lead = (state.turn_count >= _DECISIVE_LEAD_MIN_TURNS and second is not None

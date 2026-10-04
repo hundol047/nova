@@ -180,3 +180,24 @@ def test_retrieval_only_tier2_candidate_does_not_spend_the_action_budget(monkeyp
     assert MissingInformationAnalyzer().analyze(_state(), [unsupported], []) == []
     supported = _item("onto::synthetic_tier2_3", supported=True)
     assert MissingInformationAnalyzer().analyze(_state(), [supported], [])
+
+
+def test_tier2_candidate_outside_the_contention_ranks_generates_no_questions(monkeypatch):
+    """Round M: a supported but low-ranked long-tail candidate must not inflate the action pool."""
+    concept = ClinicalConcept(
+        concept_id="synthetic_tier2_4", canonical_name="Synthetic Distant Condition",
+        semantic_type=SemanticType.DISEASE, tier=Tier.TIER2_STRUCTURED,
+        category="ent", curation_status="STRUCTURED", typical_features=("tinnitus", "ear fullness"),
+    )
+
+    class _FakeCatalog:
+        def get_condition(self, concept_id):
+            return concept if concept_id == "synthetic_tier2_4" else None
+
+    import nova_agent.ontology.registry as registry_module
+    monkeypatch.setattr(registry_module, "get_default_catalog", lambda: _FakeCatalog())
+    near = _item("onto::synthetic_tier2_4")
+    far = _item("onto::synthetic_tier2_4")
+    far.rank = 20
+    assert MissingInformationAnalyzer().analyze(_state(), [near], [])
+    assert MissingInformationAnalyzer().analyze(_state(), [far], []) == []
