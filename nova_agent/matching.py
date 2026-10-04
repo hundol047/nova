@@ -180,8 +180,13 @@ def _stem(word: str) -> str:
     return lowered
 
 
+_JOINABLE_HYPHEN = re.compile(r"\b(light|head|dizzy|nose|numb)-(headed|bleed|ness|sighted)\b")
+
+
 def _content_words(text: str) -> Set[str]:
-    words = re.split(r"[^a-z0-9가-힣]+", text.lower())
+    # A patient's hyphenation must not split one clinical word into two fragments
+    # ("light-headed" == "lightheaded").
+    words = re.split(r"[^a-z0-9가-힣]+", _JOINABLE_HYPHEN.sub(r"\1\2", text.lower()))
     return {_stem(w) for w in words if w and w not in _IGNORED}
 
 
@@ -346,6 +351,21 @@ FEATURE_ALIASES: dict[str, list[str]] = {
     "liver disease": ["cirrhosis", "hepatitis", "liver problems"],
     "peptic ulcer disease": ["stomach ulcer", "ulcer history", "history of ulcers"],
 }
+
+
+def _merge_lay_aliases() -> None:
+    """Merge nova_agent.lay_language.LAY_FEATURE_ALIASES into FEATURE_ALIASES (each variant stays
+    scoped to its one knowledge-base phrase)."""
+    from .lay_language import LAY_FEATURE_ALIASES
+
+    for phrase, variants in LAY_FEATURE_ALIASES.items():
+        bucket = FEATURE_ALIASES.setdefault(phrase.lower(), [])
+        for variant in variants:
+            if variant not in bucket:
+                bucket.append(variant)
+
+
+_merge_lay_aliases()
 
 
 def feature_present_with_aliases(phrase: str, findings: List[str], scrub_negated_spans: bool = True) -> bool:
