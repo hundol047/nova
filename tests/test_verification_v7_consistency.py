@@ -45,7 +45,7 @@ def test_v7_runtime_unchanged_since_freeze():
 def test_pointer_supersedes_historical_v7():
     p = json.loads(_POINTER.read_text())
     d = _v7()
-    assert p["current_verification_schema"] in {"nova-verification-v8", "nova-verification-v9", "nova-verification-v10", "nova-verification-v11"}
-    assert p["current_blind_version"] in {"v17", "v18"}
+    assert p["current_verification_schema"] in {"nova-verification-v8", "nova-verification-v9", "nova-verification-v10", "nova-verification-v11", "nova-verification-v12"}
+    assert p["current_blind_version"] in {"v17", "v18", "v19"}
     assert str(_V7.relative_to(_ROOT)) in p["previous_verification_artifacts"]
     assert not any(k.endswith("_commit_sha") for k in p)

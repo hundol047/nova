@@ -1,0 +1,1 @@
+SUPERSEDED initial diagnostic traces. Evaluation began with uncommitted compliance boundary changes; reported runtime_head is end-of-run metadata, NOT a byte-attested baseline. Embedded-acronym scoring was defective. Do not use raw metrics as accuracy claims. Complete raw trajectories retained for failure audit only.

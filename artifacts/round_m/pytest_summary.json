@@ -1,0 +1,13 @@
+{
+  "passed": 962,
+  "failed": 0,
+  "skipped": 1,
+  "skip_reasons": [
+    {
+      "test": "tests.test_learning_training.test_torch_training_and_checkpoint_roundtrip",
+      "reason": "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"
+    }
+  ],
+  "command": "python -m pytest tests -q --disable-warnings --junitxml=artifacts/round_m/pytest.xml",
+  "junit_sha256": "7163bbc272cbbf649a340c2caab770b565ac77c3cfa5560687a46f42c3489ec8"
+}

@@ -1,0 +1,232 @@
+[
+  {
+    "output_file": "nova_agent/knowledge/diagnostic_tests/notes.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-09-21T14:17:14Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "4479ca1112a28fa6fb70f8153a50810c3088cea9"
+  },
+  {
+    "output_file": "nova_agent/knowledge/diseases/abdominal_gi.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-10-04T13:26:41Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "5a117b60983f9223b07c96a3ef0ead160fab1e42"
+  },
+  {
+    "output_file": "nova_agent/knowledge/diseases/cardiac.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-10-04T13:26:41Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "5a117b60983f9223b07c96a3ef0ead160fab1e42"
+  },
+  {
+    "output_file": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-09-28T17:25:35Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "202ed76c4b9bf49fffc62f1ba42f316fcc9f9b9b"
+  },
+  {
+    "output_file": "nova_agent/knowledge/diseases/genitourinary.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-10-04T13:26:41Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "5a117b60983f9223b07c96a3ef0ead160fab1e42"
+  },
+  {
+    "output_file": "nova_agent/knowledge/diseases/infectious.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-10-04T13:26:41Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "5a117b60983f9223b07c96a3ef0ead160fab1e42"
+  },
+  {
+    "output_file": "nova_agent/knowledge/diseases/neuro.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-10-04T13:26:41Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "5a117b60983f9223b07c96a3ef0ead160fab1e42"
+  },
+  {
+    "output_file": "nova_agent/knowledge/diseases/pulmonary.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-10-04T13:26:41Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "5a117b60983f9223b07c96a3ef0ead160fab1e42"
+  },
+  {
+    "output_file": "nova_agent/knowledge/guidelines/chief_complaint_guidelines.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-09-21T14:17:14Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "4479ca1112a28fa6fb70f8153a50810c3088cea9"
+  },
+  {
+    "output_file": "nova_agent/knowledge/red_flags/critical_conditions.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-09-28T08:03:53Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "15d6249e3b66839edcd6bc0af7bfcd5c02525a3d"
+  },
+  {
+    "output_file": "nova_agent/knowledge/red_flags/demographic_and_medication_risk.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-09-22T07:19:54Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "eaef053423744ae90135612f1f763cf4a3f0a4a8"
+  },
+  {
+    "output_file": "nova_agent/knowledge/tier2_catalog.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-09-25T08:53:53Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "3fc53093a8b1de10f15cb850ddf04dbbb06128e2"
+  },
+  {
+    "output_file": "nova_agent/knowledge/tier2_enrichment.json",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-10-04T15:36:35Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "fd53d293748005992de747bbec3725d641b74984"
+  },
+  {
+    "output_file": "nova_agent/lay_language.py",
+    "tool_model": "UNRESOLVED: historical engineering-agent attribution is not an exact model/version",
+    "date": "2026-10-04T16:57:36Z",
+    "date_definition": "Last repository commit, not proven generation time",
+    "instruction_prompt": "UNRESOLVED: original verbatim generation prompt not present",
+    "source_material": "General knowledge claimed; no auditable medical source supplied",
+    "manual_review_status": "UNREVIEWED / no documented clinician signoff",
+    "commit": "955fdc48a49e2c236bc933503ab7b5b25c75f387"
+  },
+  {
+    "output_file": "evaluation/cases.py",
+    "tool_model": "UNRESOLVED",
+    "date": "UNRESOLVED",
+    "instruction_prompt": "UNRESOLVED; scripts/ and case source retain construction code, not original chat prompt",
+    "source_material": "Synthetic development hypotheses, not patient evidence",
+    "manual_review_status": "Not independently clinician-adjudicated",
+    "bundled_in_submission": false
+  },
+  {
+    "output_file": "evaluation/generalization_cases_v2.py",
+    "tool_model": "UNRESOLVED",
+    "date": "UNRESOLVED",
+    "instruction_prompt": "UNRESOLVED; scripts/ and case source retain construction code, not original chat prompt",
+    "source_material": "Synthetic development hypotheses, not patient evidence",
+    "manual_review_status": "Not independently clinician-adjudicated",
+    "bundled_in_submission": false
+  },
+  {
+    "output_file": "evaluation/generalization_dev_cases_round_d.py",
+    "tool_model": "UNRESOLVED",
+    "date": "UNRESOLVED",
+    "instruction_prompt": "UNRESOLVED; scripts/ and case source retain construction code, not original chat prompt",
+    "source_material": "Synthetic development hypotheses, not patient evidence",
+    "manual_review_status": "Not independently clinician-adjudicated",
+    "bundled_in_submission": false
+  },
+  {
+    "output_file": "evaluation/generalization_dev_cases_round_e.py",
+    "tool_model": "UNRESOLVED",
+    "date": "UNRESOLVED",
+    "instruction_prompt": "UNRESOLVED; scripts/ and case source retain construction code, not original chat prompt",
+    "source_material": "Synthetic development hypotheses, not patient evidence",
+    "manual_review_status": "Not independently clinician-adjudicated",
+    "bundled_in_submission": false
+  },
+  {
+    "output_file": "evaluation/generalization_dev_cases_round_g.py",
+    "tool_model": "UNRESOLVED",
+    "date": "UNRESOLVED",
+    "instruction_prompt": "UNRESOLVED; scripts/ and case source retain construction code, not original chat prompt",
+    "source_material": "Synthetic development hypotheses, not patient evidence",
+    "manual_review_status": "Not independently clinician-adjudicated",
+    "bundled_in_submission": false
+  },
+  {
+    "output_file": "evaluation/generalization_dev_cases_round_i.py",
+    "tool_model": "UNRESOLVED",
+    "date": "UNRESOLVED",
+    "instruction_prompt": "UNRESOLVED; scripts/ and case source retain construction code, not original chat prompt",
+    "source_material": "Synthetic development hypotheses, not patient evidence",
+    "manual_review_status": "Not independently clinician-adjudicated",
+    "bundled_in_submission": false
+  },
+  {
+    "output_file": "evaluation/generalization_dev_cases_round_j.py",
+    "tool_model": "UNRESOLVED",
+    "date": "UNRESOLVED",
+    "instruction_prompt": "UNRESOLVED; scripts/ and case source retain construction code, not original chat prompt",
+    "source_material": "Synthetic development hypotheses, not patient evidence",
+    "manual_review_status": "Not independently clinician-adjudicated",
+    "bundled_in_submission": false
+  },
+  {
+    "output_file": "evaluation/generalization_dev_cases_round_m.py",
+    "tool_model": "UNRESOLVED",
+    "date": "UNRESOLVED",
+    "instruction_prompt": "UNRESOLVED; scripts/ and case source retain construction code, not original chat prompt",
+    "source_material": "Synthetic development hypotheses, not patient evidence",
+    "manual_review_status": "Not independently clinician-adjudicated",
+    "bundled_in_submission": false
+  },
+  {
+    "output_file": "evaluation/generalization_stress_cases.py",
+    "tool_model": "UNRESOLVED",
+    "date": "UNRESOLVED",
+    "instruction_prompt": "UNRESOLVED; scripts/ and case source retain construction code, not original chat prompt",
+    "source_material": "Synthetic development hypotheses, not patient evidence",
+    "manual_review_status": "Not independently clinician-adjudicated",
+    "bundled_in_submission": false
+  },
+  {
+    "output_file": "evaluation/held_out_cases.py",
+    "tool_model": "UNRESOLVED",
+    "date": "UNRESOLVED",
+    "instruction_prompt": "UNRESOLVED; scripts/ and case source retain construction code, not original chat prompt",
+    "source_material": "Synthetic development hypotheses, not patient evidence",
+    "manual_review_status": "Not independently clinician-adjudicated",
+    "bundled_in_submission": false
+  }
+]

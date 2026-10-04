@@ -1,0 +1,21 @@
+{
+  "baseline": {
+    "diagnosis_accuracy": 0.9512195121951219,
+    "critical_recall": 1.0,
+    "average_tests": 9.046875,
+    "average_turns": 26.1328125
+  },
+  "current": {
+    "diagnosis_accuracy": 0.959349593495935,
+    "critical_recall": 1.0,
+    "average_tests": 8.9921875,
+    "average_turns": 25.8984375
+  },
+  "delta": {
+    "diagnosis_accuracy": 0.008130081300813052,
+    "critical_recall": 0.0,
+    "average_tests": -0.0546875,
+    "average_turns": -0.234375
+  },
+  "method": "Initial saved predictions re-scored using corrected whole-word alias matcher, identical cases and scoring flags; no old inflated equivalence retained. Baseline was not byte-attested, so descriptive engineering comparison only."
+}

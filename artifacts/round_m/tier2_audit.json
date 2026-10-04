@@ -1,0 +1,9 @@
+{
+  "tier2_total": 1246,
+  "tier2_enriched": 83,
+  "tier2_unenriched": 1163,
+  "tier2_with_confirmatory_findings": 27,
+  "tier2_with_provenance_metadata": 83,
+  "tier2_with_verified_medical_provenance": 0,
+  "note": "Global authorship metadata is not an original medical source; exact entry intersection audited separately. No mass fill."
+}

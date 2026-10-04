@@ -1,0 +1,15 @@
+{
+  "known_route_success_rate": 1.0,
+  "known_route_misses": [],
+  "unknown_fallback_rate": 1.0,
+  "unknown_fallback_false_positives": [],
+  "specific_over_generic_accuracy": 1.0,
+  "specific_over_generic_misses": [],
+  "multi_concept_recall": 1.0,
+  "multi_concept_misses": [],
+  "critical_concept_recall": 1.0,
+  "critical_concept_misses": [],
+  "end_to_end_candidate_generation_rate": 1.0,
+  "end_to_end_candidate_generation_misses": [],
+  "diseases_scanned": 34
+}

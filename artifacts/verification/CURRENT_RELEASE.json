@@ -1,11 +1,13 @@
 {
-  "note": "Pointer file (spec: a single, unambiguous place to find the CURRENT verification artifact, so a reader never has to guess which SHA-suffixed local-release-*.json file in this directory is current). This file itself is always updated in the SAME commit as the verification artifact it points to -- never a separate follow-up.",
-  "current_verification_artifact": "artifacts/verification/local-release-f315fbf-v11.json",
-  "current_verification_schema": "nova-verification-v11",
-  "verified_runtime_sha": "f315fbf27bafaaeecb43344428ac61d7fe1a7a05",
-  "current_blind_version": "v18",
-  "current_blind_manifest": "evaluation/blind_v18_manifest.json",
+  "current_verification_artifact": "artifacts/verification/local-release-9b607b4-v12.json",
+  "current_verification_schema": "nova-verification-v12",
+  "verified_runtime_sha": "9b607b49c56e64b072645f1539d53d1ca4b92c74",
+  "current_blind_version": "v19",
+  "current_blind_manifest": null,
+  "current_blind_status": "REFERENCE-ONLY",
+  "fresh_final_blind": "NOT YET AUTHORED",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-f315fbf-v11.json",
     "artifacts/verification/local-release-d6e2b84-v10.json",
     "artifacts/verification/local-release-14e6644-v9.json",
     "artifacts/verification/local-release-1046986-v8.json",
@@ -15,8 +17,6 @@
     "artifacts/verification/local-release-faa1701-v4.json",
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
-  "updated_utc": "2026-10-03T13:44:18.819403+00:00",
-  "status": "LOCAL_VERIFICATION_COMPLETED_EXTERNAL_BLOCKED",
-  "reason": "Round J structural repair verified locally. v18 preserved reference-only; no v19; real model/API remain unverified.",
-  "current_blind_status": "REFERENCE-ONLY"
+  "status": "NOT READY",
+  "reason": "Current runtime locally verified; official interface, real model and provenance/license clearance blocked."
 }

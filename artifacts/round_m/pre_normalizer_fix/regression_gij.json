@@ -1,0 +1,73 @@
+{
+  "g": {
+    "scored_diagnostic_accuracy": 1.0,
+    "all_case_diagnostic_accuracy": 1.0,
+    "unscored_case_names": [],
+    "unsupported_case_success_rate": null,
+    "critical_diagnosis_recall": 1.0,
+    "critical_miss_rate": 0.0,
+    "average_turns": 23.583333333333332,
+    "median_turns": 21.5,
+    "duplicate_action_rate": 0.0,
+    "unnecessary_test_rate": 1.8333333333333333,
+    "malformed_output_rate": 0.0,
+    "failed_diagnosis_rate": 0.0,
+    "fallback_rate": null,
+    "average_ask_count": 7.75,
+    "average_exam_count": 5.666666666666667,
+    "average_test_count": 9.166666666666666,
+    "utility_score_proxy": 0.6725,
+    "n_cases": 12,
+    "n_scored_cases": 12,
+    "n_critical_cases": 4
+  },
+  "i": {
+    "scored_diagnostic_accuracy": 0.9473684210526315,
+    "all_case_diagnostic_accuracy": 0.9,
+    "unscored_case_names": [
+      "RoundI_unsupported"
+    ],
+    "unsupported_case_success_rate": 1.0,
+    "critical_diagnosis_recall": 1.0,
+    "critical_miss_rate": 0.0,
+    "average_turns": 19.2,
+    "median_turns": 15.0,
+    "duplicate_action_rate": 0.0,
+    "unnecessary_test_rate": 2.0,
+    "malformed_output_rate": 0.0,
+    "failed_diagnosis_rate": 0.0,
+    "fallback_rate": null,
+    "average_ask_count": 6.6,
+    "average_exam_count": 4.7,
+    "average_test_count": 6.9,
+    "utility_score_proxy": 0.608,
+    "n_cases": 20,
+    "n_scored_cases": 19,
+    "n_critical_cases": 8
+  },
+  "j": {
+    "scored_diagnostic_accuracy": 0.9230769230769231,
+    "all_case_diagnostic_accuracy": 0.8888888888888888,
+    "unscored_case_names": [
+      "RoundJ_53",
+      "RoundJ_54"
+    ],
+    "unsupported_case_success_rate": 1.0,
+    "critical_diagnosis_recall": 1.0,
+    "critical_miss_rate": 0.0,
+    "average_turns": 24.35185185185185,
+    "median_turns": 20.5,
+    "duplicate_action_rate": 0.0,
+    "unnecessary_test_rate": 2.8333333333333335,
+    "malformed_output_rate": 0.0,
+    "failed_diagnosis_rate": 0.0,
+    "fallback_rate": null,
+    "average_ask_count": 9.481481481481481,
+    "average_exam_count": 5.796296296296297,
+    "average_test_count": 8.074074074074074,
+    "utility_score_proxy": 0.5037037037037037,
+    "n_cases": 54,
+    "n_scored_cases": 52,
+    "n_critical_cases": 20
+  }
+}

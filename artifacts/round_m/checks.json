@@ -1,0 +1,50 @@
+[
+  {
+    "command": "NOVA_COMPETITION_RETRIEVAL=true python scripts/evaluate_round_m_final.py",
+    "returncode": 0,
+    "artifact": "artifacts/round_m/final_summary.json",
+    "sha256": "ee8dbb0731a2fed0812939aedbbc1cc33586efb3038d71b0f0df35cbcdf938ee"
+  },
+  {
+    "command": "NOVA_COMPETITION_RETRIEVAL=true python scripts/evaluate_pre_guide_regressions.py",
+    "returncode": 0,
+    "artifact": "artifacts/round_m/final_regressions.json",
+    "sha256": "2937d61c65bd384a0be0b8484be666406f3067887f0bf1801796985f0c19fcc3"
+  },
+  {
+    "command": "NOVA_COMPETITION_RETRIEVAL=true python scripts/evaluate_ood_development.py --output artifacts/round_m/ood.json",
+    "returncode": 0,
+    "artifact": "artifacts/round_m/ood.json",
+    "sha256": "3787b96a6a1cf66860e3fc092075abd6efbd5687556b52b32e041f42ec2c50d3"
+  },
+  {
+    "command": "NOVA_COMPETITION_RETRIEVAL=true python scripts/evaluate_round_m_ood.py",
+    "returncode": 0,
+    "artifact": "artifacts/round_m/round_m_ood.json",
+    "sha256": "f15273614b26197d18905e01a53626a626183c2bdfebc381e223ab33aebbe86a"
+  },
+  {
+    "command": "python scripts/benchmark_competition_retrieval.py --json",
+    "returncode": 0,
+    "artifact": "artifacts/round_m/retrieval.json",
+    "sha256": "f576dfe2ce25c89cde91640a8434b4c42c4308e1a46ff494c66a66ff755b08b2"
+  },
+  {
+    "command": "python scripts/benchmark_chief_complaint_routing.py --json",
+    "returncode": 0,
+    "artifact": "artifacts/round_m/routing.json",
+    "sha256": "4bac0c01faa42a9676e49e31bb94a0c9fe05d816949a6ba0b2581bf933684d67"
+  },
+  {
+    "command": "python scripts/verify_submission_standalone_full_loop.py",
+    "returncode": 0,
+    "artifact": "artifacts/round_m/standalone.txt",
+    "sha256": "69d42cd4c8df85be6db21db619ad7a3b11135d5cdddaf8c08e9429fbefad7197"
+  },
+  {
+    "command": "python -m evaluation.adversarial",
+    "returncode": 0,
+    "artifact": "artifacts/round_m/adversarial.txt",
+    "sha256": "486c51959197a5116c7bdbc0c6f7a6b780d4180377faca8faacb03bdcf57822e"
+  }
+]
