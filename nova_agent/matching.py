@@ -120,6 +120,13 @@ _NEVER_DOUBLED_FOR_SUFFIX = set("aeiouwxy")
 # canonical KB form it must normalize to; the canonical form already stems to itself unchanged.
 _IRREGULAR_STEM_OVERRIDES = {
     "exertional": "exertion",
+    # Round M anatomical adjective/noun pairs: a patient says "pain in one testicle" while a
+    # feature says "testicular pain"; no suffix rule connects the two forms.
+    "testicular": "testicle", "testis": "testicle", "testes": "testicle", "scrotal": "scrotum",
+    "pelvic": "pelvis", "vaginal": "vagina", "urethral": "urethra",
+    "ureteral": "ureter", "thoracic": "thorax", "esophageal": "esophagus",
+    # canonical nouns whose plain "-s" ending the suffix rules would otherwise strip
+    "pelvis": "pelvis", "esophagus": "esophagus",
 }
 
 
@@ -183,11 +190,18 @@ def _stem(word: str) -> str:
 _JOINABLE_HYPHEN = re.compile(r"\b(light|head|dizzy|nose|numb)-(headed|bleed|ness|sighted)\b")
 
 
+# Everyday words for an anatomical region that the knowledge base names with its clinical adjective
+# ("belly pain" vs "abdominal pain"). Mapped to the clinical adjective's own stem before matching so
+# both directions agree; only unambiguous region words ("stomach" is NOT here: it names the organ
+# as often as the region).
+_LAY_ANATOMY = {"belly": "abdominal", "tummy": "abdominal"}
+
+
 def _content_words(text: str) -> Set[str]:
     # A patient's hyphenation must not split one clinical word into two fragments
     # ("light-headed" == "lightheaded").
     words = re.split(r"[^a-z0-9가-힣]+", _JOINABLE_HYPHEN.sub(r"\1\2", text.lower()))
-    return {_stem(w) for w in words if w and w not in _IGNORED}
+    return {_stem(_LAY_ANATOMY.get(w, w)) for w in words if w and w not in _IGNORED}
 
 
 def content_word_count(text: str) -> int:

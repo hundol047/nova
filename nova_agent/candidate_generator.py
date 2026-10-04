@@ -437,6 +437,13 @@ def generate_candidates(presentation: ClinicalPresentation,
         # tests/test_zero_evidence_file_order_independence.py.
         for entry in all_diseases().values():
             _add(pool, entry, "zero_evidence_fallback")
+        if competition_retrieval:
+            # Round M: "nothing in the 34-disease KB matched" is exactly when the broad ontology
+            # retrieval matters most (the true diagnosis is then a long-tail concept), yet this
+            # early return used to skip it entirely. It only ADDS candidates; they are retrieval
+            # recall, not evidence, so differential.py still treats an unscored pool as zero-evidence.
+            _broaden_with_open_world(pool, presentation, imaging_text, chief_complaint_text,
+                                     retrieval_top_k, rerank_top_k, objective_findings)
         return list(pool.values())
 
     # 4. safety_candidate -- the small, fixed can't-miss list always rides along ON TOP OF a

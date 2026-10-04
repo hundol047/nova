@@ -1,0 +1,64 @@
+"""Round M scoring/matching mechanisms found by tracing fresh development cases (general invariants,
+independent of any case set)."""
+
+from __future__ import annotations
+
+import pytest
+
+from nova_agent.differential import (
+    _TYPICAL_FEATURE_CONTRIBUTION_CAP, CONFIRMATORY_WEIGHT, _score_disease, _soft_saturate)
+from nova_agent.matching import content_words, feature_present, feature_present_with_aliases
+from nova_agent.state import PatientState
+
+
+def test_soft_saturation_is_monotone_bounded_and_identity_below_the_knee():
+    xs = [0.0, 0.5, 1.0, 2.0, 2.5, 3.0, 4.5, 6.0, 12.0]
+    ys = [_soft_saturate(x) for x in xs]
+    assert ys[:4] == xs[:4]
+    assert all(b > a for a, b in zip(ys, ys[1:])), "more evidence must always rank at least slightly higher"
+    assert max(ys) <= _TYPICAL_FEATURE_CONTRIBUTION_CAP <= CONFIRMATORY_WEIGHT
+
+
+def _entry(name, features):
+    return {"id": name, "name": name, "typical_features": features, "risk_factors": [], "confirmatory_findings": []}
+
+
+def test_six_matched_features_outrank_two_matched_features_instead_of_tying():
+    state = PatientState(case_id="sat", chief_complaint="presenting")
+    state.symptoms = ["colicky belly cramps", "repeated vomiting", "swollen belly", "no gas passed", "constipation", "dehydration"]
+    many = _entry("many", ["colicky belly cramps", "repeated vomiting", "swollen belly", "no gas passed", "constipation", "dehydration"])
+    few = _entry("few", ["repeated vomiting", "swollen belly"])
+    assert _score_disease(many, state)[0] > _score_disease(few, state)[0]
+
+
+@pytest.mark.parametrize("feature,finding", [
+    ("testicular pain", "pain in one testicle"),
+    ("scrotal swelling", "swelling of the scrotum"),
+    ("pelvic pain", "pain deep in the pelvis"),
+    ("ureteral stone", "a stone in the ureter"),
+])
+def test_anatomical_adjective_and_noun_forms_match(feature, finding):
+    assert feature_present(feature, [finding])
+
+
+def test_anatomical_normalization_does_not_merge_unrelated_words():
+    assert content_words("thoracic") != content_words("abdominal")
+    assert not feature_present("testicular pain", ["pain in one knee"])
+
+
+def test_alias_is_not_satisfied_by_partial_word_overlap():
+    # "elevated blood pressure" (alias of hypertension) must not be credited by "elevated white blood cell count"
+    assert not feature_present_with_aliases("hypertension", ["elevated white blood cell count"])
+    assert feature_present_with_aliases("hypertension", ["her blood pressure is elevated and high blood pressure runs in the family"])
+
+
+@pytest.mark.parametrize("feature,finding", [
+    ("burning upper abdominal pain", "burning upper belly pain at night"),
+    ("diffuse crampy abdominal pain", "crampy tummy pain all over"),
+])
+def test_everyday_region_words_match_the_clinical_adjective(feature, finding):
+    assert feature_present(feature, [finding])
+
+
+def test_ambiguous_region_word_stomach_is_not_equated_with_abdominal():
+    assert content_words("stomach") != content_words("abdominal")
