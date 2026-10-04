@@ -36,3 +36,14 @@ def test_position_alone_cannot_beat_an_exact_name_match():
     token = _cand("token", kind="token", score=0.7)
     ranked = lightweight_rerank([token, exact], rerank_top_k=1)
     assert ranked[0].concept.concept_id == "exact"
+
+
+def test_safety_reinjection_never_evicts_the_best_retrieved_candidates():
+    from nova_agent.retrieval_pipeline import _PROTECTED_FUSED_TOP
+    non_dangerous = [_cand(f"n{i}", score=0.9) for i in range(30)]
+    dangerous = [_cand(f"d{i}", score=0.05, dangerous=True) for i in range(40)]
+    kept = lightweight_rerank(non_dangerous + dangerous, rerank_top_k=25)
+    kept_ids = {k.concept.concept_id for k in kept}
+    for i in range(_PROTECTED_FUSED_TOP):
+        assert f"n{i}" in kept_ids, "a top-fused candidate must survive reinjection"
+    assert all(f"d{i}" in kept_ids for i in range(40)), "every dangerous candidate is still retained"

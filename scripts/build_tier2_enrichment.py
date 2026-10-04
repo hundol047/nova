@@ -65,6 +65,7 @@ E = {
  "prostatitis": ["fever and chills", "pain between scrotum and anus", "burning urination", "frequent urination", "tender boggy prostate"],
  "urinary_retention": ["unable to pass urine", "lower abdominal fullness", "suprapubic pain", "enlarged prostate", "dribbling"],
  "acute_kidney_injury": ["reduced urine output", "rising creatinine", "swelling", "recent vomiting or diarrhea or nephrotoxic drug", "fatigue"],
+ "cellulitis": ["red warm swollen skin", "spreading redness", "tender skin", "fever", "skin break or wound", "leg most common"],
  "cellulitis_derm": ["red warm swollen skin", "spreading redness", "tender skin", "fever", "skin break or wound", "leg most common"],
  "erysipelas": ["sharply demarcated red raised skin", "fever", "facial or leg involvement", "tender hot skin", "abrupt onset"],
  "der_cutaneous_abscess": ["painful fluctuant lump", "red warm swelling", "pus drainage", "fever"],

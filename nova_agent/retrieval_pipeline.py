@@ -58,6 +58,7 @@ _DANGEROUS_BONUS = 0.12
 # position alone beat match strength.
 _FUSED_RANK_BONUS_MAX = 0.35
 _FUSED_RANK_HALF_LIFE = 5.0
+_PROTECTED_FUSED_TOP = 8
 _CRITICAL_URGENCY_BONUS = 0.08
 
 # Stage 1 multi-query fusion. All weights/constants live here, not scattered as magic numbers.
@@ -255,8 +256,15 @@ def lightweight_rerank(retrieved: List[RetrievedCandidate], *,
         if rc.concept.dangerous is True and rc.concept.concept_id not in kept_ids
     ]
     if dangerous_missing:
+        # Round M: the best-retrieved few are never evicted to make room (reinjection is about
+        # SAFETY retention; it must not be able to erase the candidates several independent
+        # signals agreed on -- with dozens of dangerous concepts retrieved it used to evict every
+        # non-dangerous survivor, including a rank-2 retrieval hit). If nothing evictable is left the
+        # dangerous candidate is appended instead (bounded overflow, as documented above).
+        top_fused_ids = {c.concept.concept_id for c in retrieved[:_PROTECTED_FUSED_TOP]}
         non_dangerous_kept = sorted(
-            (rc for rc in kept if not rc.concept.dangerous), key=lambda rc: rc.rerank_score
+            (rc for rc in kept if not rc.concept.dangerous and rc.concept.concept_id not in top_fused_ids),
+            key=lambda rc: rc.rerank_score
         )
         for missing in dangerous_missing:
             if non_dangerous_kept:

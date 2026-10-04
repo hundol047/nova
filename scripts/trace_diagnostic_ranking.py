@@ -44,6 +44,31 @@ FAILURE_CLASSES = ('RETRIEVAL_MISS','RERANK_MISS','ACTIVE_SET_MISS',
     'FINAL_RANKING_ERROR','STOP_POLICY_ERROR','PROTOCOL_OR_OOD_ERROR')
 
 
+ABLATIONS = ('no_objective_boost', 'no_contradiction_penalty', 'no_top_competitor_action', 'no_specificity')
+
+
+def ablation_patches(name):
+    """Context managers that disable ONE component, for ablation measurements only."""
+    import nova_agent.missing_info as mi
+    if name == 'no_objective_boost':
+        return [patch.object(de, 'CONFIRMATORY_WEIGHT', de.FEATURE_WEIGHT)]
+    if name == 'no_contradiction_penalty':
+        return [patch.object(de, 'CONTRADICTION_PENALTY', 0.0)]
+    if name == 'no_specificity':
+        return [patch.object(de, '_specificity_multiplier', lambda feature: 1.0)]
+    if name == 'no_top_competitor_action':
+        original = mi.MissingInformationAnalyzer.analyze
+
+        def analyze(self, *a, **kw):
+            cands = original(self, *a, **kw)
+            for c in cands:
+                c.top_competitor_separation = 0.0
+                c.decision_changing_value = max(c.critical_resolution_gain, c.specificity_gain)
+            return cands
+        return [patch.object(mi.MissingInformationAnalyzer, 'analyze', analyze)]
+    return []
+
+
 def primary_failure(row):
     """Single, ordered primary attribution; preserve the facts used for audit."""
     if not row['scored'] or row['correct']:
@@ -234,21 +259,26 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--output-dir',required=True);p.add_argument('--cases',help='Comma-separated development IDs only')
     p.add_argument('--case-module',default='evaluation.generalization_dev_cases_round_j',help='development case module (never a blind module)')
     p.add_argument('--case-var',default='ROUND_J_CASES')
+    p.add_argument('--ablate',choices=ABLATIONS,help='development-only ablation of ONE reasoning component (measurement, never shipped)')
     args=p.parse_args();out=Path(args.output_dir);out.mkdir(parents=True,exist_ok=True)
     if 'blind' in args.case_module: raise SystemExit('refusing to trace a blind module')
     mod=importlib.import_module(args.case_module);all_cases=getattr(mod,args.case_var)
     cases=all_cases if not args.cases else [c for c in all_cases if c.case_id in args.cases.split(',')]
     rows=[]
+    from contextlib import ExitStack
+    stack=ExitStack()
+    for cm in (ablation_patches(args.ablate) if args.ablate else []): stack.enter_context(cm)
     for case in cases:
         summary,turns=trace_case(case);target=out/(case.case_id+'.json.gz')
         payload=json.dumps({'summary':summary,'turns':turns},ensure_ascii=False,separators=(',',':')).encode()
         target.write_bytes(gzip.compress(payload,mtime=0));summary['trace_file']=target.name;summary['trace_sha256']=hashlib.sha256(target.read_bytes()).hexdigest();rows.append(summary)
         print(case.case_id,summary['correct'],summary['final_rank'],summary['primary_failure'],flush=True)
+    stack.close()
     archive_hash = archive_traces(out, rows)
     result=dict(trace_archive_sha256=archive_hash, data_type='SYNTHETIC DEVELOPMENT / COMPETITION STRUCTURE / MOCK LLM',expert_reviewed=False,independent_clinical_validation=False,
         runtime_head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         runtime_dirty=bool(subprocess.check_output(['git','status','--porcelain','--','nova_agent'],cwd=ROOT,text=True).strip()),
-        case_file_sha256=hashlib.sha256(Path(mod.__file__).read_bytes()).hexdigest(),case_module=args.case_module,
+        case_file_sha256=hashlib.sha256(Path(mod.__file__).read_bytes()).hexdigest(),case_module=args.case_module,ablation=args.ablate,
         component_definition='raw signed component sums; objective includes numeric glucose/lactate; score_residual records saturation and reassuring penalties; medication overlaps risk',
         metrics=aggregate(rows),cases=rows)
     (out/'summary.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
