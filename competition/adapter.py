@@ -123,12 +123,37 @@ class NovaCompetitionAgent:
         self.agent = agent or DoctorAgent()
         self._states: Dict[str, PatientState] = {}
         self._pending_actions: Dict[str, AgentAction] = {}
+        self._emitted_actions: Dict[str, int] = {}
 
     def act(self, observation: dict) -> dict:
+        case_id = observation.get("case_id") if isinstance(observation, dict) else None
+        try:
+            result = self._act(observation)
+        except Exception:
+            if isinstance(case_id, str):
+                self.close_case(case_id)
+            raise
+        if result["action_type"] == "DIAGNOSE":
+            self.close_case(result["case_id"])
+        return result
+
+    def close_case(self, case_id: str) -> None:
+        """Drop patient-derived state on completion/error; retain no patient tombstones."""
+        self._states.pop(case_id, None)
+        self._pending_actions.pop(case_id, None)
+        self._emitted_actions.pop(case_id, None)
+
+    def _act(self, observation: dict) -> dict:
         obs = CompetitionObservation.model_validate(observation)
+        if obs.observation_type != "initial" and obs.case_id not in self._states:
+            raise ValueError("A fresh initial observation is required for this case")
+        if obs.observation_type == "initial":
+            self.close_case(obs.case_id)
         state = observation_to_state(obs, self.agent, self._states.get(obs.case_id),
                                       self._pending_actions.get(obs.case_id))
         self._states[obs.case_id] = state
+        if self._emitted_actions.get(obs.case_id, 0) >= state.max_turns:
+            raise RuntimeError("Interaction budget exhausted; no further action may be emitted")
 
         action, _llm_output, _differential = self.agent.decide(state)
         in_competition_mode = get_config().llm_provider != "mock"
@@ -183,6 +208,17 @@ class NovaCompetitionAgent:
         # DIAGNOSE action (on the NEXT act() call, when the environment's reply arrives), so they
         # would still be stale/unset here.
         diagnosis_quality = dict(state.pending_diagnosis_quality or {}) if action.action_type == "DIAGNOSE" else None
-        return action_to_competition(obs.case_id, action, real_llm_verified=real_llm_verified,
+        result = action_to_competition(obs.case_id, action, real_llm_verified=real_llm_verified,
                                       diagnosis_quality=diagnosis_quality,
                                       evidence_assessment=state.evidence_assessment).model_dump()
+        if action.action_type == "DIAGNOSE":
+            # Existing real_llm_verified is legacy DEVELOPMENT structured-parse telemetry.
+            # It cannot attest organizer model identity, revision, or official call semantics.
+            result["metadata"]["call_accounting"] = {
+                "OFFICIAL_CALL_RESPONSE_RECEIVED": "NOT_VERIFIED",
+                "INTERNAL_STRUCTURED_OUTPUT_VALID": state.llm_success_count > 0,
+                "successful_development_structured_calls": state.llm_success_count,
+                "official_successful_case_llm_calls": None,
+            }
+        self._emitted_actions[obs.case_id] = self._emitted_actions.get(obs.case_id, 0) + 1
+        return result

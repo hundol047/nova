@@ -10,6 +10,4 @@ def enforce_submission_provider():
     cfg = get_config()
     if cfg.ml_ranker_enabled or cfg.ml_model_path:
         raise RuntimeError("NOT READY: learned rankers/weights forbidden in preliminary submission")
-    if cfg.llm_provider == "mock":
-        return  # explicit offline local validation, never a valid competition run
     raise RuntimeError("NOT READY: EXTERNAL_OFFICIAL_INTERFACE_BLOCKED; no organizer-approved transport integrated")

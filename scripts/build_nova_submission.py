@@ -126,7 +126,7 @@ def _import_smoke_test() -> None:
     tests/test_hybrid_and_robustness.py::test_submission_run_entrypoint does, run again here at
     build time so a broken submission is never left in place even if the test suite wasn't run."""
     proc = subprocess.run(
-        [sys.executable, "run.py"],
+        [sys.executable, "-m", "competition.local_runner"],
         input='{"case_id": "build_smoke", "observation_type": "initial", "chief_complaint": "chest pain", '
               '"demographics": {"age": 55, "sex": "male"}}\n',
         cwd=str(SUBMISSION), capture_output=True, text=True, timeout=30,

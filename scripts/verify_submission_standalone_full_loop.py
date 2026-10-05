@@ -1,10 +1,10 @@
-"""`python scripts/verify_submission_standalone_full_loop.py` -- proves submission/run.py runs the
+"""`python scripts/verify_submission_standalone_full_loop.py` -- proves the isolated local mock harness runs the
 FULL observation -> routing -> retrieval -> differential -> ASK/EXAM/TEST -> update -> DIAGNOSE
 loop standalone, not just a single turn (scripts/build_nova_submission.py's own build-time smoke
 test only exercises one observation -> one action, per spec/round discipline that check must stay
 fast; this script is the deeper, slower companion run manually as part of a verification round).
 
-Copies submission/ to an isolated temp directory, runs `python run.py` as a real subprocess from
+Copies submission/ to an isolated temp directory, runs `python -m competition.local_runner` as a real subprocess from
 INSIDE that copy with PYTHONPATH explicitly cleared and only a minimal PATH in its environment (so
 it cannot import anything from the source repository -- proving submission/ is genuinely
 self-contained), and feeds it a multi-turn JSON-lines conversation (initial observation, then a
@@ -40,7 +40,7 @@ def main() -> None:
 
         env = {"PATH": "/usr/bin:/bin", "NOVA_LLM_PROVIDER": os.environ.get("NOVA_LLM_PROVIDER", "mock")}
         proc = subprocess.Popen(
-            [sys.executable, "run.py"], cwd=str(isolated),
+            [sys.executable, "-m", "competition.local_runner"], cwd=str(isolated),
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             text=True, bufsize=1, env=env,
         )
@@ -52,7 +52,7 @@ def main() -> None:
             line = proc.stdout.readline()
             if not line:
                 stderr = proc.stderr.read() if proc.stderr else ""
-                raise SystemExit(f"submission/run.py produced no output (exited early). stderr:\n{stderr}")
+                raise SystemExit(f"Local mock harness produced no output (exited early). stderr:\n{stderr}")
             return json.loads(line)
 
         observation = {

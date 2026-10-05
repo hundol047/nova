@@ -55,3 +55,15 @@ assistant; exact model build not available. Outputs: packaging guard/tests, prov
 audit, development retrieval-depth experiment, and execution report. Sources: repository
 code and https://nova.snubhai.org/rules/ and /evaluation/. No clinical facts, synthetic
 case labels or patient data are generated or altered by this repair.
+
+## 2026-10-05 compliance boundary pass
+
+Instruction: user's numbered compliance/provenance/release request, sections 0–14 supplied
+in this session. Tool: ChatGPT Work coding assistant; exact model/version unavailable.
+Outputs: separate official/local entrypoints, lifecycle and emitted-action guards, synthetic
+engineering boundary tests, rule matrix, historical-evidence inventory and replacement plan.
+No clinical facts or disease labels were generated, and no clinical runtime asset was replaced.
+Clinical assets remain byte-identical to 5413af9. Engineering tests are not clinician review.
+Sources: current repository and genuine Git object history; official N.O.V.A. rules/evaluation/FAQ;
+MedlinePlus publisher reuse terms and XML index. Exact historical generation records remain
+unresolved; this entry does not retrospectively create them.

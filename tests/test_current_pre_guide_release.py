@@ -5,7 +5,8 @@ ROOT=Path(__file__).resolve().parents[1]
 def load(path):return json.loads((ROOT/path).read_text())
 def current():
  p=load('artifacts/verification/CURRENT_RELEASE.json');d=load(p['current_verification_artifact'])
- assert p['current_verification_schema']==d['schema']=='nova-verification-v12'
+ assert p['current_verification_schema']==d['schema']
+ assert d['schema'] in {'nova-verification-v12','nova-verification-v13'}
  assert p['verified_runtime_sha']==d['verified_runtime_sha']
  return d
 
@@ -34,7 +35,7 @@ def test_current_blind_and_readiness_are_honest():
 
 def test_complete_round_m_denominators_and_failure_coverage():
  from evaluation.generalization_dev_cases_round_m import ROUND_M_CASES
- d=current();s=load(d['round_m_artifact']);rows=s['cases'];f=load('artifacts/round_m/failure_analysis.json')
+ d=current();s=load(d['round_m_artifact']);rows=s['cases'];f=load(d.get('failure_analysis_artifact','artifacts/round_m/failure_analysis.json'))
  assert len(rows)==len(ROUND_M_CASES)==128
  assert sum(r['scored'] for r in rows)==sum(c.scoring_expected for c in ROUND_M_CASES)==123
  assert {r['case_id'] for r in rows}=={c.case_id for c in ROUND_M_CASES}

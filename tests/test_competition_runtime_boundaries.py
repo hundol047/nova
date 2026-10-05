@@ -49,7 +49,7 @@ def stub(*, model="openai/gpt-oss-20b", content=CONTENT, delay=0, fail_first=Fal
 
 @pytest.mark.parametrize("model,content", [("another-model", CONTENT), (None, CONTENT),
     ("openai/gpt-oss-20b", json.dumps({"selected_action": {"type": "ASK", "content": ""}})),
-                                          ("openai/gpt-oss-20b", "ready")])
+                                          ("openai/gpt-oss-20b", "ready"), ("openai/gpt-oss-20b", ""), ("openai/gpt-oss-20b", "{malformed") ])
 def test_preflight_requires_correct_identity_and_structured_parse(model, content):
     with stub(model=model, content=content) as (url, requests):
         client = CompetitionLLMClient(); client.base_url = url; client.max_retries = 1
@@ -90,7 +90,7 @@ def test_preflight_success_does_not_credit_new_case(monkeypatch):
         adapter = NovaCompetitionAgent(DoctorAgent(llm_client=client))
         obs = {"case_id": "one", "observation_type": "initial", "chief_complaint": "chest pain", "max_turns": 1}
         assert adapter.act(obs)["metadata"]["real_llm_verified"] is True
-        assert adapter._states["one"].llm_success_count == 1
+        assert "one" not in adapter._states
         client.base_url = "http://127.0.0.1:1/v1"
         with pytest.raises(RealLLMUnavailableError):
             adapter.act(dict(obs, case_id="two"))
@@ -108,14 +108,8 @@ def test_isolated_submission_runtime_modes(tmp_path, mode):
                         {"case_id": "isolated", "observation_type": "exam_result", "content": "Normal findings."}]
         proc = subprocess.run([sys.executable, "run.py"], cwd=isolated, env=env,
             input="\n".join(json.dumps(x) for x in observations) + "\n", capture_output=True, text=True, timeout=15)
-        if mode != "mock":
-            assert proc.returncode == 1 and "NOT READY" in proc.stderr
-            assert not proc.stdout.strip()
-        else:
-            assert proc.returncode == 0, proc.stderr
-            actions = [json.loads(x) for x in proc.stdout.splitlines()]
-            assert actions[-1]["action_type"] == "DIAGNOSE"
-            assert actions[-1]["metadata"].get("real_llm_verified") == (True if mode == "stub" else None)
+        assert proc.returncode == 1 and "NOT READY" in proc.stderr
+        assert not proc.stdout.strip()
     if mode == "stub":
         with stub() as (url, requests):
             run(url)

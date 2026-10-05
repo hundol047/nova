@@ -121,3 +121,12 @@ externally, not vendored in the ZIP. No license is inferred for our clinical kno
 
 The executable coverage audit is `python scripts/audit_compliance_gaps.py`. It checks
 missing entries, current byte hashes and unresolved permission fields; it cannot grant clearance.
+
+## 2026-10-05 expanded evidence inventory
+
+See `artifacts/compliance_hardening/clinical_asset_inventory.json` for all required authorship,
+rights, generation and review fields; `CONTROLLED_REPLACEMENT_PLAN.md` for per-asset decisions.
+The earlier blanket UNKNOWN rows are uncertainty records, not findings that internal authorship
+is inherently license-invalid. No owner authorization or clinician approval was inferred.
+`python scripts/validate_runtime_provenance.py --require-cleared` deliberately exits nonzero
+while rights remain unresolved. It cannot grant clearance from a JSON status label.

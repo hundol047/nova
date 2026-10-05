@@ -30,7 +30,8 @@ def test_submission_lock_cannot_be_redirected(monkeypatch,provider,url):
 
 def test_mock_is_local_only_and_no_weight_loading(monkeypatch):
     monkeypatch.setattr(config,'_config',replace(get_config(),llm_provider='mock'))
-    enforce_submission_provider()
+    with pytest.raises(RuntimeError, match="EXTERNAL_OFFICIAL_INTERFACE_BLOCKED"):
+        enforce_submission_provider()
     monkeypatch.setattr(config,'_config',replace(get_config(),ml_ranker_enabled=True))
     with pytest.raises(RuntimeError,match='weights forbidden'): enforce_submission_provider()
 

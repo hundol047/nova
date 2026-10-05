@@ -336,7 +336,7 @@ def test_submission_run_entrypoint():
     assert (submission_dir / "competition").is_dir()
 
     proc = subprocess.run(
-        [sys.executable, "run.py"],
+        [sys.executable, "-m", "competition.local_runner"],
         input='{"case_id": "pytest1", "observation_type": "initial", "chief_complaint": "chest pain", '
               '"demographics": {"age": 55, "sex": "male"}}\n',
         cwd=str(submission_dir), capture_output=True, text=True, timeout=30,
@@ -363,7 +363,7 @@ def test_submission_stdout_contains_only_protocol_json():
     stdin_text = "\n".join(_json.dumps(o) for o in observations) + "\n"
 
     proc = subprocess.run(
-        [sys.executable, "run.py"],
+        [sys.executable, "-m", "competition.local_runner"],
         input=stdin_text, cwd=str(submission_dir), capture_output=True, text=True, timeout=30,
         env={"PATH": "/usr/bin:/bin",
              "NOVA_LLM_PROVIDER": "mock"},
