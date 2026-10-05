@@ -153,3 +153,19 @@ Publisher evidence snapshots are in `research/licensed_references/terms/`.
 - Supplemental bounded prompt context only. Existing medical heuristics remain
   UNRESOLVED; these new references do not retroactively supply their original provenance.
   Actual fixed-model performance is still NOT VERIFIED; the official path stays blocked.
+
+## Field-level follow-up (2026-10-05)
+
+`artifacts/clinical_review_pass/field_provenance_inventory.json` lists 15,205 legacy JSON
+leaves (including identifiers/metadata, not 15,205 clinical claims) and selected module-level
+literals. It is a triage index, not historical authorship evidence. 138 text occurrences
+in candidate sources are explicitly NOT clinical validation. No legacy clearance status
+is raised. The complete file-level inventory remains the coverage authority.
+
+`docs/clinical_review/TEST_NOTE_REPLACEMENT_CANDIDATES.json` contains five deterministic
+NLM test-purpose excerpts, with exact source and transformation records. NLM reuse scope
+was documented in the retained source terms. These excerpts do not establish indications,
+rule-out conditions, thresholds or safety caveats in the original notes. Promotion is
+blocked pending scope/safety review; the existing notes are preserved. The packet is
+excluded from the inference ZIP. Medical correctness, original authorship/use rights
+and clinician review remain separate determinations.

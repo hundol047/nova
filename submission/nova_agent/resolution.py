@@ -103,4 +103,18 @@ def _ontology_workup_addressed(diagnosis_id: str, state: PatientState) -> bool:
         return False
     if entry is None:
         return False
-    return all(state.question_asked(q) for q in entry.get("discriminating_questions", []))
+    # Match the action generator: a specific positive feature already in this
+    # patient's evidence does not need to be elicited again. This only records
+    # discriminator coverage; it does not exclude the disease or bypass stop safety.
+    from nova_agent.differential import _score_disease
+    from nova_agent.ontology.normalizer import normalize
+    _, _, support, _, _ = _score_disease(entry, state)
+    supported = {normalize(s) for s in support}
+    def covered(question):
+        if state.question_asked(question):
+            return True
+        if ":" not in question:
+            return False
+        feature = normalize(question.split(":", 1)[1])
+        return bool(feature and feature in supported)
+    return all(covered(q) for q in entry.get("discriminating_questions", []))

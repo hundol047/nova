@@ -1,0 +1,3059 @@
+[
+  {
+    "disease_id": "acute_abdomen",
+    "name": "Acute Abdomen (Surgical Abdomen)",
+    "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "acute_abdomen",
+      "name": "Acute Abdomen (Surgical Abdomen)",
+      "aliases": [
+        "acute abdomen",
+        "surgical abdomen",
+        "peritonitis",
+        "급성복증"
+      ],
+      "chief_complaint_tags": [
+        "abdominal_pain",
+        "vomiting"
+      ],
+      "category": "abdominal_gi",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "severe abdominal pain",
+        "rebound tenderness",
+        "guarding",
+        "rigid abdomen",
+        "fever"
+      ],
+      "risk_factors": [
+        "prior abdominal surgery",
+        "elderly age"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "severity",
+        "location",
+        "character"
+      ],
+      "discriminating_exams": [
+        "abdominal_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "cbc",
+        "lipase",
+        "ct_abdomen"
+      ],
+      "confirmatory_findings": [
+        "free air",
+        "peritoneal signs on imaging",
+        "perforation"
+      ],
+      "red_flag_keywords": [
+        "rebound tenderness",
+        "guarding",
+        "rigid abdomen",
+        "peritoneal signs"
+      ],
+      "minimum_workup": [
+        "ct_abdomen"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:5583",
+        "title": "Peritoneal Disorders",
+        "url": "https://medlineplus.gov/peritonealdisorders.html",
+        "matched_existing_label": "peritonitis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "acute_coronary_syndrome",
+    "name": "Acute Coronary Syndrome",
+    "source_path": "nova_agent/knowledge/diseases/cardiac.json",
+    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "acute_coronary_syndrome",
+      "name": "Acute Coronary Syndrome",
+      "aliases": [
+        "MI",
+        "myocardial infarction",
+        "acute myocardial infarction",
+        "AMI",
+        "STEMI",
+        "NSTEMI",
+        "heart attack",
+        "ACS",
+        "unstable angina",
+        "급성 관상동맥증후군",
+        "심근경색"
+      ],
+      "chief_complaint_tags": [
+        "chest_pain",
+        "dyspnea",
+        "syncope",
+        "palpitations",
+        "vomiting"
+      ],
+      "category": "cardiac",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "exertional chest pain",
+        "substernal pressure",
+        "radiates to arm or jaw",
+        "diaphoresis",
+        "nausea",
+        "dyspnea on exertion",
+        "left arm pain"
+      ],
+      "risk_factors": [
+        "hypertension",
+        "diabetes",
+        "smoking",
+        "hyperlipidemia",
+        "family history",
+        "male over 45",
+        "female over 55",
+        "prior coronary disease"
+      ],
+      "discriminating_questions": [
+        "character",
+        "aggravating",
+        "associated_symptoms",
+        "past_medical_history",
+        "family_history"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "cardiac_auscultation",
+        "general_appearance"
+      ],
+      "discriminating_tests": [
+        "ecg",
+        "troponin",
+        "cxr"
+      ],
+      "confirmatory_findings": [
+        "ST elevation",
+        "ST depression",
+        "elevated troponin",
+        "troponin elevated"
+      ],
+      "red_flag_keywords": [
+        "diaphoresis",
+        "radiating pain",
+        "crushing",
+        "pressure",
+        "hypotension",
+        "sweating"
+      ],
+      "minimum_workup": [
+        "ecg",
+        "troponin"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:5",
+        "title": "Heart Attack",
+        "url": "https://medlineplus.gov/heartattack.html",
+        "matched_existing_label": "MI",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "anaphylaxis",
+    "name": "Anaphylaxis",
+    "source_path": "nova_agent/knowledge/diseases/infectious.json",
+    "source_sha256": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "anaphylaxis",
+      "name": "Anaphylaxis",
+      "aliases": [
+        "anaphylaxis",
+        "anaphylactic reaction",
+        "아나필락시스"
+      ],
+      "chief_complaint_tags": [
+        "dyspnea",
+        "fever",
+        "allergic"
+      ],
+      "category": "infectious",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "sudden onset urticaria",
+        "facial swelling",
+        "wheeze",
+        "throat tightness",
+        "hypotension",
+        "recent allergen exposure"
+      ],
+      "risk_factors": [
+        "known allergy",
+        "recent new medication",
+        "insect sting",
+        "food exposure"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "associated_symptoms",
+        "allergy"
+      ],
+      "discriminating_exams": [
+        "skin_exam",
+        "lung_auscultation",
+        "vital_signs"
+      ],
+      "discriminating_tests": [],
+      "red_flag_keywords": [
+        "urticaria",
+        "facial swelling",
+        "throat tightness",
+        "wheeze after exposure",
+        "hypotension"
+      ],
+      "minimum_workup": [],
+      "evidence_level": "internally_authored_heuristic",
+      "confirmatory_findings": [
+        "elevated tryptase"
+      ],
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:6257",
+        "title": "Anaphylaxis",
+        "url": "https://medlineplus.gov/anaphylaxis.html",
+        "matched_existing_label": "Anaphylaxis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "aortic_dissection",
+    "name": "Aortic Dissection",
+    "source_path": "nova_agent/knowledge/diseases/cardiac.json",
+    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "aortic_dissection",
+      "name": "Aortic Dissection",
+      "aliases": [
+        "dissecting aortic aneurysm",
+        "aortic tear",
+        "대동맥 박리"
+      ],
+      "chief_complaint_tags": [
+        "chest_pain",
+        "abdominal_pain",
+        "syncope",
+        "back_pain"
+      ],
+      "category": "cardiac",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "tearing chest pain",
+        "ripping pain",
+        "pain radiates to back",
+        "sudden onset severe pain",
+        "pulse differential",
+        "unequal blood pressure between arms"
+      ],
+      "risk_factors": [
+        "hypertension",
+        "marfan syndrome",
+        "bicuspid aortic valve",
+        "cocaine use",
+        "connective tissue disease"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "character",
+        "location",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "extremity_exam",
+        "cardiac_auscultation"
+      ],
+      "discriminating_tests": [
+        "ct_aorta",
+        "cxr",
+        "ecg"
+      ],
+      "confirmatory_findings": [
+        "widened mediastinum",
+        "dissection flap",
+        "intimal flap"
+      ],
+      "red_flag_keywords": [
+        "tearing",
+        "ripping",
+        "sudden onset",
+        "radiates to back",
+        "pulse differential",
+        "unequal blood pressure"
+      ],
+      "minimum_workup": [
+        "ct_aorta"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:4931",
+        "title": "Aortic Aneurysm",
+        "url": "https://medlineplus.gov/aorticaneurysm.html",
+        "matched_existing_label": "Aortic Dissection",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "meningitis",
+    "name": "Bacterial Meningitis",
+    "source_path": "nova_agent/knowledge/diseases/neuro.json",
+    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "meningitis",
+      "name": "Bacterial Meningitis",
+      "aliases": [
+        "meningitis",
+        "수막염"
+      ],
+      "chief_complaint_tags": [
+        "headache",
+        "fever",
+        "altered_mental_status",
+        "neck_stiffness"
+      ],
+      "category": "neuro",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "fever",
+        "neck stiffness",
+        "photophobia",
+        "headache",
+        "altered mental status",
+        "rash"
+      ],
+      "risk_factors": [
+        "recent infection",
+        "immunosuppression",
+        "close contact exposure",
+        "no vaccination"
+      ],
+      "discriminating_questions": [
+        "associated_symptoms",
+        "onset",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "meningeal_signs",
+        "skin_exam",
+        "vital_signs",
+        "mental_status_exam"
+      ],
+      "discriminating_tests": [
+        "lumbar_puncture",
+        "blood_culture",
+        "cbc"
+      ],
+      "confirmatory_findings": [
+        "CSF pleocytosis",
+        "gram-negative diplococci",
+        "gram-positive",
+        "elevated white blood cell count"
+      ],
+      "red_flag_keywords": [
+        "neck stiffness",
+        "photophobia",
+        "petechial rash",
+        "fever with headache",
+        "altered mental status"
+      ],
+      "minimum_workup": [
+        "lumbar_puncture"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:324",
+        "title": "Meningitis",
+        "url": "https://medlineplus.gov/meningitis.html",
+        "matched_existing_label": "meningitis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "cardiac_arrhythmia",
+    "name": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+    "source_path": "nova_agent/knowledge/diseases/cardiac.json",
+    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "dangerous": true,
+    "urgency": "MEDIUM",
+    "current_profile": {
+      "id": "cardiac_arrhythmia",
+      "name": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+      "aliases": [
+        "arrhythmia",
+        "atrial fibrillation",
+        "afib",
+        "svt",
+        "supraventricular tachycardia",
+        "부정맥"
+      ],
+      "chief_complaint_tags": [
+        "palpitations",
+        "syncope",
+        "dizziness",
+        "chest_pain"
+      ],
+      "category": "cardiac",
+      "dangerous": true,
+      "urgency": "MEDIUM",
+      "typical_features": [
+        "sudden onset palpitations",
+        "irregular heartbeat",
+        "racing heart",
+        "associated lightheadedness",
+        "known history of arrhythmia"
+      ],
+      "risk_factors": [
+        "hypertension",
+        "structural heart disease",
+        "hyperthyroidism",
+        "excessive caffeine or stimulant use",
+        "advanced age"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "duration",
+        "associated_symptoms",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "cardiac_auscultation"
+      ],
+      "discriminating_tests": [
+        "ecg",
+        "bmp"
+      ],
+      "confirmatory_findings": [
+        "irregularly irregular rhythm",
+        "narrow complex tachycardia",
+        "atrial fibrillation on ecg"
+      ],
+      "red_flag_keywords": [
+        "hypotension",
+        "syncope with palpitations",
+        "chest pain with palpitations"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:147",
+        "title": "Arrhythmia",
+        "url": "https://medlineplus.gov/arrhythmia.html",
+        "matched_existing_label": "arrhythmia",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      },
+      {
+        "reference_id": "medlineplus:4964",
+        "title": "Atrial Fibrillation",
+        "url": "https://medlineplus.gov/atrialfibrillation.html",
+        "matched_existing_label": "atrial fibrillation",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "diabetic_ketoacidosis",
+    "name": "Diabetic Ketoacidosis",
+    "source_path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+    "source_sha256": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "diabetic_ketoacidosis",
+      "name": "Diabetic Ketoacidosis",
+      "aliases": [
+        "DKA",
+        "diabetic ketoacidosis",
+        "당뇨병성 케톤산증"
+      ],
+      "chief_complaint_tags": [
+        "altered_mental_status",
+        "abdominal_pain",
+        "dyspnea",
+        "vomiting",
+        "weakness",
+        "metabolic"
+      ],
+      "category": "endocrine_metabolic",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "polyuria",
+        "polydipsia",
+        "nausea and vomiting",
+        "abdominal pain",
+        "fruity breath odor",
+        "kussmaul breathing",
+        "confusion"
+      ],
+      "risk_factors": [
+        "known diabetes",
+        "missed insulin doses",
+        "recent infection"
+      ],
+      "discriminating_questions": [
+        "past_medical_history",
+        "medication",
+        "associated_symptoms",
+        "onset"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "mental_status_exam",
+        "abdominal_exam"
+      ],
+      "discriminating_tests": [
+        "glucose_point_of_care",
+        "ketones",
+        "abg",
+        "bmp"
+      ],
+      "confirmatory_findings": [
+        "large ketones",
+        "metabolic acidosis",
+        "kussmaul breathing"
+      ],
+      "red_flag_keywords": [
+        "kussmaul breathing",
+        "fruity breath",
+        "confusion with known diabetes",
+        "polyuria polydipsia"
+      ],
+      "minimum_workup": [
+        "glucose_point_of_care",
+        "ketones"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "ectopic_pregnancy",
+    "name": "Ectopic Pregnancy",
+    "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "ectopic_pregnancy",
+      "name": "Ectopic Pregnancy",
+      "aliases": [
+        "ectopic pregnancy",
+        "tubal pregnancy",
+        "자궁외임신"
+      ],
+      "chief_complaint_tags": [
+        "abdominal_pain",
+        "syncope",
+        "pelvic_gynecologic"
+      ],
+      "category": "abdominal_gi",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "lower abdominal pain",
+        "vaginal bleeding",
+        "missed period",
+        "unilateral pelvic pain",
+        "dizziness"
+      ],
+      "risk_factors": [
+        "prior ectopic pregnancy",
+        "pelvic inflammatory disease",
+        "IUD use",
+        "tubal surgery",
+        "childbearing age female"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "location",
+        "associated_symptoms",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "pelvic_exam",
+        "abdominal_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "beta_hcg",
+        "pelvic_ultrasound"
+      ],
+      "confirmatory_findings": [
+        "positive beta-hCG",
+        "no intrauterine pregnancy",
+        "adnexal mass"
+      ],
+      "red_flag_keywords": [
+        "vaginal bleeding",
+        "missed period",
+        "unilateral pelvic pain",
+        "hypotension",
+        "syncope"
+      ],
+      "minimum_workup": [
+        "beta_hcg",
+        "pelvic_ultrasound"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:5811",
+        "title": "Ectopic Pregnancy",
+        "url": "https://medlineplus.gov/ectopicpregnancy.html",
+        "matched_existing_label": "Ectopic Pregnancy",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "gi_bleeding",
+    "name": "Gastrointestinal Bleeding",
+    "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "gi_bleeding",
+      "name": "Gastrointestinal Bleeding",
+      "aliases": [
+        "GI bleed",
+        "upper GI bleeding",
+        "lower GI bleeding",
+        "위장관출혈"
+      ],
+      "chief_complaint_tags": [
+        "abdominal_pain",
+        "vomiting",
+        "weakness",
+        "gi_bleeding"
+      ],
+      "category": "abdominal_gi",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "hematemesis",
+        "melena",
+        "hematochezia",
+        "lightheadedness",
+        "pallor",
+        "tachycardia"
+      ],
+      "risk_factors": [
+        "NSAID use",
+        "anticoagulant use",
+        "antiplatelet use",
+        "liver disease",
+        "peptic ulcer disease",
+        "alcohol use"
+      ],
+      "discriminating_questions": [
+        "associated_symptoms",
+        "medication",
+        "past_medical_history",
+        "social_history"
+      ],
+      "discriminating_exams": [
+        "abdominal_exam",
+        "vital_signs",
+        "fecal_occult_blood"
+      ],
+      "discriminating_tests": [
+        "cbc",
+        "fecal_occult_blood"
+      ],
+      "confirmatory_findings": [
+        "positive fecal occult blood",
+        "hemoglobin drop",
+        "low hemoglobin"
+      ],
+      "red_flag_keywords": [
+        "hematemesis",
+        "melena",
+        "hematochezia",
+        "hypotension",
+        "tachycardia",
+        "pallor"
+      ],
+      "minimum_workup": [
+        "cbc"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:1308",
+        "title": "Gastrointestinal Bleeding",
+        "url": "https://medlineplus.gov/gastrointestinalbleeding.html",
+        "matched_existing_label": "Gastrointestinal Bleeding",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "ischemic_stroke",
+    "name": "Ischemic Stroke",
+    "source_path": "nova_agent/knowledge/diseases/neuro.json",
+    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "ischemic_stroke",
+      "name": "Ischemic Stroke",
+      "aliases": [
+        "stroke",
+        "cerebrovascular accident",
+        "CVA",
+        "brain attack",
+        "뇌졸중",
+        "뇌경색"
+      ],
+      "chief_complaint_tags": [
+        "headache",
+        "dizziness",
+        "altered_mental_status",
+        "weakness",
+        "syncope",
+        "focal_weakness",
+        "aphasia",
+        "numbness",
+        "vision_changes"
+      ],
+      "category": "neuro",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "sudden onset focal weakness",
+        "facial droop",
+        "slurred speech",
+        "aphasia",
+        "unilateral numbness",
+        "sudden vision loss",
+        "ataxia"
+      ],
+      "risk_factors": [
+        "atrial fibrillation",
+        "hypertension",
+        "diabetes",
+        "smoking",
+        "prior stroke or TIA",
+        "advanced age"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "associated_symptoms",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "neuro_exam",
+        "vital_signs",
+        "mental_status_exam"
+      ],
+      "discriminating_tests": [
+        "ct_head",
+        "mri_brain",
+        "glucose_point_of_care"
+      ],
+      "confirmatory_findings": [
+        "acute infarct",
+        "diffusion restriction"
+      ],
+      "reassuring_if_present": [
+        "no focal neurological deficit",
+        "no focal neuro deficit",
+        "normal neurologic exam",
+        "normal neurological exam"
+      ],
+      "red_flag_keywords": [
+        "facial droop",
+        "slurred speech",
+        "unilateral weakness",
+        "sudden onset",
+        "focal deficit"
+      ],
+      "minimum_workup": [
+        "ct_head",
+        "glucose_point_of_care"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:6248",
+        "title": "Ischemic Stroke",
+        "url": "https://medlineplus.gov/ischemicstroke.html",
+        "matched_existing_label": "Ischemic Stroke",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      },
+      {
+        "reference_id": "medlineplus:8",
+        "title": "Stroke",
+        "url": "https://medlineplus.gov/stroke.html",
+        "matched_existing_label": "stroke",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "pulmonary_embolism",
+    "name": "Pulmonary Embolism",
+    "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
+    "source_sha256": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "pulmonary_embolism",
+      "name": "Pulmonary Embolism",
+      "aliases": [
+        "PE",
+        "pulmonary thromboembolism",
+        "폐색전증"
+      ],
+      "chief_complaint_tags": [
+        "dyspnea",
+        "chest_pain",
+        "syncope",
+        "palpitations",
+        "cough",
+        "leg_swelling",
+        "hemoptysis"
+      ],
+      "category": "pulmonary",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "sudden onset dyspnea",
+        "pleuritic chest pain",
+        "tachycardia",
+        "hemoptysis",
+        "calf swelling",
+        "unilateral leg pain"
+      ],
+      "risk_factors": [
+        "recent surgery",
+        "immobilization",
+        "long travel",
+        "malignancy",
+        "oral contraceptive use",
+        "prior DVT or PE",
+        "pregnancy"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "character",
+        "associated_symptoms",
+        "past_medical_history",
+        "social_history"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "extremity_exam",
+        "lung_auscultation"
+      ],
+      "discriminating_tests": [
+        "d_dimer",
+        "ct_chest_angio",
+        "ecg"
+      ],
+      "confirmatory_findings": [
+        "filling defect in the pulmonary artery",
+        "elevated D-dimer"
+      ],
+      "red_flag_keywords": [
+        "sudden onset dyspnea",
+        "pleuritic",
+        "calf swelling",
+        "hemoptysis",
+        "tachycardia",
+        "hypoxia"
+      ],
+      "minimum_workup": [
+        "d_dimer",
+        "ct_chest_angio"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:377",
+        "title": "Pulmonary Embolism",
+        "url": "https://medlineplus.gov/pulmonaryembolism.html",
+        "matched_existing_label": "Pulmonary Embolism",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "sepsis",
+    "name": "Sepsis",
+    "source_path": "nova_agent/knowledge/diseases/infectious.json",
+    "source_sha256": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "sepsis",
+      "name": "Sepsis",
+      "aliases": [
+        "sepsis",
+        "septic shock",
+        "패혈증"
+      ],
+      "chief_complaint_tags": [
+        "fever",
+        "altered_mental_status",
+        "dyspnea",
+        "urinary_symptoms",
+        "weakness",
+        "leg_swelling"
+      ],
+      "category": "infectious",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "fever",
+        "tachycardia",
+        "hypotension",
+        "altered mental status",
+        "tachypnea",
+        "suspected infection source"
+      ],
+      "risk_factors": [
+        "immunosuppression",
+        "recent infection",
+        "indwelling catheter",
+        "advanced age",
+        "diabetes"
+      ],
+      "discriminating_questions": [
+        "associated_symptoms",
+        "onset",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "mental_status_exam",
+        "skin_exam"
+      ],
+      "discriminating_tests": [
+        "lactate",
+        "blood_culture",
+        "cbc",
+        "bmp"
+      ],
+      "confirmatory_findings": [
+        "positive blood culture",
+        "gram-negative rods",
+        "gram-positive cocci",
+        "gram-negative diplococci"
+      ],
+      "red_flag_keywords": [
+        "hypotension",
+        "tachycardia",
+        "altered mental status",
+        "tachypnea",
+        "fever with confusion"
+      ],
+      "minimum_workup": [
+        "lactate",
+        "blood_culture"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:3210",
+        "title": "Sepsis",
+        "url": "https://medlineplus.gov/sepsis.html",
+        "matched_existing_label": "Sepsis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      },
+      {
+        "reference_id": "medlineplus:5717",
+        "title": "Shock",
+        "url": "https://medlineplus.gov/shock.html",
+        "matched_existing_label": "septic shock",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "severe_electrolyte_disorder",
+    "name": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+    "source_path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+    "source_sha256": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "severe_electrolyte_disorder",
+      "name": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+      "aliases": [
+        "hyperkalemia",
+        "hyponatremia",
+        "severe electrolyte disturbance",
+        "중증 전해질이상"
+      ],
+      "chief_complaint_tags": [
+        "altered_mental_status",
+        "dizziness",
+        "palpitations",
+        "weakness",
+        "metabolic",
+        "seizure"
+      ],
+      "category": "endocrine_metabolic",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "muscle weakness",
+        "palpitations",
+        "confusion",
+        "arrhythmia",
+        "seizure"
+      ],
+      "risk_factors": [
+        "chronic kidney disease",
+        "diuretic use",
+        "vomiting or diarrhea",
+        "renin-angiotensin system inhibitor use"
+      ],
+      "discriminating_questions": [
+        "past_medical_history",
+        "medication",
+        "associated_symptoms"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "cardiac_auscultation",
+        "mental_status_exam"
+      ],
+      "discriminating_tests": [
+        "bmp",
+        "ecg"
+      ],
+      "red_flag_keywords": [
+        "arrhythmia",
+        "muscle weakness with renal disease",
+        "confusion with renal disease"
+      ],
+      "confirmatory_findings": [
+        "peaked t waves",
+        "hyperkalemia",
+        "elevated potassium",
+        "hyponatremia",
+        "low sodium",
+        "widened qrs"
+      ],
+      "minimum_workup": [
+        "bmp"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:5949",
+        "title": "Potassium",
+        "url": "https://medlineplus.gov/potassium.html",
+        "matched_existing_label": "hyperkalemia",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      },
+      {
+        "reference_id": "medlineplus:3666",
+        "title": "Sodium",
+        "url": "https://medlineplus.gov/sodium.html",
+        "matched_existing_label": "hyponatremia",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "subarachnoid_hemorrhage",
+    "name": "Subarachnoid Hemorrhage",
+    "source_path": "nova_agent/knowledge/diseases/neuro.json",
+    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "subarachnoid_hemorrhage",
+      "name": "Subarachnoid Hemorrhage",
+      "aliases": [
+        "SAH",
+        "ruptured aneurysm",
+        "지주막하출혈"
+      ],
+      "chief_complaint_tags": [
+        "headache",
+        "altered_mental_status",
+        "neck_stiffness"
+      ],
+      "category": "neuro",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "thunderclap headache",
+        "worst headache of life",
+        "sudden onset severe headache",
+        "neck stiffness",
+        "photophobia",
+        "vomiting"
+      ],
+      "risk_factors": [
+        "hypertension",
+        "smoking",
+        "family history of aneurysm",
+        "polycystic kidney disease"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "character",
+        "severity",
+        "associated_symptoms"
+      ],
+      "discriminating_exams": [
+        "meningeal_signs",
+        "neuro_exam",
+        "mental_status_exam"
+      ],
+      "discriminating_tests": [
+        "ct_head",
+        "lumbar_puncture"
+      ],
+      "confirmatory_findings": [
+        "subarachnoid blood",
+        "xanthochromia"
+      ],
+      "red_flag_keywords": [
+        "thunderclap",
+        "worst headache of life",
+        "sudden onset severe",
+        "neck stiffness"
+      ],
+      "minimum_workup": [
+        "ct_head"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:6263",
+        "title": "Hemorrhagic Stroke",
+        "url": "https://medlineplus.gov/hemorrhagicstroke.html",
+        "matched_existing_label": "Subarachnoid Hemorrhage",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "tension_pneumothorax",
+    "name": "Tension Pneumothorax",
+    "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
+    "source_sha256": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "dangerous": true,
+    "urgency": "CRITICAL",
+    "current_profile": {
+      "id": "tension_pneumothorax",
+      "name": "Tension Pneumothorax",
+      "aliases": [
+        "tension pneumo",
+        "긴장성 기흉"
+      ],
+      "chief_complaint_tags": [
+        "dyspnea",
+        "chest_pain",
+        "cough",
+        "trauma"
+      ],
+      "category": "pulmonary",
+      "dangerous": true,
+      "urgency": "CRITICAL",
+      "typical_features": [
+        "sudden onset dyspnea",
+        "unilateral absent breath sounds",
+        "tracheal deviation",
+        "hypotension",
+        "chest pain after trauma"
+      ],
+      "risk_factors": [
+        "chest trauma",
+        "tall thin body habitus",
+        "COPD",
+        "mechanical ventilation"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "character",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "lung_auscultation",
+        "vital_signs",
+        "general_appearance"
+      ],
+      "discriminating_tests": [
+        "cxr"
+      ],
+      "confirmatory_findings": [
+        "absent breath sounds",
+        "tracheal deviation"
+      ],
+      "red_flag_keywords": [
+        "absent breath sounds",
+        "tracheal deviation",
+        "hypotension",
+        "sudden onset dyspnea",
+        "distended neck veins"
+      ],
+      "minimum_workup": [
+        "lung_auscultation",
+        "cxr"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "appendicitis",
+    "name": "Acute Appendicitis",
+    "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "current_profile": {
+      "id": "appendicitis",
+      "name": "Acute Appendicitis",
+      "aliases": [
+        "appendicitis",
+        "충수염"
+      ],
+      "chief_complaint_tags": [
+        "abdominal_pain"
+      ],
+      "category": "abdominal_gi",
+      "dangerous": false,
+      "urgency": "MEDIUM",
+      "typical_features": [
+        "periumbilical pain migrating to right lower quadrant",
+        "anorexia",
+        "low grade fever",
+        "nausea"
+      ],
+      "risk_factors": [
+        "young age"
+      ],
+      "discriminating_questions": [
+        "location",
+        "onset",
+        "associated_symptoms"
+      ],
+      "discriminating_exams": [
+        "abdominal_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "cbc",
+        "ct_abdomen"
+      ],
+      "red_flag_keywords": [
+        "rebound tenderness",
+        "guarding"
+      ],
+      "evidence_level": "internally_authored_heuristic",
+      "confirmatory_findings": [
+        "inflamed appendix",
+        "appendiceal wall thickening",
+        "dilated appendix",
+        "periappendiceal fat stranding",
+        "appendicolith"
+      ],
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:1223",
+        "title": "Appendicitis",
+        "url": "https://medlineplus.gov/appendicitis.html",
+        "matched_existing_label": "appendicitis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "acute_bronchitis",
+    "name": "Acute Bronchitis",
+    "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
+    "source_sha256": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "acute_bronchitis",
+      "name": "Acute Bronchitis",
+      "aliases": [
+        "bronchitis",
+        "chest cold",
+        "급성기관지염"
+      ],
+      "chief_complaint_tags": [
+        "cough",
+        "fever"
+      ],
+      "category": "pulmonary",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "productive cough",
+        "mild fever",
+        "no focal consolidation",
+        "recent viral illness",
+        "chest wall soreness from coughing"
+      ],
+      "risk_factors": [
+        "smoking",
+        "recent viral upper respiratory infection"
+      ],
+      "discriminating_questions": [
+        "duration",
+        "associated_symptoms",
+        "social_history"
+      ],
+      "discriminating_exams": [
+        "lung_auscultation",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "cxr"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:5755",
+        "title": "Acute Bronchitis",
+        "url": "https://medlineplus.gov/acutebronchitis.html",
+        "matched_existing_label": "Acute Bronchitis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      },
+      {
+        "reference_id": "medlineplus:1608",
+        "title": "Chronic Bronchitis",
+        "url": "https://medlineplus.gov/chronicbronchitis.html",
+        "matched_existing_label": "bronchitis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "gastroenteritis",
+    "name": "Acute Gastroenteritis",
+    "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "gastroenteritis",
+      "name": "Acute Gastroenteritis",
+      "aliases": [
+        "gastroenteritis",
+        "stomach flu",
+        "급성위장염"
+      ],
+      "chief_complaint_tags": [
+        "abdominal_pain",
+        "fever",
+        "vomiting",
+        "diarrhea"
+      ],
+      "category": "abdominal_gi",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "diffuse crampy abdominal pain",
+        "diarrhea",
+        "vomiting",
+        "recent similar illness contact"
+      ],
+      "risk_factors": [
+        "recent travel",
+        "sick contacts",
+        "food exposure"
+      ],
+      "discriminating_questions": [
+        "associated_symptoms",
+        "onset",
+        "social_history"
+      ],
+      "discriminating_exams": [
+        "abdominal_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "cbc"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:3056",
+        "title": "Gastroenteritis",
+        "url": "https://medlineplus.gov/gastroenteritis.html",
+        "matched_existing_label": "gastroenteritis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "acute_pancreatitis",
+    "name": "Acute Pancreatitis",
+    "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "current_profile": {
+      "id": "acute_pancreatitis",
+      "name": "Acute Pancreatitis",
+      "aliases": [
+        "pancreatitis",
+        "급성췌장염"
+      ],
+      "chief_complaint_tags": [
+        "abdominal_pain",
+        "vomiting",
+        "back_pain"
+      ],
+      "category": "abdominal_gi",
+      "dangerous": false,
+      "urgency": "MEDIUM",
+      "typical_features": [
+        "epigastric pain radiating to back",
+        "nausea",
+        "vomiting",
+        "worse after eating fatty food"
+      ],
+      "risk_factors": [
+        "alcohol use",
+        "gallstones",
+        "hypertriglyceridemia"
+      ],
+      "discriminating_questions": [
+        "location",
+        "character",
+        "social_history",
+        "aggravating"
+      ],
+      "discriminating_exams": [
+        "abdominal_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "lipase",
+        "abdominal_ultrasound"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic",
+      "confirmatory_findings": [
+        "elevated lipase",
+        "pancreatic inflammation on imaging",
+        "peripancreatic fat stranding"
+      ],
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:5876",
+        "title": "Pancreatitis",
+        "url": "https://medlineplus.gov/pancreatitis.html",
+        "matched_existing_label": "Acute Pancreatitis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "pyelonephritis",
+    "name": "Acute Pyelonephritis",
+    "source_path": "nova_agent/knowledge/diseases/genitourinary.json",
+    "source_sha256": "0e1275f2fc43d5aec7b4880e115fba11cbf4b9785b05bef3026ad18d80358dce",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "current_profile": {
+      "id": "pyelonephritis",
+      "name": "Acute Pyelonephritis",
+      "aliases": [
+        "pyelonephritis",
+        "upper UTI",
+        "kidney infection",
+        "신우신염"
+      ],
+      "chief_complaint_tags": [
+        "urinary_symptoms",
+        "fever",
+        "back_pain"
+      ],
+      "category": "genitourinary",
+      "dangerous": false,
+      "urgency": "MEDIUM",
+      "typical_features": [
+        "flank pain",
+        "fever",
+        "costovertebral angle tenderness",
+        "dysuria",
+        "nausea and vomiting"
+      ],
+      "risk_factors": [
+        "female sex",
+        "diabetes",
+        "urinary obstruction",
+        "pregnancy"
+      ],
+      "discriminating_questions": [
+        "location",
+        "associated_symptoms",
+        "onset"
+      ],
+      "discriminating_exams": [
+        "costovertebral_tenderness",
+        "vital_signs",
+        "abdominal_exam"
+      ],
+      "discriminating_tests": [
+        "urinalysis",
+        "urine_culture",
+        "cbc",
+        "bmp"
+      ],
+      "red_flag_keywords": [
+        "fever with flank pain",
+        "hypotension",
+        "confusion"
+      ],
+      "confirmatory_findings": [
+        "positive leukocyte esterase",
+        "positive nitrites",
+        "elevated white blood cell count"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:448",
+        "title": "Urinary Tract Infections",
+        "url": "https://medlineplus.gov/urinarytractinfections.html",
+        "matched_existing_label": "pyelonephritis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "asthma_copd_exacerbation",
+    "name": "Asthma / COPD Exacerbation",
+    "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
+    "source_sha256": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "current_profile": {
+      "id": "asthma_copd_exacerbation",
+      "name": "Asthma / COPD Exacerbation",
+      "aliases": [
+        "asthma exacerbation",
+        "COPD exacerbation",
+        "천식 악화",
+        "만성폐쇄성폐질환 악화"
+      ],
+      "chief_complaint_tags": [
+        "dyspnea",
+        "cough"
+      ],
+      "category": "pulmonary",
+      "dangerous": false,
+      "urgency": "MEDIUM",
+      "typical_features": [
+        "wheeze",
+        "known asthma or COPD",
+        "worse with triggers",
+        "prolonged expiration"
+      ],
+      "risk_factors": [
+        "smoking",
+        "known reactive airway disease",
+        "allergen exposure"
+      ],
+      "discriminating_questions": [
+        "past_medical_history",
+        "aggravating",
+        "associated_symptoms"
+      ],
+      "discriminating_exams": [
+        "lung_auscultation",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "cxr",
+        "abg"
+      ],
+      "red_flag_keywords": [
+        "silent chest",
+        "unable to speak in full sentences",
+        "hypoxia"
+      ],
+      "evidence_level": "internally_authored_heuristic",
+      "confirmatory_findings": [
+        "reduced peak flow",
+        "hyperinflation on chest x-ray"
+      ],
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+    },
+    "source_leads": [],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "bppv",
+    "name": "Benign Paroxysmal Positional Vertigo",
+    "source_path": "nova_agent/knowledge/diseases/neuro.json",
+    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "bppv",
+      "name": "Benign Paroxysmal Positional Vertigo",
+      "aliases": [
+        "BPPV",
+        "positional vertigo",
+        "양성돌발체위현훈"
+      ],
+      "chief_complaint_tags": [
+        "dizziness"
+      ],
+      "category": "neuro",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "brief episodic vertigo",
+        "triggered by head position change",
+        "no focal neuro deficit",
+        "no hearing loss"
+      ],
+      "risk_factors": [
+        "prior episodes",
+        "recent head trauma",
+        "advanced age"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "duration",
+        "aggravating",
+        "associated_symptoms"
+      ],
+      "discriminating_exams": [
+        "neuro_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic",
+      "confirmatory_findings": [
+        "positive dix-hallpike",
+        "positional nystagmus",
+        "torsional nystagmus"
+      ],
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+    },
+    "source_leads": [],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "pneumonia",
+    "name": "Community-Acquired Pneumonia",
+    "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
+    "source_sha256": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "current_profile": {
+      "id": "pneumonia",
+      "name": "Community-Acquired Pneumonia",
+      "aliases": [
+        "pneumonia",
+        "폐렴"
+      ],
+      "chief_complaint_tags": [
+        "dyspnea",
+        "fever",
+        "chest_pain",
+        "cough"
+      ],
+      "category": "pulmonary",
+      "dangerous": false,
+      "urgency": "MEDIUM",
+      "typical_features": [
+        "productive cough",
+        "fever",
+        "pleuritic chest pain",
+        "crackles on auscultation",
+        "dyspnea"
+      ],
+      "risk_factors": [
+        "elderly age",
+        "smoking",
+        "COPD",
+        "immunosuppression"
+      ],
+      "discriminating_questions": [
+        "associated_symptoms",
+        "onset",
+        "duration"
+      ],
+      "discriminating_exams": [
+        "lung_auscultation",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "cxr",
+        "cbc"
+      ],
+      "red_flag_keywords": [
+        "hypoxia",
+        "confusion",
+        "hypotension"
+      ],
+      "confirmatory_findings": [
+        "consolidation",
+        "infiltrate",
+        "focal consolidation",
+        "crackles"
+      ],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:363",
+        "title": "Pneumonia",
+        "url": "https://medlineplus.gov/pneumonia.html",
+        "matched_existing_label": "pneumonia",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "gerd",
+    "name": "Gastroesophageal Reflux Disease",
+    "source_path": "nova_agent/knowledge/diseases/cardiac.json",
+    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "gerd",
+      "name": "Gastroesophageal Reflux Disease",
+      "aliases": [
+        "GERD",
+        "acid reflux",
+        "heartburn",
+        "위식도역류질환"
+      ],
+      "chief_complaint_tags": [
+        "chest_pain",
+        "abdominal_pain"
+      ],
+      "category": "cardiac",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "burning chest pain",
+        "worse after meals",
+        "worse lying down",
+        "relieved by antacids",
+        "sour taste"
+      ],
+      "risk_factors": [
+        "obesity",
+        "hiatal hernia",
+        "smoking"
+      ],
+      "discriminating_questions": [
+        "character",
+        "aggravating",
+        "relieving",
+        "associated_symptoms"
+      ],
+      "discriminating_exams": [
+        "abdominal_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "ecg",
+        "troponin"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic",
+      "confirmatory_findings": [
+        "esophagitis on endoscopy"
+      ],
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:512",
+        "title": "GERD",
+        "url": "https://medlineplus.gov/gerd.html",
+        "matched_existing_label": "Gastroesophageal Reflux Disease",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      },
+      {
+        "reference_id": "medlineplus:1653",
+        "title": "Heartburn",
+        "url": "https://medlineplus.gov/heartburn.html",
+        "matched_existing_label": "acid reflux",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "hypoglycemia",
+    "name": "Hypoglycemia",
+    "source_path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+    "source_sha256": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "current_profile": {
+      "id": "hypoglycemia",
+      "name": "Hypoglycemia",
+      "aliases": [
+        "low blood sugar",
+        "hypoglycemia",
+        "저혈당"
+      ],
+      "chief_complaint_tags": [
+        "altered_mental_status",
+        "dizziness",
+        "weakness",
+        "metabolic"
+      ],
+      "category": "endocrine_metabolic",
+      "dangerous": false,
+      "urgency": "MEDIUM",
+      "typical_features": [
+        "diaphoresis",
+        "confusion",
+        "tremor",
+        "known diabetes on insulin",
+        "resolves with glucose"
+      ],
+      "risk_factors": [
+        "insulin use",
+        "sulfonylurea use",
+        "missed meal"
+      ],
+      "discriminating_questions": [
+        "past_medical_history",
+        "medication",
+        "onset"
+      ],
+      "discriminating_exams": [
+        "mental_status_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "glucose_point_of_care"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:1264",
+        "title": "Hypoglycemia",
+        "url": "https://medlineplus.gov/hypoglycemia.html",
+        "matched_existing_label": "Hypoglycemia",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "migraine",
+    "name": "Migraine",
+    "source_path": "nova_agent/knowledge/diseases/neuro.json",
+    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "migraine",
+      "name": "Migraine",
+      "aliases": [
+        "migraine headache",
+        "편두통"
+      ],
+      "chief_complaint_tags": [
+        "headache",
+        "dizziness",
+        "vomiting"
+      ],
+      "category": "neuro",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "unilateral pulsating headache",
+        "photophobia",
+        "phonophobia",
+        "nausea",
+        "aura",
+        "recurrent similar episodes"
+      ],
+      "risk_factors": [
+        "family history of migraine",
+        "female sex",
+        "known migraine history"
+      ],
+      "discriminating_questions": [
+        "character",
+        "associated_symptoms",
+        "family_history",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "neuro_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "ct_head"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:3157",
+        "title": "Migraine",
+        "url": "https://medlineplus.gov/migraine.html",
+        "matched_existing_label": "Migraine",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "musculoskeletal_chest_pain",
+    "name": "Musculoskeletal Chest Pain (Costochondritis)",
+    "source_path": "nova_agent/knowledge/diseases/cardiac.json",
+    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "musculoskeletal_chest_pain",
+      "name": "Musculoskeletal Chest Pain (Costochondritis)",
+      "aliases": [
+        "costochondritis",
+        "chest wall pain",
+        "근골격계 흉통"
+      ],
+      "chief_complaint_tags": [
+        "chest_pain"
+      ],
+      "category": "cardiac",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "reproducible with palpation",
+        "worse with movement",
+        "localized tenderness",
+        "sharp pain"
+      ],
+      "risk_factors": [
+        "recent physical strain",
+        "recent trauma"
+      ],
+      "discriminating_questions": [
+        "character",
+        "aggravating",
+        "location"
+      ],
+      "discriminating_exams": [
+        "abdominal_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "ecg"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic",
+      "confirmatory_findings": [
+        "reproducible chest wall tenderness",
+        "pain reproduced on palpation"
+      ],
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:1412",
+        "title": "Cartilage Disorders",
+        "url": "https://medlineplus.gov/cartilagedisorders.html",
+        "matched_existing_label": "costochondritis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "nephrolithiasis",
+    "name": "Nephrolithiasis (Kidney Stone)",
+    "source_path": "nova_agent/knowledge/diseases/genitourinary.json",
+    "source_sha256": "0e1275f2fc43d5aec7b4880e115fba11cbf4b9785b05bef3026ad18d80358dce",
+    "dangerous": false,
+    "urgency": "MEDIUM",
+    "current_profile": {
+      "id": "nephrolithiasis",
+      "name": "Nephrolithiasis (Kidney Stone)",
+      "aliases": [
+        "kidney stone",
+        "renal colic",
+        "nephrolithiasis",
+        "요로결석"
+      ],
+      "chief_complaint_tags": [
+        "urinary_symptoms",
+        "abdominal_pain",
+        "back_pain"
+      ],
+      "category": "genitourinary",
+      "dangerous": false,
+      "urgency": "MEDIUM",
+      "typical_features": [
+        "colicky flank pain",
+        "pain radiates to groin",
+        "hematuria",
+        "nausea",
+        "unable to find comfortable position"
+      ],
+      "risk_factors": [
+        "prior kidney stones",
+        "dehydration",
+        "family history"
+      ],
+      "discriminating_questions": [
+        "location",
+        "character",
+        "family_history"
+      ],
+      "discriminating_exams": [
+        "costovertebral_tenderness",
+        "vital_signs"
+      ],
+      "discriminating_tests": [
+        "urinalysis",
+        "ct_abdomen"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic",
+      "confirmatory_findings": [
+        "ureteral stone on imaging",
+        "hydronephrosis",
+        "blood in urine on urinalysis"
+      ],
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:1224",
+        "title": "Kidney Stones",
+        "url": "https://medlineplus.gov/kidneystones.html",
+        "matched_existing_label": "nephrolithiasis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "orthostatic_hypotension",
+    "name": "Orthostatic Hypotension",
+    "source_path": "nova_agent/knowledge/diseases/neuro.json",
+    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "orthostatic_hypotension",
+      "name": "Orthostatic Hypotension",
+      "aliases": [
+        "orthostatic hypotension",
+        "postural hypotension",
+        "기립성 저혈압"
+      ],
+      "chief_complaint_tags": [
+        "dizziness",
+        "syncope"
+      ],
+      "category": "neuro",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "lightheadedness on standing up",
+        "improves with sitting or lying down",
+        "no focal neurological deficit",
+        "no chest pain",
+        "no palpitations before the episode"
+      ],
+      "risk_factors": [
+        "dehydration",
+        "diuretic use",
+        "prolonged bed rest",
+        "advanced age"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "aggravating",
+        "relieving",
+        "medication"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "neuro_exam"
+      ],
+      "discriminating_tests": [],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic",
+      "confirmatory_findings": [
+        "orthostatic drop in blood pressure",
+        "blood pressure falls on standing"
+      ],
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:1225",
+        "title": "Low Blood Pressure",
+        "url": "https://medlineplus.gov/lowbloodpressure.html",
+        "matched_existing_label": "Orthostatic Hypotension",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      },
+      {
+        "reference_id": "medlineplus:4242",
+        "title": "Autonomic Nervous System Disorders",
+        "url": "https://medlineplus.gov/autonomicnervoussystemdisorders.html",
+        "matched_existing_label": "Orthostatic Hypotension",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "panic_attack",
+    "name": "Panic Attack",
+    "source_path": "nova_agent/knowledge/diseases/cardiac.json",
+    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "panic_attack",
+      "name": "Panic Attack",
+      "aliases": [
+        "panic attack",
+        "anxiety attack",
+        "공황발작"
+      ],
+      "chief_complaint_tags": [
+        "chest_pain",
+        "dyspnea",
+        "palpitations"
+      ],
+      "category": "cardiac",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "sudden onset intense anxiety or fear",
+        "hyperventilation",
+        "tingling around the mouth or fingers",
+        "fear of dying or losing control",
+        "chest tightness",
+        "palpitations",
+        "symptoms peak within minutes then improve",
+        "resolves with calming down or reassurance"
+      ],
+      "risk_factors": [
+        "history of anxiety or panic disorder",
+        "recent significant stressor"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "duration",
+        "associated_symptoms",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "general_appearance"
+      ],
+      "discriminating_tests": [
+        "ecg"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "tension_headache",
+    "name": "Tension-Type Headache",
+    "source_path": "nova_agent/knowledge/diseases/neuro.json",
+    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "tension_headache",
+      "name": "Tension-Type Headache",
+      "aliases": [
+        "tension headache",
+        "긴장성두통"
+      ],
+      "chief_complaint_tags": [
+        "headache"
+      ],
+      "category": "neuro",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "bilateral band-like pressure",
+        "mild to moderate intensity",
+        "no nausea",
+        "stress related"
+      ],
+      "risk_factors": [
+        "stress",
+        "poor sleep",
+        "prolonged screen time"
+      ],
+      "discriminating_questions": [
+        "character",
+        "location",
+        "aggravating"
+      ],
+      "discriminating_exams": [
+        "neuro_exam",
+        "vital_signs"
+      ],
+      "discriminating_tests": [],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:273",
+        "title": "Headache",
+        "url": "https://medlineplus.gov/headache.html",
+        "matched_existing_label": "tension headache",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "uncomplicated_cystitis",
+    "name": "Uncomplicated Cystitis (Lower UTI)",
+    "source_path": "nova_agent/knowledge/diseases/genitourinary.json",
+    "source_sha256": "0e1275f2fc43d5aec7b4880e115fba11cbf4b9785b05bef3026ad18d80358dce",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "uncomplicated_cystitis",
+      "name": "Uncomplicated Cystitis (Lower UTI)",
+      "aliases": [
+        "UTI",
+        "urinary tract infection",
+        "cystitis",
+        "방광염",
+        "요로감염"
+      ],
+      "chief_complaint_tags": [
+        "urinary_symptoms"
+      ],
+      "category": "genitourinary",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "dysuria",
+        "urinary frequency",
+        "urinary urgency",
+        "suprapubic discomfort",
+        "no fever",
+        "no flank pain"
+      ],
+      "risk_factors": [
+        "female sex",
+        "sexual activity",
+        "prior UTI"
+      ],
+      "discriminating_questions": [
+        "associated_symptoms",
+        "onset",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "abdominal_exam",
+        "vital_signs",
+        "costovertebral_tenderness"
+      ],
+      "discriminating_tests": [
+        "urinalysis",
+        "urine_culture"
+      ],
+      "confirmatory_findings": [
+        "positive leukocyte esterase",
+        "positive nitrites"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:448",
+        "title": "Urinary Tract Infections",
+        "url": "https://medlineplus.gov/urinarytractinfections.html",
+        "matched_existing_label": "UTI",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      },
+      {
+        "reference_id": "medlineplus:1274",
+        "title": "Interstitial Cystitis",
+        "url": "https://medlineplus.gov/interstitialcystitis.html",
+        "matched_existing_label": "cystitis",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "vasovagal_syncope",
+    "name": "Vasovagal (Reflex) Syncope",
+    "source_path": "nova_agent/knowledge/diseases/cardiac.json",
+    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "vasovagal_syncope",
+      "name": "Vasovagal (Reflex) Syncope",
+      "aliases": [
+        "vasovagal syncope",
+        "reflex syncope",
+        "neurocardiogenic syncope",
+        "미주신경성 실신"
+      ],
+      "chief_complaint_tags": [
+        "syncope",
+        "dizziness"
+      ],
+      "category": "cardiac",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "prodrome of lightheadedness",
+        "triggered by standing or pain or fear",
+        "brief loss of consciousness",
+        "rapid spontaneous recovery",
+        "no chest pain",
+        "no palpitations before the episode"
+      ],
+      "risk_factors": [
+        "prolonged standing",
+        "dehydration",
+        "emotional stress",
+        "young age"
+      ],
+      "discriminating_questions": [
+        "onset",
+        "aggravating",
+        "associated_symptoms",
+        "past_medical_history"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "cardiac_auscultation"
+      ],
+      "discriminating_tests": [
+        "ecg"
+      ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:1481",
+        "title": "Fainting",
+        "url": "https://medlineplus.gov/fainting.html",
+        "matched_existing_label": "vasovagal syncope",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  },
+  {
+    "disease_id": "viral_uri",
+    "name": "Viral Upper Respiratory Infection",
+    "source_path": "nova_agent/knowledge/diseases/infectious.json",
+    "source_sha256": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
+    "dangerous": false,
+    "urgency": "LOW",
+    "current_profile": {
+      "id": "viral_uri",
+      "name": "Viral Upper Respiratory Infection",
+      "aliases": [
+        "common cold",
+        "viral URI",
+        "상기도감염"
+      ],
+      "chief_complaint_tags": [
+        "fever",
+        "cough",
+        "upper_respiratory"
+      ],
+      "category": "infectious",
+      "dangerous": false,
+      "urgency": "LOW",
+      "typical_features": [
+        "low grade fever",
+        "rhinorrhea",
+        "sore throat",
+        "cough",
+        "mild symptoms"
+      ],
+      "risk_factors": [
+        "sick contacts",
+        "seasonal exposure"
+      ],
+      "discriminating_questions": [
+        "associated_symptoms",
+        "duration"
+      ],
+      "discriminating_exams": [
+        "vital_signs",
+        "lung_auscultation"
+      ],
+      "discriminating_tests": [],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic"
+    },
+    "source_leads": [
+      {
+        "reference_id": "medlineplus:196",
+        "title": "Common Cold",
+        "url": "https://medlineplus.gov/commoncold.html",
+        "matched_existing_label": "common cold",
+        "license": "Public-domain health-topic summaries; NLM scope-specific reuse terms",
+        "version": "2026-10-03",
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "relationship": "LEXICAL_REVIEW_LEAD_NOT_VERIFIED_CLINICAL_EQUIVALENCE"
+      }
+    ],
+    "review": {
+      "reviewer_name": null,
+      "qualification": null,
+      "review_date": null,
+      "feature_validity": "PENDING",
+      "objective_finding_specificity": "PENDING",
+      "dangerous_alternatives": "PENDING",
+      "minimum_workup": "PENDING",
+      "negative_evidence_sufficiency": "PENDING",
+      "population_exceptions": "PENDING",
+      "recommended_corrections": [],
+      "supporting_sources": [],
+      "approval": "PENDING"
+    }
+  }
+]

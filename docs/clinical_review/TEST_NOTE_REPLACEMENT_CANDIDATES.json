@@ -1,0 +1,242 @@
+{
+  "source_snapshot_sha256": "2b05a02bd5e5c7eb237d52d45d032267e27d01e6bdd67302032cdae23bcd3d38",
+  "original_notes_sha256": "6cc5f51ac1c69c2a17354e5606e83749cb39ab19a313d0719afb1fe4ebadf161",
+  "runtime_modified": false,
+  "candidates": [
+    {
+      "test_id": "d_dimer",
+      "original_note": "High sensitivity, low specificity for PE/DVT; most useful to rule out PE in a low pre-test-probability patient, not to rule it in.",
+      "original_provenance": "UNRESOLVED",
+      "candidate_background_note": "A D-dimer test looks for D-dimer in blood. D-dimer is a protein fragment (small piece) that's made when a blood clot dissolves in your body. D-dimer isn't usually found in your blood unless your body is making or breaking up blood clots.",
+      "source_url": "https://medlineplus.gov/lab-tests/d-dimer-test/",
+      "source_metadata": {
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "index_url": "https://medlineplus.gov/lab-tests/",
+        "license": "Public-domain medical test information; NLM reuse terms",
+        "pages": {
+          "d_dimer": {
+            "sha256": "b0703d29bf9dea7d71884bb623ad13f2710cfc0cbde51c2e4116d9780af48634",
+            "url": "https://medlineplus.gov/lab-tests/d-dimer-test/"
+          },
+          "ecg": {
+            "sha256": "7fb6fce22a57a9c4c237526863b4a5a4d906a4df3000956fdd490fbf075a95ce",
+            "url": "https://medlineplus.gov/lab-tests/electrocardiogram/"
+          },
+          "lactate": {
+            "sha256": "6eee83fb2eb0745cffb3b50eddf0226d2cf2747538b980ea58f8ef9be6fba365",
+            "url": "https://medlineplus.gov/lab-tests/lactate-test/"
+          },
+          "lipase": {
+            "sha256": "850931b246f7d5a1941961e2c17c57ea1a4b6e505b2dd50806d484d1cf9cf36e",
+            "url": "https://medlineplus.gov/lab-tests/lipase-tests/"
+          },
+          "troponin": {
+            "sha256": "3121842688b9780ba1d48fc79c3cd0525950a7ad1d89abd10cd18cc28f90e407",
+            "url": "https://medlineplus.gov/lab-tests/troponin-test/"
+          }
+        },
+        "terms_url": "https://medlineplus.gov/about/using/usingcontent/",
+        "version": "Retrieved 2026-10-05; per-page byte hashes retained"
+      },
+      "source_markup_sha256": "3a632b2f971f01dca0cd3c279d9efd7aad7ad972602b58833cbdf6a1814587ac",
+      "transformation": "First complete p element; HTML removed with retained plain() function. No paraphrase or AI clinical generation.",
+      "generation_code": "scripts/prepare_test_note_replacements.py",
+      "generation_date": "2026-10-05",
+      "clinical_generation_model": "NOT_APPLICABLE_DETERMINISTIC_EXTRACTION",
+      "source_rights_scope": "NLM medical-test prose only; excludes third-party content and images",
+      "manual_clinical_review": "PENDING",
+      "clinician_review": "PENDING",
+      "promotion": "BLOCKED_PENDING_SCOPE_AND_SAFETY_REVIEW",
+      "reason": "Test-purpose background is not equivalent to the original indications, exclusions, thresholds or safety caveats. Do not silently remove those clinical distinctions.",
+      "submission_included_as_replacement": false
+    },
+    {
+      "test_id": "ecg",
+      "original_note": "First-line for any chest pain or syncope; look for ST elevation/depression, new T-wave inversion, or signs of right heart strain (PE).",
+      "original_provenance": "UNRESOLVED",
+      "candidate_background_note": "An electrocardiogram (EKG) test is a simple, painless, and quick test that records the electrical signals your heart makes when it beats. These signals tell your heart’s four chambers to contract (squeeze) in a specific rhythm that your heart needs to pump blood to your body.",
+      "source_url": "https://medlineplus.gov/lab-tests/electrocardiogram/",
+      "source_metadata": {
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "index_url": "https://medlineplus.gov/lab-tests/",
+        "license": "Public-domain medical test information; NLM reuse terms",
+        "pages": {
+          "d_dimer": {
+            "sha256": "b0703d29bf9dea7d71884bb623ad13f2710cfc0cbde51c2e4116d9780af48634",
+            "url": "https://medlineplus.gov/lab-tests/d-dimer-test/"
+          },
+          "ecg": {
+            "sha256": "7fb6fce22a57a9c4c237526863b4a5a4d906a4df3000956fdd490fbf075a95ce",
+            "url": "https://medlineplus.gov/lab-tests/electrocardiogram/"
+          },
+          "lactate": {
+            "sha256": "6eee83fb2eb0745cffb3b50eddf0226d2cf2747538b980ea58f8ef9be6fba365",
+            "url": "https://medlineplus.gov/lab-tests/lactate-test/"
+          },
+          "lipase": {
+            "sha256": "850931b246f7d5a1941961e2c17c57ea1a4b6e505b2dd50806d484d1cf9cf36e",
+            "url": "https://medlineplus.gov/lab-tests/lipase-tests/"
+          },
+          "troponin": {
+            "sha256": "3121842688b9780ba1d48fc79c3cd0525950a7ad1d89abd10cd18cc28f90e407",
+            "url": "https://medlineplus.gov/lab-tests/troponin-test/"
+          }
+        },
+        "terms_url": "https://medlineplus.gov/about/using/usingcontent/",
+        "version": "Retrieved 2026-10-05; per-page byte hashes retained"
+      },
+      "source_markup_sha256": "d8803a21dc5baa7208b18bcc2c8343c748091979c32b376ae7dc041fb9e5f1cc",
+      "transformation": "First complete p element; HTML removed with retained plain() function. No paraphrase or AI clinical generation.",
+      "generation_code": "scripts/prepare_test_note_replacements.py",
+      "generation_date": "2026-10-05",
+      "clinical_generation_model": "NOT_APPLICABLE_DETERMINISTIC_EXTRACTION",
+      "source_rights_scope": "NLM medical-test prose only; excludes third-party content and images",
+      "manual_clinical_review": "PENDING",
+      "clinician_review": "PENDING",
+      "promotion": "BLOCKED_PENDING_SCOPE_AND_SAFETY_REVIEW",
+      "reason": "Test-purpose background is not equivalent to the original indications, exclusions, thresholds or safety caveats. Do not silently remove those clinical distinctions.",
+      "submission_included_as_replacement": false
+    },
+    {
+      "test_id": "lactate",
+      "original_note": "Elevated lactate suggests tissue hypoperfusion; used to risk-stratify suspected sepsis severity.",
+      "original_provenance": "UNRESOLVED",
+      "candidate_background_note": "This test measures the level of lactate, also called lactic acid, in a sample of your blood. In certain cases, cerebrospinal fluid (CSF) may be used. Normally, you have low levels of lactate in your blood and CSF. High levels of lactate may be a sign of a wide variety of medical conditions.",
+      "source_url": "https://medlineplus.gov/lab-tests/lactate-test/",
+      "source_metadata": {
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "index_url": "https://medlineplus.gov/lab-tests/",
+        "license": "Public-domain medical test information; NLM reuse terms",
+        "pages": {
+          "d_dimer": {
+            "sha256": "b0703d29bf9dea7d71884bb623ad13f2710cfc0cbde51c2e4116d9780af48634",
+            "url": "https://medlineplus.gov/lab-tests/d-dimer-test/"
+          },
+          "ecg": {
+            "sha256": "7fb6fce22a57a9c4c237526863b4a5a4d906a4df3000956fdd490fbf075a95ce",
+            "url": "https://medlineplus.gov/lab-tests/electrocardiogram/"
+          },
+          "lactate": {
+            "sha256": "6eee83fb2eb0745cffb3b50eddf0226d2cf2747538b980ea58f8ef9be6fba365",
+            "url": "https://medlineplus.gov/lab-tests/lactate-test/"
+          },
+          "lipase": {
+            "sha256": "850931b246f7d5a1941961e2c17c57ea1a4b6e505b2dd50806d484d1cf9cf36e",
+            "url": "https://medlineplus.gov/lab-tests/lipase-tests/"
+          },
+          "troponin": {
+            "sha256": "3121842688b9780ba1d48fc79c3cd0525950a7ad1d89abd10cd18cc28f90e407",
+            "url": "https://medlineplus.gov/lab-tests/troponin-test/"
+          }
+        },
+        "terms_url": "https://medlineplus.gov/about/using/usingcontent/",
+        "version": "Retrieved 2026-10-05; per-page byte hashes retained"
+      },
+      "source_markup_sha256": "455180907d595356ad9c2d978fe3bef66f3b4045effd68e8c85c186842fb4845",
+      "transformation": "First complete p element; HTML removed with retained plain() function. No paraphrase or AI clinical generation.",
+      "generation_code": "scripts/prepare_test_note_replacements.py",
+      "generation_date": "2026-10-05",
+      "clinical_generation_model": "NOT_APPLICABLE_DETERMINISTIC_EXTRACTION",
+      "source_rights_scope": "NLM medical-test prose only; excludes third-party content and images",
+      "manual_clinical_review": "PENDING",
+      "clinician_review": "PENDING",
+      "promotion": "BLOCKED_PENDING_SCOPE_AND_SAFETY_REVIEW",
+      "reason": "Test-purpose background is not equivalent to the original indications, exclusions, thresholds or safety caveats. Do not silently remove those clinical distinctions.",
+      "submission_included_as_replacement": false
+    },
+    {
+      "test_id": "lipase",
+      "original_note": "Elevated 3x upper limit supports acute pancreatitis; imaging still needed to assess severity/complications.",
+      "original_provenance": "UNRESOLVED",
+      "candidate_background_note": "A lipase test measures the level of lipase in your blood. Lipase helps your body digest fats. It's a type of digestive enzyme. An enzyme is a protein that speeds up certain chemical reactions in your body. Most of your lipase is made in your pancreas, an organ located behind the lower part of your stomach. Lipase is also made in your salivary (spit) glands and in your stomach.",
+      "source_url": "https://medlineplus.gov/lab-tests/lipase-tests/",
+      "source_metadata": {
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "index_url": "https://medlineplus.gov/lab-tests/",
+        "license": "Public-domain medical test information; NLM reuse terms",
+        "pages": {
+          "d_dimer": {
+            "sha256": "b0703d29bf9dea7d71884bb623ad13f2710cfc0cbde51c2e4116d9780af48634",
+            "url": "https://medlineplus.gov/lab-tests/d-dimer-test/"
+          },
+          "ecg": {
+            "sha256": "7fb6fce22a57a9c4c237526863b4a5a4d906a4df3000956fdd490fbf075a95ce",
+            "url": "https://medlineplus.gov/lab-tests/electrocardiogram/"
+          },
+          "lactate": {
+            "sha256": "6eee83fb2eb0745cffb3b50eddf0226d2cf2747538b980ea58f8ef9be6fba365",
+            "url": "https://medlineplus.gov/lab-tests/lactate-test/"
+          },
+          "lipase": {
+            "sha256": "850931b246f7d5a1941961e2c17c57ea1a4b6e505b2dd50806d484d1cf9cf36e",
+            "url": "https://medlineplus.gov/lab-tests/lipase-tests/"
+          },
+          "troponin": {
+            "sha256": "3121842688b9780ba1d48fc79c3cd0525950a7ad1d89abd10cd18cc28f90e407",
+            "url": "https://medlineplus.gov/lab-tests/troponin-test/"
+          }
+        },
+        "terms_url": "https://medlineplus.gov/about/using/usingcontent/",
+        "version": "Retrieved 2026-10-05; per-page byte hashes retained"
+      },
+      "source_markup_sha256": "57b4a21007d3b23d150e9161a519f7d50cd31bdc88198d8dbca7114da1bec681",
+      "transformation": "First complete p element; HTML removed with retained plain() function. No paraphrase or AI clinical generation.",
+      "generation_code": "scripts/prepare_test_note_replacements.py",
+      "generation_date": "2026-10-05",
+      "clinical_generation_model": "NOT_APPLICABLE_DETERMINISTIC_EXTRACTION",
+      "source_rights_scope": "NLM medical-test prose only; excludes third-party content and images",
+      "manual_clinical_review": "PENDING",
+      "clinician_review": "PENDING",
+      "promotion": "BLOCKED_PENDING_SCOPE_AND_SAFETY_REVIEW",
+      "reason": "Test-purpose background is not equivalent to the original indications, exclusions, thresholds or safety caveats. Do not silently remove those clinical distinctions.",
+      "submission_included_as_replacement": false
+    },
+    {
+      "test_id": "troponin",
+      "original_note": "Elevated in myocardial injury; a single normal troponin early after symptom onset does not exclude ACS.",
+      "original_provenance": "UNRESOLVED",
+      "candidate_background_note": "A troponin test measures the level of troponin in a sample of your blood. Troponin is a protein that's found in the cells of your heart muscle.",
+      "source_url": "https://medlineplus.gov/lab-tests/troponin-test/",
+      "source_metadata": {
+        "attribution": "Source: MedlinePlus, National Library of Medicine.",
+        "index_url": "https://medlineplus.gov/lab-tests/",
+        "license": "Public-domain medical test information; NLM reuse terms",
+        "pages": {
+          "d_dimer": {
+            "sha256": "b0703d29bf9dea7d71884bb623ad13f2710cfc0cbde51c2e4116d9780af48634",
+            "url": "https://medlineplus.gov/lab-tests/d-dimer-test/"
+          },
+          "ecg": {
+            "sha256": "7fb6fce22a57a9c4c237526863b4a5a4d906a4df3000956fdd490fbf075a95ce",
+            "url": "https://medlineplus.gov/lab-tests/electrocardiogram/"
+          },
+          "lactate": {
+            "sha256": "6eee83fb2eb0745cffb3b50eddf0226d2cf2747538b980ea58f8ef9be6fba365",
+            "url": "https://medlineplus.gov/lab-tests/lactate-test/"
+          },
+          "lipase": {
+            "sha256": "850931b246f7d5a1941961e2c17c57ea1a4b6e505b2dd50806d484d1cf9cf36e",
+            "url": "https://medlineplus.gov/lab-tests/lipase-tests/"
+          },
+          "troponin": {
+            "sha256": "3121842688b9780ba1d48fc79c3cd0525950a7ad1d89abd10cd18cc28f90e407",
+            "url": "https://medlineplus.gov/lab-tests/troponin-test/"
+          }
+        },
+        "terms_url": "https://medlineplus.gov/about/using/usingcontent/",
+        "version": "Retrieved 2026-10-05; per-page byte hashes retained"
+      },
+      "source_markup_sha256": "b3f14935f5a62aab4f4e34cb6cad8a33f771038401b7526463e6fe81530bed42",
+      "transformation": "First complete p element; HTML removed with retained plain() function. No paraphrase or AI clinical generation.",
+      "generation_code": "scripts/prepare_test_note_replacements.py",
+      "generation_date": "2026-10-05",
+      "clinical_generation_model": "NOT_APPLICABLE_DETERMINISTIC_EXTRACTION",
+      "source_rights_scope": "NLM medical-test prose only; excludes third-party content and images",
+      "manual_clinical_review": "PENDING",
+      "clinician_review": "PENDING",
+      "promotion": "BLOCKED_PENDING_SCOPE_AND_SAFETY_REVIEW",
+      "reason": "Test-purpose background is not equivalent to the original indications, exclusions, thresholds or safety caveats. Do not silently remove those clinical distinctions.",
+      "submission_included_as_replacement": false
+    }
+  ]
+}

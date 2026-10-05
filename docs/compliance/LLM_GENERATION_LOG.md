@@ -6,7 +6,7 @@ receipt. This log records gaps; it does not reconstruct invented provenance.
 
 Machine-readable inventory: `artifacts/round_m/generation_inventory.json`.
 
-| Output | Tool/model | Date | Prompt/instruction | Source material | Manual review |
+| Output | Tool/model | Recorded commit date, NOT generation date | Prompt/instruction | Source material | Manual review |
 |---|---|---|---|---|---|
 | `nova_agent/knowledge/diagnostic_tests/notes.json` | UNRESOLVED: historical engineering-agent attribution is not an exact model/version | 2026-09-21T14:17:14Z | UNRESOLVED: original verbatim generation prompt not present | General knowledge claimed; no auditable medical source supplied | UNREVIEWED / no documented clinician signoff |
 | `nova_agent/knowledge/diseases/abdominal_gi.json` | UNRESOLVED: historical engineering-agent attribution is not an exact model/version | 2026-10-04T13:26:41Z | UNRESOLVED: original verbatim generation prompt not present | General knowledge claimed; no auditable medical source supplied | UNREVIEWED / no documented clinician signoff |
@@ -84,3 +84,17 @@ Its exact model/version is unavailable and is NOT claimed as a reproducibility r
 Reproduction of the clinical text depends only on retained inputs and code, not on
 re-running the coding assistant. Review: engineering tests and source/terms inspection;
 clinician review NOT PERFORMED. Earlier clinical-generation gaps remain unresolved.
+
+## 2026-10-05 clinical review and engineering experiments
+
+User instruction: complete provenance follow-up, retrieval/rerank improvement, action
+efficiency evaluation, and a professor review packet. Coding assistant exact model/build
+remains UNRESOLVED; no reproducible external-LLM clinical generation is claimed.
+`prepare_clinical_review.py` enumerates existing data and links exact names to already
+retained publisher references; lexical matches do not validate a clinical rule.
+`prepare_test_note_replacements.py` extracts the first complete publisher paragraph
+with the retained HTML parser, without paraphrase. Five excerpts are review candidates,
+not promoted diagnostic replacements. Source markup, publisher terms, version and hashes
+are retained. Neither new clinical facts nor new case labels were generated.
+Review status: no clinician has reviewed or approved this packet. Runtime engineering
+experiments and their rejected variants are recorded in artifacts/clinical_review_pass.
