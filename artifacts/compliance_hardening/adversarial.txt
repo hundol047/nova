@@ -1,0 +1,14 @@
+PASS  uncooperative_patient_repeats
+PASS  empty_and_whitespace_observations
+PASS  conflicting_information
+PASS  extremely_long_response
+PASS  irrelevant_response
+PASS  duplicate_response_to_same_action
+PASS  llm_malformed_json
+PASS  llm_timeout
+PASS  llm_unavailable_full_case
+PASS  unknown_chief_complaint_adapter
+PASS  malformed_competition_observation
+PASS  random_seed_reproducibility
+
+ALL CHECKS PASSED

@@ -36,6 +36,25 @@ runpy.run_path('run.py',run_name='__main__')
     assert not result.stdout and "UNAUTHORIZED_NETWORK_ATTEMPT" not in result.stderr
 
 
+@pytest.mark.parametrize("setting", ["NOVA_ML_RANKER_ENABLED", "NOVA_ML_MODEL_PATH"])
+def test_actual_development_ranker_settings_cannot_load_weights(tmp_path, setting):
+    weights = tmp_path / "synthetic.weights"
+    weights.write_text("not model weights")
+    env = dict(os.environ, NOVA_LLM_PROVIDER="competition")
+    env[setting] = "true" if setting.endswith("ENABLED") else str(weights)
+    code = """import runpy,sys
+def guard(event,args):
+    if event == 'open' and str(args[0]).endswith('synthetic.weights'):
+        raise AssertionError('WEIGHT_READ_ATTEMPT')
+sys.addaudithook(guard)
+runpy.run_path('run.py',run_name='__main__')
+"""
+    result = subprocess.run([sys.executable, "-c", code], cwd=ROOT / "submission", env=env,
+                            text=True, capture_output=True, timeout=10)
+    assert result.returncode == 1 and "weights forbidden" in result.stderr
+    assert not result.stdout and "WEIGHT_READ_ATTEMPT" not in result.stderr
+
+
 def run_cases(order, interleaved=False):
     adapter = NovaCompetitionAgent(DoctorAgent(MockLLMClient()))
     actions = {c: [] for c in order}

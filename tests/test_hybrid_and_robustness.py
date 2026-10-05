@@ -328,8 +328,8 @@ def test_standalone_without_backend():
 
 
 def test_submission_run_entrypoint():
-    """Runs submission/run.py as a real subprocess with its own sys.path (only submission/ on it,
-    nothing from the outer repo), proving the packaged submission is self-contained end to end."""
+    """Runs the explicitly local mock module as a subprocess (only submission/ on its path,
+    nothing from the outer repo), proving packaged clinical modules can be tested independently of the blocked official entrypoint."""
     submission_dir = REPO_ROOT / "submission"
     assert (submission_dir / "run.py").exists()
     assert (submission_dir / "nova_agent").is_dir()
