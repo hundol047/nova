@@ -74,7 +74,8 @@
     "nova_agent/taxonomy.py",
     "nova_agent/uncertainty.py",
     "nova_agent/unit_safety.py",
-    "nova_agent/vitals_parser.py"
+    "nova_agent/vitals_parser.py",
+    "nova_agent/knowledge/licensed_reference_store.py"
   ],
   "official_submission_allowed": false,
   "note": "Manual rights/authorship review required; no automatic legal or medical certification."

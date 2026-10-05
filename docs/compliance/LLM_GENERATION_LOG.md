@@ -67,3 +67,20 @@ Clinical assets remain byte-identical to 5413af9. Engineering tests are not clin
 Sources: current repository and genuine Git object history; official N.O.V.A. rules/evaluation/FAQ;
 MedlinePlus publisher reuse terms and XML index. Exact historical generation records remain
 unresolved; this entry does not retrospectively create them.
+
+## 2026-10-05 licensed reference extraction
+
+Output: `nova_agent/knowledge/licensed_references.json`.
+Clinical-content generation tool/model/version/prompt: NOT APPLICABLE. Clinical text
+was selected from the named publishers and deterministically transformed by
+`scripts/import_licensed_references.py`; original markup, source metadata and hashes
+are retained in `research/licensed_references/source_snapshot.json`. No LLM clinical
+paraphrasing, translation, diagnosis labels, features or thresholds were generated.
+
+The coding assistant wrote extraction/integration code and documentation following
+the user's instruction `반영해줘` to integrate the previously identified MedlinePlus
+and Orphanet materials, subject to the preceding provenance and competition constraints.
+Its exact model/version is unavailable and is NOT claimed as a reproducibility receipt.
+Reproduction of the clinical text depends only on retained inputs and code, not on
+re-running the coding assistant. Review: engineering tests and source/terms inspection;
+clinician review NOT PERFORMED. Earlier clinical-generation gaps remain unresolved.

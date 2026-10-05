@@ -796,7 +796,7 @@
     {
       "asset_id": "nova_agent/knowledge/PROVENANCE.md",
       "path": "nova_agent/knowledge/PROVENANCE.md",
-      "sha256": "ba9ab70943214b4205921073ff80d6563d542b64ba2cb261c8f5b54c18988732",
+      "sha256": "74e9b684b56153403b2baae5b9d945fd394d5197d2457269e839f48b570aea7c",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -1701,7 +1701,7 @@
     {
       "asset_id": "nova_agent/llm_client.py",
       "path": "nova_agent/llm_client.py",
-      "sha256": "770d10c48088c660d37b7d6cad09c7cdca4e4672822ffc74ffc8558f7a38c2e4",
+      "sha256": "84a25054bc7d20fe8f9bde4441d6eeeb8ea7e35dd1917558858a8ede99ac678c",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -1751,7 +1751,9 @@
           "unchanged coverage and same-set accuracy/safety/efficiency regression"
         ],
         "status": "BLOCKED"
-      }
+      },
+      "previous_sha256_before_reference_integration": "770d10c48088c660d37b7d6cad09c7cdca4e4672822ffc74ffc8558f7a38c2e4",
+      "reference_integration_note": "Engineering change 2026-10-05; no new medical facts or labels. Exact coding assistant model version unavailable; no fabricated generation receipt."
     },
     {
       "asset_id": "nova_agent/llm_preflight.py",
@@ -3057,7 +3059,7 @@
     {
       "asset_id": "nova_agent/orchestrator.py",
       "path": "nova_agent/orchestrator.py",
-      "sha256": "3d5d57d80978c0507931151327909833c455d6e078ac42f4b920583e145b7b18",
+      "sha256": "13bf20ff10de01264da4859a000c210c97f012bae4d0b581ff3ce60265c800ff",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -3107,7 +3109,9 @@
           "unchanged coverage and same-set accuracy/safety/efficiency regression"
         ],
         "status": "BLOCKED"
-      }
+      },
+      "previous_sha256_before_reference_integration": "3d5d57d80978c0507931151327909833c455d6e078ac42f4b920583e145b7b18",
+      "reference_integration_note": "Engineering change 2026-10-05; no new medical facts or labels. Exact coding assistant model version unavailable; no fabricated generation receipt."
     },
     {
       "asset_id": "nova_agent/resolution.py",
@@ -3874,6 +3878,93 @@
       "clinician_review": "UNRESOLVED",
       "submission_included": false,
       "status": "NOT_USED_IN_SUBMISSION"
+    },
+    {
+      "asset_id": "nova_agent/knowledge/licensed_reference_store.py",
+      "path": "nova_agent/knowledge/licensed_reference_store.py",
+      "sha256": "752956c93d4c859119942951a40a4f8ce867dbda8061b76e3b877adf36534cc2",
+      "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
+      "original_author": "UNRESOLVED",
+      "original_source": "UNRESOLVED",
+      "source_reference": [
+        "research/licensed_references/README.md"
+      ],
+      "source_version": "UNRESOLVED",
+      "license": "UNRESOLVED",
+      "research_publication_permission": "UNRESOLVED",
+      "redistribution_permission": "UNRESOLVED",
+      "modification_permission": "UNRESOLVED",
+      "generation_method": "UNRESOLVED",
+      "generating_model": "UNRESOLVED",
+      "model_version": "UNRESOLVED",
+      "generation_prompt": "UNRESOLVED",
+      "generation_code": "UNRESOLVED",
+      "generation_date": "UNRESOLVED",
+      "manual_review": "Engineering tests do not establish original authorship or medical correctness",
+      "clinician_review": "No documented clinician signoff",
+      "submission_included": true,
+      "status": "UNRESOLVED",
+      "history_evidence": [],
+      "history_caveat": "Commit author/time are not original clinical author/generation time",
+      "authorship_status": "UNRESOLVED",
+      "medical_validation_status": "NOT independently clinically validated",
+      "rights_status": "UNRESOLVED",
+      "replacement_plan": {
+        "decision": "E",
+        "next_actions": [
+          "A: recover original source/generation records",
+          "B: obtain substantiated team authorship/rights authorization if appropriate",
+          "C: if unavailable, stage separately documented deterministic replacement and validate before promotion"
+        ],
+        "exclude_now": false,
+        "reason": "No evidence supports safe loss of coverage; no source or permission inferred",
+        "promotion_requirements": [
+          "source bytes/hash/version and permission evidence",
+          "reproducible transformation or exact model/prompt records",
+          "review of content and rights",
+          "unchanged coverage and same-set accuracy/safety/efficiency regression"
+        ],
+        "status": "BLOCKED"
+      },
+      "reference_integration_note": "Engineering change 2026-10-05; no new medical facts or labels. Exact coding assistant model version unavailable; no fabricated generation receipt."
+    },
+    {
+      "asset_id": "nova_agent/knowledge/licensed_references.json",
+      "path": "nova_agent/knowledge/licensed_references.json",
+      "sha256": "6d4494db4090c204523a5f512fcc31308820bf34a2dfbf402f1b85241811a2c0",
+      "runtime_use": "Bounded static publisher background references; not scored features or patient evidence",
+      "original_author": "National Library of Medicine / Orphanet; per-record publisher in bundled catalog",
+      "original_source": "Publisher XML health-topic summaries, active disorder definitions and five medical-test article sections",
+      "source_reference": [
+        "research/licensed_references/source_snapshot.json",
+        "research/licensed_references/terms/manifest.json",
+        "scripts/import_licensed_references.py"
+      ],
+      "source_version": "MedlinePlus 2026-10-03; Orphanet July 2026; test pages retrieved 2026-10-05",
+      "license": "Per-source: NLM public-domain permitted sections / Orphanet CC BY 4.0",
+      "research_publication_permission": "Publisher reuse terms permit reproduction within retained scope; CC BY 4.0 permits any purpose subject to attribution",
+      "redistribution_permission": "Permitted under documented source-specific terms; attribution retained",
+      "modification_permission": "NLM XML repurposing; Orphanet CC BY 4.0 adaptation with change notice",
+      "generation_method": "Deterministic field selection, HTML stripping and whitespace normalization; no clinical LLM generation",
+      "generating_model": "NOT_APPLICABLE",
+      "model_version": "NOT_APPLICABLE",
+      "generation_prompt": "NOT_APPLICABLE: no LLM-generated clinical material",
+      "generation_code": "scripts/import_licensed_references.py",
+      "generation_date": "2026-10-05 (new extraction, not original authorship)",
+      "manual_review": "Publisher scope/terms inspected; engineering identity/hash/selection checks; not clinical validation",
+      "clinician_review": "NOT_REVIEWED",
+      "submission_included": true,
+      "status": "VERIFIED",
+      "history_evidence": [],
+      "history_caveat": "Commit author/time are not original clinical author/generation time",
+      "authorship_status": "Named source publishers; not FutureLabs-original",
+      "medical_validation_status": "NOT independently clinically validated",
+      "rights_status": "Source-specific terms verified for selected fields only",
+      "replacement_plan": {
+        "decision": "C",
+        "status": "REFERENCE_CONTEXT_ONLY",
+        "reason": "Supplemental external text; no existing heuristic relabelled or replaced"
+      }
     }
   ],
   "clearance": "BLOCKED",

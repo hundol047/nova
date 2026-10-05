@@ -130,3 +130,26 @@ The earlier blanket UNKNOWN rows are uncertainty records, not findings that inte
 is inherently license-invalid. No owner authorization or clinician approval was inferred.
 `python scripts/validate_runtime_provenance.py --require-cleared` deliberately exits nonzero
 while rights remain unresolved. It cannot grant clearance from a JSON status label.
+
+## New licensed reference integration (2026-10-05)
+
+`nova_agent/knowledge/licensed_references.json`: 637 separately sourced references
+(372 MedlinePlus health topics, five medical tests, 260 Orphanet disorder definitions).
+Exact sources, versions, terms, transformations, attribution and hashes are retained
+in the bundled asset and `research/licensed_references/source_snapshot.json`.
+Publisher evidence snapshots are in `research/licensed_references/terms/`.
+
+- MedlinePlus health-topic XML dated 2026-10-03 and medical-test article text retrieved
+  2026-10-05. Public-domain sections and source acknowledgement per
+  https://medlineplus.gov/about/using/usingcontent/ and https://medlineplus.gov/xml.html.
+  No A.D.A.M., ASHP, image or linked third-party article is included.
+- Orphanet Nomenclature Pack July 2026, English active disorder-level names/aliases/
+  definitions only. Orphanet (c) 2026; https://www.orphacode.org/pack-nomenclature/
+  explicitly supplies CC BY 4.0: https://creativecommons.org/licenses/by/4.0/.
+  Attribution, license link and modification notice retained. No endorsement claimed.
+- Deterministic selection, HTML stripping and whitespace normalization; no AI-generated
+  clinical facts or labels. Source identity/license evidence verified for these fields;
+  no NOVA clinician review or independent clinical validation claimed.
+- Supplemental bounded prompt context only. Existing medical heuristics remain
+  UNRESOLVED; these new references do not retroactively supply their original provenance.
+  Actual fixed-model performance is still NOT VERIFIED; the official path stays blocked.

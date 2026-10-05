@@ -21,6 +21,7 @@ from nova_agent.clinical_summary import build_clinical_summary
 from nova_agent.config import get_config, effective_max_turns
 from nova_agent.differential import DifferentialEngine, DifferentialItem
 from nova_agent.knowledge.retrieval import retrieve_turn_context
+from nova_agent.knowledge.licensed_reference_store import retrieve_licensed_references
 from nova_agent.llm_client import BaseLLMClient, TurnContext, get_llm_client
 from nova_agent.llm_schema import AgentTurnOutput
 from nova_agent.safety import SafetyLayer
@@ -104,7 +105,10 @@ class DoctorAgent:
                 ctx = TurnContext(summary=summary, differential=deterministic_differential,
                                    safety_findings=safety_findings, candidates=candidates,
                                    chosen_action=deterministic_action, stop_decision=stop_decision,
-                                   retrieved_context=retrieved_context)
+                                   retrieved_context=retrieved_context,
+                                   external_references=retrieve_licensed_references(
+                                       [d.diagnosis for d in deterministic_differential], candidate_test_ids,
+                                   ) if cfg.rag_enabled else [])
                 # Clear telemetry before this case call; a previous case/preflight cannot count.
                 self.llm_client._last_call_was_real = False
                 self.llm_client._last_call_succeeded = False
