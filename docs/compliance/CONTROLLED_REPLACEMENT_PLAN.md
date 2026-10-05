@@ -35,3 +35,19 @@ linked pages have separate rights. No Orphanet license clearance is inferred fro
 
 This pass generated engineering code/metadata, not new medical facts or clinical labels.
 Existing diagnosis coverage and all clinical scoring/retrieval/stop files remain byte-identical.
+
+## Reference integration follow-up, 2026-10-05
+
+The new `licensed_references.json` asset has been promoted as bounded supplemental
+publisher context after reproducible source extraction, publisher reuse-term inspection
+and same-set development regressions. Its engineering matching review is not clinician
+signoff. Orphanet's current official CC BY 4.0 declaration was independently inspected
+and preserved; this supersedes only the earlier statement that its terms were unchecked.
+
+No existing clinical asset was replaced, removed, re-attributed or cleared. Those assets
+retain decision E and recovery routes A/B/C. The new source snapshot and licensing
+records apply only to the new reference asset. Existing clinical weights, thresholds,
+features, action utilities and retrieval ranking are byte-unchanged. The LLM's prompt
+now includes separately labelled background references, so real fixed-model impact
+must be evaluated after the official environment is supplied. Mock regression equality
+is not evidence that real-model accuracy increased or latency remained unchanged.

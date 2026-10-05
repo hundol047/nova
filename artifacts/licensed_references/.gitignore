@@ -1,0 +1,2 @@
+# Individual traces are losslessly retained in final/traces.tar.xz.
+**/final/*.json.gz

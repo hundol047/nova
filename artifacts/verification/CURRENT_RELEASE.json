@@ -1,12 +1,13 @@
 {
-  "current_verification_artifact": "artifacts/verification/local-release-9d86b04-v13.json",
-  "current_verification_schema": "nova-verification-v13",
-  "verified_runtime_sha": "9d86b047fcc9c501491ee9ec4c104fd64628001f",
+  "current_verification_artifact": "artifacts/verification/local-release-c37d0c4-v14.json",
+  "current_verification_schema": "nova-verification-v14",
+  "verified_runtime_sha": "c37d0c4b28565c90422c4df2d3bac099791ef97e",
   "current_blind_version": "v19",
   "current_blind_manifest": null,
   "current_blind_status": "REFERENCE-ONLY",
   "fresh_final_blind": "NOT YET AUTHORED",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-9d86b04-v13.json",
     "artifacts/verification/local-release-9b607b4-v12.json",
     "artifacts/verification/local-release-f315fbf-v11.json",
     "artifacts/verification/local-release-d6e2b84-v10.json",
@@ -20,5 +21,5 @@
   ],
   "status": "NOT READY",
   "reason": "Current runtime locally verified; official interface, real model and provenance/license clearance blocked.",
-  "latest_compliance_followup": "artifacts/compliance_hardening/rule_matrix.json"
+  "latest_compliance_followup": "artifacts/licensed_references/rule_matrix.json"
 }
