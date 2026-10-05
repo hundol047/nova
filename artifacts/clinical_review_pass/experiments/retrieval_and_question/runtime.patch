@@ -1,0 +1,58 @@
+diff --git a/nova_agent/missing_info.py b/nova_agent/missing_info.py
+index 058e39b..83d958c 100644
+--- a/nova_agent/missing_info.py
++++ b/nova_agent/missing_info.py
+@@ -187,6 +187,14 @@ class MissingInformationAnalyzer:
+                 questions = entry.get("discriminating_questions", [])
+             for discriminator in questions:
+                 category = discriminator.split(":", 1)[0]
++                if cfg.competition_retrieval_enabled and ":" in discriminator:
++                    # A feature-specific question cannot add the very same feature
++                    # already supported for this hypothesis. Do not infer other
++                    # answers, match substrings, or suppress generic safety history.
++                    from nova_agent.ontology.normalizer import normalize
++                    feature = normalize(discriminator.split(":", 1)[1])
++                    if feature and feature in {normalize(s) for s in item.supporting_evidence}:
++                        continue
+                 key = f"ask:{discriminator}"
+                 if state.question_asked(discriminator) or _already_answered(state, category):
+                     continue
+diff --git a/nova_agent/ontology/providers/core_kb.py b/nova_agent/ontology/providers/core_kb.py
+index c1cffb1..f0c40eb 100644
+--- a/nova_agent/ontology/providers/core_kb.py
++++ b/nova_agent/ontology/providers/core_kb.py
+@@ -54,6 +54,7 @@ class CoreKbProvider:
+                     dangerous=entry.get("dangerous"),
+                     chief_complaint_tags=tuple(entry.get("chief_complaint_tags", [])),
+                     typical_features=tuple(entry.get("typical_features", [])),
++                    confirmatory_findings=tuple(entry.get("confirmatory_findings", [])),
+                     kb_id=kb_id,
+                 )
+ 
+diff --git a/nova_agent/ontology/search.py b/nova_agent/ontology/search.py
+index 702b256..4893ada 100644
+--- a/nova_agent/ontology/search.py
++++ b/nova_agent/ontology/search.py
+@@ -72,7 +72,10 @@ class ConceptSearchIndex:
+         # nothing with its formal name/aliases. Folded into the SAME token index (not a separate
+         # weight class) so the existing IDF weighting above already suppresses generic overlap
+         # (e.g. "pain") while rewarding a rarer shared term (e.g. "substernal").
+-        for feature in concept.typical_features:
++        # The scorer already consumes these objective phrases. Keeping them out of
++        # retrieval made an observed finding unable to retrieve its own KB profile.
++        # This is indexing existing metadata, not adding clinical facts or weights.
++        for feature in (*concept.typical_features, *concept.confirmatory_findings):
+             for tok in tokens(feature):
+                 bucket = self._by_token.setdefault(tok, [])
+                 if concept.concept_id not in bucket:
+@@ -122,7 +125,9 @@ class ConceptSearchIndex:
+         #    The final score is still normalized into the same [0.5, 0.9] band the caller already
+         #    depends on (open_world.py's KNOWN/POSSIBLE thresholds, etc.) -- only the RELATIVE
+         #    ranking among token-overlap matches changes, not the score's meaning or range.
+-        q_tokens = tokens(query)
++        # IDF denominator is keyed by unique token. Count numerator with the SAME
++        # vocabulary; repeated words must not manufacture extra matching evidence.
++        q_tokens = list(dict.fromkeys(tokens(query)))
+         if q_tokens:
+             total_concepts = max(1, len(self._concepts))
+             tok_weight: Dict[str, float] = {}

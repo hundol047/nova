@@ -1,0 +1,21 @@
+{
+  "format": "public-test-outcomes-v1",
+  "original_sha256": "26a106aa77ed4ced912d09adc80f751a6bb0fde626d79dbf0d69a05307ba3d02",
+  "summary_sha256": "19e228fdc9d4e0ae8fed5106af3fb5708add713af21791db5f6560b794e0fb60",
+  "counts": {
+    "tests": 1029,
+    "passed": 1028,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1
+  },
+  "identity": "SHA256 of JSON [classname, name] with ensure_ascii=False",
+  "redacted": [
+    "test names and parameters",
+    "suite metadata",
+    "paths",
+    "output",
+    "failure and skip details"
+  ],
+  "note": "Original reports retained locally. Outcomes and durations preserved; this is not a new test run."
+}

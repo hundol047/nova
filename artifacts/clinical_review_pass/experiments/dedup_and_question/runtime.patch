@@ -1,0 +1,32 @@
+diff --git a/nova_agent/missing_info.py b/nova_agent/missing_info.py
+index 058e39b..83d958c 100644
+--- a/nova_agent/missing_info.py
++++ b/nova_agent/missing_info.py
+@@ -187,6 +187,14 @@ class MissingInformationAnalyzer:
+                 questions = entry.get("discriminating_questions", [])
+             for discriminator in questions:
+                 category = discriminator.split(":", 1)[0]
++                if cfg.competition_retrieval_enabled and ":" in discriminator:
++                    # A feature-specific question cannot add the very same feature
++                    # already supported for this hypothesis. Do not infer other
++                    # answers, match substrings, or suppress generic safety history.
++                    from nova_agent.ontology.normalizer import normalize
++                    feature = normalize(discriminator.split(":", 1)[1])
++                    if feature and feature in {normalize(s) for s in item.supporting_evidence}:
++                        continue
+                 key = f"ask:{discriminator}"
+                 if state.question_asked(discriminator) or _already_answered(state, category):
+                     continue
+diff --git a/nova_agent/ontology/search.py b/nova_agent/ontology/search.py
+index 702b256..8907f81 100644
+--- a/nova_agent/ontology/search.py
++++ b/nova_agent/ontology/search.py
+@@ -122,7 +122,7 @@ class ConceptSearchIndex:
+         #    The final score is still normalized into the same [0.5, 0.9] band the caller already
+         #    depends on (open_world.py's KNOWN/POSSIBLE thresholds, etc.) -- only the RELATIVE
+         #    ranking among token-overlap matches changes, not the score's meaning or range.
+-        q_tokens = tokens(query)
++        q_tokens = list(dict.fromkeys(tokens(query)))
+         if q_tokens:
+             total_concepts = max(1, len(self._concepts))
+             tok_weight: Dict[str, float] = {}

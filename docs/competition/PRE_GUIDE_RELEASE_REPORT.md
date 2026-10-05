@@ -1,95 +1,215 @@
 # N.O.V.A. 2026 PRE-GUIDE RELEASE REPORT
 
-REMOTE HEAD audited: `3ede61c1079dc4597597a29ded1fd6668ae85402`
-CURRENT RUNTIME SHA: `c37d0c4b28565c90422c4df2d3bac099791ef97e`
+REMOTE HEAD audited: `7c2c59773cdff71a8fde33e61dfa346f3110e076`
+CURRENT RUNTIME SHA: `920eb608337fd035746be17cd87f12eb93bbe604`
 
 STATUS: **NOT READY**. LOCAL_PRE_GUIDE_VERIFIED / EXTERNAL_OFFICIAL_INTERFACE_BLOCKED.
-This release adds attributed offline reference context. No clinical scoring, features,
-thresholds, stop policy, action utilities or retrieval ranking were changed.
 
-## Reference integration
+## Four requested tasks
 
-637 references: 372 MedlinePlus health-topic summaries, five medical-test articles,
-260 Orphanet active disorder definitions. Reproducible publisher-field extraction;
-original selected markup, source/version/hash, attribution and reuse terms retained.
-Each turn receives at most two references, 1,600 text characters each, plus source metadata.
-References are explicitly background, not observed patient evidence or diagnostic criteria.
-Existing knowledge coverage is retained. No legacy provenance gap was cleared by citation.
-Actual fixed-model accuracy, latency and prompt-token cost are NOT VERIFIED.
+1. Field-level provenance triage and reproducible replacement candidates prepared. No legacy rights cleared or clinical replacement promoted without review.
+2. Retrieval experiments and every metric delta retained, including rejected variants and remaining losses.
+3. Question coverage and action-efficiency experiments evaluated against unchanged cases and safety tests.
+4. Professor packet covers all 34 core profiles, 29 with lexical source leads; all approval fields pending.
+
+637 previously integrated licensed references remain. Five test-purpose excerpts are review candidates, not substitutes for diagnostic indications/safety caveats.
+Tier-2: 1,246 total; 83 have features; 1,163 do not; 27 have confirmatory fields; no clinician review claimed.
 
 ## ROUND M — synthetic development / mock LLM
 
-Cases: 128; Scored: 123; Critical: 43; OOD: 5 unscored.
-Top1: 95.93%; Top3: 98.37%; Top5: 99.19%; Top10: 99.19%.
-MRR: 0.973577; median finite true rank: 1.0; missing rank: 1.
-Critical Top1/Top3/Top5: 100% / 100% / 100%; recall: 100.00%; miss: 0.00%.
-Critical denominator is the 43 existing marked cases; no urgent-looking case was relabelled.
-Retrieval @150: 84.55%; rerank @25: 72.36%; active truth: 99.19%.
-Retrieval and rerank remain BELOW the 92% and 85% development stretch goals.
-Long-tail n=26: retrieval 100%; rerank 96.15%; active 100%; Top1 92.31%; Top5/Top10 100%.
-EN: 108/113 (95.58%); KO: 1/1; JA: 2/2; Mixed: 7/7. Tiny KO/JA samples are not broad multilingual validation.
-Avg ASK: 9.90625; EXAM: 6; TEST: 8.99219; turns: 25.89844; median turns: 20.5.
-Redundant tests: 0; diagnostic-delay proxy: 0 (not clinical certification).
-Avg unresolved dangerous alternatives: 11.39062 (heuristic candidate count).
-Five wrong scored cases remain: four FINAL_RANKING_ERROR and one RERANK_MISS; see failure_analysis.json.
-OOD controls still take 36–44 turns and force final DIAGNOSE; no supported-diagnosis claim.
-All recorded before/after metrics AND per-case decisions are equal. No accuracy improvement claimed.
+128 cases; 123 scored; 43 marked critical; five OOD/unscored. Labels and denominators unchanged.
+Critical recall uses the existing 43 marked cases; it is not a clinical safety certification.
+Retrieval is measured at the final decision turn; core scoring may bypass ontology retrieval.
+Pure KO/JA sample sizes are tiny; follow-up text may be English. No broad multilingual claim.
+
+| Metric | Before (v14) | Current | Delta |
+|---|---:|---:|---:|
+| MRR | 0.9735772357723578 | 0.9735772357723578 | 0.0 |
+| Top1 | 0.959349593495935 | 0.959349593495935 | 0.0 |
+| Top10 | 0.991869918699187 | 0.991869918699187 | 0.0 |
+| Top3 | 0.983739837398374 | 0.983739837398374 | 0.0 |
+| Top5 | 0.991869918699187 | 0.991869918699187 | 0.0 |
+| accuracy | 0.959349593495935 | 0.959349593495935 | 0.0 |
+| action_selection_error_rate | 0.0 | 0.0 | 0.0 |
+| active_truth_retention | 0.991869918699187 | 0.991869918699187 | 0.0 |
+| average_ask | 9.90625 | 8.65625 | -1.25 |
+| average_diagnostic_delay | 0 | 0 | 0 |
+| average_exam | 6 | 6 | 0 |
+| average_tests | 8.9921875 | 9.0234375 | 0.03125 |
+| average_turns | 25.8984375 | 24.6796875 | -1.21875 |
+| average_unresolved_critical_alternatives | 11.390625 | 11.359375 | -0.03125 |
+| cases | 128 | 128 | 0 |
+| critical_Top1 | 1.0 | 1.0 | 0.0 |
+| critical_Top3 | 1.0 | 1.0 | 0.0 |
+| critical_Top5 | 1.0 | 1.0 | 0.0 |
+| critical_candidate_retention | 1.0 | 1.0 | 0.0 |
+| critical_count | 43 | 43 | 0 |
+| critical_miss | 0.0 | 0.0 | 0.0 |
+| critical_recall | 1.0 | 1.0 | 0.0 |
+| diagnostic_delay_observed_count | 124 | 125 | 1 |
+| final_ranking_error_rate | 0.032520325203252036 | 0.032520325203252036 | 0.0 |
+| median_true_rank | 1.0 | 1.0 | 0.0 |
+| median_turns | 20.5 | 19.0 | -1.5 |
+| missing_rank_count | 1 | 1 | 0 |
+| redundant_tests | 0 | 0 | 0 |
+| rerank_at25 | 0.7235772357723578 | 0.7235772357723578 | 0.0 |
+| rerank_truth_retention | 0.7317073170731707 | 0.7317073170731707 | 0.0 |
+| retrieval_at150 | 0.8455284552845529 | 0.8455284552845529 | 0.0 |
+| retrieval_truth_retention | 0.8455284552845529 | 0.8455284552845529 | 0.0 |
+| scored_cases | 123 | 123 | 0 |
+
+Rates above are fractions, not percentages. Long-tail and language detail:
+
+```json
+{
+  "long_tail": {
+    "count": 26,
+    "retrieved": 1.0,
+    "rerank_top25": 0.9615384615384616,
+    "active": 1.0,
+    "Top5": 1.0,
+    "Top1": 0.9230769230769231,
+    "interpretation": "Round M category-defined symptom-only development probes, no independent medical adjudication",
+    "Top10": 1.0,
+    "retrieval_at150": 1.0,
+    "rerank_at25": 0.9615384615384616
+  },
+  "languages": {
+    "EN": {
+      "count": 113,
+      "correct": 108,
+      "accuracy": 0.9557522123893806
+    },
+    "KO": {
+      "count": 1,
+      "correct": 1,
+      "accuracy": 1.0
+    },
+    "JA": {
+      "count": 2,
+      "correct": 2,
+      "accuracy": 1.0
+    },
+    "Mixed": {
+      "count": 7,
+      "correct": 7,
+      "accuracy": 1.0
+    }
+  }
+}
+```
+
+OOD observations (forced DIAGNOSE is not a supported-diagnosis claim):
+
+```json
+[
+  {
+    "case_id": "RoundM_124",
+    "final": "Acute Abdomen (Surgical Abdomen)",
+    "turns": 44,
+    "tests": 19,
+    "asks": 12,
+    "exams": 12
+  },
+  {
+    "case_id": "RoundM_125",
+    "final": "Acute Abdomen (Surgical Abdomen)",
+    "turns": 44,
+    "tests": 19,
+    "asks": 12,
+    "exams": 12
+  },
+  {
+    "case_id": "RoundM_126",
+    "final": "Gastrointestinal Bleeding",
+    "turns": 36,
+    "tests": 16,
+    "asks": 10,
+    "exams": 9
+  },
+  {
+    "case_id": "RoundM_127",
+    "final": "Migraine",
+    "turns": 40,
+    "tests": 18,
+    "asks": 10,
+    "exams": 11
+  },
+  {
+    "case_id": "RoundM_128",
+    "final": "Acute Abdomen (Surgical Abdomen)",
+    "turns": 44,
+    "tests": 19,
+    "asks": 12,
+    "exams": 12
+  }
+]
+```
+
+Every wrong scored case has ordered earliest-stage failure attribution in `artifacts/clinical_review_pass/failure_analysis.json`.
+This heuristic attribution is not clinician causal adjudication. Diagnostic delay is a policy proxy; missing observations are not zero delay.
 
 ## REGRESSION
 
-Tests passed: 1024; failed: 0; skipped: 1. FULL CURRENT SUITE.
-tests/ executed in two disjoint groups: runtime tests and 3 release consistency tests.
-Skip reasons: [{"test": "tests.test_learning_training.test_torch_training_and_checkpoint_roundtrip", "reason": "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"}]
-First attempt: 2 new-test import errors under suite isolation, fixed by importing the actual orchestrator module; no clinical change.
-Held-out / generalization-v2 / stress / Round D / Round E / Round G: 100% scored accuracy.
-Round I: 94.74%; Round J: 92.31%. All eight full summaries and case outputs equal baseline.
-Source/submission byte equivalence PASS. Standalone offline mock full-loop PASS.
+Tests passed: 1028; failed: 0; skipped: 1. FULL CURRENT SUITE.
+Skip reasons: [{"test": "sha256.8cb56e51e8fc3aa67968326c96381d9851697704c949c89e1468d550ebd1ae24", "reason": "See retained original report; details withheld from public summary"}]
+
+| Suite | Scored accuracy | Critical recall | Mean tests | Mean turns |
+|---|---:|---:|---:|---:|
+| held_out | 1.0 | 1.0 | 9.222222222222221 | 28.166666666666668 |
+| generalization_v2 | 1.0 | 1.0 | 7.277777777777778 | 20.5 |
+| stress | 1.0 | 1.0 | 9.625 | 25.125 |
+| round_d | 1.0 | 1.0 | 13.428571428571429 | 33.285714285714285 |
+| round_e | 1.0 | 1.0 | 11.714285714285714 | 30.714285714285715 |
+| round_g | 1.0 | 1.0 | 9.166666666666666 | 23.416666666666668 |
+| round_i | 0.9473684210526315 | 1.0 | 6.95 | 18.75 |
+| round_j | 0.9230769230769231 | 1.0 | 8.11111111111111 | 23.555555555555557 |
+
+All per-case changes, including increases in test count or turns, are retained in `artifacts/clinical_review_pass/performance_comparison.json`.
 
 ## BLIND STATUS
 
-v18: REFERENCE-ONLY.
-v19: NOT EXECUTED; PREEXECUTION INVALIDATED / REFERENCE-ONLY.
-Fresh final blind: NOT YET AUTHORED. No blind execution or tuning in this pass.
+v18: REFERENCE-ONLY. v19: NOT EXECUTED; PREEXECUTION INVALIDATED / REFERENCE-ONLY.
+Fresh final blind: NOT YET AUTHORED. No v19 execution or v20 creation.
 
 ## COMPLIANCE
 
-- Fixed model configured: PASS
-- Fixed revision configured: PASS
-- Fine-tuning absent: PASS
-- 60-turn hard cap: PASS
-- Official 4 actions only: PASS
-- Case-related LLM success gate: BLOCKED — organizer receipt semantics/transport not provided; development JSON validity is separate
-- Competition provider lock: PASS
-- No online private-case learning: PASS
-- Case isolation: PASS
-- Static retrieval: PASS
-- Secret scan: PASS
-- Source documentation: BLOCKED — new reference sources verified; legacy clinical origins unresolved
-- License documentation: BLOCKED — new reference terms documented; legacy rights unresolved
-- LLM-generation log: FAIL — log exists, historical exact model/prompt records unresolved
+```json
+{
+  "Fixed model configured": "PASS",
+  "Fixed revision configured": "PASS",
+  "Fine-tuning absent": "PASS",
+  "60-turn hard cap": "PASS",
+  "Official 4 actions only": "PASS",
+  "Case-related LLM success gate": "BLOCKED — organizer receipt semantics/transport not provided; development JSON validity is separate",
+  "Competition provider lock": "PASS",
+  "No online private-case learning": "PASS",
+  "Case isolation": "PASS",
+  "Static retrieval": "PASS",
+  "Secret scan": "PASS",
+  "Source documentation": "BLOCKED — new reference sources verified; legacy clinical origins unresolved",
+  "License documentation": "BLOCKED — new reference terms documented; legacy rights unresolved",
+  "LLM-generation log": "FAIL — log exists, historical exact model/prompt records unresolved"
+}
+```
 
-Network claim: APPLICATION_LEVEL_NETWORK_POLICY_VERIFIED; OS isolation NOT VERIFIED.
+Machine-readable rule matrix distinguishes PASS, BLOCKED and NOT_VERIFIED. Application-level fail-closed policy tested; OS network isolation not proven.
 
 ## OFFICIAL INTERFACE
 
-Participant guide: not available in inspected public material.
-Official API: NOT VERIFIED. Official schema: PLACEHOLDER. Real organizer gpt-oss call: NOT VERIFIED.
-Official entrypoint remains fail-closed for all providers, including mock.
+Participant guide: not available to this audit. Official API: NOT VERIFIED. Schema: PLACEHOLDER.
+Real organizer gpt-oss call: NOT VERIFIED. No guessed transport or official readiness claim.
 
 ## VERIFICATION
 
-Version: nova-verification-v14.
-Runtime SHA: `c37d0c4b28565c90422c4df2d3bac099791ef97e`.
-Submission ZIP: `artifacts/verification/nova-pre-guide-v14.zip`; Bytes: 669068; SHA256: `63997e4cd3ac8ac06450b9abb7c3401309e9184c65eb131732930d186ae96e2f`.
-UTF-8 Python; run.py and requirements.txt present; <50 MB; no evaluation/blind data, labels, tests, training artifacts or weights in ZIP.
-Secret-pattern scan PASS (heuristic scope; no claim of mathematically proven secret absence).
-The staged evaluated runtime was bound byte-for-byte to the imported commit; execution_checkout_head is retained separately.
-Source HTML snapshots retain publisher whitespace/line endings intentionally; code whitespace check excludes those snapshots.
+Version: v15; runtime SHA: `920eb608337fd035746be17cd87f12eb93bbe604`.
+Submission ZIP: `artifacts/verification/nova-pre-guide-v15.zip`; bytes: 669434; SHA256: `607f58aedd599808346619a0d039a17cc778392b4a83fbde2f09a4fc6edbd661`.
+Source/submission byte equivalence: PASS. Secret scan: PASS (heuristic scan limitations retained). UTF-8/Python, run.py and requirements.txt present; below 50 MB.
+No evaluation data, tests, frontend/backend, training artifacts or model weights in candidate ZIP.
 
-BLOCKERS:
-1. Official participant guide, schema and approved transport/environment.
-2. Real fixed-model case-call and performance/latency verification.
-3. Remaining legacy medical-source, rights, generation-history and clinician-review gaps.
+## BLOCKERS
 
-Evidence: artifacts/licensed_references/{before,after,performance_comparison.json,pytest.xml,package_audit.json}.
-No final official submission readiness is claimed.
+1. Original clinical authorship/rights and historical AI-generation receipts remain unresolved for legacy assets.
+2. Clinical review of rules and candidate replacements remains pending.
+3. Official participant guide, exact schema/transport and real fixed-model validation are unavailable to this pass.
+4. Development retrieval/rerank targets and independent clinical validation remain unmet.
