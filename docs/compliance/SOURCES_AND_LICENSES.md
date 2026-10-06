@@ -206,3 +206,12 @@ Sources examined and NOT used: HPO (licence page unreachable from this environme
 DDXPlus (CC BY 4.0, but its data files are hosted on figshare, which is unreachable here; it is also a
 synthetic dataset derived from a proprietary knowledge base), SHHS/NSRR (sleep-study data, data-use
 agreement, no symptom-diagnosis pairs).
+
+## Update 2026-10-06 (integration): the open synonym sidecars are opt-in
+
+`tier2_open_features.json` (Disease Ontology, CC0) and `tier2_mondo_synonyms.json` (Mondo, CC BY 4.0) are
+shipped as DATA but are OFF by default (`NOVA_OPEN_SYNONYMS=1`, `NOVA_MONDO_SYNONYMS=1` enable them). Measured on
+the Round M development set they changed no decision, and enabling them changes which candidate review entries
+the frozen review datasets screen out. The CC BY 4.0 attribution above applies whenever Mondo-derived aliases are
+enabled. `nova_agent/pr15_feature_aliases.py` carries the feature-local aliases ported from PR #15; the 8 that
+met the repository's own leakage criterion were not ported (`artifacts/integration/pr15_alias_provenance.json`).

@@ -245,6 +245,12 @@ def content_words(text: str) -> Set[str]:
     return _content_words(text)
 
 
+# "absent breath sounds", "absent pulses", "absent bowel sounds": here "absent" DESCRIBES the examination
+# finding (the sign is absent) -- it does not negate a symptom mentioned earlier or later in the report.
+_ABSENT_SIGN = (r"(?:breath|bowel|heart|lung|air entry|tendon|deep tendon|corneal|gag|femoral|radial|pedal|"
+                r"distal|peripheral|carotid|pulses?|reflexes?|bruits?)\b")
+
+
 def _strip_negated_spans(text: str) -> str:
     # Negation ends at a clause boundary, not an arbitrary four-word window.
     # Keep affirmative clauses after "but"/"however" rather than erasing the entire report.
@@ -259,7 +265,8 @@ def _strip_negated_spans(text: str) -> str:
         if re.search(r"(?:\b(?:is|are|was|were)\s+|:\s*)(?:absent|negative|not (?:present|seen|detected))\b"
                      r"|\b(?:absent|not present|not seen|not detected)\s*[.!]?\s*$", clause, re.I):
             continue
-        positive.append(re.sub(r"\b(?:no|not|denies|denied|without|absent|negative for)\b.*$", " ", clause, flags=re.I))
+        positive.append(re.sub(r"\b(?:no|not|denies|denied|without|negative for|absent(?!\s+" + _ABSENT_SIGN + r"))\b.*$",
+                               " ", clause, flags=re.I))
     return " ; ".join(positive)
 
 
@@ -381,8 +388,24 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
     return False
 
 
+_LEADING_NEGATION = re.compile(r"^\s*(?:denies|denied|no|without|negative for|never had|not experiencing|"
+                               r"(?:does not|doesn't|do not|don't|did not|didn't) have)\b[:\s]*", re.IGNORECASE)
+
+
+def _narrower_than_feature(feature_words: Set[str], negative: str) -> bool:
+    """A denial that names MORE than the feature does not refute the feature: "denies productive cough" says
+    nothing about a bare "cough" (the patient may have a dry one), whereas "denies cough" does refute
+    "dry cough". True when the denied phrase carries a content word the feature lacks."""
+    if not _LEADING_NEGATION.match(negative):
+        return False
+    target = _content_words(_LEADING_NEGATION.sub("", negative, count=1).lower())
+    return bool(target) and bool(feature_words) and feature_words <= target and bool(target - feature_words)
+
+
 def feature_denied(feature: str, negatives: List[str]) -> bool:
-    return feature_present(feature, negatives)
+    feature_words = _content_words(feature)
+    effective = [n for n in negatives if not _narrower_than_feature(feature_words, n)]
+    return feature_present(feature, effective)
 
 
 # Locally negated span ("denies chest pain"): used ONLY by explicitly_denied_in_findings(); the
@@ -474,6 +497,12 @@ def _strict_alias_present(alias: str, findings: List[str], scrub_negated_spans: 
     one of its content words present in one finding -- never the 60% partial overlap feature_present()
     allows for a curated knowledge-base phrase (a 3-word variant must not be satisfied by 2 words)."""
     alias_lower = alias.lower()
+    if _NON_LATIN_RE.search(alias_lower):
+        # A CJK/Hangul (or mixed-script, e.g. "右腕 weakness") alias is matched as a LITERAL phrase only. Its
+        # content words would otherwise collapse to the Latin remainder ("weakness"), letting a bare English
+        # word satisfy a focal-weakness feature.
+        return any(_non_latin_phrase_present(alias_lower, _strip_negated_spans(f.lower()) if scrub_negated_spans else f.lower())
+                   for f in findings)
     alias_words = _content_words(alias_lower)
     # Generic symptom nouns (pain, ache...) are stripped from content words, so "pain after meals" would
     # otherwise reduce to {after, meal} and match any "after a meal" text. They must still be present.

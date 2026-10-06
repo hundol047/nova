@@ -5,6 +5,11 @@ No environment variable or CLI argument enables a mock or arbitrary network prov
 For offline local testing only: python -m competition.local_runner.
 """
 import sys
+from pathlib import Path
+
+# The packages (nova_agent/, competition/) sit next to this file. Do not rely on the launcher putting the
+# script directory on sys.path (it does not under `python -I`, nor when started from another cwd).
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 
 def main():

@@ -18,6 +18,7 @@ only the two packages the Doctor Agent actually imports at runtime.
 from __future__ import annotations
 
 import hashlib
+import os
 import argparse
 import json
 import re
@@ -138,6 +139,18 @@ def _import_smoke_test() -> None:
     print("import/subprocess smoke test OK: explicit mock standalone (real model NOT VERIFIED)")
 
 
+def _reference_time() -> str:
+    """Deterministic build reference (see _build_zip_and_manifest)."""
+    epoch = os.environ.get("SOURCE_DATE_EPOCH")
+    if epoch and epoch.isdigit():
+        return datetime.fromtimestamp(int(epoch), timezone.utc).isoformat()
+    try:
+        return subprocess.check_output(["git", "log", "-1", "--format=%cI"], cwd=ROOT, text=True,
+                                       stderr=subprocess.DEVNULL).strip() or "1980-01-01T00:00:00+00:00"
+    except Exception:  # noqa: BLE001 - no git: still deterministic
+        return "1980-01-01T00:00:00+00:00"
+
+
 def _build_zip_and_manifest() -> None:
     files = _submission_files()
     manifest = {
@@ -147,7 +160,10 @@ def _build_zip_and_manifest() -> None:
         "schema_status": "PLACEHOLDER",
         "real_model_status": "NOT VERIFIED",
         "source_license_clearance": "UNRESOLVED",
-        "built_at_utc": datetime.now(timezone.utc).isoformat(),
+        # Reproducible build: a wall-clock build time would make every rebuild of the SAME sources a
+        # different ZIP (and so a different hash to record). The reference time is SOURCE_DATE_EPOCH when set,
+        # else the committer time of HEAD; no wall clock enters the archive.
+        "built_at_utc": _reference_time(),
         "file_count": len(files),
         "files": {
             str(p.relative_to(SUBMISSION)): hashlib.sha256(p.read_bytes()).hexdigest() for p in files
@@ -159,9 +175,13 @@ def _build_zip_and_manifest() -> None:
     if zip_path.exists():
         zip_path.unlink()
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
-        for p in files:
-            zf.write(p, arcname=p.relative_to(SUBMISSION))
-        zf.write(SUBMISSION / "MANIFEST.json", arcname="MANIFEST.json")
+        entries = [(str(p.relative_to(SUBMISSION)), p) for p in files] + [("MANIFEST.json", SUBMISSION / "MANIFEST.json")]
+        for arcname, path in sorted(entries):
+            # Fixed timestamp and permissions: file mtimes/modes are not build inputs.
+            info = zipfile.ZipInfo(arcname, date_time=(1980, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = 0o644 << 16
+            zf.writestr(info, path.read_bytes())
     if zip_path.stat().st_size >= 50_000_000:
         raise SystemExit("submission.zip exceeds the conservative 50 MB release limit")
     size_mb = zip_path.stat().st_size / (1024 * 1024)

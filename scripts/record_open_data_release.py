@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = "artifacts/preliminary_open_data/"
+BASE = "artifacts/integration/"  # overridden by --base
 
 
 def read(path):
@@ -25,11 +25,30 @@ def sha(path):
     return hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
 
 
+def conditions() -> dict:
+    """The four result classes are reported SEPARATELY and never merged into one accuracy claim."""
+    out = {"mock_regression_all_tests_allowed": "see regressions/round_m in this record (synthetic cases, deterministic mock model, tests allowed, 60 turns)",
+           "preliminary_rules_50_turns_no_test": None,
+           "real_fixed_model_gpt_oss_20b": "NOT VERIFIED -- no organizer endpoint/credentials/guide available; nothing was run",
+           "independent_evaluation": "NOT AVAILABLE -- every case set used here is author-written development/regression data; no untouched independent set exists (blind v19 was invalidated, v20 not authored)"}
+    path = ROOT / (BASE + "preliminary_rules_eval.json")
+    if path.exists():
+        data = json.loads(path.read_text())
+        out["preliminary_rules_50_turns_no_test"] = {"result": data.get("preliminary_rules"),
+                                                   "unrestricted_development_rules_same_cases": data.get("unrestricted_development_rules"),
+                                                   "limitation": data.get("limitation")}
+    return out
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--runtime", required=True)
+    parser.add_argument("--base", default="artifacts/integration/", help="directory holding regressions.json, pytest_runtime.xml, ...")
+    parser.add_argument("--schema", default="nova-verification-v17")
     args = parser.parse_args()
     runtime = args.runtime
+    global BASE
+    BASE = args.base.rstrip("/") + "/"
     reg = read(BASE + "regressions.json")
     assert reg["runtime_unchanged_during_execution"]
     hashes = dict(reg["runtime_sha256"], **{p: sha(p) for p in ("submission/run.py", "submission/requirements.txt")})
@@ -46,11 +65,11 @@ def main():
              "scope": "tests/ minus tests/test_current_pre_guide_release.py::test_current_runtime_exact_archive_and_commit",
              "junit": BASE + "pytest_runtime.xml", "junit_sha256": sha(BASE + "pytest_runtime.xml")}
     summary = read("artifacts/round_m/final_summary.json")
-    package = "artifacts/verification/nova-pre-guide-v16.zip"
+    package = "artifacts/verification/nova-pre-guide-" + args.schema.rsplit("-", 1)[-1] + ".zip"
     shutil.copyfile(ROOT / "submission/submission.zip", ROOT / package)
     previous = read("artifacts/verification/CURRENT_RELEASE.json")["current_verification_artifact"]
     result = copy.deepcopy(read(previous))
-    result.update(schema="nova-verification-v16", generated_utc=datetime.now(timezone.utc).isoformat(),
+    result.update(schema=args.schema, generated_utc=datetime.now(timezone.utc).isoformat(),
                   verified_runtime_sha=runtime, executed_local_runtime_sha=runtime, runtime_sha256=hashes, tests=tests,
                   round_m=summary["metrics"], round_m_artifact="artifacts/round_m/final_summary.json",
                   failure_analysis_artifact="artifacts/round_m/failure_analysis.json",
@@ -59,11 +78,12 @@ def main():
                   scope_of_change="Preliminary-round rules (SAY/EXAM/no TEST/SOAP/50 turns, bounded model calls) as state-flag "
                                   "behaviour, plus CC0 Disease Ontology EXACT synonyms as Tier-2 aliases. No disease facts, score "
                                   "weights or labels edited; dev accuracy unchanged (Round M Top1 0.9593).",
+                  evaluation_conditions=conditions(),
                   submission={"zip": package, "bytes": (ROOT / package).stat().st_size, "sha256": sha(package),
                               "status": "LOCAL PRE-GUIDE CANDIDATE ONLY; official transport BLOCKED"})
     for stale in ("rule_matrix", "clinical_review_pass", "clinical_prompt_changed", "clinical_parameters_changed", "clinical_parameter_scope"):
         result.pop(stale, None)
-    artifact = "artifacts/verification/local-release-" + runtime[:7] + "-v16.json"
+    artifact = "artifacts/verification/local-release-" + runtime[:7] + "-" + args.schema.rsplit("-", 1)[-1] + ".json"
     (ROOT / artifact).write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     pointer = read("artifacts/verification/CURRENT_RELEASE.json")
     pointer.update(current_verification_artifact=artifact, current_verification_schema=result["schema"], verified_runtime_sha=runtime,
