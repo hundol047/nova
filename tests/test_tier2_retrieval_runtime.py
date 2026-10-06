@@ -18,7 +18,9 @@ def test_a_real_bundled_tier2_concept_exists_and_is_reachable_by_search():
     hits = catalog.search_conditions("sudden sensorineural hearing loss", limit=3)
     assert hits, "expected the real bundled Tier-2 catalog to contain this concept"
     assert hits[0].concept.tier == Tier.TIER2_STRUCTURED
-    assert hits[0].concept.curation_status == "STRUCTURED"
+    # PR #15's audit correction: every bundled Tier-2 record is an UNVERIFIED structured candidate
+    # (clinical_validation_status NOT_VERIFIED), so it is searchable but never labelled curated.
+    assert hits[0].concept.curation_status == "NOT_CURATED"
 
 
 def test_a_real_tier2_concept_reaches_the_runtime_candidate_pool():

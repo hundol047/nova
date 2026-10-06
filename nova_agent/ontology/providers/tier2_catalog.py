@@ -65,7 +65,8 @@ class Tier2CatalogProvider:
         """id -> {typical_features, synonyms} from knowledge/tier2_open_features.json, built from the CC0
         Human Disease Ontology (has_symptom clauses + EXACT synonyms; see scripts/build_open_disease_features.py).
         Lowest precedence: catalog features > unreviewed enrichment > these. NOT clinician reviewed."""
-        if self._path != _CATALOG_PATH or not _OPEN_FEATURES_PATH.is_file():
+        from nova_agent.config import get_config
+        if self._path != _CATALOG_PATH or not _OPEN_FEATURES_PATH.is_file() or not get_config().open_synonyms_enabled:
             return {}
         try:
             data = json.loads(_OPEN_FEATURES_PATH.read_text(encoding="utf-8"))
@@ -124,9 +125,11 @@ class Tier2CatalogProvider:
             codes = tuple(
                 ExternalCode(system=c["system"], code=str(c["code"]), display=c.get("display"))
                 for c in entry.get("external_codes", [])
-                if c.get("system") and c.get("code") is not None
+                if c.get("system") and c.get("code") is not None and c.get("mapping_status") == "VERIFIED"
             )
-            curated = bool(entry.get("curated", True))
+            # Only an entry whose clinical validation is VERIFIED counts as curated (PR #15 rule); everything
+            # else is a NOT_CURATED reference candidate.
+            curated = entry.get("clinical_validation_status") == "VERIFIED"
             features = tuple(entry.get("typical_features", []))
             source = "tier2_catalog"
             extra = enrichment.get(cid)

@@ -3,7 +3,7 @@
     "disease_id": "acute_abdomen",
     "name": "Acute Abdomen (Surgical Abdomen)",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -95,7 +95,7 @@
     "disease_id": "acute_coronary_syndrome",
     "name": "Acute Coronary Syndrome",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -300,7 +300,7 @@
     "disease_id": "aortic_dissection",
     "name": "Aortic Dissection",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -400,7 +400,7 @@
     "disease_id": "meningitis",
     "name": "Bacterial Meningitis",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -465,7 +465,21 @@
       "minimum_workup": [
         "lumbar_puncture"
       ],
-      "evidence_level": "internally_authored_heuristic"
+      "evidence_level": "internally_authored_heuristic",
+      "required_diagnostic_context_any": [
+        "neck stiffness",
+        "photophobia",
+        "altered mental status",
+        "CSF pleocytosis",
+        "gram-negative diplococci",
+        "gram-positive"
+      ],
+      "evidence_references": [
+        {
+          "url": "https://www.nice.org.uk/guidance/ng240/chapter/Recommendations",
+          "scope": "Clinical features and investigation results are combined; this software final-label guard does not exclude meningitis or suppress urgent evaluation."
+        }
+      ]
     },
     "source_leads": [
       {
@@ -498,7 +512,7 @@
     "disease_id": "cardiac_arrhythmia",
     "name": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
     "dangerous": true,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -552,7 +566,10 @@
       "confirmatory_findings": [
         "irregularly irregular rhythm",
         "narrow complex tachycardia",
-        "atrial fibrillation on ecg"
+        "atrial fibrillation on ecg",
+        "high-grade AV block",
+        "second-degree AV block",
+        "bradycardia with dropped beats"
       ],
       "red_flag_keywords": [
         "hypotension",
@@ -692,7 +709,7 @@
     "disease_id": "ectopic_pregnancy",
     "name": "Ectopic Pregnancy",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -789,7 +806,7 @@
     "disease_id": "gi_bleeding",
     "name": "Gastrointestinal Bleeding",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -890,7 +907,7 @@
     "disease_id": "ischemic_stroke",
     "name": "Ischemic Stroke",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1014,7 +1031,7 @@
     "disease_id": "pulmonary_embolism",
     "name": "Pulmonary Embolism",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1342,7 +1359,7 @@
     "disease_id": "subarachnoid_hemorrhage",
     "name": "Subarachnoid Hemorrhage",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1436,7 +1453,7 @@
     "disease_id": "tension_pneumothorax",
     "name": "Tension Pneumothorax",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1518,7 +1535,7 @@
     "disease_id": "appendicitis",
     "name": "Acute Appendicitis",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -1566,9 +1583,23 @@
         "appendiceal wall thickening",
         "dilated appendix",
         "periappendiceal fat stranding",
-        "appendicolith"
+        "appendicolith",
+        "appendiceal inflammation",
+        "McBurney's point tenderness",
+        "right lower quadrant tenderness",
+        "rebound tenderness"
       ],
-      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset",
+      "evidence_references": [
+        {
+          "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/appendicitis/diagnosis",
+          "scope": "Imaging evidence of appendiceal enlargement or inflammation supports evaluation of appendicitis; not a standalone diagnostic guarantee."
+        },
+        {
+          "url": "https://link.springer.com/article/10.1186/s13017-016-0090-5",
+          "scope": "Imaging findings including wall thickening and noncompressibility suggest appendicitis."
+        }
+      ]
     },
     "source_leads": [
       {
@@ -1601,7 +1632,7 @@
     "disease_id": "acute_bronchitis",
     "name": "Acute Bronchitis",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -1686,7 +1717,7 @@
     "disease_id": "gastroenteritis",
     "name": "Acute Gastroenteritis",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -1763,7 +1794,7 @@
     "disease_id": "acute_pancreatitis",
     "name": "Acute Pancreatitis",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -1806,13 +1837,13 @@
         "lipase",
         "abdominal_ultrasound"
       ],
-      "red_flag_keywords": [],
-      "evidence_level": "internally_authored_heuristic",
       "confirmatory_findings": [
         "elevated lipase",
         "pancreatic inflammation on imaging",
         "peripancreatic fat stranding"
       ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic",
       "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
     },
     "source_leads": [
@@ -1846,7 +1877,7 @@
     "disease_id": "pyelonephritis",
     "name": "Acute Pyelonephritis",
     "source_path": "nova_agent/knowledge/diseases/genitourinary.json",
-    "source_sha256": "0e1275f2fc43d5aec7b4880e115fba11cbf4b9785b05bef3026ad18d80358dce",
+    "source_sha256": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -1905,7 +1936,29 @@
         "positive nitrites",
         "elevated white blood cell count"
       ],
-      "evidence_level": "internally_authored_heuristic"
+      "evidence_level": "internally_authored_heuristic",
+      "required_diagnostic_context_any": [
+        "flank pain",
+        "costovertebral angle tenderness",
+        "CVA tenderness",
+        "dysuria",
+        "painful urination",
+        "urinary frequency",
+        "pyuria",
+        "positive nitrites",
+        "nitrite positive",
+        "positive leukocyte esterase",
+        "leukocyte esterase positive",
+        "positive urine culture",
+        "urine culture positive",
+        "renal inflammation"
+      ],
+      "evidence_references": [
+        {
+          "url": "https://www.niddk.nih.gov/health-information/urologic-diseases/kidney-infection-pyelonephritis/diagnosis",
+          "scope": "History, examination and urine investigations inform diagnosis; this internal abstention guard is not a guideline diagnostic criterion."
+        }
+      ]
     },
     "source_leads": [
       {
@@ -1938,7 +1991,7 @@
     "disease_id": "asthma_copd_exacerbation",
     "name": "Asthma / COPD Exacerbation",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -1959,14 +2012,18 @@
       "urgency": "MEDIUM",
       "typical_features": [
         "wheeze",
-        "known asthma or COPD",
         "worse with triggers",
-        "prolonged expiration"
+        "prolonged expiration",
+        "dyspnea",
+        "cough",
+        "worsening dyspnea"
       ],
       "risk_factors": [
         "smoking",
         "known reactive airway disease",
-        "allergen exposure"
+        "allergen exposure",
+        "asthma",
+        "COPD"
       ],
       "discriminating_questions": [
         "past_medical_history",
@@ -1991,7 +2048,13 @@
         "reduced peak flow",
         "hyperinflation on chest x-ray"
       ],
-      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset",
+      "evidence_references": [
+        {
+          "url": "https://www.nhlbi.nih.gov/health/copd/symptoms",
+          "scope": "Known disease is risk context; worsening respiratory symptoms require evaluation and are not confirmed by history alone."
+        }
+      ]
     },
     "source_leads": [],
     "review": {
@@ -2013,7 +2076,7 @@
     "disease_id": "bppv",
     "name": "Benign Paroxysmal Positional Vertigo",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2081,7 +2144,7 @@
     "disease_id": "pneumonia",
     "name": "Community-Acquired Pneumonia",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -2134,10 +2197,15 @@
       "confirmatory_findings": [
         "consolidation",
         "infiltrate",
-        "focal consolidation",
-        "crackles"
+        "focal consolidation"
       ],
-      "evidence_level": "internally_authored_heuristic"
+      "evidence_level": "internally_authored_heuristic",
+      "evidence_references": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6812437/",
+          "scope": "Auscultatory signs alone are nonspecific; crackles are retained as a typical feature, not independent confirmatory evidence."
+        }
+      ]
     },
     "source_leads": [
       {
@@ -2170,7 +2238,7 @@
     "disease_id": "gerd",
     "name": "Gastroesophageal Reflux Disease",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2341,7 +2409,7 @@
     "disease_id": "migraine",
     "name": "Migraine",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2419,7 +2487,7 @@
     "disease_id": "musculoskeletal_chest_pain",
     "name": "Musculoskeletal Chest Pain (Costochondritis)",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2452,18 +2520,18 @@
         "location"
       ],
       "discriminating_exams": [
-        "abdominal_exam",
+        "lung_auscultation",
         "vital_signs"
       ],
       "discriminating_tests": [
         "ecg"
       ],
-      "red_flag_keywords": [],
-      "evidence_level": "internally_authored_heuristic",
       "confirmatory_findings": [
         "reproducible chest wall tenderness",
         "pain reproduced on palpation"
       ],
+      "red_flag_keywords": [],
+      "evidence_level": "internally_authored_heuristic",
       "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
     },
     "source_leads": [
@@ -2497,7 +2565,7 @@
     "disease_id": "nephrolithiasis",
     "name": "Nephrolithiasis (Kidney Stone)",
     "source_path": "nova_agent/knowledge/diseases/genitourinary.json",
-    "source_sha256": "0e1275f2fc43d5aec7b4880e115fba11cbf4b9785b05bef3026ad18d80358dce",
+    "source_sha256": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -2582,7 +2650,7 @@
     "disease_id": "orthostatic_hypotension",
     "name": "Orthostatic Hypotension",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2673,7 +2741,7 @@
     "disease_id": "panic_attack",
     "name": "Panic Attack",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2742,7 +2810,7 @@
     "disease_id": "tension_headache",
     "name": "Tension-Type Headache",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2813,7 +2881,7 @@
     "disease_id": "uncomplicated_cystitis",
     "name": "Uncomplicated Cystitis (Lower UTI)",
     "source_path": "nova_agent/knowledge/diseases/genitourinary.json",
-    "source_sha256": "0e1275f2fc43d5aec7b4880e115fba11cbf4b9785b05bef3026ad18d80358dce",
+    "source_sha256": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2907,7 +2975,7 @@
     "disease_id": "vasovagal_syncope",
     "name": "Vasovagal (Reflex) Syncope",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {

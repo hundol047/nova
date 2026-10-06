@@ -39,6 +39,7 @@ from typing import Dict, List, Optional
 from nova_agent.glucose_evidence import extract_glucose_mg_dl
 from nova_agent.severity_evidence import extract_lactate_mmol_l
 from nova_agent.state import PatientState
+from nova_agent.assertion_status import is_uncertain
 from nova_agent.unit_safety import value_is_in_disallowed_unit
 
 Direction = str  # "high" | "low" -- which side of normal counts as abnormal for a given lab
@@ -65,12 +66,14 @@ class LabSpec:
     # (`allowed_units`) and units that would MISinterpret the bare number against those thresholds
     # (`disallowed_units`, e.g. creatinine mg/dL thresholds vs an SI umol/L value ~88x larger, or
     # hemoglobin g/dL thresholds vs a g/L value ~10x larger that could HIDE a critical low). When
-    # the raw text states a disallowed unit and no allowed unit, the numeric parse is refused
+    # the raw text states a disallowed unit with no registered conversion, parsing is refused
     # (interpretation stays "unknown"), never silently interpreted. Empty tuples => no unit guard
     # (unchanged behavior), used where the number is unit-agnostic or the units are numerically
     # equivalent (mEq/L == mmol/L for monovalent ions) or intrinsically unitless (pH).
     allowed_units: tuple = ()
     disallowed_units: tuple = ()
+    # Explicit analyte-specific conversions to `unit`; never inferred from another result.
+    unit_divisors: tuple = ()
 
 
 _GENERIC_ABNORMAL_HIGH_WORDS = (
@@ -108,15 +111,20 @@ def _panel_pattern(*names: str) -> re.Pattern:
     (e.g. a single "bmp"/"basic_metabolic_panel" result reporting several analytes at once, such
     as "potassium 6.9, creatinine elevated above baseline") -- not just a whole-string number, so
     one analyte's presence/absence doesn't depend on where in the panel string it appears."""
-    alternation = "|".join(re.escape(n) for n in names)
-    return re.compile(rf"(?:{alternation})[^0-9]{{0,15}}?(\d{{1,3}}(?:\.\d+)?)", re.IGNORECASE)
+    # Callers supply literals, never regex fragments. A value must follow this analyte,
+    # not an intervening analyte name, reference range, or an unspecified pending value.
+    alternation = "|".join(re.escape(n) for n in sorted(names, key=len, reverse=True))
+    # A reported change still contains a measured endpoint. Interpret its NUMBER, not
+    # the word "fallen" as low: a fall can end within the normal range.
+    connector = r"(?:is\s+|of\s+|[:=]\s*|(?:has\s+)?(?:fallen|fell|dropped|decreased|risen|rose|increased)\s+to\s+)?"
+    return re.compile(rf"\b(?:{alternation})\b\s*{connector}(\d+(?:\.\d+)?)(?![\d.])", re.IGNORECASE)
 
 
 LAB_SPECS: Dict[str, LabSpec] = {
     "lab.potassium": LabSpec(
         canonical_id="lab.potassium", display_name="potassium", unit="mEq/L",
         raw_keys=("potassium", "bmp", "basic_metabolic_panel"),
-        numeric_pattern=_panel_pattern("potassium", r"\bk\b"),
+        numeric_pattern=_panel_pattern("potassium", "K"),
         low=3.5, high=5.0, critical_low=2.5, critical_high=6.5,
         qualitative_high_words=("hyperkalemia", "elevated potassium"),
         qualitative_low_words=("hypokalemia", "low potassium"),
@@ -124,7 +132,7 @@ LAB_SPECS: Dict[str, LabSpec] = {
     "lab.sodium": LabSpec(
         canonical_id="lab.sodium", display_name="sodium", unit="mEq/L",
         raw_keys=("sodium", "bmp", "basic_metabolic_panel"),
-        numeric_pattern=_panel_pattern("sodium", r"\bna\b"),
+        numeric_pattern=_panel_pattern("sodium", "Na"),
         low=135.0, high=145.0, critical_low=120.0, critical_high=155.0,
         qualitative_high_words=("hypernatremia", "elevated sodium"),
         qualitative_low_words=("hyponatremia", "low sodium"),
@@ -133,7 +141,9 @@ LAB_SPECS: Dict[str, LabSpec] = {
         canonical_id="lab.creatinine", display_name="creatinine", unit="mg/dL",
         raw_keys=("creatinine", "bmp", "basic_metabolic_panel"),
         numeric_pattern=_panel_pattern("creatinine"),
-        allowed_units=("mg/dl",), disallowed_units=("umol/l", "mmol/l"),
+        allowed_units=("mg/dl",), disallowed_units=("umol/l", "mmol/l", "mg/l"),
+        # NIDDK eGFR equations: serum creatinine µmol/L / 88.4 = mg/dL.
+        unit_divisors=(("umol/l", 88.4),),
         # A single absolute cutoff is a real simplification (true AKI is defined by a RISE from a
         # patient's own baseline, not one absolute number) -- disclosed, not hidden: this flags a
         # plausibly-abnormal single value only, it is not a substitute for trend/baseline
@@ -152,13 +162,14 @@ LAB_SPECS: Dict[str, LabSpec] = {
     "lab.hemoglobin": LabSpec(
         canonical_id="lab.hemoglobin", display_name="hemoglobin", unit="g/dL",
         raw_keys=("hemoglobin", "cbc"),
-        numeric_pattern=_panel_pattern("hemoglobin", r"\bhgb\b", r"\bhb\b"),
+        numeric_pattern=_panel_pattern("hemoglobin", "Hgb", "Hb"),
         # Unisex conservative adult cutoff (true normal range is sex-specific) -- a disclosed
         # simplification, same spirit as the creatinine note above.
         low=12.0, critical_low=7.0,
-        # g/L (SI) is ~10x g/dL -- "hemoglobin 70 g/L" (=7.0 g/dL, critical) must NOT read as 70
+        # g/L is exactly 10x g/dL -- "hemoglobin 70 g/L" (=7.0 g/dL, critical) must NOT read as 70
         # (which would look normal and HIDE a critical anemia).
         allowed_units=("g/dl",), disallowed_units=("g/l",),
+        unit_divisors=(("g/l", 10.0),),
         qualitative_low_words=("low hemoglobin", "anemia", "hemoglobin drop"),
     ),
     "lab.platelet": LabSpec(
@@ -197,7 +208,7 @@ LAB_SPECS: Dict[str, LabSpec] = {
         canonical_id="lab.d_dimer", display_name="D-dimer", unit="",
         raw_keys=("d_dimer",), numeric_pattern=None,
         qualitative_high_words=_direction_words("high", "elevated d-dimer", "elevated d dimer",
-                                                 "markedly elevated", "positive"),
+                                                 "d-dimer elevated", "d dimer elevated", "markedly elevated", "positive"),
         qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal")
         + _GENERIC_NORMAL_WORDS,
     ),
@@ -244,12 +255,26 @@ LAB_SPECS: Dict[str, LabSpec] = {
     "lab.urinalysis_infection": LabSpec(
         canonical_id="lab.urinalysis_infection", display_name="urinalysis (infection markers)", unit="",
         raw_keys=("urinalysis", "ua", "urine_dipstick"), numeric_pattern=None,
-        qualitative_high_words=("leukocyte esterase", "positive nitrites", "nitrite positive",
+        qualitative_high_words=("leukocyte esterase positive", "positive nitrites", "nitrite positive",
                                  "pyuria", "positive leukocyte esterase", "bacteriuria"),
         qualitative_normal_words=("negative leukocyte esterase", "no nitrites", "negative nitrites",
-                                   "no pyuria", "clean urinalysis") + _GENERIC_NORMAL_WORDS,
+                                   "no pyuria", "clean urinalysis",
+                                   "leukocyte esterase negative", "nitrites negative", "nitrite negative") + _GENERIC_NORMAL_WORDS,
     ),
 }
+
+
+for _id, _name, _positive, _normal in (
+    ("leukocyte_esterase", "leukocyte esterase", ("positive leukocyte esterase", "leukocyte esterase positive"),
+     ("negative leukocyte esterase", "leukocyte esterase negative", "no leukocyte esterase")),
+    ("nitrites", "nitrites", ("positive nitrites", "positive nitrite", "nitrite positive", "nitrites positive"),
+     ("negative nitrites", "negative nitrite", "nitrite negative", "nitrites negative", "no nitrites")),
+    ("pyuria", "pyuria", ("pyuria",), ("no pyuria", "without pyuria", "pyuria absent")),
+):
+    LAB_SPECS["lab." + _id] = LabSpec(
+        canonical_id="lab." + _id, display_name=_name, unit="",
+        raw_keys=("urinalysis", "ua", "urine_dipstick"), numeric_pattern=None,
+        qualitative_high_words=_positive, qualitative_normal_words=_normal)
 
 
 @dataclass
@@ -264,22 +289,48 @@ class ObjectiveFinding:
     evidence_label: str  # human-readable, for supporting/contradictory_evidence lists
 
 
-def _extract_numeric(spec: LabSpec, raw_texts: List[str]) -> Optional[float]:
+def _current_result_texts(raw_texts: List[str]) -> List[str]:
+    """Remove explicitly historical/reference clauses, never guess their chronology. A bare "reference range"
+    label ("reference range potassium 3.5") is not a result, but a comparison to it ("above the reference
+    range", "within reference range") IS the result and is kept."""
+    return [clause for text in raw_texts
+            for clause in re.split(r"[;,\n]|\b(?:but|however)\b", text, flags=re.I)
+            if not is_uncertain(clause) and not re.search(r"\b(?:previously|historical|baseline|last (?:year|month|week)|"
+                             r"prior result|old result|(?<!above the )(?<!above )(?<!below the )(?<!below )(?<!within the )(?<!within )"
+                             r"(?<!outside the )(?<!outside )(?<!beyond the )(?<!exceeds the )reference range|"
+                             r"if|will|would|could|should|expected|predicted)\b", clause, re.I)]
+
+
+def _extract_numeric_values(spec: LabSpec, raw_texts: List[str]) -> set[float]:
+    values = set()
     if spec.numeric_pattern is None:
-        return None
+        return values
     for text in raw_texts:
-        # Unit safety (spec section 19): if this text states a unit the spec's thresholds are NOT
-        # defined in (and no allowed unit alongside it), refuse to interpret the bare number rather
-        # than misread e.g. creatinine umol/L or hemoglobin g/L against mg/dL / g/dL thresholds.
-        if value_is_in_disallowed_unit(text, spec.allowed_units, spec.disallowed_units):
-            continue
-        match = spec.numeric_pattern.search(text)
-        if match:
+        for match in spec.numeric_pattern.finditer(text):
+            if re.search(r"\b(?:not|no|denies|without)\b[^.;,]*$", text[:match.start()], re.I):
+                continue
+            # Unit context belongs to this number only, not a neighboring analyte.
+            tail = text[match.end():]
+            suffix = re.split(r"[;,\n]|\b(?:and|but)\b", tail, maxsplit=1, flags=re.I)[0]
+            # Inspect only an immediately adjacent unit, before a parenthetical conversion.
+            suffix = suffix.split("(", 1)[0]
+            unit_match = re.match(r"\s*([a-zµμ]+\s*/\s*[a-z]+)", suffix, re.I)
+            divisor = 1.0
+            if unit_match:
+                unit = re.sub(r"\s+", "", unit_match.group(1).lower()).replace("µ", "u").replace("μ", "u")
+                conversions = dict(spec.unit_divisors)
+                if unit in conversions:
+                    divisor = conversions[unit]
+                elif spec.allowed_units and unit not in spec.allowed_units:
+                    continue
+            elif value_is_in_disallowed_unit(suffix, spec.allowed_units, spec.disallowed_units):
+                continue
             try:
-                return float(match.group(1))
+                # Remove floating-point noise only; distinct measured results remain conflicts.
+                values.add(round(float(match.group(1)) / divisor, 10))
             except (ValueError, IndexError):
                 continue
-    return None
+    return values
 
 
 def _interpret_numeric(spec: LabSpec, value: float) -> str:
@@ -317,19 +368,46 @@ def _is_high_only_qualitative(spec: LabSpec) -> bool:
 
 
 def _interpret_qualitative(spec: LabSpec, raw_texts: List[str]) -> Optional[str]:
-    combined = " ".join(t.lower() for t in raw_texts)
-    for word in spec.qualitative_high_words:
-        if word in combined:
-            return "high"
-    for word in spec.qualitative_low_words:
-        if word in combined:
-            return "low"
-    if _is_high_only_qualitative(spec) and _asserts_high_magnitude(combined):
-        return "high"
-    for word in spec.qualitative_normal_words:
-        if word in combined:
-            return "normal"
-    return None
+    def term_pattern(term: str) -> re.Pattern:
+        # Lab reports often contain alignment whitespace ("D-DIMER  MARKEDLY  ELEVATED").
+        # Match whitespace flexibly without widening any clinical vocabulary or changing the
+        # assertion/negation handling below.
+        parts = [part for part in re.split(r"\s+", term.strip()) if part]
+        return re.compile(r"(?<!\w)" + r"\s+".join(re.escape(part) for part in parts) + r"(?!\w)")
+
+    directions = set()
+    for text in raw_texts:
+        for clause in re.split(r"[;,\n]|\b(?:but|however)\b", text.lower()):
+            if re.search(r"\b(?:previously|historical|last year|rule out|suspected|possible)\b", clause):
+                continue
+            clause_directions = set()
+            abnormal_spans = []
+            for direction, terms in (("high", spec.qualitative_high_words),
+                                     ("low", spec.qualitative_low_words)):
+                for word in terms:
+                    for match in term_pattern(word).finditer(clause):
+                        abnormal_spans.append(match.span())
+                        prefix = clause[:match.start()]
+                        suffix = clause[match.end():]
+                        negated = (re.search(r"\b(?:no|not|without|negative|denies)\b[^.;,]*$", prefix)
+                                   or re.match(r"\s*(?:is\s+|was\s+)?(?:negative|absent|not detected)\b", suffix))
+                        clause_directions.add("normal" if negated else direction)
+            for term in spec.qualitative_normal_words:
+                for match in term_pattern(term).finditer(clause):
+                    # "normal" inside "above the upper limit of normal" is
+                    # part of the abnormal assertion, not a second result.
+                    if any(start <= match.start() and match.end() <= end
+                           for start, end in abnormal_spans):
+                        continue
+                    if re.search(r"\b(?:not|no|without)\s+$", clause[:match.start()]):
+                        continue
+                    clause_directions.add("normal")
+            directions.update(clause_directions)
+    if _is_high_only_qualitative(spec) and _asserts_high_magnitude(" ".join(x.lower() for x in raw_texts)):
+        return "high"  # "markedly raised" style magnitude assertions (ours), after the assertion-aware pass
+    if len(directions) > 1:
+        return "unknown"  # conflicting assertions have no safe implicit precedence
+    return next(iter(directions), None)
 
 
 def normalize_one(spec: LabSpec, state: PatientState) -> Optional[ObjectiveFinding]:
@@ -339,13 +417,22 @@ def normalize_one(spec: LabSpec, state: PatientState) -> Optional[ObjectiveFindi
     raw_texts = [state.laboratory_tests[k] for k in spec.raw_keys if state.laboratory_tests.get(k)]
     if not raw_texts:
         return None
-    value = _extract_numeric(spec, raw_texts)
+    if any(re.search(r"\b(?:hemoly[sz]ed|sample clotted|specimen clotted|invalid specimen|contaminated specimen)\b", t, re.I)
+           for t in raw_texts):
+        return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), None,
+                                spec.unit, "unknown", f"{spec.display_name} (unusable specimen)")
+    current_texts = _current_result_texts(raw_texts)
+    values = _extract_numeric_values(spec, current_texts)
+    if len(values) > 1:
+        return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), None,
+                                spec.unit, "unknown", f"{spec.display_name} (conflicting numeric results)")
+    value = next(iter(values), None)
     if value is not None:
         interpretation = _interpret_numeric(spec, value)
         label = f"{spec.display_name} {value:g}{(' ' + spec.unit) if spec.unit else ''} ({interpretation.replace('_', ' ')})"
         return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), value,
                                  spec.unit, interpretation, label)
-    qualitative = _interpret_qualitative(spec, raw_texts)
+    qualitative = _interpret_qualitative(spec, current_texts)
     if qualitative is not None:
         label = f"{spec.display_name} ({qualitative})" if qualitative != "normal" \
             else f"{spec.display_name} not elevated"
@@ -418,7 +505,7 @@ CONFIRMATORY_PHRASE_TO_LAB: Dict[str, tuple] = {
     "positive beta-hcg": ("lab.beta_hcg", "high"),
     "elevated lipase": ("lab.lipase", "high"),
     "lipase elevated": ("lab.lipase", "high"),
-    "positive leukocyte esterase": ("lab.urinalysis_infection", "high"),
-    "positive nitrites": ("lab.urinalysis_infection", "high"),
-    "pyuria": ("lab.urinalysis_infection", "high"),
+    "positive leukocyte esterase": ("lab.leukocyte_esterase", "high"),
+    "positive nitrites": ("lab.nitrites", "high"),
+    "pyuria": ("lab.pyuria", "high"),
 }

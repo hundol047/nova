@@ -1,0 +1,18 @@
+{
+  "original": {
+    "fixed_cases": [
+      "SIM50_high_development_18633"
+    ],
+    "regressed_cases": [],
+    "before_correct": 383,
+    "after_correct": 384
+  },
+  "extra": {
+    "fixed_cases": [
+      "SIM50_high_development_18990"
+    ],
+    "regressed_cases": [],
+    "before_correct": 387,
+    "after_correct": 388
+  }
+}

@@ -70,6 +70,10 @@ def main() -> int:
 
     # --- model provider / endpoint / name -----------------------------------------------------
     provider = cfg.llm_provider
+    check("preliminary_provider", provider == "competition",
+          "Preliminary submission must explicitly use provider=competition.")
+    check("preliminary_fixed_model", cfg.competition_model == "openai/gpt-oss-20b",
+          "Preliminary fixed model is openai/gpt-oss-20b; configuration does not verify server weights/revision.")
     check("llm_provider_configured", provider == "competition",
           f"NOVA_LLM_PROVIDER={provider!r} -- a competition run needs a real provider "
           f"(competition targeting openai/gpt-oss-20b), not the offline mock stand-in.")
@@ -147,9 +151,11 @@ def main() -> int:
     print("OFFICIAL_API = NOT VERIFIED")
 
     # --- official submission readiness (blocks until evidenced) --------------------------------
+    # A placeholder cannot establish submission readiness even when an endpoint works.
     check("official_competition_schema", False,
           "competition/schema.py is a documented PLACEHOLDER -- no official N.O.V.A. 2026 API was "
-          "available at implementation time. Update competition/schema.py + adapter.py once published.")
+          "available at implementation time. Update competition/schema.py + adapter.py once published.",
+          severity="fail")
 
     # --- submission size ------------------------------------------------------------------------
     submission_dir = ROOT / "submission"

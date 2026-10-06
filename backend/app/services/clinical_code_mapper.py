@@ -48,10 +48,17 @@ LOINC_TO_NOVA_LAB: Dict[str, Tuple[str, str]] = {
     '2345-7': ('lab.glucose', 'glucose_point_of_care'),
     '2524-7': ('lab.lactate', 'lactate'),
     '3040-3': ('lab.lipase', 'lipase'),
-    # Urine dipstick infection markers (leukocyte esterase / nitrite) both feed the single
-    # urinalysis_infection lab nova_agent reads from the 'urinalysis' raw key.
-    '5799-2': ('lab.urinalysis_infection', 'urinalysis'),
-    '5802-4': ('lab.urinalysis_infection', 'urinalysis'),
+    # Urine dipstick / sediment markers. nova_agent reads all of them from the one 'urinalysis' raw result
+    # text, but its objective-evidence registry has a spec for each marker (lab.leukocyte_esterase,
+    # lab.nitrites, lab.pyuria) plus the combined lab.urinalysis_infection, so each canonical id needs
+    # its own LOINC row: 5799-2 leukocyte esterase [presence] in urine by test strip, 5802-4 nitrite
+    # [presence] in urine by test strip, 5821-4 leukocytes [#/area] in urine sediment by microscopy (HPF),
+    # 24357-6 urinalysis macro (dipstick) panel. Codes are from the public LOINC table; no local copy of
+    # the LOINC table is bundled to verify them against.
+    '5799-2': ('lab.leukocyte_esterase', 'urinalysis'),
+    '5802-4': ('lab.nitrites', 'urinalysis'),
+    '5821-4': ('lab.pyuria', 'urinalysis'),
+    '24357-6': ('lab.urinalysis_infection', 'urinalysis'),
 }
 
 # Fallback when the Observation carries no loinc.org coding at all (a DemoAdapter-sourced lab, or

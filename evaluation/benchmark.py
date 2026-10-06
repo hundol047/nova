@@ -37,7 +37,7 @@ def print_case_table(results: list[CaseResult]) -> None:
     print(header)
     print("-" * len(header))
     for r in results:
-        expected_marker = "" if r.scoring_expected else " (not scored)"
+        expected_marker = "" if r.scoring_expected or r.ground_truth not in {"unknown", ""} else " (unknown handling)"
         print(f"{r.case_id:<32}{r.category:<22}{(('YES' if r.correct else 'NO') + expected_marker):<10}"
               f"{r.turns:<8}{r.duplicate_actions:<11}{('YES' if r.critical_miss else 'NO'):<15}")
 
@@ -47,8 +47,9 @@ def compute_summary(results: list[CaseResult]) -> dict:
     denominator is always named explicitly -- never silently drop hard cases just to inflate one
     headline accuracy number."""
     n = len(results) or 1
-    scored = [r for r in results if r.scoring_expected]
-    unsupported = [r for r in results if not r.scoring_expected]
+    # A named ground truth remains scored even if an old fixture excluded Tier-2.
+    scored = [r for r in results if r.scoring_expected or r.ground_truth not in {"unknown", ""}]
+    unsupported = [r for r in results if r not in scored]
     scored_n = len(scored) or 1
     critical_cases = [r for r in results if r.critical]
     turns_list = [r.turns for r in results]
@@ -70,7 +71,7 @@ def compute_summary(results: list[CaseResult]) -> dict:
         # Unsupported (excluded-from-scoring) cases: not "correct/incorrect" (no single right
         # answer), but still checked for safe handling -- reached a diagnosis, no critical miss.
         "unsupported_case_success_rate": (
-            sum(1 for r in unsupported if not r.failed_to_diagnose and not r.critical_miss) / len(unsupported)
+            sum(1 for r in unsupported if r.correct and not r.failed_to_diagnose and not r.critical_miss) / len(unsupported)
             if unsupported else None
         ),
         "critical_diagnosis_recall": (
@@ -115,7 +116,7 @@ def print_summary(title: str, results: list[CaseResult]) -> None:
     print(f"  All-Case Diagnostic Accuracy: {s['all_case_diagnostic_accuracy'] * 100:.1f}%  (every case, no exclusions)")
     if s["unsupported_case_success_rate"] is not None:
         print(f"  Unsupported-Case Success Rate:{s['unsupported_case_success_rate'] * 100:.1f}%  "
-              f"(safe handling of excluded cases: diagnosed, no critical miss)")
+              f"(explicit unknown correctly preserved)")
     if s["critical_diagnosis_recall"] is not None:
         print(f"  Critical Diagnosis Recall:    {s['critical_diagnosis_recall'] * 100:.1f}%")
     print(f"  Critical Miss Rate:           {s['critical_miss_rate'] * 100:.1f}%")

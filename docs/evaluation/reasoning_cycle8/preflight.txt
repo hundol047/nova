@@ -1,0 +1,29 @@
+=== Competition Preflight ===
+
+  PASS  python_version: 3.12.14 (requires >= 3.9)
+  PASS  package_pydantic: pydantic 2.13.5 importable
+  PASS  nova_agent_imports: nova_agent.orchestrator.DoctorAgent imports cleanly
+  PASS  competition_adapter_imports: competition.adapter.NovaCompetitionAgent imports cleanly
+  PASS  preliminary_fixed_model: Preliminary fixed model is openai/gpt-oss-20b; configuration does not verify server weights/revision.
+  PASS  knowledge_files: 7 disease knowledge file(s) found in /workspace/scratch/9819f121b13b/nova/nova_agent/knowledge
+  PASS  submission_run_py: /workspace/scratch/9819f121b13b/nova/submission/run.py
+  PASS  turn_limit_configured: NOVA_MAX_TURNS=60
+  PASS  submission_size: 1.9 MB (submission/ directory)
+  PASS  endpoint_locality: skipped (provider=mock has no endpoint)
+  PASS  secret_scan: no suspicious credential-shaped strings found in nova_agent/competition
+  FAIL  preliminary_provider: Preliminary submission must explicitly use provider=competition.
+  FAIL  llm_provider_configured: NOVA_LLM_PROVIDER='mock' -- a competition run needs a real provider (competition/openai_compatible/local/anthropic), not the offline mock stand-in.
+  FAIL  llm_health: skipped (provider=mock has no real endpoint to check)
+  FAIL  structured_output_and_action_validation: skipped (provider=mock)
+  FAIL  structured_output_parse_success: skipped (provider=mock)
+  FAIL  real_llm_success_count_at_least_1: skipped (provider=mock)
+  FAIL  official_competition_schema: competition/schema.py is a documented PLACEHOLDER -- no official N.O.V.A. 2026 API was available at implementation time. Update competition/schema.py + adapter.py once published.
+
+NOT READY
+  - preliminary_provider: Preliminary submission must explicitly use provider=competition.
+  - llm_provider_configured: NOVA_LLM_PROVIDER='mock' -- a competition run needs a real provider (competition/openai_compatible/local/anthropic), not the offline mock stand-in.
+  - llm_health: skipped (provider=mock has no real endpoint to check)
+  - structured_output_and_action_validation: skipped (provider=mock)
+  - structured_output_parse_success: skipped (provider=mock)
+  - real_llm_success_count_at_least_1: skipped (provider=mock)
+  - official_competition_schema: competition/schema.py is a documented PLACEHOLDER -- no official N.O.V.A. 2026 API was available at implementation time. Update competition/schema.py + adapter.py once published.

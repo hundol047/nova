@@ -25,6 +25,19 @@ Honest, current limitations — only what actually remains. None are hidden.
 > document, and is the clear top priority for a future round.
 
 ## Reasoning / clinical scope
+- **Deep clinical reasoning is 34 diagnoses** across a bounded set of chief-complaint concepts —
+  far from exhaustive. The repository also contains 1,246 structured, review-gated candidates and
+  a separate offline terminology review inventory, but those records do not provide the same
+  discriminating evidence or clinical validation as the 34 deep profiles. The deterministic prior
+  only covers the deep profiles; the LLM may introduce diagnoses outside them.
+- **Matching is keyword/entropy-based, not an embedding model** (`nova_agent/matching.py`) —
+  deliberate, for determinism/testability, but misses synonym pairs neither stemmed nor
+  keyword-matched.
+- **Safety lay-language aliases are scoped heuristics, not clinical NLP validation.** They improve
+  recall for a small set of red-flag phrases and are negation-aware, but can increase false-positive
+  safety flags and extra workup turns; their effect has only been checked in deterministic synthetic
+  regressions.
+
 - **Closed-KB (non-competition-retrieval) path is 34 diagnoses** across a bounded set of
   chief-complaint concepts — far from exhaustive. The LLM may introduce diagnoses outside this set,
   but the deterministic prior on this path only covers these 34.
@@ -39,6 +52,9 @@ Honest, current limitations — only what actually remains. None are hidden.
 ## Evaluation
 - All benchmark numbers are on **synthetic** vignettes with a **mock** LLM in CI — not real
   patients, not a live model.
+- The frozen 50,000-case simulation is synthetic and mock-only; its development/validation split
+  is not an independent patient evaluation. No population accuracy, calibrated probability, or
+  clinical sensitivity claim can be derived from it.
 - **Blind v8's first run has not been executed** (needs a runnable Python env); it is frozen and
   will be run exactly once, then reported as-is. No Blind v8 accuracy number exists yet.
 - Blind v3/v4/v5/v6 are reference-only.

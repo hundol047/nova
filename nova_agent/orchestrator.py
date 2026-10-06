@@ -111,6 +111,20 @@ class DoctorAgent:
                     tag, [d.diagnosis_id for d in deterministic_differential], candidate_test_ids,
                 )
 
+                # Broad retrieval reaches the real reasoning prompt, without replacing core safety.
+                # Competition retrieval mode already feeds its own dependency-light retrieval
+                # (retrieval_pipeline/open_world) into the differential the prompt is built from, and
+                # the submission package never ships the repository-level learning/ package this
+                # legacy catalog context needs -- so it applies to the non-competition path only.
+                if not cfg.competition_retrieval_enabled:
+                    try:
+                        from nova_agent.catalog_context import retrieve_catalog_context
+                        retrieved_context.append(retrieve_catalog_context(state))
+                    except Exception:
+                        log.exception("Catalog retrieval unavailable; retaining core safety reasoning")
+                        retrieved_context.append({"source": "catalog_retrieval_unavailable",
+                                                  "text": "Expanded catalog unavailable; do not claim expanded coverage."})
+
                 # 4/5. LLM Differential Reasoning + LLM Candidate Actions (one combined call).
                 ctx = TurnContext(summary=summary, differential=deterministic_differential,
                                    safety_findings=safety_findings, candidates=candidates,
@@ -151,7 +165,7 @@ class DoctorAgent:
 
             # 6/7. Deterministic Safety Validation + Structured Action Validation.
             merged_differential = self.safety_validator.merge_differential(
-                llm_output, deterministic_differential, safety_findings,
+                llm_output, deterministic_differential, safety_findings, state=state,
             )
             candidate_pool = build_candidate_pool(candidates)
             result = self.safety_validator.validate_action(
@@ -165,6 +179,32 @@ class DoctorAgent:
                                       urgency=d.urgency, dangerous_if_missed=d.dangerous_if_missed)
                 for d in result.differential
             ]
+            # Legacy (non-competition) retrieval only: abstain with "unknown" when the chosen label lacks
+            # positive current support or its required localizing context (PR #15 guard, verified by its
+            # own tests). In competition retrieval mode the Round E/M forced-diagnosis behaviour applies
+            # unchanged -- an abstention cannot score, and that mode's accuracy was measured without it.
+            if result.action.action_type == "DIAGNOSE" and not get_config().competition_retrieval_enabled:
+                from nova_agent.safety_validator import selected_diagnosis_item
+                from nova_agent.knowledge.retrieval import disease_by_id
+                from nova_agent.evidence_grounding import distinct_support_count
+                from nova_agent.resolution import is_resolved
+                item = selected_diagnosis_item(result.action.content, result.differential)
+                from nova_agent.differential import has_positive_diagnostic_support, has_required_diagnostic_context
+                novel_ready = (item is not None and (disease_by_id(item.diagnosis_id) is not None or (
+                    item.confidence_band != 'LOW' and
+                    distinct_support_count(item.supporting_evidence, state) >= get_config().stop_policy.min_evidence_items
+                    and not any(d.dangerous_if_missed and d.diagnosis_id != item.diagnosis_id
+                                and not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)
+                                for d in result.differential))))
+                if (not item or not has_positive_diagnostic_support(item)
+                        or not has_required_diagnostic_context(item, state) or not novel_ready):
+                    result.action = AgentAction(action_type="DIAGNOSE", key="unknown", content="unknown",
+                                                rationale="Insufficient diagnostic evidence; clinical review required. "
+                                                "Unresolved dangerous alternatives remain in the differential.")
+                else:
+                    # Forced completion can retain a deterministic key with an LLM-proposed
+                    # name. Keep the externally visible action internally consistent.
+                    result.action.key = item.diagnosis_id
 
             state.evidence_assessment = assess_evidence(
                 state, deterministic_differential,
@@ -235,9 +275,7 @@ class DoctorAgent:
 
     def _safe_fallback(self, state: PatientState) -> AgentAction:
         if state.remaining_turns <= 1:
-            diagnosis = state.current_differential[0].diagnosis if state.current_differential else \
-                (state.chief_complaint or "Undifferentiated presentation")
-            return AgentAction(action_type="DIAGNOSE", key="fallback", content=diagnosis,
+            return AgentAction(action_type="DIAGNOSE", key="unknown", content="unknown",
                                 rationale="Safe fallback: forced diagnose to respect the turn limit after an "
                                           "internal error.")
         if not state.symptom_onset and not state.question_asked("onset"):
@@ -246,7 +284,5 @@ class DoctorAgent:
         if not state.exam_done("vital_signs"):
             return AgentAction(action_type="EXAM", key="vital_signs", content="Vital signs (BP/HR/RR/Temp/SpO2)",
                                 rationale="Safe fallback after an internal error: obtain vital signs.")
-        diagnosis = state.current_differential[0].diagnosis if state.current_differential else \
-            (state.chief_complaint or "Undifferentiated presentation")
-        return AgentAction(action_type="DIAGNOSE", key="fallback", content=diagnosis,
+        return AgentAction(action_type="DIAGNOSE", key="unknown", content="unknown",
                             rationale="Safe fallback: no further safe fallback action available.")

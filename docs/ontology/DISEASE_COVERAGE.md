@@ -1,5 +1,13 @@
 # N.O.V.A. Disease Coverage
 
+> **2026-10-02 audit correction: expansion is BLOCKED.** The 1,246 additional records are
+> unverified terminology candidates, not clinically validated diseases. Unreviewed code anchors
+> are excluded from runtime code mapping, and synthetic NOVASYNTH snapshots are excluded by the
+> production catalog. Historical 5,651 and curation claims below describe prior demo behavior only.
+> Run `python scripts/check_expansion_gate.py` (expected nonzero until clinical review).
+> See `docs/ontology/EXPANSION_AUDIT_FIXES.md`.
+
+
 > **Round update (commit `b3fdccd`, competition retrieval-recall round):** this environment's
 > DEFAULT catalog (what the competition runtime actually loads at `get_default_catalog()`) has
 > **1,280 real concepts total** (34 Tier-1 + 1,246 Tier-2 + **0** real imported Tier-3 -- no

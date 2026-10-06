@@ -36,7 +36,13 @@ from nova_agent.matching import (
     feature_present,
     feature_present_with_aliases,
 )
-from nova_agent.objective_evidence import CONFIRMATORY_PHRASE_TO_LAB, NONSPECIFIC_INFLAMMATORY_LAB_IDS, ObjectiveFinding, normalize_objective_evidence
+from nova_agent.objective_evidence import (
+    CONFIRMATORY_PHRASE_TO_LAB,
+    NONSPECIFIC_INFLAMMATORY_LAB_IDS,
+    ObjectiveFinding,
+    _current_result_texts,
+    normalize_objective_evidence,
+)
 from nova_agent.severity_evidence import (
     ELEVATED_LACTATE_MMOL_L,
     GENERIC_PHYSIOLOGIC_SEVERITY_WORDS,
@@ -159,6 +165,38 @@ class DifferentialItem(BaseModel):
     evidence_status: Dict[str, str] = {}
 
 
+
+def has_positive_diagnostic_support(item: DifferentialItem) -> bool:
+    """Risk factors and absent symptoms can adjust a differential, not establish it alone."""
+    from nova_agent.knowledge.retrieval import disease_by_id
+    entry = disease_by_id(item.diagnosis_id) or {}
+    risk_only = {str(x).lower() for x in entry.get("risk_factors", [])}
+    return any(e.lower() not in risk_only and _strip_negative_prefix(e) is None
+               for e in item.supporting_evidence)
+
+
+def has_required_diagnostic_context(item: DifferentialItem, state: PatientState) -> bool:
+    """A final label may require localizing context beyond generic systemic symptoms.
+
+    This is an abstention guard, not an exclusion rule or a diagnostic criterion.
+    Candidates remain available for workup. Read actual current observations, not
+    the LLM's claimed supporting evidence or past/family history.
+    """
+    from nova_agent.knowledge.retrieval import disease_by_id
+    entry = disease_by_id(item.diagnosis_id) or {}
+    required = entry.get("required_diagnostic_context_any", [])
+    if not required:
+        return True
+    current = [state.chief_complaint, *state.symptoms, *state.associated_symptoms,
+               *state.pertinent_positives, *state.physical_examinations.values(),
+               *state.imaging.values(), *state.laboratory_tests.values()]
+    current = [clause for text in current for clause in re.split(r"[;,\n]", text)
+               if not re.search(r"\b(?:previously|historical|baseline|history of|last (?:year|month|week)|"
+                                r"prior result|old result|reference range)\b", clause, re.I)]
+    return any(_present_with_aliases(phrase, current, strict=True)
+               for phrase in required)
+
+
 def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict[str, ObjectiveFinding],
                              supporting: List[str], contradictory: List[str],
                              missing: List[str]) -> Optional[float]:
@@ -196,7 +234,8 @@ _INFERENCE_FEATURE = re.compile(r"^(?:suspected|presumed|possible)\b", re.IGNORE
 
 
 def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: List[str],
-                   supporting: List[str], contradictory: List[str], missing: List[str], *, objective: bool = False) -> float:
+                   supporting: List[str], contradictory: List[str], missing: List[str], *, objective: bool = False,
+                   strict: bool = False) -> float:
     """Negation-aware scoring for ONE typical_feature or confirmatory_finding phrase. Shared by
     both loops in _score_disease() below -- confirmatory_findings previously used a naive
     present-or-not check with no negation awareness at all, which let a phrase like "absent breath
@@ -230,7 +269,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
     if feature_denied(phrase, negatives) or explicitly_denied_in_findings(phrase, findings):
         contradictory.append(phrase)
         return -(CONFIRMATORY_WEIGHT if objective else CONTRADICTION_PENALTY)
-    if _present_with_aliases(phrase, findings):
+    if _present_with_aliases(phrase, findings, strict=strict):
         supporting.append(phrase)
         return weight
     missing.append(phrase)
@@ -337,6 +376,9 @@ def _score_disease(entry: dict, state: PatientState,
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 
+    # A past/family report is risk context, not a current objective test result; an explicitly
+    # historical or hypothetical report is not a current observation either.
+    objective_text = _current_result_texts(list(confirmatory_evidence_pool))
     counted_labs = set()
     for finding in entry.get("confirmatory_findings", []):
         # Several knowledge-base phrasings can name the SAME lab reading ("elevated troponin" /
@@ -359,8 +401,8 @@ def _score_disease(entry: dict, state: PatientState,
             # test/exam result (see PatientState.objective_findings_text()'s docstring for the real
             # false-positive this closes: a merely-reported PAST diagnosis must never satisfy a
             # confirmatory finding that requires an actual current test/exam to have been performed).
-            score += _score_phrase(finding, CONFIRMATORY_WEIGHT, confirmatory_evidence_pool, negatives,
-                                    supporting, contradictory, missing, objective=True)
+            score += _score_phrase(finding, CONFIRMATORY_WEIGHT, objective_text, negatives,
+                                    supporting, contradictory, missing, objective=True, strict=True)
 
     # Objective negative exam findings (spec section 7/8): a plain typical_feature has no way to be
     # CONTRADICTED by an objective negative exam finding (only by an explicit patient-denial in
@@ -392,8 +434,12 @@ def _score_disease(entry: dict, state: PatientState,
 
     for reassuring in entry.get("reassuring_if_present", []):
         negative_target = _strip_negative_prefix(reassuring)
+        # A multi-word objective reassurance ("normal neurologic exam") must match as a complete assertion
+        # in what an EXAM/TEST actually produced -- never in a family/past-history statement ("Parent had a
+        # normal neurologic exam"), and never by partial word overlap ("new focal deficit" is not the
+        # opposite of "no focal neurological deficit").
         matched = (explicitly_denied_in_findings(negative_target, findings) if negative_target
-                   else feature_present(reassuring, findings, scrub_negated_spans=True))
+                   else feature_present(reassuring, state.objective_findings_text(), scrub_negated_spans=True, strict=True))
         if matched:
             contradictory.append(reassuring)
             score -= CONTRADICTION_PENALTY

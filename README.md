@@ -2,6 +2,13 @@
 
 # N.O.V.A. 2026 Doctor Agent
 
+Latest reasoning/evaluation cycle: [implementation, measured results and live-model blockers](docs/evaluation/reasoning_cycle8/REPORT.md).
+History/medication context, grounded quoted evidence, novel-hypothesis handling and a fixed-model
+comparison runner are implemented. External clinical accuracy and competition readiness remain
+unverified; no fixed-model training was performed.
+
+External evidence intake (2026-10-03): [clinical sources, expert-review provenance, 3,370 downloaded benchmark rows, and remaining coverage gaps](research/external_evidence/README.md). Research/evaluation only; no training or clinical accuracy improvement is claimed.
+
 A conversational medical-diagnosis agent (**ASK / EXAM / TEST / DIAGNOSE**) built for the N.O.V.A.
 2026 competition as an independent, standalone `nova_agent` module. It reasons iteratively from a
 limited initial presentation toward a differential diagnosis, actively guards against missing
@@ -9,10 +16,14 @@ time-critical ("can't-miss") conditions, and always submits a final diagnosis wi
 60-turn limit in the provisional competition protocol. A forced wire label is explicitly
 separated from internal evidence support; it is not a confirmed clinical diagnosis.
 
-Everything below reflects verified, executed behavior (`pytest tests/`, `evaluation.benchmark`,
-`evaluation.ablation`, `evaluation.adversarial`, `scripts/preflight_competition.py`, and a real
-standalone subprocess run of `submission/`) -- see [Known Limitations](#9-known-limitations) for
-what is *not* yet verified.
+Evaluation reports record the commands, provider, data provenance and limitations of each run.
+Older benchmark sections below describe historical snapshots; use the latest linked report for
+current regression results. See [Known Limitations](#9-known-limitations) for unverified behavior.
+
+**Verification status** (these are three genuinely different claims -- never conflate them):
+- **Code / regression**: local non-API software tests and frozen mock replays are recorded in the
+  latest report. The production API test file remains excluded because of a previously observed
+  TestClient hang; a skipped neural test and mock-only tests do not establish full service readiness.
 
 **Historical verification status** (current local results are in the release pointer above):
 - **Code / test CI**: READY -- 520 unit tests (1 skipped), the full local benchmark suite (tuning, held-out,
@@ -757,8 +768,8 @@ backend/app/services/nova_*.py, nova_schemas.py
                   service layer, production_guard, observability) -- see section 8, backend/tests/
                   test_nova_*.py, and docs/NOVA_*.md
 evaluation/       Local benchmark harness: tuning + held-out cases, simulator, benchmark,
-                  ablation, adversarial, tune, scoring, blind v3-v6 (all synthetic vignettes,
-                  never real patient data)
+                  ablation, adversarial, tune, scoring, blind v3-v6 (synthetic vignettes), plus
+                  model_comparison.py for separate public research-benchmark evaluation
 submission/       Standalone, backend-independent deployable package (run.py entrypoint)
 web/              Standalone Streamlit browser workspace for development/demo/manual testing
                   (nova_app.py + nova_web_adapter.py) -- drives the SAME DoctorAgent, never a
@@ -769,7 +780,7 @@ docs/nova/        production/ (standalone) architecture/deployment/security/clin
                   operations/runbook docs
 docs/NOVA_*.md    backend/ (integrated) architecture/deployment/security/clinical-safety/
                   operations/runbook docs
-tests/            pytest suite (181 tests, including tests/test_production_*.py)
+tests/            pytest suite (latest executed counts and exclusions in evaluation reports)
 ```
 
 Module-by-module responsibility and full LLM-provider config are documented in
@@ -800,3 +811,30 @@ SynexAgent's React/Vite UI and FastAPI server -- it never needs them running.
 - **Backend (SynexAgent) tests fail after modifying `nova_agent/`**: they shouldn't -- `backend/`
   never imports from `nova_agent/`/`competition/` (only the optional reverse). Run
   `pytest backend/tests` in isolation to confirm.
+
+Latest evidence-parsing regression replay: [2026-10-03 report](docs/evaluation/mock_replay_2026_10_03/README.md) — synthetic mock Top-1 180/191 (94.24%); not clinical accuracy or independent validation.
+
+Laboratory trend follow-up: [2026-10-03 report](docs/evaluation/mock_replay_2026_10_03_trends/README.md) — synthetic mock final-answer accuracy 181/191 (94.76%); no model training or clinical validation.
+
+Safety follow-up: [observed flags and tradeoffs](docs/evaluation/safety_flags_2026_10_03/README.md). Synthetic critical-case final flags: 71/97 to 84/97; exact dangerous target answers unchanged at 90/97. Not clinical sensitivity.
+
+Added 24 source-informed synthetic safety snapshots and fixed historical/family symptoms triggering current safety flags. [Evidence and limitations](docs/evaluation/source_safety_2026_10_03/README.md).
+
+ICD-11 2026 reference registration: [18,375 ordinary categories plus separately classified functioning/extension codes](docs/ontology/ICD11_2026_REFERENCE.md). Offline reference only; diagnostic coverage and accuracy are unchanged.
+
+Latest synthetic safety replay: [2026-10-03 cycle 2](docs/evaluation/safety_cycle2/RESULTS.md).
+Across two 400-input cohorts, exact diagnosis agreement was unchanged while missed final safety
+flags decreased; see the report for non-independent data provenance and remaining limitations.
+
+[Current imaging-evidence evaluation](docs/evaluation/accuracy_cycle3/REPORT.md): paired synthetic
+cohorts improved to 384/400 and 388/400. This is development replay, not independent clinical accuracy.
+
+Experimental neural training now requires recorded candidate evidence (no hash pseudo-features).
+[Readiness and blockers](docs/learning/RECORDED_SIGNALS_READINESS.md): no new clinical weights were
+trained or activated; approved data, independent evaluation and a PyTorch environment are still needed.
+
+[Respiratory evidence cycle](docs/evaluation/respiratory_cycle5/REPORT.md): paired hard synthetic
+cohorts improved to 92.5%, 95%, and 94%; gains share one source family and are not clinical validation.
+
+[Abstention cycle 6](docs/evaluation/abstention_cycle6/REPORT.md): 12 unsupported final names became
+unknown in 1,200 synthetic replays. Target-label agreement did not improve; safety flags were unchanged.

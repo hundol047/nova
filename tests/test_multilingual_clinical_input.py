@@ -81,3 +81,40 @@ def test_mixed_japanese_english_input_still_routes_correctly():
 
 def test_mixed_chinese_english_input_still_routes_correctly():
     assert classify("患者主诉 dyspnea 和呼吸困难") == "dyspnea"
+
+
+@pytest.mark.parametrize("phrase,expected", [
+    ("右腕 weakness があります、急に言葉が出にくくなりました", {"weakness", "aphasia", "focal_weakness"}),
+    ("高熱と激しい頭痛、首が硬くて曲げられません", {"fever", "headache"}),
+])
+def test_mixed_japanese_signs_preserve_neurologic_and_infectious_concepts(phrase, expected):
+    """Generic Japanese sign phrases must not collapse to an unrelated or empty concept set."""
+    from nova_agent.clinical_presentation import extract_presentation
+
+    observed = set(extract_presentation(phrase).symptoms)
+    assert expected <= observed
+
+
+def test_multilingual_feature_aliases_handle_cjk_joining_and_negation():
+    from nova_agent.differential import _present_with_aliases
+
+    positive = ["高熱と激しい頭痛、首が硬くて曲げにくい", "黒色便が出ています"]
+    assert _present_with_aliases("fever", positive)
+    assert _present_with_aliases("neck stiffness", positive)
+    assert _present_with_aliases("melena", positive)
+
+    negative = ["高熱はありません", "黒色便はありません"]
+    assert not _present_with_aliases("fever", negative)
+    assert not _present_with_aliases("melena", negative)
+
+
+@pytest.mark.parametrize("feature,phrase", [
+    ("localized tenderness", "局部压痛，按压时疼痛可以复现"),
+    ("reproducible with palpation", "pain reproduced by pressing"),
+    ("prodrome of lightheadedness", "先觉恶心出汗，视野变窄"),
+    ("brief loss of consciousness", "短暂晕厥后很快清醒"),
+])
+def test_high_value_multilingual_differential_aliases(feature, phrase):
+    from nova_agent.differential import _present_with_aliases
+
+    assert _present_with_aliases(feature, [phrase])

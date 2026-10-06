@@ -149,7 +149,7 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
     "sour taste": ["acid taste", "sour taste in my mouth", "bitter taste", "acid in my throat"],
     # --- GI bleeding
     "hematemesis": ["vomiting blood", "coffee-ground", "coffee grounds", "vomit blood"],
-    "melena": ["black tarry stools", "black sticky stools", "tarry black stools", "black stools", "dark tarry stools", "tarry stools", "black and sticky"],
+    "melena": ["black tarry stools", "black sticky stools", "tarry black stools", "dark tarry stools", "tarry stools", "black and sticky"],
     "hematochezia": ["blood in the stool", "red blood from the bottom", "bright red blood in stool"],
     "lightheadedness": ["feel faint", "dizzy on standing", "light-headed", "lightheaded", "feel lightheaded"],
     "pallor": ["pale", "looks pale", "very pale"],

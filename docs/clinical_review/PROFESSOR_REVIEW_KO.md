@@ -137,7 +137,7 @@
 현재 코드 분류: urgency=MEDIUM, dangerous=True (미검토)
 
 - 증상 특징: ["sudden onset palpitations", "irregular heartbeat", "racing heart", "associated lightheadedness", "known history of arrhythmia"]
-- 현재 확진 관련 소견: ["irregularly irregular rhythm", "narrow complex tachycardia", "atrial fibrillation on ecg"]
+- 현재 확진 관련 소견: ["irregularly irregular rhythm", "narrow complex tachycardia", "atrial fibrillation on ecg", "high-grade AV block", "second-degree AV block", "bradycardia with dropped beats"]
 - 위험 인자: ["hypertension", "structural heart disease", "hyperthyroidism", "excessive caffeine or stimulant use", "advanced age"]
 - 최소 검사: []
 - 위험 신호: ["hypotension", "syncope with palpitations", "chest pain with palpitations"]
@@ -351,7 +351,7 @@
 현재 코드 분류: urgency=MEDIUM, dangerous=False (미검토)
 
 - 증상 특징: ["periumbilical pain migrating to right lower quadrant", "anorexia", "low grade fever", "nausea"]
-- 현재 확진 관련 소견: ["inflamed appendix", "appendiceal wall thickening", "dilated appendix", "periappendiceal fat stranding", "appendicolith"]
+- 현재 확진 관련 소견: ["inflamed appendix", "appendiceal wall thickening", "dilated appendix", "periappendiceal fat stranding", "appendicolith", "appendiceal inflammation", "McBurney's point tenderness", "right lower quadrant tenderness", "rebound tenderness"]
 - 위험 인자: ["young age"]
 - 최소 검사: []
 - 위험 신호: ["rebound tenderness", "guarding"]
@@ -456,9 +456,9 @@
 파일: `nova_agent/knowledge/diseases/pulmonary.json`
 현재 코드 분류: urgency=MEDIUM, dangerous=False (미검토)
 
-- 증상 특징: ["wheeze", "known asthma or COPD", "worse with triggers", "prolonged expiration"]
+- 증상 특징: ["wheeze", "worse with triggers", "prolonged expiration", "dyspnea", "cough", "worsening dyspnea"]
 - 현재 확진 관련 소견: ["reduced peak flow", "hyperinflation on chest x-ray"]
-- 위험 인자: ["smoking", "known reactive airway disease", "allergen exposure"]
+- 위험 인자: ["smoking", "known reactive airway disease", "allergen exposure", "asthma", "COPD"]
 - 최소 검사: []
 - 위험 신호: ["silent chest", "unable to speak in full sentences", "hypoxia"]
 - 구별용 검사: ["cxr", "abg"]
@@ -499,7 +499,7 @@
 현재 코드 분류: urgency=MEDIUM, dangerous=False (미검토)
 
 - 증상 특징: ["productive cough", "fever", "pleuritic chest pain", "crackles on auscultation", "dyspnea"]
-- 현재 확진 관련 소견: ["consolidation", "infiltrate", "focal consolidation", "crackles"]
+- 현재 확진 관련 소견: ["consolidation", "infiltrate", "focal consolidation"]
 - 위험 인자: ["elderly age", "smoking", "COPD", "immunosuppression"]
 - 최소 검사: []
 - 위험 신호: ["hypoxia", "confusion", "hypotension"]

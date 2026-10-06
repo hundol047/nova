@@ -37,6 +37,7 @@ def _example(cands, label, ex_id="e1"):
         example_id=ex_id, patient_pseudonym="pt_x", encounter_time="2025-01-01",
         feature_vector=[0.0] * FEATURE_DIM, candidate_concept_ids=cands,
         label_concept_id=label, label_source=LabelSource.CLINICIAN_CONFIRMED,
+        candidate_signals={c: [float(i), 0.2, 0.1] for i,c in enumerate(cands)},
     )
 
 
@@ -46,8 +47,7 @@ def test_candidate_rows_layout_and_label_index():
     assert li == 1
     assert len(rows) == 3
     assert all(len(r) == MODEL_INPUT_DIM for r in rows)  # FEATURE_DIM + 3
-    # pseudo per-candidate signal does NOT encode the label (rows for a/c are not systematically
-    # smaller than b) — just check it's label-free by construction: different candidates differ.
+    # Synthetic recorded scores are fixture inputs independent of the label.
     assert rows[0][-3:] != rows[1][-3:]
 
 
@@ -123,6 +123,7 @@ def test_torch_training_and_checkpoint_roundtrip(tmp_path):
             "label_concept_id": "core:sepsis" if i % 2 else "tier2:migraine",
             "label_source": "CLINICIAN_CONFIRMED",
             "candidate_ids": ["core:sepsis", "tier2:migraine", "tier2:gout"],
+            "candidate_signals": {c: [0.2, 0.3, 0.1] for c in ["core:sepsis", "tier2:migraine", "tier2:gout"]},
             "age_years": 40 + i, "symptom_flags": ["fever"] if i % 2 else ["headache"],
         })
     snap = build_snapshot(raw, tmp_path / "ds")

@@ -1,0 +1,70 @@
+{
+  "split": "validation",
+  "cases": 8,
+  "corpus_sha256": "eb1c0bcce9d9bec4ce0328263e8b738c01d1c15b2cd8cb384779ed47c63aeeb9",
+  "tp": 4,
+  "fp": 0,
+  "fn": 0,
+  "tn": 4,
+  "sensitivity": 1.0,
+  "specificity": 1.0,
+  "scope": "SYNTHETIC_TARGET_FLAG_TEST_NOT_DIAGNOSTIC_ACCURACY",
+  "results": [
+    {
+      "id": "anaphylaxis-active-0",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "anaphylaxis"
+      ]
+    },
+    {
+      "id": "anaphylaxis-active-1",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "anaphylaxis"
+      ]
+    },
+    {
+      "id": "anaphylaxis-active-2",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "anaphylaxis"
+      ]
+    },
+    {
+      "id": "anaphylaxis-active-3",
+      "expected": true,
+      "predicted": true,
+      "flags": [
+        "anaphylaxis"
+      ]
+    },
+    {
+      "id": "anaphylaxis-family_history",
+      "expected": false,
+      "predicted": false,
+      "flags": []
+    },
+    {
+      "id": "anaphylaxis-past_medical_history",
+      "expected": false,
+      "predicted": false,
+      "flags": []
+    },
+    {
+      "id": "anaphylaxis-denied",
+      "expected": false,
+      "predicted": false,
+      "flags": []
+    },
+    {
+      "id": "anaphylaxis-unrelated",
+      "expected": false,
+      "predicted": false,
+      "flags": []
+    }
+  ]
+}

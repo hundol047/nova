@@ -1,0 +1,53 @@
+{
+  "baseline": "5548d5b",
+  "scope": "synthetic_mock_only",
+  "clinical_accuracy_verified": false,
+  "reference": {
+    "before": {
+      "correct": 16,
+      "total": 24,
+      "named_correct": 15,
+      "named_total": 22,
+      "critical_correct": 9,
+      "critical_total": 15
+    },
+    "after": {
+      "correct": 17,
+      "total": 24,
+      "named_correct": 15,
+      "named_total": 22,
+      "critical_correct": 9,
+      "critical_total": 15
+    }
+  },
+  "validation": {
+    "before": {
+      "correct": 4,
+      "total": 8,
+      "named_correct": 4,
+      "named_total": 4,
+      "critical_correct": 0,
+      "critical_total": 0
+    },
+    "after": {
+      "correct": 8,
+      "total": 8,
+      "named_correct": 4,
+      "named_total": 4,
+      "critical_correct": 0,
+      "critical_total": 0
+    }
+  },
+  "remaining_unimplemented_targets": 7,
+  "tests": {
+    "passed": 540,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "regression": {
+    "correct": 72,
+    "total": 72,
+    "families": 18
+  }
+}

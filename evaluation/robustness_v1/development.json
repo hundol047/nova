@@ -1,0 +1,1122 @@
+[
+  {
+    "family": "ChestPain01",
+    "variant": "original",
+    "case": {
+      "case_id": "ChestPain01__original",
+      "chief_complaint": "chest pain",
+      "demographics": {
+        "age": 58,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_coronary_syndrome",
+      "answers": {
+        "onset": "started suddenly about 1 hour ago",
+        "character": "substernal pressure, like someone sitting on my chest",
+        "aggravating": "worse with exertion; denies tearing or ripping pain",
+        "relieving": "somewhat better with rest",
+        "associated_symptoms": "diaphoresis, nausea, and pain radiates to the left arm and jaw; denies calf swelling, denies hemoptysis, denies unilateral leg pain",
+        "past_medical_history": "hypertension, diabetes, hyperlipidemia",
+        "family_history": "father had a heart attack at 55",
+        "social_history": "smokes one pack per day"
+      },
+      "exam_results": {
+        "vital_signs": "BP 150/95, HR 105, RR 20, Temp 37.0, SpO2 97%",
+        "cardiac_auscultation": "normal heart sounds, no murmur",
+        "general_appearance": "diaphoretic, appears uncomfortable"
+      },
+      "test_results": {
+        "ecg": "ST elevation in anterior leads",
+        "troponin": "elevated troponin",
+        "cxr": "no widened mediastinum, no pneumothorax"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "ChestPain01",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "ChestPain01__uppercase",
+      "chief_complaint": "chest pain",
+      "demographics": {
+        "age": 58,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_coronary_syndrome",
+      "answers": {
+        "onset": "STARTED SUDDENLY ABOUT 1 HOUR AGO",
+        "character": "SUBSTERNAL PRESSURE, LIKE SOMEONE SITTING ON MY CHEST",
+        "aggravating": "WORSE WITH EXERTION; DENIES TEARING OR RIPPING PAIN",
+        "relieving": "SOMEWHAT BETTER WITH REST",
+        "associated_symptoms": "DIAPHORESIS, NAUSEA, AND PAIN RADIATES TO THE LEFT ARM AND JAW; DENIES CALF SWELLING, DENIES HEMOPTYSIS, DENIES UNILATERAL LEG PAIN",
+        "past_medical_history": "HYPERTENSION, DIABETES, HYPERLIPIDEMIA",
+        "family_history": "FATHER HAD A HEART ATTACK AT 55",
+        "social_history": "SMOKES ONE PACK PER DAY"
+      },
+      "exam_results": {
+        "vital_signs": "BP 150/95, HR 105, RR 20, TEMP 37.0, SPO2 97%",
+        "cardiac_auscultation": "NORMAL HEART SOUNDS, NO MURMUR",
+        "general_appearance": "DIAPHORETIC, APPEARS UNCOMFORTABLE"
+      },
+      "test_results": {
+        "ecg": "ST ELEVATION IN ANTERIOR LEADS",
+        "troponin": "ELEVATED TROPONIN",
+        "cxr": "NO WIDENED MEDIASTINUM, NO PNEUMOTHORAX"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "ChestPain01",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "ChestPain01__extra_spaces",
+      "chief_complaint": "chest pain",
+      "demographics": {
+        "age": 58,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_coronary_syndrome",
+      "answers": {
+        "onset": "  started  suddenly  about  1  hour  ago  ",
+        "character": "  substernal  pressure,  like  someone  sitting  on  my  chest  ",
+        "aggravating": "  worse  with  exertion;  denies  tearing  or  ripping  pain  ",
+        "relieving": "  somewhat  better  with  rest  ",
+        "associated_symptoms": "  diaphoresis,  nausea,  and  pain  radiates  to  the  left  arm  and  jaw;  denies  calf  swelling,  denies  hemoptysis,  denies  unilateral  leg  pain  ",
+        "past_medical_history": "  hypertension,  diabetes,  hyperlipidemia  ",
+        "family_history": "  father  had  a  heart  attack  at  55  ",
+        "social_history": "  smokes  one  pack  per  day  "
+      },
+      "exam_results": {
+        "vital_signs": "  BP  150/95,  HR  105,  RR  20,  Temp  37.0,  SpO2  97%  ",
+        "cardiac_auscultation": "  normal  heart  sounds,  no  murmur  ",
+        "general_appearance": "  diaphoretic,  appears  uncomfortable  "
+      },
+      "test_results": {
+        "ecg": "  ST  elevation  in  anterior  leads  ",
+        "troponin": "  elevated  troponin  ",
+        "cxr": "  no  widened  mediastinum,  no  pneumothorax  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "ChestPain01",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "ChestPain01__sentence_breaks",
+      "chief_complaint": "chest pain",
+      "demographics": {
+        "age": 58,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_coronary_syndrome",
+      "answers": {
+        "onset": "started suddenly about 1 hour ago",
+        "character": "substernal pressure, like someone sitting on my chest",
+        "aggravating": "worse with exertion. denies tearing or ripping pain",
+        "relieving": "somewhat better with rest",
+        "associated_symptoms": "diaphoresis, nausea, and pain radiates to the left arm and jaw. denies calf swelling, denies hemoptysis, denies unilateral leg pain",
+        "past_medical_history": "hypertension, diabetes, hyperlipidemia",
+        "family_history": "father had a heart attack at 55",
+        "social_history": "smokes one pack per day"
+      },
+      "exam_results": {
+        "vital_signs": "BP 150/95, HR 105, RR 20, Temp 37.0, SpO2 97%",
+        "cardiac_auscultation": "normal heart sounds, no murmur",
+        "general_appearance": "diaphoretic, appears uncomfortable"
+      },
+      "test_results": {
+        "ecg": "ST elevation in anterior leads",
+        "troponin": "elevated troponin",
+        "cxr": "no widened mediastinum, no pneumothorax"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain01",
+    "variant": "original",
+    "case": {
+      "case_id": "AbdominalPain01__original",
+      "chief_complaint": "abdominal pain",
+      "demographics": {
+        "age": 28,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "ectopic_pregnancy",
+      "answers": {
+        "onset": "sudden onset lower abdominal pain 3 hours ago",
+        "location": "lower abdominal pain, more on one side, unilateral pelvic pain",
+        "character": "sharp pain",
+        "associated_symptoms": "vaginal bleeding and my period is late, missed period; also feeling dizzy; denies fever, denies rebound tenderness or guarding, denies vomiting bile",
+        "past_medical_history": "prior pelvic inflammatory disease, had an IUD placed previously"
+      },
+      "exam_results": {
+        "vital_signs": "BP 90/60, HR 118, RR 18, Temp 36.8, SpO2 99%",
+        "pelvic_exam": "unilateral adnexal tenderness",
+        "abdominal_exam": "mild lower abdominal tenderness, no rebound or guarding"
+      },
+      "test_results": {
+        "beta_hcg": "positive beta-hCG",
+        "pelvic_ultrasound": "no intrauterine pregnancy seen, free fluid in pelvis, adnexal mass"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain01",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "AbdominalPain01__uppercase",
+      "chief_complaint": "abdominal pain",
+      "demographics": {
+        "age": 28,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "ectopic_pregnancy",
+      "answers": {
+        "onset": "SUDDEN ONSET LOWER ABDOMINAL PAIN 3 HOURS AGO",
+        "location": "LOWER ABDOMINAL PAIN, MORE ON ONE SIDE, UNILATERAL PELVIC PAIN",
+        "character": "SHARP PAIN",
+        "associated_symptoms": "VAGINAL BLEEDING AND MY PERIOD IS LATE, MISSED PERIOD; ALSO FEELING DIZZY; DENIES FEVER, DENIES REBOUND TENDERNESS OR GUARDING, DENIES VOMITING BILE",
+        "past_medical_history": "PRIOR PELVIC INFLAMMATORY DISEASE, HAD AN IUD PLACED PREVIOUSLY"
+      },
+      "exam_results": {
+        "vital_signs": "BP 90/60, HR 118, RR 18, TEMP 36.8, SPO2 99%",
+        "pelvic_exam": "UNILATERAL ADNEXAL TENDERNESS",
+        "abdominal_exam": "MILD LOWER ABDOMINAL TENDERNESS, NO REBOUND OR GUARDING"
+      },
+      "test_results": {
+        "beta_hcg": "POSITIVE BETA-HCG",
+        "pelvic_ultrasound": "NO INTRAUTERINE PREGNANCY SEEN, FREE FLUID IN PELVIS, ADNEXAL MASS"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain01",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "AbdominalPain01__extra_spaces",
+      "chief_complaint": "abdominal pain",
+      "demographics": {
+        "age": 28,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "ectopic_pregnancy",
+      "answers": {
+        "onset": "  sudden  onset  lower  abdominal  pain  3  hours  ago  ",
+        "location": "  lower  abdominal  pain,  more  on  one  side,  unilateral  pelvic  pain  ",
+        "character": "  sharp  pain  ",
+        "associated_symptoms": "  vaginal  bleeding  and  my  period  is  late,  missed  period;  also  feeling  dizzy;  denies  fever,  denies  rebound  tenderness  or  guarding,  denies  vomiting  bile  ",
+        "past_medical_history": "  prior  pelvic  inflammatory  disease,  had  an  IUD  placed  previously  "
+      },
+      "exam_results": {
+        "vital_signs": "  BP  90/60,  HR  118,  RR  18,  Temp  36.8,  SpO2  99%  ",
+        "pelvic_exam": "  unilateral  adnexal  tenderness  ",
+        "abdominal_exam": "  mild  lower  abdominal  tenderness,  no  rebound  or  guarding  "
+      },
+      "test_results": {
+        "beta_hcg": "  positive  beta-hCG  ",
+        "pelvic_ultrasound": "  no  intrauterine  pregnancy  seen,  free  fluid  in  pelvis,  adnexal  mass  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain01",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "AbdominalPain01__sentence_breaks",
+      "chief_complaint": "abdominal pain",
+      "demographics": {
+        "age": 28,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "ectopic_pregnancy",
+      "answers": {
+        "onset": "sudden onset lower abdominal pain 3 hours ago",
+        "location": "lower abdominal pain, more on one side, unilateral pelvic pain",
+        "character": "sharp pain",
+        "associated_symptoms": "vaginal bleeding and my period is late, missed period. also feeling dizzy. denies fever, denies rebound tenderness or guarding, denies vomiting bile",
+        "past_medical_history": "prior pelvic inflammatory disease, had an IUD placed previously"
+      },
+      "exam_results": {
+        "vital_signs": "BP 90/60, HR 118, RR 18, Temp 36.8, SpO2 99%",
+        "pelvic_exam": "unilateral adnexal tenderness",
+        "abdominal_exam": "mild lower abdominal tenderness, no rebound or guarding"
+      },
+      "test_results": {
+        "beta_hcg": "positive beta-hCG",
+        "pelvic_ultrasound": "no intrauterine pregnancy seen, free fluid in pelvis, adnexal mass"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Headache01",
+    "variant": "original",
+    "case": {
+      "case_id": "Headache01__original",
+      "chief_complaint": "headache",
+      "demographics": {
+        "age": 45,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "subarachnoid_hemorrhage",
+      "answers": {
+        "onset": "sudden onset, thunderclap, worst headache of my life",
+        "character": "severe, thunderclap quality",
+        "severity": "10 out of 10, worst headache of my life",
+        "associated_symptoms": "neck stiffness, photophobia, and vomiting; denies fever, denies focal weakness or slurred speech",
+        "past_medical_history": "hypertension",
+        "family_history": "family history of brain aneurysm",
+        "social_history": "smokes"
+      },
+      "exam_results": {
+        "meningeal_signs": "positive neck stiffness, positive Kernig sign",
+        "neuro_exam": "no focal neurological deficit",
+        "vital_signs": "BP 165/100, HR 88, RR 16, Temp 36.9, SpO2 98%"
+      },
+      "test_results": {
+        "ct_head": "subarachnoid blood seen on non-contrast CT"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Headache01",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Headache01__uppercase",
+      "chief_complaint": "headache",
+      "demographics": {
+        "age": 45,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "subarachnoid_hemorrhage",
+      "answers": {
+        "onset": "SUDDEN ONSET, THUNDERCLAP, WORST HEADACHE OF MY LIFE",
+        "character": "SEVERE, THUNDERCLAP QUALITY",
+        "severity": "10 OUT OF 10, WORST HEADACHE OF MY LIFE",
+        "associated_symptoms": "NECK STIFFNESS, PHOTOPHOBIA, AND VOMITING; DENIES FEVER, DENIES FOCAL WEAKNESS OR SLURRED SPEECH",
+        "past_medical_history": "HYPERTENSION",
+        "family_history": "FAMILY HISTORY OF BRAIN ANEURYSM",
+        "social_history": "SMOKES"
+      },
+      "exam_results": {
+        "meningeal_signs": "POSITIVE NECK STIFFNESS, POSITIVE KERNIG SIGN",
+        "neuro_exam": "NO FOCAL NEUROLOGICAL DEFICIT",
+        "vital_signs": "BP 165/100, HR 88, RR 16, TEMP 36.9, SPO2 98%"
+      },
+      "test_results": {
+        "ct_head": "SUBARACHNOID BLOOD SEEN ON NON-CONTRAST CT"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Headache01",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Headache01__extra_spaces",
+      "chief_complaint": "headache",
+      "demographics": {
+        "age": 45,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "subarachnoid_hemorrhage",
+      "answers": {
+        "onset": "  sudden  onset,  thunderclap,  worst  headache  of  my  life  ",
+        "character": "  severe,  thunderclap  quality  ",
+        "severity": "  10  out  of  10,  worst  headache  of  my  life  ",
+        "associated_symptoms": "  neck  stiffness,  photophobia,  and  vomiting;  denies  fever,  denies  focal  weakness  or  slurred  speech  ",
+        "past_medical_history": "  hypertension  ",
+        "family_history": "  family  history  of  brain  aneurysm  ",
+        "social_history": "  smokes  "
+      },
+      "exam_results": {
+        "meningeal_signs": "  positive  neck  stiffness,  positive  Kernig  sign  ",
+        "neuro_exam": "  no  focal  neurological  deficit  ",
+        "vital_signs": "  BP  165/100,  HR  88,  RR  16,  Temp  36.9,  SpO2  98%  "
+      },
+      "test_results": {
+        "ct_head": "  subarachnoid  blood  seen  on  non-contrast  CT  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Headache01",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Headache01__sentence_breaks",
+      "chief_complaint": "headache",
+      "demographics": {
+        "age": 45,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "subarachnoid_hemorrhage",
+      "answers": {
+        "onset": "sudden onset, thunderclap, worst headache of my life",
+        "character": "severe, thunderclap quality",
+        "severity": "10 out of 10, worst headache of my life",
+        "associated_symptoms": "neck stiffness, photophobia, and vomiting. denies fever, denies focal weakness or slurred speech",
+        "past_medical_history": "hypertension",
+        "family_history": "family history of brain aneurysm",
+        "social_history": "smokes"
+      },
+      "exam_results": {
+        "meningeal_signs": "positive neck stiffness, positive Kernig sign",
+        "neuro_exam": "no focal neurological deficit",
+        "vital_signs": "BP 165/100, HR 88, RR 16, Temp 36.9, SpO2 98%"
+      },
+      "test_results": {
+        "ct_head": "subarachnoid blood seen on non-contrast CT"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever01",
+    "variant": "original",
+    "case": {
+      "case_id": "Fever01__original",
+      "chief_complaint": "fever",
+      "demographics": {
+        "age": 22,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "meningitis",
+      "answers": {
+        "onset": "started yesterday, fever and headache",
+        "associated_symptoms": "neck stiffness, photophobia, and confusion; denies thunderclap or worst headache of life, denies focal weakness",
+        "past_medical_history": "no chronic illnesses",
+        "social_history": "college dormitory, close contact with a sick roommate"
+      },
+      "exam_results": {
+        "meningeal_signs": "positive neck stiffness, positive Brudzinski sign",
+        "skin_exam": "petechial rash on the trunk",
+        "vital_signs": "BP 100/65, HR 122, RR 22, Temp 39.5, SpO2 96%",
+        "mental_status_exam": "mildly confused, oriented to person only"
+      },
+      "test_results": {
+        "lumbar_puncture": "CSF pleocytosis with elevated protein and low glucose",
+        "blood_culture": "gram-negative diplococci on gram stain",
+        "cbc": "elevated white blood cell count"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever01",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Fever01__uppercase",
+      "chief_complaint": "fever",
+      "demographics": {
+        "age": 22,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "meningitis",
+      "answers": {
+        "onset": "STARTED YESTERDAY, FEVER AND HEADACHE",
+        "associated_symptoms": "NECK STIFFNESS, PHOTOPHOBIA, AND CONFUSION; DENIES THUNDERCLAP OR WORST HEADACHE OF LIFE, DENIES FOCAL WEAKNESS",
+        "past_medical_history": "NO CHRONIC ILLNESSES",
+        "social_history": "COLLEGE DORMITORY, CLOSE CONTACT WITH A SICK ROOMMATE"
+      },
+      "exam_results": {
+        "meningeal_signs": "POSITIVE NECK STIFFNESS, POSITIVE BRUDZINSKI SIGN",
+        "skin_exam": "PETECHIAL RASH ON THE TRUNK",
+        "vital_signs": "BP 100/65, HR 122, RR 22, TEMP 39.5, SPO2 96%",
+        "mental_status_exam": "MILDLY CONFUSED, ORIENTED TO PERSON ONLY"
+      },
+      "test_results": {
+        "lumbar_puncture": "CSF PLEOCYTOSIS WITH ELEVATED PROTEIN AND LOW GLUCOSE",
+        "blood_culture": "GRAM-NEGATIVE DIPLOCOCCI ON GRAM STAIN",
+        "cbc": "ELEVATED WHITE BLOOD CELL COUNT"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever01",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Fever01__extra_spaces",
+      "chief_complaint": "fever",
+      "demographics": {
+        "age": 22,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "meningitis",
+      "answers": {
+        "onset": "  started  yesterday,  fever  and  headache  ",
+        "associated_symptoms": "  neck  stiffness,  photophobia,  and  confusion;  denies  thunderclap  or  worst  headache  of  life,  denies  focal  weakness  ",
+        "past_medical_history": "  no  chronic  illnesses  ",
+        "social_history": "  college  dormitory,  close  contact  with  a  sick  roommate  "
+      },
+      "exam_results": {
+        "meningeal_signs": "  positive  neck  stiffness,  positive  Brudzinski  sign  ",
+        "skin_exam": "  petechial  rash  on  the  trunk  ",
+        "vital_signs": "  BP  100/65,  HR  122,  RR  22,  Temp  39.5,  SpO2  96%  ",
+        "mental_status_exam": "  mildly  confused,  oriented  to  person  only  "
+      },
+      "test_results": {
+        "lumbar_puncture": "  CSF  pleocytosis  with  elevated  protein  and  low  glucose  ",
+        "blood_culture": "  gram-negative  diplococci  on  gram  stain  ",
+        "cbc": "  elevated  white  blood  cell  count  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever01",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Fever01__sentence_breaks",
+      "chief_complaint": "fever",
+      "demographics": {
+        "age": 22,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "meningitis",
+      "answers": {
+        "onset": "started yesterday, fever and headache",
+        "associated_symptoms": "neck stiffness, photophobia, and confusion. denies thunderclap or worst headache of life, denies focal weakness",
+        "past_medical_history": "no chronic illnesses",
+        "social_history": "college dormitory, close contact with a sick roommate"
+      },
+      "exam_results": {
+        "meningeal_signs": "positive neck stiffness, positive Brudzinski sign",
+        "skin_exam": "petechial rash on the trunk",
+        "vital_signs": "BP 100/65, HR 122, RR 22, Temp 39.5, SpO2 96%",
+        "mental_status_exam": "mildly confused, oriented to person only"
+      },
+      "test_results": {
+        "lumbar_puncture": "CSF pleocytosis with elevated protein and low glucose",
+        "blood_culture": "gram-negative diplococci on gram stain",
+        "cbc": "elevated white blood cell count"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dyspnea01",
+    "variant": "original",
+    "case": {
+      "case_id": "Dyspnea01__original",
+      "chief_complaint": "shortness of breath",
+      "demographics": {
+        "age": 50,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "pulmonary_embolism",
+      "answers": {
+        "onset": "sudden onset shortness of breath 30 minutes ago",
+        "character": "pleuritic chest pain, sharp pain worse with breathing",
+        "associated_symptoms": "unilateral leg pain and calf swelling; denies wheeze, denies fever, denies absent breath sounds",
+        "past_medical_history": "recent long haul flight, recent surgery on the leg",
+        "medication": "oral contraceptive pills"
+      },
+      "exam_results": {
+        "vital_signs": "BP 110/70, HR 128, RR 26, Temp 37.1, SpO2 89%",
+        "extremity_exam": "right calf swelling and tenderness",
+        "lung_auscultation": "clear breath sounds bilaterally"
+      },
+      "test_results": {
+        "d_dimer": "elevated D-dimer",
+        "ct_chest_angio": "filling defect in the right pulmonary artery consistent with pulmonary embolism",
+        "ecg": "sinus tachycardia, no ST elevation"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dyspnea01",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Dyspnea01__uppercase",
+      "chief_complaint": "shortness of breath",
+      "demographics": {
+        "age": 50,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "pulmonary_embolism",
+      "answers": {
+        "onset": "SUDDEN ONSET SHORTNESS OF BREATH 30 MINUTES AGO",
+        "character": "PLEURITIC CHEST PAIN, SHARP PAIN WORSE WITH BREATHING",
+        "associated_symptoms": "UNILATERAL LEG PAIN AND CALF SWELLING; DENIES WHEEZE, DENIES FEVER, DENIES ABSENT BREATH SOUNDS",
+        "past_medical_history": "RECENT LONG HAUL FLIGHT, RECENT SURGERY ON THE LEG",
+        "medication": "ORAL CONTRACEPTIVE PILLS"
+      },
+      "exam_results": {
+        "vital_signs": "BP 110/70, HR 128, RR 26, TEMP 37.1, SPO2 89%",
+        "extremity_exam": "RIGHT CALF SWELLING AND TENDERNESS",
+        "lung_auscultation": "CLEAR BREATH SOUNDS BILATERALLY"
+      },
+      "test_results": {
+        "d_dimer": "ELEVATED D-DIMER",
+        "ct_chest_angio": "FILLING DEFECT IN THE RIGHT PULMONARY ARTERY CONSISTENT WITH PULMONARY EMBOLISM",
+        "ecg": "SINUS TACHYCARDIA, NO ST ELEVATION"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dyspnea01",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Dyspnea01__extra_spaces",
+      "chief_complaint": "shortness of breath",
+      "demographics": {
+        "age": 50,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "pulmonary_embolism",
+      "answers": {
+        "onset": "  sudden  onset  shortness  of  breath  30  minutes  ago  ",
+        "character": "  pleuritic  chest  pain,  sharp  pain  worse  with  breathing  ",
+        "associated_symptoms": "  unilateral  leg  pain  and  calf  swelling;  denies  wheeze,  denies  fever,  denies  absent  breath  sounds  ",
+        "past_medical_history": "  recent  long  haul  flight,  recent  surgery  on  the  leg  ",
+        "medication": "  oral  contraceptive  pills  "
+      },
+      "exam_results": {
+        "vital_signs": "  BP  110/70,  HR  128,  RR  26,  Temp  37.1,  SpO2  89%  ",
+        "extremity_exam": "  right  calf  swelling  and  tenderness  ",
+        "lung_auscultation": "  clear  breath  sounds  bilaterally  "
+      },
+      "test_results": {
+        "d_dimer": "  elevated  D-dimer  ",
+        "ct_chest_angio": "  filling  defect  in  the  right  pulmonary  artery  consistent  with  pulmonary  embolism  ",
+        "ecg": "  sinus  tachycardia,  no  ST  elevation  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dyspnea01",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Dyspnea01__sentence_breaks",
+      "chief_complaint": "shortness of breath",
+      "demographics": {
+        "age": 50,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "pulmonary_embolism",
+      "answers": {
+        "onset": "sudden onset shortness of breath 30 minutes ago",
+        "character": "pleuritic chest pain, sharp pain worse with breathing",
+        "associated_symptoms": "unilateral leg pain and calf swelling. denies wheeze, denies fever, denies absent breath sounds",
+        "past_medical_history": "recent long haul flight, recent surgery on the leg",
+        "medication": "oral contraceptive pills"
+      },
+      "exam_results": {
+        "vital_signs": "BP 110/70, HR 128, RR 26, Temp 37.1, SpO2 89%",
+        "extremity_exam": "right calf swelling and tenderness",
+        "lung_auscultation": "clear breath sounds bilaterally"
+      },
+      "test_results": {
+        "d_dimer": "elevated D-dimer",
+        "ct_chest_angio": "filling defect in the right pulmonary artery consistent with pulmonary embolism",
+        "ecg": "sinus tachycardia, no ST elevation"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dizziness01",
+    "variant": "original",
+    "case": {
+      "case_id": "Dizziness01__original",
+      "chief_complaint": "dizziness",
+      "demographics": {
+        "age": 65,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "bppv",
+      "answers": {
+        "onset": "brief episodes for the past week",
+        "duration": "each episode lasts less than a minute",
+        "aggravating": "triggered by turning my head or rolling over in bed",
+        "associated_symptoms": "denies focal weakness, denies slurred speech, denies hearing loss, denies severe headache",
+        "past_medical_history": "no chronic illnesses"
+      },
+      "exam_results": {
+        "neuro_exam": "no focal neurological deficit",
+        "vital_signs": "BP 130/80, HR 76, RR 16, Temp 36.8, SpO2 98%"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dizziness01",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Dizziness01__uppercase",
+      "chief_complaint": "dizziness",
+      "demographics": {
+        "age": 65,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "bppv",
+      "answers": {
+        "onset": "BRIEF EPISODES FOR THE PAST WEEK",
+        "duration": "EACH EPISODE LASTS LESS THAN A MINUTE",
+        "aggravating": "TRIGGERED BY TURNING MY HEAD OR ROLLING OVER IN BED",
+        "associated_symptoms": "DENIES FOCAL WEAKNESS, DENIES SLURRED SPEECH, DENIES HEARING LOSS, DENIES SEVERE HEADACHE",
+        "past_medical_history": "NO CHRONIC ILLNESSES"
+      },
+      "exam_results": {
+        "neuro_exam": "NO FOCAL NEUROLOGICAL DEFICIT",
+        "vital_signs": "BP 130/80, HR 76, RR 16, TEMP 36.8, SPO2 98%"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dizziness01",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Dizziness01__extra_spaces",
+      "chief_complaint": "dizziness",
+      "demographics": {
+        "age": 65,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "bppv",
+      "answers": {
+        "onset": "  brief  episodes  for  the  past  week  ",
+        "duration": "  each  episode  lasts  less  than  a  minute  ",
+        "aggravating": "  triggered  by  turning  my  head  or  rolling  over  in  bed  ",
+        "associated_symptoms": "  denies  focal  weakness,  denies  slurred  speech,  denies  hearing  loss,  denies  severe  headache  ",
+        "past_medical_history": "  no  chronic  illnesses  "
+      },
+      "exam_results": {
+        "neuro_exam": "  no  focal  neurological  deficit  ",
+        "vital_signs": "  BP  130/80,  HR  76,  RR  16,  Temp  36.8,  SpO2  98%  "
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dizziness01",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Dizziness01__sentence_breaks",
+      "chief_complaint": "dizziness",
+      "demographics": {
+        "age": 65,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "bppv",
+      "answers": {
+        "onset": "brief episodes for the past week",
+        "duration": "each episode lasts less than a minute",
+        "aggravating": "triggered by turning my head or rolling over in bed",
+        "associated_symptoms": "denies focal weakness, denies slurred speech, denies hearing loss, denies severe headache",
+        "past_medical_history": "no chronic illnesses"
+      },
+      "exam_results": {
+        "neuro_exam": "no focal neurological deficit",
+        "vital_signs": "BP 130/80, HR 76, RR 16, Temp 36.8, SpO2 98%"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AlteredMentalStatus01",
+    "variant": "original",
+    "case": {
+      "case_id": "AlteredMentalStatus01__original",
+      "chief_complaint": "confusion",
+      "demographics": {
+        "age": 19,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "diabetic_ketoacidosis",
+      "answers": {
+        "onset": "over the past day, increasingly confused",
+        "associated_symptoms": "polyuria, polydipsia, nausea and vomiting, abdominal pain; denies focal weakness, denies neck stiffness, denies fever",
+        "past_medical_history": "type 1 diabetes",
+        "medication": "ran out of insulin three days ago"
+      },
+      "exam_results": {
+        "mental_status_exam": "confused, oriented to person only",
+        "vital_signs": "BP 100/65, HR 118, RR 28, Temp 37.0, SpO2 98%",
+        "abdominal_exam": "mild diffuse tenderness, no rebound or guarding"
+      },
+      "test_results": {
+        "glucose_point_of_care": "blood glucose 450 mg/dL",
+        "ketones": "large ketones present",
+        "abg": "metabolic acidosis with kussmaul breathing, pH 7.15"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AlteredMentalStatus01",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "AlteredMentalStatus01__uppercase",
+      "chief_complaint": "confusion",
+      "demographics": {
+        "age": 19,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "diabetic_ketoacidosis",
+      "answers": {
+        "onset": "OVER THE PAST DAY, INCREASINGLY CONFUSED",
+        "associated_symptoms": "POLYURIA, POLYDIPSIA, NAUSEA AND VOMITING, ABDOMINAL PAIN; DENIES FOCAL WEAKNESS, DENIES NECK STIFFNESS, DENIES FEVER",
+        "past_medical_history": "TYPE 1 DIABETES",
+        "medication": "RAN OUT OF INSULIN THREE DAYS AGO"
+      },
+      "exam_results": {
+        "mental_status_exam": "CONFUSED, ORIENTED TO PERSON ONLY",
+        "vital_signs": "BP 100/65, HR 118, RR 28, TEMP 37.0, SPO2 98%",
+        "abdominal_exam": "MILD DIFFUSE TENDERNESS, NO REBOUND OR GUARDING"
+      },
+      "test_results": {
+        "glucose_point_of_care": "BLOOD GLUCOSE 450 MG/DL",
+        "ketones": "LARGE KETONES PRESENT",
+        "abg": "METABOLIC ACIDOSIS WITH KUSSMAUL BREATHING, PH 7.15"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AlteredMentalStatus01",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "AlteredMentalStatus01__extra_spaces",
+      "chief_complaint": "confusion",
+      "demographics": {
+        "age": 19,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "diabetic_ketoacidosis",
+      "answers": {
+        "onset": "  over  the  past  day,  increasingly  confused  ",
+        "associated_symptoms": "  polyuria,  polydipsia,  nausea  and  vomiting,  abdominal  pain;  denies  focal  weakness,  denies  neck  stiffness,  denies  fever  ",
+        "past_medical_history": "  type  1  diabetes  ",
+        "medication": "  ran  out  of  insulin  three  days  ago  "
+      },
+      "exam_results": {
+        "mental_status_exam": "  confused,  oriented  to  person  only  ",
+        "vital_signs": "  BP  100/65,  HR  118,  RR  28,  Temp  37.0,  SpO2  98%  ",
+        "abdominal_exam": "  mild  diffuse  tenderness,  no  rebound  or  guarding  "
+      },
+      "test_results": {
+        "glucose_point_of_care": "  blood  glucose  450  mg/dL  ",
+        "ketones": "  large  ketones  present  ",
+        "abg": "  metabolic  acidosis  with  kussmaul  breathing,  pH  7.15  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AlteredMentalStatus01",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "AlteredMentalStatus01__sentence_breaks",
+      "chief_complaint": "confusion",
+      "demographics": {
+        "age": 19,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "diabetic_ketoacidosis",
+      "answers": {
+        "onset": "over the past day, increasingly confused",
+        "associated_symptoms": "polyuria, polydipsia, nausea and vomiting, abdominal pain. denies focal weakness, denies neck stiffness, denies fever",
+        "past_medical_history": "type 1 diabetes",
+        "medication": "ran out of insulin three days ago"
+      },
+      "exam_results": {
+        "mental_status_exam": "confused, oriented to person only",
+        "vital_signs": "BP 100/65, HR 118, RR 28, Temp 37.0, SpO2 98%",
+        "abdominal_exam": "mild diffuse tenderness, no rebound or guarding"
+      },
+      "test_results": {
+        "glucose_point_of_care": "blood glucose 450 mg/dL",
+        "ketones": "large ketones present",
+        "abg": "metabolic acidosis with kussmaul breathing, pH 7.15"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "UrinarySymptoms01",
+    "variant": "original",
+    "case": {
+      "case_id": "UrinarySymptoms01__original",
+      "chief_complaint": "painful urination",
+      "demographics": {
+        "age": 30,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "uncomplicated_cystitis",
+      "answers": {
+        "onset": "started 2 days ago",
+        "associated_symptoms": "dysuria, urinary frequency and urgency; denies fever, denies flank pain, denies nausea or vomiting",
+        "past_medical_history": "prior urinary tract infection last year"
+      },
+      "exam_results": {
+        "abdominal_exam": "mild suprapubic tenderness",
+        "vital_signs": "BP 118/76, HR 82, RR 16, Temp 36.9, SpO2 99%",
+        "costovertebral_tenderness": "no costovertebral angle tenderness"
+      },
+      "test_results": {
+        "urinalysis": "positive leukocyte esterase and nitrites"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "UrinarySymptoms01",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "UrinarySymptoms01__uppercase",
+      "chief_complaint": "painful urination",
+      "demographics": {
+        "age": 30,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "uncomplicated_cystitis",
+      "answers": {
+        "onset": "STARTED 2 DAYS AGO",
+        "associated_symptoms": "DYSURIA, URINARY FREQUENCY AND URGENCY; DENIES FEVER, DENIES FLANK PAIN, DENIES NAUSEA OR VOMITING",
+        "past_medical_history": "PRIOR URINARY TRACT INFECTION LAST YEAR"
+      },
+      "exam_results": {
+        "abdominal_exam": "MILD SUPRAPUBIC TENDERNESS",
+        "vital_signs": "BP 118/76, HR 82, RR 16, TEMP 36.9, SPO2 99%",
+        "costovertebral_tenderness": "NO COSTOVERTEBRAL ANGLE TENDERNESS"
+      },
+      "test_results": {
+        "urinalysis": "POSITIVE LEUKOCYTE ESTERASE AND NITRITES"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "UrinarySymptoms01",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "UrinarySymptoms01__extra_spaces",
+      "chief_complaint": "painful urination",
+      "demographics": {
+        "age": 30,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "uncomplicated_cystitis",
+      "answers": {
+        "onset": "  started  2  days  ago  ",
+        "associated_symptoms": "  dysuria,  urinary  frequency  and  urgency;  denies  fever,  denies  flank  pain,  denies  nausea  or  vomiting  ",
+        "past_medical_history": "  prior  urinary  tract  infection  last  year  "
+      },
+      "exam_results": {
+        "abdominal_exam": "  mild  suprapubic  tenderness  ",
+        "vital_signs": "  BP  118/76,  HR  82,  RR  16,  Temp  36.9,  SpO2  99%  ",
+        "costovertebral_tenderness": "  no  costovertebral  angle  tenderness  "
+      },
+      "test_results": {
+        "urinalysis": "  positive  leukocyte  esterase  and  nitrites  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "UrinarySymptoms01",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "UrinarySymptoms01__sentence_breaks",
+      "chief_complaint": "painful urination",
+      "demographics": {
+        "age": 30,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "uncomplicated_cystitis",
+      "answers": {
+        "onset": "started 2 days ago",
+        "associated_symptoms": "dysuria, urinary frequency and urgency. denies fever, denies flank pain, denies nausea or vomiting",
+        "past_medical_history": "prior urinary tract infection last year"
+      },
+      "exam_results": {
+        "abdominal_exam": "mild suprapubic tenderness",
+        "vital_signs": "BP 118/76, HR 82, RR 16, Temp 36.9, SpO2 99%",
+        "costovertebral_tenderness": "no costovertebral angle tenderness"
+      },
+      "test_results": {
+        "urinalysis": "positive leukocyte esterase and nitrites"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "standard",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  }
+]

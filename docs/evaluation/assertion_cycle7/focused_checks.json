@@ -1,0 +1,77 @@
+{
+  "scope": "AUTHOR_WRITTEN_SOFTWARE_REGRESSIONS_NOT_DIAGNOSTIC_ACCURACY",
+  "before_correct": 0,
+  "after_correct": 7,
+  "checks": [
+    {
+      "feature": "left arm pain",
+      "text": "Blood pressure measured in the left arm. Abdominal pain persists",
+      "kwargs": {
+        "scrub_negated_spans": false
+      },
+      "expected": false,
+      "before": true,
+      "after": false
+    },
+    {
+      "feature": "left arm pain",
+      "text": "Blood pressure measured in the left arm. Abdominal pain persists",
+      "kwargs": {
+        "scrub_negated_spans": true
+      },
+      "expected": false,
+      "before": true,
+      "after": false
+    },
+    {
+      "feature": "left arm pain",
+      "text": "Blood pressure measured in the left arm; Abdominal pain persists",
+      "kwargs": {
+        "scrub_negated_spans": false
+      },
+      "expected": false,
+      "before": true,
+      "after": false
+    },
+    {
+      "feature": "left arm pain",
+      "text": "Blood pressure measured in the left arm; Abdominal pain persists",
+      "kwargs": {
+        "scrub_negated_spans": true
+      },
+      "expected": false,
+      "before": true,
+      "after": false
+    },
+    {
+      "feature": "left arm pain",
+      "text": "Blood pressure measured in the left arm\nAbdominal pain persists",
+      "kwargs": {
+        "scrub_negated_spans": false
+      },
+      "expected": false,
+      "before": true,
+      "after": false
+    },
+    {
+      "feature": "left arm pain",
+      "text": "Blood pressure measured in the left arm\nAbdominal pain persists",
+      "kwargs": {
+        "scrub_negated_spans": true
+      },
+      "expected": false,
+      "before": true,
+      "after": false
+    },
+    {
+      "feature": "ST elevation",
+      "text": "ST segments were assessed. Elevation of liver enzymes was detected.",
+      "kwargs": {
+        "strict": true
+      },
+      "expected": false,
+      "before": true,
+      "after": false
+    }
+  ]
+}

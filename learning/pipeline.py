@@ -14,7 +14,7 @@ The LLM is NEVER handed the full 5,000 catalog — only the narrowed bundle. A n
 (free text outside the bundle) is normalized to a canonical concept or preserved as
 UNMAPPED_LLM_DIAGNOSIS. UNKNOWN/OOD remain first-class outcomes even with 5,000 concepts.
 
-Dependency-free (uses the deterministic retrieval/rerank paths). Never in the submission.
+Dependency-free (uses the deterministic retrieval/rerank paths). Included as a bounded candidate-context runtime dependency.
 """
 
 from __future__ import annotations
@@ -179,7 +179,9 @@ class FiveKPipeline:
         if not lexically_grounded:
             return PipelineOutcome.UNKNOWN_PRESENTATION
         top = cands[0]
-        if top.score >= KNOWN_SCORE and not is_ood:
+        concept = self._catalog.get_condition(top.concept_id)
+        if (top.score >= KNOWN_SCORE and not is_ood and concept is not None
+                and concept.curation_status == "DEEP"):
             return PipelineOutcome.KNOWN_CONDITION
         if top.score >= POSSIBLE_SCORE:
             return PipelineOutcome.POSSIBLE_UNMAPPED_CONDITION
@@ -190,8 +192,9 @@ class FiveKPipeline:
         raw = (raw_text or "").strip()
         if len(raw) < 3:
             return NormalizedLLMDiagnosis(raw, False, None, None, "UNMAPPED_LLM_DIAGNOSIS")
-        hits = self._catalog.search_conditions(raw, limit=1)
-        if hits and hits[0].score >= 0.9:
-            c = hits[0].concept
+        from nova_agent.open_world import OpenWorldRetriever
+        result = OpenWorldRetriever(self._catalog).normalize_llm_diagnosis(raw)
+        if result.mapped:
+            c = result.concept
             return NormalizedLLMDiagnosis(raw, True, c.concept_id, c.canonical_name, "MAPPED")
         return NormalizedLLMDiagnosis(raw, False, None, None, "UNMAPPED_LLM_DIAGNOSIS")

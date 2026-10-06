@@ -1,0 +1,3 @@
+{
+  "reason": "Configure provider=competition, fixed model, and authorized endpoint explicitly; mock cannot measure this comparison."
+}

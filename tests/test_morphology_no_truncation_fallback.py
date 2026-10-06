@@ -85,3 +85,11 @@ def test_ish_suffix_rule_does_not_introduce_an_unrelated_collision():
     # "selfish"/"finish" share the "-ish" suffix but their stems ("self"/"fin") must not
     # accidentally satisfy an unrelated clinical phrase.
     assert feature_present("self harm", ["patient describes feeling selfish about asking for help"]) is False
+
+
+def test_breathe_breathing_and_breath_share_a_stem_but_not_unrelated_words():
+    """Reviewed irregular override (see matching._IRREGULAR_STEM_OVERRIDES): verb/gerund/noun forms of one
+    clinical concept normalize together; a word that merely shares the prefix does not."""
+    from nova_agent.matching import _stem
+    assert _stem("breathe") == _stem("breathing") == _stem("breath") == _stem("breaths")
+    assert _stem("breathtaking") != _stem("breath")

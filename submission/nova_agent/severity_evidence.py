@@ -32,6 +32,7 @@ import re
 from typing import List, Optional
 
 from nova_agent.matching import feature_denied, feature_present
+from nova_agent.glucose_evidence import current_asserted_lab_clauses
 from nova_agent.state import PatientState
 
 HYPOTENSION_SBP_THRESHOLD = 90
@@ -95,16 +96,24 @@ def extract_lactate_mmol_l(lactate_result_text: Optional[str]) -> Optional[float
     # (~18x larger) must NOT be read as a bare mmol/L number. A qualitative "elevated" with a
     # mg/dL number still counts via the qualitative path below; only the NUMERIC parse is refused.
     from nova_agent.unit_safety import value_is_in_disallowed_unit
-    numeric_unit_unsafe = value_is_in_disallowed_unit(lactate_result_text, ("mmol/l",), ("mg/dl",))
-    match = None if numeric_unit_unsafe else _LACTATE_PATTERN.search(lactate_result_text)
-    if not match:
-        if _QUALITATIVE_ELEVATED_LACTATE_PATTERN.search(lactate_result_text):
-            return QUALITATIVE_ELEVATED_LACTATE_MMOL_L
+    values = set()
+    qualitative_high = False
+    for clause in current_asserted_lab_clauses(lactate_result_text):
+        unsafe = value_is_in_disallowed_unit(clause, ("mmol/l",), ("mg/dl",))
+        matches = [] if unsafe else list(_LACTATE_PATTERN.finditer(clause))
+        values.update(float(match.group(1)) for match in matches)
+        if not matches and _QUALITATIVE_ELEVATED_LACTATE_PATTERN.search(clause):
+            qualitative_high = True
+        elif unsafe:
+            return None
+    if len(values) > 1:
         return None
-    try:
-        return float(match.group(1))
-    except ValueError:
-        return None
+    if values:
+        value = next(iter(values))
+        if qualitative_high and value < ELEVATED_LACTATE_MMOL_L:
+            return None
+        return value
+    return QUALITATIVE_ELEVATED_LACTATE_MMOL_L if qualitative_high else None
 
 
 def systemic_severity_signals(state: PatientState) -> List[str]:

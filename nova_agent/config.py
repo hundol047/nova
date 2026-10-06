@@ -168,6 +168,11 @@ class NovaConfig:
     # Mondo (CC BY 4.0) EXACT synonyms as Tier-2 aliases. OFF by default: measured on the Round M
     # development set it changed no decision (Top1 unchanged) and lowered retrieval@150/rerank@25 by
     # 0.8 points each, so it is shipped as opt-in data (NOVA_MONDO_SYNONYMS=1) rather than active.
+    # Disease Ontology (CC0) EXACT synonyms as Tier-2 aliases: also OFF by default. On the Round M development
+    # set they changed no decision (Top1 unchanged), and enabling them changes which candidate review
+    # entries the frozen, reproducible review datasets screen out (research/diagnosis_expansion), so the
+    # integrated release keeps them opt-in (NOVA_OPEN_SYNONYMS=1) rather than silently active.
+    open_synonyms_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_OPEN_SYNONYMS", False))
     mondo_synonyms_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_MONDO_SYNONYMS", False))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(

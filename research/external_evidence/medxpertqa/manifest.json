@@ -1,0 +1,47 @@
+{
+  "dataset": "TsinghuaC3I/MedXpertQA",
+  "revision": "7e7c465a68eb2b866926bfa59c8c9d17a8daba65",
+  "retrieved_at": "2026-10-03",
+  "purpose": "EXTERNAL_PUBLIC_BENCHMARK_INTAKE_NOT_TRAINING",
+  "license_declared": "MIT",
+  "files": [
+    {
+      "path": "Text_test.jsonl.gz",
+      "url": "https://huggingface.co/datasets/TsinghuaC3I/MedXpertQA/resolve/7e7c465a68eb2b866926bfa59c8c9d17a8daba65/Text/test.jsonl",
+      "uncompressed_sha256": "07ea977f7e326909b51c883b65f6ad7f399fc6db07408ef3630f4e3048ec71b2",
+      "uncompressed_bytes": 4163223,
+      "sha256": "b19ce104887b00969e50c073e5e2cc300e4701b760234f5698c1c39fbfcbc587",
+      "bytes": 1114920
+    },
+    {
+      "path": "Text_dev.jsonl.gz",
+      "url": "https://huggingface.co/datasets/TsinghuaC3I/MedXpertQA/resolve/7e7c465a68eb2b866926bfa59c8c9d17a8daba65/Text/dev.jsonl",
+      "uncompressed_sha256": "1030a180a00ea2762ce9ac2a4fa4d5db4543b7e4aa25b0fdd2ec44149e2242fa",
+      "uncompressed_bytes": 13465,
+      "sha256": "80527d5bbe412451eb7fb76047ce0b1ac450effef1bfb48c16fa0b20ee70d662",
+      "bytes": 4927
+    },
+    {
+      "path": "DATASET_CARD.md",
+      "url": "https://huggingface.co/datasets/TsinghuaC3I/MedXpertQA/resolve/7e7c465a68eb2b866926bfa59c8c9d17a8daba65/README.md",
+      "sha256": "7deb132dc3745ad22c8e0c3726e7f40cd30675ba5b400e876b85b138fa40c25a",
+      "bytes": 4058
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/TsinghuaC3I/MedXpertQA/main/LICENSE",
+      "sha256": "381f24d4c372f6cd7d1f730ba8d877f9217cf9ac0cb32a97211327c22b2da8aa",
+      "bytes": 1068
+    },
+    {
+      "path": "PROJECT_README.md",
+      "url": "https://raw.githubusercontent.com/TsinghuaC3I/MedXpertQA/main/README.md",
+      "sha256": "63b725f43345e9f7c69468d6efd93371d73fbfc72302097d7c8ab6e7882d3745",
+      "bytes": 9181
+    }
+  ],
+  "runtime_eligible": false,
+  "training_eligible": false,
+  "source_expert_review": "AUTHOR_REPORTED_LICENSED_PHYSICIAN_REVIEW",
+  "nova_clinical_adjudication": "PENDING"
+}

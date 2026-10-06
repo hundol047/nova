@@ -38,7 +38,29 @@ def test_guards_drop_generic_and_ambiguous():
     assert not usable_synonym("Heart Malformation 2")
 
 
-def test_provider_precedence_catalog_over_open(tmp_path):
+def _enable_open_sidecars(monkeypatch, request):
+    """NovaConfig is frozen: enable the opt-in sidecars through the environment and reload the process
+    config, then reload again on teardown so no other test sees them."""
+    from nova_agent.config import get_config
+    monkeypatch.setenv("NOVA_OPEN_SYNONYMS", "1")
+    monkeypatch.setenv("NOVA_MONDO_SYNONYMS", "1")
+    get_config(reload=True)
+
+    def restore():
+        monkeypatch.undo()
+        get_config(reload=True)
+    request.addfinalizer(restore)
+
+
+def test_open_sidecars_are_off_by_default():
+    from nova_agent.config import get_config
+    assert get_config().open_synonyms_enabled is False and get_config().mondo_synonyms_enabled is False
+    assert not any("open_disease_ontology" in c.source or "mondo_cc_by" in c.source
+                   for c in Tier2CatalogProvider().load())
+
+
+def test_provider_precedence_catalog_over_open(monkeypatch, request):
+    _enable_open_sidecars(monkeypatch, request)
     concepts = {c.concept_id: c for c in Tier2CatalogProvider().load()}
     catalog = json.loads((ROOT / "nova_agent/knowledge/tier2_catalog.json").read_text())["conditions"]
     own = {c["id"] for c in catalog if c.get("typical_features")}
@@ -87,8 +109,9 @@ def test_short_acronyms_and_disjunctions_are_rejected():
     assert usable_synonym("GERD") and usable_synonym("Hansen disease")
 
 
-def test_sidecar_synonyms_never_collide_across_concepts():
+def test_sidecar_synonyms_never_collide_across_concepts(monkeypatch, request):
     """After merging both sidecars, an adopted synonym belongs to exactly one concept."""
+    _enable_open_sidecars(monkeypatch, request)
     sidecar_sources = ("open_disease_ontology", "mondo_cc_by")
     concepts = Tier2CatalogProvider().load()
     catalog = {c["id"]: c for c in json.loads((ROOT / "nova_agent/knowledge/tier2_catalog.json").read_text())["conditions"]}

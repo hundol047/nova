@@ -1,0 +1,21 @@
+{
+  "scope": "synthetic_autonomous_dialogue_format_robustness",
+  "baseline_commit": "10b7f22",
+  "limitations": [
+    "Variants share source cases; 104 scenarios are 26 families, not 104 independent patients.",
+    "Historical source cases have been seen before. Validation mutations are reserved during this pass, not independently clinician-adjudicated."
+  ],
+  "files": {
+    "development.json": {
+      "sha256": "730a8bf6c7c4772434bcb86da42b979687f928caa18e7cb4590c356f3e7e5d2f",
+      "scenarios": 32,
+      "families": 8
+    },
+    "validation.json": {
+      "sha256": "d44498c614e897b75fcab450f0d02e1dd0161d03310e8828207e3f65294fe056",
+      "scenarios": 72,
+      "families": 18
+    }
+  },
+  "validation_use": "Validation outputs were not inspected until final code was frozen. Earlier in-flight candidate validation is superseded by the final replay."
+}

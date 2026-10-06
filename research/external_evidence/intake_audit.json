@@ -1,0 +1,946 @@
+{
+  "schema_version": 1,
+  "clinical_accuracy_measured": false,
+  "training_performed": false,
+  "runtime_eligible": false,
+  "coverage_method": "case-insensitive regex; not clinical adjudication",
+  "near_duplicate_or_cross_corpus_leakage_checked": false,
+  "patterns": {
+    "pheochromocytoma": "pheochromocytoma|phaeochromocytoma",
+    "croup": "\\bcroup\\b|laryngotracheobronchitis",
+    "preeclampsia": "pre[- ]?eclampsia",
+    "pancreatic_cancer": "pancreatic (?:adeno)?carcinoma|pancreatic cancer|adenocarcinoma of the pancreas",
+    "acute_kidney_injury": "acute kidney injury|acute renal (?:failure|injury)",
+    "pericarditis": "pericarditis",
+    "stevens_johnson_syndrome": "Stevens[– -]Johnson|toxic epidermal necrolysis",
+    "guillain_barre": "Guillain[– -]Barr",
+    "fabry": "Fabry"
+  },
+  "datasets": {
+    "medxpertqa": {
+      "rows": 2455,
+      "splits": {
+        "dev": 5,
+        "test": 2450
+      },
+      "duplicate_ids": 0,
+      "duplicate_normalized_prompts": 0,
+      "files_hash_verified": 5,
+      "coverage": {
+        "pheochromocytoma": {
+          "any_mention": 8,
+          "answer_contains_term": 1
+        },
+        "croup": {
+          "any_mention": 0,
+          "answer_contains_term": 0
+        },
+        "preeclampsia": {
+          "any_mention": 8,
+          "answer_contains_term": 1
+        },
+        "pancreatic_cancer": {
+          "any_mention": 8,
+          "answer_contains_term": 0
+        },
+        "acute_kidney_injury": {
+          "any_mention": 7,
+          "answer_contains_term": 0
+        },
+        "pericarditis": {
+          "any_mention": 3,
+          "answer_contains_term": 0
+        },
+        "stevens_johnson_syndrome": {
+          "any_mention": 1,
+          "answer_contains_term": 0
+        },
+        "guillain_barre": {
+          "any_mention": 3,
+          "answer_contains_term": 0
+        },
+        "fabry": {
+          "any_mention": 0,
+          "answer_contains_term": 0
+        }
+      }
+    },
+    "diagnosisarena": {
+      "rows": 915,
+      "splits": {
+        "test": 915
+      },
+      "duplicate_ids": 0,
+      "duplicate_normalized_prompts": 0,
+      "files_hash_verified": 4,
+      "coverage": {
+        "pheochromocytoma": {
+          "any_mention": 5,
+          "answer_contains_term": 2
+        },
+        "croup": {
+          "any_mention": 0,
+          "answer_contains_term": 0
+        },
+        "preeclampsia": {
+          "any_mention": 1,
+          "answer_contains_term": 0
+        },
+        "pancreatic_cancer": {
+          "any_mention": 2,
+          "answer_contains_term": 0
+        },
+        "acute_kidney_injury": {
+          "any_mention": 7,
+          "answer_contains_term": 2
+        },
+        "pericarditis": {
+          "any_mention": 8,
+          "answer_contains_term": 4
+        },
+        "stevens_johnson_syndrome": {
+          "any_mention": 5,
+          "answer_contains_term": 1
+        },
+        "guillain_barre": {
+          "any_mention": 2,
+          "answer_contains_term": 0
+        },
+        "fabry": {
+          "any_mention": 1,
+          "answer_contains_term": 0
+        }
+      }
+    }
+  },
+  "review_queue": [
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-303",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-584",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-795",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1043",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1145",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1544",
+      "disease": "pheochromocytoma",
+      "source_task": "Basic Science",
+      "answer_contains_term": true,
+      "source_answer": "Hypertensive crisis during pheochromocytoma resection is rare",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-2008",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-2332",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-9",
+      "disease": "preeclampsia",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-588",
+      "disease": "preeclampsia",
+      "source_task": "Treatment",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-921",
+      "disease": "preeclampsia",
+      "source_task": "Diagnosis",
+      "answer_contains_term": true,
+      "source_answer": "Maternal preeclampsia",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1112",
+      "disease": "preeclampsia",
+      "source_task": "Treatment",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1821",
+      "disease": "preeclampsia",
+      "source_task": "Basic Science",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1960",
+      "disease": "preeclampsia",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-2118",
+      "disease": "preeclampsia",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-2210",
+      "disease": "preeclampsia",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-341",
+      "disease": "pancreatic_cancer",
+      "source_task": "Basic Science",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-755",
+      "disease": "pancreatic_cancer",
+      "source_task": "Treatment",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-898",
+      "disease": "pancreatic_cancer",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1383",
+      "disease": "pancreatic_cancer",
+      "source_task": "Treatment",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1389",
+      "disease": "pancreatic_cancer",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-2009",
+      "disease": "pancreatic_cancer",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-2152",
+      "disease": "pancreatic_cancer",
+      "source_task": "Basic Science",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-2251",
+      "disease": "pancreatic_cancer",
+      "source_task": "Treatment",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-303",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1051",
+      "disease": "acute_kidney_injury",
+      "source_task": "Treatment",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1190",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1413",
+      "disease": "acute_kidney_injury",
+      "source_task": "Basic Science",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1825",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1977",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-2196",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-241",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-888",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1485",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-1703",
+      "disease": "stevens_johnson_syndrome",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-691",
+      "disease": "guillain_barre",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-728",
+      "disease": "guillain_barre",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "medxpertqa",
+      "split": "test",
+      "id": "Text-2338",
+      "disease": "guillain_barre",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "126",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "140",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": true,
+      "source_answer": "Pheochromocytoma-induced cardiomyopathy",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "553",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "644",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "822",
+      "disease": "pheochromocytoma",
+      "source_task": "Diagnosis",
+      "answer_contains_term": true,
+      "source_answer": "Pheochromocytoma presenting as left adrenal incidentaloma with diffuse alveolar hemorrhage",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "752",
+      "disease": "preeclampsia",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "70",
+      "disease": "pancreatic_cancer",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "535",
+      "disease": "pancreatic_cancer",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "62",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "523",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "540",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "548",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "586",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": true,
+      "source_answer": "Rifampin-induced acute renal failure due to heme pigment-related injury",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "770",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": true,
+      "source_answer": "Leptospirosis with severe pneumonia, acute kidney injury, and acute liver injury",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "777",
+      "disease": "acute_kidney_injury",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "87",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": true,
+      "source_answer": "Myopericarditis",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "140",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "355",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "420",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "514",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": true,
+      "source_answer": "Effusive-constrictive pericarditis",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "571",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "628",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": true,
+      "source_answer": "Peri-infarction pericarditis (PIP)",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "766",
+      "disease": "pericarditis",
+      "source_task": "Diagnosis",
+      "answer_contains_term": true,
+      "source_answer": "Myopericarditis with cardiac conduction system involvement due to monkeypox virus infection with concurrent Lyme disease",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "84",
+      "disease": "stevens_johnson_syndrome",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "144",
+      "disease": "stevens_johnson_syndrome",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "207",
+      "disease": "stevens_johnson_syndrome",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "395",
+      "disease": "stevens_johnson_syndrome",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "697",
+      "disease": "stevens_johnson_syndrome",
+      "source_task": "Diagnosis",
+      "answer_contains_term": true,
+      "source_answer": "Valproic acid-induced aplastic crisis and Stevens-Johnson syndrome",
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "238",
+      "disease": "guillain_barre",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "742",
+      "disease": "guillain_barre",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    },
+    {
+      "dataset": "diagnosisarena",
+      "split": "test",
+      "id": "312",
+      "disease": "fabry",
+      "source_task": "Diagnosis",
+      "answer_contains_term": false,
+      "source_answer": null,
+      "nova_mapping_review": "PENDING",
+      "expert_reviewer": null,
+      "clinical_gold_approved_for_nova": false
+    }
+  ]
+}

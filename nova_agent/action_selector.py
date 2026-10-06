@@ -49,6 +49,10 @@ class AgentAction(BaseModel):
     rationale: str
 
 
+# Small tie-break (utility points; typical utilities are ~3) -- see generate_and_select().
+LEADER_CONFIRMATORY_BONUS = 0.05
+
+
 class ActionSelector:
     def __init__(self) -> None:
         self.missing_info = MissingInformationAnalyzer()
@@ -136,8 +140,19 @@ class ActionSelector:
     def generate_and_select(self, state: PatientState, differential: List[DifferentialItem],
                              safety_findings: List[SafetyFinding], lang: str = "en"
                              ) -> tuple[AgentAction, List[ScoredCandidate], StopDecision]:
-        dangerous_ids = {d.diagnosis_id for d in differential if d.dangerous_if_missed}
+        # SafetyLayer can actively flag a dangerous diagnosis that is below the display top-K.
+        # Treat that finding as dangerous for action utility too; otherwise the stop policy would
+        # correctly keep the case open while the selector still preferred unrelated low-safety
+        # actions because the flagged diagnosis was not present in the truncated differential.
+        dangerous_ids = ({d.diagnosis_id for d in differential if d.dangerous_if_missed}
+                         | {f.diagnosis_id for f in safety_findings})
         time_critical_ids = _time_critical_ids()
+        safety_only_ids = {f.diagnosis_id for f in safety_findings} - {d.diagnosis_id for d in differential}
+        leader = differential[0] if differential else None
+        leader_workup = set()
+        if leader is not None and leader.dangerous_if_missed:
+            from nova_agent.missing_info import _resolve_entry
+            leader_workup = set((_resolve_entry(leader.diagnosis_id) or {}).get("minimum_workup") or ())
         decisively_supported = self._decisively_supported_dangerous_ids(differential)
         raw_candidates = self.missing_info.analyze(state, differential, safety_findings)
         if state.preliminary_rules:
@@ -151,6 +166,27 @@ class ActionSelector:
             time_critical_involved = bool(set(cand.disease_ids_discriminated) & time_critical_ids)
             utility, components = self._utility(cand, dangerous_discriminated, time_critical_involved,
                                                   differential, decisively_supported)
+            # Legacy (non-competition) retrieval: the minimum-workup confirmatory test of the LEADING
+            # dangerous diagnosis (troponin for ACS) must not lose a near-tie to a generic question merely
+            # because a weakly supported must-not-miss alternative (kept in the pool by PR #15's safety-net
+            # protection) also touches that question. Competition retrieval has its own critical-resolution
+            # and specificity terms for this and is left exactly as measured.
+            if (leader_workup and not get_config().competition_retrieval_enabled
+                    and cand.action_type in {"TEST", "EXAM"} and cand.key in leader_workup):
+                utility += LEADER_CONFIRMATORY_BONUS
+                components["leading_dangerous_confirmatory"] = LEADER_CONFIRMATORY_BONUS
+            # PR #15's "mandatory structured vitals" gate, scoped to its stated purpose: a red flag whose
+            # diagnosis is NOT in the displayed differential (SafetyLayer raised it from below the top-K)
+            # would otherwise have no action investigating it, so structured vitals -- which feed
+            # SafetyLayer's numeric thresholds -- come first. When the flagged diagnosis IS already in the
+            # differential (e.g. ACS in a crushing-chest-pain presentation) its own confirmatory test must
+            # keep outranking generic early actions (tests/test_discriminator_priority.py). In the
+            # preliminary round vitals arrive with the first patient statement, so this is already satisfied.
+            if (safety_only_ids and cand.action_type == "EXAM" and cand.key == "vital_signs"
+                    and not state.exam_done("vital_signs")):
+                gate_bonus = get_config().weights.safety_weight + get_config().weights.time_critical_weight
+                utility += gate_bonus
+                components["mandatory_safety_vitals"] = round(gate_bonus, 3)
             content = {"ko": cand.content_ko, "ja": cand.content_ja, "zh": cand.content_zh}.get(lang) \
                 or cand.content_en
             scored.append(ScoredCandidate(action_type=cand.action_type, key=cand.key, content=content,

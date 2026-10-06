@@ -1,0 +1,6 @@
+{
+  "sha256": "472d180636c3d29cd22bc8a3cd0d54e0ba59d74dbf848950e5451ec3ab7fc0af",
+  "baseline": "aad2297",
+  "scope": "8 synthetic mock dialogues; 4 families with paired units. Authored before patch; not independent clinical validation. No fixture changes after first replay.",
+  "evaluation_status": "development: first patched replay 6/8; failures used to add missing canonical GI symptom routing; final replay 8/8 is regression only"
+}

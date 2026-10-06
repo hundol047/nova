@@ -222,6 +222,14 @@ def build_reasoning_prompt(ctx: TurnContext) -> str:
             + json.dumps(ctx.external_references, ensure_ascii=False) + "\n\n"
         )
 
+    from nova_agent.taxonomy import QUESTION_CATALOG, EXAM_CATALOG, TEST_CATALOG
+    additional_actions = []
+    offered = {(c.action_type, c.key) for c in ctx.candidates}
+    for kind, catalog in [('ASK', QUESTION_CATALOG), ('EXAM', EXAM_CATALOG), ('TEST', TEST_CATALOG)]:
+        for key, spec in catalog.items():
+            if (kind, key) not in offered and key not in ctx.summary.completed_action_keys.get(kind, []):
+                additional_actions.append(f"{kind}:{key} — {spec.get('text_en') or spec['name_en']}")
+    additional_text = '\n'.join(additional_actions) or '(none remain)'
     return (
         "You are the clinical reasoning component of a conversational diagnosis agent. You will "
         "see the current structured patient summary, relevant retrieved medical knowledge, and "
@@ -230,11 +238,19 @@ def build_reasoning_prompt(ctx: TurnContext) -> str:
         '{"differential": [{"diagnosis": str, "diagnosis_id": str|null, "rank": int, '
         '"supporting_evidence": [str], "contradictory_evidence": [str], "missing_information": [str], '
         '"dangerous_if_missed": bool, "confidence": "LOW"|"MEDIUM"|"HIGH"}], '
-        '"selected_action": {"type": "ASK"|"EXAM"|"TEST"|"DIAGNOSE", "key": str, "content": str}}\n\n'
+        '"selected_action": {"type": "ASK"|"EXAM"|"TEST"|"DIAGNOSE", "key": str, "content": str, "reason": str}}\n\n'
         "Rules: you MAY re-rank the differential, add supporting/contradictory evidence, or "
         "introduce a diagnosis not in the candidate list below if clinically justified (set its "
         "diagnosis_id to null). For selected_action of type ASK/EXAM/TEST, `key` MUST be copied "
-        "EXACTLY from one of the candidate keys listed below -- never invent one. For DIAGNOSE, "
+        "EXACTLY from the ranked candidates OR additional catalog below -- never invent one. "
+        "Choose one action whose possible results distinguish the leading plausible causes; "
+        "record that evidence gap in a short reason, not a reasoning transcript. "
+        "Do not repeat completed actions or reinterpret unavailable information as a normal result. "
+        "Preserve past/family/medication context and onset order. Compare the primary cause with "
+        "manifestations and complications; do not equate a complication with the complete diagnosis. "
+        "Do not invent a cause when evidence supports only a syndrome. "
+        "Supporting evidence must quote observed findings, not facts invented from retrieved knowledge. "
+        "For DIAGNOSE, "
         "only choose it when you are genuinely confident and have no unresolved dangerous "
         "alternative; a deterministic safety layer will reject an unsafe or premature diagnosis "
         "regardless of your choice, so choose honestly rather than trying to guess what will pass.\n\n"
@@ -247,6 +263,7 @@ def build_reasoning_prompt(ctx: TurnContext) -> str:
         f"Retrieved knowledge:\n{context_text}\n\n"
         f"{reference_text}"
         f"Legal ASK/EXAM/TEST candidates this turn:\n{candidates_text}\n"
+        f"Additional legal catalog actions (not ranked; use only if needed):\n{additional_text}\n"
     )
 
 

@@ -540,7 +540,12 @@ def generate_candidates(presentation: ClinicalPresentation,
     # size budget -- a broad retrieval hit can add a genuinely new long-tail possibility, but it can
     # never crowd out an existing Tier-1 candidate or must-not-miss diagnosis.
     trimmable_only_sources = {"safety_candidate", "contextual_safety", "ontology_broadening", "ontology_retrieval"}
-    protected = [c for c in candidates if not set(c.sources).issubset(trimmable_only_sources)]
+    # The fixed cross-cutting must-not-miss list (PR #15) always survives the size budget even when only the
+    # safety net retrieved it. Other `dangerous` entries are NOT protected on that flag alone: protecting all
+    # of them let weakly supported ones (e.g. hypoglycemia from "sweating") displace the disease-specific
+    # leaders in the top-K and shift action utilities (tests/test_discriminator_priority.py).
+    protected = [c for c in candidates if c.id in CROSS_CUTTING_DANGEROUS_DIAGNOSES
+                 or not set(c.sources).issubset(trimmable_only_sources)]
     # Round M: an ontology candidate whose OWN typical/confirmatory features are matched by the
     # patient's evidence is no longer a zero-evidence supplement. Trimming by insertion order cut
     # evidence-bearing long-tail truths that retrieval ranked 1st-10th (they were appended after the

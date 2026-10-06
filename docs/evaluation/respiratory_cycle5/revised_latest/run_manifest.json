@@ -1,0 +1,18 @@
+{
+  "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+  "selection": "200 per difficulty; deterministic round-robin source families; no prediction filtering",
+  "seed": "compliance-cycle4",
+  "excluded_inputs": 800,
+  "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+  "selected_sha256": "6c74548b080d4f047ce1443408bb6338648f2d7307a300a09daaaab50d862c53",
+  "runtime_sha256": "8407579fc3a147f2d08ad23bb68a7642a15b5ea4b8477ff4f13c90759c1fcff7",
+  "runtime_commit": "59b3fd210909fe9a8de7c6179c75beec8fb84c1f",
+  "runner_sha256": "9a3fdc526d792212139de7ad8104fa99416b7211ce3f47f0eda9e95e154e0f1a",
+  "response_policy": "mapped_unknown_missing",
+  "memoized": true,
+  "cases": 400,
+  "independent_test": false,
+  "clinical_validation": false,
+  "training": false,
+  "limitation": "Previously development-exposed synthetic source families and correlated variants; English scripted dialogues; not ICD-11-wide coverage."
+}

@@ -1,0 +1,38 @@
+{
+  "original": {
+    "cases": 400,
+    "correct": 385,
+    "changed_to_unknown": [
+      "SIM50_high_validation_02184",
+      "SIM50_high_validation_02940",
+      "SIM50_high_development_17141",
+      "SIM50_high_development_05598",
+      "SIM50_high_development_19866"
+    ],
+    "regressed_correct": [],
+    "changed_safety_flags": []
+  },
+  "extra": {
+    "cases": 400,
+    "correct": 390,
+    "changed_to_unknown": [
+      "SIM50_high_development_02730",
+      "SIM50_high_validation_03048",
+      "SIM50_high_development_16308"
+    ],
+    "regressed_correct": [],
+    "changed_safety_flags": []
+  },
+  "latest": {
+    "cases": 400,
+    "correct": 388,
+    "changed_to_unknown": [
+      "SIM50_high_development_01064",
+      "SIM50_high_development_17486",
+      "SIM50_high_validation_04884",
+      "SIM50_high_development_06550"
+    ],
+    "regressed_correct": [],
+    "changed_safety_flags": []
+  }
+}

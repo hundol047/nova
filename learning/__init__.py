@@ -1,7 +1,7 @@
 """N.O.V.A. learning subsystem (vNext PART B) — OPTIONAL, off the critical path.
 
 This package holds the deep-learning candidate RANKER and its data pipeline. It is deliberately a
-TOP-LEVEL package, NOT part of nova_agent/, and is NEVER included in the competition submission.
+TOP-LEVEL package, NOT part of nova_agent/, with only a small dependency-free retrieval/routing/rerank subset included in submissions.
 
 Hard invariants (enforced structurally + in tests):
   - torch is OPTIONAL. Import of this package must NOT require torch. Training/inference code that
@@ -13,7 +13,7 @@ Hard invariants (enforced structurally + in tests):
   - No calibrated percentage is emitted unless a fitted calibrator is present (see calibration.py).
   - A NOVA prediction is NEVER used as a training label (see labels.py / continual pipeline).
 
-Nothing here is imported by nova_agent at runtime; the reasoning engine works fully without it.
+The runtime imports pipeline/retrieval/routing/rerank for candidate context only; training stays isolated.
 """
 
 __all__ = [

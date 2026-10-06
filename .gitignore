@@ -39,3 +39,6 @@ bp3d_repo
 # NEVER commit these — the repo ships terminology-free. See docs/ontology/TERMINOLOGY_PROVENANCE.md.
 nova_agent/ontology/snapshots/*.json
 submission/nova_agent/ontology/snapshots/*.json
+
+# Operator-installed WHO reference data, intentionally outside git
+**/ontology/snapshots/icd11_reference_*.sqlite

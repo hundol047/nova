@@ -148,6 +148,11 @@ def _already_answered(state: PatientState, category: str) -> bool:
     return False
 
 
+def normalize_feature(text: str) -> str:
+    from nova_agent.ontology.normalizer import normalize
+    return normalize(text)
+
+
 class MissingInformationAnalyzer:
     def analyze(self, state: PatientState, differential: List[DifferentialItem],
                 safety_findings: List[SafetyFinding]) -> List[CandidateInfo]:
@@ -167,16 +172,20 @@ class MissingInformationAnalyzer:
         exam_candidates: dict[str, CandidateInfo] = {}
         test_candidates: dict[str, CandidateInfo] = {}
 
-        for item in top_k:
-            entry = _resolve_entry(item.diagnosis_id)
-            if entry is None:
-                continue
+        def add_entry(diagnosis_id: str, entry: dict, item: Optional[DifferentialItem] = None) -> None:
+            """Add actions for one diagnosis, including a safety-only diagnosis.
 
+            The deterministic differential is intentionally capped at top-K for ordinary
+            ranking. A diagnosis actively raised by SafetyLayer must still contribute its
+            minimum workup actions when it ranks below that cap; otherwise a red flag could block
+            premature diagnosis but have no legal action capable of investigating it. ``item`` is
+            the ranked differential entry when there is one (None for a safety-only diagnosis).
+            """
             # A retrieval-only ontology candidate (no supporting evidence yet) must not spend turns on
             # its own generic feature questions: it is in the pool for RECALL, and the case's real
             # evidence has to earn it a place in the action budget first (Round M: enriched Tier-2
             # entries otherwise generated dozens of unrelated "associated_symptoms:<feature>" asks).
-            if item.diagnosis_id.startswith("onto::") and (
+            if item is not None and diagnosis_id.startswith("onto::") and (
                     not item.supporting_evidence or item.rank > MAX_TIER2_QUESTION_RANK):
                 # ...and only while it is actually in contention (top ranks): every supported
                 # long-tail candidate otherwise adds up to four generic questions to the action
@@ -185,28 +194,29 @@ class MissingInformationAnalyzer:
                 questions = []
             else:
                 questions = entry.get("discriminating_questions", [])
+            supported_features = {normalize_feature(s) for s in item.supporting_evidence} if item is not None else set()
             for discriminator in questions:
                 category = discriminator.split(":", 1)[0]
                 if cfg.competition_retrieval_enabled and ":" in discriminator:
                     # A feature-specific question cannot add the very same feature
                     # already supported for this hypothesis. Do not infer other
                     # answers, match substrings, or suppress generic safety history.
-                    from nova_agent.ontology.normalizer import normalize
-                    feature = normalize(discriminator.split(":", 1)[1])
-                    if feature and feature in {normalize(s) for s in item.supporting_evidence}:
+                    feature = normalize_feature(discriminator.split(":", 1)[1])
+                    if feature and feature in supported_features:
                         continue
                 key = f"ask:{discriminator}"
                 if state.question_asked(discriminator) or _already_answered(state, category):
                     continue
-                spec = disease_specific_question(item.diagnosis_id, discriminator)
+                spec = disease_specific_question(diagnosis_id, discriminator)
                 cand = ask_candidates.setdefault(key, CandidateInfo(
                     action_type="ASK", key=discriminator, content_en=spec["text_en"], content_ko=spec["text_ko"],
                     content_ja=spec.get("text_ja", ""), content_zh=spec.get("text_zh", ""),
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
-                cand.disease_ids_discriminated.append(item.diagnosis_id)
-                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
+                if diagnosis_id not in cand.disease_ids_discriminated:
+                    cand.disease_ids_discriminated.append(diagnosis_id)
+                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
 
             for exam_id in entry.get("discriminating_exams", []):
                 if state.exam_done(exam_id):
@@ -220,8 +230,9 @@ class MissingInformationAnalyzer:
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
-                cand.disease_ids_discriminated.append(item.diagnosis_id)
-                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
+                if diagnosis_id not in cand.disease_ids_discriminated:
+                    cand.disease_ids_discriminated.append(diagnosis_id)
+                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
 
             for test_id in entry.get("discriminating_tests", []):
                 if state.test_done(test_id):
@@ -235,14 +246,33 @@ class MissingInformationAnalyzer:
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
-                cand.disease_ids_discriminated.append(item.diagnosis_id)
-                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
+                if diagnosis_id not in cand.disease_ids_discriminated:
+                    cand.disease_ids_discriminated.append(diagnosis_id)
+                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
+
+        for item in top_k:
+            entry = _resolve_entry(item.diagnosis_id)
+            if entry is not None:
+                add_entry(item.diagnosis_id, entry, item)
+
+        # Safety findings are additive: they do not rewrite the diagnostic ranking, but they keep
+        # an actively flagged dangerous condition actionable when it falls below display top-K.
+        ranked_ids = {item.diagnosis_id for item in top_k}
+        for finding in safety_findings:
+            if finding.diagnosis_id in ranked_ids:
+                continue
+            entry = _resolve_entry(finding.diagnosis_id)
+            if entry is not None:
+                add_entry(finding.diagnosis_id, entry)
 
         prior = _diagnosis_prior(top_k)
         all_candidates = list(ask_candidates.values()) + list(exam_candidates.values()) + list(test_candidates.values())
         for cand in all_candidates:
             affected_ids = set(cand.disease_ids_discriminated)
-            n = len(affected_ids)
+            # A safety-only diagnosis may be added outside the display top-K.  The original
+            # split score is defined over the top-K prior, so do not let that additive safety
+            # provenance make n > top_k_count and turn the discrimination score negative.
+            n = min(len(affected_ids), top_k_count)
             # Peaks when the item splits the top-K roughly in half (maximally discriminative);
             # low when it's either irrelevant (n=0, filtered out already) or shared by every
             # candidate (doesn't separate anything, though it may still confirm/exclude the group).

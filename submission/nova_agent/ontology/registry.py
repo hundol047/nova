@@ -109,6 +109,13 @@ def build_catalog(include_ontology_snapshots: bool = True) -> DiseaseCatalog:
     if include_ontology_snapshots:
         for provider in (SnomedProvider(), Icd11Provider(), Icd10Provider(), CustomProvider()):
             if provider.available():
+                import json
+                try:
+                    snapshot = json.loads(provider.snapshot_path().read_text(encoding="utf-8"))
+                except (OSError, ValueError):
+                    continue
+                if snapshot.get("synthetic") or snapshot.get("system") == "NOVASYNTH":
+                    continue
                 catalog.add_all(provider.load())      # Tier-3 (only if snapshot supplied)
     return catalog
 
