@@ -21,7 +21,8 @@ from typing import Dict, Optional
 from nova_agent.action_selector import AgentAction
 from nova_agent.config import get_config
 from nova_agent.orchestrator import DoctorAgent
-from nova_agent.preliminary import detect_language, exam_request_text, explanation_text, say_text
+from nova_agent.preliminary import (detect_language, exam_request_text, explanation_text, looks_like_rejection,
+                                    parse_first_statement, plan_say_text, say_text)
 from nova_agent.soap import build_soap, localized_name
 from nova_agent.state import PatientState
 
@@ -65,7 +66,12 @@ def observation_to_state(obs: CompetitionObservation, agent: DoctorAgent,
     DoctorAgent.observe(), which is what actually accumulates evidence into PatientState.
     """
     if obs.observation_type == "initial" or existing_state is None:
-        state = agent.new_case(obs.case_id, obs.chief_complaint or "", obs.demographics, obs.max_turns,
+        demographics = dict(obs.demographics or {})
+        if preliminary or (preliminary is None and get_config().preliminary_rules):
+            # Preliminary round: age/sex are stated inside the first patient sentence.
+            for key, value in parse_first_statement(obs.chief_complaint or "").items():
+                demographics.setdefault(key, value)
+        state = agent.new_case(obs.case_id, obs.chief_complaint or "", demographics, obs.max_turns,
                                preliminary=preliminary)
         state.locale = detect_language(obs.chief_complaint or "")
         if obs.vital_signs:
@@ -76,7 +82,8 @@ def observation_to_state(obs: CompetitionObservation, agent: DoctorAgent,
         log.warning("Non-initial observation for case=%s with no pending action; ignoring content.", obs.case_id)
         return existing_state
 
-    rejected = bool((obs.raw or {}).get("rejected"))
+    rejected = bool((obs.raw or {}).get("rejected")) or (
+        pending_action.action_type == "EXAM" and looks_like_rejection(obs.content or ""))
     if pending_action.action_type == "EXAM" and rejected:
         # Preliminary rules: a request not on the organizer's list is rejected and costs no turn.
         existing_state.record_exam_rejected(pending_action.key)
@@ -93,7 +100,8 @@ def preliminary_wire_action(case_id: str, action: AgentAction, state: PatientSta
     metadata = {"key": action.key, "rationale": action.rationale, "protocol_status": "PLACEHOLDER",
                 "rules": "PRELIMINARY_2026-10-06"}
     if action.action_type == "ASK":
-        return CompetitionAction(case_id=case_id, action_type="SAY", content=say_text(action.key, lang, action.content),
+        return CompetitionAction(case_id=case_id, action_type="SAY",
+                                 content=say_text(action.key, lang, action.content, empathy=state.turn_count == 0),
                                  metadata=metadata)
     if action.action_type == "SAY":
         return CompetitionAction(case_id=case_id, action_type="SAY", content=action.content, metadata=metadata)
@@ -161,7 +169,7 @@ class NovaCompetitionAgent:
         self._states: Dict[str, PatientState] = {}
         self._pending_actions: Dict[str, AgentAction] = {}
         self._emitted_actions: Dict[str, int] = {}
-        self._explained: set = set()
+        self._closing_done: Dict[str, set] = {}
 
     def act(self, observation: dict) -> dict:
         case_id = observation.get("case_id") if isinstance(observation, dict) else None
@@ -175,6 +183,45 @@ class NovaCompetitionAgent:
             self.close_case(result["case_id"])
         return result
 
+    # Standard safety history asked before the diagnosis if the encounter has not covered it: these
+    # change management (drug interactions, comorbid risk) and the rubric credits what is actually asked.
+    _CORE_HISTORY = ("past_medical_history", "medication", "allergy")
+
+    def _closing_action(self, case_id: str, state: PatientState, differential: list) -> Optional[AgentAction]:
+        """What to do between "the engine is ready to diagnose" and the DIAGNOSE submission:
+        (1) any unasked core safety history, (2) tell the patient the working diagnosis, (3) tell
+        the patient the next step. ("Writing an education plan is not explaining" -- it must happen
+        in dialogue.) Each step needs turn budget; none is attempted once the time budget is nearly
+        spent. DIAGNOSE itself costs no turn."""
+        if self._time_nearly_up(state):
+            return None
+        done = self._closing_done.setdefault(case_id, set())
+        remaining = state.remaining_turns
+        if remaining >= 5:
+            for category in self._CORE_HISTORY:
+                if not state.question_asked(category) and category not in done:
+                    done.add(category)  # at most one attempt per category
+                    from nova_agent.taxonomy import QUESTION_CATALOG
+                    return AgentAction(action_type="ASK", key=category, content=QUESTION_CATALOG[category]["text_en"],
+                                       rationale="Standard safety history before the diagnosis.")
+        top = differential[0] if differential else None
+        lang = state.locale or "en"
+        if "dx" not in done and remaining >= 3:
+            done.add("dx")
+            entry = None
+            if top is not None:
+                from nova_agent.soap import _entry_for
+                entry = _entry_for(top.diagnosis_id)
+            label = localized_name(entry, top.diagnosis if top else "", lang)
+            return AgentAction(action_type="SAY", key="explanation", content=explanation_text(label, lang),
+                               rationale="Explain the working diagnosis to the patient before submitting the note.")
+        if "plan" not in done and remaining >= 2:
+            done.add("plan")
+            urgent = bool(top and (top.dangerous_if_missed or top.urgency in ("CRITICAL", "HIGH")))
+            return AgentAction(action_type="SAY", key="plan_explanation", content=plan_say_text(urgent, lang),
+                               rationale="Tell the patient the next step and when to return.")
+        return None
+
     @staticmethod
     def _time_nearly_up(state: PatientState) -> bool:
         from nova_agent.config import PRELIMINARY_TIME_SAFETY_FRACTION
@@ -186,7 +233,7 @@ class NovaCompetitionAgent:
         self._states.pop(case_id, None)
         self._pending_actions.pop(case_id, None)
         self._emitted_actions.pop(case_id, None)
-        self._explained.discard(case_id)
+        self._closing_done.pop(case_id, None)
 
     def _act(self, observation: dict) -> dict:
         obs = CompetitionObservation.model_validate(observation)
@@ -241,25 +288,12 @@ class NovaCompetitionAgent:
                     "scripts/preflight_competition.py before submitting."
                 )
 
-        if (state.preliminary_rules and action.action_type == "DIAGNOSE" and obs.case_id not in self._explained
-                and state.remaining_turns >= 2 and not self._time_nearly_up(state)):
-            # "Writing an education plan is not explaining": the explanation must happen in the
-            # dialogue, so one SAY (<= 30 characters) tells the patient the working diagnosis
-            # before the note is submitted. DIAGNOSE itself costs no turn.
-            self._explained.add(obs.case_id)
-            top = _differential[0] if _differential else None
-            label = top.diagnosis if top else ""
-            entry = None
-            if top is not None:
-                from nova_agent.soap import _entry_for
-                entry = _entry_for(top.diagnosis_id)
-            lang = state.locale or "en"
-            say = AgentAction(action_type="SAY", key="explanation",
-                              content=explanation_text(localized_name(entry, label, lang), lang),
-                              rationale="Explain the working diagnosis to the patient before submitting the note.")
-            self._pending_actions[obs.case_id] = say
-            self._emitted_actions[obs.case_id] = self._emitted_actions.get(obs.case_id, 0) + 1
-            return preliminary_wire_action(obs.case_id, say, state, _differential or []).model_dump()
+        if state.preliminary_rules and action.action_type == "DIAGNOSE":
+            closing = self._closing_action(obs.case_id, state, _differential or [])
+            if closing is not None:
+                self._pending_actions[obs.case_id] = closing
+                self._emitted_actions[obs.case_id] = self._emitted_actions.get(obs.case_id, 0) + 1
+                return preliminary_wire_action(obs.case_id, closing, state, _differential or []).model_dump()
 
         self._pending_actions[obs.case_id] = action
         real_llm_verified: Optional[bool] = None
@@ -302,5 +336,6 @@ class NovaCompetitionAgent:
                 "successful_development_structured_calls": state.llm_success_count,
                 "official_successful_case_llm_calls": None,
             }
-        self._emitted_actions[obs.case_id] = self._emitted_actions.get(obs.case_id, 0) + 1
+        if action.action_type != "DIAGNOSE":  # DIAGNOSE costs no turn in the preliminary round
+            self._emitted_actions[obs.case_id] = self._emitted_actions.get(obs.case_id, 0) + 1
         return result

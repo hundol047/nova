@@ -158,7 +158,7 @@
     {
       "asset_id": "nova_agent/action_selector.py",
       "path": "nova_agent/action_selector.py",
-      "sha256": "79b0b9f60ca0b94f8ec2cbc19b3236006a3d9d1e2fe3417888c4525b32201d44",
+      "sha256": "78b0d041f95465f35112c629590861a2fe2dada0261dba037bf5380f40516dda",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -429,7 +429,7 @@
     {
       "asset_id": "nova_agent/config.py",
       "path": "nova_agent/config.py",
-      "sha256": "c68a0042fbacec06902a390a71b1d94dccb5e746918bcb58cab8fa30b57a5a4f",
+      "sha256": "5f5ba65809611dbed8ad5cbdbda4a9d69eb33d4f3db2d86c0d81cabf5615b564",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -2799,7 +2799,7 @@
     {
       "asset_id": "nova_agent/ontology/providers/tier2_catalog.py",
       "path": "nova_agent/ontology/providers/tier2_catalog.py",
-      "sha256": "39a10e91e0de903d9ad6c1163ba220b67232f5b16c20912eee12c47205bf7b70",
+      "sha256": "948998b58e529ce013f3c6990d4d63e6318b9dae09468c7d9fcbc73fa345cabd",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -3059,7 +3059,7 @@
     {
       "asset_id": "nova_agent/orchestrator.py",
       "path": "nova_agent/orchestrator.py",
-      "sha256": "13bf20ff10de01264da4859a000c210c97f012bae4d0b581ff3ce60265c800ff",
+      "sha256": "a6e83dfbc055fc6e0576c8059d147bc726bdbb7f0bde12ce61c3466526beff76",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -3116,7 +3116,7 @@
     {
       "asset_id": "nova_agent/resolution.py",
       "path": "nova_agent/resolution.py",
-      "sha256": "1cd6038eb1e67a70eef210baddb4a6ab6ed2ff4c0230ff8c58aea0792acba330",
+      "sha256": "a91545af69e09c1b022cc4245717f39b0305ce9efa4fe0ab97583516a345d1b2",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -3438,7 +3438,7 @@
     {
       "asset_id": "nova_agent/state.py",
       "path": "nova_agent/state.py",
-      "sha256": "5131a55ce916585c7f75e9186817763d818e4ba721a43db95ab8613b0486c0b4",
+      "sha256": "72cebaa013ad0bd4ecb834346e5b62571bc5382be36246432ab4640592e613b8",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -3493,7 +3493,7 @@
     {
       "asset_id": "nova_agent/stop_policy.py",
       "path": "nova_agent/stop_policy.py",
-      "sha256": "226c64acabb513f09918e6f8bb03671e1113a6518de0d6921c426d12c6d4a135",
+      "sha256": "e421093f246504f826aac50aca0cd4726536c5963673345aa13927074c7318d8",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -3964,6 +3964,142 @@
         "decision": "C",
         "status": "REFERENCE_CONTEXT_ONLY",
         "reason": "Supplemental external text; no existing heuristic relabelled or replaced"
+      }
+    },
+    {
+      "asset_id": "nova_agent/preliminary.py",
+      "path": "nova_agent/preliminary.py",
+      "sha256": "1aab97f1d5aed6a464431c115c20f89ac7e0e08afd3a6537e8641f50865c109e",
+      "runtime_use": "Preliminary-round (2026-10-06 briefing) interaction text: SAY/EXAM wording, first-statement parsing; engineering-agent authored in this session",
+      "original_author": "UNRESOLVED",
+      "original_source": "Engineering-agent authored in this session from the organizer briefing; not independently established",
+      "source_reference": [
+        "nova_agent/knowledge/PROVENANCE.md",
+        "artifacts/round_m/source_inventory.json"
+      ],
+      "source_version": "UNRESOLVED",
+      "license": "UNRESOLVED",
+      "research_publication_permission": "UNRESOLVED",
+      "redistribution_permission": "UNRESOLVED",
+      "modification_permission": "UNRESOLVED",
+      "generation_method": "UNRESOLVED",
+      "generating_model": "UNRESOLVED",
+      "model_version": "UNRESOLVED",
+      "generation_prompt": "UNRESOLVED",
+      "generation_code": "UNRESOLVED",
+      "generation_date": "UNRESOLVED",
+      "manual_review": "Engineering tests do not establish original authorship or medical correctness",
+      "clinician_review": "No documented clinician signoff",
+      "submission_included": true,
+      "status": "UNRESOLVED",
+      "history_evidence": [],
+      "history_caveat": "Commit author/time are not original clinical author/generation time",
+      "authorship_status": "UNRESOLVED",
+      "medical_validation_status": "NOT independently clinically validated",
+      "rights_status": "UNRESOLVED",
+      "replacement_plan": {
+        "decision": "E",
+        "next_actions": [
+          "A: recover original source/generation records",
+          "B: obtain substantiated team authorship/rights authorization if appropriate",
+          "C: if unavailable, stage separately documented deterministic replacement and validate before promotion"
+        ],
+        "exclude_now": false,
+        "reason": "No evidence supports safe loss of coverage; no source or permission inferred",
+        "promotion_requirements": [
+          "source bytes/hash/version and permission evidence",
+          "reproducible transformation or exact model/prompt records",
+          "review of content and rights",
+          "unchanged coverage and same-set accuracy/safety/efficiency regression"
+        ],
+        "status": "BLOCKED"
+      }
+    },
+    {
+      "asset_id": "nova_agent/soap.py",
+      "path": "nova_agent/soap.py",
+      "sha256": "dd9467ab1a2c7600526400af4a07da55f50eecd4850f34dc10a0f1b06f054356",
+      "runtime_use": "Preliminary-round SOAP note formatter rebuilt from the turn log; plan text is generic rule-derived, not clinician-authored",
+      "original_author": "UNRESOLVED",
+      "original_source": "Engineering-agent authored in this session from the organizer briefing; not independently established",
+      "source_reference": [
+        "nova_agent/knowledge/PROVENANCE.md",
+        "artifacts/round_m/source_inventory.json"
+      ],
+      "source_version": "UNRESOLVED",
+      "license": "UNRESOLVED",
+      "research_publication_permission": "UNRESOLVED",
+      "redistribution_permission": "UNRESOLVED",
+      "modification_permission": "UNRESOLVED",
+      "generation_method": "UNRESOLVED",
+      "generating_model": "UNRESOLVED",
+      "model_version": "UNRESOLVED",
+      "generation_prompt": "UNRESOLVED",
+      "generation_code": "UNRESOLVED",
+      "generation_date": "UNRESOLVED",
+      "manual_review": "Engineering tests do not establish original authorship or medical correctness",
+      "clinician_review": "No documented clinician signoff",
+      "submission_included": true,
+      "status": "UNRESOLVED",
+      "history_evidence": [],
+      "history_caveat": "Commit author/time are not original clinical author/generation time",
+      "authorship_status": "UNRESOLVED",
+      "medical_validation_status": "NOT independently clinically validated",
+      "rights_status": "UNRESOLVED",
+      "replacement_plan": {
+        "decision": "E",
+        "next_actions": [
+          "A: recover original source/generation records",
+          "B: obtain substantiated team authorship/rights authorization if appropriate",
+          "C: if unavailable, stage separately documented deterministic replacement and validate before promotion"
+        ],
+        "exclude_now": false,
+        "reason": "No evidence supports safe loss of coverage; no source or permission inferred",
+        "promotion_requirements": [
+          "source bytes/hash/version and permission evidence",
+          "reproducible transformation or exact model/prompt records",
+          "review of content and rights",
+          "unchanged coverage and same-set accuracy/safety/efficiency regression"
+        ],
+        "status": "BLOCKED"
+      }
+    },
+    {
+      "asset_id": "nova_agent/knowledge/tier2_open_features.json",
+      "path": "nova_agent/knowledge/tier2_open_features.json",
+      "sha256": "7d88e9b0c8709c79f6f6baf0f0fb26a9862c6d7aef7379c2b3c2bf4318891a16",
+      "runtime_use": "Alias vocabulary (EXACT synonyms) for Tier-2 concepts; not patient evidence, not scored features",
+      "original_author": "Human Disease Ontology consortium (Schriml LM et al.)",
+      "original_source": "Disease Ontology doid.obo, https://raw.githubusercontent.com/DiseaseOntology/HumanDiseaseOntology/main/src/ontology/doid.obo",
+      "source_reference": [
+        "research/open_sources/disease_ontology/terms.txt",
+        "scripts/build_open_disease_features.py",
+        "docs/compliance/SOURCES_AND_LICENSES.md"
+      ],
+      "source_version": "releases/2026-09-30/doid.obo; file sha256 51e717b6b9f5d391f2793f9e16faf9c8629a661ab8f21c3a024458129f182ad2",
+      "license": "CC0 1.0 Universal, stated inside the source file (licence lines retained verbatim in terms.txt)",
+      "research_publication_permission": "CC0 public-domain dedication permits any use",
+      "redistribution_permission": "CC0 public-domain dedication permits redistribution",
+      "modification_permission": "CC0 public-domain dedication permits modification",
+      "generation_method": "Deterministic extraction and exact-match filtering; no LLM generation",
+      "generating_model": "NOT_APPLICABLE",
+      "model_version": "NOT_APPLICABLE",
+      "generation_prompt": "NOT_APPLICABLE: no LLM-generated clinical material",
+      "generation_code": "scripts/build_open_disease_features.py",
+      "generation_date": "2026-10-06 (new extraction, not original authorship)",
+      "manual_review": "Source licence lines inspected; engineering hash/selection checks; synonym-to-concept matching is by exact name/alias or ICD-10 code only",
+      "clinician_review": "NOT_REVIEWED",
+      "submission_included": true,
+      "status": "VERIFIED",
+      "history_evidence": [],
+      "history_caveat": "Commit author/time are not original clinical author/generation time",
+      "authorship_status": "Named source ontology; not FutureLabs-original",
+      "medical_validation_status": "NOT independently clinically validated",
+      "rights_status": "Source licence verified from the source file text only; mapping to NOVA concepts is unreviewed",
+      "replacement_plan": {
+        "decision": "C",
+        "status": "REFERENCE_CONTEXT_ONLY",
+        "reason": "Added vocabulary only; no existing heuristic relabelled or replaced"
       }
     }
   ],

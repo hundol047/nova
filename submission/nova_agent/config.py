@@ -26,8 +26,10 @@ PRELIMINARY_CASE_SECONDS = 20 * 60
 PRELIMINARY_TIME_SAFETY_FRACTION = 0.85
 # Real-model calls per case in the preliminary round. The fixed model is limited to 200 calls and
 # 500k input / 100k output tokens per session, and the efficiency score counts model usage; at least
-# one call per case is REQUIRED (a case with no model call scores 0).
-PRELIMINARY_MAX_LLM_CALLS_PER_CASE = 12
+# one call per case is REQUIRED (a case with no model call scores 0). Sized so that a session of 10
+# cases stays inside every cap: 10 x 8 = 80 calls, ~8k characters (~3-4k tokens) of prompt per call
+# (~320k input) and max_tokens=1024 per call (~82k output), leaving headroom for retries.
+PRELIMINARY_MAX_LLM_CALLS_PER_CASE = 8
 
 
 def effective_max_turns(value, default=60, ceiling=60):

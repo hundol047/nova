@@ -74,7 +74,9 @@
           "completion_type": "FORCED_FINAL_DIAGNOSIS",
           "wire_result": "DIAGNOSE",
           "protocol_status": "PLACEHOLDER"
-        }
+        },
+        "soap": null,
+        "primary_diagnosis": null
       }
     },
     {
@@ -151,7 +153,9 @@
           "completion_type": "FORCED_FINAL_DIAGNOSIS",
           "wire_result": "DIAGNOSE",
           "protocol_status": "PLACEHOLDER"
-        }
+        },
+        "soap": null,
+        "primary_diagnosis": null
       }
     },
     {
@@ -224,7 +228,9 @@
           "completion_type": "FORCED_FINAL_DIAGNOSIS",
           "wire_result": "DIAGNOSE",
           "protocol_status": "PLACEHOLDER"
-        }
+        },
+        "soap": null,
+        "primary_diagnosis": null
       }
     },
     {
@@ -297,7 +303,9 @@
           "completion_type": "FORCED_FINAL_DIAGNOSIS",
           "wire_result": "DIAGNOSE",
           "protocol_status": "PLACEHOLDER"
-        }
+        },
+        "soap": null,
+        "primary_diagnosis": null
       }
     },
     {
@@ -374,7 +382,9 @@
           "completion_type": "FORCED_FINAL_DIAGNOSIS",
           "wire_result": "DIAGNOSE",
           "protocol_status": "PLACEHOLDER"
-        }
+        },
+        "soap": null,
+        "primary_diagnosis": null
       }
     }
   ],
