@@ -171,7 +171,11 @@ def test_full_mock_encounter_obeys_every_preliminary_rule():
     assert kinds[-1] == "DIAGNOSE" and "TEST" not in kinds and "ASK" not in kinds
     assert all(len(a["content"]) <= SAY_MAX_CHARS for a in actions if a["action_type"] == "SAY")
     assert len(actions) - 1 <= PRELIMINARY_MAX_TURNS
-    assert kinds[-2] == "SAY", "the working diagnosis is explained in dialogue right before the note"
+    assert kinds[-2] == "SAY" and kinds[-3] == "SAY", "diagnosis and next step are explained in dialogue before the note"
+    say_texts = [a["content"] for a in actions if a["action_type"] == "SAY"]
+    assert say_texts[0].startswith("I'm sorry.") or len(say_texts[0]) <= SAY_MAX_CHARS
+    keys = [a["metadata"].get("key") for a in actions]
+    assert {"past_medical_history", "medication", "allergy"} <= set(keys), "core safety history is covered before the diagnosis"
     final = actions[-1]
     assert set(final["soap"]) == {"S", "O", "A", "P"} and final["primary_diagnosis"]
     assert "[T0 at presentation]" in final["soap"]["O"]
@@ -196,3 +200,64 @@ def test_exam_rejection_costs_no_turn_through_the_adapter():
     agent.act({"case_id": case.case_id, "observation_type": "exam_result", "content": "", "raw": {"rejected": True}})
     state = agent._states[case.case_id]
     assert state.turn_count == turns_before and exam_key in state.rejected_exams
+
+
+def test_first_question_carries_a_short_empathic_opener_only_when_it_fits():
+    assert say_text("onset", "ko", empathy=True).startswith("힘드시겠어요.")
+    assert say_text("onset", "en", empathy=True).startswith("I'm sorry.")
+    assert len(say_text("associated_symptoms:pain radiating to the left arm", "en", empathy=True)) <= SAY_MAX_CHARS
+    assert not say_text("onset", "en").startswith("I'm sorry.")
+
+
+@pytest.mark.parametrize("text,expected", [
+    ("해당 진찰 요청은 거절되었습니다.", True), ("Request rejected: not supported.", True),
+    ("The examination is not available.", True), ("tender in the right flank, no guarding", False),
+    ("Unremarkable, within normal limits.", False), ("", False),
+])
+def test_rejection_wording_is_recognized_conservatively(text, expected):
+    from nova_agent.preliminary import looks_like_rejection
+    assert looks_like_rejection(text) is expected
+
+
+def test_plan_explanation_fits_the_limit_and_differs_by_urgency():
+    from nova_agent.preliminary import plan_say_text
+    for lang in LANGS:
+        urgent, routine = plan_say_text(True, lang), plan_say_text(False, lang)
+        assert urgent != routine and len(urgent) <= SAY_MAX_CHARS and len(routine) <= SAY_MAX_CHARS
+
+
+def test_diagnose_never_counts_toward_the_emitted_turn_budget():
+    case = next(c for c in ROUND_M_CASES if c.case_id == "RoundM_001")
+    agent = NovaCompetitionAgent(agent=DoctorAgent(llm_client=MockLLMClient()), preliminary=True)
+    obs = {"case_id": case.case_id, "observation_type": "initial", "chief_complaint": case.chief_complaint,
+           "demographics": case.demographics}
+    emitted = 0
+    for _ in range(60):
+        act = agent.act(obs)
+        if act["action_type"] == "DIAGNOSE":
+            break
+        emitted += 1
+        pending = agent._pending_actions[case.case_id]
+        kind = "say_response" if act["action_type"] == "SAY" else "exam_result"
+        reply = (case.answers.get(pending.key, case.default_answer) if act["action_type"] == "SAY"
+                 else case.exam_results.get(pending.key, case.default_exam_result))
+        obs = {"case_id": case.case_id, "observation_type": kind, "content": reply}
+    assert act["action_type"] == "DIAGNOSE" and emitted <= PRELIMINARY_MAX_TURNS
+
+
+@pytest.mark.parametrize("text,expected", [
+    ("김철수, 45세 남자입니다. 가슴이 아파서 왔어요.", {"age": 45, "sex": "male"}),
+    ("I am Anna, a 34-year-old woman with a headache.", {"age": 34, "sex": "female"}),
+    ("山田太郎、52歳、男性です。腹痛です。", {"age": 52, "sex": "male"}),
+    ("no demographic information here", {}),
+])
+def test_age_and_sex_are_read_from_the_first_statement_only_when_stated(text, expected):
+    from nova_agent.preliminary import parse_first_statement
+    assert parse_first_statement(text) == expected
+
+
+def test_first_statement_demographics_reach_the_patient_state():
+    agent = NovaCompetitionAgent(agent=DoctorAgent(llm_client=MockLLMClient()), preliminary=True)
+    agent.act({"case_id": "d1", "observation_type": "initial", "chief_complaint": "김철수, 28세 여자입니다. 아랫배가 아파요."})
+    state = agent._states["d1"]
+    assert state.demographics.age == 28 and state.demographics.sex == "female" and state.locale == "ko"

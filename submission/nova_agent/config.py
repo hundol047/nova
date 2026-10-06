@@ -17,15 +17,28 @@ import os
 from dataclasses import dataclass, field
 
 
-def effective_max_turns(value, default=60):
-    """Reject non-integral/invalid budgets and enforce the public 60-turn ceiling."""
+# Preliminary-round limits from the organizer briefing of 2026-10-06 (opening ceremony slides,
+# supplied by the team): at most 50 turns and 20 minutes per case; DIAGNOSE costs no turn.
+PRELIMINARY_MAX_TURNS = 50
+PRELIMINARY_CASE_SECONDS = 20 * 60
+# Fraction of the wall-clock limit after which the agent stops gathering and submits its diagnosis
+# (leaves headroom for the final SOAP submission and for model latency on the last turn).
+PRELIMINARY_TIME_SAFETY_FRACTION = 0.85
+# Real-model calls per case in the preliminary round. The fixed model is limited to 200 calls and
+# 500k input / 100k output tokens per session, and the efficiency score counts model usage; at least
+# one call per case is REQUIRED (a case with no model call scores 0).
+PRELIMINARY_MAX_LLM_CALLS_PER_CASE = 12
+
+
+def effective_max_turns(value, default=60, ceiling=60):
+    """Reject non-integral/invalid budgets and enforce the turn ceiling (60 public, 50 preliminary)."""
     def valid(x):
         if isinstance(x, bool): return None
         if isinstance(x, int): return x if x > 0 else None
         if isinstance(x, str) and x.strip().isdigit():
             n = int(x.strip()); return n if n > 0 else None
         return None
-    return min(valid(value) or valid(default) or 60, 60)
+    return min(valid(value) or valid(default) or ceiling, ceiling)
 
 
 def _float_env(name: str, default: float) -> float:
@@ -137,6 +150,14 @@ class NovaConfig:
     # deployer/test can still force it explicitly with NOVA_COMPETITION_RETRIEVAL=true|false
     # regardless of provider. Pure additive supplement -- see candidate_generator._broaden_with_
     # open_world's docstring for the safety/fallback contract.
+    # Preliminary-round rules (no TEST action, vitals given at the start, 50 turns / 20 minutes, a
+    # bounded number of model calls, SAY <= 30 characters, SOAP note on DIAGNOSE). Default ON only
+    # for the competition provider so every development benchmark keeps its behavior.
+    preliminary_rules: bool = field(
+        default_factory=lambda: _bool_env(
+            "NOVA_PRELIMINARY_RULES", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"
+        )
+    )
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"

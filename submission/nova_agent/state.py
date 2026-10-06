@@ -18,7 +18,7 @@ from nova_agent.models import Allergy, Medication, VitalSigns
 from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG
 from nova_agent.vitals_parser import describe_vital_sign_abnormalities, parse_vital_signs
 
-ActionType = Literal["ASK", "EXAM", "TEST", "DIAGNOSE"]
+ActionType = Literal["ASK", "EXAM", "TEST", "DIAGNOSE", "SAY"]
 
 
 def normalize_key(text: str) -> str:
@@ -94,6 +94,7 @@ class ConversationTurn(BaseModel):
     action_type: ActionType
     content: str
     result: str = ""
+    key: str = ""  # catalog key the action used (ask category / exam id / test id); "" for SAY/DIAGNOSE
     timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 
@@ -161,6 +162,8 @@ class PatientState(BaseModel):
     laboratory_tests: Dict[str, str] = Field(default_factory=dict)
     imaging: Dict[str, str] = Field(default_factory=dict)
 
+    initial_vitals_text: Optional[str] = None
+    rejected_exams: List[str] = Field(default_factory=list)
     performed_actions: List[ConversationTurn] = Field(default_factory=list)
     asked_questions: List[str] = Field(default_factory=list)
     completed_examinations: List[str] = Field(default_factory=list)
@@ -172,6 +175,11 @@ class PatientState(BaseModel):
 
     turn_count: int = 0
     max_turns: int = 60
+    # Preliminary-round rules (2026 organizer briefing): no TEST action exists, vital signs arrive
+    # with the first patient statement, and a case has a wall-clock limit. Off for every legacy
+    # caller, so all existing development benchmarks keep their exact behavior.
+    preliminary_rules: bool = False
+    time_limit_seconds: Optional[float] = None
     model_config = ConfigDict(validate_assignment=True)
 
     @field_validator("max_turns", mode="before")
@@ -288,7 +296,7 @@ class PatientState(BaseModel):
         key = f"ask:{discriminator}"
         if key not in self.asked_questions:
             self.asked_questions.append(key)
-        turn = ConversationTurn(turn=self.turn_count, action_type="ASK", content=question_text, result=answer)
+        turn = ConversationTurn(turn=self.turn_count, action_type="ASK", content=question_text, result=answer, key=discriminator)
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
         self._absorb_answer(discriminator, answer)
@@ -299,7 +307,7 @@ class PatientState(BaseModel):
             self.completed_examinations.append(exam_id)
         spec = EXAM_CATALOG.get(exam_id)
         content = spec["name_en"] if spec else exam_id
-        turn = ConversationTurn(turn=self.turn_count, action_type="EXAM", content=content, result=result)
+        turn = ConversationTurn(turn=self.turn_count, action_type="EXAM", content=content, result=result, key=exam_id)
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
         self.physical_examinations[exam_id] = result
@@ -311,13 +319,46 @@ class PatientState(BaseModel):
                     if finding not in self.vital_sign_findings:
                         self.vital_sign_findings.append(finding)
 
+    def record_initial_vitals(self, text: str) -> None:
+        """Vital signs handed over WITH the first patient statement (preliminary-round rules): real
+        objective evidence, but obtained by no action, so no turn is consumed. Recorded under the
+        same keys an EXAM would use so every downstream consumer treats it identically."""
+        if not text:
+            return
+        if "vital_signs" not in self.completed_examinations:
+            self.completed_examinations.append("vital_signs")
+        self.physical_examinations["vital_signs"] = text
+        parsed = parse_vital_signs(text)
+        if parsed is not None:
+            self.vital_signs.append(parsed)
+            for finding in describe_vital_sign_abnormalities(parsed):
+                if finding not in self.vital_sign_findings:
+                    self.vital_sign_findings.append(finding)
+        self.initial_vitals_text = text
+
+    def record_exam_rejected(self, exam_id: str) -> None:
+        """The environment rejected an examination request (not on its list). Per the preliminary
+        rules a rejected request costs NO turn; it is marked done so it is never re-sent, and it
+        contributes no evidence (never recorded as a normal finding)."""
+        if exam_id not in self.completed_examinations:
+            self.completed_examinations.append(exam_id)
+        self.rejected_exams.append(exam_id)
+
+    def record_say(self, content: str, reply: str = "") -> None:
+        """A conversational turn (explanation/empathy) that gathers no new history: costs one turn,
+        and the patient's reply is NOT absorbed as clinical evidence."""
+        self.turn_count += 1
+        turn = ConversationTurn(turn=self.turn_count, action_type="SAY", content=content, result=reply)
+        self.performed_actions.append(turn)
+        self.conversation_history.append(turn)
+
     def record_test(self, test_id: str, result: str) -> None:
         self.turn_count += 1
         if test_id not in self.completed_tests:
             self.completed_tests.append(test_id)
         spec = TEST_CATALOG.get(test_id)
         content = spec["name_en"] if spec else test_id
-        turn = ConversationTurn(turn=self.turn_count, action_type="TEST", content=content, result=result)
+        turn = ConversationTurn(turn=self.turn_count, action_type="TEST", content=content, result=result, key=test_id)
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
         if spec and spec["kind"] == "imaging":

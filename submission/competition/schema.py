@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, field_validator
 OFFICIAL_API_STATUS = "NOT VERIFIED"
 SCHEMA_STATUS = "PLACEHOLDER"
 
-ObservationType = Literal["initial", "ask_response", "exam_result", "test_result"]
+ObservationType = Literal["initial", "ask_response", "say_response", "exam_result", "test_result"]
 
 
 class CompetitionObservation(BaseModel):
@@ -37,6 +37,8 @@ class CompetitionObservation(BaseModel):
     chief_complaint: Optional[str] = None
     demographics: Optional[Dict[str, Any]] = None
     max_turns: Optional[int] = None
+    # Preliminary round: vital signs arrive WITH the patient's first statement (2026-10-06 briefing).
+    vital_signs: Optional[str] = None
 
     @field_validator("max_turns", mode="before")
     @classmethod
@@ -54,6 +56,12 @@ class CompetitionAction(BaseModel):
     """Provisional envelope; only the four publicly documented actions are permitted."""
 
     case_id: str
-    action_type: Literal["ASK", "EXAM", "TEST", "DIAGNOSE"]
+    # Wire names: the preliminary round uses SAY (dialogue), EXAM and DIAGNOSE only; "ASK" is the
+    # legacy name for SAY and TEST exists from the final round on.
+    action_type: Literal["ASK", "SAY", "EXAM", "TEST", "DIAGNOSE"]
     content: str
     metadata: Dict[str, Any] = Field(default_factory=dict)
+    # DIAGNOSE only: structured S/O/A/P blocks and the single primary diagnosis. The exact wire
+    # encoding of the submission is NOT published (placeholder); `content` carries the full note.
+    soap: Optional[Dict[str, str]] = None
+    primary_diagnosis: Optional[str] = None
