@@ -189,3 +189,20 @@ source file's SHA-256 and `data-version`. The ~7 MB source file itself is not bu
   vocabulary, never as patient evidence. The Human Phenotype Ontology (lay synonyms) was NOT used
   because its licence text could not be verified from this environment. No other external source
   was reachable (only raw.githubusercontent.com).
+
+## Mondo Disease Ontology synonyms (2026-10-06)
+
+`nova_agent/knowledge/tier2_mondo_synonyms.json` is built by `scripts/build_mondo_synonyms.py` from the
+Mondo Disease Ontology (`mondo-edit.obo`, https://github.com/monarch-initiative/mondo). Licence: CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/), stated inside the source file and in the repository
+LICENSE. **Attribution:** Mondo Disease Ontology, Monarch Initiative, https://mondo.monarchinitiative.org,
+CC BY 4.0. Modifications: only EXACT synonyms of the single Mondo term matching a Tier-2 concept's
+name/alias were extracted and filtered (no short acronyms, no disjunctions, no collision with any other
+concept, at most five per concept). No endorsement by the Monarch Initiative is implied. Licence lines,
+source sha256 and data version are in the sidecar provenance and `research/open_sources/mondo/terms.txt`;
+the ~46 MB source file is not bundled. Not clinician-reviewed; aliases only, never patient evidence.
+
+Sources examined and NOT used: HPO (licence page unreachable from this environment, so terms unverified),
+DDXPlus (CC BY 4.0, but its data files are hosted on figshare, which is unreachable here; it is also a
+synthetic dataset derived from a proprietary knowledge base), SHHS/NSRR (sleep-study data, data-use
+agreement, no symptom-diagnosis pairs).

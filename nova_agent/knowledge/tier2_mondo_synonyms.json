@@ -1,0 +1,5021 @@
+{
+ "schema": "nova-open-mondo-synonyms-v1",
+ "provenance": {
+  "source": "Mondo Disease Ontology, monarch-initiative/mondo",
+  "source_url": "https://raw.githubusercontent.com/monarch-initiative/mondo/master/src/ontology/mondo-edit.obo",
+  "source_file_sha256": "30fd1b2d50ea2a14330f1d93e7ef5e61607a05c1a36e1ce8e0f54b6aceaabf7e",
+  "source_data_version": "",
+  "retrieved_utc": "2026-10-06",
+  "license": "CC BY 4.0, stated inside the source file and in the repository LICENSE",
+  "license_evidence": [
+   "property_value: http://purl.org/dc/terms/license http://creativecommons.org/licenses/by/4.0/"
+  ],
+  "attribution": "Mondo Disease Ontology (https://mondo.monarchinitiative.org), Monarch Initiative, CC BY 4.0. Only EXACT synonyms were extracted and filtered; no endorsement by the Monarch Initiative is implied.",
+  "extraction": "EXACT synonyms of the single Mondo term whose name/synonym equals a catalog concept name/alias; guards in scripts/build_mondo_synonyms.py and scripts/build_open_disease_features.py; nothing generated",
+  "clinician_reviewed": false,
+  "use": "Aliases for Tier-2 concepts only; never patient evidence"
+ },
+ "entries": [
+  {
+   "id": "achalasia",
+   "mondo": "MONDO:0008698",
+   "mondo_name": "achalasia",
+   "synonyms": [
+    "achalasia of cardia",
+    "achalasia of oesophagus",
+    "cardiospasm",
+    "esophageal achalasia"
+   ]
+  },
+  {
+   "id": "acute_hepatitis",
+   "mondo": "MONDO:0002251",
+   "mondo_name": "hepatitis",
+   "synonyms": [
+    "Hepatitis",
+    "inflammation of liver",
+    "liver inflammation"
+   ]
+  },
+  {
+   "id": "celiac_disease",
+   "mondo": "MONDO:0005130",
+   "mondo_name": "celiac disease",
+   "synonyms": [
+    "celiac sprue",
+    "coeliac sprue",
+    "gluten intolerance",
+    "gluten-induced enteropathy",
+    "non tropical sprue"
+   ]
+  },
+  {
+   "id": "colorectal_cancer",
+   "mondo": "MONDO:0005575",
+   "mondo_name": "colorectal cancer",
+   "synonyms": [
+    "cancer of colorectum",
+    "cancer of large bowel",
+    "cancer of large intestine",
+    "colorectum cancer",
+    "malignant colorectal neoplasm"
+   ]
+  },
+  {
+   "id": "crohn_disease",
+   "mondo": "MONDO:0005011",
+   "mondo_name": "Crohn disease",
+   "synonyms": [
+    "Crohn's disease",
+    "regional enteritis"
+   ]
+  },
+  {
+   "id": "diverticulitis",
+   "mondo": "MONDO:0004235",
+   "mondo_name": "diverticulitis",
+   "synonyms": [
+    "digestive tract diverticulum inflammation"
+   ]
+  },
+  {
+   "id": "esophageal_cancer",
+   "mondo": "MONDO:0007576",
+   "mondo_name": "esophageal cancer",
+   "synonyms": [
+    "cancer of esophagus",
+    "cancer of oesophagus",
+    "esophagus cancer",
+    "malignant esophageal neoplasm",
+    "malignant esophageal tumor"
+   ]
+  },
+  {
+   "id": "esophageal_varices",
+   "mondo": "MONDO:0001221",
+   "mondo_name": "esophageal varices",
+   "synonyms": [
+    "esophageal varix",
+    "esophagus varicose disease",
+    "oesophagus varicose disease",
+    "varicose disease of esophagus",
+    "varicose disease of oesophagus"
+   ]
+  },
+  {
+   "id": "gastric_cancer",
+   "mondo": "MONDO:0001056",
+   "mondo_name": "gastric cancer",
+   "synonyms": [
+    "cancer of stomach",
+    "malignant gastric neoplasm",
+    "malignant gastric tumor",
+    "malignant gastric tumour",
+    "malignant neoplasm of stomach"
+   ]
+  },
+  {
+   "id": "gastroparesis",
+   "mondo": "MONDO:0006769",
+   "mondo_name": "gastroparesis",
+   "synonyms": [
+    "gastroparalysis",
+    "gastroparesis syndrome"
+   ]
+  },
+  {
+   "id": "ge3_glucagonoma",
+   "mondo": "MONDO:0019959",
+   "mondo_name": "glucagonoma",
+   "synonyms": [
+    "glucagonoma syndrome",
+    "pancreatic glucagonoma"
+   ]
+  },
+  {
+   "id": "ge3_menetrier",
+   "mondo": "MONDO:0007652",
+   "mondo_name": "gastric mucosal hypertrophy",
+   "synonyms": [
+    "giant hypertrophic gastritis",
+    "hypertrophic gastritis",
+    "hypertrophic gastropathy",
+    "hypoproteinemic hypertrophic gastropathy",
+    "Menetrier's disease"
+   ]
+  },
+  {
+   "id": "ge3_somatostatinoma",
+   "mondo": "MONDO:0006976",
+   "mondo_name": "somatostatinoma",
+   "synonyms": [
+    "Delta cell tumor",
+    "Delta cell tumour",
+    "somatostatin cell tumor",
+    "somatostatin producing tumor",
+    "somatostatin producing tumour"
+   ]
+  },
+  {
+   "id": "ge3_vipoma",
+   "mondo": "MONDO:0019960",
+   "mondo_name": "VIPoma",
+   "synonyms": [
+    "Diarrheogenic islet cell tumor",
+    "Diarrheogenic islet cell tumour",
+    "vasoactive intestinal peptide-secreting tumour",
+    "Verner-Morrison syndrome",
+    "VIP producing neoplasm"
+   ]
+  },
+  {
+   "id": "gi2_bacterial_overgrowth",
+   "mondo": "MONDO:0400000",
+   "mondo_name": "small intestinal bacterial overgrowth",
+   "synonyms": [
+    "SIBO"
+   ]
+  },
+  {
+   "id": "gi2_eosinophilic_gastroenteritis",
+   "mondo": "MONDO:0016129",
+   "mondo_name": "eosinophilic gastroenteritis",
+   "synonyms": [
+    "eosinophilic enteritis",
+    "eosinophilic gastroenterocolitis"
+   ]
+  },
+  {
+   "id": "gi2_gastric_antral_vascular_ectasia",
+   "mondo": "MONDO:0006767",
+   "mondo_name": "gastric antral vascular ectasia",
+   "synonyms": [
+    "GAVE"
+   ]
+  },
+  {
+   "id": "gi2_gastric_outlet_obstruction",
+   "mondo": "MONDO:0001561",
+   "mondo_name": "pyloric stenosis",
+   "synonyms": [
+    "pyloric stenosis"
+   ]
+  },
+  {
+   "id": "gi2_mirizzi_syndrome",
+   "mondo": "MONDO:0043330",
+   "mondo_name": "Mirizzi syndrome",
+   "synonyms": [
+    "mirizzi's syndrome"
+   ]
+  },
+  {
+   "id": "gi2_nonalcoholic_steatohepatitis",
+   "mondo": "MONDO:0007027",
+   "mondo_name": "metabolic dysfunction-associated steatohepatitis",
+   "synonyms": [
+    "MASH",
+    "NASH"
+   ]
+  },
+  {
+   "id": "gi2_tropical_sprue",
+   "mondo": "MONDO:0001078",
+   "mondo_name": "tropical sprue",
+   "synonyms": [
+    "post-infective tropical malabsorption",
+    "tropical steatorrhea"
+   ]
+  },
+  {
+   "id": "gi2_whipple_disease",
+   "mondo": "MONDO:0005116",
+   "mondo_name": "Whipple disease",
+   "synonyms": [
+    "intestinal lipodystrophy",
+    "intestinal lipophagic granulomatosis",
+    "secondary non-tropical sprue",
+    "Tropheryma whipplei infectious disease"
+   ]
+  },
+  {
+   "id": "gi_anal_fistula",
+   "mondo": "MONDO:0000754",
+   "mondo_name": "anal fistula",
+   "synonyms": [
+    "anorectal fistula"
+   ]
+  },
+  {
+   "id": "gi_appendiceal_mucocele",
+   "mondo": "MONDO:0001671",
+   "mondo_name": "mucocele of appendix",
+   "synonyms": [
+    "mucocele of the appendix"
+   ]
+  },
+  {
+   "id": "gi_barrett_esophagus",
+   "mondo": "MONDO:0013662",
+   "mondo_name": "Barrett esophagus",
+   "synonyms": [
+    "Barrett esophagus/esophageal adenocarcinoma",
+    "Barrett's esophagus",
+    "Barrett's oesophagus with esophagitis",
+    "Barrett's ulcer of oesophagus",
+    "CELLO"
+   ]
+  },
+  {
+   "id": "gi_gastric_ulcer",
+   "mondo": "MONDO:0001126",
+   "mondo_name": "gastric ulcer",
+   "synonyms": [
+    "stomach peptic ulcer disease"
+   ]
+  },
+  {
+   "id": "gi_gerd_gi",
+   "mondo": "MONDO:0007186",
+   "mondo_name": "gastroesophageal reflux disease",
+   "synonyms": [
+    "acid reflux",
+    "gastroesophageal reflux",
+    "GERD"
+   ]
+  },
+  {
+   "id": "gi_hiatal_hernia",
+   "mondo": "MONDO:0007721",
+   "mondo_name": "hiatus hernia",
+   "synonyms": [
+    "hiatus hernia"
+   ]
+  },
+  {
+   "id": "gi_malabsorption",
+   "mondo": "MONDO:0020598",
+   "mondo_name": "malabsorption syndrome",
+   "synonyms": [
+    "malabsorption"
+   ]
+  },
+  {
+   "id": "gi_peritonitis_gi",
+   "mondo": "MONDO:1010128",
+   "mondo_name": "peritonitis",
+   "synonyms": [
+    "peritoneum inflammation"
+   ]
+  },
+  {
+   "id": "gi_proctitis",
+   "mondo": "MONDO:0005538",
+   "mondo_name": "proctitis",
+   "synonyms": [
+    "anus inflammation",
+    "inflammation of anus",
+    "rectitis"
+   ]
+  },
+  {
+   "id": "gi_short_bowel",
+   "mondo": "MONDO:0015183",
+   "mondo_name": "short bowel syndrome",
+   "synonyms": [
+    "short gut syndrome"
+   ]
+  },
+  {
+   "id": "gi_sialadenitis",
+   "mondo": "MONDO:0006969",
+   "mondo_name": "sialadenitis",
+   "synonyms": [
+    "sialitis",
+    "sialoadenitis"
+   ]
+  },
+  {
+   "id": "gi_volvulus",
+   "mondo": "MONDO:0004570",
+   "mondo_name": "intestinal volvulus",
+   "synonyms": [
+    "volvulus"
+   ]
+  },
+  {
+   "id": "hemorrhoids",
+   "mondo": "MONDO:0004872",
+   "mondo_name": "hemorrhoid",
+   "synonyms": [
+    "Haemorrhoids",
+    "hemorrhoid"
+   ]
+  },
+  {
+   "id": "irritable_bowel_syndrome",
+   "mondo": "MONDO:0005052",
+   "mondo_name": "irritable bowel syndrome",
+   "synonyms": [
+    "irritable colon",
+    "mucus colitis",
+    "spastic colon"
+   ]
+  },
+  {
+   "id": "pancreatic_cancer",
+   "mondo": "MONDO:0009831",
+   "mondo_name": "malignant pancreatic neoplasm",
+   "synonyms": [
+    "cancer of pancreas",
+    "malignant neoplasm of pancreas",
+    "malignant pancreas neoplasm",
+    "malignant pancreatic neoplasm",
+    "pancreas cancer"
+   ]
+  },
+  {
+   "id": "ulcerative_colitis",
+   "mondo": "MONDO:0005101",
+   "mondo_name": "ulcerative colitis",
+   "synonyms": [
+    "colitis ulcerative"
+   ]
+  },
+  {
+   "id": "allergic_rhinitis",
+   "mondo": "MONDO:0011786",
+   "mondo_name": "allergic rhinitis",
+   "synonyms": [
+    "allergic form of rhinitis"
+   ]
+  },
+  {
+   "id": "atopic_dermatitis",
+   "mondo": "MONDO:0004980",
+   "mondo_name": "atopic eczema",
+   "synonyms": [
+    "allergic form of dermatitis",
+    "ATOD",
+    "atopic eczema",
+    "eczema",
+    "eczematous dermatitis"
+   ]
+  },
+  {
+   "id": "food_allergy",
+   "mondo": "MONDO:0700226",
+   "mondo_name": "food allergy",
+   "synonyms": [
+    "allergy of food material",
+    "food material allergic disease"
+   ]
+  },
+  {
+   "id": "cardiac_tamponade",
+   "mondo": "MONDO:0001297",
+   "mondo_name": "cardiac tamponade",
+   "synonyms": [
+    "pericardial tamponade"
+   ]
+  },
+  {
+   "id": "cd2_arvc",
+   "mondo": "MONDO:0016587",
+   "mondo_name": "arrhythmogenic right ventricular cardiomyopathy",
+   "synonyms": [
+    "arrhythmogenic right ventricular dysplasia",
+    "arrhythmogenic RVD",
+    "ARVD",
+    "right ventricular dysplasia"
+   ]
+  },
+  {
+   "id": "cd2_catecholaminergic_vt",
+   "mondo": "MONDO:0017990",
+   "mondo_name": "catecholaminergic polymorphic ventricular tachycardia",
+   "synonyms": [
+    "catecholaminergic polymorphic ventricular tachycardia",
+    "CPVT",
+    "malignant paroxysmal ventricular tachycardia",
+    "multifocal ventricular premature beats"
+   ]
+  },
+  {
+   "id": "cd2_dresslers",
+   "mondo": "MONDO:0001049",
+   "mondo_name": "Dressler syndrome",
+   "synonyms": [
+    "Dressler's syndrome",
+    "postmyocardial infarction syndrome"
+   ]
+  },
+  {
+   "id": "cd2_multifocal_atrial_tachycardia",
+   "mondo": "MONDO:0017988",
+   "mondo_name": "multifocal atrial tachycardia",
+   "synonyms": [
+    "chaotic atrial tachycardia"
+   ]
+  },
+  {
+   "id": "cd2_peripartum_cardiomyopathy",
+   "mondo": "MONDO:0018920",
+   "mondo_name": "peripartum cardiomyopathy",
+   "synonyms": [
+    "postpartum cardiomyopathy"
+   ]
+  },
+  {
+   "id": "chronic_heart_failure",
+   "mondo": "MONDO:0005009",
+   "mondo_name": "congestive heart failure",
+   "synonyms": [
+    "congestive heart disease"
+   ]
+  },
+  {
+   "id": "cir_aortitis",
+   "mondo": "MONDO:0006656",
+   "mondo_name": "aortitis",
+   "synonyms": [
+    "aorta inflammation",
+    "inflammation of aorta"
+   ]
+  },
+  {
+   "id": "cir_cardiac_sarcoidosis",
+   "mondo": "MONDO:0001707",
+   "mondo_name": "cardiac sarcoidosis",
+   "synonyms": [
+    "heart sarcoidosis",
+    "sarcoidosis of heart"
+   ]
+  },
+  {
+   "id": "cir_carotid_dissection",
+   "mondo": "MONDO:0004763",
+   "mondo_name": "carotid artery dissection",
+   "synonyms": [
+    "dissection of carotid artery"
+   ]
+  },
+  {
+   "id": "cir_cor_pulmonale",
+   "mondo": "MONDO:0004596",
+   "mondo_name": "cor pulmonale",
+   "synonyms": [
+    "pulmonary heart disease"
+   ]
+  },
+  {
+   "id": "cir_essential_hypertension",
+   "mondo": "MONDO:0001134",
+   "mondo_name": "essential hypertension",
+   "synonyms": [
+    "idiopathic hypertension",
+    "primary hypertension"
+   ]
+  },
+  {
+   "id": "cir_mitral_valve_prolapse",
+   "mondo": "MONDO:0004910",
+   "mondo_name": "mitral valve prolapse",
+   "synonyms": [
+    "barlow's syndrome",
+    "floppy mitral valve",
+    "mitral valve prolapse syndrome"
+   ]
+  },
+  {
+   "id": "cir_moyamoya",
+   "mondo": "MONDO:0016820",
+   "mondo_name": "Moyamoya disease",
+   "synonyms": [
+    "idiopathic Moyamoya disease",
+    "progressive intracranial arterial occlusion"
+   ]
+  },
+  {
+   "id": "cir_premature_atrial",
+   "mondo": "MONDO:1061002",
+   "mondo_name": "polymorphous adenocarcinoma",
+   "synonyms": [
+    "PLGA",
+    "polymorphous low-grade adenocarcinoma"
+   ]
+  },
+  {
+   "id": "cir_takayasu",
+   "mondo": "MONDO:0017991",
+   "mondo_name": "Takayasu arteritis",
+   "synonyms": [
+    "aortic arch arteritis",
+    "aortic arch syndrome",
+    "cervical aortic arch",
+    "idiopathic aortitis",
+    "Takayasu's arteritis"
+   ]
+  },
+  {
+   "id": "hypertensive_emergency",
+   "mondo": "MONDO:0006846",
+   "mondo_name": "malignant hypertension",
+   "synonyms": [
+    "accelerated-malignant hypertension",
+    "malignant phase hypertension"
+   ]
+  },
+  {
+   "id": "hypertrophic_cardiomyopathy",
+   "mondo": "MONDO:0005045",
+   "mondo_name": "hypertrophic cardiomyopathy",
+   "synonyms": [
+    "hypertrophic subaortic stenosis",
+    "obstructive hypertrophic cardiomyopathy"
+   ]
+  },
+  {
+   "id": "myocarditis",
+   "mondo": "MONDO:0004496",
+   "mondo_name": "myocarditis",
+   "synonyms": [
+    "inflammation of myocardium",
+    "myocardium inflammation"
+   ]
+  },
+  {
+   "id": "pericardial_effusion",
+   "mondo": "MONDO:0001370",
+   "mondo_name": "pericardial effusion",
+   "synonyms": [
+    "pericardial fluid"
+   ]
+  },
+  {
+   "id": "pericarditis",
+   "mondo": "MONDO:0005904",
+   "mondo_name": "pericarditis",
+   "synonyms": [
+    "inflammation of pericardium",
+    "pericardium inflammation"
+   ]
+  },
+  {
+   "id": "peripheral_arterial_disease",
+   "mondo": "MONDO:0005386",
+   "mondo_name": "peripheral arterial disease",
+   "synonyms": [
+    "peripheral arterial disorder"
+   ]
+  },
+  {
+   "id": "rheumatic_heart_disease",
+   "mondo": "MONDO:0006955",
+   "mondo_name": "rheumatic heart disease",
+   "synonyms": [
+    "rheumatic carditis"
+   ]
+  },
+  {
+   "id": "takotsubo_cardiomyopathy",
+   "mondo": "MONDO:0019018",
+   "mondo_name": "Tako-tsubo cardiomyopathy",
+   "synonyms": [
+    "ampulla cardiomyopathy",
+    "apical ballooning syndrome",
+    "ballooning cardiomyopathy",
+    "Tako-Tsubo syndrome",
+    "Takotsubo syndrome"
+   ]
+  },
+  {
+   "id": "ventricular_fibrillation",
+   "mondo": "MONDO:0000190",
+   "mondo_name": "ventricular fibrillation",
+   "synonyms": [
+    "VFib"
+   ]
+  },
+  {
+   "id": "wolff_parkinson_white",
+   "mondo": "MONDO:0008685",
+   "mondo_name": "Wolff-Parkinson-White syndrome",
+   "synonyms": [
+    "ventricular familial preexcitation syndrome"
+   ]
+  },
+  {
+   "id": "atrial_septal_defect",
+   "mondo": "MONDO:0006664",
+   "mondo_name": "atrial septal defect",
+   "synonyms": [
+    "Atrial Septal Defects",
+    "atrial septum defect",
+    "auricular septal defect",
+    "congenital atrial septal defect",
+    "interatrial septal defect"
+   ]
+  },
+  {
+   "id": "biliary_atresia",
+   "mondo": "MONDO:0008867",
+   "mondo_name": "biliary atresia",
+   "synonyms": [
+    "atresia of bile ducts",
+    "congenital biliary atresia",
+    "non-syndromic biliary atresia"
+   ]
+  },
+  {
+   "id": "cleft_lip_palate",
+   "mondo": "MONDO:0016044",
+   "mondo_name": "cleft lip/palate",
+   "synonyms": [
+    "cleft lip-alveolus-palate syndrome"
+   ]
+  },
+  {
+   "id": "con_cleft_palate",
+   "mondo": "MONDO:0016064",
+   "mondo_name": "cleft palate",
+   "synonyms": [
+    "palatoschisis",
+    "uranostaphyloschisis"
+   ]
+  },
+  {
+   "id": "con_club_foot",
+   "mondo": "MONDO:0007342",
+   "mondo_name": "clubfoot",
+   "synonyms": [
+    "clubbed foot",
+    "talipes",
+    "talipes equinovarus"
+   ]
+  },
+  {
+   "id": "con_developmental_hip_dysplasia",
+   "mondo": "MONDO:0000158",
+   "mondo_name": "developmental dysplasia of the hip",
+   "synonyms": [
+    "congenital hip dysplasia"
+   ]
+  },
+  {
+   "id": "con_duodenal_atresia",
+   "mondo": "MONDO:0009126",
+   "mondo_name": "duodenal atresia",
+   "synonyms": [
+    "atresia of duodenum",
+    "congenital atresia of duodenum",
+    "congenital duodenal atresia"
+   ]
+  },
+  {
+   "id": "con_fragile_x",
+   "mondo": "MONDO:0010383",
+   "mondo_name": "fragile X syndrome",
+   "synonyms": [
+    "FraX syndrome",
+    "FRAXA syndrome",
+    "marker X syndrome",
+    "Martin-Bell syndrome"
+   ]
+  },
+  {
+   "id": "con_gastroschisis",
+   "mondo": "MONDO:0009264",
+   "mondo_name": "gastroschisis",
+   "synonyms": [
+    "laparoschisis"
+   ]
+  },
+  {
+   "id": "con_hypoplastic_left_heart",
+   "mondo": "MONDO:0004933",
+   "mondo_name": "hypoplastic left heart syndrome",
+   "synonyms": [
+    "HLHS"
+   ]
+  },
+  {
+   "id": "con_hypoxic_ischemic_encephalopathy",
+   "mondo": "MONDO:0006663",
+   "mondo_name": "perinatal asphyxia",
+   "synonyms": [
+    "asphyxia neonatorum",
+    "birth asphyxia",
+    "birth depression",
+    "fetal asphyxia",
+    "foetal asphyxia"
+   ]
+  },
+  {
+   "id": "con_imperforate_anus",
+   "mondo": "MONDO:0001046",
+   "mondo_name": "imperforate anus",
+   "synonyms": [
+    "anal atresia",
+    "congenital atresia of anus"
+   ]
+  },
+  {
+   "id": "con_kernicterus",
+   "mondo": "MONDO:0018477",
+   "mondo_name": "bilirubin encephalopathy",
+   "synonyms": [
+    "bilirubin encephalopathy"
+   ]
+  },
+  {
+   "id": "con_meconium_aspiration",
+   "mondo": "MONDO:0006851",
+   "mondo_name": "meconium aspiration syndrome",
+   "synonyms": [
+    "meconium aspiration",
+    "neonatal aspiration of meconium"
+   ]
+  },
+  {
+   "id": "con_noonan",
+   "mondo": "MONDO:0018997",
+   "mondo_name": "Noonan syndrome",
+   "synonyms": [
+    "Noonan's syndrome"
+   ]
+  },
+  {
+   "id": "con_omphalocele",
+   "mondo": "MONDO:0019015",
+   "mondo_name": "omphalocele",
+   "synonyms": [
+    "congenital omphalocele",
+    "exomphalos"
+   ]
+  },
+  {
+   "id": "con_patent_ductus_arteriosus",
+   "mondo": "MONDO:0011827",
+   "mondo_name": "patent ductus arteriosus",
+   "synonyms": [
+    "familial patent arterial duct",
+    "patent ductus botalli"
+   ]
+  },
+  {
+   "id": "con_prader_willi",
+   "mondo": "MONDO:0008300",
+   "mondo_name": "Prader-Willi syndrome",
+   "synonyms": [
+    "Prader-Labhart-Willi syndrome",
+    "Prader-Willi-Labhart syndrome",
+    "Willi-Prader syndrome"
+   ]
+  },
+  {
+   "id": "con_pyloric_stenosis_con",
+   "mondo": "MONDO:0001560",
+   "mondo_name": "hypertrophic pyloric stenosis",
+   "synonyms": [
+    "congenital hypertrophic pyloric stenosis",
+    "IHPS",
+    "infantile hypertrophic pyloric stenosis",
+    "infantile pyloric stenosis"
+   ]
+  },
+  {
+   "id": "con_respiratory_distress_newborn",
+   "mondo": "MONDO:0700081",
+   "mondo_name": "newborn respiratory distress syndrome",
+   "synonyms": [
+    "hyaline membrane disease",
+    "infant ARDS",
+    "infant respiratory distress syndrome",
+    "neonatal respiratory distress",
+    "RDS Of newborns"
+   ]
+  },
+  {
+   "id": "con_transposition_great_arteries",
+   "mondo": "MONDO:0000153",
+   "mondo_name": "transposition of the great arteries",
+   "synonyms": [
+    "complete transposition",
+    "great vessels transposition",
+    "transposition of great vessels"
+   ]
+  },
+  {
+   "id": "con_trisomy_13",
+   "mondo": "MONDO:0018068",
+   "mondo_name": "trisomy 13",
+   "synonyms": [
+    "Patau syndrome",
+    "Patau's syndrome"
+   ]
+  },
+  {
+   "id": "con_trisomy_18",
+   "mondo": "MONDO:0018071",
+   "mondo_name": "trisomy 18",
+   "synonyms": [
+    "Edwards syndrome"
+   ]
+  },
+  {
+   "id": "con_truncus_arteriosus",
+   "mondo": "MONDO:0018072",
+   "mondo_name": "persistent truncus arteriosus",
+   "synonyms": [
+    "common aorticopulmonary trunk",
+    "common arterial trunk",
+    "common truncus arteriosus",
+    "persistent truncus arteriosus"
+   ]
+  },
+  {
+   "id": "con_williams_syndrome",
+   "mondo": "MONDO:0008678",
+   "mondo_name": "Williams syndrome",
+   "synonyms": [
+    "Williams-Beuren syndrome"
+   ]
+  },
+  {
+   "id": "congenital_heart_disease",
+   "mondo": "MONDO:0005453",
+   "mondo_name": "congenital heart disease",
+   "synonyms": [
+    "congenital anomaly of heart",
+    "congenital heart defect",
+    "congenital heart defects"
+   ]
+  },
+  {
+   "id": "esophageal_atresia",
+   "mondo": "MONDO:0001044",
+   "mondo_name": "esophageal atresia",
+   "synonyms": [
+    "congenital atresia of esophagus",
+    "congenital atresia of oesophagus",
+    "congenital esophageal atresia",
+    "congenital imperforate oesophagus",
+    "imperforate oesophagus"
+   ]
+  },
+  {
+   "id": "hirschsprung_disease",
+   "mondo": "MONDO:0018309",
+   "mondo_name": "Hirschsprung disease",
+   "synonyms": [
+    "aganglionic megacolon",
+    "congenital intestinal aganglionosis",
+    "congenital megacolon",
+    "Hirschsprung disease susceptibility",
+    "Hirschsprung's disease"
+   ]
+  },
+  {
+   "id": "neural_tube_defect",
+   "mondo": "MONDO:0018075",
+   "mondo_name": "neural tube defect",
+   "synonyms": [
+    "spinal dysraphism"
+   ]
+  },
+  {
+   "id": "ventricular_septal_defect",
+   "mondo": "MONDO:0002070",
+   "mondo_name": "ventricular septal defect",
+   "synonyms": [
+    "interventricular communication",
+    "interventricular septal defect"
+   ]
+  },
+  {
+   "id": "angioedema",
+   "mondo": "MONDO:0010481",
+   "mondo_name": "angioedema",
+   "synonyms": [
+    "angioedemas",
+    "angioneurotic Edemas",
+    "giant urticaria",
+    "giant Urticarias",
+    "Quincke edema"
+   ]
+  },
+  {
+   "id": "basal_cell_carcinoma",
+   "mondo": "MONDO:0020804",
+   "mondo_name": "basal cell carcinoma",
+   "synonyms": [
+    "basal cell cancer",
+    "malignant basal cell neoplasm"
+   ]
+  },
+  {
+   "id": "de2_acute_generalized_pustulosis",
+   "mondo": "MONDO:0017384",
+   "mondo_name": "acute generalized exanthematous pustulosis",
+   "synonyms": [
+    "AGEP",
+    "pustular drug eruption",
+    "toxic pustuloderma"
+   ]
+  },
+  {
+   "id": "de2_cutaneous_t_cell_lymphoma",
+   "mondo": "MONDO:0000607",
+   "mondo_name": "primary cutaneous T-cell non-Hodgkin lymphoma",
+   "synonyms": [
+    "CTCL",
+    "cutaneous T cell lymphoma",
+    "cutaneous T-cell non-Hodgkin lymphoma",
+    "cutaneous T-cell non-Hodgkin's lymphoma",
+    "PCTCL"
+   ]
+  },
+  {
+   "id": "de2_erythema_multiforme_de2",
+   "mondo": "MONDO:0044719",
+   "mondo_name": "erythema multiforme major",
+   "synonyms": [
+    "erythema exsudativum multiforme majus",
+    "erythema multiforme majus"
+   ]
+  },
+  {
+   "id": "de2_staph_scalded_skin",
+   "mondo": "MONDO:0018181",
+   "mondo_name": "staphylococcal scalded skin syndrome",
+   "synonyms": [
+    "generalised exfoliative disease",
+    "generalized exfoliative disease",
+    "Ritter disease",
+    "Ritter's disease",
+    "SSSS"
+   ]
+  },
+  {
+   "id": "de2_sweet_syndrome",
+   "mondo": "MONDO:0011959",
+   "mondo_name": "sweet syndrome",
+   "synonyms": [
+    "acute febrile neutrophilic dermatosis"
+   ]
+  },
+  {
+   "id": "der_acne",
+   "mondo": "MONDO:0011438",
+   "mondo_name": "acne",
+   "synonyms": [
+    "acne",
+    "acne varioliformis"
+   ]
+  },
+  {
+   "id": "der_actinic_keratosis",
+   "mondo": "MONDO:0005173",
+   "mondo_name": "actinic keratosis",
+   "synonyms": [
+    "solar keratosis"
+   ]
+  },
+  {
+   "id": "der_dermatitis_herpetiformis",
+   "mondo": "MONDO:0015614",
+   "mondo_name": "dermatitis herpetiformis",
+   "synonyms": [
+    "Duhring's disease",
+    "Durhing-Brocq disease"
+   ]
+  },
+  {
+   "id": "der_folliculitis",
+   "mondo": "MONDO:0006552",
+   "mondo_name": "folliculitis",
+   "synonyms": [
+    "dermatitis of hair follicle",
+    "hair follicle dermatitis"
+   ]
+  },
+  {
+   "id": "der_hidradenitis",
+   "mondo": "MONDO:0006559",
+   "mondo_name": "hidradenitis suppurativa",
+   "synonyms": [
+    "acne inversa",
+    "ectopic acne",
+    "fox den disease",
+    "pyoderma fistulans significa",
+    "verneuil disease"
+   ]
+  },
+  {
+   "id": "der_lichen_planus",
+   "mondo": "MONDO:0006572",
+   "mondo_name": "lichen planus",
+   "synonyms": [
+    "lichen ruber planus"
+   ]
+  },
+  {
+   "id": "der_pityriasis_rosea",
+   "mondo": "MONDO:0006601",
+   "mondo_name": "pityriasis rosea",
+   "synonyms": [
+    "Pityriasis circinata"
+   ]
+  },
+  {
+   "id": "der_pressure_ulcer",
+   "mondo": "MONDO:0004646",
+   "mondo_name": "decubitus ulcer",
+   "synonyms": [
+    "pressure sores"
+   ]
+  },
+  {
+   "id": "der_rosacea",
+   "mondo": "MONDO:0006604",
+   "mondo_name": "rosacea",
+   "synonyms": [
+    "acne rosacea"
+   ]
+  },
+  {
+   "id": "der_seborrheic_dermatitis",
+   "mondo": "MONDO:0006608",
+   "mondo_name": "seborrheic dermatitis",
+   "synonyms": [
+    "cradle Cap",
+    "seborrhea",
+    "seborrheic eczema",
+    "skin seborrheic"
+   ]
+  },
+  {
+   "id": "dress_syndrome",
+   "mondo": "MONDO:0015340",
+   "mondo_name": "drug rash with eosinophilia and systemic symptoms",
+   "synonyms": [
+    "DRESS",
+    "dress",
+    "Drug hypersensitivity syndrome"
+   ]
+  },
+  {
+   "id": "dy3_dermatofibroma",
+   "mondo": "MONDO:0006717",
+   "mondo_name": "cutaneous fibrous histiocytoma",
+   "synonyms": [
+    "benign cutaneous fibrous histiocytoma",
+    "benign fibrous cutaneous histiocytoma",
+    "benign skin fibrous histiocytoma",
+    "cutaneous fibrous histiocytoma",
+    "fibrohistiocytic neoplasm"
+   ]
+  },
+  {
+   "id": "dy3_epidermal_cyst",
+   "mondo": "MONDO:0007547",
+   "mondo_name": "epidermoid cysts",
+   "synonyms": [
+    "Epidermal cyst",
+    "epidermoid cyst",
+    "epidermoid cysts",
+    "epithelial cyst",
+    "Follicular infundibular cyst"
+   ]
+  },
+  {
+   "id": "dy3_onychomycosis",
+   "mondo": "MONDO:0001628",
+   "mondo_name": "tinea unguium",
+   "synonyms": [
+    "dermatophytic onychia",
+    "dermatophytosis of nail",
+    "nail dermatophytosis",
+    "tinea unguium"
+   ]
+  },
+  {
+   "id": "dy3_seborrheic_keratosis",
+   "mondo": "MONDO:0008420",
+   "mondo_name": "seborrheic keratosis",
+   "synonyms": [
+    "basal cell papilloma",
+    "keratosis Seborrheica"
+   ]
+  },
+  {
+   "id": "dy3_tinea_pedis",
+   "mondo": "MONDO:0005984",
+   "mondo_name": "tinea pedis",
+   "synonyms": [
+    "dermatophytosis of foot",
+    "dermatophytosis of pes",
+    "pes dermatophytosis"
+   ]
+  },
+  {
+   "id": "melanoma_derm",
+   "mondo": "MONDO:0005012",
+   "mondo_name": "cutaneous melanoma",
+   "synonyms": [
+    "malignant cutaneous melanoma",
+    "malignant melanoma of skin",
+    "melanoma of skin",
+    "melanoma of the skin",
+    "skin melanoma"
+   ]
+  },
+  {
+   "id": "scabies",
+   "mondo": "MONDO:0004525",
+   "mondo_name": "scabies",
+   "synonyms": [
+    "Sarcoptes scabiei infectious disease",
+    "sarcoptic itch"
+   ]
+  },
+  {
+   "id": "squamous_cell_carcinoma_skin",
+   "mondo": "MONDO:0002529",
+   "mondo_name": "skin squamous cell carcinoma",
+   "synonyms": [
+    "epidermoid carcinoma of skin",
+    "epidermoid skin carcinoma",
+    "skin squamous cell cancer",
+    "skin squamous cell carcinoma",
+    "squamous cell skin carcinoma"
+   ]
+  },
+  {
+   "id": "adrenal_crisis",
+   "mondo": "MONDO:0019801",
+   "mondo_name": "acute adrenal insufficiency",
+   "synonyms": [
+    "acute adrenal failure",
+    "acute adrenocortical insufficiency",
+    "Addisonian crisis",
+    "adrenocortical crisis"
+   ]
+  },
+  {
+   "id": "cushing_syndrome",
+   "mondo": "MONDO:0018912",
+   "mondo_name": "Cushing syndrome",
+   "synonyms": [
+    "cortisol Excess",
+    "Cushing's syndrome",
+    "hyperadrenocorticism",
+    "pituitary basophilism",
+    "suprarenogenic syndrome"
+   ]
+  },
+  {
+   "id": "end_amyloidosis",
+   "mondo": "MONDO:0019065",
+   "mondo_name": "amyloidosis",
+   "synonyms": [
+    "amyloid",
+    "amyloid disease",
+    "amyloidoses"
+   ]
+  },
+  {
+   "id": "end_carcinoid_syndrome",
+   "mondo": "MONDO:0100347",
+   "mondo_name": "carcinoid syndrome",
+   "synonyms": [
+    "malignant carcinoid syndrome"
+   ]
+  },
+  {
+   "id": "end_congenital_hypothyroid",
+   "mondo": "MONDO:0018612",
+   "mondo_name": "congenital hypothyroidism",
+   "synonyms": [
+    "congenital iodine deficiency syndrome"
+   ]
+  },
+  {
+   "id": "end_familial_hypercholesterolemia",
+   "mondo": "MONDO:0005439",
+   "mondo_name": "familial hypercholesterolemia",
+   "synonyms": [
+    "hyperlipoproteinemia type II"
+   ]
+  },
+  {
+   "id": "end_goiter",
+   "mondo": "MONDO:0001658",
+   "mondo_name": "nontoxic goiter",
+   "synonyms": [
+    "euthyroid goiter",
+    "euthyroid goitre",
+    "non-toxic simple goiter"
+   ]
+  },
+  {
+   "id": "end_insulinoma",
+   "mondo": "MONDO:0024677",
+   "mondo_name": "pancreatic insulinoma",
+   "synonyms": [
+    "pancreatic insulinoma"
+   ]
+  },
+  {
+   "id": "end_men1",
+   "mondo": "MONDO:0007540",
+   "mondo_name": "multiple endocrine neoplasia type 1",
+   "synonyms": [
+    "MEA type I",
+    "men type I",
+    "Wermer syndrome",
+    "Wermer's syndrome"
+   ]
+  },
+  {
+   "id": "end_mody",
+   "mondo": "MONDO:0018911",
+   "mondo_name": "maturity-onset diabetes of the young",
+   "synonyms": [
+    "MODY"
+   ]
+  },
+  {
+   "id": "end_obesity",
+   "mondo": "MONDO:0011122",
+   "mondo_name": "obesity disorder",
+   "synonyms": [
+    "obesity disease"
+   ]
+  },
+  {
+   "id": "end_thyroiditis_hashimoto",
+   "mondo": "MONDO:0007699",
+   "mondo_name": "Hashimoto thyroiditis",
+   "synonyms": [
+    "chronic lymphocytic thyroiditis",
+    "Hashimoto disease",
+    "Hashimoto hypothyroidism",
+    "Hashimoto's disease",
+    "Hashimoto's syndrome"
+   ]
+  },
+  {
+   "id": "end_type1_diabetes",
+   "mondo": "MONDO:0005147",
+   "mondo_name": "type 1 diabetes mellitus",
+   "synonyms": [
+    "diabetes mellitis type I",
+    "IDDM",
+    "immune mediated diabetes",
+    "insulin dependent diabetes",
+    "juvenile diabetes"
+   ]
+  },
+  {
+   "id": "end_vitamin_d_deficiency",
+   "mondo": "MONDO:0100471",
+   "mondo_name": "vitamin D deficiency",
+   "synonyms": [
+    "avitaminosis D",
+    "DEFIC VITAMIN D",
+    "VITAMIN D DEFIC",
+    "vitamin D deficiencies",
+    "vitamin D insufficiency"
+   ]
+  },
+  {
+   "id": "er2_bartter",
+   "mondo": "MONDO:0015231",
+   "mondo_name": "Bartter syndrome",
+   "synonyms": [
+    "Bartter disease",
+    "Bartter's syndrome",
+    "hypokalemic alkalosis"
+   ]
+  },
+  {
+   "id": "er2_central_diabetes_insipidus",
+   "mondo": "MONDO:0015790",
+   "mondo_name": "central diabetes insipidus",
+   "synonyms": [
+    "neurogenic diabetes insipidus"
+   ]
+  },
+  {
+   "id": "er2_euthyroid_sick",
+   "mondo": "MONDO:0006755",
+   "mondo_name": "euthyroid sick syndrome",
+   "synonyms": [
+    "sick euthyroid syndrome",
+    "sick-euthyroid syndrome"
+   ]
+  },
+  {
+   "id": "er2_fanconi_syndrome",
+   "mondo": "MONDO:0001083",
+   "mondo_name": "Fanconi renotubular syndrome",
+   "synonyms": [
+    "adult Fanconi Anemia",
+    "De toni-debre-Fanconi syndrome",
+    "Fanconi's syndrome",
+    "Fanconi-de toni syndrome",
+    "Lignac-Fanconi syndrome"
+   ]
+  },
+  {
+   "id": "er2_liddle",
+   "mondo": "MONDO:0008323",
+   "mondo_name": "Liddle syndrome",
+   "synonyms": [
+    "pseudoaldosteronism"
+   ]
+  },
+  {
+   "id": "er2_prolactinoma",
+   "mondo": "MONDO:0010911",
+   "mondo_name": "prolactin-producing pituitary gland adenoma",
+   "synonyms": [
+    "lactotrope adenoma",
+    "lactotroph adenoma",
+    "lactotroph cell adenoma",
+    "pituitary gland prolactinoma",
+    "pituitary lactotrophic adenoma"
+   ]
+  },
+  {
+   "id": "er2_proximal_rta",
+   "mondo": "MONDO:0008369",
+   "mondo_name": "proximal renal tubular acidosis",
+   "synonyms": [
+    "pRTA"
+   ]
+  },
+  {
+   "id": "er2_sheehan_syndrome",
+   "mondo": "MONDO:0019618",
+   "mondo_name": "Sheehan syndrome",
+   "synonyms": [
+    "postpartum hypopituitarism",
+    "Sheehan's syndrome"
+   ]
+  },
+  {
+   "id": "er2_thyroid_cancer_medullary",
+   "mondo": "MONDO:0015277",
+   "mondo_name": "medullary thyroid gland carcinoma",
+   "synonyms": [
+    "C cell carcinoma",
+    "carcinoma of parafollicular cell",
+    "medullary carcinoma",
+    "medullary carcinoma of thyroid",
+    "medullary thyroid cancer"
+   ]
+  },
+  {
+   "id": "er2_thyroid_cancer_papillary",
+   "mondo": "MONDO:0005075",
+   "mondo_name": "thyroid gland papillary carcinoma",
+   "synonyms": [
+    "papillary cancer of thyroid",
+    "papillary carcinoma of thyroid",
+    "papillary thyroid cancer",
+    "papillary thyroid gland carcinoma",
+    "thyroid gland papillary cancer"
+   ]
+  },
+  {
+   "id": "er2_tumor_induced_osteomalacia",
+   "mondo": "MONDO:0018124",
+   "mondo_name": "Oncogenic osteomalacia",
+   "synonyms": [
+    "Oncogenic hypophosphatemic osteomalacia"
+   ]
+  },
+  {
+   "id": "er2_type4_rta",
+   "mondo": "MONDO:0100161",
+   "mondo_name": "hyperkalemic renal tubular acidosis",
+   "synonyms": [
+    "hyperkalemic RTA"
+   ]
+  },
+  {
+   "id": "hypopituitarism",
+   "mondo": "MONDO:0005152",
+   "mondo_name": "hypopituitarism",
+   "synonyms": [
+    "pituitary insufficiency"
+   ]
+  },
+  {
+   "id": "hypothyroidism",
+   "mondo": "MONDO:0005420",
+   "mondo_name": "hypothyroidism",
+   "synonyms": [
+    "underactive thyroid"
+   ]
+  },
+  {
+   "id": "pheochromocytoma",
+   "mondo": "MONDO:0008233",
+   "mondo_name": "pheochromocytoma",
+   "synonyms": [
+    "phaeochromocytoma"
+   ]
+  },
+  {
+   "id": "pituitary_apoplexy",
+   "mondo": "MONDO:0006908",
+   "mondo_name": "pituitary apoplexy",
+   "synonyms": [
+    "pituitary gland apoplexy"
+   ]
+  },
+  {
+   "id": "primary_aldosteronism",
+   "mondo": "MONDO:0001422",
+   "mondo_name": "primary aldosteronism",
+   "synonyms": [
+    "Conn's syndrome",
+    "primary hyperaldosteronism"
+   ]
+  },
+  {
+   "id": "siadh",
+   "mondo": "MONDO:0006802",
+   "mondo_name": "inappropriate ADH syndrome",
+   "synonyms": [
+    "ectopic ADH secretion",
+    "ectopic antidiuretic hormone secretion",
+    "inappropriate ADH secretion",
+    "inappropriate Arginine vasopressin secretion",
+    "SIADH"
+   ]
+  },
+  {
+   "id": "subacute_thyroiditis",
+   "mondo": "MONDO:0006982",
+   "mondo_name": "subacute thyroiditis",
+   "synonyms": [
+    "De Quervain thyroiditis",
+    "De Quervain's thyroiditis",
+    "de Quervain's thyroiditis",
+    "DeQuervain thyroiditis",
+    "giant-cell thyroiditis"
+   ]
+  },
+  {
+   "id": "thyroid_storm",
+   "mondo": "MONDO:0006996",
+   "mondo_name": "thyroid crisis",
+   "synonyms": [
+    "thyroid crisis"
+   ]
+  },
+  {
+   "id": "type2_diabetes",
+   "mondo": "MONDO:0005148",
+   "mondo_name": "type 2 diabetes mellitus",
+   "synonyms": [
+    "adult onset diabetes",
+    "adult-onset diabetes",
+    "diabetes mellitis type II",
+    "NIDDM",
+    "non-insulin dependent diabetes"
+   ]
+  },
+  {
+   "id": "acute_otitis_media",
+   "mondo": "MONDO:0024330",
+   "mondo_name": "infectious otitis media",
+   "synonyms": [
+    "infectious otitis Media",
+    "middle Ear infection"
+   ]
+  },
+  {
+   "id": "bppv_ent",
+   "mondo": "MONDO:8000018",
+   "mondo_name": "benign paroxysmal positional vertigo",
+   "synonyms": [
+    "BPPV",
+    "familial benign recurrent vertigo",
+    "familial vestibulopathy"
+   ]
+  },
+  {
+   "id": "ear_acoustic_neuroma",
+   "mondo": "MONDO:0001569",
+   "mondo_name": "acoustic neuroma",
+   "synonyms": [
+    "acoustic neurilemmoma",
+    "acoustic neurilemoma",
+    "acoustic neurinoma",
+    "acoustic schwannoma",
+    "vestibular neurilemmoma"
+   ]
+  },
+  {
+   "id": "ear_labyrinthitis",
+   "mondo": "MONDO:0002008",
+   "mondo_name": "labyrinthitis",
+   "synonyms": [
+    "inflammation of internal ear",
+    "internal ear inflammation",
+    "otitis interna"
+   ]
+  },
+  {
+   "id": "ear_presbycusis",
+   "mondo": "MONDO:0043765",
+   "mondo_name": "presbycusis",
+   "synonyms": [
+    "age-related hearing impairment",
+    "ARHI"
+   ]
+  },
+  {
+   "id": "nasopharyngeal_cancer",
+   "mondo": "MONDO:0015459",
+   "mondo_name": "nasopharyngeal carcinoma",
+   "synonyms": [
+    "carcinoma of nasopharynx",
+    "carcinoma of the nasopharynx",
+    "nasopharynx carcinoma"
+   ]
+  },
+  {
+   "id": "otitis_externa",
+   "mondo": "MONDO:0004795",
+   "mondo_name": "otitis externa",
+   "synonyms": [
+    "external Ear infection",
+    "infectious otitis externa",
+    "outer Ear infection",
+    "swimmer's Ear",
+    "swimmer's ear"
+   ]
+  },
+  {
+   "id": "decompression_sickness",
+   "mondo": "MONDO:0020797",
+   "mondo_name": "decompression sickness",
+   "synonyms": [
+    "bends"
+   ]
+  },
+  {
+   "id": "ev2_radiation_sickness",
+   "mondo": "MONDO:0033938",
+   "mondo_name": "acute radiation syndrome",
+   "synonyms": [
+    "Acute radiation sickness"
+   ]
+  },
+  {
+   "id": "mi3_capillary_leak",
+   "mondo": "MONDO:0001956",
+   "mondo_name": "capillary leak syndrome",
+   "synonyms": [
+    "acute vascular leak syndrome",
+    "AVLS",
+    "capillary hyperpermeability syndrome",
+    "capillary leak syndrome",
+    "Clarkson disease"
+   ]
+  },
+  {
+   "id": "mi3_drug_induced_lupus",
+   "mondo": "MONDO:0016474",
+   "mondo_name": "drug-induced lupus erythematosus",
+   "synonyms": [
+    "DILE",
+    "drug induced lupus",
+    "drug induced lupus erythematosus"
+   ]
+  },
+  {
+   "id": "sym_altered_mental_status",
+   "mondo": "MONDO:0008693",
+   "mondo_name": "ablepharon macrostomia syndrome",
+   "synonyms": [
+    "Ablepharon-Macrostomia Syndrome",
+    "ablepharon-macrostomia syndrome"
+   ]
+  },
+  {
+   "id": "sym_anaphylactic_shock",
+   "mondo": "MONDO:0100053",
+   "mondo_name": "anaphylaxis",
+   "synonyms": [
+    "systemic anaphylaxis"
+   ]
+  },
+  {
+   "id": "sym_cardiac_arrest",
+   "mondo": "MONDO:0000745",
+   "mondo_name": "cardiac arrest",
+   "synonyms": [
+    "circulatory arrest"
+   ]
+  },
+  {
+   "id": "down_syndrome",
+   "mondo": "MONDO:0008608",
+   "mondo_name": "Down syndrome",
+   "synonyms": [
+    "Down's syndrome"
+   ]
+  },
+  {
+   "id": "ehlers_danlos_syndrome",
+   "mondo": "MONDO:0020066",
+   "mondo_name": "Ehlers-Danlos syndrome",
+   "synonyms": [
+    "Cutis hyperelastica",
+    "Danlos disease",
+    "danlos ehlers syndrome",
+    "Dystrophia mesodermalis congenita",
+    "Ehler Danlos Syndrome"
+   ]
+  },
+  {
+   "id": "gen_achondroplasia",
+   "mondo": "MONDO:0007037",
+   "mondo_name": "achondroplasia",
+   "synonyms": [
+    "osteosclerosis congenita"
+   ]
+  },
+  {
+   "id": "gen_alpha1_antitrypsin",
+   "mondo": "MONDO:0013282",
+   "mondo_name": "alpha 1-antitrypsin deficiency",
+   "synonyms": [
+    "AAT deficiency"
+   ]
+  },
+  {
+   "id": "gen_alport",
+   "mondo": "MONDO:0018965",
+   "mondo_name": "Alport syndrome",
+   "synonyms": [
+    "Alport deafness-nephropathy",
+    "Alport's syndrome"
+   ]
+  },
+  {
+   "id": "gen_becker_md",
+   "mondo": "MONDO:0010311",
+   "mondo_name": "Becker muscular dystrophy",
+   "synonyms": [
+    "Becker dystrophinopathy"
+   ]
+  },
+  {
+   "id": "gen_charcot_marie_tooth",
+   "mondo": "MONDO:0015626",
+   "mondo_name": "Charcot-Marie-Tooth disease",
+   "synonyms": [
+    "Charcot-Marie-Tooth hereditary neuropathy",
+    "CMT/HMSN",
+    "peroneal muscular atrophy"
+   ]
+  },
+  {
+   "id": "gen_dubin_johnson",
+   "mondo": "MONDO:0009380",
+   "mondo_name": "Dubin-Johnson syndrome",
+   "synonyms": [
+    "chronic idiopathic jaundice",
+    "Dubin Johnson Syndrome",
+    "Dubin-Sprinz disease",
+    "Sprinz-Nelson syndrome"
+   ]
+  },
+  {
+   "id": "gen_familial_adenomatous_polyposis",
+   "mondo": "MONDO:0021055",
+   "mondo_name": "classic familial adenomatous polyposis",
+   "synonyms": [
+    "adenomatous polyposis coli",
+    "classic familial adenomatous polyposis",
+    "classic FAP",
+    "colorectal adenomatous polyposis",
+    "familial adenomatous polyposis coli"
+   ]
+  },
+  {
+   "id": "gen_friedreich_ataxia",
+   "mondo": "MONDO:0100339",
+   "mondo_name": "Friedreich ataxia",
+   "synonyms": [
+    "FRDA",
+    "Friedreich's Ataxia",
+    "Friedreich's ataxia"
+   ]
+  },
+  {
+   "id": "gen_gilbert_syndrome",
+   "mondo": "MONDO:0007745",
+   "mondo_name": "Gilbert syndrome",
+   "synonyms": [
+    "familial cholemia",
+    "Gilbert disease",
+    "Gilbert's syndrome"
+   ]
+  },
+  {
+   "id": "gen_hereditary_hemorrhagic_telangiectasia",
+   "mondo": "MONDO:0019180",
+   "mondo_name": "hereditary hemorrhagic telangiectasia",
+   "synonyms": [
+    "Osler-Weber-Rendu disease",
+    "Rendu-Osler disease",
+    "Rendu-Osler-Weber disease"
+   ]
+  },
+  {
+   "id": "gen_hereditary_pancreatitis",
+   "mondo": "MONDO:0008185",
+   "mondo_name": "hereditary chronic pancreatitis",
+   "synonyms": [
+    "hereditary chronic pancreatitis"
+   ]
+  },
+  {
+   "id": "gen_li_fraumeni",
+   "mondo": "MONDO:0018875",
+   "mondo_name": "Li-Fraumeni syndrome",
+   "synonyms": [
+    "Li Fraumeni syndrome",
+    "SBLA syndrome"
+   ]
+  },
+  {
+   "id": "gen_mccune_albright",
+   "mondo": "MONDO:0018919",
+   "mondo_name": "McCune-Albright syndrome",
+   "synonyms": [
+    "Albright's disease",
+    "gonadotropin-independent female-limited sexual precocity",
+    "McCune Albright Syndrome",
+    "McCune Albright syndrome"
+   ]
+  },
+  {
+   "id": "gen_myotonic_dystrophy",
+   "mondo": "MONDO:0016107",
+   "mondo_name": "myotonic dystrophy",
+   "synonyms": [
+    "inherited myotonic dystrophy"
+   ]
+  },
+  {
+   "id": "gen_neurofibromatosis2",
+   "mondo": "MONDO:0007039",
+   "mondo_name": "NF2-related schwannomatosis",
+   "synonyms": [
+    "bilateral acoustic neurofibromatosis",
+    "central neurofibromatosis",
+    "SWNV"
+   ]
+  },
+  {
+   "id": "gen_osteogenesis_imperfecta",
+   "mondo": "MONDO:0019019",
+   "mondo_name": "osteogenesis imperfecta",
+   "synonyms": [
+    "brittle bone disease",
+    "glass bone disease",
+    "Lobstein disease",
+    "Osteopsathyrosis",
+    "Porak and Durante disease"
+   ]
+  },
+  {
+   "id": "gen_tuberous_sclerosis",
+   "mondo": "MONDO:0001734",
+   "mondo_name": "tuberous sclerosis",
+   "synonyms": [
+    "Bourneville disease",
+    "Bourneville syndrome",
+    "Bourneville's disease",
+    "Bourneville's syndrome",
+    "epiloia"
+   ]
+  },
+  {
+   "id": "gen_von_hippel_lindau",
+   "mondo": "MONDO:0008667",
+   "mondo_name": "von Hippel-Lindau disease",
+   "synonyms": [
+    "cerebroretinal angiomatosis",
+    "familial cerebelloretinal angiomatosis",
+    "Lindau disease",
+    "VHL-related von Hippel-Lindau disease",
+    "Von Hippel-Lindau syndrome"
+   ]
+  },
+  {
+   "id": "hereditary_angioedema",
+   "mondo": "MONDO:0019623",
+   "mondo_name": "hereditary angioedema",
+   "synonyms": [
+    "familial angioneurotic edema",
+    "familial angioneurotic oedema",
+    "hereditary angioneurotic edema",
+    "hereditary angioneurotic oedema",
+    "hereditary bradykinine-induced angioedema"
+   ]
+  },
+  {
+   "id": "marfan_syndrome",
+   "mondo": "MONDO:0007947",
+   "mondo_name": "Marfan syndrome",
+   "synonyms": [
+    "Contractural arachnodactyly",
+    "Marfan's syndrome"
+   ]
+  },
+  {
+   "id": "neurofibromatosis",
+   "mondo": "MONDO:0021061",
+   "mondo_name": "neurofibromatosis",
+   "synonyms": [
+    "neurofibromatosis syndrome"
+   ]
+  },
+  {
+   "id": "sickle_cell_disease",
+   "mondo": "MONDO:0011382",
+   "mondo_name": "sickle cell disease",
+   "synonyms": [
+    "Hb-S/Hb-C disease",
+    "sickle cell anemia",
+    "sickle-cell/Hb-C disease without crisis"
+   ]
+  },
+  {
+   "id": "acute_kidney_injury",
+   "mondo": "MONDO:0002492",
+   "mondo_name": "acute kidney injury",
+   "synonyms": [
+    "acute kidney failure"
+   ]
+  },
+  {
+   "id": "bph",
+   "mondo": "MONDO:0010811",
+   "mondo_name": "benign prostatic hyperplasia",
+   "synonyms": [
+    "benign hyperplasia of prostate",
+    "benign prostate hyperplasia",
+    "benign prostatic Hypertrophy",
+    "benign prostatic hypertrophy"
+   ]
+  },
+  {
+   "id": "chronic_kidney_disease",
+   "mondo": "MONDO:0005300",
+   "mondo_name": "chronic kidney disease",
+   "synonyms": [
+    "chronic renal disease"
+   ]
+  },
+  {
+   "id": "epididymitis",
+   "mondo": "MONDO:0004779",
+   "mondo_name": "epididymitis",
+   "synonyms": [
+    "epididymal",
+    "epididymis"
+   ]
+  },
+  {
+   "id": "gn3_peyronie",
+   "mondo": "MONDO:0008231",
+   "mondo_name": "Peyronie disease",
+   "synonyms": [
+    "penile fibromatosis",
+    "penile induration",
+    "penis fibromatosis",
+    "Peyronie's disease",
+    "Peyronie's fibromatosis"
+   ]
+  },
+  {
+   "id": "gn3_rapidly_progressive_gn",
+   "mondo": "MONDO:0017236",
+   "mondo_name": "rapidly progressive glomerulonephritis",
+   "synonyms": [
+    "RPGN"
+   ]
+  },
+  {
+   "id": "gu_adenomyosis",
+   "mondo": "MONDO:0010888",
+   "mondo_name": "adenomyosis",
+   "synonyms": [
+    "adenomyosis of the uterus",
+    "adenomyosis of uterus",
+    "endometriosis interna",
+    "endometriosis of myometrium",
+    "endometriosis of uterus"
+   ]
+  },
+  {
+   "id": "gu_amenorrhea",
+   "mondo": "MONDO:0001836",
+   "mondo_name": "amenorrhea",
+   "synonyms": [
+    "absence of menstruation"
+   ]
+  },
+  {
+   "id": "gu_balanitis",
+   "mondo": "MONDO:0006672",
+   "mondo_name": "balanitis",
+   "synonyms": [
+    "glans penis inflammation",
+    "inflammation of glans penis"
+   ]
+  },
+  {
+   "id": "gu_erectile_dysfunction",
+   "mondo": "MONDO:0005362",
+   "mondo_name": "erectile dysfunction",
+   "synonyms": [
+    "male erectile Disorder"
+   ]
+  },
+  {
+   "id": "gu_fibrocystic_breast",
+   "mondo": "MONDO:0005219",
+   "mondo_name": "breast fibrocystic disease",
+   "synonyms": [
+    "benign breast disease",
+    "breast fibrocystic change",
+    "cystic disease of breast",
+    "diffuse cystic mastopathy",
+    "fibrocystic breast"
+   ]
+  },
+  {
+   "id": "gu_focal_segmental_glomerulosclerosis",
+   "mondo": "MONDO:0100313",
+   "mondo_name": "focal segmental glomerulosclerosis",
+   "synonyms": [
+    "FSGS"
+   ]
+  },
+  {
+   "id": "gu_iga_nephropathy",
+   "mondo": "MONDO:0005342",
+   "mondo_name": "IgA glomerulonephritis",
+   "synonyms": [
+    "Berger's disease",
+    "IgA glomerulonephritis"
+   ]
+  },
+  {
+   "id": "gu_lupus_nephritis",
+   "mondo": "MONDO:0005556",
+   "mondo_name": "lupus nephritis",
+   "synonyms": [
+    "lupus glomerulonephritis",
+    "SLE nephritis"
+   ]
+  },
+  {
+   "id": "gu_mastitis",
+   "mondo": "MONDO:0006849",
+   "mondo_name": "mastitis",
+   "synonyms": [
+    "breast infection",
+    "breast inflammation",
+    "inflammation of breast",
+    "inflammatory disease of breast"
+   ]
+  },
+  {
+   "id": "gu_membranous_nephropathy",
+   "mondo": "MONDO:0005376",
+   "mondo_name": "membranous glomerulonephritis",
+   "synonyms": [
+    "membranous Glomerulonephropathy"
+   ]
+  },
+  {
+   "id": "gu_minimal_change",
+   "mondo": "MONDO:0006835",
+   "mondo_name": "minimal change disease",
+   "synonyms": [
+    "lipoid nephrosis",
+    "minimal change glomerulonephritis",
+    "minimal change nephropathy",
+    "nil disease"
+   ]
+  },
+  {
+   "id": "gu_urethritis",
+   "mondo": "MONDO:0005297",
+   "mondo_name": "urethritis",
+   "synonyms": [
+    "inflammation of urethra",
+    "urethra inflammation"
+   ]
+  },
+  {
+   "id": "testicular_torsion",
+   "mondo": "MONDO:0008541",
+   "mondo_name": "spermatic cord torsion",
+   "synonyms": [
+    "torsion of testis"
+   ]
+  },
+  {
+   "id": "endometrial_cancer",
+   "mondo": "MONDO:0011962",
+   "mondo_name": "endometrial cancer",
+   "synonyms": [
+    "cancer of endometrium",
+    "endometrium cancer",
+    "malignant endometrial neoplasm",
+    "malignant endometrium neoplasm",
+    "malignant neoplasm of endometrium"
+   ]
+  },
+  {
+   "id": "polycystic_ovary_syndrome",
+   "mondo": "MONDO:0008487",
+   "mondo_name": "polycystic ovary syndrome",
+   "synonyms": [
+    "PCOS",
+    "polycystic ovarian disease",
+    "polycystic ovaries",
+    "Stein-Leventhal syndrome"
+   ]
+  },
+  {
+   "id": "tubo_ovarian_abscess",
+   "mondo": "MONDO:0001172",
+   "mondo_name": "salpingo-oophoritis",
+   "synonyms": [
+    "tubo ovarian abscess",
+    "Tubo-ovarian inflammatory disease"
+   ]
+  },
+  {
+   "id": "vulvovaginal_candidiasis",
+   "mondo": "MONDO:0006014",
+   "mondo_name": "vulvovaginal candidiasis",
+   "synonyms": [
+    "candidal vulvovaginitis",
+    "candidal: cervix",
+    "monilial vulvovaginitis",
+    "vaginal candidiasis"
+   ]
+  },
+  {
+   "id": "essential_thrombocythemia",
+   "mondo": "MONDO:0005029",
+   "mondo_name": "essential thrombocythemia",
+   "synonyms": [
+    "essential thrombocytemia",
+    "essential thrombocytosis",
+    "primary thrombocythemia",
+    "primary thrombocytosis"
+   ]
+  },
+  {
+   "id": "folate_deficiency",
+   "mondo": "MONDO:0001860",
+   "mondo_name": "folic acid deficiency anemia",
+   "synonyms": [
+    "folate-deficiency anemia",
+    "folate-deficient megaloblastic anemia"
+   ]
+  },
+  {
+   "id": "hem_agranulocytosis",
+   "mondo": "MONDO:0001609",
+   "mondo_name": "agranulocytosis",
+   "synonyms": [
+    "granulocytopenia"
+   ]
+  },
+  {
+   "id": "hem_anemia_chronic_disease",
+   "mondo": "MONDO:0020725",
+   "mondo_name": "anemia due to chronic disorder",
+   "synonyms": [
+    "anaemia of chronic disease",
+    "anaemia of chronic illness",
+    "anaemia of chronic inflammation",
+    "anemia of chronic illness",
+    "anemia of chronic inflammation"
+   ]
+  },
+  {
+   "id": "hem_antithrombin_deficiency",
+   "mondo": "MONDO:0013144",
+   "mondo_name": "hereditary antithrombin deficiency",
+   "synonyms": [
+    "Antithrombin Deficiency",
+    "congenital antithrombin III deficiency",
+    "congenital AT-III deficiency",
+    "hereditary antithrombin deficiency",
+    "inherited antithrombin deficiency"
+   ]
+  },
+  {
+   "id": "hem_complement_deficiency",
+   "mondo": "MONDO:0003832",
+   "mondo_name": "complement deficiency",
+   "synonyms": [
+    "complement activation disease",
+    "disorder of complement activation"
+   ]
+  },
+  {
+   "id": "hem_digeorge",
+   "mondo": "MONDO:0008564",
+   "mondo_name": "DiGeorge syndrome",
+   "synonyms": [
+    "DiGeorge anomaly",
+    "DiGeorge's syndrome",
+    "pharyngeal pouch syndrome"
+   ]
+  },
+  {
+   "id": "hem_hemophagocytic",
+   "mondo": "MONDO:0015540",
+   "mondo_name": "hemophagocytic syndrome",
+   "synonyms": [
+    "hemophagocytic syndrome"
+   ]
+  },
+  {
+   "id": "hem_heparin_induced_thrombocytopenia",
+   "mondo": "MONDO:0018048",
+   "mondo_name": "heparin-induced thrombocytopenia",
+   "synonyms": [
+    "heparin-associated thrombocytopenia"
+   ]
+  },
+  {
+   "id": "hem_hereditary_spherocytosis",
+   "mondo": "MONDO:0019350",
+   "mondo_name": "hereditary spherocytosis",
+   "synonyms": [
+    "congenital spherocytic hemolytic anaemia",
+    "Minkowski-Chauffard disease",
+    "spherocytic anaemia"
+   ]
+  },
+  {
+   "id": "hem_mast_cell_activation",
+   "mondo": "MONDO:0100004",
+   "mondo_name": "mast cell activation syndrome",
+   "synonyms": [
+    "MACS",
+    "mast cell activation disease"
+   ]
+  },
+  {
+   "id": "hem_methemoglobinemia",
+   "mondo": "MONDO:0001117",
+   "mondo_name": "methemoglobinemia",
+   "synonyms": [
+    "methemoglobinemias"
+   ]
+  },
+  {
+   "id": "hem_paroxysmal_nocturnal",
+   "mondo": "MONDO:0100244",
+   "mondo_name": "paroxysmal nocturnal hemoglobinuria",
+   "synonyms": [
+    "acquired paroxysmal nocturnal hemoglobinuria",
+    "hereditary paroxysmal nocturnal hemoglobinuria",
+    "inherited paroxysmal nocturnal hemoglobinuria",
+    "Marchiafava-Micheli disease",
+    "paroxysmal hemoglobinuria"
+   ]
+  },
+  {
+   "id": "hem_protein_c_deficiency",
+   "mondo": "MONDO:0019145",
+   "mondo_name": "hereditary thrombophilia due to congenital protein C deficiency",
+   "synonyms": [
+    "Protein C deficiency disease"
+   ]
+  },
+  {
+   "id": "hem_pure_red_cell_aplasia",
+   "mondo": "MONDO:0001705",
+   "mondo_name": "pure red-cell aplasia",
+   "synonyms": [
+    "PRCA"
+   ]
+  },
+  {
+   "id": "hem_sideroblastic_anemia",
+   "mondo": "MONDO:0015194",
+   "mondo_name": "sideroblastic anemia",
+   "synonyms": [
+    "anaemia sideroblastic",
+    "anemia sideroblastic"
+   ]
+  },
+  {
+   "id": "hem_wiskott_aldrich",
+   "mondo": "MONDO:0010518",
+   "mondo_name": "Wiskott-Aldrich syndrome",
+   "synonyms": [
+    "eczema-thrombocytopenia-immunodeficiency syndrome",
+    "Wiskott Aldrich syndrome"
+   ]
+  },
+  {
+   "id": "hemolytic_anemia",
+   "mondo": "MONDO:0003664",
+   "mondo_name": "hemolytic anemia",
+   "synonyms": [
+    "anaemia hemolytic",
+    "anemia hemolytic"
+   ]
+  },
+  {
+   "id": "itp",
+   "mondo": "MONDO:0008558",
+   "mondo_name": "autoimmune thrombocytopenic purpura",
+   "synonyms": [
+    "autoimmune thrombocytopenic purpura",
+    "idiopathic thrombocytopenia",
+    "idiopathic thrombocytopenia purpura",
+    "idiopathic thrombocytopenic purpura"
+   ]
+  },
+  {
+   "id": "myelodysplastic_syndrome",
+   "mondo": "MONDO:0018881",
+   "mondo_name": "myelodysplastic syndrome",
+   "synonyms": [
+    "dysmyelopoietic syndrome",
+    "MDS-U",
+    "myelodysplasia",
+    "myelodysplastic neoplasm",
+    "myelodysplastic syndrome/neoplasm"
+   ]
+  },
+  {
+   "id": "polycythemia_vera",
+   "mondo": "MONDO:0009891",
+   "mondo_name": "acquired polycythemia vera",
+   "synonyms": [
+    "acquired primary erythrocytosis",
+    "Osler-Vaquez disease",
+    "polycythaemia rubra vera",
+    "polycythemia rubra vera",
+    "Vaquez disease"
+   ]
+  },
+  {
+   "id": "thalassemia",
+   "mondo": "MONDO:0000984",
+   "mondo_name": "thalassemia",
+   "synonyms": [
+    "sickle-cell thalassemia with crisis",
+    "sickle-cell thalassemia without crisis"
+   ]
+  },
+  {
+   "id": "ttp",
+   "mondo": "MONDO:0018896",
+   "mondo_name": "thrombotic thrombocytopenic purpura",
+   "synonyms": [
+    "Moschcowitz disease",
+    "Moschowitz disease"
+   ]
+  },
+  {
+   "id": "von_willebrand_disease",
+   "mondo": "MONDO:0024574",
+   "mondo_name": "von Willebrand disease (hereditary or acquired)",
+   "synonyms": [
+    "von Willebrand disorder",
+    "von Willebrand's disease"
+   ]
+  },
+  {
+   "id": "dic",
+   "mondo": "MONDO:0001243",
+   "mondo_name": "disseminated intravascular coagulation",
+   "synonyms": [
+    "consumptive coagulopathy",
+    "defibrination syndrome"
+   ]
+  },
+  {
+   "id": "iron_deficiency_anemia",
+   "mondo": "MONDO:0001356",
+   "mondo_name": "iron deficiency anemia",
+   "synonyms": [
+    "iron-deficiency anaemia",
+    "iron-deficiency anemia"
+   ]
+  },
+  {
+   "id": "thrombocytopenia",
+   "mondo": "MONDO:0002049",
+   "mondo_name": "thrombocytopenia",
+   "synonyms": [
+    "platelet count decreased",
+    "thrombocytopenic disorder"
+   ]
+  },
+  {
+   "id": "acute_liver_failure",
+   "mondo": "MONDO:0019542",
+   "mondo_name": "acute liver failure",
+   "synonyms": [
+    "acute hepatic failure"
+   ]
+  },
+  {
+   "id": "alcoholic_hepatitis",
+   "mondo": "MONDO:0001505",
+   "mondo_name": "alcoholic hepatitis",
+   "synonyms": [
+    "acute alcoholic hepatitis"
+   ]
+  },
+  {
+   "id": "hepatic_encephalopathy",
+   "mondo": "MONDO:0001711",
+   "mondo_name": "hepatic encephalopathy",
+   "synonyms": [
+    "portal-systemic encephalopathy"
+   ]
+  },
+  {
+   "id": "hepatitis_a",
+   "mondo": "MONDO:0005790",
+   "mondo_name": "hepatitis A virus infection",
+   "synonyms": [
+    "Hepatitis A infection",
+    "hepatitis type A"
+   ]
+  },
+  {
+   "id": "hepatitis_b",
+   "mondo": "MONDO:0005344",
+   "mondo_name": "hepatitis B virus infection",
+   "synonyms": [
+    "Hepatitis B infection",
+    "hepatitis B infection",
+    "Hepatitis B virus hepatitis",
+    "hepatitis type B",
+    "viral Hepatitis B"
+   ]
+  },
+  {
+   "id": "hepatocellular_carcinoma",
+   "mondo": "MONDO:0007256",
+   "mondo_name": "hepatocellular carcinoma",
+   "synonyms": [
+    "carcinoma of liver",
+    "carcinoma of liver cells",
+    "hepatocellular adenocarcinoma",
+    "hepatocellular cancer",
+    "hepatoma"
+   ]
+  },
+  {
+   "id": "nafld",
+   "mondo": "MONDO:0013209",
+   "mondo_name": "metabolic dysfunction-associated steatotic liver disease",
+   "synonyms": [
+    "MASLD",
+    "NAFLD",
+    "non-alcoholic fatty liver"
+   ]
+  },
+  {
+   "id": "portal_vein_thrombosis",
+   "mondo": "MONDO:0001339",
+   "mondo_name": "portal vein thrombosis",
+   "synonyms": [
+    "portal vein thrombotic disease"
+   ]
+  },
+  {
+   "id": "primary_biliary_cholangitis",
+   "mondo": "MONDO:0005388",
+   "mondo_name": "primary biliary cholangitis",
+   "synonyms": [
+    "chronic non-suppurative destructive cholangitis",
+    "chronic nonsuppurative destructive cholangitis",
+    "Hanot syndrome",
+    "primary biliary cirrhosis"
+   ]
+  },
+  {
+   "id": "wilson_disease",
+   "mondo": "MONDO:0010200",
+   "mondo_name": "Wilson disease",
+   "synonyms": [
+    "hepatolenticular degeneration",
+    "Westphal-Strumpell syndrome",
+    "Wilson's disease"
+   ]
+  },
+  {
+   "id": "chronic_granulomatous_disease",
+   "mondo": "MONDO:0018305",
+   "mondo_name": "chronic granulomatous disease",
+   "synonyms": [
+    "chronic septic granulomatosis"
+   ]
+  },
+  {
+   "id": "common_variable_immunodeficiency",
+   "mondo": "MONDO:0015517",
+   "mondo_name": "common variable immunodeficiency",
+   "synonyms": [
+    "Common Variable Immune Deficiency",
+    "primary antibody deficiency",
+    "primary hypogammaglobulinemia",
+    "secondary hypogammaglobulinemia"
+   ]
+  },
+  {
+   "id": "graft_versus_host_disease",
+   "mondo": "MONDO:0013730",
+   "mondo_name": "graft versus host disease",
+   "synonyms": [
+    "graft versus host disease",
+    "graft vs host disease",
+    "graft vs. host disease",
+    "graft-versus-host-disease",
+    "graft-vs-host disease"
+   ]
+  },
+  {
+   "id": "severe_combined_immunodeficiency",
+   "mondo": "MONDO:0015974",
+   "mondo_name": "severe combined immunodeficiency",
+   "synonyms": [
+    "SCID",
+    "severe combined immunodeficiency disease"
+   ]
+  },
+  {
+   "id": "brucellosis",
+   "mondo": "MONDO:0005683",
+   "mondo_name": "brucellosis",
+   "synonyms": [
+    "undulant fever"
+   ]
+  },
+  {
+   "id": "clostridioides_difficile",
+   "mondo": "MONDO:0000705",
+   "mondo_name": "Clostridium difficile colitis",
+   "synonyms": [
+    "C. diff colitis",
+    "C. diff infection",
+    "Clostridium difficile infection"
+   ]
+  },
+  {
+   "id": "dengue",
+   "mondo": "MONDO:0005502",
+   "mondo_name": "dengue disease",
+   "synonyms": [
+    "break bone fever",
+    "Dengue",
+    "Dengue virus infection",
+    "Dengue virus infectious disease"
+   ]
+  },
+  {
+   "id": "herpes_zoster",
+   "mondo": "MONDO:0005609",
+   "mondo_name": "herpes zoster",
+   "synonyms": [
+    "herpes Zoster",
+    "Zoster"
+   ]
+  },
+  {
+   "id": "if3_actinomycosis",
+   "mondo": "MONDO:0005631",
+   "mondo_name": "actinomycosis",
+   "synonyms": [
+    "Actinomyces infection"
+   ]
+  },
+  {
+   "id": "if3_adenovirus",
+   "mondo": "MONDO:0043479",
+   "mondo_name": "adenoviridae infectious disease",
+   "synonyms": [
+    "Adenoviridae infectious disease",
+    "adenoviridae infectious disease",
+    "disease due to adenovirus"
+   ]
+  },
+  {
+   "id": "if3_african_trypanosomiasis",
+   "mondo": "MONDO:0005459",
+   "mondo_name": "human African trypanosomiasis",
+   "synonyms": [
+    "Africam sleeping sickness"
+   ]
+  },
+  {
+   "id": "if3_anaplasmosis",
+   "mondo": "MONDO:0005118",
+   "mondo_name": "human granulocytic anaplasmosis",
+   "synonyms": [
+    "anaplasmoses",
+    "human anaplasmosis",
+    "infection by Anaplasma phagocytophilum"
+   ]
+  },
+  {
+   "id": "if3_babesiosis",
+   "mondo": "MONDO:0005661",
+   "mondo_name": "babesiosis",
+   "synonyms": [
+    "Babesia infectious disease",
+    "babesiasis",
+    "infection by Babesia",
+    "piroplasmosis"
+   ]
+  },
+  {
+   "id": "if3_chagas",
+   "mondo": "MONDO:0001444",
+   "mondo_name": "Chagas disease",
+   "synonyms": [
+    "infection by trypanosoma cruzi",
+    "Trypanosoma cruzi infectious disease"
+   ]
+  },
+  {
+   "id": "if3_filariasis",
+   "mondo": "MONDO:0005761",
+   "mondo_name": "filarial elephantiasis",
+   "synonyms": [
+    "eyelid elephantiasis"
+   ]
+  },
+  {
+   "id": "if3_leprosy",
+   "mondo": "MONDO:0005124",
+   "mondo_name": "leprosy",
+   "synonyms": [
+    "Hansen disease",
+    "Hansen's disease",
+    "Mycobacterium leprae infectious disease"
+   ]
+  },
+  {
+   "id": "if3_melioidosis",
+   "mondo": "MONDO:0017775",
+   "mondo_name": "melioidosis",
+   "synonyms": [
+    "Burkholderia pseudomallei infectious disease",
+    "pseudoglanders"
+   ]
+  },
+  {
+   "id": "if3_onchocerciasis",
+   "mondo": "MONDO:0017137",
+   "mondo_name": "onchocerciasis",
+   "synonyms": [
+    "infection by Onchocerca volvulus",
+    "Onchocerca volvulus infection"
+   ]
+  },
+  {
+   "id": "if3_rat_bite_fever",
+   "mondo": "MONDO:0006941",
+   "mondo_name": "rat-bite fever",
+   "synonyms": [
+    "spirillosis",
+    "Streptobacillosis"
+   ]
+  },
+  {
+   "id": "if3_trichinosis",
+   "mondo": "MONDO:0019444",
+   "mondo_name": "trichinellosis",
+   "synonyms": [
+    "Trichinella infectious disease",
+    "trichinosis"
+   ]
+  },
+  {
+   "id": "inf_anthrax",
+   "mondo": "MONDO:0005119",
+   "mondo_name": "anthrax infection",
+   "synonyms": [
+    "Bacillus anthracis infectious disease"
+   ]
+  },
+  {
+   "id": "inf_ascariasis",
+   "mondo": "MONDO:0005654",
+   "mondo_name": "ascariasis",
+   "synonyms": [
+    "Ascaris lumbricoides infectious disease"
+   ]
+  },
+  {
+   "id": "inf_botulism",
+   "mondo": "MONDO:0005498",
+   "mondo_name": "botulism",
+   "synonyms": [
+    "botulism poisoning"
+   ]
+  },
+  {
+   "id": "inf_candidiasis_mucosal",
+   "mondo": "MONDO:0002026",
+   "mondo_name": "candidiasis",
+   "synonyms": [
+    "Candida <Debaryomycetaceae> infection",
+    "Candida infection",
+    "Candidosis"
+   ]
+  },
+  {
+   "id": "inf_chikungunya",
+   "mondo": "MONDO:0017941",
+   "mondo_name": "chikungunya",
+   "synonyms": [
+    "Chikungunya fever",
+    "Chikungunya virus infectious disease"
+   ]
+  },
+  {
+   "id": "inf_cholera_inf",
+   "mondo": "MONDO:0015766",
+   "mondo_name": "cholera",
+   "synonyms": [
+    "Vibrio cholerae infectious disease"
+   ]
+  },
+  {
+   "id": "inf_coccidioidomycosis",
+   "mondo": "MONDO:0005706",
+   "mondo_name": "coccidioidomycosis",
+   "synonyms": [
+    "California disease",
+    "Coccidioides immitis infectious disease",
+    "Coccidioides infection",
+    "desert fever",
+    "desert rheumatism"
+   ]
+  },
+  {
+   "id": "inf_cryptococcosis",
+   "mondo": "MONDO:0005724",
+   "mondo_name": "cryptococcosis",
+   "synonyms": [
+    "Cryptococcus neoformans infectious disease",
+    "torulosis"
+   ]
+  },
+  {
+   "id": "inf_cryptosporidiosis",
+   "mondo": "MONDO:0015474",
+   "mondo_name": "cryptosporidiosis",
+   "synonyms": [
+    "Cryptosporidium infection",
+    "Cryptosporidium infectious disease",
+    "intestinal cryptosporidiosis"
+   ]
+  },
+  {
+   "id": "inf_cysticercosis",
+   "mondo": "MONDO:0015484",
+   "mondo_name": "cysticercosis",
+   "synonyms": [
+    "tapeworm infection: pork"
+   ]
+  },
+  {
+   "id": "inf_ebola",
+   "mondo": "MONDO:0005737",
+   "mondo_name": "Ebola hemorrhagic fever",
+   "synonyms": [
+    "Ebola",
+    "Ebola fever",
+    "Ebolavirus infectious disease"
+   ]
+  },
+  {
+   "id": "inf_ebv",
+   "mondo": "MONDO:0005111",
+   "mondo_name": "Epstein-Barr virus infection",
+   "synonyms": [
+    "EBV infection"
+   ]
+  },
+  {
+   "id": "inf_giardiasis",
+   "mondo": "MONDO:0001103",
+   "mondo_name": "giardiasis",
+   "synonyms": [
+    "Giardia infection"
+   ]
+  },
+  {
+   "id": "inf_gonorrhea",
+   "mondo": "MONDO:0004277",
+   "mondo_name": "gonorrhea",
+   "synonyms": [
+    "Neisseria gonorrhoeae infection"
+   ]
+  },
+  {
+   "id": "inf_hantavirus",
+   "mondo": "MONDO:0005780",
+   "mondo_name": "hantavirus infectious disease",
+   "synonyms": [
+    "disease due to hantavirus",
+    "Hantavirus infectious disease"
+   ]
+  },
+  {
+   "id": "inf_hemorrhagic_fever",
+   "mondo": "MONDO:0018087",
+   "mondo_name": "viral hemorrhagic fever",
+   "synonyms": [
+    "VHFs",
+    "viral haemorrhagic fever"
+   ]
+  },
+  {
+   "id": "inf_histoplasmosis",
+   "mondo": "MONDO:0018312",
+   "mondo_name": "histoplasmosis",
+   "synonyms": [
+    "darling disease",
+    "Histoplasma infectious disease"
+   ]
+  },
+  {
+   "id": "inf_hsv_encephalitis",
+   "mondo": "MONDO:0012521",
+   "mondo_name": "herpes simplex encephalitis",
+   "synonyms": [
+    "Herpes simplex meningo-encephalitis",
+    "Herpes simplex neuroinvasion",
+    "herpetic encephalitis",
+    "HSV encephalitis",
+    "HSVE"
+   ]
+  },
+  {
+   "id": "inf_listeriosis",
+   "mondo": "MONDO:0005828",
+   "mondo_name": "listeriosis",
+   "synonyms": [
+    "infection by Listeria monocytogenes",
+    "Listeria infection",
+    "Listeria monocytogenes infectious disease"
+   ]
+  },
+  {
+   "id": "inf_pneumocystis_inf",
+   "mondo": "MONDO:0019121",
+   "mondo_name": "pneumocystosis",
+   "synonyms": [
+    "Pneumocystis",
+    "Pneumocystis carinii pneumonia",
+    "pneumocystosis"
+   ]
+  },
+  {
+   "id": "inf_q_fever",
+   "mondo": "MONDO:0019186",
+   "mondo_name": "Q fever",
+   "synonyms": [
+    "Coxiella burnetii infectious disease",
+    "Coxiellosis",
+    "nine Mile fever",
+    "quadrilateral fever",
+    "query fever"
+   ]
+  },
+  {
+   "id": "inf_schistosomiasis",
+   "mondo": "MONDO:0015254",
+   "mondo_name": "schistosomiasis",
+   "synonyms": [
+    "Bilharzia",
+    "bilharziasis",
+    "snail fever"
+   ]
+  },
+  {
+   "id": "inf_strongyloidiasis",
+   "mondo": "MONDO:0005974",
+   "mondo_name": "strongyloidiasis",
+   "synonyms": [
+    "Anguilluliasis",
+    "Anguillulosis"
+   ]
+  },
+  {
+   "id": "inf_syphilis",
+   "mondo": "MONDO:0005976",
+   "mondo_name": "syphilis",
+   "synonyms": [
+    "Treponema pallidum infectious disease"
+   ]
+  },
+  {
+   "id": "inf_toxoplasmosis",
+   "mondo": "MONDO:0005989",
+   "mondo_name": "toxoplasmosis",
+   "synonyms": [
+    "Toxoplasma gondii infectious disease"
+   ]
+  },
+  {
+   "id": "inf_tularemia",
+   "mondo": "MONDO:0018077",
+   "mondo_name": "tularemia",
+   "synonyms": [
+    "Francisella tularensis infectious disease"
+   ]
+  },
+  {
+   "id": "inf_typhus",
+   "mondo": "MONDO:0001246",
+   "mondo_name": "typhus",
+   "synonyms": [
+    "typhus-group rickettsiae disease",
+    "typhus-group rickettsiosis"
+   ]
+  },
+  {
+   "id": "inf_yellow_fever",
+   "mondo": "MONDO:0020502",
+   "mondo_name": "yellow fever",
+   "synonyms": [
+    "bronze John",
+    "sylvatic yellow fever",
+    "Yellow fever Virus infection",
+    "Yellow Jack"
+   ]
+  },
+  {
+   "id": "inf_zika",
+   "mondo": "MONDO:0018661",
+   "mondo_name": "Zika virus infectious disease",
+   "synonyms": [
+    "Zika",
+    "Zika virus infection",
+    "Zika virus infectious disease",
+    "ZikV infection"
+   ]
+  },
+  {
+   "id": "infectious_diarrhea",
+   "mondo": "MONDO:0001517",
+   "mondo_name": "dysentery",
+   "synonyms": [
+    "dysenteric diarrhea",
+    "dysenteric diarrhoea",
+    "infectious diarrheal disease",
+    "infectious diarrheal diseases",
+    "infectious diarrhoea"
+   ]
+  },
+  {
+   "id": "infectious_mononucleosis",
+   "mondo": "MONDO:0005810",
+   "mondo_name": "infectious mononucleosis",
+   "synonyms": [
+    "Gammaherpesviral mononucleosis",
+    "glandular fever",
+    "Mono"
+   ]
+  },
+  {
+   "id": "leptospirosis",
+   "mondo": "MONDO:0005825",
+   "mondo_name": "leptospirosis",
+   "synonyms": [
+    "Leptospira infectious disease",
+    "nanukayami fever"
+   ]
+  },
+  {
+   "id": "lyme_disease",
+   "mondo": "MONDO:0019632",
+   "mondo_name": "Lyme disease",
+   "synonyms": [
+    "Borrelia",
+    "Borrelia burgdorferi infection",
+    "Borreliella burgdorferi infectious disease",
+    "Lyme borreliosis"
+   ]
+  },
+  {
+   "id": "measles",
+   "mondo": "MONDO:0004619",
+   "mondo_name": "measles",
+   "synonyms": [
+    "Measles morbillivirus infectious disease",
+    "morbilli",
+    "rubeola infection"
+   ]
+  },
+  {
+   "id": "mumps",
+   "mondo": "MONDO:0000989",
+   "mondo_name": "mumps infectious disease",
+   "synonyms": [
+    "epidemic parotitis",
+    "Mumps virus infectious disease"
+   ]
+  },
+  {
+   "id": "rabies",
+   "mondo": "MONDO:0019173",
+   "mondo_name": "rabies",
+   "synonyms": [
+    "lyssa"
+   ]
+  },
+  {
+   "id": "rubella",
+   "mondo": "MONDO:0004656",
+   "mondo_name": "rubella",
+   "synonyms": [
+    "german measles",
+    "Rubella infection",
+    "Rubella virus infectious disease",
+    "three-Day Measles"
+   ]
+  },
+  {
+   "id": "scarlet_fever",
+   "mondo": "MONDO:0005952",
+   "mondo_name": "scarlet fever",
+   "synonyms": [
+    "scarlatina"
+   ]
+  },
+  {
+   "id": "septic_arthritis",
+   "mondo": "MONDO:0004471",
+   "mondo_name": "bacterial arthritis",
+   "synonyms": [
+    "pyogenic arthritis"
+   ]
+  },
+  {
+   "id": "toxic_shock_syndrome",
+   "mondo": "MONDO:0001881",
+   "mondo_name": "toxic shock syndrome",
+   "synonyms": [
+    "bacterial toxic-shock syndrome",
+    "bacterial TSS"
+   ]
+  },
+  {
+   "id": "typhoid_fever",
+   "mondo": "MONDO:0005619",
+   "mondo_name": "typhoid fever",
+   "synonyms": [
+    "typhoid",
+    "typhoidal salmonellosis"
+   ]
+  },
+  {
+   "id": "fabry_disease",
+   "mondo": "MONDO:0010526",
+   "mondo_name": "Fabry disease",
+   "synonyms": [
+    "Alpha-galactosidase A deficiency",
+    "Anderson-Fabry disease",
+    "angiokeratoma corporis diffusum",
+    "diffuse angiokeratoma",
+    "Fabry's disease"
+   ]
+  },
+  {
+   "id": "g6pd_deficiency",
+   "mondo": "MONDO:0005775",
+   "mondo_name": "G6PD deficiency",
+   "synonyms": [
+    "glucosephosphate dehydrogenase deficiency"
+   ]
+  },
+  {
+   "id": "gaucher_disease",
+   "mondo": "MONDO:0018150",
+   "mondo_name": "Gaucher disease",
+   "synonyms": [
+    "acid beta-glucosidase deficiency",
+    "Gaucher syndrome",
+    "glucocerebrosidase deficiency",
+    "glucocerebrosidosis",
+    "glucosylceramidase deficiency"
+   ]
+  },
+  {
+   "id": "glycogen_storage_disease",
+   "mondo": "MONDO:0002412",
+   "mondo_name": "disorder of glycogen metabolism",
+   "synonyms": [
+    "glycogen storage disorder",
+    "glycogenoses",
+    "glycogenosis",
+    "inborn glycogen storage disorder"
+   ]
+  },
+  {
+   "id": "maple_syrup_urine_disease",
+   "mondo": "MONDO:0009563",
+   "mondo_name": "maple syrup urine disease",
+   "synonyms": [
+    "BCKD deficiency",
+    "BCKDH deficiency",
+    "branched chain ketoaciduria",
+    "branched-chain ketoaciduria",
+    "Ketoacidaemia"
+   ]
+  },
+  {
+   "id": "tay_sachs_disease",
+   "mondo": "MONDO:0010100",
+   "mondo_name": "Tay-Sachs disease",
+   "synonyms": [
+    "Hex A pseudodeficiency",
+    "hexosaminidase A deficiency",
+    "Tay Sachs Disease"
+   ]
+  },
+  {
+   "id": "msk_adhesive_capsulitis_msk",
+   "mondo": "MONDO:0006763",
+   "mondo_name": "frozen shoulder",
+   "synonyms": [
+    "adhesive capsulitis of shoulder"
+   ]
+  },
+  {
+   "id": "msk_bursitis",
+   "mondo": "MONDO:0002471",
+   "mondo_name": "bursitis",
+   "synonyms": [
+    "inflammation of synovial bursa",
+    "synovial bursa inflammation"
+   ]
+  },
+  {
+   "id": "msk_costochondritis",
+   "mondo": "MONDO:0001858",
+   "mondo_name": "Tietze syndrome",
+   "synonyms": [
+    "costochondral joint syndromic disease",
+    "Tietze syndrome",
+    "Tietze's disease",
+    "Tietze's syndrome"
+   ]
+  },
+  {
+   "id": "msk_dupuytren",
+   "mondo": "MONDO:0006345",
+   "mondo_name": "palmar fibromatosis",
+   "synonyms": [
+    "palmar fibromatosis"
+   ]
+  },
+  {
+   "id": "msk_fibromyalgia",
+   "mondo": "MONDO:0005546",
+   "mondo_name": "fibromyalgia",
+   "synonyms": [
+    "fibromyalgia syndrome"
+   ]
+  },
+  {
+   "id": "msk_gout_arthropathy",
+   "mondo": "MONDO:0005393",
+   "mondo_name": "gout",
+   "synonyms": [
+    "gout"
+   ]
+  },
+  {
+   "id": "msk_juvenile_idiopathic_arthritis",
+   "mondo": "MONDO:0011429",
+   "mondo_name": "juvenile idiopathic arthritis",
+   "synonyms": [
+    "juvenile rheumatoid arthritis"
+   ]
+  },
+  {
+   "id": "msk_lateral_epicondylitis",
+   "mondo": "MONDO:0001875",
+   "mondo_name": "epicondylitis",
+   "synonyms": [
+    "ectepicondyle of humerus inflammation"
+   ]
+  },
+  {
+   "id": "msk_myositis_ossificans",
+   "mondo": "MONDO:0003964",
+   "mondo_name": "myositis ossificans",
+   "synonyms": [
+    "myositis ossificans progressiva"
+   ]
+  },
+  {
+   "id": "msk_pagets_bone",
+   "mondo": "MONDO:0005382",
+   "mondo_name": "bone Paget disease",
+   "synonyms": [
+    "bone Paget disease",
+    "bone Paget's disease",
+    "osseous Paget's disease",
+    "osteitis deformans",
+    "Paget's bone disease"
+   ]
+  },
+  {
+   "id": "msk_tendinitis",
+   "mondo": "MONDO:0004857",
+   "mondo_name": "tendinitis",
+   "synonyms": [
+    "inflammation of tendon",
+    "tendon inflammation",
+    "tendonitis"
+   ]
+  },
+  {
+   "id": "polymyalgia_rheumatica",
+   "mondo": "MONDO:0019735",
+   "mondo_name": "polymyalgia rheumatica",
+   "synonyms": [
+    "rhizomelic pseudopolyarthritis"
+   ]
+  },
+  {
+   "id": "ckd_stage5",
+   "mondo": "MONDO:0004375",
+   "mondo_name": "end stage renal failure",
+   "synonyms": [
+    "end stage kidney disease",
+    "end stage kidney failure",
+    "end stage renal disease",
+    "ESRD"
+   ]
+  },
+  {
+   "id": "nephrotic_syndrome",
+   "mondo": "MONDO:0005377",
+   "mondo_name": "nephrotic syndrome",
+   "synonyms": [
+    "nephrotic syndromes"
+   ]
+  },
+  {
+   "id": "polycystic_kidney_disease",
+   "mondo": "MONDO:0020642",
+   "mondo_name": "polycystic kidney disease",
+   "synonyms": [
+    "fibrocystic renal disease"
+   ]
+  },
+  {
+   "id": "amyotrophic_lateral_sclerosis",
+   "mondo": "MONDO:0004976",
+   "mondo_name": "amyotrophic lateral sclerosis",
+   "synonyms": [
+    "Charcot disease",
+    "Lou Gehrig disease"
+   ]
+  },
+  {
+   "id": "bell_palsy",
+   "mondo": "MONDO:0005665",
+   "mondo_name": "Bell's palsy",
+   "synonyms": [
+    "facial nerve palsy",
+    "facial nerve paralysis",
+    "palsy of facial nerve",
+    "paralysis Of Facial nerve"
+   ]
+  },
+  {
+   "id": "brain_tumor",
+   "mondo": "MONDO:0021211",
+   "mondo_name": "brain neoplasm",
+   "synonyms": [
+    "brain neoplasms",
+    "brain tumour",
+    "neoplasm of brain",
+    "neoplasm of the brain",
+    "tumor of brain"
+   ]
+  },
+  {
+   "id": "cauda_equina",
+   "mondo": "MONDO:0005693",
+   "mondo_name": "cauda equina syndrome",
+   "synonyms": [
+    "cauda equina syndromic disease"
+   ]
+  },
+  {
+   "id": "cerebellar_ataxia",
+   "mondo": "MONDO:0000437",
+   "mondo_name": "cerebellar ataxia",
+   "synonyms": [
+    "ataxia syndrome",
+    "cerebellar ataxias",
+    "spinocerebellar ataxia",
+    "spinocerebellar degeneration"
+   ]
+  },
+  {
+   "id": "cluster_headache",
+   "mondo": "MONDO:0043537",
+   "mondo_name": "cluster headache syndrome",
+   "synonyms": [
+    "ciliary neuralgia",
+    "ciliary neuralgias",
+    "cluster headache syndrome",
+    "cluster migraine",
+    "erythromelalgia of the head"
+   ]
+  },
+  {
+   "id": "dementia_alzheimer",
+   "mondo": "MONDO:0004975",
+   "mondo_name": "Alzheimer disease",
+   "synonyms": [
+    "Alzheimer dementia",
+    "Alzheimer's dementia",
+    "Alzheimer's disease",
+    "Alzheimers disease",
+    "presenile and senile dementia"
+   ]
+  },
+  {
+   "id": "encephalitis",
+   "mondo": "MONDO:0006009",
+   "mondo_name": "viral encephalitis",
+   "synonyms": [
+    "Viruses caused encephalitis",
+    "Viruses encephalitis"
+   ]
+  },
+  {
+   "id": "epilepsy",
+   "mondo": "MONDO:0005027",
+   "mondo_name": "epilepsy",
+   "synonyms": [
+    "seizure disorder"
+   ]
+  },
+  {
+   "id": "giant_cell_arteritis",
+   "mondo": "MONDO:0008538",
+   "mondo_name": "temporal arteritis",
+   "synonyms": [
+    "Horton disease",
+    "inflammation of temporal artery",
+    "temporal artery inflammation"
+   ]
+  },
+  {
+   "id": "guillain_barre",
+   "mondo": "MONDO:0016218",
+   "mondo_name": "Guillain-Barre syndrome",
+   "synonyms": [
+    "Guillain Barre syndrome",
+    "Guillain-Barre-Strohl syndrome"
+   ]
+  },
+  {
+   "id": "huntington_disease",
+   "mondo": "MONDO:0007739",
+   "mondo_name": "Huntington disease",
+   "synonyms": [
+    "Huntington chorea",
+    "Huntington's chorea",
+    "Huntington's Disease",
+    "Huntington's disease"
+   ]
+  },
+  {
+   "id": "idiopathic_intracranial_hypertension",
+   "mondo": "MONDO:0009468",
+   "mondo_name": "pseudotumor cerebri",
+   "synonyms": [
+    "benign intracran. hypt.",
+    "benign intracranial hypertension"
+   ]
+  },
+  {
+   "id": "myasthenia_gravis",
+   "mondo": "MONDO:0009688",
+   "mondo_name": "myasthenia gravis",
+   "synonyms": [
+    "acquired myasthenia",
+    "autoimmune myasthenia gravis"
+   ]
+  },
+  {
+   "id": "myelitis_transverse",
+   "mondo": "MONDO:0021553",
+   "mondo_name": "transverse myelitis",
+   "synonyms": [
+    "transverse myelopathy syndrome"
+   ]
+  },
+  {
+   "id": "neu_cerebral_palsy",
+   "mondo": "MONDO:0006497",
+   "mondo_name": "cerebral palsy",
+   "synonyms": [
+    "infantile cerebral palsy"
+   ]
+  },
+  {
+   "id": "neu_dystonia",
+   "mondo": "MONDO:0003441",
+   "mondo_name": "dystonic disorder",
+   "synonyms": [
+    "dystonic disorder"
+   ]
+  },
+  {
+   "id": "neu_epidural_abscess",
+   "mondo": "MONDO:0005752",
+   "mondo_name": "epidural abscess",
+   "synonyms": [
+    "extradural intraspinal abscess",
+    "intraspinal epidural abscess",
+    "intraspinal extradural abscess",
+    "spinal extradural abscess"
+   ]
+  },
+  {
+   "id": "neu_locked_in",
+   "mondo": "MONDO:0016567",
+   "mondo_name": "locked-in syndrome",
+   "synonyms": [
+    "Cerebromedullospinal disconnection",
+    "Locked In Syndrome",
+    "locked-in state"
+   ]
+  },
+  {
+   "id": "neu_narcolepsy",
+   "mondo": "MONDO:0021107",
+   "mondo_name": "narcolepsy",
+   "synonyms": [
+    "paroxysmal sleep"
+   ]
+  },
+  {
+   "id": "neu_spina_bifida",
+   "mondo": "MONDO:0008449",
+   "mondo_name": "spina bifida",
+   "synonyms": [
+    "rachischisis",
+    "spinal meningocele",
+    "spinal myelocele",
+    "spinal myelomeningocele"
+   ]
+  },
+  {
+   "id": "neu_tourette",
+   "mondo": "MONDO:0007661",
+   "mondo_name": "Tourette syndrome",
+   "synonyms": [
+    "motor-verbal tic disorder",
+    "Tourette disease",
+    "Tourette's syndrome"
+   ]
+  },
+  {
+   "id": "neuromyelitis_optica",
+   "mondo": "MONDO:0019100",
+   "mondo_name": "neuromyelitis optica",
+   "synonyms": [
+    "Devic disease",
+    "Neuromyelitis Optica Spectrum Disorder"
+   ]
+  },
+  {
+   "id": "normal_pressure_hydrocephalus",
+   "mondo": "MONDO:0009366",
+   "mondo_name": "normal pressure hydrocephalus",
+   "synonyms": [
+    "chronic adult hydrocephalus"
+   ]
+  },
+  {
+   "id": "nu2_creutzfeldt_jakob",
+   "mondo": "MONDO:0005357",
+   "mondo_name": "Creutzfeldt Jacob disease",
+   "synonyms": [
+    "classic Creutzfeldt-Jakob disease",
+    "Creutzfeldt Jakob Disease",
+    "Creutzfeldt-Jacob disease",
+    "Jakob-Creutzfeldt disease"
+   ]
+  },
+  {
+   "id": "nu2_lambert_eaton",
+   "mondo": "MONDO:0018556",
+   "mondo_name": "Lambert-Eaton myasthenic syndrome",
+   "synonyms": [
+    "Eaton Lambert syndrome",
+    "Eaton-Lambert syndrome",
+    "Lambert Eaton myasthenic syndrome",
+    "Lambert Eaton syndrome",
+    "Lambert-Eaton syndrome"
+   ]
+  },
+  {
+   "id": "nu2_miller_fisher",
+   "mondo": "MONDO:0005851",
+   "mondo_name": "Miller Fisher syndrome",
+   "synonyms": [
+    "cranial variant of GBS",
+    "Fisher syndrome",
+    "Miller-Fisher syndrome"
+   ]
+  },
+  {
+   "id": "nu2_posterior_reversible_encephalopathy",
+   "mondo": "MONDO:0044033",
+   "mondo_name": "posterior leukoencephalopathy syndrome",
+   "synonyms": [
+    "PRES",
+    "reversible occipital parietal encephalopathy",
+    "reversible Posterior leukoencephalopathy syndrome",
+    "reversible posterior leukoencephalopathy syndrome",
+    "RPLE"
+   ]
+  },
+  {
+   "id": "nu2_progressive_multifocal",
+   "mondo": "MONDO:0016318",
+   "mondo_name": "progressive multifocal leukoencephalopathy",
+   "synonyms": [
+    "progressive multifocal leukoencephalitis"
+   ]
+  },
+  {
+   "id": "nu2_reversible_cerebral_vasoconstriction",
+   "mondo": "MONDO:0017291",
+   "mondo_name": "reversible cerebral vasoconstriction syndrome",
+   "synonyms": [
+    "RCVS"
+   ]
+  },
+  {
+   "id": "nu2_spontaneous_intracranial_hypotension",
+   "mondo": "MONDO:0018624",
+   "mondo_name": "spontaneous intracranial hypotension",
+   "synonyms": [
+    "spontaneous cerebrospinal fluid leak"
+   ]
+  },
+  {
+   "id": "nu2_stiff_person",
+   "mondo": "MONDO:0008491",
+   "mondo_name": "stiff-person syndrome",
+   "synonyms": [
+    "Moersch-Woltman syndrome",
+    "Stiff-man syndrome",
+    "stiff-person syndrome"
+   ]
+  },
+  {
+   "id": "nu2_thoracic_outlet",
+   "mondo": "MONDO:0005979",
+   "mondo_name": "thoracic outlet syndrome",
+   "synonyms": [
+    "thoracic outlet compression syndrome"
+   ]
+  },
+  {
+   "id": "parkinson_disease",
+   "mondo": "MONDO:0005180",
+   "mondo_name": "Parkinson disease",
+   "synonyms": [
+    "paralysis agitans",
+    "Parkinson disease"
+   ]
+  },
+  {
+   "id": "peripheral_neuropathy",
+   "mondo": "MONDO:0005244",
+   "mondo_name": "peripheral neuropathy",
+   "synonyms": [
+    "neuropathy",
+    "peripheral nerve disorder"
+   ]
+  },
+  {
+   "id": "tia",
+   "mondo": "MONDO:0005264",
+   "mondo_name": "transient ischemic attack",
+   "synonyms": [
+    "transient ischaemic attacks",
+    "transient ischemic attacks"
+   ]
+  },
+  {
+   "id": "trigeminal_neuralgia",
+   "mondo": "MONDO:0008599",
+   "mondo_name": "trigeminal neuralgia",
+   "synonyms": [
+    "neuralgia of trigeminal nerve",
+    "trigeminal nerve neuralgia"
+   ]
+  },
+  {
+   "id": "wernicke_encephalopathy",
+   "mondo": "MONDO:0007020",
+   "mondo_name": "Wernicke encephalopathy",
+   "synonyms": [
+    "Wernicke's encephalopathy"
+   ]
+  },
+  {
+   "id": "chorioamnionitis",
+   "mondo": "MONDO:0000409",
+   "mondo_name": "chorioamnionitis",
+   "synonyms": [
+    "fetal membrane inflammation",
+    "foetal membrane inflammation",
+    "inflammation of fetal membrane",
+    "inflammation of foetal membrane",
+    "intra-amniotic infection"
+   ]
+  },
+  {
+   "id": "gestational_diabetes",
+   "mondo": "MONDO:0005406",
+   "mondo_name": "gestational diabetes",
+   "synonyms": [
+    "diabetes in pregnancy",
+    "gestational diabetes mellitus",
+    "maternal gestational diabetes mellitus"
+   ]
+  },
+  {
+   "id": "og2_acute_fatty_liver_pregnancy",
+   "mondo": "MONDO:0016573",
+   "mondo_name": "acute fatty liver of pregnancy",
+   "synonyms": [
+    "AFLP"
+   ]
+  },
+  {
+   "id": "og2_asherman",
+   "mondo": "MONDO:0015299",
+   "mondo_name": "Asherman syndrome",
+   "synonyms": [
+    "Asherman's Syndrome",
+    "intrauterine adhesions",
+    "intrauterine synechiae"
+   ]
+  },
+  {
+   "id": "og2_ectopic_pregnancy_og2",
+   "mondo": "MONDO:0000755",
+   "mondo_name": "ectopic pregnancy",
+   "synonyms": [
+    "extrauterine pregnancy"
+   ]
+  },
+  {
+   "id": "og2_intrahepatic_cholestasis",
+   "mondo": "MONDO:0100429",
+   "mondo_name": "intrahepatic cholestasis of pregnancy",
+   "synonyms": [
+    "gravidic intrahepatic cholestasis",
+    "pregnancy related cholestasis",
+    "pregnancy-related cholestasis"
+   ]
+  },
+  {
+   "id": "og2_molar_pregnancy",
+   "mondo": "MONDO:0006248",
+   "mondo_name": "hydatidiform mole",
+   "synonyms": [
+    "hydatid mole",
+    "molar pregnancy"
+   ]
+  },
+  {
+   "id": "og2_ovarian_hyperstimulation",
+   "mondo": "MONDO:0011972",
+   "mondo_name": "ovarian hyperstimulation syndrome",
+   "synonyms": [
+    "OHSS"
+   ]
+  },
+  {
+   "id": "og2_preterm_premature_rupture",
+   "mondo": "MONDO:0012511",
+   "mondo_name": "preterm premature rupture of the membranes",
+   "synonyms": [
+    "PPROM"
+   ]
+  },
+  {
+   "id": "placenta_previa",
+   "mondo": "MONDO:0005918",
+   "mondo_name": "placenta praevia",
+   "synonyms": [
+    "placenta praevia"
+   ]
+  },
+  {
+   "id": "placental_abruption",
+   "mondo": "MONDO:0004846",
+   "mondo_name": "placental abruption",
+   "synonyms": [
+    "abruptio placentae",
+    "premature separation of placenta"
+   ]
+  },
+  {
+   "id": "preeclampsia",
+   "mondo": "MONDO:0005081",
+   "mondo_name": "preeclampsia",
+   "synonyms": [
+    "pre-eclamptic toxaemia",
+    "pre-eclamptic toxemia",
+    "preeclampsia/eclampsia",
+    "pregnancy toxaemia",
+    "proteinuric hypertension of pregnancy"
+   ]
+  },
+  {
+   "id": "acute_lymphoblastic_leukemia",
+   "mondo": "MONDO:0004967",
+   "mondo_name": "acute lymphoblastic leukemia",
+   "synonyms": [
+    "acute lymphoblastic leukemia/lymphoma",
+    "acute lymphocytic leukaemia",
+    "acute lymphocytic leukemia",
+    "acute lymphocytic leukemias",
+    "acute lymphogenous leukaemia"
+   ]
+  },
+  {
+   "id": "acute_myeloid_leukemia",
+   "mondo": "MONDO:0018874",
+   "mondo_name": "acute myeloid leukemia",
+   "synonyms": [
+    "acute granulocytic leukaemia",
+    "acute granulocytic leukemia",
+    "acute myeloblastic leukemia",
+    "acute myelocytic leukaemia",
+    "acute myelocytic leukemia"
+   ]
+  },
+  {
+   "id": "breast_cancer",
+   "mondo": "MONDO:0007254",
+   "mondo_name": "breast cancer",
+   "synonyms": [
+    "cancer of breast",
+    "malignant breast neoplasm",
+    "malignant breast tumor",
+    "malignant breast tumour",
+    "malignant neoplasm of breast"
+   ]
+  },
+  {
+   "id": "cervical_cancer",
+   "mondo": "MONDO:0002974",
+   "mondo_name": "cervical cancer",
+   "synonyms": [
+    "cancer of uterine cervix",
+    "malignant cervical neoplasm",
+    "malignant cervical tumor",
+    "malignant cervical tumour",
+    "malignant cervix neoplasm"
+   ]
+  },
+  {
+   "id": "chronic_lymphocytic_leukemia",
+   "mondo": "MONDO:0004948",
+   "mondo_name": "B-cell chronic lymphocytic leukemia",
+   "synonyms": [
+    "B cell CLL",
+    "B cell lymphocytic leukaemia",
+    "B cell lymphocytic leukemia",
+    "B-cell chronic lymphocytic leukemia",
+    "B-cell chronic lymphogenous leukaemia"
+   ]
+  },
+  {
+   "id": "chronic_myeloid_leukemia",
+   "mondo": "MONDO:0011996",
+   "mondo_name": "chronic myeloid leukemia",
+   "synonyms": [
+    "chronic granulocytic leukemia",
+    "chronic myelocytic leukaemia",
+    "chronic myelocytic leukemia",
+    "chronic myelogenous leukemia",
+    "chronic myelogenous leukemias"
+   ]
+  },
+  {
+   "id": "hodgkin_lymphoma",
+   "mondo": "MONDO:0004952",
+   "mondo_name": "Hodgkins lymphoma",
+   "synonyms": [
+    "Hodgkin disease",
+    "Hodgkin's Disease",
+    "Hodgkin's disease",
+    "Hodgkin's lymphoma"
+   ]
+  },
+  {
+   "id": "malignant_hypercalcemia",
+   "mondo": "MONDO:0043455",
+   "mondo_name": "humoral hypercalcemia of malignancy",
+   "synonyms": [
+    "humoral hypercalcemia of malignancy"
+   ]
+  },
+  {
+   "id": "melanoma",
+   "mondo": "MONDO:0005105",
+   "mondo_name": "melanoma",
+   "synonyms": [
+    "melanoma"
+   ]
+  },
+  {
+   "id": "neo_adrenal_ca",
+   "mondo": "MONDO:0006639",
+   "mondo_name": "adrenal cortex carcinoma",
+   "synonyms": [
+    "adrenal cortex adenocarcinoma",
+    "adrenal cortex carcinoma",
+    "adrenal cortical adenocarcinoma",
+    "adrenocortical carcinoma",
+    "carcinoma of adrenal cortex"
+   ]
+  },
+  {
+   "id": "neo_cns_lymphoma",
+   "mondo": "MONDO:0002571",
+   "mondo_name": "primary central nervous system lymphoma",
+   "synonyms": [
+    "central nervous system lymphoma",
+    "CNS lymphoma",
+    "malignant lymphomas of CNS",
+    "microglioma",
+    "PCNSL"
+   ]
+  },
+  {
+   "id": "neo_colonic_polyp",
+   "mondo": "MONDO:0006498",
+   "mondo_name": "adenomatous colon polyp",
+   "synonyms": [
+    "adenomatous polyp of colon",
+    "colon adenomatous polyp"
+   ]
+  },
+  {
+   "id": "neo_gallbladder_ca",
+   "mondo": "MONDO:0005411",
+   "mondo_name": "gallbladder cancer",
+   "synonyms": [
+    "cancer of gall bladder",
+    "gall bladder cancer",
+    "malignant gall bladder neoplasm",
+    "malignant gallbladder neoplasm",
+    "malignant gallbladder tumor"
+   ]
+  },
+  {
+   "id": "neo_gist",
+   "mondo": "MONDO:0011719",
+   "mondo_name": "gastrointestinal stromal tumor",
+   "synonyms": [
+    "gastrointestinal stromal neoplasm",
+    "gastrointestinal stromal sarcoma",
+    "Gastrointestinal Stromal Tumors",
+    "GIST"
+   ]
+  },
+  {
+   "id": "neo_glioblastoma",
+   "mondo": "MONDO:0018177",
+   "mondo_name": "glioblastoma",
+   "synonyms": [
+    "glioblastoma multiforme",
+    "grade IV astrocytic neoplasm",
+    "grade IV astrocytic tumor",
+    "grade IV astrocytic tumour",
+    "grade IV astrocytoma"
+   ]
+  },
+  {
+   "id": "neo_hypopharyngeal_ca",
+   "mondo": "MONDO:0005806",
+   "mondo_name": "hypopharynx cancer",
+   "synonyms": [
+    "hypopharynx pharynx cancer",
+    "hypural pharynx cancer",
+    "malignant hypopharyngeal neoplasm",
+    "malignant hypopharyngeal tumor",
+    "malignant hypopharyngeal tumour"
+   ]
+  },
+  {
+   "id": "neo_kaposi_sarcoma",
+   "mondo": "MONDO:0005055",
+   "mondo_name": "Kaposi's sarcoma",
+   "synonyms": [
+    "Kaposi's sarcoma"
+   ]
+  },
+  {
+   "id": "neo_monoclonal_gammopathy",
+   "mondo": "MONDO:0004225",
+   "mondo_name": "monoclonal gammopathy of uncertain significance",
+   "synonyms": [
+    "benign monoclonal gammopathy",
+    "MGUS"
+   ]
+  },
+  {
+   "id": "neo_mycosis_fungoides",
+   "mondo": "MONDO:0009691",
+   "mondo_name": "mycosis fungoides",
+   "synonyms": [
+    "CTCL/ mycosis fungoides",
+    "cutaneous T-cell lymphoma/mycosis fungoides"
+   ]
+  },
+  {
+   "id": "neo_myeloproliferative",
+   "mondo": "MONDO:0020076",
+   "mondo_name": "myeloproliferative neoplasm",
+   "synonyms": [
+    "chronic myeloproliferative disease",
+    "chronic myeloproliferative disorder",
+    "chronic myeloproliferative neoplasm",
+    "CMPD",
+    "myeloproliferative disorder"
+   ]
+  },
+  {
+   "id": "neo_oral_cavity_ca",
+   "mondo": "MONDO:0005515",
+   "mondo_name": "oral cavity cancer",
+   "synonyms": [
+    "cancer of oral cavity",
+    "malignant mouth neoplasm",
+    "malignant mouth tumor",
+    "malignant mouth tumour",
+    "malignant neoplasm of mouth"
+   ]
+  },
+  {
+   "id": "neo_penile_ca",
+   "mondo": "MONDO:0001325",
+   "mondo_name": "penile cancer",
+   "synonyms": [
+    "cancer of penis",
+    "malignant neoplasm of penis",
+    "malignant penile neoplasm",
+    "malignant penile tumor",
+    "malignant penile tumour"
+   ]
+  },
+  {
+   "id": "neo_pituitary_adenoma",
+   "mondo": "MONDO:0006373",
+   "mondo_name": "pituitary gland adenoma",
+   "synonyms": [
+    "adenoma of pituitary",
+    "adenoma of pituitary gland",
+    "adenoma of the pituitary",
+    "pituitary gland adenoma"
+   ]
+  },
+  {
+   "id": "neo_salivary_gland_ca",
+   "mondo": "MONDO:0004669",
+   "mondo_name": "salivary gland cancer",
+   "synonyms": [
+    "cancer of saliva-secreting gland",
+    "cancer of salivary gland",
+    "malignant saliva-secreting gland neoplasm",
+    "malignant salivary gland neoplasm",
+    "malignant salivary gland tumor"
+   ]
+  },
+  {
+   "id": "neo_small_intestine_ca",
+   "mondo": "MONDO:0000956",
+   "mondo_name": "small intestine cancer",
+   "synonyms": [
+    "cancer of small intestine",
+    "malignant small bowel neoplasm",
+    "malignant small bowel tumor",
+    "malignant small bowel tumour",
+    "malignant small intestinal neoplasm"
+   ]
+  },
+  {
+   "id": "neo_soft_tissue_sarcoma",
+   "mondo": "MONDO:0018078",
+   "mondo_name": "soft tissue sarcoma",
+   "synonyms": [
+    "connective tissue sarcoma",
+    "malignant mesenchymal tumor",
+    "malignant mesenchymal tumour",
+    "non-Rhabdo. soft tissue sarcoma",
+    "sarcoma of soft tissue"
+   ]
+  },
+  {
+   "id": "neo_testicular_ca",
+   "mondo": "MONDO:0005447",
+   "mondo_name": "testicular cancer",
+   "synonyms": [
+    "cancer of testis",
+    "malignant neoplasm of testis",
+    "malignant testicular neoplasm",
+    "malignant testicular tumor",
+    "malignant testicular tumour"
+   ]
+  },
+  {
+   "id": "neo_thymoma",
+   "mondo": "MONDO:0006456",
+   "mondo_name": "thymoma",
+   "synonyms": [
+    "primary thymic epithelial neoplasm",
+    "primary thymic epithelial tumor",
+    "primary thymic epithelial tumour"
+   ]
+  },
+  {
+   "id": "neo_tongue_ca",
+   "mondo": "MONDO:0004631",
+   "mondo_name": "tongue cancer",
+   "synonyms": [
+    "cancer of tongue",
+    "malignant neoplasm of tongue",
+    "malignant tongue neoplasm",
+    "malignant tongue tumor",
+    "malignant tongue tumour"
+   ]
+  },
+  {
+   "id": "neo_vaginal_ca",
+   "mondo": "MONDO:0001402",
+   "mondo_name": "vaginal cancer",
+   "synonyms": [
+    "cancer of vagina",
+    "malignant neoplasm of vagina",
+    "malignant tumor of vagina",
+    "malignant tumour of vagina",
+    "malignant vagina neoplasm"
+   ]
+  },
+  {
+   "id": "neo_vulvar_ca",
+   "mondo": "MONDO:0001528",
+   "mondo_name": "vulva cancer",
+   "synonyms": [
+    "cancer of mammalian vulva",
+    "malignant mammalian vulva neoplasm",
+    "malignant neoplasm of vulva",
+    "malignant tumor of vulva",
+    "malignant tumour of vulva"
+   ]
+  },
+  {
+   "id": "non_hodgkin_lymphoma",
+   "mondo": "MONDO:0018908",
+   "mondo_name": "non-Hodgkin lymphoma",
+   "synonyms": [
+    "non-Hodgkin's lymphoma",
+    "non-Hodgkins lymphoma"
+   ]
+  },
+  {
+   "id": "ovarian_cancer",
+   "mondo": "MONDO:0008170",
+   "mondo_name": "ovarian cancer",
+   "synonyms": [
+    "cancer of ovary",
+    "cancer of the ovary",
+    "malignant neoplasm of ovary",
+    "malignant ovarian neoplasm",
+    "malignant ovarian tumor"
+   ]
+  },
+  {
+   "id": "thyroid_cancer",
+   "mondo": "MONDO:0002108",
+   "mondo_name": "thyroid cancer",
+   "synonyms": [
+    "cancer of thyroid gland",
+    "malignant neoplasm of thyroid",
+    "malignant thyroid gland neoplasm",
+    "malignant thyroid gland tumor",
+    "malignant thyroid gland tumour"
+   ]
+  },
+  {
+   "id": "central_retinal_artery_occlusion",
+   "mondo": "MONDO:0001633",
+   "mondo_name": "central retinal artery occlusion",
+   "synonyms": [
+    "central retinal arterial occlusion"
+   ]
+  },
+  {
+   "id": "central_retinal_vein_occlusion",
+   "mondo": "MONDO:0002303",
+   "mondo_name": "central retinal vein occlusion",
+   "synonyms": [
+    "central retinal Venous occlusion"
+   ]
+  },
+  {
+   "id": "ee2_giant_cell_arteritis_eye",
+   "mondo": "MONDO:0000498",
+   "mondo_name": "arteritic anterior ischemic optic neuropathy",
+   "synonyms": [
+    "arteritic aion"
+   ]
+  },
+  {
+   "id": "ee2_nonarteritic_ischemic_optic",
+   "mondo": "MONDO:0000499",
+   "mondo_name": "non-arteritic anterior ischemic optic neuropathy",
+   "synonyms": [
+    "NAION",
+    "non-arteritic aion"
+   ]
+  },
+  {
+   "id": "ee2_posterior_uveitis",
+   "mondo": "MONDO:0006918",
+   "mondo_name": "posterior uveitis",
+   "synonyms": [
+    "chorioretinal region inflammation",
+    "inflammation of chorioretinal region"
+   ]
+  },
+  {
+   "id": "ee2_thyroid_eye_disease",
+   "mondo": "MONDO:0001509",
+   "mondo_name": "endocrine exophthalmos",
+   "synonyms": [
+    "thyroid-associated ophthalmopathy"
+   ]
+  },
+  {
+   "id": "eye_blepharitis",
+   "mondo": "MONDO:0004785",
+   "mondo_name": "blepharitis",
+   "synonyms": [
+    "eyelid inflammation",
+    "inflammation of eyelid"
+   ]
+  },
+  {
+   "id": "eye_cataract",
+   "mondo": "MONDO:0005129",
+   "mondo_name": "cataract",
+   "synonyms": [
+    "opacity of the lens"
+   ]
+  },
+  {
+   "id": "eye_corneal_ulcer",
+   "mondo": "MONDO:0004577",
+   "mondo_name": "corneal ulcer",
+   "synonyms": [
+    "cornea ulcer disease",
+    "ulcer disease of cornea"
+   ]
+  },
+  {
+   "id": "eye_dacryocystitis",
+   "mondo": "MONDO:0004926",
+   "mondo_name": "dacryocystitis",
+   "synonyms": [
+    "Dacryoadenitides",
+    "Dacryocystitides",
+    "inflammation of lacrimal sac",
+    "lacrimal sac inflammation"
+   ]
+  },
+  {
+   "id": "eye_dry_eye",
+   "mondo": "MONDO:0006733",
+   "mondo_name": "dry eye syndrome",
+   "synonyms": [
+    "dry eye",
+    "keratoconjunctivitis sicca"
+   ]
+  },
+  {
+   "id": "eye_macular_degeneration",
+   "mondo": "MONDO:0005150",
+   "mondo_name": "age-related macular degeneration",
+   "synonyms": [
+    "ARMD",
+    "Senile macular retinal degeneration"
+   ]
+  },
+  {
+   "id": "eye_papilledema",
+   "mondo": "MONDO:0006879",
+   "mondo_name": "optic papillitis",
+   "synonyms": [
+    "Choked disc",
+    "Choked discs",
+    "Choked disk",
+    "Choked disks",
+    "decreased intraocular pressure-associated papilledema"
+   ]
+  },
+  {
+   "id": "eye_strabismus",
+   "mondo": "MONDO:0003432",
+   "mondo_name": "strabismus",
+   "synonyms": [
+    "squint"
+   ]
+  },
+  {
+   "id": "retinal_detachment",
+   "mondo": "MONDO:0008375",
+   "mondo_name": "retinal detachment",
+   "synonyms": [
+    "detached retina"
+   ]
+  },
+  {
+   "id": "uveitis",
+   "mondo": "MONDO:0020283",
+   "mondo_name": "uveitis",
+   "synonyms": [
+    "inflammation of uvea",
+    "uvea inflammation"
+   ]
+  },
+  {
+   "id": "osteoarthritis",
+   "mondo": "MONDO:0005178",
+   "mondo_name": "osteoarthritis",
+   "synonyms": [
+    "degenerative joint disease"
+   ]
+  },
+  {
+   "id": "bronchiolitis",
+   "mondo": "MONDO:0002465",
+   "mondo_name": "bronchiolitis",
+   "synonyms": [
+    "wheezy bronchitis"
+   ]
+  },
+  {
+   "id": "kawasaki_disease",
+   "mondo": "MONDO:0012727",
+   "mondo_name": "Kawasaki disease",
+   "synonyms": [
+    "infantile polyarteritis nodosa",
+    "Kawasaki syndrome",
+    "mucocutaneous lymph node syndrome"
+   ]
+  },
+  {
+   "id": "pd2_infantile_spasms",
+   "mondo": "MONDO:0018097",
+   "mondo_name": "infantile spasms",
+   "synonyms": [
+    "IESS",
+    "infantile epileptic spasms syndrome",
+    "infantile spasms syndrome",
+    "intellectual disability-hypsarrhythmia syndrome",
+    "West syndrome"
+   ]
+  },
+  {
+   "id": "pd2_juvenile_dermatomyositis",
+   "mondo": "MONDO:0008054",
+   "mondo_name": "juvenile dermatomyositis",
+   "synonyms": [
+    "childhood dermatomyositis",
+    "inflammation of myoseptum",
+    "juvenile DM",
+    "myoseptum inflammation",
+    "myoseptumitis"
+   ]
+  },
+  {
+   "id": "pd2_legg_calve_perthes",
+   "mondo": "MONDO:0007885",
+   "mondo_name": "Legg-Calve-Perthes disease",
+   "synonyms": [
+    "Legg-Calve-Perthes symptom",
+    "Legg-Calve-Perthes syndrome",
+    "Legg-Perthes disease",
+    "Perthe's disease",
+    "Perthes disease"
+   ]
+  },
+  {
+   "id": "pd2_mis_c",
+   "mondo": "MONDO:0100163",
+   "mondo_name": "COVID-19–associated multisystem inflammatory syndrome in children",
+   "synonyms": [
+    "MIS-C",
+    "paediatric inflammatory multisystem syndrome",
+    "paediatric multisystem inflammatory syndrome",
+    "pediatric inflammatory multisystem syndrome",
+    "pediatric multisystem inflammatory syndrome"
+   ]
+  },
+  {
+   "id": "pd2_osgood_schlatter",
+   "mondo": "MONDO:0004241",
+   "mondo_name": "Osgood-Schlatter disease",
+   "synonyms": [
+    "Osgood-Schlatter's disease"
+   ]
+  },
+  {
+   "id": "pd2_pertussis_pd2",
+   "mondo": "MONDO:0005077",
+   "mondo_name": "pertussis",
+   "synonyms": [
+    "Bordetella pertussis infection",
+    "Bordetella pertussis infectious disease"
+   ]
+  },
+  {
+   "id": "pd2_reye_syndrome",
+   "mondo": "MONDO:0005942",
+   "mondo_name": "Reye syndrome",
+   "synonyms": [
+    "Reye's syndrome"
+   ]
+  },
+  {
+   "id": "pd2_roseola",
+   "mondo": "MONDO:0000337",
+   "mondo_name": "exanthema subitum",
+   "synonyms": [
+    "exanthem subitum",
+    "roseola",
+    "sixth disease"
+   ]
+  },
+  {
+   "id": "pd2_slipped_capital_femoral",
+   "mondo": "MONDO:0018382",
+   "mondo_name": "epiphysiolysis of the hip",
+   "synonyms": [
+    "epiphysiolysis capitis femoris",
+    "femoral head epiphysiolysis",
+    "SCFE",
+    "slipped femoral capital epiphyses",
+    "slipped upper femoral epiphysis"
+   ]
+  },
+  {
+   "id": "pyloric_stenosis",
+   "mondo": "MONDO:0001560",
+   "mondo_name": "hypertrophic pyloric stenosis",
+   "synonyms": [
+    "congenital hypertrophic pyloric stenosis",
+    "IHPS",
+    "infantile hypertrophic pyloric stenosis",
+    "infantile pyloric stenosis"
+   ]
+  },
+  {
+   "id": "alcohol_withdrawal",
+   "mondo": "MONDO:0005433",
+   "mondo_name": "alcohol withdrawal",
+   "synonyms": [
+    "alcohol withdrawal syndrome"
+   ]
+  },
+  {
+   "id": "bipolar_disorder",
+   "mondo": "MONDO:0004985",
+   "mondo_name": "bipolar disorder",
+   "synonyms": [
+    "major affective disorder",
+    "manic-depression"
+   ]
+  },
+  {
+   "id": "major_depressive_disorder",
+   "mondo": "MONDO:0002009",
+   "mondo_name": "major depressive disorder",
+   "synonyms": [
+    "major depression",
+    "unipolar depression"
+   ]
+  },
+  {
+   "id": "psy_binge_eating",
+   "mondo": "MONDO:0005582",
+   "mondo_name": "binge eating disorder",
+   "synonyms": [
+    "binge eating"
+   ]
+  },
+  {
+   "id": "psy_bulimia",
+   "mondo": "MONDO:0005452",
+   "mondo_name": "bulimia nervosa",
+   "synonyms": [
+    "bulimia",
+    "hyperorexia nervosa"
+   ]
+  },
+  {
+   "id": "psy_conversion_disorder",
+   "mondo": "MONDO:0002104",
+   "mondo_name": "conversion disorder",
+   "synonyms": [
+    "conversion hysterical neurosis"
+   ]
+  },
+  {
+   "id": "psy_dementia_lewy",
+   "mondo": "MONDO:0007488",
+   "mondo_name": "Lewy body dementia",
+   "synonyms": [
+    "cortical Lewy body disease",
+    "Lewy body dementia",
+    "Lewy body disease"
+   ]
+  },
+  {
+   "id": "psy_frontotemporal_dementia",
+   "mondo": "MONDO:0017276",
+   "mondo_name": "frontotemporal dementia",
+   "synonyms": [
+    "Frontotemporal degeneration"
+   ]
+  },
+  {
+   "id": "psy_postpartum_depression",
+   "mondo": "MONDO:0005929",
+   "mondo_name": "postpartum depression",
+   "synonyms": [
+    "postnatal depression"
+   ]
+  },
+  {
+   "id": "ptsd",
+   "mondo": "MONDO:0005146",
+   "mondo_name": "post-traumatic stress disorder",
+   "synonyms": [
+    "PTSD",
+    "traumatic neurosis"
+   ]
+  },
+  {
+   "id": "serotonin_syndrome",
+   "mondo": "MONDO:0018546",
+   "mondo_name": "serotonin syndrome",
+   "synonyms": [
+    "serotonergic syndrome",
+    "serotonin storm",
+    "serotonin toxicity",
+    "serotonin toxidrome"
+   ]
+  },
+  {
+   "id": "aspiration_pneumonia",
+   "mondo": "MONDO:0000265",
+   "mondo_name": "aspiration pneumonia",
+   "synonyms": [
+    "acid aspiration syndrome",
+    "acid aspiration syndromes",
+    "aspiration Pneumonias",
+    "gastric acid aspiration syndrome",
+    "Mendelson syndrome"
+   ]
+  },
+  {
+   "id": "cystic_fibrosis",
+   "mondo": "MONDO:0009061",
+   "mondo_name": "cystic fibrosis",
+   "synonyms": [
+    "mucoviscidosis"
+   ]
+  },
+  {
+   "id": "hypersensitivity_pneumonitis",
+   "mondo": "MONDO:0017853",
+   "mondo_name": "hypersensitivity pneumonitis",
+   "synonyms": [
+    "allergic form of pneumonitis",
+    "allergic pneumonitis",
+    "exogen allergic alveolitis",
+    "extrinsic allergic alveolitis"
+   ]
+  },
+  {
+   "id": "influenza",
+   "mondo": "MONDO:0005812",
+   "mondo_name": "influenza",
+   "synonyms": [
+    "influenza infection",
+    "Influenza with other manifestations",
+    "orthomyxoviridae infectious disease"
+   ]
+  },
+  {
+   "id": "legionella_pneumonia",
+   "mondo": "MONDO:0005824",
+   "mondo_name": "Legionnaires' disease",
+   "synonyms": [
+    "Legionnaires' Disease"
+   ]
+  },
+  {
+   "id": "lung_cancer",
+   "mondo": "MONDO:0008903",
+   "mondo_name": "lung cancer",
+   "synonyms": [
+    "cancer of lung",
+    "malignant lung neoplasm",
+    "malignant lung tumor",
+    "malignant lung tumour",
+    "malignant neoplasm of lung"
+   ]
+  },
+  {
+   "id": "mesothelioma",
+   "mondo": "MONDO:0003308",
+   "mondo_name": "pleural mesothelioma",
+   "synonyms": [
+    "mesothelioma of pleura",
+    "mesothelioma of the pleura",
+    "pleura mesothelioma"
+   ]
+  },
+  {
+   "id": "obstructive_sleep_apnea",
+   "mondo": "MONDO:0007147",
+   "mondo_name": "obstructive sleep apnea syndrome",
+   "synonyms": [
+    "obstructive sleep apnea syndrome"
+   ]
+  },
+  {
+   "id": "pertussis",
+   "mondo": "MONDO:0005077",
+   "mondo_name": "pertussis",
+   "synonyms": [
+    "Bordetella pertussis infection",
+    "Bordetella pertussis infectious disease"
+   ]
+  },
+  {
+   "id": "pneumocystis_pneumonia",
+   "mondo": "MONDO:0019121",
+   "mondo_name": "pneumocystosis",
+   "synonyms": [
+    "Pneumocystis",
+    "Pneumocystis carinii pneumonia",
+    "pneumocystosis"
+   ]
+  },
+  {
+   "id": "pu2_acute_interstitial_pneumonia",
+   "mondo": "MONDO:0019203",
+   "mondo_name": "acute interstitial pneumonia",
+   "synonyms": [
+    "acute interstitial pneumonitis",
+    "Hamman-rich syndrome"
+   ]
+  },
+  {
+   "id": "pu2_allergic_bronchopulmonary_aspergillosis",
+   "mondo": "MONDO:0015243",
+   "mondo_name": "allergic bronchopulmonary aspergillosis",
+   "synonyms": [
+    "ABPA",
+    "allergic aspergillosis",
+    "Hinson-Pepys disease"
+   ]
+  },
+  {
+   "id": "pu2_cryptogenic_organizing_pneumonia",
+   "mondo": "MONDO:0015264",
+   "mondo_name": "cryptogenic organizing pneumonia",
+   "synonyms": [
+    "bronchiolitis obliterans organizing pneumonia",
+    "cryptogenic organizing pneumonitis",
+    "organising pneumonia",
+    "Organizing Pneumonia",
+    "organizing pneumonia"
+   ]
+  },
+  {
+   "id": "pu2_goodpasture",
+   "mondo": "MONDO:0009303",
+   "mondo_name": "anti-glomerular basement membrane disease",
+   "synonyms": [
+    "anti-GBM syndrome",
+    "anti-glomerular basement membrane disease"
+   ]
+  },
+  {
+   "id": "pu2_lymphangioleiomyomatosis",
+   "mondo": "MONDO:0011705",
+   "mondo_name": "lymphangioleiomyomatosis",
+   "synonyms": [
+    "lymphangiomyomatosis"
+   ]
+  },
+  {
+   "id": "pu2_nonspecific_interstitial",
+   "mondo": "MONDO:0019622",
+   "mondo_name": "non-specific interstitial pneumonia",
+   "synonyms": [
+    "non-specific idiopathic interstitial pneumonia",
+    "NSIP"
+   ]
+  },
+  {
+   "id": "pu2_primary_ciliary_dyskinesia",
+   "mondo": "MONDO:0016575",
+   "mondo_name": "primary ciliary dyskinesia",
+   "synonyms": [
+    "Kartagener syndrome",
+    "Kartagener's syndrome"
+   ]
+  },
+  {
+   "id": "pu2_pulmonary_sequestration",
+   "mondo": "MONDO:0017843",
+   "mondo_name": "congenital pulmonary sequestration",
+   "synonyms": [
+    "bronchopulmonary sequestration",
+    "congenital bronchopulmonary sequestration",
+    "congenital sequestration of lung"
+   ]
+  },
+  {
+   "id": "pulmonary_tuberculosis",
+   "mondo": "MONDO:0006052",
+   "mondo_name": "pulmonary tuberculosis",
+   "synonyms": [
+    "lung TB",
+    "lung tuberculosis",
+    "pulmonary TB"
+   ]
+  },
+  {
+   "id": "res_asbestosis",
+   "mondo": "MONDO:0016466",
+   "mondo_name": "asbestosis",
+   "synonyms": [
+    "asbestos dust pneumoconiosis",
+    "asbestos pneumoconiosis",
+    "pneumoconiosis from asbestos dust"
+   ]
+  },
+  {
+   "id": "res_bronchopneumonia",
+   "mondo": "MONDO:0005682",
+   "mondo_name": "bronchopneumonia",
+   "synonyms": [
+    "bronchial pneumonia",
+    "lobular pneumonia"
+   ]
+  },
+  {
+   "id": "res_silicosis",
+   "mondo": "MONDO:0005960",
+   "mondo_name": "silicosis",
+   "synonyms": [
+    "pneumoconiosis due to silica"
+   ]
+  },
+  {
+   "id": "sarcoidosis",
+   "mondo": "MONDO:0019338",
+   "mondo_name": "sarcoidosis",
+   "synonyms": [
+    "Besnier-Boeck-Schaumann disease",
+    "besnier-Boeck-Schaumann syndrome",
+    "Boeck sarcoid",
+    "Boeck's sarcoid",
+    "Boeck's sarcoidosis"
+   ]
+  },
+  {
+   "id": "ankylosing_spondylitis",
+   "mondo": "MONDO:0005306",
+   "mondo_name": "ankylosing spondylitis",
+   "synonyms": [
+    "ankylosing spondylarthritis"
+   ]
+  },
+  {
+   "id": "behcet_disease",
+   "mondo": "MONDO:0007191",
+   "mondo_name": "Behcet disease",
+   "synonyms": [
+    "Bechet syndrome",
+    "Behcet syndrome",
+    "Behcet's syndrome",
+    "silk road disease"
+   ]
+  },
+  {
+   "id": "dermatomyositis",
+   "mondo": "MONDO:0016367",
+   "mondo_name": "dermatomyositis",
+   "synonyms": [
+    "dermatopolymyositis"
+   ]
+  },
+  {
+   "id": "gca",
+   "mondo": "MONDO:0008538",
+   "mondo_name": "temporal arteritis",
+   "synonyms": [
+    "Horton disease",
+    "inflammation of temporal artery",
+    "temporal artery inflammation"
+   ]
+  },
+  {
+   "id": "granulomatosis_polyangiitis",
+   "mondo": "MONDO:0012105",
+   "mondo_name": "granulomatosis with polyangiitis",
+   "synonyms": [
+    "necrotizing respiratory granulomatosis",
+    "Wegener granulomatosis",
+    "Wegener's granulomatosis",
+    "Wegener's syndrome"
+   ]
+  },
+  {
+   "id": "polyarteritis_nodosa",
+   "mondo": "MONDO:0019170",
+   "mondo_name": "polyarteritis nodosa",
+   "synonyms": [
+    "classic polyarteritis nodosa",
+    "classical polyarteritis nodosa",
+    "panarteritis nodosa",
+    "periarteritis nodosa"
+   ]
+  },
+  {
+   "id": "psoriatic_arthritis",
+   "mondo": "MONDO:0011849",
+   "mondo_name": "psoriatic arthritis",
+   "synonyms": [
+    "arthritis psoriatica",
+    "arthropathic psoriasis"
+   ]
+  },
+  {
+   "id": "reactive_arthritis",
+   "mondo": "MONDO:0017376",
+   "mondo_name": "reactive arthritis",
+   "synonyms": [
+    "arthritis urethritica",
+    "Fiessinger-Leroy disease",
+    "Fiessinger-Leroy-Reiter syndrome",
+    "polyarthritis enterica",
+    "Reiter syndrome"
+   ]
+  },
+  {
+   "id": "rh2_adult_onset_stills",
+   "mondo": "MONDO:0019355",
+   "mondo_name": "adult-onset Still disease",
+   "synonyms": [
+    "Adult-Onset Still's Disease",
+    "adult-onset Still's disease",
+    "AOSD",
+    "Wissler-Fanconi syndrome"
+   ]
+  },
+  {
+   "id": "rh2_antisynthetase",
+   "mondo": "MONDO:0019344",
+   "mondo_name": "antisynthetase syndrome",
+   "synonyms": [
+    "AS syndrome"
+   ]
+  },
+  {
+   "id": "rh2_cryoglobulinemic_vasculitis",
+   "mondo": "MONDO:0007407",
+   "mondo_name": "Cryoglobulinemic vasculitis",
+   "synonyms": [
+    "essential cryoglobulinemia",
+    "essential mixed cryoglobulinemia",
+    "Mixed Cryoglobulinemia",
+    "mixed cryoglobulinemia",
+    "primary cryoglobulinemia"
+   ]
+  },
+  {
+   "id": "rh2_eosinophilic_fasciitis",
+   "mondo": "MONDO:0009175",
+   "mondo_name": "eosinophilic fasciitis",
+   "synonyms": [
+    "diffuse fasciitis with eosinophilia",
+    "Shulman syndrome"
+   ]
+  },
+  {
+   "id": "rh2_eosinophilic_granulomatosis",
+   "mondo": "MONDO:0015943",
+   "mondo_name": "eosinophilic granulomatosis with polyangiitis",
+   "synonyms": [
+    "allergic angiitides",
+    "allergic angiitis",
+    "allergic angiitis and granulomatosis",
+    "allergic granulomatoses",
+    "allergic granulomatosis"
+   ]
+  },
+  {
+   "id": "rh2_felty_syndrome",
+   "mondo": "MONDO:0007603",
+   "mondo_name": "Felty syndrome",
+   "synonyms": [
+    "Felty's syndrome",
+    "splenomegaly-neutropenia-rheumatoid arthritis syndrome"
+   ]
+  },
+  {
+   "id": "rh2_henoch_schonlein_rh",
+   "mondo": "MONDO:0019167",
+   "mondo_name": "immunoglobulin A vasculitis",
+   "synonyms": [
+    "allergic purpura",
+    "anaphylactoid purpura",
+    "purpura rheumatica",
+    "rheumatoid purpura",
+    "Schoenlein-Henoch purpura"
+   ]
+  },
+  {
+   "id": "rh2_inclusion_body_myositis",
+   "mondo": "MONDO:0007827",
+   "mondo_name": "inclusion body myositis",
+   "synonyms": [
+    "sIBM",
+    "Sporadic Inclusion Body Myositis",
+    "sporadic inclusion body myositis"
+   ]
+  },
+  {
+   "id": "rh2_microscopic_polyangiitis",
+   "mondo": "MONDO:0019124",
+   "mondo_name": "microscopic polyangiitis",
+   "synonyms": [
+    "Micropolyangiitis",
+    "microscopic polyarteritis"
+   ]
+  },
+  {
+   "id": "rh2_mixed_connective_tissue",
+   "mondo": "MONDO:0005854",
+   "mondo_name": "mixed connective tissue disease",
+   "synonyms": [
+    "MCTD",
+    "sharp syndrome"
+   ]
+  },
+  {
+   "id": "rh2_undifferentiated_connective_tissue",
+   "mondo": "MONDO:0019527",
+   "mondo_name": "undifferentiated connective tissue syndrome",
+   "synonyms": [
+    "UCTD"
+   ]
+  },
+  {
+   "id": "sjogren_syndrome",
+   "mondo": "MONDO:0010030",
+   "mondo_name": "Sjogren syndrome",
+   "synonyms": [
+    "primary Sjogren-Gougerot syndrome",
+    "sicca syndrome"
+   ]
+  },
+  {
+   "id": "carbon_monoxide_poisoning",
+   "mondo": "MONDO:0800373",
+   "mondo_name": "carbon monoxide poisoning",
+   "synonyms": [
+    "CO Poisoning"
+   ]
+  },
+  {
+   "id": "organophosphate_poisoning",
+   "mondo": "MONDO:0800386",
+   "mondo_name": "organophosphate poisoning",
+   "synonyms": [
+    "insecticide poisoning",
+    "organophosphate exposure"
+   ]
+  },
+  {
+   "id": "tx2_lead_poisoning",
+   "mondo": "MONDO:0018019",
+   "mondo_name": "lead poisoning",
+   "synonyms": [
+    "Lead intoxication",
+    "saturnism"
+   ]
+  },
+  {
+   "id": "tx2_malignant_hyperthermia",
+   "mondo": "MONDO:0018493",
+   "mondo_name": "malignant hyperthermia of anesthesia",
+   "synonyms": [
+    "anaesthesia related hyperthermia",
+    "hyperthermia of anaesthesia",
+    "hyperthermia of anesthesia",
+    "malignant hyperpyrexia",
+    "malignant hyperthermia of anesthesia"
+   ]
+  },
+  {
+   "id": "tx2_mercury_poisoning",
+   "mondo": "MONDO:0018020",
+   "mondo_name": "mercury poisoning",
+   "synonyms": [
+    "hydrargyria",
+    "mercurialism",
+    "Mercury intoxication"
+   ]
+  },
+  {
+   "id": "fournier_gangrene",
+   "mondo": "MONDO:0043352",
+   "mondo_name": "fournier gangrene",
+   "synonyms": [
+    "fournier's gangrene"
+   ]
+  },
+  {
+   "id": "interstitial_cystitis",
+   "mondo": "MONDO:0018301",
+   "mondo_name": "interstitial cystitis",
+   "synonyms": [
+    "bladder pain syndrome",
+    "chronic interstitial cystitis",
+    "IC/BPS",
+    "IC/PBS",
+    "interstitial cystitis/bladder pain syndrome"
+   ]
+  },
+  {
+   "id": "priapism",
+   "mondo": "MONDO:0004745",
+   "mondo_name": "priapism",
+   "synonyms": [
+    "mentulagra"
+   ]
+  },
+  {
+   "id": "prostate_cancer",
+   "mondo": "MONDO:0008315",
+   "mondo_name": "prostate cancer",
+   "synonyms": [
+    "cancer of prostate gland",
+    "malignant neoplasm of prostate",
+    "malignant prostate gland neoplasm",
+    "malignant prostate neoplasm",
+    "malignant prostate tumor"
+   ]
+  },
+  {
+   "id": "varicocele",
+   "mondo": "MONDO:0001498",
+   "mondo_name": "varicocele",
+   "synonyms": [
+    "scrotal varices",
+    "scrotum varicose disease",
+    "varicose disease of scrotum"
+   ]
+  },
+  {
+   "id": "lymphedema",
+   "mondo": "MONDO:0019297",
+   "mondo_name": "lymphedema",
+   "synonyms": [
+    "lymphatic oedema"
+   ]
+  },
+  {
+   "id": "ruptured_aaa",
+   "mondo": "MONDO:0005160",
+   "mondo_name": "aortic aneurysm",
+   "synonyms": [
+    "aortic aneurysm",
+    "ruptured thoracic aneurysm",
+    "ruptured thoracic aortic aneurysm",
+    "ruptured thoracoabdominal aortic aneurysm"
+   ]
+  },
+  {
+   "id": "subclavian_steal_syndrome",
+   "mondo": "MONDO:0006983",
+   "mondo_name": "subclavian steal syndrome",
+   "synonyms": [
+    "subclavian artery stenosis"
+   ]
+  }
+ ]
+}

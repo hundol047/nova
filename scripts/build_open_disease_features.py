@@ -116,8 +116,9 @@ def usable_features(raw: list) -> list:
 def usable_synonym(syn: str) -> bool:
     key = norm(syn)
     words = syn.split()
-    return bool(key) and key.isascii() and key not in AMBIGUOUS_SYNONYMS and len(words) <= 4 \
-        and " - " not in syn and "and/or" not in syn and not re.search(r"\d", syn)
+    return bool(key) and syn.isascii() and key not in AMBIGUOUS_SYNONYMS and len(words) <= 4 \
+        and " - " not in syn and "and/or" not in syn and " or " not in syn and not re.search(r"\d", syn) \
+        and not (len(words) == 1 and len(key) <= 3)  # 2-3 letter acronyms (OI, MAS, TED, HUS) collide with ordinary text
 
 
 def build(obo: Path, include_features: bool = False) -> dict:

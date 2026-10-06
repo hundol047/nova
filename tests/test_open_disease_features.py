@@ -64,3 +64,45 @@ def test_builder_on_fixture_obo(tmp_path):
     assert terms[0]["symptoms"] == ["hydrophobia", "aerophobia", "fever"]
     result = build(obo)
     assert result["schema"] == "nova-open-disease-features-v1"
+
+
+MONDO = ROOT / "nova_agent/knowledge/tier2_mondo_synonyms.json"
+
+
+def test_mondo_sidecar_provenance_and_guards():
+    from scripts.build_mondo_synonyms import build  # noqa: F401  (import check: builder stays runnable)
+    data = json.loads(MONDO.read_text(encoding="utf-8"))
+    prov = data["provenance"]
+    assert prov["clinician_reviewed"] is False and "CC BY 4.0" in prov["license"]
+    assert any("creativecommons.org/licenses/by/4.0" in line for line in prov["license_evidence"])
+    assert "Monarch Initiative" in prov["attribution"] and len(prov["source_file_sha256"]) == 64
+    for entry in data["entries"]:
+        assert 1 <= len(entry["synonyms"]) <= 5
+        assert all(usable_synonym(s) and "(" not in s and "," not in s for s in entry["synonyms"])
+
+
+def test_short_acronyms_and_disjunctions_are_rejected():
+    assert not usable_synonym("OI") and not usable_synonym("MAS") and not usable_synonym("Leptospira disease or disorder")
+    assert not usable_synonym("Graves’ eye disease")  # typographic quote: not ASCII
+    assert usable_synonym("GERD") and usable_synonym("Hansen disease")
+
+
+def test_sidecar_synonyms_never_collide_across_concepts():
+    """After merging both sidecars, an adopted synonym belongs to exactly one concept."""
+    sidecar_sources = ("open_disease_ontology", "mondo_cc_by")
+    concepts = Tier2CatalogProvider().load()
+    catalog = {c["id"]: c for c in json.loads((ROOT / "nova_agent/knowledge/tier2_catalog.json").read_text())["conditions"]}
+    owners = {}
+    for c in concepts:
+        for name in (c.canonical_name,) + tuple(c.aliases):
+            owners.setdefault(name.lower(), set()).add(c.concept_id)
+    adopted = 0
+    for c in concepts:
+        if not any(tag in c.source for tag in sidecar_sources):
+            continue
+        original = {a.lower() for a in catalog[c.concept_id.split(":", 1)[1]].get("aliases", [])}
+        for alias in c.aliases:
+            if alias.lower() not in original:
+                adopted += 1
+                assert owners[alias.lower()] == {c.concept_id}, alias
+    assert adopted > 500

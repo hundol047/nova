@@ -433,7 +433,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "IBD",
     "Irritable colon"
    ]
   },
@@ -627,16 +626,6 @@
    ]
   },
   {
-   "id": "cd2_lqt_acquired",
-   "doid": "DOID:2843",
-   "do_name": "long QT syndrome",
-   "matched_by": "exact ICD-10 code I45.81",
-   "typical_features": [],
-   "synonyms": [
-    "LQT"
-   ]
-  },
-  {
    "id": "cd2_peripartum_cardiomyopathy",
    "doid": "DOID:9997",
    "do_name": "peripartum cardiomyopathy",
@@ -665,7 +654,6 @@
    "typical_features": [],
    "synonyms": [
     "Cardiac Failure Congestive",
-    "CHF",
     "Congestive heart disease",
     "Weak heart"
    ]
@@ -806,16 +794,6 @@
    ]
   },
   {
-   "id": "long_qt_syndrome",
-   "doid": "DOID:2843",
-   "do_name": "long QT syndrome",
-   "matched_by": "exact name/alias",
-   "typical_features": [],
-   "synonyms": [
-    "LQT"
-   ]
-  },
-  {
    "id": "mitral_regurgitation",
    "doid": "DOID:11502",
    "do_name": "mitral valve insufficiency",
@@ -885,11 +863,11 @@
    "matched_by": "exact ICD-10 code I25.10",
    "typical_features": [],
    "synonyms": [
-    "CHD",
     "coronary arteriosclerosis",
     "Coronary disease",
     "coronary heart disease",
-    "Ischemic Heart Disease"
+    "Ischemic Heart Disease",
+    "myocardial ischemia"
    ]
   },
   {
@@ -1085,8 +1063,7 @@
    "matched_by": "exact ICD-10 code Q93.82",
    "typical_features": [],
    "synonyms": [
-    "Fanconi Schlesinger syndrome",
-    "WBS"
+    "Fanconi Schlesinger syndrome"
    ]
   },
   {
@@ -1742,16 +1719,6 @@
    ]
   },
   {
-   "id": "er2_pseudohypoparathyroidism",
-   "doid": "DOID:4184",
-   "do_name": "pseudohypoparathyroidism",
-   "matched_by": "exact name/alias",
-   "typical_features": [],
-   "synonyms": [
-    "PHP"
-   ]
-  },
-  {
    "id": "er2_sheehan_syndrome",
    "doid": "DOID:9476",
    "do_name": "Sheehan syndrome",
@@ -1793,9 +1760,7 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "hereditary generalized hypotrichosis simplex",
-    "HHS",
-    "HTS"
+    "hereditary generalized hypotrichosis simplex"
    ]
   },
   {
@@ -1967,7 +1932,6 @@
    "matched_by": "exact ICD-10 code M32.0",
    "typical_features": [],
    "synonyms": [
-    "DIL",
     "DILE"
    ]
   },
@@ -2123,7 +2087,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "LFS",
     "SBLA syndrome"
    ]
   },
@@ -2173,11 +2136,11 @@
    "matched_by": "exact ICD-10 code Q85.02",
    "typical_features": [],
    "synonyms": [
-    "ACN",
     "acoustic neurofibromatosis",
     "BANF",
     "bilateral acoustic neurinoma",
-    "bilateral acoustic neurofibromatosis"
+    "bilateral acoustic neurofibromatosis",
+    "bilateral acoustic schwannomas"
    ]
   },
   {
@@ -2261,9 +2224,7 @@
    "synonyms": [
     "chronic kidney failure",
     "chronic renal disease",
-    "chronic renal failure syndrome",
-    "CKD",
-    "CRF"
+    "chronic renal failure syndrome"
    ]
   },
   {
@@ -2316,9 +2277,7 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "BFH",
-    "thin membrane nephropathy",
-    "TMN"
+    "thin membrane nephropathy"
    ]
   },
   {
@@ -2362,7 +2321,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "FGS",
     "focal glomerular sclerosis",
     "focal glomerulosclerosis",
     "FSGS"
@@ -2420,7 +2378,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "OAB",
     "urge syndrome",
     "urgency-frequency syndrome"
    ]
@@ -2434,16 +2391,6 @@
    "synonyms": [
     "Non-Gonococcal Urethritis",
     "Nongonococcal urethritis"
-   ]
-  },
-  {
-   "id": "pelvic_inflammatory_disease",
-   "doid": "DOID:1003",
-   "do_name": "pelvic inflammatory disease",
-   "matched_by": "exact name/alias",
-   "typical_features": [],
-   "synonyms": [
-    "PID"
    ]
   },
   {
@@ -2740,8 +2687,7 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "Defibrination syndrome",
-    "DIC"
+    "Defibrination syndrome"
    ]
   },
   {
@@ -2867,8 +2813,7 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "antiphospholipid antibody syndrome",
-    "APS"
+    "antiphospholipid antibody syndrome"
    ]
   },
   {
@@ -2879,7 +2824,6 @@
    "typical_features": [],
    "synonyms": [
     "Bridges-Good syndrome",
-    "CGD",
     "Congenital dysphagocytosis",
     "Quie syndrome"
    ]
@@ -3540,8 +3484,7 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "toxic shock",
-    "TSS"
+    "toxic shock"
    ]
   },
   {
@@ -3632,8 +3575,7 @@
    "synonyms": [
     "Folling's disease",
     "maternal phenylketonuria",
-    "phenylalaninemia",
-    "PKU"
+    "phenylalaninemia"
    ]
   },
   {
@@ -3781,7 +3723,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "Arthritis or polyarthritis, rheumatic",
     "atrophic Arthritis"
    ]
   },
@@ -3908,7 +3849,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "HD",
     "Huntington's chorea"
    ]
   },
@@ -3970,7 +3910,6 @@
    "matched_by": "exact ICD-10 code G93.32",
    "typical_features": [],
    "synonyms": [
-    "CFS",
     "Myalgic encephalitis",
     "Myalgic encephalomyelitis",
     "Postviral fatigue syndrome"
@@ -4026,7 +3965,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "WED",
     "Willis-Ekbom disease",
     "Wittmaack-Ekbom syndrome"
    ]
@@ -4061,8 +3999,7 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "Low pressure hydrocephalus",
-    "NPH"
+    "Low pressure hydrocephalus"
    ]
   },
   {
@@ -4086,11 +4023,11 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "CJD",
     "Creutzfeldt Jacob syndrome",
     "Creutzfeldt Jakob disease",
     "Creutzfeldt-Jacob disease",
-    "Jakob-Creutzfeldt disease"
+    "Jakob-Creutzfeldt disease",
+    "Subacute spongiform encephalopathy"
    ]
   },
   {
@@ -4154,7 +4091,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "TIA",
     "Transient cerebral ischaemia",
     "Transient ischemic attacks"
    ]
@@ -4221,7 +4157,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "GDM",
     "Gestational diabetes mellitus",
     "Maternal gestational diabetes mellitus"
    ]
@@ -4258,7 +4193,6 @@
    "typical_features": [],
    "synonyms": [
     "gravidic intrahepatic cholestasis",
-    "ICP",
     "pregnancy related cholestasis"
    ]
   },
@@ -4338,7 +4272,6 @@
    "synonyms": [
     "acute lymphoblastic leukaemia",
     "acute lymphocytic leukaemia",
-    "ALL",
     "precursor lymphoblastic lymphoma/leukemia"
    ]
   },
@@ -4419,7 +4352,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "HL",
     "Hodgkin disease",
     "Hodgkin's sarcoma",
     "Hodgkins lymphoma"
@@ -4521,7 +4453,6 @@
    "typical_features": [],
    "synonyms": [
     "adult glioblastoma multiforme",
-    "GBM",
     "glioblastoma multiforme",
     "primary glioblastoma multiforme",
     "spongioblastoma multiforme"
@@ -4630,8 +4561,7 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "neuroblastoma of Retina",
-    "RB"
+    "neuroblastoma of Retina"
    ]
   },
   {
@@ -5000,8 +4930,7 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "respiratory syncytial virus",
-    "RSV"
+    "respiratory syncytial virus"
    ]
   },
   {
@@ -5071,7 +5000,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "Conversion hysteria or reaction",
     "Conversion Hysterical Neurosis",
     "Hysterical neurosis, conversion type"
    ]
@@ -5207,7 +5135,6 @@
    "matched_by": "exact name/alias",
    "typical_features": [],
    "synonyms": [
-    "CF",
     "mucoviscidosis"
    ]
   },
@@ -5254,16 +5181,6 @@
    "synonyms": [
     "influenza with non-respiratory manifestation",
     "Influenza with other manifestations"
-   ]
-  },
-  {
-   "id": "interstitial_lung_disease",
-   "doid": "DOID:3082",
-   "do_name": "interstitial lung disease",
-   "matched_by": "exact name/alias",
-   "typical_features": [],
-   "synonyms": [
-    "ILD"
    ]
   },
   {
@@ -5329,7 +5246,6 @@
    "synonyms": [
     "accelerated interstitial pneumonia",
     "acute interstitial pneumonitis",
-    "AIP",
     "Hamman-Rich disease",
     "Hamman-Rich syndrome"
    ]
@@ -5739,8 +5655,7 @@
    "typical_features": [],
    "synonyms": [
     "adenocarcinoma of kidney",
-    "hypernephroma",
-    "RCC"
+    "hypernephroma"
    ]
   },
   {
