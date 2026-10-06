@@ -230,6 +230,10 @@ def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict
     return 0.0
 
 
+# A confirmatory phrase such as "atrial fibrillation on ecg" names the test the result came from. The objective
+# pool only ever holds EXAM/TEST/imaging results, and an ECG report reads "atrial fibrillation with fast rate"
+# without repeating "ecg", so modality words must not be required for the strict match.
+_MODALITY_WORDS = frozenset({"ecg", "ekg", "ct", "mri", "cxr", "imaging", "xray", "ultrasound", "echo", "echocardiogram", "radiograph", "scan"})
 _INFERENCE_FEATURE = re.compile(r"^(?:suspected|presumed|possible)\b", re.IGNORECASE)
 
 
@@ -269,7 +273,7 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
     if feature_denied(phrase, negatives) or explicitly_denied_in_findings(phrase, findings):
         contradictory.append(phrase)
         return -(CONFIRMATORY_WEIGHT if objective else CONTRADICTION_PENALTY)
-    if _present_with_aliases(phrase, findings, strict=strict):
+    if _present_with_aliases(phrase, findings, strict=strict, ignore_words=_MODALITY_WORDS if objective else frozenset()):
         supporting.append(phrase)
         return weight
     missing.append(phrase)

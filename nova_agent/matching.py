@@ -145,6 +145,8 @@ _IRREGULAR_STEM_OVERRIDES = {
     # "pain when I breathe in" / "pain with breathing" / "shortness of breath": verb, gerund and noun forms of
     # one concept that no plain suffix rule joins (breathe+ing -> "breath", breath -> "breath").
     "breathe": "breath", "breathes": "breath", "breathing": "breath", "breaths": "breath",
+    # "irregularly irregular rhythm" (the textbook AF finding) vs a report of "irregular rhythm": adverb/adjective.
+    "irregularly": "irregular",
     # Round M anatomical adjective/noun pairs: a patient says "pain in one testicle" while a
     # feature says "testicular pain"; no suffix rule connects the two forms.
     "testicular": "testicle", "testis": "testicle", "testes": "testicle", "scrotal": "scrotum",
@@ -303,13 +305,14 @@ def _opposite_polarity(feature_content: Set[str], finding_content: Set[str]) -> 
     return (f_up and n_down and not n_up) or (f_down and n_up and not n_down)
 
 
-def feature_present(feature: str, findings_text: List[str], scrub_negated_spans: bool = False, strict: bool = False) -> bool:
+def feature_present(feature: str, findings_text: List[str], scrub_negated_spans: bool = False, strict: bool = False,
+                    ignore_words: frozenset = frozenset()) -> bool:
     """`scrub_negated_spans=True` is for checking against a general finding bag (e.g.
     state.all_findings_text()) that can contain an EXAM/TEST result embedding an unrelated
     negation in the same string. Leave it False (the default) when checking against
     PatientState.pertinent_negatives -- those entries ARE the negative statement itself (e.g.
     "denies chest pain"), so scrubbing them would erase the very text being matched against."""
-    feature_content = _content_words(feature)
+    feature_content = _content_words(feature) - ignore_words
     feature_lower = feature.lower()
     distinguishing = _distinguishing_tokens(feature_content)
     # Match within one assertion, not a whole report. Otherwise words from unrelated
@@ -546,14 +549,14 @@ _merge_pr15_aliases()
 
 
 def feature_present_with_aliases(phrase: str, findings: List[str], scrub_negated_spans: bool = True,
-                                 strict: bool = False) -> bool:
+                                 strict: bool = False, ignore_words: frozenset = frozenset()) -> bool:
     """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
     FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase.
     The single shared entry point for alias-aware matching; both differential.py's scoring and
     candidate_generator.py's pool-membership checks call this rather than plain feature_present()
     directly, so a diagnosis reachable only through an aliased phrase behaves identically at both
     stages."""
-    if feature_present(phrase, findings, scrub_negated_spans=scrub_negated_spans, strict=strict):
+    if feature_present(phrase, findings, scrub_negated_spans=scrub_negated_spans, strict=strict, ignore_words=ignore_words):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):
         # Every alias is a PARAPHRASE of its phrase, so it is matched strictly (never by the 60%

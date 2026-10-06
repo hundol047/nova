@@ -18,6 +18,7 @@ visible. Synthetic data, mock LLM, no expert adjudication: NOT the official scor
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import importlib
 import json
 import statistics
@@ -87,6 +88,19 @@ def summarize(rows: list) -> dict:
                 cases_over_50_turns=sum(r["turns"] > 50 for r in rows))
 
 
+def _run_dev_case(job):
+    """One case under the unrestricted development rules, with its OWN agent (cases never share state)."""
+    module, var, case_id = job
+    case = next(c for c in getattr(importlib.import_module(module), var) if c.case_id == case_id)
+    return run_case(DoctorAgent(llm_client=MockLLMClient()), case)
+
+
+def _run_prelim_case(job):
+    module, var, case_id = job
+    case = next(c for c in getattr(importlib.import_module(module), var) if c.case_id == case_id)
+    return run_preliminary_case(case)
+
+
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--case-module", default="evaluation.generalization_dev_cases_round_m")
@@ -94,17 +108,26 @@ def main() -> None:
     p.add_argument("--cases", help="comma-separated case ids")
     p.add_argument("--compare", action="store_true", help="also run the unrestricted development rules")
     p.add_argument("--output")
+    p.add_argument("--workers", type=int, default=1, help="parallel processes; every case still gets its own agent")
     args = p.parse_args()
     if "blind" in args.case_module:
         raise SystemExit("refusing to evaluate a blind module")
     cases = getattr(importlib.import_module(args.case_module), args.case_var)
     if args.cases:
         cases = [c for c in cases if c.case_id in set(args.cases.split(","))]
-    rows = [run_preliminary_case(c) for c in cases]
+    jobs = [(args.case_module, args.case_var, c.case_id) for c in cases]
+    if args.workers > 1:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=args.workers) as pool:
+            rows = list(pool.map(_run_prelim_case, jobs))
+    else:
+        rows = [run_preliminary_case(c) for c in cases]
     out = {"preliminary_rules": summarize(rows)}
     if args.compare:
-        agent = DoctorAgent(llm_client=MockLLMClient())
-        dev = [run_case(agent, c) for c in cases]
+        if args.workers > 1:
+            with concurrent.futures.ProcessPoolExecutor(max_workers=args.workers) as pool:
+                dev = list(pool.map(_run_dev_case, jobs))
+        else:
+            dev = [_run_dev_case(j) for j in jobs]
         scored = [r for r in dev if r.scoring_expected]
         crit = [r for r in scored if r.critical]
         out["unrestricted_development_rules"] = dict(
