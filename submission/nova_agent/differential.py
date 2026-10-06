@@ -12,6 +12,7 @@ reshuffle the ranking.
 from __future__ import annotations
 
 import math
+import re
 
 from typing import Dict, List, Literal, Optional
 
@@ -191,6 +192,9 @@ def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict
     return 0.0
 
 
+_INFERENCE_FEATURE = re.compile(r"^(?:suspected|presumed|possible)\b", re.IGNORECASE)
+
+
 def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: List[str],
                    supporting: List[str], contradictory: List[str], missing: List[str], *, objective: bool = False) -> float:
     """Negation-aware scoring for ONE typical_feature or confirmatory_finding phrase. Shared by
@@ -211,6 +215,16 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         if feature_present(underlying, findings, scrub_negated_spans=True):
             contradictory.append(phrase)
             return -CONTRADICTION_PENALTY
+        missing.append(phrase)
+        return 0.0
+    if _INFERENCE_FEATURE.match(phrase) and not objective:
+        # "suspected infection source" is a clinician's inference over MANY possible sources, not a
+        # symptom. Denying one source symptom ("denies cough, denies burning with urination") does not
+        # refute it -- an occult source is exactly how sepsis in an immunocompromised patient presents --
+        # so it can be supported or missing, never contradicted by individual symptom denials.
+        if _present_with_aliases(phrase, findings):
+            supporting.append(phrase)
+            return weight
         missing.append(phrase)
         return 0.0
     if feature_denied(phrase, negatives) or explicitly_denied_in_findings(phrase, findings):
