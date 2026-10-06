@@ -169,3 +169,23 @@ rule-out conditions, thresholds or safety caveats in the original notes. Promoti
 blocked pending scope/safety review; the existing notes are preserved. The packet is
 excluded from the inference ZIP. Medical correctness, original authorship/use rights
 and clinician review remain separate determinations.
+
+## Open disease-ontology features (2026-10-06)
+
+`nova_agent/knowledge/tier2_open_features.json` is built by `scripts/build_open_disease_features.py`
+from the Human Disease Ontology (`doid.obo`, https://github.com/DiseaseOntology/HumanDiseaseOntology,
+Schriml LM et al., https://disease-ontology.org). Licence: CC0 1.0 Universal (public-domain
+dedication) -- the two licence lines of the source file are copied verbatim into the sidecar's
+provenance block and into `research/open_sources/disease_ontology/terms.txt`, together with the
+source file's SHA-256 and `data-version`. The ~7 MB source file itself is not bundled.
+
+- Only `has_symptom` clauses and EXACT synonyms of terms that match a Tier-2 concept by exact
+  name/alias or exact ICD-10 code are copied; ambiguous matches are skipped. Nothing is generated.
+- Concepts that already have typical_features (catalog or `tier2_enrichment.json`) are untouched;
+  the new features are lowest precedence and the concept `source` tag says so.
+- Quality guards (generic one-word findings, > 8-word clauses, < 2 surviving findings, ambiguous or
+  qualified synonyms, alias collisions with other concepts) are in the build script and tested.
+- Not clinician-reviewed (`clinician_reviewed: false`); used only as low-weight retrieval/matching
+  vocabulary, never as patient evidence. The Human Phenotype Ontology (lay synonyms) was NOT used
+  because its licence text could not be verified from this environment. No other external source
+  was reachable (only raw.githubusercontent.com).

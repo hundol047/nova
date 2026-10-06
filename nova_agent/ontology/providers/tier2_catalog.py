@@ -22,6 +22,8 @@ from nova_agent.ontology.models import (
 
 _ENRICHMENT_PATH = Path(__file__).resolve().parent.parent.parent / "knowledge" / "tier2_enrichment.json"
 
+_OPEN_FEATURES_PATH = Path(__file__).resolve().parent.parent.parent / "knowledge" / "tier2_open_features.json"
+
 _CATALOG_PATH = (
     Path(__file__).resolve().parent.parent.parent / "knowledge" / "tier2_catalog.json"
 )
@@ -57,6 +59,20 @@ class Tier2CatalogProvider:
                           "confirmatory_findings": list(e.get("confirmatory_findings", []))}
                 for e in data.get("entries", []) if e.get("id")}
 
+    def _load_open_features(self) -> dict:
+        """id -> {typical_features, synonyms} from knowledge/tier2_open_features.json, built from the CC0
+        Human Disease Ontology (has_symptom clauses + EXACT synonyms; see scripts/build_open_disease_features.py).
+        Lowest precedence: catalog features > unreviewed enrichment > these. NOT clinician reviewed."""
+        if self._path != _CATALOG_PATH or not _OPEN_FEATURES_PATH.is_file():
+            return {}
+        try:
+            data = json.loads(_OPEN_FEATURES_PATH.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            return {}
+        return {e["id"]: {"typical_features": list(e.get("typical_features", [])),
+                          "synonyms": list(e.get("synonyms", []))}
+                for e in data.get("entries", []) if e.get("id")}
+
     def iter_concepts(self) -> Iterator[ClinicalConcept]:
         if not self.available():
             return
@@ -66,6 +82,7 @@ class Tier2CatalogProvider:
             return
         conditions = data.get("conditions", data if isinstance(data, list) else [])
         enrichment = self._load_enrichment()
+        open_features = self._load_open_features()
         for entry in conditions:
             cid = entry.get("id")
             name = entry.get("name")
@@ -87,12 +104,24 @@ class Tier2CatalogProvider:
                 features = tuple(extra["typical_features"])
                 confirmatory = confirmatory or tuple(extra["confirmatory_findings"])
                 source = "tier2_catalog+tier2_enrichment_unreviewed"
+            aliases = tuple(a for a in entry.get("aliases", []) if a)
+            open_extra = open_features.get(cid)
+            if open_extra:
+                if open_extra["typical_features"] and not features:
+                    features = tuple(open_extra["typical_features"])
+                    source = "tier2_catalog+open_disease_ontology_cc0_unreviewed"
+                known = {a.lower() for a in aliases} | {name.lower()}
+                added = tuple(x for x in open_extra["synonyms"] if x.lower() not in known)
+                if added:
+                    aliases = aliases + added
+                    if source == "tier2_catalog":
+                        source = "tier2_catalog+open_disease_ontology_cc0_synonyms"
             yield ClinicalConcept(
                 concept_id=f"tier2:{cid}",
                 canonical_name=name,
                 semantic_type=self._semantic_type(entry.get("semantic_type")),
                 tier=Tier.TIER2_STRUCTURED,
-                aliases=tuple(a for a in entry.get("aliases", []) if a),
+                aliases=aliases,
                 category=entry.get("category"),
                 external_codes=codes,
                 source=source,
