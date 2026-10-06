@@ -14,7 +14,7 @@ Each row has exactly one status. An official action name does not establish its 
 | ASK / EXAM / TEST / DIAGNOSE names | CONFIRMED_OFFICIAL | Evaluation: 진행 방식 |
 | ASK meaning | CONFIRMED_OFFICIAL | Questions for history and symptoms |
 | EXAM meaning | CONFIRMED_OFFICIAL | Physical examination selection |
-| TEST meaning | CONFIRMED_OFFICIAL | Laboratory / imaging selection |
+| TEST meaning | CONFIRMED_OFFICIAL | Public Evaluation page: laboratory / imaging selection. **Not available in the preliminary round** per the 2026-10-06 briefing |
 | DIAGNOSE meaning | CONFIRMED_OFFICIAL | Final diagnosis submission |
 | Initial information scope | CONFIRMED_OFFICIAL | Basic patient information and initial symptoms |
 | Required observation JSON | PLACEHOLDER | `CompetitionObservation` is our local contract |
@@ -22,7 +22,7 @@ Each row has exactly one status. An official action name does not establish its 
 | Per-action payload encoding | PLACEHOLDER | Current key/content/metadata fields are not documented officially |
 | case_id semantics | PLACEHOLDER | Local per-case key only |
 | turn field semantics | PLACEHOLDER | Local protocol convention only |
-| Maximum interactions | CONFIRMED_OFFICIAL | Evaluation: maximum 60 turns per case |
+| Maximum interactions | CONFIRMED_OFFICIAL | Public Evaluation page: 60 turns. **Superseded for the preliminary round** by the 2026-10-06 briefing: 50 turns (see section below) |
 | LLM endpoint and route | NOT_AVAILABLE | `/chat/completions` is a provisional transport assumption |
 | Authentication method / token delivery | NOT_AVAILABLE | Rules mention issued API credits/tokens, not header syntax |
 | JSON model-selection field | PLACEHOLDER | Current OpenAI-compatible `model` field |
@@ -50,6 +50,32 @@ prohibited; this submission includes neither learned weights nor training depend
 Optional response fields `revision` / `model_revision` are compatibility checks, not confirmed
 official field names. If present they must match the expected revision; if absent the result is
 `NOT_VERIFIABLE_FROM_RUNTIME`. Server model/revision strings do not attest the actual weights.
+
+## 2026-10-06 organizer briefing (preliminary round) — supplied by the team as slide photos
+
+Source: eleven photographs of the organizer briefing slides given to the team. They are NOT on the
+public pages above and carry no machine-readable contract, so the wire encoding stays `PLACEHOLDER`.
+Implemented as state flags (`PatientState.preliminary_rules`, ON by default only for the
+`competition` provider; `competition.submission_profile` builds an always-ON adapter), never as a
+global change, so the development benchmarks keep their behaviour.
+
+| Rule | Status | Implementation / boundary |
+| --- | --- | --- |
+| 50 turns per case | CONFIRMED_BRIEFING | `PRELIMINARY_MAX_TURNS`; `effective_max_turns()` |
+| 20 minutes per case | CONFIRMED_BRIEFING | `PRELIMINARY_CASE_SECONDS`; forced DIAGNOSE with a closing reserve; real latency NOT VERIFIED |
+| No TEST action | CONFIRMED_BRIEFING | filtered in action selection and adapter; never emitted |
+| Vital signs delivered at the start (turn 0) | CONFIRMED_BRIEFING | `record_initial_vitals`; wire field name is a placeholder |
+| Patient statement carries age/sex | CONFIRMED_BRIEFING | `parse_first_statement`; heuristic text parsing |
+| SAY: one question, at most 30 characters | CONFIRMED_BRIEFING | `fit_say` guarantees the limit in every language; templates exist for ko/en/ja/zh, other scripts fall back to English |
+| EXAM: one maneuver per request | CONFIRMED_BRIEFING | single-maneuver exam text |
+| SOAP note on DIAGNOSE with turn numbers; only asked/examined content counts | CONFIRMED_BRIEFING | `nova_agent/soap.py` rebuilt from the turn log; field names PLACEHOLDER |
+| At most 8 model calls per case (first, final, every 4th turn) | CONFIRMED_BRIEFING | `PRELIMINARY_MAX_LLM_CALLS_PER_CASE`; verified only against the mock model |
+| Closing dialogue (core history, diagnosis SAY, next-step SAY) | CONFIRMED_BRIEFING | adapter `_closing_action` |
+| Rejected examination requests | NOT_AVAILABLE | rejection wording unpublished; detected by a documented heuristic (below) |
+
+Open boundaries: real `gpt-oss-20b` latency and call accounting, the JSON encoding of SAY/EXAM/
+DIAGNOSE/vitals/SOAP, and how SOAP is scored are all unknown until the participant guide arrives.
+Accuracy numbers under these rules are synthetic development results, not an official score.
 
 ## Configuration and external blockers
 
