@@ -1,0 +1,38 @@
+{
+  "baseline_commit": "cd9ec6a",
+  "scope": "LOCAL_OFFLINE_EXPANSION_AND_EVIDENCE_REVIEW",
+  "runtime_registered": 1280,
+  "offline_candidates": 33724,
+  "total_records": 35004,
+  "distinct_normalized_names": 35000,
+  "new_ncit_candidates": 9508,
+  "source_audit": "PASS",
+  "software_tests": {
+    "tests": 551,
+    "passed": 550,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "structured_evidence_probes": {
+    "profiles": 7,
+    "probes": 54,
+    "passed": 54,
+    "scope": "SYNTHETIC_SOFTWARE_PROBES_NOT_DIAGNOSTIC_ACCURACY"
+  },
+  "hard_reference": {
+    "provider": "mock",
+    "case_count": 24,
+    "correct": 17,
+    "critical_case_count": 15,
+    "critical_correct": 9,
+    "scored_named_correct": 15,
+    "scored_named_total": 22,
+    "clinical_accuracy_verified": false,
+    "change_from_baseline": 0
+  },
+  "clinical_reviewed_new_candidates": 0,
+  "runtime_activation": false,
+  "remote_push": false,
+  "limitation": "35,000 distinct labels include subtypes, stages and parent categories; semantic equivalence review remains pending. Evidence probes are software checks, not diagnostic accuracy. Runtime accuracy did not improve in this change."
+}

@@ -1,0 +1,5 @@
+{
+  "sha256": "a71789a54003caa6c26b883c2236c03e57a41c2809cbe616ad26e42560aa6975",
+  "baseline": "5548d5b",
+  "scope": "8 synthetic mock dialogues, four paired presentations; not independent clinical validation; frozen before patch"
+}

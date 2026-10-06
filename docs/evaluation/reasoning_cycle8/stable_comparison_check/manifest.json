@@ -1,0 +1,51 @@
+{
+  "dataset_manifest": {
+    "schema_version": 1,
+    "source": "SII-SPIRAL-MED/DiagnosisArena",
+    "source_revision": "64bb873fe651e1c71cd8b0958104dd911f042872",
+    "source_sha256": "de980033fa681d9cb5bf4138f04dea204c1326d18017a752a137458195c36520",
+    "input_sha256": "77fe9a04e2301894bc5277e3ef7151e892875e2f576cbbaf1733ddce24d2bb4b",
+    "label_sha256": "611afeff916625c30801f7ab1d254a753e81ed5cdfde76c4a6b72c72b794c9af",
+    "seed": "nova-comparison-v1",
+    "new_case_quotas": {
+      "development": 50,
+      "validation": 50,
+      "holdout": 100
+    },
+    "actual_counts": {
+      "development": 59,
+      "validation": 50,
+      "holdout": 100
+    },
+    "preparation_sha256": "6f6984745fa11f827a744553a2b0f0d28d492abc1eca5db13edcc11b759d931d",
+    "near_duplicate_pairs_grouped": 0,
+    "exact_answer_mentions_quarantined": [
+      "194",
+      "345"
+    ],
+    "family_basis": "lexical clusters only; patient/article family identifiers unavailable",
+    "semantic_leakage_review": "PENDING",
+    "triage_labels": "UNAVAILABLE",
+    "interactive_mapping_review": "PENDING",
+    "clinical_validation": false,
+    "model_pretraining_contamination": "UNKNOWN",
+    "terms": "RESEARCH_AND_MODEL_EVALUATION_ONLY; no clinical use",
+    "expert_review_scope": "authors report source review; no new NOVA clinician adjudication"
+  },
+  "split": "development",
+  "cases": 59,
+  "available_cases": 59,
+  "limit": 3,
+  "runtime_sha256": "83e6441bdc22c1042c83052a5572144618729abfb2524635b79ba661c28eb203",
+  "runner_sha256": "5582209c8996a0afae2ab910412c7c41c96a0f9b759320d4a80e42c99396ca38",
+  "comparison_sha256": "cc6671b27ddebb5e76993e90ba09d50480e84830b75270e2f932a8bd73df1af3",
+  "model": "openai/gpt-oss-20b",
+  "expected_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+  "server_revision_verified": false,
+  "temperature": 0.0,
+  "max_tokens": 1024,
+  "training": false,
+  "clinical_validation": false,
+  "live_executed": false,
+  "interactive_ready_cases": 0
+}

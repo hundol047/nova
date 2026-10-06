@@ -1,0 +1,3139 @@
+{
+ "source": "origin/fix/nova-expansion-validation 0f6d1d7 (2026-10-03); alias additions relative to common base ebf04f0",
+ "note": "verbatim_in_eval_case = first case whose text contains the alias (mostly generic phrases). Only the 8 meeting the repository's own >=24-char chief_complaint criterion are excluded. Evaluation sets named here are development/regression only, never independent evidence.",
+ "counts": {
+  "added": 391,
+  "verbatim_overlap": 178,
+  "excluded": 8
+ },
+ "aliases": [
+  {
+   "feature_phrase": "infiltrate",
+   "alias": "airspace opacity",
+   "chars": 16,
+   "verbatim_in_eval_case": "Blind8_47_AfebrileElderlyPneumonia",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "infiltrate",
+   "alias": "airspace opacities",
+   "chars": 18,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worsening dyspnea",
+   "alias": "worsening breathlessness",
+   "chars": 24,
+   "verbatim_in_eval_case": "Blind6_31_NursingHomeCoughShortnessOfBreath",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worsening dyspnea",
+   "alias": "increasing breathlessness",
+   "chars": 25,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worsening dyspnea",
+   "alias": "more breathless",
+   "chars": 15,
+   "verbatim_in_eval_case": "Blind8_04_GymBarbellSuddenDyspnea",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worsening dyspnea",
+   "alias": "worsening shortness of breath",
+   "chars": 29,
+   "verbatim_in_eval_case": "Blind6_52_Multimorbidity_HeartFailurePatientNewCOPDFlare",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worsening dyspnea",
+   "alias": "increasing shortness of breath",
+   "chars": 30,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "focal consolidation",
+   "alias": "lobar consolidation",
+   "chars": 19,
+   "verbatim_in_eval_case": "Blind17_50",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "focal consolidation",
+   "alias": "right upper lobe consolidation",
+   "chars": 30,
+   "verbatim_in_eval_case": "Blind8_57_FeverNeckButChestSource",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "focal consolidation",
+   "alias": "right middle lobe consolidation",
+   "chars": 31,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "focal consolidation",
+   "alias": "right lower lobe consolidation",
+   "chars": 30,
+   "verbatim_in_eval_case": "Blind6_31_NursingHomeCoughShortnessOfBreath",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "focal consolidation",
+   "alias": "left upper lobe consolidation",
+   "chars": 29,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "focal consolidation",
+   "alias": "left lower lobe consolidation",
+   "chars": 29,
+   "verbatim_in_eval_case": "Blind14_29_ElderlyPneumoniaWithoutFever",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "fever",
+   "alias": "high fever",
+   "chars": 10,
+   "verbatim_in_eval_case": "Blind6_02_FoodTruckLunchIllness",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "fever",
+   "alias": "高熱",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_07_LingeringPostViralCough",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "fever",
+   "alias": "発熱",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_10_CampFeverStiffNeck",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "fever",
+   "alias": "熱がある",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "fever",
+   "alias": "열이 나다",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "fever",
+   "alias": "고열",
+   "chars": 2,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "neck stiffness",
+   "alias": "stiff neck",
+   "chars": 10,
+   "verbatim_in_eval_case": "Blind16_08_SnappedLikeALightning",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "neck stiffness",
+   "alias": "首が硬い",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "neck stiffness",
+   "alias": "首が硬く",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_10_CampFeverStiffNeck",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "neck stiffness",
+   "alias": "首がこわばる",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "neck stiffness",
+   "alias": "首が動かしにくい",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "neck stiffness",
+   "alias": "項部硬直",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_10_CampFeverStiffNeck",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "neck stiffness",
+   "alias": "경부강직",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "headache",
+   "alias": "激しい頭痛",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind9_10_CampFeverStiffNeck",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "headache",
+   "alias": "頭痛",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_10_CampFeverStiffNeck",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "headache",
+   "alias": "頭が痛い",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "headache",
+   "alias": "열과 두통",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "slurred speech",
+   "alias": "言葉が出にくい",
+   "chars": 7,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "slurred speech",
+   "alias": "言葉が出にく",
+   "chars": 6,
+   "verbatim_in_eval_case": "Blind8_36_MixedJaEnArmWeakness",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "slurred speech",
+   "alias": "言葉がうまく出ない",
+   "chars": 9,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "slurred speech",
+   "alias": "word-finding difficulty",
+   "chars": 23,
+   "verbatim_in_eval_case": "Blind8_36_MixedJaEnArmWeakness",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "slurred speech",
+   "alias": "difficulty finding words",
+   "chars": 24,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "slurred speech",
+   "alias": "ろれつが回らない",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "slurred speech",
+   "alias": "expressive aphasia",
+   "chars": 18,
+   "verbatim_in_eval_case": "Blind6_07_GardeningSuddenArmDrop",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "slurred speech",
+   "alias": "word-finding trouble",
+   "chars": 20,
+   "verbatim_in_eval_case": "Blind9_40_MigraineHistoryNewDeficit",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "slurred speech",
+   "alias": "실어증",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "vaginal bleeding",
+   "alias": "vaginal spotting",
+   "chars": 16,
+   "verbatim_in_eval_case": "Blind6_37_PregnancyPelvic_ThirdTrimesterSharpPain",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "vaginal bleeding",
+   "alias": "spotting",
+   "chars": 8,
+   "verbatim_in_eval_case": "Blind6_16_MissedPeriodDizzySpell",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "vaginal bleeding",
+   "alias": "light spotting",
+   "chars": 14,
+   "verbatim_in_eval_case": "DevE03_VagueReproductiveAgeEmergency",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "vaginal bleeding",
+   "alias": "膣出血",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "vaginal bleeding",
+   "alias": "膣から出血",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "missed period",
+   "alias": "period is late",
+   "chars": 14,
+   "verbatim_in_eval_case": "AbdominalPain01",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "missed period",
+   "alias": "late period",
+   "chars": 11,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "missed period",
+   "alias": "missed period",
+   "chars": 13,
+   "verbatim_in_eval_case": "AbdominalPain01",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "missed period",
+   "alias": "生理が遅れている",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "missed period",
+   "alias": "月経が遅い",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unilateral pelvic pain",
+   "alias": "one-sided pelvic pain",
+   "chars": 21,
+   "verbatim_in_eval_case": "Blind8_27_MissedPeriodPelvicPain",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unilateral pelvic pain",
+   "alias": "sharp pain on one side of the pelvis",
+   "chars": 36,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": "Blind06_RuralEctopic",
+   "treatment": "excluded (>=24 chars shared with an evaluation case chief_complaint)"
+  },
+  {
+   "feature_phrase": "unilateral pelvic pain",
+   "alias": "한쪽 골반 통증",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unilateral pelvic pain",
+   "alias": "片側の骨盤痛",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tearing chest pain",
+   "alias": "tearing back pain",
+   "chars": 17,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tearing chest pain",
+   "alias": "tearing breastbone pain",
+   "chars": 23,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tearing chest pain",
+   "alias": "tearing abdominal pain",
+   "chars": 22,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tearing chest pain",
+   "alias": "tearing pain",
+   "chars": 12,
+   "verbatim_in_eval_case": "Blind8_02_TearingBetweenShoulderBlades",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tearing chest pain",
+   "alias": "tearing between the shoulder blades",
+   "chars": 35,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": "V19_03",
+   "treatment": "excluded (>=24 chars shared with an evaluation case chief_complaint)"
+  },
+  {
+   "feature_phrase": "tearing chest pain",
+   "alias": "tearing pain moving toward the back",
+   "chars": 35,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tearing chest pain",
+   "alias": "가슴에서 등으로 찢어지는 통증",
+   "chars": 16,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "black tarry stool",
+   "chars": 17,
+   "verbatim_in_eval_case": "Blind10_23_HemoglobinGramsPerLiterGIBleed",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "black and tarry stool",
+   "chars": 21,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "black tarry stools",
+   "chars": 18,
+   "verbatim_in_eval_case": "Blind10_23_HemoglobinGramsPerLiterGIBleed",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "black and tarry stools",
+   "chars": 22,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "黒い便",
+   "chars": 3,
+   "verbatim_in_eval_case": "Blind8_22_BlackTarryStools",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "黒色便",
+   "chars": 3,
+   "verbatim_in_eval_case": "Blind9_22_TarryStoolsAnticoag",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "黒くてタール状の便",
+   "chars": 9,
+   "verbatim_in_eval_case": "Blind8_22_BlackTarryStools",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "タール便",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "タール状便",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "便が黒い",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "검은 변",
+   "chars": 4,
+   "verbatim_in_eval_case": "V18_46",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "흑변",
+   "chars": 2,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "黑色便",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "melena",
+   "alias": "黑便",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind8_63_HematemesisVariceal",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hematemesis",
+   "alias": "vomiting blood",
+   "chars": 14,
+   "verbatim_in_eval_case": "Blind6_39_GIBleed_CirrhoticVaricealHematemesis",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hematemesis",
+   "alias": "vomited blood",
+   "chars": 13,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hematemesis",
+   "alias": "吐血",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_22_TarryStoolsAnticoag",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hematemesis",
+   "alias": "血を吐く",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hematemesis",
+   "alias": "토혈",
+   "chars": 2,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hematemesis",
+   "alias": "피를 토함",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hematemesis",
+   "alias": "呕血",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind8_63_HematemesisVariceal",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hematemesis",
+   "alias": "呕出鲜红色血液",
+   "chars": 7,
+   "verbatim_in_eval_case": "Blind8_63_HematemesisVariceal",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hematemesis",
+   "alias": "吐出鲜血",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hematemesis",
+   "alias": "呕吐鲜血",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "liver disease",
+   "alias": "cirrhosis",
+   "chars": 9,
+   "verbatim_in_eval_case": "Blind6_20_LiverDiseasePatientBlackStools",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "liver disease",
+   "alias": "肝硬化",
+   "chars": 3,
+   "verbatim_in_eval_case": "Blind8_63_HematemesisVariceal",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "liver disease",
+   "alias": "간경변",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "alcohol use",
+   "alias": "长期饮酒",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind8_63_HematemesisVariceal",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "alcohol use",
+   "alias": "长期喝酒",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "alcohol use",
+   "alias": "heavy drinking",
+   "chars": 14,
+   "verbatim_in_eval_case": "Blind16_27_BoringPainToTheBackAfterBinge",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "alcohol use",
+   "alias": "chronic alcohol use",
+   "chars": 19,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "appendiceal inflammation",
+   "alias": "inflamed appendix",
+   "chars": 17,
+   "verbatim_in_eval_case": "Blind12_ElderlyAtypicalAppendicitis",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "appendiceal inflammation",
+   "alias": "appendiceal wall thickening",
+   "chars": 27,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "appendiceal inflammation",
+   "alias": "thickened appendix",
+   "chars": 18,
+   "verbatim_in_eval_case": "AbdominalPain03_YoungAdultAppendicitis",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "appendiceal inflammation",
+   "alias": "noncompressible appendix",
+   "chars": 24,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "photophobia",
+   "alias": "光がまぶしい",
+   "chars": 6,
+   "verbatim_in_eval_case": "Blind9_10_CampFeverStiffNeck",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "photophobia",
+   "alias": "光がつらい",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "throat tightness",
+   "alias": "throat feels like it is closing",
+   "chars": 31,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "throat tightness",
+   "alias": "throat feels like it's closing",
+   "chars": 30,
+   "verbatim_in_eval_case": "Blind14_54_PeanutReactionAtRestaurant",
+   "scanner_criterion_case": "Blind14_54_PeanutReactionAtRestaurant",
+   "treatment": "excluded (>=24 chars shared with an evaluation case chief_complaint)"
+  },
+  {
+   "feature_phrase": "throat tightness",
+   "alias": "throat closing",
+   "chars": 14,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "throat tightness",
+   "alias": "throat swelling",
+   "chars": 15,
+   "verbatim_in_eval_case": "Blind5_34_ColdAirRunNormalOxygenWheeze",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "throat tightness",
+   "alias": "喉が締め付けられる",
+   "chars": 9,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "throat tightness",
+   "alias": "喉が詰まる",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "throat tightness",
+   "alias": "목이 조이는 느낌",
+   "chars": 9,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "throat tightness",
+   "alias": "목이 붓는 느낌",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "throat tightness",
+   "alias": "喉咙发紧",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent allergen exposure",
+   "alias": "after eating",
+   "chars": 12,
+   "verbatim_in_eval_case": "Blind6_23_LateNightSnackBurningChest",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent allergen exposure",
+   "alias": "after taking a new medication",
+   "chars": 29,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent allergen exposure",
+   "alias": "after a new drug",
+   "chars": 16,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent allergen exposure",
+   "alias": "after an antibiotic",
+   "chars": 19,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent allergen exposure",
+   "alias": "new medication",
+   "chars": 14,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent allergen exposure",
+   "alias": "new antibiotic",
+   "chars": 14,
+   "verbatim_in_eval_case": "Blind16_12_HivesAfterTheAntibiotic",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent allergen exposure",
+   "alias": "食後",
+   "chars": 2,
+   "verbatim_in_eval_case": "RoundJ_48",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent allergen exposure",
+   "alias": "新しい薬の後",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent allergen exposure",
+   "alias": "薬を飲んだ後",
+   "chars": 6,
+   "verbatim_in_eval_case": "Blind8_61_DrugAllergyThroat",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent allergen exposure",
+   "alias": "새 약을 먹은 후",
+   "chars": 9,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset urticaria",
+   "alias": "hives",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind6_13_ShrimpAppetizerSuddenSwelling",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset urticaria",
+   "alias": "widespread hives",
+   "chars": 16,
+   "verbatim_in_eval_case": "Blind8_32_PeanutHivesThroatTight",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset urticaria",
+   "alias": "urticaria",
+   "chars": 9,
+   "verbatim_in_eval_case": "Blind6_13_ShrimpAppetizerSuddenSwelling",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset urticaria",
+   "alias": "じんましん",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind8_61_DrugAllergyThroat",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset urticaria",
+   "alias": "蕁麻疹",
+   "chars": 3,
+   "verbatim_in_eval_case": "Blind8_61_DrugAllergyThroat",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset urticaria",
+   "alias": "두드러기",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset urticaria",
+   "alias": "荨麻疹",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "bilateral band-like pressure",
+   "alias": "bilateral pressure",
+   "chars": 18,
+   "verbatim_in_eval_case": "Blind9_43_NegativeCentricHeadache",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "bilateral band-like pressure",
+   "alias": "pressure on both sides",
+   "chars": 22,
+   "verbatim_in_eval_case": "Blind4_03_BandLikeHeadacheStress",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "bilateral band-like pressure",
+   "alias": "tight band around my head",
+   "chars": 25,
+   "verbatim_in_eval_case": "Blind4_03_BandLikeHeadacheStress",
+   "scanner_criterion_case": "Blind4_03_BandLikeHeadacheStress",
+   "treatment": "excluded (>=24 chars shared with an evaluation case chief_complaint)"
+  },
+  {
+   "feature_phrase": "bilateral band-like pressure",
+   "alias": "양쪽 머리를 누르는 느낌",
+   "chars": 13,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "bilateral band-like pressure",
+   "alias": "양측성 지속적 압박감",
+   "chars": 11,
+   "verbatim_in_eval_case": "Blind9_12_ExamWeekBandPressure",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "bilateral band-like pressure",
+   "alias": "띠로 조이는 듯한 둔통",
+   "chars": 12,
+   "verbatim_in_eval_case": "Blind9_12_ExamWeekBandPressure",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "bilateral band-like pressure",
+   "alias": "两侧像被带子勒住",
+   "chars": 8,
+   "verbatim_in_eval_case": "Blind8_12_DeadlineBandHeadache",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "bilateral band-like pressure",
+   "alias": "两侧压迫感",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "bilateral band-like pressure",
+   "alias": "両側の圧迫感",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "stress related",
+   "alias": "시험 기간",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind9_12_ExamWeekBandPressure",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "stress related",
+   "alias": "스트레스와 오래 앉아",
+   "chars": 11,
+   "verbatim_in_eval_case": "Blind9_12_ExamWeekBandPressure",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "stress related",
+   "alias": "工作压力大",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind8_12_DeadlineBandHeadache",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "stress related",
+   "alias": "压力大",
+   "chars": 3,
+   "verbatim_in_eval_case": "Blind8_12_DeadlineBandHeadache",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "stress related",
+   "alias": "stress-related",
+   "chars": 14,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "localized tenderness",
+   "alias": "point tenderness",
+   "chars": 16,
+   "verbatim_in_eval_case": "Blind6_24_MovingBoxesRibPain",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "localized tenderness",
+   "alias": "tender in one spot",
+   "chars": 18,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "localized tenderness",
+   "alias": "one spot is tender",
+   "chars": 18,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "localized tenderness",
+   "alias": "point tender",
+   "chars": 12,
+   "verbatim_in_eval_case": "Blind6_24_MovingBoxesRibPain",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "localized tenderness",
+   "alias": "국소 압통",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "localized tenderness",
+   "alias": "한 곳을 누르면 아픔",
+   "chars": 11,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "localized tenderness",
+   "alias": "局部压痛",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind8_23_SharedHotpotDiarrhea",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "reproducible with palpation",
+   "alias": "reproduced on palpation",
+   "chars": 23,
+   "verbatim_in_eval_case": "Blind9_17_PaintedCeilingChestSore",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "reproducible with palpation",
+   "alias": "pain reproduced by pressing",
+   "chars": 27,
+   "verbatim_in_eval_case": "Blind6_24_MovingBoxesRibPain",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "reproducible with palpation",
+   "alias": "reproduced by pressing",
+   "chars": 22,
+   "verbatim_in_eval_case": "Blind6_24_MovingBoxesRibPain",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "reproducible with palpation",
+   "alias": "누르면 통증 재현",
+   "chars": 9,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "reproducible with palpation",
+   "alias": "按压可诱发疼痛",
+   "chars": 7,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "lightheadedness on standing up",
+   "alias": "dizzy when standing",
+   "chars": 19,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "lightheadedness on standing up",
+   "alias": "lightheaded when I stand",
+   "chars": 24,
+   "verbatim_in_eval_case": "AbdominalPain04_AnticoagulantGIBleed",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "lightheadedness on standing up",
+   "alias": "어지러울 때 일어남",
+   "chars": 10,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "lightheadedness on standing up",
+   "alias": "立ち上がるとふらつく",
+   "chars": 10,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "lightheadedness on standing up",
+   "alias": "gray out each time I stand",
+   "chars": 26,
+   "verbatim_in_eval_case": "Blind9_15_NewPillDizzyStanding",
+   "scanner_criterion_case": "Blind9_15_NewPillDizzyStanding",
+   "treatment": "excluded (>=24 chars shared with an evaluation case chief_complaint)"
+  },
+  {
+   "feature_phrase": "lightheadedness on standing up",
+   "alias": "only on standing",
+   "chars": 16,
+   "verbatim_in_eval_case": "Blind9_15_NewPillDizzyStanding",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "lightheadedness on standing up",
+   "alias": "站起来就眼前发黑",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "lightheadedness on standing up",
+   "alias": "일어날 때마다 눈앞이 캄캄",
+   "chars": 14,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "prodrome of lightheadedness",
+   "alias": "先觉恶心出汗",
+   "chars": 6,
+   "verbatim_in_eval_case": "Blind9_14_HotChurchFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "prodrome of lightheadedness",
+   "alias": "眼前发黑",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_14_HotChurchFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "prodrome of lightheadedness",
+   "alias": "视野变窄",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_14_HotChurchFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "prodrome of lightheadedness",
+   "alias": "先有恶心出汗",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "prodrome of lightheadedness",
+   "alias": "메스꺼움과 식은땀",
+   "chars": 9,
+   "verbatim_in_eval_case": "Blind8_14_BloodDrawFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "prodrome of lightheadedness",
+   "alias": "시야가 좁아짐",
+   "chars": 7,
+   "verbatim_in_eval_case": "Blind8_14_BloodDrawFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "prodrome of lightheadedness",
+   "alias": "prodrome of warmth and nausea",
+   "chars": 29,
+   "verbatim_in_eval_case": "Blind8_53_ChoirStandingFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by standing or pain or fear",
+   "alias": "站立时",
+   "chars": 3,
+   "verbatim_in_eval_case": "Blind9_14_HotChurchFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by standing or pain or fear",
+   "alias": "闷热环境站立",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by standing or pain or fear",
+   "alias": "standing in a hot room",
+   "chars": 22,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by standing or pain or fear",
+   "alias": "triggered while standing",
+   "chars": 24,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by standing or pain or fear",
+   "alias": "standing in a hot crowded hall",
+   "chars": 30,
+   "verbatim_in_eval_case": "Blind8_53_ChoirStandingFaint",
+   "scanner_criterion_case": "Blind8_53_ChoirStandingFaint",
+   "treatment": "excluded (>=24 chars shared with an evaluation case chief_complaint)"
+  },
+  {
+   "feature_phrase": "triggered by standing or pain or fear",
+   "alias": "fainted standing",
+   "chars": 16,
+   "verbatim_in_eval_case": "Blind8_53_ChoirStandingFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by standing or pain or fear",
+   "alias": "채혈 중",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by standing or pain or fear",
+   "alias": "주사 맞을 때",
+   "chars": 7,
+   "verbatim_in_eval_case": "Blind8_14_BloodDrawFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by standing or pain or fear",
+   "alias": "서 있다가",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind16_45_KoreanMixedFaintAfterStanding",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "brief loss of consciousness",
+   "alias": "短暂晕厥",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_14_HotChurchFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "brief loss of consciousness",
+   "alias": "briefly fainted",
+   "chars": 15,
+   "verbatim_in_eval_case": "Blind17_18",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "brief loss of consciousness",
+   "alias": "briefly passed out",
+   "chars": 18,
+   "verbatim_in_eval_case": "Blind8_53_ChoirStandingFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "brief loss of consciousness",
+   "alias": "잠깐 의식을 잃음",
+   "chars": 9,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "brief loss of consciousness",
+   "alias": "잠깐 정신을 잃",
+   "chars": 8,
+   "verbatim_in_eval_case": "Blind8_14_BloodDrawFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rapid spontaneous recovery",
+   "alias": "很快清醒",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_14_HotChurchFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rapid spontaneous recovery",
+   "alias": "quickly came around",
+   "chars": 19,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rapid spontaneous recovery",
+   "alias": "rapidly recovered",
+   "chars": 17,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rapid spontaneous recovery",
+   "alias": "recovered in seconds",
+   "chars": 20,
+   "verbatim_in_eval_case": "Blind8_53_ChoirStandingFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rapid spontaneous recovery",
+   "alias": "금방 깨어",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind8_14_BloodDrawFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset palpitations",
+   "alias": "sudden heart racing",
+   "chars": 19,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset palpitations",
+   "alias": "sudden fluttering",
+   "chars": 17,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset palpitations",
+   "alias": "갑자기 심장이 두근",
+   "chars": 10,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset palpitations",
+   "alias": "突然の動悸",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset palpitations",
+   "alias": "突然心脏狂跳",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset palpitations",
+   "alias": "突然心臓がバクバク",
+   "chars": 9,
+   "verbatim_in_eval_case": "Blind8_16_SuddenPalpitations",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset palpitations",
+   "alias": "palpitations just before",
+   "chars": 24,
+   "verbatim_in_eval_case": "Blind8_45_FallAfterBlackout",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset palpitations",
+   "alias": "palpitations immediately before",
+   "chars": 31,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset palpitations",
+   "alias": "심장이 두근거린 직후",
+   "chars": 11,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "periumbilical pain migrating to right lower quadrant",
+   "alias": "pain moved from the belly button to the right lower abdomen",
+   "chars": 59,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "periumbilical pain migrating to right lower quadrant",
+   "alias": "pain started around the navel and moved right",
+   "chars": 45,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": "V19_78",
+   "treatment": "excluded (>=24 chars shared with an evaluation case chief_complaint)"
+  },
+  {
+   "feature_phrase": "periumbilical pain migrating to right lower quadrant",
+   "alias": "배꼽에서 오른쪽 아랫배로 통증이 이동",
+   "chars": 20,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "periumbilical pain migrating to right lower quadrant",
+   "alias": "へそから右下腹部へ痛みが移る",
+   "chars": 14,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "periumbilical pain migrating to right lower quadrant",
+   "alias": "脐周痛转到右下腹",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "periumbilical pain migrating to right lower quadrant",
+   "alias": "从肚脐转到右下腹",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "epigastric pain radiating to back",
+   "alias": "upper abdominal pain going to the back",
+   "chars": 38,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "epigastric pain radiating to back",
+   "alias": "upper belly pain to the back",
+   "chars": 28,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "epigastric pain radiating to back",
+   "alias": "명치 통증이 등으로 뻗음",
+   "chars": 13,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "epigastric pain radiating to back",
+   "alias": "上腹部痛が背中に放散",
+   "chars": 10,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unilateral absent breath sounds",
+   "alias": "one-sided absent breath sounds",
+   "chars": 30,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unilateral absent breath sounds",
+   "alias": "breath sounds absent on one side",
+   "chars": 32,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unilateral absent breath sounds",
+   "alias": "片側の呼吸音が聞こえない",
+   "chars": 12,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unilateral absent breath sounds",
+   "alias": "absent right breath sounds",
+   "chars": 26,
+   "verbatim_in_eval_case": "Blind9_04_DivingSuddenChestCollapse",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unilateral absent breath sounds",
+   "alias": "right breath sounds absent",
+   "chars": 26,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unilateral absent breath sounds",
+   "alias": "右侧呼吸音消失",
+   "chars": 7,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unilateral absent breath sounds",
+   "alias": "오른쪽 호흡음 소실",
+   "chars": 10,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tracheal deviation",
+   "alias": "windpipe shifted",
+   "chars": 16,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tracheal deviation",
+   "alias": "trachea shifted",
+   "chars": 15,
+   "verbatim_in_eval_case": "Blind6_38_Trauma_MotorcycleChestWallImpact",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tracheal deviation",
+   "alias": "기관이 한쪽으로 밀림",
+   "chars": 11,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tracheal deviation",
+   "alias": "気管偏位",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tracheal deviation",
+   "alias": "tracheal shift",
+   "chars": 14,
+   "verbatim_in_eval_case": "Blind16_15_TallThinGuyCollapsedLung",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tracheal deviation",
+   "alias": "tracheal shift to the left",
+   "chars": 26,
+   "verbatim_in_eval_case": "Blind16_15_TallThinGuyCollapsedLung",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tracheal deviation",
+   "alias": "气管向左偏移",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "tracheal deviation",
+   "alias": "기관이 왼쪽으로 밀림",
+   "chars": 11,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "sudden arm weakness",
+   "chars": 19,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "arm weakness",
+   "chars": 12,
+   "verbatim_in_eval_case": "Blind6_47_DangerousMimic_MigrainePatientNowActuallyStroke",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "right arm weakness",
+   "chars": 18,
+   "verbatim_in_eval_case": "Blind9_40_MigraineHistoryNewDeficit",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "left arm weakness",
+   "chars": 17,
+   "verbatim_in_eval_case": "Blind6_47_DangerousMimic_MigrainePatientNowActuallyStroke",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "right arm drift",
+   "chars": 15,
+   "verbatim_in_eval_case": "Blind6_07_GardeningSuddenArmDrop",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "left arm drift",
+   "chars": 14,
+   "verbatim_in_eval_case": "Blind9_08_WokeWithSlurredSpeech",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "突然腕に力が入らない",
+   "chars": 10,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "急に腕が動かしにくい",
+   "chars": 10,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "右腕 weakness",
+   "chars": 11,
+   "verbatim_in_eval_case": "Blind8_36_MixedJaEnArmWeakness",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "左腕 weakness",
+   "chars": 11,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "片側 weakness",
+   "chars": 11,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "new focal deficit",
+   "chars": 17,
+   "verbatim_in_eval_case": "Blind9_40_MigraineHistoryNewDeficit",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "new focal neurological deficit",
+   "chars": 30,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset focal weakness",
+   "alias": "새로운 국소 신경학적 결손",
+   "chars": 14,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "burning chest pain",
+   "alias": "胸口烧灼感",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind8_18_NightBurningReflux",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "burning chest pain",
+   "alias": "胸口灼热",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "burning chest pain",
+   "alias": "烧心",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind8_69_RefluxBenignResolved",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "burning chest pain",
+   "alias": "명치 위가 타는 듯",
+   "chars": 10,
+   "verbatim_in_eval_case": "Blind9_18_LateSupperBurn",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "burning chest pain",
+   "alias": "가슴이 타는 느낌",
+   "chars": 9,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worse after meals",
+   "alias": "饭后加重",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worse after meals",
+   "alias": "餐后加重",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worse after meals",
+   "alias": "吃夜宵后加重",
+   "chars": 6,
+   "verbatim_in_eval_case": "Blind8_18_NightBurningReflux",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worse after meals",
+   "alias": "食後に悪化",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worse after meals",
+   "alias": "식후 악화",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worse lying down",
+   "alias": "平躺加重",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind8_18_NightBurningReflux",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worse lying down",
+   "alias": "躺下后加重",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worse lying down",
+   "alias": "横になると悪化",
+   "chars": 7,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "worse lying down",
+   "alias": "누우면 악화",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "relieved by antacids",
+   "alias": "吃抑酸药就好转",
+   "chars": 7,
+   "verbatim_in_eval_case": "Blind8_69_RefluxBenignResolved",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "relieved by antacids",
+   "alias": "抑酸药有效",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind8_69_RefluxBenignResolved",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "relieved by antacids",
+   "alias": "antacid helps",
+   "chars": 13,
+   "verbatim_in_eval_case": "RoundI_negative_cardiac",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "relieved by antacids",
+   "alias": "제산제로 호전",
+   "chars": 7,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sour taste",
+   "alias": "反酸",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind8_18_NightBurningReflux",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sour taste",
+   "alias": "酸水",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind8_18_NightBurningReflux",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sour taste",
+   "alias": "口に酸っぱい",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sour taste",
+   "alias": "신물이 올라옴",
+   "chars": 7,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sour taste",
+   "alias": "신물",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_18_LateSupperBurn",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "McBurney's point tenderness",
+   "alias": "McBurney's point",
+   "chars": 16,
+   "verbatim_in_eval_case": "Blind9_19_NavelToRLQBump",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "McBurney's point tenderness",
+   "alias": "rebound at McBurney's point",
+   "chars": 27,
+   "verbatim_in_eval_case": "Blind9_19_NavelToRLQBump",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "McBurney's point tenderness",
+   "alias": "McBurney 압통",
+   "chars": 11,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "right lower quadrant tenderness",
+   "alias": "RLQ tenderness",
+   "chars": 14,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "right lower quadrant tenderness",
+   "alias": "RLQ guarding",
+   "chars": 12,
+   "verbatim_in_eval_case": "Blind9_19_NavelToRLQBump",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "right lower quadrant tenderness",
+   "alias": "right lower quadrant guarding",
+   "chars": 29,
+   "verbatim_in_eval_case": "V19_78",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "right lower quadrant tenderness",
+   "alias": "右下腹压痛",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind8_54_AtypicalRetrocecalAppendicitis",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "right lower quadrant tenderness",
+   "alias": "右下腹压痛伴肌紧张",
+   "chars": 9,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "anorexia",
+   "alias": "食欲差",
+   "chars": 3,
+   "verbatim_in_eval_case": "Blind8_54_AtypicalRetrocecalAppendicitis",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "anorexia",
+   "alias": "没有食欲",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "anorexia",
+   "alias": "没胃口",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "anorexia",
+   "alias": "식욕 저하",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind11_18_MixedKoEn_MigratingRLQ",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "anorexia",
+   "alias": "食欲がない",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "low grade fever",
+   "alias": "低烧",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind8_54_AtypicalRetrocecalAppendicitis",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "low grade fever",
+   "alias": "低热",
+   "chars": 2,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "low grade fever",
+   "alias": "微热",
+   "chars": 2,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "low grade fever",
+   "alias": "微熱",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_34_DaycareSnifflesSoreThroat",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "low grade fever",
+   "alias": "미열",
+   "chars": 2,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "nausea",
+   "alias": "恶心",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_14_HotChurchFaint",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "nausea",
+   "alias": "吐き気",
+   "chars": 3,
+   "verbatim_in_eval_case": "Blind16_43_JapaneseMixedVomitingDiarrhea",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "nausea",
+   "alias": "구역질",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "diffuse crampy abdominal pain",
+   "alias": "肚子绞痛",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind8_23_SharedHotpotDiarrhea",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "diffuse crampy abdominal pain",
+   "alias": "腹部绞痛",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "diffuse crampy abdominal pain",
+   "alias": "복통이 쥐어짜듯",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "diarrhea",
+   "alias": "水样腹泻",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_23_PicnicVomitDiarrhea",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "diarrhea",
+   "alias": "腹泻",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_23_PicnicVomitDiarrhea",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "diarrhea",
+   "alias": "설사",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_37_MixedLipasePancreatitis",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "diarrhea",
+   "alias": "下痢",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind16_43_JapaneseMixedVomitingDiarrhea",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "vomiting",
+   "alias": "呕吐",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_23_PicnicVomitDiarrhea",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "vomiting",
+   "alias": "上吐下泻",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_23_PicnicVomitDiarrhea",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "vomiting",
+   "alias": "구토",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind8_20_BingeDrinkEpigastric",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "vomiting",
+   "alias": "嘔吐",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind8_22_BlackTarryStools",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent similar illness contact",
+   "alias": "同桌有人也腹泻",
+   "chars": 7,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent similar illness contact",
+   "alias": "同伴也有类似症状",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent similar illness contact",
+   "alias": "家人也腹泻",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent similar illness contact",
+   "alias": "同席者も下痢",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent similar illness contact",
+   "alias": "sick contacts with similar symptoms",
+   "chars": 35,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rhinorrhea",
+   "alias": "鼻水",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind9_34_DaycareSnifflesSoreThroat",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rhinorrhea",
+   "alias": "流鼻涕",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rhinorrhea",
+   "alias": "鼻涕",
+   "chars": 2,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rhinorrhea",
+   "alias": "鼻水が出る",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rhinorrhea",
+   "alias": "콧물",
+   "chars": 2,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sore throat",
+   "alias": "喉の痛み",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_34_DaycareSnifflesSoreThroat",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sore throat",
+   "alias": "咽喉痛",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sore throat",
+   "alias": "喉が痛い",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sore throat",
+   "alias": "목이 아픔",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sore throat",
+   "alias": "인후통",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "mild symptoms",
+   "alias": "轻微症状",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "mild symptoms",
+   "alias": "轻い症状",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "mild symptoms",
+   "alias": "軽い症状",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "mild symptoms",
+   "alias": "가벼운 증상",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "productive cough",
+   "alias": "白痰",
+   "chars": 2,
+   "verbatim_in_eval_case": "Blind8_07_PostColdLingeringCough",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "productive cough",
+   "alias": "白色痰",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "productive cough",
+   "alias": "少量白痰",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind8_07_PostColdLingeringCough",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "productive cough",
+   "alias": "가래가 나오는 기침",
+   "chars": 10,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "productive cough",
+   "alias": "痰が出る咳",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "no focal consolidation",
+   "alias": "无实变体征",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind8_07_PostColdLingeringCough",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "no focal consolidation",
+   "alias": "没有实变",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "no focal consolidation",
+   "alias": "実変なし",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_07_LingeringPostViralCough",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "no focal consolidation",
+   "alias": "경화 없음",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent viral illness",
+   "alias": "感冒后",
+   "chars": 3,
+   "verbatim_in_eval_case": "Blind8_07_PostColdLingeringCough",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent viral illness",
+   "alias": "風邪の後",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_07_LingeringPostViralCough",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "recent viral illness",
+   "alias": "감기 후",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "irregular heartbeat",
+   "alias": "脈が速くて不規則",
+   "chars": 8,
+   "verbatim_in_eval_case": "Blind8_16_SuddenPalpitations",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "irregular heartbeat",
+   "alias": "不整な頻脈",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind9_16_SuddenFlutterDizzy",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "irregular heartbeat",
+   "alias": "不规则心跳",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "irregular heartbeat",
+   "alias": "맥박이 불규칙",
+   "chars": 7,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "racing heart",
+   "alias": "心臓がバクバク",
+   "chars": 7,
+   "verbatim_in_eval_case": "Blind8_16_SuddenPalpitations",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "racing heart",
+   "alias": "胸がドキドキ",
+   "chars": 6,
+   "verbatim_in_eval_case": "Blind9_16_SuddenFlutterDizzy",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "racing heart",
+   "alias": "心跳很快",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "racing heart",
+   "alias": "가슴이 두근",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "associated lightheadedness",
+   "alias": "lightheadedness with palpitations",
+   "chars": 33,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "associated lightheadedness",
+   "alias": "dizziness with palpitations",
+   "chars": 27,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "associated lightheadedness",
+   "alias": "心悸伴头晕",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "associated lightheadedness",
+   "alias": "動悸を伴うめまい",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "associated lightheadedness",
+   "alias": "두근거림을 동반한 어지러움",
+   "chars": 14,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "atrial fibrillation on ecg",
+   "alias": "atrial fibrillation with rapid ventricular response",
+   "chars": 51,
+   "verbatim_in_eval_case": "Blind6_29_TreadmillFlutteringChest",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "atrial fibrillation on ecg",
+   "alias": "心房颤动",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "atrial fibrillation on ecg",
+   "alias": "心房細動",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind8_22_BlackTarryStools",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "atrial fibrillation on ecg",
+   "alias": "심방세동",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind9_08_WokeWithSlurredSpeech",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset dyspnea",
+   "alias": "突然呼吸困难",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset dyspnea",
+   "alias": "突然息苦しい",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "sudden onset dyspnea",
+   "alias": "갑자기 숨이 참",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "calf swelling",
+   "alias": "one leg swollen",
+   "chars": 15,
+   "verbatim_in_eval_case": "Blind8_66_SparseAcuteDyspnea",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "calf swelling",
+   "alias": "一条腿肿",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "calf swelling",
+   "alias": "한쪽 다리 붓기",
+   "chars": 8,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "calf swelling",
+   "alias": "片脚の腫れ",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rigid abdomen",
+   "alias": "board-like rigidity",
+   "chars": 19,
+   "verbatim_in_eval_case": "Blind9_21_BoardRigidAbdomenNSAID",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rigid abdomen",
+   "alias": "boardlike abdomen",
+   "chars": 17,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rigid abdomen",
+   "alias": "board-like abdomen",
+   "chars": 18,
+   "verbatim_in_eval_case": "AbdominalPain06_ElderlyAcuteAbdomen",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rigid abdomen",
+   "alias": "diffuse rigidity",
+   "chars": 16,
+   "verbatim_in_eval_case": "Blind6_22_ConstructionWorkerRigidAbdomen",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rigid abdomen",
+   "alias": "복부가 판자처럼 단단함",
+   "chars": 12,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rebound tenderness",
+   "alias": "diffuse rebound",
+   "chars": 15,
+   "verbatim_in_eval_case": "AbdominalPain06_ElderlyAcuteAbdomen",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rebound tenderness",
+   "alias": "rebound and guarding",
+   "chars": 20,
+   "verbatim_in_eval_case": "AbdominalPain03_YoungAdultAppendicitis",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rebound tenderness",
+   "alias": "diffuse rebound and guarding",
+   "chars": 28,
+   "verbatim_in_eval_case": "AbdominalPain06_ElderlyAcuteAbdomen",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rebound tenderness",
+   "alias": "반발통",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "rebound tenderness",
+   "alias": "반발 압통",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "crackles on auscultation",
+   "alias": "basal crackles",
+   "chars": 14,
+   "verbatim_in_eval_case": "Blind8_47_AfebrileElderlyPneumonia",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "crackles on auscultation",
+   "alias": "right basal crackles",
+   "chars": 20,
+   "verbatim_in_eval_case": "Blind8_47_AfebrileElderlyPneumonia",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "crackles on auscultation",
+   "alias": "bibasal crackles",
+   "chars": 16,
+   "verbatim_in_eval_case": "Blind10_13_DyspneaCHFvsCOPDvsPE",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "crackles on auscultation",
+   "alias": "fine crackles",
+   "chars": 13,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "crackles on auscultation",
+   "alias": "기저부 수포음",
+   "chars": 7,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "crackles on auscultation",
+   "alias": "수포음",
+   "chars": 3,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "wheeze",
+   "alias": "wheezing",
+   "chars": 8,
+   "verbatim_in_eval_case": "Blind6_13_ShrimpAppetizerSuddenSwelling",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "wheeze",
+   "alias": "diffuse wheeze",
+   "chars": 14,
+   "verbatim_in_eval_case": "Blind16_12_HivesAfterTheAntibiotic",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "wheeze",
+   "alias": "expiratory wheeze",
+   "chars": 17,
+   "verbatim_in_eval_case": "Blind6_13_ShrimpAppetizerSuddenSwelling",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "wheeze",
+   "alias": "호기성 천명",
+   "chars": 6,
+   "verbatim_in_eval_case": "Blind8_58_CatDanderWheeze",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "wheeze",
+   "alias": "쌕쌕거림",
+   "chars": 4,
+   "verbatim_in_eval_case": "Blind8_58_CatDanderWheeze",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "prolonged expiration",
+   "alias": "prolonged expiratory phase",
+   "chars": 26,
+   "verbatim_in_eval_case": "Blind6_34_ColdSnapWheezingWalkingUpstairs",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "prolonged expiration",
+   "alias": "호기 연장",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind8_58_CatDanderWheeze",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "prolonged expiration",
+   "alias": "呼気延長",
+   "chars": 4,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "ripping pain",
+   "alias": "ripping back pain",
+   "chars": 17,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "ripping pain",
+   "alias": "ripping pain through to the back",
+   "chars": 32,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": "V19_35",
+   "treatment": "excluded (>=24 chars shared with an evaluation case chief_complaint)"
+  },
+  {
+   "feature_phrase": "pain radiates to back",
+   "alias": "moving down toward my back",
+   "chars": 26,
+   "verbatim_in_eval_case": "Blind8_02_TearingBetweenShoulderBlades",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "pain radiates to back",
+   "alias": "radiating to the back",
+   "chars": 21,
+   "verbatim_in_eval_case": "Blind16_27_BoringPainToTheBackAfterBinge",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "pain radiates to back",
+   "alias": "through to my back",
+   "chars": 18,
+   "verbatim_in_eval_case": "Blind6_21_HolidayFeastBoringPain",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "pain radiates to back",
+   "alias": "등으로 뻗는 통증",
+   "chars": 9,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "pulse differential",
+   "alias": "unequal radial pulses",
+   "chars": 21,
+   "verbatim_in_eval_case": "Blind8_02_TearingBetweenShoulderBlades",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "pulse differential",
+   "alias": "different radial pulses",
+   "chars": 23,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "pulse differential",
+   "alias": "unequal pulses",
+   "chars": 14,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unequal blood pressure between arms",
+   "alias": "different blood pressure between arms",
+   "chars": 37,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unequal blood pressure between arms",
+   "alias": "blood pressure difference between arms",
+   "chars": 38,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "unequal blood pressure between arms",
+   "alias": "higher pressure in the right arm than the left",
+   "chars": 46,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hemoglobin drop",
+   "alias": "hemoglobin fallen",
+   "chars": 17,
+   "verbatim_in_eval_case": "Blind8_40_WrongUnitGlucoseGIBleed",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hemoglobin drop",
+   "alias": "hemoglobin fell",
+   "chars": 15,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hemoglobin drop",
+   "alias": "drop in hemoglobin",
+   "chars": 18,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "hemoglobin drop",
+   "alias": "血红蛋白下降",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "brief episodic vertigo",
+   "alias": "几秒天旋地转",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "brief episodic vertigo",
+   "alias": "brief seconds-long spinning",
+   "chars": 27,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "brief episodic vertigo",
+   "alias": "短暂旋转性眩晕",
+   "chars": 7,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by head position change",
+   "alias": "누웠다 일어날 때",
+   "chars": 9,
+   "verbatim_in_eval_case": "Blind8_65_PositionalOnlyVertigo",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by head position change",
+   "alias": "머리 위치 바꿀 때",
+   "chars": 10,
+   "verbatim_in_eval_case": "Blind8_65_PositionalOnlyVertigo",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by head position change",
+   "alias": "头位改变时",
+   "chars": 5,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "triggered by head position change",
+   "alias": "頭の位置を変えると",
+   "chars": 9,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "improves with sitting or lying down",
+   "alias": "resolves sitting",
+   "chars": 16,
+   "verbatim_in_eval_case": "Blind6_28_NewBloodPressurePillDizzyStanding",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "improves with sitting or lying down",
+   "alias": "坐起来缓解",
+   "chars": 5,
+   "verbatim_in_eval_case": "Blind8_18_NightBurningReflux",
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  },
+  {
+   "feature_phrase": "improves with sitting or lying down",
+   "alias": "앉으면 호전",
+   "chars": 6,
+   "verbatim_in_eval_case": null,
+   "scanner_criterion_case": null,
+   "treatment": "included"
+  }
+ ]
+}

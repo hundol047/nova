@@ -1,0 +1,37 @@
+[
+  {
+    "check": "regression",
+    "returncode": 0,
+    "seconds": 45.14
+  },
+  {
+    "check": "held_out",
+    "returncode": 0,
+    "seconds": 10.94
+  },
+  {
+    "check": "adversarial",
+    "returncode": 0,
+    "seconds": 2.37
+  },
+  {
+    "check": "failure_analysis",
+    "returncode": 0,
+    "seconds": 10.69
+  },
+  {
+    "check": "retrieval",
+    "returncode": 0,
+    "seconds": 0.72
+  },
+  {
+    "check": "routing",
+    "returncode": 0,
+    "seconds": 0.21
+  },
+  {
+    "check": "specificity",
+    "returncode": 0,
+    "seconds": 0.16
+  }
+]

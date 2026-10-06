@@ -1,0 +1,11 @@
+{
+  "passed": 833,
+  "failed": 0,
+  "skipped": 1,
+  "finalized": true,
+  "source": "Final completion pass: executed full pytest JUnit XML",
+  "junit_sha256": "49ed17e154ad77cd6992c49bffe0aa7405c2948e6b02f2748312f49cf5a81e2d",
+  "skip_reasons": [
+    "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"
+  ]
+}

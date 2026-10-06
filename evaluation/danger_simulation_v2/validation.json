@@ -1,0 +1,245 @@
+[
+  {
+    "case_id": "new_aortic_dissection_0",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "Abrupt tearing pain across my upper back",
+    "demographics": {
+      "age": 48,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "aortic_dissection",
+    "answers": {
+      "onset": "immediate peak less than an hour ago",
+      "character": "severe tearing pain"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {
+      "ct_aorta": "intimal flap of the thoracic aorta",
+      "ecg": "normal ECG",
+      "troponin": "not elevated"
+    }
+  },
+  {
+    "case_id": "new_aortic_dissection_1",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "A ripping pain began between my shoulders",
+    "demographics": {
+      "age": 56,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "aortic_dissection",
+    "answers": {
+      "onset": "immediate peak less than an hour ago",
+      "character": "severe tearing pain"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {
+      "ct_aorta": "intimal flap of the thoracic aorta",
+      "ecg": "normal ECG",
+      "troponin": "not elevated"
+    }
+  },
+  {
+    "case_id": "new_aortic_dissection_2",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "Sudden severe pain from my chest into my back",
+    "demographics": {
+      "age": 64,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "aortic_dissection",
+    "answers": {
+      "onset": "immediate peak less than an hour ago",
+      "character": "severe tearing pain"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {
+      "ct_aorta": "intimal flap of the thoracic aorta",
+      "ecg": "normal ECG",
+      "troponin": "not elevated"
+    }
+  },
+  {
+    "case_id": "new_asthma_copd_exacerbation_0",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "Wheezing and breathlessness are worse today",
+    "demographics": {
+      "age": 48,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "asthma_copd_exacerbation",
+    "answers": {
+      "associated_symptoms": "wheeze, prolonged expiration",
+      "past_medical_history": "known COPD",
+      "aggravating": "worse with triggers"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {
+      "cxr": "no focal consolidation",
+      "abg": "pH 7.38"
+    }
+  },
+  {
+    "case_id": "new_asthma_copd_exacerbation_1",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "My chest feels tight and I wheeze on breathing out",
+    "demographics": {
+      "age": 56,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "asthma_copd_exacerbation",
+    "answers": {
+      "associated_symptoms": "wheeze, prolonged expiration",
+      "past_medical_history": "known COPD",
+      "aggravating": "worse with triggers"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {
+      "cxr": "no focal consolidation",
+      "abg": "pH 7.38"
+    }
+  },
+  {
+    "case_id": "new_asthma_copd_exacerbation_2",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "Cough and wheezing have worsened after dust exposure",
+    "demographics": {
+      "age": 64,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "asthma_copd_exacerbation",
+    "answers": {
+      "associated_symptoms": "wheeze, prolonged expiration",
+      "past_medical_history": "known COPD",
+      "aggravating": "worse with triggers"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {
+      "cxr": "no focal consolidation",
+      "abg": "pH 7.38"
+    }
+  },
+  {
+    "case_id": "new_acute_coronary_syndrome_0",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "Pressure in my chest and sweating",
+    "demographics": {
+      "age": 48,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "associated_symptoms": "diaphoresis; denies tearing pain"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {
+      "ecg": "ST depression",
+      "troponin": "troponin elevated"
+    }
+  },
+  {
+    "case_id": "new_acute_coronary_syndrome_1",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "Chest discomfort with jaw pain",
+    "demographics": {
+      "age": 56,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "associated_symptoms": "diaphoresis; denies tearing pain"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {
+      "ecg": "ST depression",
+      "troponin": "troponin elevated"
+    }
+  },
+  {
+    "case_id": "new_acute_coronary_syndrome_2",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "Nausea and breathlessness after walking upstairs",
+    "demographics": {
+      "age": 64,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "associated_symptoms": "diaphoresis; denies tearing pain"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {
+      "ecg": "ST depression",
+      "troponin": "troponin elevated"
+    }
+  },
+  {
+    "case_id": "new_unknown_0",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "A vague odd sensation today",
+    "demographics": {
+      "age": 48,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "associated_symptoms": "denies chest pain; denies wheezing; denies fever"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {}
+  },
+  {
+    "case_id": "new_unknown_1",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "I feel slightly different but cannot describe why",
+    "demographics": {
+      "age": 56,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "associated_symptoms": "denies chest pain; denies wheezing; denies fever"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {}
+  },
+  {
+    "case_id": "new_unknown_2",
+    "category": "new_synthetic_validation",
+    "chief_complaint": "General unease without a clear symptom",
+    "demographics": {
+      "age": 64,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "associated_symptoms": "denies chest pain; denies wheezing; denies fever"
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 86, RR 18, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {}
+  }
+]

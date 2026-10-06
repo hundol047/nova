@@ -1,0 +1,5761 @@
+{
+ "schema": "nova-open-disease-features-v1",
+ "provenance": {
+  "source": "Human Disease Ontology (Disease Ontology), DiseaseOntology/HumanDiseaseOntology",
+  "source_url": "https://raw.githubusercontent.com/DiseaseOntology/HumanDiseaseOntology/main/src/ontology/doid.obo",
+  "source_file_sha256": "51e717b6b9f5d391f2793f9e16faf9c8629a661ab8f21c3a024458129f182ad2",
+  "source_data_version": "releases/2026-09-30/doid.obo",
+  "retrieved_utc": "2026-10-06",
+  "license": "CC0 1.0 Universal (public domain dedication), stated inside the source file",
+  "license_evidence": [
+   "remark: The Disease Ontology content is available via the Creative Commons Public Domain Dedication CC0 1.0 Universal license (https://creativecommons.org/publicdomain/zero/1.0/).",
+   "property_value: terms:license https://creativecommons.org/publicdomain/zero/1.0/"
+  ],
+  "attribution": "Source: Human Disease Ontology (https://disease-ontology.org), CC0 1.0. Schriml LM et al.",
+  "extraction": "has_symptom clauses and EXACT synonyms copied from DO term definitions for terms matched to a catalog concept by exact name/alias or exact ICD-10 code; quality guards in scripts/build_open_disease_features.py; nothing generated or paraphrased",
+  "clinician_reviewed": false,
+  "use": "Aliases (EXACT synonyms) for Tier-2 concepts; typical_features only when built with --include-features (off by default, see script help); never patient evidence"
+ },
+ "entries": [
+  {
+   "id": "achalasia",
+   "doid": "DOID:9164",
+   "do_name": "achalasia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "achalasia of cardia",
+    "achalasia of esophagus",
+    "cardiospasm",
+    "esophageal achalasia",
+    "hypertensive lower esophageal sphincter"
+   ]
+  },
+  {
+   "id": "acute_hepatitis",
+   "doid": "DOID:2237",
+   "do_name": "hepatitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute/subac. necrosis of liver",
+    "animal hepatitis",
+    "chronic hepatitis",
+    "chronic persistent hepatitis"
+   ]
+  },
+  {
+   "id": "anal_fissure",
+   "doid": "DOID:3128",
+   "do_name": "anus disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "anal disease",
+    "anal fissure and fistula",
+    "anal ulcer",
+    "fissure in ano",
+    "Nontraumatic tear of anus"
+   ]
+  },
+  {
+   "id": "bowel_obstruction",
+   "doid": "DOID:8440",
+   "do_name": "ileus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Ileus of intestine"
+   ]
+  },
+  {
+   "id": "celiac_disease",
+   "doid": "DOID:10608",
+   "do_name": "celiac disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "celiac sprue",
+    "coeliac disease",
+    "idiopathic steatorrhea"
+   ]
+  },
+  {
+   "id": "cholecystitis",
+   "doid": "DOID:1949",
+   "do_name": "cholecystitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute and chronic cholecystitis",
+    "acute on chronic cholecystitis",
+    "chronic cholecystitis"
+   ]
+  },
+  {
+   "id": "crohn_disease",
+   "doid": "DOID:8778",
+   "do_name": "Crohn's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Crohn's disease of colon",
+    "Granulomatous Colitis",
+    "Pediatric Crohn's disease"
+   ]
+  },
+  {
+   "id": "esophageal_cancer",
+   "doid": "DOID:5041",
+   "do_name": "esophageal cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Ca lower third oesophagus",
+    "Ca middle third oesophagus",
+    "esophagus cancer"
+   ]
+  },
+  {
+   "id": "esophageal_varices",
+   "doid": "DOID:112",
+   "do_name": "esophageal varix",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bleeding esophageal varices",
+    "Bleeding oesophageal varices",
+    "esophageal varices with bleeding",
+    "esophageal varices without bleeding"
+   ]
+  },
+  {
+   "id": "gastric_cancer",
+   "doid": "DOID:10534",
+   "do_name": "stomach cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "gastric neoplasm"
+   ]
+  },
+  {
+   "id": "gastroparesis",
+   "doid": "DOID:11914",
+   "do_name": "gastroparesis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "gastric atonia",
+    "Gastroparalysis",
+    "Gastroparesis syndrome"
+   ]
+  },
+  {
+   "id": "ge3_cecal_volvulus",
+   "doid": "DOID:8445",
+   "do_name": "intestinal volvulus",
+   "matched_by": "exact ICD-10 code K56.2",
+   "typical_features": [],
+   "synonyms": [
+    "familial intestinal malrotation",
+    "Volvulus",
+    "volvulus of midgut"
+   ]
+  },
+  {
+   "id": "ge3_intestinal_pseudo_obstruction",
+   "doid": "DOID:0080072",
+   "do_name": "intestinal pseudo-obstruction",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "neuronal intestinal dysplasia"
+   ]
+  },
+  {
+   "id": "ge3_menetrier",
+   "doid": "DOID:8757",
+   "do_name": "gastric mucosal hypertrophy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "familial giant hypertrophic gastritis",
+    "hypertrophic gastritis",
+    "hypertrophic gastropathy"
+   ]
+  },
+  {
+   "id": "ge3_rectal_prolapse",
+   "doid": "DOID:9307",
+   "do_name": "rectal prolapse",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Procidentia, rectum"
+   ]
+  },
+  {
+   "id": "ge3_solitary_rectal_ulcer",
+   "doid": "DOID:13662",
+   "do_name": "ulcer of anus and rectum",
+   "matched_by": "exact ICD-10 code K62.6",
+   "typical_features": [],
+   "synonyms": [
+    "anal and rectal ulcer"
+   ]
+  },
+  {
+   "id": "ge3_somatostatinoma",
+   "doid": "DOID:4430",
+   "do_name": "somatostatinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Somatostatin cell neoplasm",
+    "Somatostatin cell tumour"
+   ]
+  },
+  {
+   "id": "ge3_superior_mesenteric_artery_syndrome",
+   "doid": "DOID:3557",
+   "do_name": "superior mesenteric artery syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Wilkie's syndrome"
+   ]
+  },
+  {
+   "id": "ge3_vipoma",
+   "doid": "DOID:5574",
+   "do_name": "VIPoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Vasoactive intestinal peptide-secreting tumor",
+    "VIP- Secreting tumor",
+    "Vipoma, malignant"
+   ]
+  },
+  {
+   "id": "gi2_gastric_antral_vascular_ectasia",
+   "doid": "DOID:2493",
+   "do_name": "gastric antral vascular ectasia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Watermelon stomach"
+   ]
+  },
+  {
+   "id": "gi2_gastric_outlet_obstruction",
+   "doid": "DOID:3122",
+   "do_name": "gastric outlet obstruction",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "gastric outflow obstruction"
+   ]
+  },
+  {
+   "id": "gi2_hepatic_vein_thrombosis",
+   "doid": "DOID:11512",
+   "do_name": "Budd-Chiari syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hepatic vein thrombosis"
+   ]
+  },
+  {
+   "id": "gi2_mirizzi_syndrome",
+   "doid": "DOID:13580",
+   "do_name": "cholestasis",
+   "matched_by": "exact ICD-10 code K83.1",
+   "typical_features": [],
+   "synonyms": [
+    "bile occlusion",
+    "Obstruction of bile duct"
+   ]
+  },
+  {
+   "id": "gi2_nonalcoholic_steatohepatitis",
+   "doid": "DOID:0080547",
+   "do_name": "metabolic dysfunction-associated steatohepatitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "MASH",
+    "NASH"
+   ]
+  },
+  {
+   "id": "gi2_tropical_sprue",
+   "doid": "DOID:10607",
+   "do_name": "tropical sprue",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Tropical steatorrhea"
+   ]
+  },
+  {
+   "id": "gi2_whipple_disease",
+   "doid": "DOID:8476",
+   "do_name": "Whipple disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "intestinal lipodystrophy",
+    "Whipple's disease"
+   ]
+  },
+  {
+   "id": "gi_autoimmune_hepatitis",
+   "doid": "DOID:2048",
+   "do_name": "autoimmune hepatitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Autoimmune chronic active hepatitis"
+   ]
+  },
+  {
+   "id": "gi_barrett_esophagus",
+   "doid": "DOID:9206",
+   "do_name": "Barrett's esophagus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Barrett's esophagus with esophagitis",
+    "Barrett's oesophagus",
+    "Barrett's ulcer of esophagus",
+    "Barretts syndrome",
+    "ulcerative esophagitis"
+   ]
+  },
+  {
+   "id": "gi_duodenal_ulcer",
+   "doid": "DOID:1724",
+   "do_name": "duodenal ulcer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Curling Ulcer",
+    "Curling's ulcers"
+   ]
+  },
+  {
+   "id": "gi_gastric_ulcer",
+   "doid": "DOID:10808",
+   "do_name": "gastric ulcer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "bleeding acute gastric ulcer"
+   ]
+  },
+  {
+   "id": "gi_gerd_gi",
+   "doid": "DOID:8534",
+   "do_name": "gastroesophageal reflux disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Acid reflux",
+    "Gastresophageal reflux",
+    "Gastro-esophageal reflux",
+    "Gastroesophageal reflux",
+    "GERD"
+   ]
+  },
+  {
+   "id": "gi_perforated_ulcer",
+   "doid": "DOID:752",
+   "do_name": "peptic ulcer perforation",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Peptic ulcer with perforation"
+   ]
+  },
+  {
+   "id": "gi_peritonitis_gi",
+   "doid": "DOID:8283",
+   "do_name": "peritonitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute generalized peritonitis",
+    "primary bacterial peritonitis",
+    "Retractile mesenteritis",
+    "sclerosing mesenteritis"
+   ]
+  },
+  {
+   "id": "gi_short_bowel",
+   "doid": "DOID:10605",
+   "do_name": "short bowel syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acquired short bowel syndrome",
+    "short gut syndrome"
+   ]
+  },
+  {
+   "id": "gi_sialadenitis",
+   "doid": "DOID:10303",
+   "do_name": "sialadenitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Sialoadenitis"
+   ]
+  },
+  {
+   "id": "gi_volvulus",
+   "doid": "DOID:8445",
+   "do_name": "intestinal volvulus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "familial intestinal malrotation",
+    "Volvulus",
+    "volvulus of midgut"
+   ]
+  },
+  {
+   "id": "inflammatory_bowel_disease",
+   "doid": "DOID:9778",
+   "do_name": "irritable bowel syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Irritable colon"
+   ]
+  },
+  {
+   "id": "irritable_bowel_syndrome",
+   "doid": "DOID:9778",
+   "do_name": "irritable bowel syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Irritable colon"
+   ]
+  },
+  {
+   "id": "liver_cirrhosis_decompensated",
+   "doid": "DOID:5082",
+   "do_name": "liver cirrhosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Cirrhosis",
+    "cirrhosis of liver"
+   ]
+  },
+  {
+   "id": "pancreatic_cancer",
+   "doid": "DOID:1793",
+   "do_name": "pancreatic cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Ca body of pancreas",
+    "Ca head of pancreas",
+    "Ca tail of pancreas",
+    "pancreas neoplasm",
+    "pancreatic neoplasm"
+   ]
+  },
+  {
+   "id": "sigmoid_volvulus",
+   "doid": "DOID:8445",
+   "do_name": "intestinal volvulus",
+   "matched_by": "exact ICD-10 code K56.2",
+   "typical_features": [],
+   "synonyms": [
+    "familial intestinal malrotation",
+    "Volvulus",
+    "volvulus of midgut"
+   ]
+  },
+  {
+   "id": "ulcerative_colitis",
+   "doid": "DOID:8577",
+   "do_name": "ulcerative colitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Left-sided ulcerative colitis"
+   ]
+  },
+  {
+   "id": "allergic_rhinitis",
+   "doid": "DOID:4481",
+   "do_name": "allergic rhinitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "atopic rhinitis",
+    "hay fever",
+    "Non-seasonal allergic rhinitis",
+    "Perenial allergic rhinitis",
+    "pollenosis"
+   ]
+  },
+  {
+   "id": "atopic_dermatitis",
+   "doid": "DOID:3310",
+   "do_name": "atopic dermatitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "allergic dermatitis",
+    "atopic eczema",
+    "Atopic neurodermatitis",
+    "Besnier's prurigo"
+   ]
+  },
+  {
+   "id": "food_allergy",
+   "doid": "DOID:3044",
+   "do_name": "food allergy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "food hypersensitivity"
+   ]
+  },
+  {
+   "id": "aortic_regurgitation",
+   "doid": "DOID:57",
+   "do_name": "aortic valve insufficiency",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "aortic incompetence",
+    "aortic insufficiency",
+    "Rheumatic aortic insufficiency",
+    "Rheumatic aortic regurgitation",
+    "rheumatic aortic valve insufficiency"
+   ]
+  },
+  {
+   "id": "aortic_stenosis",
+   "doid": "DOID:1712",
+   "do_name": "aortic valve stenosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Rheumatic aortic stenosis",
+    "rheumatic aortic valve stenosis"
+   ]
+  },
+  {
+   "id": "bradyarrhythmia_heart_block",
+   "doid": "DOID:0050820",
+   "do_name": "atrioventricular block",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "AV block"
+   ]
+  },
+  {
+   "id": "cardiac_tamponade",
+   "doid": "DOID:115",
+   "do_name": "cardiac tamponade",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "pericardial tamponade",
+    "Rose's tamponade"
+   ]
+  },
+  {
+   "id": "cd2_arvc",
+   "doid": "DOID:0050431",
+   "do_name": "arrhythmogenic right ventricular cardiomyopathy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "arrhythmogenic right ventricular dysplasia",
+    "arrhythmogenic right ventricular dysplasia/cardiomyopathy",
+    "ARVC",
+    "ARVC cardiomyopathy",
+    "ARVD"
+   ]
+  },
+  {
+   "id": "cd2_brugada",
+   "doid": "DOID:0050451",
+   "do_name": "Brugada syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bangungut",
+    "Dream disease",
+    "Pokkuri death syndrome",
+    "SUNDS"
+   ]
+  },
+  {
+   "id": "cd2_dresslers",
+   "doid": "DOID:10507",
+   "do_name": "Dressler's syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Postmyocardial infarction syndrome"
+   ]
+  },
+  {
+   "id": "cd2_high_output_failure",
+   "doid": "DOID:6000",
+   "do_name": "congestive heart failure",
+   "matched_by": "exact ICD-10 code I50.9",
+   "typical_features": [],
+   "synonyms": [
+    "Cardiac Failure Congestive",
+    "Congestive heart disease",
+    "Weak heart"
+   ]
+  },
+  {
+   "id": "cd2_peripartum_cardiomyopathy",
+   "doid": "DOID:9997",
+   "do_name": "peripartum cardiomyopathy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "antepartum peripartum cardiomyopathy",
+    "postpartum peripartum cardiomyopathy"
+   ]
+  },
+  {
+   "id": "cd2_sinus_arrest",
+   "doid": "DOID:13884",
+   "do_name": "sick sinus syndrome",
+   "matched_by": "exact ICD-10 code I49.5",
+   "typical_features": [],
+   "synonyms": [
+    "sinus node infection"
+   ]
+  },
+  {
+   "id": "chronic_heart_failure",
+   "doid": "DOID:6000",
+   "do_name": "congestive heart failure",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Cardiac Failure Congestive",
+    "Congestive heart disease",
+    "Weak heart"
+   ]
+  },
+  {
+   "id": "cir_carotid_dissection",
+   "doid": "DOID:9348",
+   "do_name": "carotid artery dissection",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Dissection of carotid artery"
+   ]
+  },
+  {
+   "id": "cir_cor_pulmonale",
+   "doid": "DOID:8515",
+   "do_name": "Cor pulmonale",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "cardiopulmonary disease",
+    "pulmonary heart disease"
+   ]
+  },
+  {
+   "id": "cir_essential_hypertension",
+   "doid": "DOID:10825",
+   "do_name": "essential hypertension",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "idiopathic hypertension",
+    "primary hypertension"
+   ]
+  },
+  {
+   "id": "cir_mitral_valve_prolapse",
+   "doid": "DOID:988",
+   "do_name": "mitral valve prolapse",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Barlow's syndrome",
+    "floppy mitral valve"
+   ]
+  },
+  {
+   "id": "cir_moyamoya",
+   "doid": "DOID:13099",
+   "do_name": "Moyamoya disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "progressive intracranial arterial occlusion"
+   ]
+  },
+  {
+   "id": "cir_orthostatic_hypotension_cir",
+   "doid": "DOID:0111154",
+   "do_name": "postural orthostatic tachycardia syndrome",
+   "matched_by": "exact ICD-10 code I95.1",
+   "typical_features": [],
+   "synonyms": [
+    "irritable heart",
+    "mitral valve prolapse syndrome",
+    "orhtostatic intolerance",
+    "soldiers heart"
+   ]
+  },
+  {
+   "id": "cir_takayasu",
+   "doid": "DOID:2508",
+   "do_name": "Takayasu's arteritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Aortic arch arteritis",
+    "aortic arch syndrome",
+    "Idiopathic aortitis",
+    "Takayasu's disease"
+   ]
+  },
+  {
+   "id": "cir_thromboangiitis_cir",
+   "doid": "DOID:12918",
+   "do_name": "thromboangiitis obliterans",
+   "matched_by": "exact ICD-10 code I73.1",
+   "typical_features": [],
+   "synonyms": [
+    "Buerger's disease",
+    "Presenile gangrene"
+   ]
+  },
+  {
+   "id": "cir_varicose_veins",
+   "doid": "DOID:799",
+   "do_name": "varicose veins",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "varices",
+    "Varix",
+    "Venous ectasia",
+    "Venous varices"
+   ]
+  },
+  {
+   "id": "dilated_cardiomyopathy",
+   "doid": "DOID:12930",
+   "do_name": "dilated cardiomyopathy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "primary dilated cardiomyopathy"
+   ]
+  },
+  {
+   "id": "heart_failure_acute",
+   "doid": "DOID:6000",
+   "do_name": "congestive heart failure",
+   "matched_by": "exact ICD-10 code I50.9",
+   "typical_features": [],
+   "synonyms": [
+    "Cardiac Failure Congestive",
+    "Congestive heart disease",
+    "Weak heart"
+   ]
+  },
+  {
+   "id": "hypertrophic_cardiomyopathy",
+   "doid": "DOID:11984",
+   "do_name": "hypertrophic cardiomyopathy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hypertrophic obstructive cardiomyopathy"
+   ]
+  },
+  {
+   "id": "mitral_regurgitation",
+   "doid": "DOID:11502",
+   "do_name": "mitral valve insufficiency",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "congenital mitral insufficiency",
+    "congenital mitral regurgitation",
+    "Mitral valve incompetence"
+   ]
+  },
+  {
+   "id": "myocarditis",
+   "doid": "DOID:820",
+   "do_name": "myocarditis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Myocardial inflammation"
+   ]
+  },
+  {
+   "id": "peripheral_arterial_disease",
+   "doid": "DOID:3669",
+   "do_name": "intermittent claudication",
+   "matched_by": "exact ICD-10 code I73.9",
+   "typical_features": [],
+   "synonyms": [
+    "Charcot's syndrome"
+   ]
+  },
+  {
+   "id": "restrictive_cardiomyopathy",
+   "doid": "DOID:397",
+   "do_name": "restrictive cardiomyopathy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Cardiomyopathy, constrictive",
+    "primary restrictive cardiomyopathy"
+   ]
+  },
+  {
+   "id": "rheumatic_heart_disease",
+   "doid": "DOID:0050827",
+   "do_name": "rheumatic heart disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "rheumatic carditis"
+   ]
+  },
+  {
+   "id": "sick_sinus_syndrome",
+   "doid": "DOID:13884",
+   "do_name": "sick sinus syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "sinus node infection"
+   ]
+  },
+  {
+   "id": "stable_coronary_artery_disease",
+   "doid": "DOID:3393",
+   "do_name": "coronary artery disease",
+   "matched_by": "exact ICD-10 code I25.10",
+   "typical_features": [],
+   "synonyms": [
+    "coronary arteriosclerosis",
+    "Coronary disease",
+    "coronary heart disease",
+    "Ischemic Heart Disease",
+    "myocardial ischemia"
+   ]
+  },
+  {
+   "id": "tricuspid_regurgitation",
+   "doid": "DOID:4080",
+   "do_name": "tricuspid valve insufficiency",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Tricuspid incompetence",
+    "Tricuspid valve regurgitation"
+   ]
+  },
+  {
+   "id": "wolff_parkinson_white",
+   "doid": "DOID:384",
+   "do_name": "Wolff-Parkinson-White syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Anomalous A-V excitation",
+    "anomalous atrioventricular excitation",
+    "Wolff-Parkinson-White pattern"
+   ]
+  },
+  {
+   "id": "atrial_septal_defect",
+   "doid": "DOID:1882",
+   "do_name": "atrial heart septal defect",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "atrioseptal defect",
+    "auricular septal defect",
+    "congenital atrial septal defect",
+    "interatrial septal defect",
+    "interauricular septal defect"
+   ]
+  },
+  {
+   "id": "biliary_atresia",
+   "doid": "DOID:13608",
+   "do_name": "biliary atresia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Atresia of bile duct",
+    "biliary atresia, congenital",
+    "Congenital biliary atresia"
+   ]
+  },
+  {
+   "id": "con_cleft_palate",
+   "doid": "DOID:674",
+   "do_name": "cleft palate",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Palatoschisis"
+   ]
+  },
+  {
+   "id": "con_club_foot",
+   "doid": "DOID:11836",
+   "do_name": "clubfoot",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "congenital clubfoot",
+    "Congenital equinovarus",
+    "Equinovarus deformity of foot"
+   ]
+  },
+  {
+   "id": "con_diaphragmatic_hernia",
+   "doid": "DOID:3827",
+   "do_name": "congenital diaphragmatic hernia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Diaphragmatic Hernia"
+   ]
+  },
+  {
+   "id": "con_fragile_x",
+   "doid": "DOID:14261",
+   "do_name": "fragile X syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "MARKER X SYNDROME",
+    "MARTIN-BELL SYNDROME"
+   ]
+  },
+  {
+   "id": "con_imperforate_anus",
+   "doid": "DOID:10488",
+   "do_name": "imperforate anus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "anal atresia",
+    "Congenital atresia of anus"
+   ]
+  },
+  {
+   "id": "con_kernicterus",
+   "doid": "DOID:2382",
+   "do_name": "kernicterus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "bilirubin encephalopathy"
+   ]
+  },
+  {
+   "id": "con_meconium_aspiration",
+   "doid": "DOID:11049",
+   "do_name": "meconium aspiration syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "meconium aspiration",
+    "Neonatal aspiration of meconium"
+   ]
+  },
+  {
+   "id": "con_noonan",
+   "doid": "DOID:3490",
+   "do_name": "Noonan syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Turner's phenotype, karyotype normal"
+   ]
+  },
+  {
+   "id": "con_omphalocele",
+   "doid": "DOID:0060327",
+   "do_name": "omphalocele",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "exomphalos",
+    "omphalocoele"
+   ]
+  },
+  {
+   "id": "con_patent_ductus_arteriosus",
+   "doid": "DOID:13832",
+   "do_name": "patent ductus arteriosus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Patent ductus Botalli"
+   ]
+  },
+  {
+   "id": "con_prader_willi",
+   "doid": "DOID:11983",
+   "do_name": "Prader-Willi syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Prader Willi syndrome"
+   ]
+  },
+  {
+   "id": "con_pyloric_stenosis_con",
+   "doid": "DOID:12638",
+   "do_name": "hypertrophic pyloric stenosis",
+   "matched_by": "exact ICD-10 code Q40.0",
+   "typical_features": [],
+   "synonyms": [
+    "congenital hypertrophic pyloric stenosis"
+   ]
+  },
+  {
+   "id": "con_respiratory_distress_newborn",
+   "doid": "DOID:12716",
+   "do_name": "newborn respiratory distress syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hyaline membrane disease",
+    "pulmonary hyaline membrane disease"
+   ]
+  },
+  {
+   "id": "con_williams_syndrome",
+   "doid": "DOID:1928",
+   "do_name": "Williams-Beuren syndrome",
+   "matched_by": "exact ICD-10 code Q93.82",
+   "typical_features": [],
+   "synonyms": [
+    "Fanconi Schlesinger syndrome"
+   ]
+  },
+  {
+   "id": "congenital_heart_disease",
+   "doid": "DOID:1682",
+   "do_name": "congenital heart disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Congenital anomaly of heart",
+    "congenital heart defect",
+    "Congenital Heart Defects",
+    "Heart Malformation"
+   ]
+  },
+  {
+   "id": "esophageal_atresia",
+   "doid": "DOID:10485",
+   "do_name": "esophageal atresia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Congenital atresia of esophagus",
+    "Congenital imperforate esophagus",
+    "Imperforate esophagus",
+    "Oesophageal atresia"
+   ]
+  },
+  {
+   "id": "hirschsprung_disease",
+   "doid": "DOID:10487",
+   "do_name": "Hirschsprung's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "aganglionic megacolon",
+    "congenital megacolon",
+    "macrocolon",
+    "pelvirectal achalasia",
+    "total intestinal aganglionosis"
+   ]
+  },
+  {
+   "id": "ventricular_septal_defect",
+   "doid": "DOID:1657",
+   "do_name": "ventricular septal defect",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Interventricular septal defect",
+    "Ventricular septal abnormality"
+   ]
+  },
+  {
+   "id": "angioedema",
+   "doid": "DOID:1558",
+   "do_name": "angioedema",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "angioneurotic edema",
+    "Angioneurotic oedema",
+    "giant urticaria",
+    "Quincke's edema"
+   ]
+  },
+  {
+   "id": "basal_cell_carcinoma",
+   "doid": "DOID:2513",
+   "do_name": "basal cell carcinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Basal cell cancer",
+    "Basal cell neoplasm",
+    "Basal cell tumor",
+    "Epithelioma basal cell",
+    "malignant Basal cell neoplasm"
+   ]
+  },
+  {
+   "id": "de2_bacterial_purpura_fulminans",
+   "doid": "DOID:0060538",
+   "do_name": "purpura fulminans",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "purpura gangrenosa"
+   ]
+  },
+  {
+   "id": "de2_cutaneous_t_cell_lymphoma",
+   "doid": "DOID:0060061",
+   "do_name": "primary cutaneous T-cell non-Hodgkin lymphoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "cutaneous T cell lymphoma"
+   ]
+  },
+  {
+   "id": "de2_granuloma_annulare",
+   "doid": "DOID:3777",
+   "do_name": "granuloma annulare",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Granulome annulare"
+   ]
+  },
+  {
+   "id": "de2_morphea",
+   "doid": "DOID:8472",
+   "do_name": "localized scleroderma",
+   "matched_by": "exact ICD-10 code L94.0",
+   "typical_features": [],
+   "synonyms": [
+    "circumscribed scleroderma",
+    "localised morphea",
+    "localised morphoea",
+    "localised scleroderma",
+    "localized morphea"
+   ]
+  },
+  {
+   "id": "de2_pemphigus_foliaceus",
+   "doid": "DOID:0080850",
+   "do_name": "pemphigus foliaceus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "pemphigus foliaceous"
+   ]
+  },
+  {
+   "id": "de2_staph_scalded_skin",
+   "doid": "DOID:9063",
+   "do_name": "Ritter's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Dermatitis exfoliativa neonatorum",
+    "Pemphigus neonatorum",
+    "Ritter disease",
+    "Scalded skin syndrome"
+   ]
+  },
+  {
+   "id": "de2_sweet_syndrome",
+   "doid": "DOID:0080746",
+   "do_name": "Sweet syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Acute Febrile Neutrophilic Dermatosis",
+    "Sweet's syndrome"
+   ]
+  },
+  {
+   "id": "der_acne",
+   "doid": "DOID:6543",
+   "do_name": "acne",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Acne varioliformis",
+    "frontalis acne"
+   ]
+  },
+  {
+   "id": "der_actinic_keratosis",
+   "doid": "DOID:8866",
+   "do_name": "actinic keratosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "actinic (Solar) Keratosis",
+    "Senile hyperkeratosis",
+    "Solar keratosis"
+   ]
+  },
+  {
+   "id": "der_alopecia_areata",
+   "doid": "DOID:986",
+   "do_name": "alopecia areata",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Circumscribed alopecia"
+   ]
+  },
+  {
+   "id": "der_dermatitis_herpetiformis",
+   "doid": "DOID:8505",
+   "do_name": "dermatitis herpetiformis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Dermatosis herpetiformis",
+    "Duhring's disease"
+   ]
+  },
+  {
+   "id": "der_hidradenitis",
+   "doid": "DOID:2280",
+   "do_name": "hidradenitis suppurativa",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Acne inversa, familial"
+   ]
+  },
+  {
+   "id": "der_lichen_planus",
+   "doid": "DOID:9201",
+   "do_name": "lichen planus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "lichen ruber planus",
+    "Lichen, ruber planus"
+   ]
+  },
+  {
+   "id": "der_pityriasis_rosea",
+   "doid": "DOID:8892",
+   "do_name": "pityriasis rosea",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Pityriasis circinata"
+   ]
+  },
+  {
+   "id": "der_pressure_ulcer",
+   "doid": "DOID:8717",
+   "do_name": "decubitus ulcer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Decubitus (pressure) ulcer",
+    "Decubitus ulcer any site",
+    "pressure sores"
+   ]
+  },
+  {
+   "id": "der_rosacea",
+   "doid": "DOID:8881",
+   "do_name": "rosacea",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Acne roscea",
+    "Acne, erythematosa"
+   ]
+  },
+  {
+   "id": "der_seborrheic_dermatitis",
+   "doid": "DOID:8741",
+   "do_name": "seborrheic dermatitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "seborrhea",
+    "Seborrhoeic dermatitis",
+    "Seborrhoeic eczema",
+    "SKIN SEBORRHEIC"
+   ]
+  },
+  {
+   "id": "dy3_acanthosis_nigricans",
+   "doid": "DOID:3138",
+   "do_name": "acanthosis nigricans",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "keratosis nigricans"
+   ]
+  },
+  {
+   "id": "dy3_candidal_intertrigo",
+   "doid": "DOID:14512",
+   "do_name": "candidal paronychia",
+   "matched_by": "exact ICD-10 code B37.2",
+   "typical_features": [],
+   "synonyms": [
+    "candidiasis of skin"
+   ]
+  },
+  {
+   "id": "dy3_dermatofibroma",
+   "doid": "DOID:4418",
+   "do_name": "cutaneous fibrous histiocytoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "benign Cutaneous fibrous Histiocytoma",
+    "fibrohistiocytic tumor",
+    "fibrous histiocytoma of skin",
+    "fibrous xanthoma of skin",
+    "Pleomorphic fibroma"
+   ]
+  },
+  {
+   "id": "dy3_lipoma",
+   "doid": "DOID:3315",
+   "do_name": "lipoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "benign lipomatous tumor",
+    "Lipomatous neoplasm",
+    "Lipomatous tumor",
+    "tumor of adipose tissue"
+   ]
+  },
+  {
+   "id": "dy3_tinea_capitis",
+   "doid": "DOID:4337",
+   "do_name": "tinea capitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Scalp ringworm",
+    "Trichophyton rubrum tinea capitis"
+   ]
+  },
+  {
+   "id": "dy3_tinea_corporis",
+   "doid": "DOID:12179",
+   "do_name": "tinea corporis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "dermatophytosis of the body",
+    "Dermatophytosis of the trunk"
+   ]
+  },
+  {
+   "id": "dy3_tinea_pedis",
+   "doid": "DOID:12403",
+   "do_name": "tinea pedis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Athlete's foot",
+    "Dermatophytosis of foot"
+   ]
+  },
+  {
+   "id": "herpes_simplex",
+   "doid": "DOID:8566",
+   "do_name": "herpes simplex",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Herpesvirus hominis disease"
+   ]
+  },
+  {
+   "id": "melanoma_derm",
+   "doid": "DOID:8923",
+   "do_name": "skin melanoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Cutaneous Malignant Melanoma",
+    "malignant ear melanoma",
+    "malignant lip melanoma",
+    "malignant lower limb melanoma",
+    "malignant neck melanoma"
+   ]
+  },
+  {
+   "id": "pemphigus_vulgaris",
+   "doid": "DOID:0060851",
+   "do_name": "pemphigus vulgaris",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "familial pemphigus vulgaris"
+   ]
+  },
+  {
+   "id": "scabies",
+   "doid": "DOID:8295",
+   "do_name": "scabies",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Infestation by Sarcoptes scabiei",
+    "Sarcoptic itch"
+   ]
+  },
+  {
+   "id": "squamous_cell_carcinoma_skin",
+   "doid": "DOID:3151",
+   "do_name": "skin squamous cell carcinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Epidermoid skin carcinoma"
+   ]
+  },
+  {
+   "id": "addison_disease",
+   "doid": "DOID:13774",
+   "do_name": "Addison's disease",
+   "matched_by": "exact ICD-10 code E27.1",
+   "typical_features": [],
+   "synonyms": [
+    "Addison disease",
+    "HYPOADRENOCORTICISM, FAMILIAL",
+    "primary adrenocortical insufficiency",
+    "primary hypoadrenalism"
+   ]
+  },
+  {
+   "id": "cushing_syndrome",
+   "doid": "DOID:446",
+   "do_name": "primary hyperaldosteronism",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Cushing's syndrome"
+   ]
+  },
+  {
+   "id": "end_adrenal_incidentaloma",
+   "doid": "DOID:0090030",
+   "do_name": "corticosteroid-binding globulin deficiency",
+   "matched_by": "exact ICD-10 code E27.8",
+   "typical_features": [],
+   "synonyms": [
+    "CBG deficiency",
+    "transcortin deficiency"
+   ]
+  },
+  {
+   "id": "end_amyloidosis",
+   "doid": "DOID:9120",
+   "do_name": "amyloidosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "amyloid disease"
+   ]
+  },
+  {
+   "id": "end_familial_hypercholesterolemia",
+   "doid": "DOID:13810",
+   "do_name": "familial hypercholesterolemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "familial hyperbetalipoproteinaemia",
+    "familial hypercholesteremia",
+    "Fredrickson type IIa hyperlipoproteinemia",
+    "Fredrickson type IIa lipidaemia",
+    "hyperbetalipoproteinemia"
+   ]
+  },
+  {
+   "id": "end_goiter",
+   "doid": "DOID:13195",
+   "do_name": "nontoxic goiter",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Goiter, non-toxic",
+    "Goitre, non-toxic",
+    "Nodule-thyroid, non tox",
+    "Non-toxic goitre",
+    "Non-toxic simple goitre"
+   ]
+  },
+  {
+   "id": "end_gout_metab",
+   "doid": "DOID:1920",
+   "do_name": "hyperuricemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Blood urate raized",
+    "uricacidemia"
+   ]
+  },
+  {
+   "id": "end_hyperaldosteronism",
+   "doid": "DOID:446",
+   "do_name": "primary hyperaldosteronism",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Cushing's syndrome"
+   ]
+  },
+  {
+   "id": "end_hyperlipidemia",
+   "doid": "DOID:3146",
+   "do_name": "lipid metabolism disorder",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "fatty acid metabolism disorder"
+   ]
+  },
+  {
+   "id": "end_hypoglycemia_reactive",
+   "doid": "DOID:2018",
+   "do_name": "hyperinsulinism",
+   "matched_by": "exact ICD-10 code E16.1",
+   "typical_features": [],
+   "synonyms": [
+    "hyperinsulinemia"
+   ]
+  },
+  {
+   "id": "end_insulinoma",
+   "doid": "DOID:3892",
+   "do_name": "insulinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Islet cell adenoma"
+   ]
+  },
+  {
+   "id": "end_kwashiorkor",
+   "doid": "DOID:13579",
+   "do_name": "kwashiorkor",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Kwashiokor"
+   ]
+  },
+  {
+   "id": "end_marasmus",
+   "doid": "DOID:12328",
+   "do_name": "marasmus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Nutritional atrophy"
+   ]
+  },
+  {
+   "id": "end_men1",
+   "doid": "DOID:10017",
+   "do_name": "multiple endocrine neoplasia type 1",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "MEN type I",
+    "Wermer syndrome",
+    "Wermer's syndrome"
+   ]
+  },
+  {
+   "id": "end_men2",
+   "doid": "DOID:0050430",
+   "do_name": "multiple endocrine neoplasia type 2A",
+   "matched_by": "exact ICD-10 code E31.22",
+   "typical_features": [],
+   "synonyms": [
+    "multiple endocrine neoplasia II",
+    "Sipple syndrome"
+   ]
+  },
+  {
+   "id": "end_mody",
+   "doid": "DOID:0050524",
+   "do_name": "maturity-onset diabetes of the young",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Mason-type diabetes",
+    "MODY"
+   ]
+  },
+  {
+   "id": "end_thyroiditis_hashimoto",
+   "doid": "DOID:7188",
+   "do_name": "autoimmune thyroiditis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Chronic Lymphocytic Thyroiditis",
+    "Hashimoto's Disease",
+    "Hashimoto's syndrome",
+    "Hashimoto's thyroiditis",
+    "Lymphocytic Thyroiditis"
+   ]
+  },
+  {
+   "id": "end_type1_diabetes",
+   "doid": "DOID:9744",
+   "do_name": "type 1 diabetes mellitus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "IDDM",
+    "insulin-dependent diabetes mellitus",
+    "type I diabetes mellitus"
+   ]
+  },
+  {
+   "id": "er2_euthyroid_sick",
+   "doid": "DOID:2856",
+   "do_name": "euthyroid sick syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Sick-euthyroid syndrome"
+   ]
+  },
+  {
+   "id": "er2_fanconi_syndrome",
+   "doid": "DOID:1062",
+   "do_name": "Fanconi syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "adult Fanconi Anemia",
+    "adult Fanconi syndrome",
+    "Congenital Fanconi syndrome",
+    "De Toni-Fanconi syndrome",
+    "deToni Fanconi syndrome"
+   ]
+  },
+  {
+   "id": "er2_liddle",
+   "doid": "DOID:0050477",
+   "do_name": "Liddle syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Liddle's syndrome",
+    "Pseudoaldosteronism"
+   ]
+  },
+  {
+   "id": "er2_prolactinoma",
+   "doid": "DOID:5394",
+   "do_name": "prolactinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "familial prolactinoma",
+    "PITUITARY ADENOMA, PROLACTIN-SECRETING",
+    "Prolactinoma of Pituitary gland"
+   ]
+  },
+  {
+   "id": "er2_sheehan_syndrome",
+   "doid": "DOID:9476",
+   "do_name": "Sheehan syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Postpartum Hypopituitarism",
+    "Sheehan's syndrome"
+   ]
+  },
+  {
+   "id": "er2_thyroid_cancer_medullary",
+   "doid": "DOID:3973",
+   "do_name": "medullary thyroid carcinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Parafollicular cell carcinoma",
+    "thyroid gland medullary carcinoma",
+    "Ultimobranchial thyroid tumor",
+    "Ultimobranchial thyroid tumour"
+   ]
+  },
+  {
+   "id": "er2_thyroid_cancer_papillary",
+   "doid": "DOID:3969",
+   "do_name": "papillary thyroid carcinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Papillary carcinoma of thyroid",
+    "thyroid gland papillary carcinoma"
+   ]
+  },
+  {
+   "id": "hyperosmolar_hyperglycemic",
+   "doid": "DOID:0110698",
+   "do_name": "hypotrichosis 1",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hereditary generalized hypotrichosis simplex"
+   ]
+  },
+  {
+   "id": "hyperparathyroidism",
+   "doid": "DOID:11202",
+   "do_name": "primary hyperparathyroidism",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "familial primary hyperparathyroidism"
+   ]
+  },
+  {
+   "id": "hyperthyroidism",
+   "doid": "DOID:7998",
+   "do_name": "hyperthyroidism",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "overactive thyroid"
+   ]
+  },
+  {
+   "id": "hypoglycemia_severe",
+   "doid": "DOID:9993",
+   "do_name": "hypoglycemia",
+   "matched_by": "exact ICD-10 code E16.2",
+   "typical_features": [],
+   "synonyms": [
+    "Hypoglycaemia"
+   ]
+  },
+  {
+   "id": "hypopituitarism",
+   "doid": "DOID:9406",
+   "do_name": "hypopituitarism",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "pituitary hormone deficiency",
+    "Pituitary insufficiency"
+   ]
+  },
+  {
+   "id": "hypothyroidism",
+   "doid": "DOID:1459",
+   "do_name": "hypothyroidism",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Thyroid deficiency",
+    "Thyroid insufficiency"
+   ]
+  },
+  {
+   "id": "pheochromocytoma",
+   "doid": "DOID:0050771",
+   "do_name": "pheochromocytoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "phaeochromocytoma"
+   ]
+  },
+  {
+   "id": "siadh",
+   "doid": "DOID:3401",
+   "do_name": "inappropriate ADH syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "SIADH"
+   ]
+  },
+  {
+   "id": "subacute_thyroiditis",
+   "doid": "DOID:7165",
+   "do_name": "subacute thyroiditis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "De Quervain's thyroiditis",
+    "Giant-cell thyroiditis",
+    "Granulomatous thyroiditis",
+    "Subacute Granulomatous Thyroiditis"
+   ]
+  },
+  {
+   "id": "thyroid_storm",
+   "doid": "DOID:12837",
+   "do_name": "thyroid crisis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Thyrotoxic crisis"
+   ]
+  },
+  {
+   "id": "type2_diabetes",
+   "doid": "DOID:9352",
+   "do_name": "type 2 diabetes mellitus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "insulin resistance",
+    "NIDDM",
+    "non-insulin-dependent diabetes mellitus",
+    "type II diabetes mellitus"
+   ]
+  },
+  {
+   "id": "bppv_ent",
+   "doid": "DOID:13941",
+   "do_name": "benign paroxysmal positional vertigo",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "benign paroxysmal positional nystagmus",
+    "benign recurrent vertigo"
+   ]
+  },
+  {
+   "id": "ear_acoustic_neuroma",
+   "doid": "DOID:12689",
+   "do_name": "acoustic neuroma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Vestibular Neurilemmoma"
+   ]
+  },
+  {
+   "id": "meniere_disease",
+   "doid": "DOID:9849",
+   "do_name": "Meniere's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Mnire's vertigo",
+    "Otogenic vertigo"
+   ]
+  },
+  {
+   "id": "nasopharyngeal_cancer",
+   "doid": "DOID:9261",
+   "do_name": "nasopharynx carcinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "malignant Nasopharyngeal tumor",
+    "malignant neoplasm of nasopharynx",
+    "nasopharynx cancer"
+   ]
+  },
+  {
+   "id": "otitis_externa",
+   "doid": "DOID:9463",
+   "do_name": "otitis externa",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "swimmer's ear"
+   ]
+  },
+  {
+   "id": "mi3_drug_induced_lupus",
+   "doid": "DOID:0040093",
+   "do_name": "drug-induced lupus erythematosus",
+   "matched_by": "exact ICD-10 code M32.0",
+   "typical_features": [],
+   "synonyms": [
+    "DILE"
+   ]
+  },
+  {
+   "id": "mi3_hyperviscosity",
+   "doid": "DOID:2917",
+   "do_name": "cryoglobulinemia",
+   "matched_by": "exact ICD-10 code D89.1",
+   "typical_features": [],
+   "synonyms": [
+    "Cryoimmunoglobulinaemia"
+   ]
+  },
+  {
+   "id": "sym_cardiac_arrest",
+   "doid": "DOID:0060319",
+   "do_name": "cardiac arrest",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "cardiopulmonary arrest",
+    "circulatory arrest"
+   ]
+  },
+  {
+   "id": "down_syndrome",
+   "doid": "DOID:14250",
+   "do_name": "Down syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Down's syndrome",
+    "Downs syndrome",
+    "G Trisomy"
+   ]
+  },
+  {
+   "id": "ehlers_danlos_syndrome",
+   "doid": "DOID:13359",
+   "do_name": "Ehlers-Danlos syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Cutis hyperelastica",
+    "elastic skin"
+   ]
+  },
+  {
+   "id": "gen_achondroplasia",
+   "doid": "DOID:4480",
+   "do_name": "achondroplasia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Achondroplastic physique",
+    "Chondrodystrophia",
+    "osteosclerosis congenita"
+   ]
+  },
+  {
+   "id": "gen_alpha1_antitrypsin",
+   "doid": "DOID:13372",
+   "do_name": "alpha 1-antitrypsin deficiency",
+   "matched_by": "exact ICD-10 code E88.01",
+   "typical_features": [],
+   "synonyms": [
+    "AAT deficiency"
+   ]
+  },
+  {
+   "id": "gen_alport",
+   "doid": "DOID:10983",
+   "do_name": "Alport syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Hereditary Nephritis"
+   ]
+  },
+  {
+   "id": "gen_becker_md",
+   "doid": "DOID:9883",
+   "do_name": "Becker muscular dystrophy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "benign congenital myopathy",
+    "Benign pseudohypertrophic muscular dystrophy"
+   ]
+  },
+  {
+   "id": "gen_dubin_johnson",
+   "doid": "DOID:12308",
+   "do_name": "Dubin-Johnson syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "chronic idiopathic jaundice",
+    "Dubin Johnson syndrome"
+   ]
+  },
+  {
+   "id": "gen_duchenne",
+   "doid": "DOID:11723",
+   "do_name": "Duchenne muscular dystrophy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Muscular dystrophy, Duchenne"
+   ]
+  },
+  {
+   "id": "gen_friedreich_ataxia",
+   "doid": "DOID:12705",
+   "do_name": "Friedreich ataxia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Friedreich's ataxia",
+    "Friedreich's tabes"
+   ]
+  },
+  {
+   "id": "gen_gilbert_syndrome",
+   "doid": "DOID:2739",
+   "do_name": "Gilbert syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Constitutional hyperbilirubinemia",
+    "Gilbert's disease",
+    "Gilbert's syndrome",
+    "Gilbert-Meulengracht syndrome",
+    "hereditary nonhemolytic jaundice"
+   ]
+  },
+  {
+   "id": "gen_hereditary_hemorrhagic_telangiectasia",
+   "doid": "DOID:1270",
+   "do_name": "hereditary hemorrhagic telangiectasia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Osler hemorrhagic telangiectasia syndrome",
+    "Osler-Weber-Rendu disease",
+    "Rendu-Osler-Weber disease"
+   ]
+  },
+  {
+   "id": "gen_li_fraumeni",
+   "doid": "DOID:3012",
+   "do_name": "Li-Fraumeni syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "SBLA syndrome"
+   ]
+  },
+  {
+   "id": "gen_lynch_syndrome",
+   "doid": "DOID:3883",
+   "do_name": "Lynch syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Hereditary non-polyposis colon cancer",
+    "Hereditary non-polyposis colorectal cancer",
+    "Hereditary nonpolyposis colon cancer",
+    "hereditary nonpolyposis colorectal cancer",
+    "hereditary nonpolyposis colorectal neoplasm"
+   ]
+  },
+  {
+   "id": "gen_mccune_albright",
+   "doid": "DOID:1858",
+   "do_name": "McCune Albright syndrome",
+   "matched_by": "exact ICD-10 code Q78.1",
+   "typical_features": [],
+   "synonyms": [
+    "fibrous dysplasia of bone",
+    "osteitis fibrosa disseminata",
+    "polyostotic fibrous dysplasia"
+   ]
+  },
+  {
+   "id": "gen_myotonic_dystrophy",
+   "doid": "DOID:11722",
+   "do_name": "myotonic dystrophy type 1",
+   "matched_by": "exact ICD-10 code G71.11",
+   "typical_features": [],
+   "synonyms": [
+    "congenital myotonic dystrophy",
+    "Dystrophia myotonica",
+    "myotonic dystrophy of Steinert",
+    "Steinert disease"
+   ]
+  },
+  {
+   "id": "gen_neurofibromatosis2",
+   "doid": "DOID:0111252",
+   "do_name": "vestibular schwannomatosis",
+   "matched_by": "exact ICD-10 code Q85.02",
+   "typical_features": [],
+   "synonyms": [
+    "acoustic neurofibromatosis",
+    "BANF",
+    "bilateral acoustic neurinoma",
+    "bilateral acoustic neurofibromatosis",
+    "bilateral acoustic schwannomas"
+   ]
+  },
+  {
+   "id": "gen_osteogenesis_imperfecta",
+   "doid": "DOID:12347",
+   "do_name": "osteogenesis imperfecta",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "brittle bone disease",
+    "Lobstein's syndrome",
+    "Osteopsathyrosis",
+    "Vrolik's disease"
+   ]
+  },
+  {
+   "id": "gen_tuberous_sclerosis",
+   "doid": "DOID:13515",
+   "do_name": "tuberous sclerosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bourneville's disease",
+    "cerebral sclerosis",
+    "Epiloia",
+    "Tuberose sclerosis",
+    "Tuberous sclerosis syndrome"
+   ]
+  },
+  {
+   "id": "gen_von_hippel_lindau",
+   "doid": "DOID:14175",
+   "do_name": "von Hippel-Lindau disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Hippel Lindau syndrome",
+    "von Hippel-Lindau syndrome"
+   ]
+  },
+  {
+   "id": "hereditary_angioedema",
+   "doid": "DOID:14735",
+   "do_name": "hereditary angioedema",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "HANE",
+    "Hereditary angioneurotic edema"
+   ]
+  },
+  {
+   "id": "marfan_syndrome",
+   "doid": "DOID:14323",
+   "do_name": "Marfan syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Marfan's syndrome"
+   ]
+  },
+  {
+   "id": "turner_syndrome",
+   "doid": "DOID:3491",
+   "do_name": "Turner syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bonnevie-Ullrich syndrome",
+    "Monosomy X",
+    "monosomy X syndrome",
+    "XO syndrome"
+   ]
+  },
+  {
+   "id": "chronic_kidney_disease",
+   "doid": "DOID:784",
+   "do_name": "chronic kidney disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "chronic kidney failure",
+    "chronic renal disease",
+    "chronic renal failure syndrome"
+   ]
+  },
+  {
+   "id": "gn3_goodpasture_gn3",
+   "doid": "DOID:9808",
+   "do_name": "Goodpasture syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "anti-glomerular basement membrane disease"
+   ]
+  },
+  {
+   "id": "gn3_membranoproliferative_gn",
+   "doid": "DOID:2920",
+   "do_name": "membranoproliferative glomerulonephritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "chronic glomerulonephritis, lobular",
+    "Lobular glomerulonephritis"
+   ]
+  },
+  {
+   "id": "gn3_peyronie",
+   "doid": "DOID:8616",
+   "do_name": "Peyronie's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Induratio penis plastica",
+    "Peyronie's Fibromatosis"
+   ]
+  },
+  {
+   "id": "gn3_phimosis",
+   "doid": "DOID:2712",
+   "do_name": "phimosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Tight foreskin",
+    "Tight frenulum"
+   ]
+  },
+  {
+   "id": "gn3_thin_basement_membrane",
+   "doid": "DOID:0111365",
+   "do_name": "benign familial hematuria",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "thin membrane nephropathy"
+   ]
+  },
+  {
+   "id": "gu_adenomyosis",
+   "doid": "DOID:288",
+   "do_name": "endometriosis of uterus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Endometriosis interna",
+    "Endometriosis of myometrium",
+    "Endometriosis, myometrium",
+    "uterine Adenomyosis"
+   ]
+  },
+  {
+   "id": "gu_amenorrhea",
+   "doid": "DOID:13938",
+   "do_name": "amenorrhea",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "absence of menstruation",
+    "amenia"
+   ]
+  },
+  {
+   "id": "gu_erectile_dysfunction",
+   "doid": "DOID:1875",
+   "do_name": "impotence",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Sexual impotence"
+   ]
+  },
+  {
+   "id": "gu_focal_segmental_glomerulosclerosis",
+   "doid": "DOID:1312",
+   "do_name": "focal segmental glomerulosclerosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "focal glomerular sclerosis",
+    "focal glomerulosclerosis",
+    "FSGS"
+   ]
+  },
+  {
+   "id": "gu_iga_nephropathy",
+   "doid": "DOID:2986",
+   "do_name": "IgA glomerulonephritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Focal Glomerulonephritis",
+    "primary IgA nephropathy",
+    "segmental glomerulonephritis"
+   ]
+  },
+  {
+   "id": "gu_mastitis",
+   "doid": "DOID:10690",
+   "do_name": "mastitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "breast inflammation",
+    "Inflammatory breast disease",
+    "Inflammatory disease of breast"
+   ]
+  },
+  {
+   "id": "gu_minimal_change",
+   "doid": "DOID:10966",
+   "do_name": "lipoid nephrosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Minimal Change Glomerulonephritis"
+   ]
+  },
+  {
+   "id": "gu_neurogenic_bladder",
+   "doid": "DOID:12143",
+   "do_name": "neurogenic bladder",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "neurogenic urinary bladder disorder",
+    "Neuropathic bladder"
+   ]
+  },
+  {
+   "id": "gu_overactive_bladder",
+   "doid": "DOID:0070355",
+   "do_name": "overactive bladder syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "urge syndrome",
+    "urgency-frequency syndrome"
+   ]
+  },
+  {
+   "id": "gu_urethritis",
+   "doid": "DOID:1343",
+   "do_name": "urethritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Non-Gonococcal Urethritis",
+    "Nongonococcal urethritis"
+   ]
+  },
+  {
+   "id": "testicular_torsion",
+   "doid": "DOID:11996",
+   "do_name": "spermatic cord torsion",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Torsion of testicle",
+    "Torsion of testis"
+   ]
+  },
+  {
+   "id": "endometrial_cancer",
+   "doid": "DOID:1380",
+   "do_name": "endometrial cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "endometrial Ca",
+    "endometrial neoplasm",
+    "malignant endometrial neoplasm",
+    "malignant neoplasm of endometrium",
+    "neoplasm of endometrium"
+   ]
+  },
+  {
+   "id": "polycystic_ovary_syndrome",
+   "doid": "DOID:11612",
+   "do_name": "polycystic ovary syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Multicystic ovaries",
+    "PCOS",
+    "Polycystic Ovarian disease",
+    "Polycystic ovaries",
+    "polycystic ovary"
+   ]
+  },
+  {
+   "id": "vulvovaginal_candidiasis",
+   "doid": "DOID:2272",
+   "do_name": "vulvovaginal candidiasis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Candidal cervix",
+    "Candidal vulvovaginitis",
+    "Monilial vulvovaginitis"
+   ]
+  },
+  {
+   "id": "essential_thrombocythemia",
+   "doid": "DOID:2224",
+   "do_name": "essential thrombocythemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Essential thrombocythaemia",
+    "familial thrombocytosis",
+    "hemorrhagic thrombocythemia",
+    "hereditary thrombocythemia",
+    "primary Thrombocytosis"
+   ]
+  },
+  {
+   "id": "folate_deficiency",
+   "doid": "DOID:14026",
+   "do_name": "folic acid deficiency anemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Folate deficiency anaemia",
+    "Folate-deficiency anaemia",
+    "Folate-deficiency anemia",
+    "Folate-deficient megaloblastic anaemia",
+    "folic acid deficiency anaemia"
+   ]
+  },
+  {
+   "id": "hem_agranulocytosis",
+   "doid": "DOID:12987",
+   "do_name": "agranulocytosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "granulocytopenia",
+    "Granulocytopenic disorder",
+    "Granulopenia"
+   ]
+  },
+  {
+   "id": "hem_antithrombin_deficiency",
+   "doid": "DOID:3755",
+   "do_name": "antithrombin III deficiency",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "AT III deficiency"
+   ]
+  },
+  {
+   "id": "hem_complement_deficiency",
+   "doid": "DOID:626",
+   "do_name": "complement deficiency",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Complement deficiency disease"
+   ]
+  },
+  {
+   "id": "hem_cryoglobulinemia",
+   "doid": "DOID:2917",
+   "do_name": "cryoglobulinemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Cryoimmunoglobulinaemia"
+   ]
+  },
+  {
+   "id": "hem_digeorge",
+   "doid": "DOID:11198",
+   "do_name": "DiGeorge syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "DiGeorge sequence",
+    "DiGeorge's syndrome",
+    "Pharyngeal pouch syndrome"
+   ]
+  },
+  {
+   "id": "hem_hemophagocytic",
+   "doid": "DOID:0050120",
+   "do_name": "hemophagocytic lymphohistiocytosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "haemophagocytic syndrome"
+   ]
+  },
+  {
+   "id": "hem_hereditary_spherocytosis",
+   "doid": "DOID:12971",
+   "do_name": "hereditary spherocytosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Congenital spherocytic hemolytic anemia",
+    "Minkowski Chauffard syndrome",
+    "spherocytic anemia"
+   ]
+  },
+  {
+   "id": "hem_hypogammaglobulinemia",
+   "doid": "DOID:2583",
+   "do_name": "agammaglobulinemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "IGHM",
+    "mu heavy chain deficiency"
+   ]
+  },
+  {
+   "id": "hem_pure_red_cell_aplasia",
+   "doid": "DOID:1340",
+   "do_name": "pure red-cell aplasia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "primary red cell aplasia",
+    "Red cell hypoplasia"
+   ]
+  },
+  {
+   "id": "hem_sideroblastic_anemia",
+   "doid": "DOID:8955",
+   "do_name": "sideroblastic anemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "ANEMIA SIDEROBLASTIC"
+   ]
+  },
+  {
+   "id": "hem_wiskott_aldrich",
+   "doid": "DOID:9169",
+   "do_name": "Wiskott-Aldrich syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Wiskott syndrome"
+   ]
+  },
+  {
+   "id": "hemolytic_anemia",
+   "doid": "DOID:583",
+   "do_name": "hemolytic anemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "ANEMIA HEMOLYTIC"
+   ]
+  },
+  {
+   "id": "itp",
+   "doid": "DOID:8924",
+   "do_name": "autoimmune thrombocytopenic purpura",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "idiopathic thrombocytopenic purpura",
+    "primary thrombocytopenic purpura"
+   ]
+  },
+  {
+   "id": "polycythemia_vera",
+   "doid": "DOID:8997",
+   "do_name": "polycythemia vera",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "chronic erythremia",
+    "Osler-Vaquez syndrome",
+    "Polycythaemia rubra vera",
+    "Proliferative polycythaemia"
+   ]
+  },
+  {
+   "id": "thalassemia",
+   "doid": "DOID:10241",
+   "do_name": "thalassemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Sickle-cell thalassemia with crisis",
+    "Sickle-cell thalassemia without crisis"
+   ]
+  },
+  {
+   "id": "ttp",
+   "doid": "DOID:10772",
+   "do_name": "thrombotic thrombocytopenic purpura",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Moschcowitz's syndrome"
+   ]
+  },
+  {
+   "id": "von_willebrand_disease",
+   "doid": "DOID:12531",
+   "do_name": "von Willebrand's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "vascular hemophilia",
+    "vascular pseudohemophilia",
+    "von Willebrand disorder",
+    "von Willebrand's-Jurgens' disease",
+    "von Willebrand-Jrgens disease"
+   ]
+  },
+  {
+   "id": "acute_leukemia",
+   "doid": "DOID:12603",
+   "do_name": "acute leukemia",
+   "matched_by": "exact ICD-10 code C95.00",
+   "typical_features": [],
+   "synonyms": [
+    "Stem cell leukaemia",
+    "Stem cell Leukemia"
+   ]
+  },
+  {
+   "id": "anemia_unspecified",
+   "doid": "DOID:2355",
+   "do_name": "anemia",
+   "matched_by": "exact ICD-10 code D64.9",
+   "typical_features": [],
+   "synonyms": [
+    "anaemia"
+   ]
+  },
+  {
+   "id": "dic",
+   "doid": "DOID:11247",
+   "do_name": "disseminated intravascular coagulation",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Defibrination syndrome"
+   ]
+  },
+  {
+   "id": "alcoholic_hepatitis",
+   "doid": "DOID:12351",
+   "do_name": "alcoholic hepatitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute alcoholic hepatitis",
+    "acute alcoholic liver disease"
+   ]
+  },
+  {
+   "id": "cirrhosis",
+   "doid": "DOID:5082",
+   "do_name": "liver cirrhosis",
+   "matched_by": "exact ICD-10 code K74.60",
+   "typical_features": [],
+   "synonyms": [
+    "cirrhosis of liver"
+   ]
+  },
+  {
+   "id": "hepatic_encephalopathy",
+   "doid": "DOID:13413",
+   "do_name": "hepatic encephalopathy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Portal-systemic encephalopathy"
+   ]
+  },
+  {
+   "id": "hepatitis_a",
+   "doid": "DOID:12549",
+   "do_name": "hepatitis A",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Viral hepatitis, type A"
+   ]
+  },
+  {
+   "id": "hepatitis_b",
+   "doid": "DOID:2043",
+   "do_name": "hepatitis B",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "chronic hepatitis B",
+    "hepatitis B infection"
+   ]
+  },
+  {
+   "id": "hepatitis_c",
+   "doid": "DOID:1883",
+   "do_name": "hepatitis C",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "chronic hepatitis C",
+    "hepatitis C infection",
+    "hepatitis nonA nonB",
+    "NANBH",
+    "Viral hepatitis C"
+   ]
+  },
+  {
+   "id": "hepatocellular_carcinoma",
+   "doid": "DOID:684",
+   "do_name": "hepatocellular carcinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Hepatoma"
+   ]
+  },
+  {
+   "id": "nafld",
+   "doid": "DOID:0080208",
+   "do_name": "metabolic dysfunction-associated steatotic liver disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "MAFLD",
+    "MASLD",
+    "metabolic-associated fatty liver disease",
+    "NAFLD"
+   ]
+  },
+  {
+   "id": "primary_biliary_cholangitis",
+   "doid": "DOID:12236",
+   "do_name": "primary biliary cholangitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "biliary liver cirrhosis",
+    "cholestatic cirrhosis",
+    "chronic nonsuppurative destructive cholangitis",
+    "primary biliary cirrhosis"
+   ]
+  },
+  {
+   "id": "wilson_disease",
+   "doid": "DOID:893",
+   "do_name": "Wilson disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Cerebral pseudosclerosis",
+    "hepatolenticular degeneration",
+    "Westphal pseudosclerosis",
+    "Westphal-Strumpell syndrome",
+    "Wilson's disease"
+   ]
+  },
+  {
+   "id": "antiphospholipid_syndrome",
+   "doid": "DOID:2988",
+   "do_name": "antiphospholipid syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "antiphospholipid antibody syndrome"
+   ]
+  },
+  {
+   "id": "chronic_granulomatous_disease",
+   "doid": "DOID:3265",
+   "do_name": "chronic granulomatous disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bridges-Good syndrome",
+    "Congenital dysphagocytosis",
+    "Quie syndrome"
+   ]
+  },
+  {
+   "id": "common_variable_immunodeficiency",
+   "doid": "DOID:12177",
+   "do_name": "common variable immunodeficiency",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acquired agammaglobulinemia",
+    "acquired hypogammaglobulinemia",
+    "common variable agammaglobulinemia",
+    "CVID",
+    "sporadic hypogammaglobulinemia"
+   ]
+  },
+  {
+   "id": "graft_versus_host_disease",
+   "doid": "DOID:0081267",
+   "do_name": "graft-versus-host disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "graft versus host disease",
+    "GvHD"
+   ]
+  },
+  {
+   "id": "severe_combined_immunodeficiency",
+   "doid": "DOID:627",
+   "do_name": "severe combined immunodeficiency",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "SCID"
+   ]
+  },
+  {
+   "id": "brucellosis",
+   "doid": "DOID:11077",
+   "do_name": "brucellosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Maltese fever",
+    "undulant fever"
+   ]
+  },
+  {
+   "id": "clostridioides_difficile",
+   "doid": "DOID:0060185",
+   "do_name": "Clostridium difficile colitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Pseudomembranous colitis"
+   ]
+  },
+  {
+   "id": "dengue",
+   "doid": "DOID:12205",
+   "do_name": "dengue disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "breakbone fever",
+    "classic dengue"
+   ]
+  },
+  {
+   "id": "epiglottitis",
+   "doid": "DOID:9398",
+   "do_name": "epiglottitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute epiglottitis and supraglottitis"
+   ]
+  },
+  {
+   "id": "herpes_zoster",
+   "doid": "DOID:8536",
+   "do_name": "herpes zoster",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "herpes zona",
+    "Shingles"
+   ]
+  },
+  {
+   "id": "if3_actinomycosis",
+   "doid": "DOID:8478",
+   "do_name": "actinomycosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "actinomycotic infection",
+    "Actinomycotic madura foot",
+    "Actinomycotic mycetema",
+    "Actinomycotic mycetoma of foot"
+   ]
+  },
+  {
+   "id": "if3_african_trypanosomiasis",
+   "doid": "DOID:10112",
+   "do_name": "sleeping sickness",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "African sleeping sickness"
+   ]
+  },
+  {
+   "id": "if3_babesiosis",
+   "doid": "DOID:9643",
+   "do_name": "babesiosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Babesiasis",
+    "Infection by babesia",
+    "piroplasmosis"
+   ]
+  },
+  {
+   "id": "if3_cat_scratch",
+   "doid": "DOID:11258",
+   "do_name": "cat-scratch disease",
+   "matched_by": "exact ICD-10 code A28.1",
+   "typical_features": [],
+   "synonyms": [
+    "benign lymphoreticulosis",
+    "cat scratch fever",
+    "Debre's Syndrome",
+    "Debre-Mollaret Syndrome",
+    "Foshay-Mollaret Cat Scratch Fever"
+   ]
+  },
+  {
+   "id": "if3_ehrlichiosis",
+   "doid": "DOID:10242",
+   "do_name": "ehrlichiosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "human ehrlichiosis"
+   ]
+  },
+  {
+   "id": "if3_filariasis",
+   "doid": "DOID:12211",
+   "do_name": "filarial elephantiasis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bancroftian elephantiasis",
+    "Bancroftian filarial chyluria",
+    "elephantiasis of eyelid"
+   ]
+  },
+  {
+   "id": "if3_gas_gangrene",
+   "doid": "DOID:9159",
+   "do_name": "gas gangrene",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Gas bacillus infection"
+   ]
+  },
+  {
+   "id": "if3_melioidosis",
+   "doid": "DOID:5052",
+   "do_name": "melioidosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute and fulminating melioidosis",
+    "Nightcliff gardener's disease",
+    "Pseudoglanders",
+    "subacute and chronic melioidosis",
+    "Whitmore's disease"
+   ]
+  },
+  {
+   "id": "if3_mycoplasma_pneumonia",
+   "doid": "DOID:13276",
+   "do_name": "Mycoplasma pneumoniae pneumonia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "cold agglutinin positive pneumonia",
+    "Mycoplasmal pneumonia"
+   ]
+  },
+  {
+   "id": "if3_nocardiosis",
+   "doid": "DOID:2312",
+   "do_name": "nocardiosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Nocardia infectious disease"
+   ]
+  },
+  {
+   "id": "if3_onchocerciasis",
+   "doid": "DOID:11678",
+   "do_name": "onchocerciasis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Infection by Onchocerca volvulus",
+    "Onchocerca volvulus infection",
+    "volvulosis"
+   ]
+  },
+  {
+   "id": "if3_trichinosis",
+   "doid": "DOID:9784",
+   "do_name": "trichinosis",
+   "matched_by": "exact ICD-10 code B75",
+   "typical_features": [],
+   "synonyms": [
+    "Trichinella spiralis infection"
+   ]
+  },
+  {
+   "id": "inf_amebiasis",
+   "doid": "DOID:9181",
+   "do_name": "amebiasis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "amoebiasis",
+    "entamoebiasis"
+   ]
+  },
+  {
+   "id": "inf_aspergillosis",
+   "doid": "DOID:13564",
+   "do_name": "aspergillosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Infection due to Aspergillus"
+   ]
+  },
+  {
+   "id": "inf_botulism",
+   "doid": "DOID:11976",
+   "do_name": "botulism",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Botulism poisoning",
+    "Foodborne botulism"
+   ]
+  },
+  {
+   "id": "inf_candidiasis_mucosal",
+   "doid": "DOID:14262",
+   "do_name": "oral candidiasis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Candidiasis of mouth",
+    "Oral moniliasis",
+    "Thrush, oral"
+   ]
+  },
+  {
+   "id": "inf_chikungunya",
+   "doid": "DOID:0050012",
+   "do_name": "chikungunya",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Chikungunya fever"
+   ]
+  },
+  {
+   "id": "inf_chlamydia",
+   "doid": "DOID:11263",
+   "do_name": "chlamydia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Chlamydia trachomatis infectious disease",
+    "chlamydial disease"
+   ]
+  },
+  {
+   "id": "inf_cholera_inf",
+   "doid": "DOID:1498",
+   "do_name": "cholera",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Vibrio cholerae"
+   ]
+  },
+  {
+   "id": "inf_coccidioidomycosis",
+   "doid": "DOID:13450",
+   "do_name": "coccidioidomycosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "primary extrapulmonary coccidioidomycosis"
+   ]
+  },
+  {
+   "id": "inf_cryptococcosis",
+   "doid": "DOID:12053",
+   "do_name": "cryptococcosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Busse-Buschke's disease",
+    "cryptococcal infection",
+    "European cryptococcosis",
+    "torula",
+    "torulosis"
+   ]
+  },
+  {
+   "id": "inf_cryptosporidiosis",
+   "doid": "DOID:1733",
+   "do_name": "cryptosporidiosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Cryptosporidial gastroenteritis",
+    "Infection by Cryptosporidium",
+    "intestinal cryptosporidiosis"
+   ]
+  },
+  {
+   "id": "inf_cysticercosis",
+   "doid": "DOID:10079",
+   "do_name": "cysticercosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "intestinal taenia solium infection",
+    "Pork tapeworm infection",
+    "Tapeworm infection pork",
+    "tenia solium infectious disease"
+   ]
+  },
+  {
+   "id": "inf_diphtheria",
+   "doid": "DOID:11405",
+   "do_name": "diphtheria",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "corynebacterium infection"
+   ]
+  },
+  {
+   "id": "inf_ebola",
+   "doid": "DOID:4325",
+   "do_name": "Ebola virus disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Ebola",
+    "Ebola disease",
+    "Ebola hemorrhagic fever"
+   ]
+  },
+  {
+   "id": "inf_ebv",
+   "doid": "DOID:2938",
+   "do_name": "Epstein-Barr virus infectious disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "EBV Infection"
+   ]
+  },
+  {
+   "id": "inf_echinococcosis",
+   "doid": "DOID:1496",
+   "do_name": "echinococcosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "echinococcal disease",
+    "Echinococcosis of liver",
+    "hepatic echinococcosis",
+    "hydatidosis",
+    "liver echinococcus"
+   ]
+  },
+  {
+   "id": "inf_giardiasis",
+   "doid": "DOID:10718",
+   "do_name": "giardiasis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "beaver feaver",
+    "Infection by Giardia lamblia"
+   ]
+  },
+  {
+   "id": "inf_listeriosis",
+   "doid": "DOID:11573",
+   "do_name": "listeriosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Infection by Listeria monocytogenes",
+    "Listeria infection"
+   ]
+  },
+  {
+   "id": "inf_pediculosis",
+   "doid": "DOID:5502",
+   "do_name": "lice infestation",
+   "matched_by": "exact ICD-10 code B85.2",
+   "typical_features": [],
+   "synonyms": [
+    "Infestation by Pediculus",
+    "Louse infestation",
+    "mixed pediculosis",
+    "mixed pediculosis infestation",
+    "pediculosis"
+   ]
+  },
+  {
+   "id": "inf_pneumocystis_inf",
+   "doid": "DOID:11339",
+   "do_name": "pneumocystosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Pneumocystis carinii pneumonia",
+    "Pneumocystosis pneumonia",
+    "pulmonary pneumocystosis"
+   ]
+  },
+  {
+   "id": "inf_rocky_mountain",
+   "doid": "DOID:0050052",
+   "do_name": "Rocky Mountain spotted fever",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Tick typhus"
+   ]
+  },
+  {
+   "id": "inf_salmonellosis",
+   "doid": "DOID:0060859",
+   "do_name": "salmonellosis",
+   "matched_by": "exact ICD-10 code A02.0",
+   "typical_features": [],
+   "synonyms": [
+    "Salmonella infection"
+   ]
+  },
+  {
+   "id": "inf_shigellosis",
+   "doid": "DOID:12385",
+   "do_name": "shigellosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "bacillary dysentery",
+    "Shigella boydii infectious disease",
+    "Shigella flexneri infectious disease",
+    "Shigella gastroenteritis",
+    "Shigella sonnei infectious disease"
+   ]
+  },
+  {
+   "id": "inf_strongyloidiasis",
+   "doid": "DOID:10955",
+   "do_name": "strongyloidiasis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "disseminated strongyloidiasis",
+    "Infection by Strongyloides"
+   ]
+  },
+  {
+   "id": "inf_syphilis",
+   "doid": "DOID:4166",
+   "do_name": "syphilis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "syphilitic chancre"
+   ]
+  },
+  {
+   "id": "inf_toxoplasmosis",
+   "doid": "DOID:9965",
+   "do_name": "toxoplasmosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "disseminated toxoplasmosis"
+   ]
+  },
+  {
+   "id": "inf_typhus",
+   "doid": "DOID:11256",
+   "do_name": "typhus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "endemic flea-borne typhus",
+    "Endemic Typhus fever",
+    "epidemic louse-borne typhus",
+    "Exanthematic Typhus fever",
+    "Flea typhus"
+   ]
+  },
+  {
+   "id": "inf_yellow_fever",
+   "doid": "DOID:9682",
+   "do_name": "yellow fever",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "jungle yellow fever",
+    "Sylvatic yellow fever",
+    "urban yellow fever",
+    "Yellow fever, sylvan"
+   ]
+  },
+  {
+   "id": "infectious_mononucleosis",
+   "doid": "DOID:8568",
+   "do_name": "infectious mononucleosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Filatov's disease",
+    "Gammaherpesviral mononucleosis",
+    "glandular fever",
+    "Monocytic angina",
+    "mononucleosis"
+   ]
+  },
+  {
+   "id": "leptospirosis",
+   "doid": "DOID:2297",
+   "do_name": "leptospirosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Fort Bragg fever",
+    "Leptospirosis icterohaemorrhagica",
+    "nanukayami fever",
+    "Rat Catcher's Yellows",
+    "spirochetal jaundice"
+   ]
+  },
+  {
+   "id": "lyme_disease",
+   "doid": "DOID:11729",
+   "do_name": "Lyme disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bannwarth syndrome",
+    "Bannworth's syndrome",
+    "Lyme borreliosis",
+    "lyme neuroborreliosis",
+    "neuroborreliosis"
+   ]
+  },
+  {
+   "id": "malaria",
+   "doid": "DOID:12365",
+   "do_name": "malaria",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "induced malaria"
+   ]
+  },
+  {
+   "id": "measles",
+   "doid": "DOID:8622",
+   "do_name": "measles",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "morbilli",
+    "rubeola"
+   ]
+  },
+  {
+   "id": "rabies",
+   "doid": "DOID:11260",
+   "do_name": "rabies",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Lyssa"
+   ]
+  },
+  {
+   "id": "rubella",
+   "doid": "DOID:8781",
+   "do_name": "rubella",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "german measles"
+   ]
+  },
+  {
+   "id": "scarlet_fever",
+   "doid": "DOID:8596",
+   "do_name": "scarlet fever",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Scarlatina"
+   ]
+  },
+  {
+   "id": "septic_arthritis",
+   "doid": "DOID:813",
+   "do_name": "septic arthritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "infectious arthritis"
+   ]
+  },
+  {
+   "id": "tetanus",
+   "doid": "DOID:11338",
+   "do_name": "tetanus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "clostridial tetanus"
+   ]
+  },
+  {
+   "id": "toxic_shock_syndrome",
+   "doid": "DOID:14115",
+   "do_name": "toxic shock syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "toxic shock"
+   ]
+  },
+  {
+   "id": "typhoid_fever",
+   "doid": "DOID:13258",
+   "do_name": "typhoid fever",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Typhoid"
+   ]
+  },
+  {
+   "id": "varicella",
+   "doid": "DOID:8659",
+   "do_name": "chickenpox",
+   "matched_by": "exact ICD-10 code B01.9",
+   "typical_features": [],
+   "synonyms": [
+    "varicella"
+   ]
+  },
+  {
+   "id": "fabry_disease",
+   "doid": "DOID:14499",
+   "do_name": "Fabry disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "alpha galactosidase deficiency",
+    "Alpha-galactosidase A deficiency",
+    "Angiokeratoma Corporis Diffusum",
+    "deficiency of melibiase",
+    "Fabry Disease, Cardiac Variant"
+   ]
+  },
+  {
+   "id": "galactosemia",
+   "doid": "DOID:9870",
+   "do_name": "galactosemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Galactosaemia",
+    "Galactose intolerance"
+   ]
+  },
+  {
+   "id": "gaucher_disease",
+   "doid": "DOID:1926",
+   "do_name": "Gaucher's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acid beta-glucosidase deficiency",
+    "glocucerebrosidase deficiency",
+    "glucosylceramide beta-glucosidase deficiency",
+    "kerasin thesaurismosis"
+   ]
+  },
+  {
+   "id": "glycogen_storage_disease",
+   "doid": "DOID:2747",
+   "do_name": "glycogen storage disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "glycogenosis"
+   ]
+  },
+  {
+   "id": "maple_syrup_urine_disease",
+   "doid": "DOID:9269",
+   "do_name": "maple syrup urine disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "branched chain ketoaciduria",
+    "Ketoacidaemia"
+   ]
+  },
+  {
+   "id": "phenylketonuria",
+   "doid": "DOID:9281",
+   "do_name": "phenylketonuria",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Folling's disease",
+    "maternal phenylketonuria",
+    "phenylalaninemia"
+   ]
+  },
+  {
+   "id": "porphyria_acute",
+   "doid": "DOID:3890",
+   "do_name": "acute intermittent porphyria",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "porphyria intermittent acute",
+    "Pyrroloporphyria"
+   ]
+  },
+  {
+   "id": "tay_sachs_disease",
+   "doid": "DOID:3320",
+   "do_name": "Tay-Sachs disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hexosaminidase A deficiency"
+   ]
+  },
+  {
+   "id": "gout",
+   "doid": "DOID:13189",
+   "do_name": "gout",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Articular gout"
+   ]
+  },
+  {
+   "id": "msk_avascular_necrosis",
+   "doid": "DOID:10159",
+   "do_name": "osteonecrosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "aseptic necrosis",
+    "Avascular necrosis of bone",
+    "bone necrosis"
+   ]
+  },
+  {
+   "id": "msk_costochondritis",
+   "doid": "DOID:14021",
+   "do_name": "Tietze's syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Costalchondritis",
+    "Costochondral junction syndrome",
+    "Slipping rib syndrome",
+    "Tietze's disease"
+   ]
+  },
+  {
+   "id": "msk_de_quervain",
+   "doid": "DOID:14107",
+   "do_name": "De Quervain disease",
+   "matched_by": "exact ICD-10 code M65.4",
+   "typical_features": [],
+   "synonyms": [
+    "Radial styloid tenosynovitis",
+    "Tenosynovitis, de Quervain's"
+   ]
+  },
+  {
+   "id": "msk_gout_arthropathy",
+   "doid": "DOID:13189",
+   "do_name": "gout",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Articular gout"
+   ]
+  },
+  {
+   "id": "msk_juvenile_idiopathic_arthritis",
+   "doid": "DOID:676",
+   "do_name": "systemic juvenile rheumatoid arthritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute juvenile rheumatoid arthritis",
+    "juvenile chronic polyarthritis",
+    "juvenile rheumatoid arthritis",
+    "monarticular juvenile rheumatoid arthritis",
+    "pauciarticular juvenile arthritis"
+   ]
+  },
+  {
+   "id": "msk_lateral_epicondylitis",
+   "doid": "DOID:14087",
+   "do_name": "epicondylitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "andrel epicondylitis",
+    "archer's elbow",
+    "golfer's elbow",
+    "hockey elbow",
+    "medial epicondylitis"
+   ]
+  },
+  {
+   "id": "msk_myositis_ossificans",
+   "doid": "DOID:668",
+   "do_name": "myositis ossificans",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Myisitis ossificans"
+   ]
+  },
+  {
+   "id": "msk_pagets_bone",
+   "doid": "DOID:5408",
+   "do_name": "Paget disease of bone",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "osseous Paget's disease",
+    "osteitis deformans",
+    "Paget's bone disease",
+    "Paget's disease of bone"
+   ]
+  },
+  {
+   "id": "msk_spinal_stenosis",
+   "doid": "DOID:6725",
+   "do_name": "spinal stenosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "cervical spinal stenosis"
+   ]
+  },
+  {
+   "id": "rheumatoid_arthritis",
+   "doid": "DOID:7148",
+   "do_name": "rheumatoid arthritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "atrophic Arthritis"
+   ]
+  },
+  {
+   "id": "systemic_lupus",
+   "doid": "DOID:9074",
+   "do_name": "systemic lupus erythematosus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "disseminated lupus erythematosus",
+    "Lupus Erythematosus, systemic"
+   ]
+  },
+  {
+   "id": "hemolytic_uremic_syndrome",
+   "doid": "DOID:12554",
+   "do_name": "hemolytic-uremic syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "haemolytic-uraemic syndrome"
+   ]
+  },
+  {
+   "id": "hypokalemia",
+   "doid": "DOID:4500",
+   "do_name": "hypokalemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hypopotassemia",
+    "potassium deficiency disorder"
+   ]
+  },
+  {
+   "id": "bell_palsy",
+   "doid": "DOID:12506",
+   "do_name": "Bell's palsy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bell's (facial) palsy"
+   ]
+  },
+  {
+   "id": "brain_tumor",
+   "doid": "DOID:0080684",
+   "do_name": "diffuse midline glioma, H3 K27-altered",
+   "matched_by": "exact ICD-10 code C71.9",
+   "typical_features": [],
+   "synonyms": [
+    "diffuse intrinsic pontine glioma"
+   ]
+  },
+  {
+   "id": "carpal_tunnel_syndrome",
+   "doid": "DOID:12169",
+   "do_name": "carpal tunnel syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "carpal tunnel median neuropathy",
+    "Median nerve entrapment"
+   ]
+  },
+  {
+   "id": "dementia_alzheimer",
+   "doid": "DOID:10652",
+   "do_name": "Alzheimer's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Alzheimers dementia"
+   ]
+  },
+  {
+   "id": "encephalitis",
+   "doid": "DOID:646",
+   "do_name": "viral encephalitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "epidemic encephalitis"
+   ]
+  },
+  {
+   "id": "epilepsy",
+   "doid": "DOID:1826",
+   "do_name": "epilepsy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "epilepsy syndrome",
+    "epileptic syndrome"
+   ]
+  },
+  {
+   "id": "essential_tremor",
+   "doid": "DOID:4990",
+   "do_name": "essential tremor",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "benign essential tremor",
+    "essential hereditary tremor",
+    "shaky hand syndrome"
+   ]
+  },
+  {
+   "id": "giant_cell_arteritis",
+   "doid": "DOID:13375",
+   "do_name": "temporal arteritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Horton's disease"
+   ]
+  },
+  {
+   "id": "huntington_disease",
+   "doid": "DOID:12858",
+   "do_name": "Huntington's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Huntington's chorea"
+   ]
+  },
+  {
+   "id": "idiopathic_intracranial_hypertension",
+   "doid": "DOID:11459",
+   "do_name": "pseudotumor cerebri",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "benign intracranial hypertension"
+   ]
+  },
+  {
+   "id": "multiple_sclerosis",
+   "doid": "DOID:2377",
+   "do_name": "multiple sclerosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Generalized multiple sclerosis",
+    "insular sclerosis"
+   ]
+  },
+  {
+   "id": "neu_bells_palsy_neu",
+   "doid": "DOID:12506",
+   "do_name": "Bell's palsy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bell's (facial) palsy"
+   ]
+  },
+  {
+   "id": "neu_brachial_plexopathy",
+   "doid": "DOID:3690",
+   "do_name": "brachial plexus neuropathy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Brachial plexus disorder"
+   ]
+  },
+  {
+   "id": "neu_cerebral_palsy",
+   "doid": "DOID:1969",
+   "do_name": "cerebral palsy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "infantile cerebral palsy"
+   ]
+  },
+  {
+   "id": "neu_chronic_fatigue",
+   "doid": "DOID:8544",
+   "do_name": "chronic fatigue syndrome",
+   "matched_by": "exact ICD-10 code G93.32",
+   "typical_features": [],
+   "synonyms": [
+    "Myalgic encephalitis",
+    "Myalgic encephalomyelitis",
+    "Postviral fatigue syndrome"
+   ]
+  },
+  {
+   "id": "neu_dystonia",
+   "doid": "DOID:543",
+   "do_name": "dystonia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "dystonic disease"
+   ]
+  },
+  {
+   "id": "neu_locked_in",
+   "doid": "DOID:12697",
+   "do_name": "locked-in syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Locked in syndrome",
+    "Locked-in state"
+   ]
+  },
+  {
+   "id": "neu_narcolepsy",
+   "doid": "DOID:8986",
+   "do_name": "narcolepsy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Narcolepsy, without cataplexy",
+    "paroxysmal sleep"
+   ]
+  },
+  {
+   "id": "neu_progressive_supranuclear",
+   "doid": "DOID:678",
+   "do_name": "progressive supranuclear palsy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "progressive supranuclear ophthalmoplegia",
+    "Steele-Richardson-Olszewski syndrome"
+   ]
+  },
+  {
+   "id": "neu_restless_legs",
+   "doid": "DOID:0050425",
+   "do_name": "restless legs syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Willis-Ekbom disease",
+    "Wittmaack-Ekbom syndrome"
+   ]
+  },
+  {
+   "id": "neu_tourette",
+   "doid": "DOID:11119",
+   "do_name": "Gilles de la Tourette syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Guinon's disease",
+    "motor-verbal tic disorder",
+    "Psychogenic tics"
+   ]
+  },
+  {
+   "id": "neuromyelitis_optica",
+   "doid": "DOID:8869",
+   "do_name": "neuromyelitis optica",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Devic's disease",
+    "Devic's syndrome"
+   ]
+  },
+  {
+   "id": "normal_pressure_hydrocephalus",
+   "doid": "DOID:1572",
+   "do_name": "normal pressure hydrocephalus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Low pressure hydrocephalus"
+   ]
+  },
+  {
+   "id": "nu2_carotid_cavernous_fistula",
+   "doid": "DOID:11294",
+   "do_name": "arteriovenous malformation",
+   "matched_by": "exact ICD-10 code I77.0",
+   "typical_features": [],
+   "synonyms": [
+    "Arteriovenous hemangioma",
+    "Cirsoid aneurysm",
+    "Racemose aneurysm",
+    "Racemose Angioma",
+    "Racemose hemangioma"
+   ]
+  },
+  {
+   "id": "nu2_creutzfeldt_jakob",
+   "doid": "DOID:11949",
+   "do_name": "Creutzfeldt-Jakob disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Creutzfeldt Jacob syndrome",
+    "Creutzfeldt Jakob disease",
+    "Creutzfeldt-Jacob disease",
+    "Jakob-Creutzfeldt disease",
+    "Subacute spongiform encephalopathy"
+   ]
+  },
+  {
+   "id": "nu2_lambert_eaton",
+   "doid": "DOID:0050214",
+   "do_name": "Lambert-Eaton myasthenic syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Eaton-Lambert syndrome",
+    "Lambert-Eaton syndrome",
+    "LEMS"
+   ]
+  },
+  {
+   "id": "nu2_miller_fisher",
+   "doid": "DOID:12889",
+   "do_name": "Miller Fisher syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Fisher's syndrome"
+   ]
+  },
+  {
+   "id": "nu2_stiff_person",
+   "doid": "DOID:13366",
+   "do_name": "Stiff-Person syndrome",
+   "matched_by": "exact ICD-10 code G25.82",
+   "typical_features": [],
+   "synonyms": [
+    "stiff man syndrome",
+    "Stiff-man syndrome"
+   ]
+  },
+  {
+   "id": "parkinson_disease",
+   "doid": "DOID:14330",
+   "do_name": "Parkinson's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "paralysis agitans",
+    "Parkinson disease"
+   ]
+  },
+  {
+   "id": "status_epilepticus",
+   "doid": "DOID:1824",
+   "do_name": "status epilepticus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Grand mal status"
+   ]
+  },
+  {
+   "id": "tia",
+   "doid": "DOID:224",
+   "do_name": "transient cerebral ischemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Transient cerebral ischaemia",
+    "Transient ischemic attacks"
+   ]
+  },
+  {
+   "id": "trigeminal_neuralgia",
+   "doid": "DOID:12098",
+   "do_name": "trigeminal neuralgia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Trifacial neuralgia",
+    "trifocal neuralgia"
+   ]
+  },
+  {
+   "id": "vascular_dementia",
+   "doid": "DOID:8725",
+   "do_name": "vascular dementia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Multi Infarct Dementia",
+    "multifocal dementia"
+   ]
+  },
+  {
+   "id": "vestibular_neuritis",
+   "doid": "DOID:12683",
+   "do_name": "vestibular neuronitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Epidemic neurolabyrinthitis"
+   ]
+  },
+  {
+   "id": "wernicke_encephalopathy",
+   "doid": "DOID:2384",
+   "do_name": "Wernicke encephalopathy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Wernicke's disease",
+    "Wernicke's encephalopathy"
+   ]
+  },
+  {
+   "id": "eclampsia",
+   "doid": "DOID:13593",
+   "do_name": "eclampsia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Eclampsia in puerperium",
+    "Eclampsia, postpartum",
+    "Postpartum eclampsia"
+   ]
+  },
+  {
+   "id": "gestational_diabetes",
+   "doid": "DOID:11714",
+   "do_name": "gestational diabetes",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Gestational diabetes mellitus",
+    "Maternal gestational diabetes mellitus"
+   ]
+  },
+  {
+   "id": "og2_ectopic_pregnancy_og2",
+   "doid": "DOID:0060329",
+   "do_name": "ectopic pregnancy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "eccyesis"
+   ]
+  },
+  {
+   "id": "og2_gestational_hypertension",
+   "doid": "DOID:10591",
+   "do_name": "pre-eclampsia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hypertension induced by pregnancy",
+    "pre-eclamptic toxaemia",
+    "preeclampsia/eclampsia",
+    "pregnancy associated hypertension",
+    "pregnancy toxemia"
+   ]
+  },
+  {
+   "id": "og2_intrahepatic_cholestasis",
+   "doid": "DOID:0070227",
+   "do_name": "intrahepatic cholestasis of pregnancy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "gravidic intrahepatic cholestasis",
+    "pregnancy related cholestasis"
+   ]
+  },
+  {
+   "id": "og2_molar_pregnancy",
+   "doid": "DOID:3590",
+   "do_name": "gestational trophoblastic neoplasm",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "gestational trophoblastic neoplasia",
+    "molar pregnancy"
+   ]
+  },
+  {
+   "id": "og2_ovarian_hyperstimulation",
+   "doid": "DOID:5425",
+   "do_name": "ovarian hyperstimulation syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "secondary Meig's syndrome"
+   ]
+  },
+  {
+   "id": "og2_premature_ovarian_insufficiency",
+   "doid": "DOID:5426",
+   "do_name": "primary ovarian insufficiency",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hypergonadotropic hypogonadism",
+    "premature ovarian failure"
+   ]
+  },
+  {
+   "id": "og2_preterm_premature_rupture",
+   "doid": "DOID:0111144",
+   "do_name": "preterm premature rupture of the membranes",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "PPROM"
+   ]
+  },
+  {
+   "id": "placental_abruption",
+   "doid": "DOID:9667",
+   "do_name": "placental abruption",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "abruptio placenta",
+    "abruptio placentae"
+   ]
+  },
+  {
+   "id": "preeclampsia",
+   "doid": "DOID:10591",
+   "do_name": "pre-eclampsia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hypertension induced by pregnancy",
+    "pre-eclamptic toxaemia",
+    "preeclampsia/eclampsia",
+    "pregnancy associated hypertension",
+    "pregnancy toxemia"
+   ]
+  },
+  {
+   "id": "acute_lymphoblastic_leukemia",
+   "doid": "DOID:9952",
+   "do_name": "acute lymphoblastic leukemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute lymphoblastic leukaemia",
+    "acute lymphocytic leukaemia",
+    "precursor lymphoblastic lymphoma/leukemia"
+   ]
+  },
+  {
+   "id": "acute_myeloid_leukemia",
+   "doid": "DOID:9119",
+   "do_name": "acute myeloid leukemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute myeloblastic leukaemia",
+    "acute myeloblastic leukemia",
+    "acute myelogenous leukaemia",
+    "acute myelogenous leukemia",
+    "acute myeloid leukaemia"
+   ]
+  },
+  {
+   "id": "breast_cancer",
+   "doid": "DOID:1612",
+   "do_name": "breast cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "breast tumor",
+    "malignant neoplasm of breast",
+    "mammary cancer",
+    "mammary tumor",
+    "primary breast cancer"
+   ]
+  },
+  {
+   "id": "cervical_cancer",
+   "doid": "DOID:4362",
+   "do_name": "cervical cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "cervical neoplasm",
+    "cervix cancer",
+    "cervix uteri cancer",
+    "neoplasm of uterine cervix",
+    "uterine cervical neoplasm"
+   ]
+  },
+  {
+   "id": "chronic_lymphocytic_leukemia",
+   "doid": "DOID:1040",
+   "do_name": "chronic lymphocytic leukemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "B-cell chronic lymphocytic leukaemia",
+    "B-cell chronic lymphocytic leukemia",
+    "chronic lymphatic leukaemia",
+    "chronic lymphatic leukemia",
+    "chronic lymphocytic leukaemia"
+   ]
+  },
+  {
+   "id": "chronic_myeloid_leukemia",
+   "doid": "DOID:8552",
+   "do_name": "chronic myeloid leukemia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "chronic granulocytic leukaemia",
+    "chronic granulocytic leukemia",
+    "chronic myelogenous leukaemia",
+    "chronic myelogenous leukemia",
+    "chronic myeloid leukaemia"
+   ]
+  },
+  {
+   "id": "hodgkin_lymphoma",
+   "doid": "DOID:8567",
+   "do_name": "Hodgkin's lymphoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Hodgkin disease",
+    "Hodgkin's sarcoma",
+    "Hodgkins lymphoma"
+   ]
+  },
+  {
+   "id": "melanoma",
+   "doid": "DOID:1909",
+   "do_name": "melanoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Naevocarcinoma"
+   ]
+  },
+  {
+   "id": "multiple_myeloma",
+   "doid": "DOID:9538",
+   "do_name": "multiple myeloma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "myeloma"
+   ]
+  },
+  {
+   "id": "neo_anal_ca",
+   "doid": "DOID:14110",
+   "do_name": "anus cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "malignant anal tumor"
+   ]
+  },
+  {
+   "id": "neo_bile_duct_ca",
+   "doid": "DOID:4947",
+   "do_name": "cholangiocarcinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "adult primary Cholangiocarcinoma",
+    "adult primary cholangiocellular carcinoma",
+    "cholangiosarcoma"
+   ]
+  },
+  {
+   "id": "neo_carcinoid",
+   "doid": "DOID:169",
+   "do_name": "neuroendocrine tumor",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "neuroendocrine neoplasm"
+   ]
+  },
+  {
+   "id": "neo_cns_lymphoma",
+   "doid": "DOID:3234",
+   "do_name": "central nervous system lymphoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Microglioma"
+   ]
+  },
+  {
+   "id": "neo_gallbladder_ca",
+   "doid": "DOID:3121",
+   "do_name": "gallbladder cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "gallbladder Ca",
+    "gallbladder neoplasm",
+    "localized malignant gallbladder neoplasm",
+    "malignant neoplasm of gallbladder",
+    "malignant tumour of gallbladder"
+   ]
+  },
+  {
+   "id": "neo_gist",
+   "doid": "DOID:9253",
+   "do_name": "gastrointestinal stromal tumor",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "GANT",
+    "gastrointestinal stromal tumour",
+    "GIST"
+   ]
+  },
+  {
+   "id": "neo_glioblastoma",
+   "doid": "DOID:3068",
+   "do_name": "glioblastoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "adult glioblastoma multiforme",
+    "glioblastoma multiforme",
+    "primary glioblastoma multiforme",
+    "spongioblastoma multiforme"
+   ]
+  },
+  {
+   "id": "neo_hypopharyngeal_ca",
+   "doid": "DOID:8533",
+   "do_name": "hypopharynx cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "malignant Hypopharyngeal tumor",
+    "malignant neoplasm of hypopharynx",
+    "malignant tumor of hypopharynx",
+    "malignant tumour of hypopharynx"
+   ]
+  },
+  {
+   "id": "neo_kaposi_sarcoma",
+   "doid": "DOID:8632",
+   "do_name": "Kaposi's sarcoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "anal Kaposi's sarcoma",
+    "cardiac Kaposi's sarcoma",
+    "conjunctival Kaposi's sarcoma",
+    "corneal Kaposi's sarcoma",
+    "cutaneous Kaposi's sarcoma"
+   ]
+  },
+  {
+   "id": "neo_meningioma",
+   "doid": "DOID:3565",
+   "do_name": "meningioma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "meningeal neoplasm",
+    "meningothelial cell tumor",
+    "neoplasm of the meninges",
+    "primary Meningeal tumor"
+   ]
+  },
+  {
+   "id": "neo_monoclonal_gammopathy",
+   "doid": "DOID:7442",
+   "do_name": "monoclonal gammopathy of uncertain significance",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "MGUS"
+   ]
+  },
+  {
+   "id": "neo_mycosis_fungoides",
+   "doid": "DOID:8691",
+   "do_name": "mycosis fungoides",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "mycosis fungoides lymphoma"
+   ]
+  },
+  {
+   "id": "neo_myeloproliferative",
+   "doid": "DOID:2226",
+   "do_name": "myeloproliferative neoplasm",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "chronic myeloproliferative disease",
+    "CMPD",
+    "CMPD, U"
+   ]
+  },
+  {
+   "id": "neo_penile_ca",
+   "doid": "DOID:11615",
+   "do_name": "penile cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Ca penis",
+    "malignant Penile tumor",
+    "Penile Ca",
+    "penile neoplasm"
+   ]
+  },
+  {
+   "id": "neo_plasmacytoma",
+   "doid": "DOID:3721",
+   "do_name": "plasmacytoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Myeloma, solitary",
+    "Solitary myeloma"
+   ]
+  },
+  {
+   "id": "neo_retinoblastoma",
+   "doid": "DOID:768",
+   "do_name": "retinoblastoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "neuroblastoma of Retina"
+   ]
+  },
+  {
+   "id": "neo_testicular_ca",
+   "doid": "DOID:2998",
+   "do_name": "testicular cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "neoplasm of testis",
+    "pediatric testicular neoplasm",
+    "testicular tumor",
+    "testis cancer",
+    "testis neoplasm"
+   ]
+  },
+  {
+   "id": "neo_tongue_ca",
+   "doid": "DOID:8649",
+   "do_name": "tongue cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "malignant neoplasm of tongue"
+   ]
+  },
+  {
+   "id": "neo_vaginal_ca",
+   "doid": "DOID:119",
+   "do_name": "vaginal cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "malignant neoplasm of vagina",
+    "malignant tumor of vagina",
+    "malignant vaginal tumor",
+    "neoplasm of vagina",
+    "vagina neoplasm"
+   ]
+  },
+  {
+   "id": "neo_wilms_tumor",
+   "doid": "DOID:2154",
+   "do_name": "nephroblastoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "adult nephroblastoma"
+   ]
+  },
+  {
+   "id": "ovarian_cancer",
+   "doid": "DOID:2394",
+   "do_name": "ovarian cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "malignant Ovarian tumor",
+    "malignant tumour of ovary",
+    "ovarian neoplasm",
+    "ovary neoplasm",
+    "primary ovarian cancer"
+   ]
+  },
+  {
+   "id": "thyroid_cancer",
+   "doid": "DOID:1781",
+   "do_name": "thyroid cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "neoplasm of thyroid gland",
+    "thyroid gland cancer",
+    "Thyroid gland neoplasm",
+    "thyroid neoplasm"
+   ]
+  },
+  {
+   "id": "ee2_posterior_uveitis",
+   "doid": "DOID:12574",
+   "do_name": "posterior uveitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Uveitis, posterior"
+   ]
+  },
+  {
+   "id": "ee2_thyroid_eye_disease",
+   "doid": "DOID:0081120",
+   "do_name": "Graves ophthalmopathy",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Graves orbitopathy",
+    "Thyroid associated ophthalmopathy"
+   ]
+  },
+  {
+   "id": "eye_chalazion",
+   "doid": "DOID:9903",
+   "do_name": "meibomian cyst",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "meibomian gland lipogranuloma"
+   ]
+  },
+  {
+   "id": "eye_dry_eye",
+   "doid": "DOID:10140",
+   "do_name": "dry eye syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "dry eye disease",
+    "Tear film insufficiency"
+   ]
+  },
+  {
+   "id": "eye_keratoconus",
+   "doid": "DOID:10126",
+   "do_name": "keratoconus",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "conical cornea"
+   ]
+  },
+  {
+   "id": "eye_macular_degeneration",
+   "doid": "DOID:10871",
+   "do_name": "age related macular degeneration",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Age Related Maculopathies",
+    "Age Related Maculopathy",
+    "Senile macular degeneration",
+    "Senile macular retinal degeneration"
+   ]
+  },
+  {
+   "id": "osteoarthritis",
+   "doid": "DOID:8398",
+   "do_name": "osteoarthritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "degenerative arthritis",
+    "degenerative joint disease",
+    "hypertrophic arthritis",
+    "osteoarthrosis",
+    "Osteoarthrosis and allied disorder"
+   ]
+  },
+  {
+   "id": "croup",
+   "doid": "DOID:9395",
+   "do_name": "croup",
+   "matched_by": "exact ICD-10 code J05.0",
+   "typical_features": [],
+   "synonyms": [
+    "acute laryngotracheobronchitis",
+    "acute Obstructive Laryngitis",
+    "Croup syndrome",
+    "Laryngotracheobronchitis"
+   ]
+  },
+  {
+   "id": "epiglottitis_peds",
+   "doid": "DOID:9398",
+   "do_name": "epiglottitis",
+   "matched_by": "exact ICD-10 code J05.10",
+   "typical_features": [],
+   "synonyms": [
+    "acute epiglottitis and supraglottitis"
+   ]
+  },
+  {
+   "id": "hand_foot_mouth_disease",
+   "doid": "DOID:10881",
+   "do_name": "hand, foot and mouth disease",
+   "matched_by": "exact ICD-10 code B08.4",
+   "typical_features": [],
+   "synonyms": [
+    "HFMD",
+    "Vesicular stomatitis and exanthem"
+   ]
+  },
+  {
+   "id": "henoch_schonlein_purpura",
+   "doid": "DOID:11123",
+   "do_name": "IgA vasculitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Allergic purpura",
+    "Autoimmune purpura",
+    "Henoch Schoenlein purpura",
+    "Henoch Scholein purpura",
+    "Henoch Schonlein purpura"
+   ]
+  },
+  {
+   "id": "intussusception",
+   "doid": "DOID:8446",
+   "do_name": "intussusception",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Intussusception of intestine"
+   ]
+  },
+  {
+   "id": "kawasaki_disease",
+   "doid": "DOID:13378",
+   "do_name": "Kawasaki disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute febrile MCLS",
+    "Kawasaki's disease",
+    "MLNS",
+    "mucocutaneous lymph node syndrome"
+   ]
+  },
+  {
+   "id": "neonatal_jaundice",
+   "doid": "DOID:2383",
+   "do_name": "neonatal jaundice",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "neonatal hyperbilirubinemia",
+    "neonatal icterus"
+   ]
+  },
+  {
+   "id": "pd2_fifth_disease",
+   "doid": "DOID:8743",
+   "do_name": "erythema infectiosum",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Fifth disease"
+   ]
+  },
+  {
+   "id": "pd2_juvenile_dermatomyositis",
+   "doid": "DOID:14203",
+   "do_name": "childhood type dermatomyositis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "childhood Dermatomyositis"
+   ]
+  },
+  {
+   "id": "pd2_legg_calve_perthes",
+   "doid": "DOID:14415",
+   "do_name": "Legg-Calve-Perthes disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Coxa plana",
+    "Juvenile osteochond-hip/pelvis",
+    "osteochondrosis of Legg-Calve-Perthes",
+    "Perthe's disease",
+    "Perthes disease"
+   ]
+  },
+  {
+   "id": "pd2_malrotation_volvulus",
+   "doid": "DOID:10487",
+   "do_name": "Hirschsprung's disease",
+   "matched_by": "exact ICD-10 code Q43.1",
+   "typical_features": [],
+   "synonyms": [
+    "aganglionic megacolon",
+    "congenital megacolon",
+    "macrocolon",
+    "pelvirectal achalasia",
+    "total intestinal aganglionosis"
+   ]
+  },
+  {
+   "id": "pd2_mis_c",
+   "doid": "DOID:0080711",
+   "do_name": "multisystem inflammatory syndrome in children",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "MIS-C",
+    "paediatric inflammatory multisystemic syndrome"
+   ]
+  },
+  {
+   "id": "pd2_necrotizing_enterocolitis",
+   "doid": "DOID:8677",
+   "do_name": "perinatal necrotizing enterocolitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "ENTEROCOLITIS NECROTIZING",
+    "Perinatal necrotising enterocolitis",
+    "Pseudomembranous enterocolitis in newborn"
+   ]
+  },
+  {
+   "id": "pd2_osgood_schlatter",
+   "doid": "DOID:7489",
+   "do_name": "Osgood-Schlatter's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Osteochondritis of tibial tubercle",
+    "Osteochondrosis of proximal tibia"
+   ]
+  },
+  {
+   "id": "pd2_pertussis_pd2",
+   "doid": "DOID:1116",
+   "do_name": "pertussis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "bordetella infection"
+   ]
+  },
+  {
+   "id": "pd2_reye_syndrome",
+   "doid": "DOID:14525",
+   "do_name": "Reye syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Reye's syndrome"
+   ]
+  },
+  {
+   "id": "pd2_roseola",
+   "doid": "DOID:0050495",
+   "do_name": "exanthema subitum",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "exanthem subitum",
+    "Sixth Disease"
+   ]
+  },
+  {
+   "id": "pyloric_stenosis",
+   "doid": "DOID:12638",
+   "do_name": "hypertrophic pyloric stenosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "congenital hypertrophic pyloric stenosis"
+   ]
+  },
+  {
+   "id": "rsv_infection",
+   "doid": "DOID:1273",
+   "do_name": "respiratory syncytial virus infectious disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "respiratory syncytial virus"
+   ]
+  },
+  {
+   "id": "bipolar_disorder",
+   "doid": "DOID:3312",
+   "do_name": "bipolar disorder",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "bipolar depression",
+    "bipolar disorder manic phase",
+    "Manic Bipolar Affective disorder",
+    "Manic bipolar I disorder",
+    "manic depression"
+   ]
+  },
+  {
+   "id": "major_depressive_disorder",
+   "doid": "DOID:1470",
+   "do_name": "major depressive disorder",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "clinical depression",
+    "major depression",
+    "recurrent major depression",
+    "single major depressive episode",
+    "unipolar depression"
+   ]
+  },
+  {
+   "id": "panic_disorder",
+   "doid": "DOID:594",
+   "do_name": "panic disorder",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "panic anxiety syndrome"
+   ]
+  },
+  {
+   "id": "psy_adhd",
+   "doid": "DOID:1094",
+   "do_name": "attention deficit hyperactivity disorder",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "ADHD",
+    "attention deficit disorder",
+    "hyperkinetic disorder"
+   ]
+  },
+  {
+   "id": "psy_bulimia",
+   "doid": "DOID:12129",
+   "do_name": "bulimia nervosa",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hyperorexia nervosa"
+   ]
+  },
+  {
+   "id": "psy_conversion_disorder",
+   "doid": "DOID:1768",
+   "do_name": "conversion disorder",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Conversion Hysterical Neurosis",
+    "Hysterical neurosis, conversion type"
+   ]
+  },
+  {
+   "id": "psy_dementia_lewy",
+   "doid": "DOID:12217",
+   "do_name": "Lewy body dementia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Diffuse Lewy body disease",
+    "Lewy body disease"
+   ]
+  },
+  {
+   "id": "psy_ocd",
+   "doid": "DOID:10933",
+   "do_name": "obsessive-compulsive disorder",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Anancastic neurosis",
+    "obsessive compulsive disorder"
+   ]
+  },
+  {
+   "id": "psy_postpartum_depression",
+   "doid": "DOID:9478",
+   "do_name": "postpartum depression",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Maternity blues",
+    "postnatal depression"
+   ]
+  },
+  {
+   "id": "psy_substance_use_alcohol",
+   "doid": "DOID:1574",
+   "do_name": "alcohol use disorder",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "alcohol abuse",
+    "Ethanol abuse"
+   ]
+  },
+  {
+   "id": "ptsd",
+   "doid": "DOID:2055",
+   "do_name": "post-traumatic stress disorder",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "PTSD",
+    "traumatic neurosis"
+   ]
+  },
+  {
+   "id": "acute_respiratory_distress",
+   "doid": "DOID:11394",
+   "do_name": "adult respiratory distress syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "adult RDS",
+    "ARDS",
+    "Non-cardiogenic pulmonary edema",
+    "Shock lung"
+   ]
+  },
+  {
+   "id": "acute_respiratory_failure",
+   "doid": "DOID:11162",
+   "do_name": "respiratory failure",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute-on-chronic respiratory failure",
+    "respiratory insufficiency/failure"
+   ]
+  },
+  {
+   "id": "asthma_stable",
+   "doid": "DOID:2841",
+   "do_name": "asthma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "bronchial hyperreactivity",
+    "chronic obstructive asthma"
+   ]
+  },
+  {
+   "id": "bronchiectasis",
+   "doid": "DOID:9563",
+   "do_name": "bronchiectasis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Polynesian bronchiectasis"
+   ]
+  },
+  {
+   "id": "bronchiolitis_obliterans",
+   "doid": "DOID:2799",
+   "do_name": "bronchiolitis obliterans",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bronchiolitis exudativa",
+    "Bronchiolitis fibrosa obliterans",
+    "Obliterative bronchiolitis"
+   ]
+  },
+  {
+   "id": "copd_stable",
+   "doid": "DOID:3083",
+   "do_name": "chronic obstructive pulmonary disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "chronic obstructive airway disease",
+    "chronic obstructive lung disease",
+    "COPD"
+   ]
+  },
+  {
+   "id": "cystic_fibrosis",
+   "doid": "DOID:1485",
+   "do_name": "cystic fibrosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "mucoviscidosis"
+   ]
+  },
+  {
+   "id": "empyema",
+   "doid": "DOID:3798",
+   "do_name": "pleural empyema",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "abscess of pleural cavity",
+    "abscess of thorax",
+    "empyema",
+    "Empyema of pleura",
+    "empyema with fistula"
+   ]
+  },
+  {
+   "id": "hemothorax",
+   "doid": "DOID:2718",
+   "do_name": "hemopneumothorax",
+   "matched_by": "exact ICD-10 code J94.2",
+   "typical_features": [],
+   "synonyms": [
+    "haemopneumothorax"
+   ]
+  },
+  {
+   "id": "hypersensitivity_pneumonitis",
+   "doid": "DOID:841",
+   "do_name": "extrinsic allergic alveolitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "alveolitis"
+   ]
+  },
+  {
+   "id": "influenza",
+   "doid": "DOID:8469",
+   "do_name": "influenza",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "influenza with non-respiratory manifestation",
+    "Influenza with other manifestations"
+   ]
+  },
+  {
+   "id": "legionella_pneumonia",
+   "doid": "DOID:10457",
+   "do_name": "Legionnaires' disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Infection by Legionella pneumophilia",
+    "Legionella",
+    "Legionnaire's disease"
+   ]
+  },
+  {
+   "id": "mesothelioma",
+   "doid": "DOID:7474",
+   "do_name": "malignant pleural mesothelioma",
+   "matched_by": "exact ICD-10 code C45.0",
+   "typical_features": [],
+   "synonyms": [
+    "malignant mesothelioma of pleura"
+   ]
+  },
+  {
+   "id": "obstructive_sleep_apnea",
+   "doid": "DOID:0050848",
+   "do_name": "obstructive sleep apnea",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "obstructive sleep apnea syndrome"
+   ]
+  },
+  {
+   "id": "pertussis",
+   "doid": "DOID:1116",
+   "do_name": "pertussis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "bordetella infection"
+   ]
+  },
+  {
+   "id": "pneumocystis_pneumonia",
+   "doid": "DOID:11339",
+   "do_name": "pneumocystosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Pneumocystis carinii pneumonia",
+    "Pneumocystosis pneumonia",
+    "pulmonary pneumocystosis"
+   ]
+  },
+  {
+   "id": "pu2_acute_interstitial_pneumonia",
+   "doid": "DOID:2800",
+   "do_name": "acute interstitial pneumonia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "accelerated interstitial pneumonia",
+    "acute interstitial pneumonitis",
+    "Hamman-Rich disease",
+    "Hamman-Rich syndrome"
+   ]
+  },
+  {
+   "id": "pu2_allergic_bronchopulmonary_aspergillosis",
+   "doid": "DOID:13166",
+   "do_name": "allergic bronchopulmonary aspergillosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "pulmonary aspergillus disease"
+   ]
+  },
+  {
+   "id": "pu2_central_sleep_apnea",
+   "doid": "DOID:9220",
+   "do_name": "central sleep apnea",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "primary central sleep apnea"
+   ]
+  },
+  {
+   "id": "pu2_cryptogenic_organizing_pneumonia",
+   "doid": "DOID:0050157",
+   "do_name": "cryptogenic organizing pneumonia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "BOOP",
+    "bronchiolitis obliterans organising pneumonia",
+    "bronchiolitis obliterans organizing pneumonia",
+    "cryptogenic organising pneumonia",
+    "Cryptogenic organising pneumonitis"
+   ]
+  },
+  {
+   "id": "pu2_goodpasture",
+   "doid": "DOID:9808",
+   "do_name": "Goodpasture syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "anti-glomerular basement membrane disease"
+   ]
+  },
+  {
+   "id": "pu2_lymphangioleiomyomatosis",
+   "doid": "DOID:3319",
+   "do_name": "lymphangioleiomyomatosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "lung lymphangioleiomyomatosis",
+    "lymphangiomyomatosis",
+    "pulmonary lymphangioleiomyomatosis"
+   ]
+  },
+  {
+   "id": "pu2_nonspecific_interstitial",
+   "doid": "DOID:2801",
+   "do_name": "nonspecific interstitial pneumonia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "NSIP"
+   ]
+  },
+  {
+   "id": "pu2_primary_ciliary_dyskinesia",
+   "doid": "DOID:9562",
+   "do_name": "primary ciliary dyskinesia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "ciliary motility disorder",
+    "immotile ciliary syndrome"
+   ]
+  },
+  {
+   "id": "res_acute_pharyngitis",
+   "doid": "DOID:2275",
+   "do_name": "pharyngitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute sore throat",
+    "chronic pharyn/nasopharyngitis",
+    "chronic pharyngitis",
+    "chronic pharyngitis and nasopharyngitis",
+    "chronic sore throat"
+   ]
+  },
+  {
+   "id": "res_bronchopneumonia",
+   "doid": "DOID:12375",
+   "do_name": "bronchopneumonia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "bronchial pneumonia",
+    "lobular pneumonia"
+   ]
+  },
+  {
+   "id": "res_bronchopulmonary_dysplasia",
+   "doid": "DOID:11650",
+   "do_name": "bronchopulmonary dysplasia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bronchopulmonary dysplasia of newborn",
+    "Neonatal chronic lung disease",
+    "neonatal chronic respiratory disease",
+    "Perinatal bronchopulmonary dysplasia",
+    "Respiratory insufficiency"
+   ]
+  },
+  {
+   "id": "res_chronic_bronchitis",
+   "doid": "DOID:6132",
+   "do_name": "bronchitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute Bronchitis",
+    "recurrent wheezy bronchitis"
+   ]
+  },
+  {
+   "id": "res_eosinophilic_pneumonia",
+   "doid": "DOID:5870",
+   "do_name": "eosinophilic pneumonia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Pneumonia, eosinophilic"
+   ]
+  },
+  {
+   "id": "res_respiratory_failure_chronic",
+   "doid": "DOID:11162",
+   "do_name": "respiratory failure",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "acute-on-chronic respiratory failure",
+    "respiratory insufficiency/failure"
+   ]
+  },
+  {
+   "id": "res_silicosis",
+   "doid": "DOID:10325",
+   "do_name": "silicosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Pneumoconiosis due to silicates",
+    "Silica pneumoconiosis",
+    "Silicotic fibrosis of lung",
+    "silicotuberculosis"
+   ]
+  },
+  {
+   "id": "sarcoidosis",
+   "doid": "DOID:11335",
+   "do_name": "sarcoidosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Boeck sarcoid",
+    "lymphogranulomatosis"
+   ]
+  },
+  {
+   "id": "ankylosing_spondylitis",
+   "doid": "DOID:7147",
+   "do_name": "ankylosing spondylitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Bekhterev syndrome",
+    "Bekhterev's disease",
+    "Marie-Strumpell disease"
+   ]
+  },
+  {
+   "id": "behcet_disease",
+   "doid": "DOID:13241",
+   "do_name": "Behcet's disease",
+   "matched_by": "exact ICD-10 code M35.2",
+   "typical_features": [],
+   "synonyms": [
+    "Adamantiades-Behcet disease",
+    "Behcet syndrome",
+    "Behet's syndrome",
+    "triple symptom complex"
+   ]
+  },
+  {
+   "id": "dermatomyositis",
+   "doid": "DOID:10223",
+   "do_name": "dermatomyositis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "dermatopolymyositis",
+    "Polymyositis with skin involvement"
+   ]
+  },
+  {
+   "id": "gca",
+   "doid": "DOID:13375",
+   "do_name": "temporal arteritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Horton's disease"
+   ]
+  },
+  {
+   "id": "granulomatosis_polyangiitis",
+   "doid": "DOID:12132",
+   "do_name": "granulomatosis with polyangiitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Necrotizing respiratory granulomatosis",
+    "Wegener granulomatosis, formerly"
+   ]
+  },
+  {
+   "id": "psoriatic_arthritis",
+   "doid": "DOID:9008",
+   "do_name": "psoriatic arthritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "arthritis psoriatica",
+    "arthropathic psoriasis"
+   ]
+  },
+  {
+   "id": "reactive_arthritis",
+   "doid": "DOID:6196",
+   "do_name": "reactive arthritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Fiessinger Leroy Reiter syndrome",
+    "Post-bacterial arthropathy",
+    "postdysenteric arthropathy",
+    "Reiter disease",
+    "Reiter's disease"
+   ]
+  },
+  {
+   "id": "rh2_adult_onset_stills",
+   "doid": "DOID:14256",
+   "do_name": "adult-onset Still's disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "adult onset Still's disease"
+   ]
+  },
+  {
+   "id": "rh2_caplan_syndrome",
+   "doid": "DOID:10326",
+   "do_name": "Caplan's syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Caplan's disease",
+    "Caplans syndrome",
+    "Rheumatoid pneumoconiosis"
+   ]
+  },
+  {
+   "id": "rh2_cryoglobulinemic_vasculitis",
+   "doid": "DOID:2917",
+   "do_name": "cryoglobulinemia",
+   "matched_by": "exact ICD-10 code D89.1",
+   "typical_features": [],
+   "synonyms": [
+    "Cryoimmunoglobulinaemia"
+   ]
+  },
+  {
+   "id": "rh2_eosinophilic_granulomatosis",
+   "doid": "DOID:3049",
+   "do_name": "Churg-Strauss syndrome",
+   "matched_by": "exact ICD-10 code M30.1",
+   "typical_features": [],
+   "synonyms": [
+    "Allergic granulomatosis angiitis",
+    "Allergic Granulomatous Angiitis",
+    "Churg-Strauss vasculitis"
+   ]
+  },
+  {
+   "id": "rh2_henoch_schonlein_rh",
+   "doid": "DOID:11123",
+   "do_name": "IgA vasculitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Allergic purpura",
+    "Autoimmune purpura",
+    "Henoch Schoenlein purpura",
+    "Henoch Scholein purpura",
+    "Henoch Schonlein purpura"
+   ]
+  },
+  {
+   "id": "rh2_mixed_connective_tissue",
+   "doid": "DOID:3492",
+   "do_name": "mixed connective tissue disease",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "mixed collagen vascular disease"
+   ]
+  },
+  {
+   "id": "rh2_relapsing_polychondritis",
+   "doid": "DOID:2556",
+   "do_name": "relapsing polychondritis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Chondromalacia, systemic"
+   ]
+  },
+  {
+   "id": "sjogren_syndrome",
+   "doid": "DOID:12894",
+   "do_name": "Sjogren's syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Sicca syndrome",
+    "xerodermosteosis"
+   ]
+  },
+  {
+   "id": "tx2_malignant_hyperthermia",
+   "doid": "DOID:8545",
+   "do_name": "malignant hyperthermia",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "anesthesia related hyperthermia"
+   ]
+  },
+  {
+   "id": "bladder_cancer",
+   "doid": "DOID:11054",
+   "do_name": "urinary bladder cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "tumor of the bladder"
+   ]
+  },
+  {
+   "id": "interstitial_cystitis",
+   "doid": "DOID:13949",
+   "do_name": "interstitial cystitis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "ulcerative cystitis"
+   ]
+  },
+  {
+   "id": "priapism",
+   "doid": "DOID:9286",
+   "do_name": "priapism",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Mentulagra"
+   ]
+  },
+  {
+   "id": "prostate_cancer",
+   "doid": "DOID:10283",
+   "do_name": "prostate cancer",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "hereditary prostate cancer",
+    "prostate cancer, familial",
+    "prostate neoplasm",
+    "prostatic cancer",
+    "prostatic neoplasm"
+   ]
+  },
+  {
+   "id": "renal_cell_carcinoma",
+   "doid": "DOID:4450",
+   "do_name": "renal cell carcinoma",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "adenocarcinoma of kidney",
+    "hypernephroma"
+   ]
+  },
+  {
+   "id": "varicocele",
+   "doid": "DOID:12337",
+   "do_name": "varicocele",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Scrotal varices"
+   ]
+  },
+  {
+   "id": "arteriovenous_malformation",
+   "doid": "DOID:11294",
+   "do_name": "arteriovenous malformation",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Arteriovenous hemangioma",
+    "Cirsoid aneurysm",
+    "Racemose aneurysm",
+    "Racemose Angioma",
+    "Racemose hemangioma"
+   ]
+  },
+  {
+   "id": "carotid_artery_stenosis",
+   "doid": "DOID:13001",
+   "do_name": "carotid stenosis",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Stenosis, carotid artery"
+   ]
+  },
+  {
+   "id": "lymphedema",
+   "doid": "DOID:4977",
+   "do_name": "lymphedema",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Lymphatic edema",
+    "Lymphoedema"
+   ]
+  },
+  {
+   "id": "renal_artery_stenosis",
+   "doid": "DOID:14092",
+   "do_name": "renal artery atheroma",
+   "matched_by": "exact ICD-10 code I70.1",
+   "typical_features": [],
+   "synonyms": [
+    "Atherosclerosis of renal artery",
+    "renal atherosclerosis"
+   ]
+  },
+  {
+   "id": "ruptured_aaa",
+   "doid": "DOID:3627",
+   "do_name": "aortic aneurysm",
+   "matched_by": "exact ICD-10 code I71.3",
+   "typical_features": [],
+   "synonyms": [
+    "ruptured aortic aneurysm"
+   ]
+  },
+  {
+   "id": "subclavian_steal_syndrome",
+   "doid": "DOID:13002",
+   "do_name": "subclavian steal syndrome",
+   "matched_by": "exact name/alias",
+   "typical_features": [],
+   "synonyms": [
+    "Subclavian artery stenosis",
+    "subclavian steal phenomenon",
+    "subclavian steal steno-occlusive disease"
+   ]
+  },
+  {
+   "id": "superficial_thrombophlebitis",
+   "doid": "DOID:3875",
+   "do_name": "thrombophlebitis",
+   "matched_by": "exact ICD-10 code I80.0",
+   "typical_features": [],
+   "synonyms": [
+    "Superficial thrombophlebitis of leg"
+   ]
+  },
+  {
+   "id": "thromboangiitis_obliterans",
+   "doid": "DOID:12918",
+   "do_name": "thromboangiitis obliterans",
+   "matched_by": "exact ICD-10 code I73.1",
+   "typical_features": [],
+   "synonyms": [
+    "Buerger's disease",
+    "Presenile gangrene"
+   ]
+  }
+ ]
+}

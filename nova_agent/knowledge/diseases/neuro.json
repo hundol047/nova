@@ -15,7 +15,11 @@
       "dizziness",
       "altered_mental_status",
       "weakness",
-      "syncope"
+      "syncope",
+      "focal_weakness",
+      "aphasia",
+      "numbness",
+      "vision_changes"
     ],
     "category": "neuro",
     "dangerous": true,
@@ -24,6 +28,7 @@
       "sudden onset focal weakness",
       "facial droop",
       "slurred speech",
+      "aphasia",
       "unilateral numbness",
       "sudden vision loss",
       "ataxia"
@@ -84,7 +89,8 @@
     ],
     "chief_complaint_tags": [
       "headache",
-      "altered_mental_status"
+      "altered_mental_status",
+      "neck_stiffness"
     ],
     "category": "neuro",
     "dangerous": true,
@@ -143,7 +149,8 @@
     "chief_complaint_tags": [
       "headache",
       "fever",
-      "altered_mental_status"
+      "altered_mental_status",
+      "neck_stiffness"
     ],
     "category": "neuro",
     "dangerous": true,
@@ -194,7 +201,21 @@
     "minimum_workup": [
       "lumbar_puncture"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "required_diagnostic_context_any": [
+      "neck stiffness",
+      "photophobia",
+      "altered mental status",
+      "CSF pleocytosis",
+      "gram-negative diplococci",
+      "gram-positive"
+    ],
+    "evidence_references": [
+      {
+        "url": "https://www.nice.org.uk/guidance/ng240/chapter/Recommendations",
+        "scope": "Clinical features and investigation results are combined; this software final-label guard does not exclude meningitis or suppress urgent evaluation."
+      }
+    ]
   },
   {
     "id": "migraine",
@@ -314,7 +335,13 @@
     ],
     "discriminating_tests": [],
     "red_flag_keywords": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "positive dix-hallpike",
+      "positional nystagmus",
+      "torsional nystagmus"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   },
   {
     "id": "orthostatic_hypotension",
@@ -356,6 +383,11 @@
     ],
     "discriminating_tests": [],
     "red_flag_keywords": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "orthostatic drop in blood pressure",
+      "blood pressure falls on standing"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   }
 ]

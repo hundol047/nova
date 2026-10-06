@@ -12,13 +12,13 @@ import time
 from datetime import datetime, timezone
 from typing import Dict, List, Literal, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 
 from nova_agent.models import Allergy, Medication, VitalSigns
 from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG
 from nova_agent.vitals_parser import describe_vital_sign_abnormalities, parse_vital_signs
 
-ActionType = Literal["ASK", "EXAM", "TEST", "DIAGNOSE"]
+ActionType = Literal["ASK", "EXAM", "TEST", "DIAGNOSE", "SAY"]
 
 
 def normalize_key(text: str) -> str:
@@ -36,7 +36,8 @@ def normalize_key(text: str) -> str:
 # weakness but my speech became slurred") -- splitting only on ';' (the original implementation)
 # missed every one of these, silently losing or misclassifying half the answer.
 _CLAUSE_SPLIT_PATTERN = re.compile(
-    r";|(?<=\w)\s+but\s+|(?<=\w)\s+however\s+|(?<=\w)\s+although\s+|(?<=\w)\s+except\s+(?:that\s+)?",
+    r";|\n|(?<=\w)\.(?=\s+[a-z])|(?<=\w)\s+but\s+|(?<=\w)\s+however\s+|(?<=\w)\s+although\s+|(?<=\w)\s+except\s+(?:that\s+)?"
+    r"|하지만|그러나|그런데|근데|でも|しかし|だが|但是|不过|但",
     re.IGNORECASE,
 )
 
@@ -44,7 +45,17 @@ _NEGATION_MARKERS = [
     "denies", "denied", "no ", "none", "negative for", "not present", "without",
     "don't have", "doesn't have", "do not have", "does not have",
     "didn't have", "did not have", "never had", "not experiencing", "not having",
-    "아니", "없습니다", "없음",
+    # Korean
+    "아니", "없습니다", "없어요", "없음", "안 아파요", "하지 않아요", "부인함",
+    # Japanese
+    "ない", "ありません", "認めない", "否定", "していない",
+    # Chinese (simplified). Deliberately NOT bare "不" -- Chinese uses no word-spacing, and "不" is
+    # a substring of many unrelated words that do NOT mean a symptom is denied (e.g. "不适"
+    # discomfort, "不规则" irregular) -- a bare single-character marker would misclassify a
+    # POSITIVE finding as negated. The multi-character markers below are specific enough to avoid
+    # that false-positive class the same way English "no " (with a trailing space, not bare "no")
+    # already avoids matching inside unrelated words like "corner".
+    "没有", "无", "否认", "未出现",
 ]
 
 
@@ -59,17 +70,51 @@ def _split_answer_segments(answer: str) -> List[str]:
         part = part.strip().rstrip(".").strip()
         if not part:
             continue
-        if re.search(r"\bdenies\b", part, re.IGNORECASE):
-            pieces = re.split(r",\s*(?=denies\b)", part, flags=re.IGNORECASE)
-            segments.extend(p.strip() for p in pieces if p.strip())
+        if re.search(r"\b(?:denies|no|without|not|negative for)\b", part, re.IGNORECASE):
+            # A comma-list may switch polarity mid-clause ("palpitations just before,
+            # no aura, no tongue biting").  Split at the marker rather than classifying
+            # the whole list as negative; otherwise the positive lead-in can incorrectly
+            # support a feature such as "no palpitations before the episode".
+            pieces = re.split(
+                r",\s*(?=(?:denies\b|no\b|without\b|not\b|negative\s+for\b))",
+                part, flags=re.IGNORECASE,
+            )
+            for piece in pieces:
+                segments.extend(_expand_mixed_leading_no(piece.strip()))
         else:
-            segments.append(part)
+            segments.extend(_expand_mixed_leading_no(part))
     return segments
 
 
 def _segment_is_negated(segment: str) -> bool:
     lowered = segment.lower()
     return any(marker in lowered for marker in _NEGATION_MARKERS)
+
+
+_MIXED_POSITIVE_CUE = re.compile(
+    r"\b(?:has|have|reports?|with|pain|nausea|vomit(?:ing)?|fever|diarr(?:hea|hoea)|"
+    r"weakness|cough|dyspnea|sweat(?:ing)?|dizzy|headache|low|mild|sharp|worse)\b"
+    r"|恶心|呕吐|低烧|低热|腹泻|疼|痛|无力|咳嗽|微热| nausea | 구역 | 구토 | 미열",
+    re.IGNORECASE,
+)
+
+
+def _expand_mixed_leading_no(segment: str) -> List[str]:
+    """Scope a leading ``no X`` to X when a comma-list continues with positive findings."""
+    match = re.match(r"^\s*(no\s+[^,;]+),\s*(.+)$", segment, re.IGNORECASE)
+    if not match:
+        return [segment]
+    negative_head, remainder = match.groups()
+    if re.search(r"\b(?:no|denies|without|not)\b|없(?:음|어요|습니다)|没有|无|否认", remainder, re.IGNORECASE):
+        return [segment]
+    if not _MIXED_POSITIVE_CUE.search(remainder):
+        return [segment]
+    # "no fever, chills or cough": a disjunction continues the negative list ("none of these"); only a
+    # remainder with its own positive predicate ("no rash, has cough") escapes the leading "no".
+    if re.search(r"\bor\b|\bnor\b", remainder, re.IGNORECASE) and not re.search(
+            r"\b(?:has|have|reports?|with)\b", remainder, re.IGNORECASE):
+        return [segment]
+    return [negative_head.strip(), remainder.strip()]
 
 
 class Demographics(BaseModel):
@@ -83,6 +128,7 @@ class ConversationTurn(BaseModel):
     action_type: ActionType
     content: str
     result: str = ""
+    key: str = ""  # catalog key the action used (ask category / exam id / test id); "" for SAY/DIAGNOSE
     timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 
@@ -107,6 +153,13 @@ class PatientState(BaseModel):
     """Everything accumulated about the current case (spec section 2)."""
 
     case_id: str = "case"
+    # UI/output locale only -- "en" | "ko" | "ja" | "zh". Never affects internal reasoning: every
+    # canonical diagnosis_id/concept tag/lab.* key stays identical regardless of this value (spec:
+    # internal reasoning language and display language are strictly separated). Persisted with the
+    # case (not just passed once at creation) since a production backend constructs a fresh
+    # DoctorAgent(lang=...) on every decide() call -- see nova_service.py's own module docstring on
+    # why -- so this is the only place that value can durably live between turns.
+    locale: str = "en"
     demographics: Demographics = Field(default_factory=Demographics)
 
     chief_complaint: str = ""
@@ -143,6 +196,8 @@ class PatientState(BaseModel):
     laboratory_tests: Dict[str, str] = Field(default_factory=dict)
     imaging: Dict[str, str] = Field(default_factory=dict)
 
+    initial_vitals_text: Optional[str] = None
+    rejected_exams: List[str] = Field(default_factory=list)
     performed_actions: List[ConversationTurn] = Field(default_factory=list)
     asked_questions: List[str] = Field(default_factory=list)
     completed_examinations: List[str] = Field(default_factory=list)
@@ -154,8 +209,45 @@ class PatientState(BaseModel):
 
     turn_count: int = 0
     max_turns: int = 60
+    # Preliminary-round rules (2026 organizer briefing): no TEST action exists, vital signs arrive
+    # with the first patient statement, and a case has a wall-clock limit. Off for every legacy
+    # caller, so all existing development benchmarks keep their exact behavior.
+    preliminary_rules: bool = False
+    time_limit_seconds: Optional[float] = None
+    model_config = ConfigDict(validate_assignment=True)
+
+    @field_validator("max_turns", mode="before")
+    @classmethod
+    def cap_max_turns(cls, value):
+        from nova_agent.config import effective_max_turns
+        return effective_max_turns(value)
+
     final_diagnosis: Optional[str] = None
     final_diagnosis_rationale: Optional[str] = None
+
+    # Round E (defect: forced/low-evidence diagnosis must never look like a confidently
+    # evidence-supported NORMAL_DIAGNOSIS). Distinct, independently-readable flags recorded once a
+    # DIAGNOSE action is actually taken (see record_diagnose() below) -- None until then, never a
+    # default of False, so "not yet diagnosed" is never confused with "diagnosed normally":
+    #   - forced_due_to_turn_limit: StopPolicy's hard remaining-turns fallback fired (StopDecision.
+    #     forced) -- the case would not otherwise have been ready to diagnose yet.
+    #   - zero_evidence_at_diagnosis: the diagnosed item was differential.py's own
+    #     fallback_candidate (candidate_generator.py's whole-catalog zero-evidence fallback) --
+    #     literally nothing matched anything; this is an UNKNOWN_PRESENTATION forced through.
+    #   - fallback_candidate_selected: the diagnosed item's OWN candidate_sources were entirely
+    #     evidence-free sources (safety_candidate/contextual_safety/zero_evidence_fallback/
+    #     ontology_broadening/ontology_retrieval) -- broader than zero_evidence_at_diagnosis (which
+    #     requires the WHOLE differential to be the catalog fallback): this can be true even when
+    #     other, better-evidenced candidates existed elsewhere in the differential.
+    # Populated from orchestrator.DoctorAgent.decide()'s own already-computed StopDecision/
+    # differential via `pending_diagnosis_quality` (transient, cleared once consumed) rather than
+    # widening decide()'s/observe()'s public signatures.
+    final_diagnosis_forced_due_to_turn_limit: Optional[bool] = None
+    final_diagnosis_zero_evidence_at_diagnosis: Optional[bool] = None
+    final_diagnosis_fallback_candidate_selected: Optional[bool] = None
+    pending_diagnosis_quality: Optional[Dict[str, bool]] = None
+    # JSON-safe internal epistemic result; no protocol labels or patient transcript copies.
+    evidence_assessment: Optional[dict] = None
 
     # Wall-clock case start (spec: graceful degradation as a per-case time budget runs out).
     # time.time()-based (not perf_counter) since it must be meaningful even if PatientState is
@@ -166,11 +258,32 @@ class PatientState(BaseModel):
     def case_elapsed_seconds(self) -> float:
         return time.time() - self.case_started_at_unix
 
+    def time_nearly_up(self) -> bool:
+        """Preliminary round (20 minutes per case; a case never submitted scores 0): True once the fixed
+        safety fraction of the budget is spent, OR once the measured seconds per turn show that the
+        closing dialogue plus the final submission would no longer fit. Always False without a limit."""
+        from nova_agent.config import (PRELIMINARY_CLOSING_TURNS, PRELIMINARY_TIME_HARD_FRACTION,
+                                       PRELIMINARY_TIME_SAFETY_FRACTION)
+        if self.time_limit_seconds is None:
+            return False
+        elapsed = self.case_elapsed_seconds
+        if elapsed >= self.time_limit_seconds * PRELIMINARY_TIME_SAFETY_FRACTION:
+            return True
+        turns = len(self.performed_actions)
+        if turns >= 3:  # need a few samples before the average means anything
+            per_turn = elapsed / turns
+            return elapsed + PRELIMINARY_CLOSING_TURNS * per_turn * 1.5 >= self.time_limit_seconds * PRELIMINARY_TIME_HARD_FRACTION
+        return False
+
     # LLM call reliability (spec: an evaluation run must never look "normal" while the real LLM is
     # actually failing every turn and the agent is silently riding the deterministic fallback).
     # Only incremented for a REAL LLM provider attempt -- MockLLMClient never touches these, since
     # it makes no real call at all (see orchestrator.decide() / llm_client.BaseLLMClient).
     llm_call_count: int = 0
+    # HTTP requests actually sent to the model INCLUDING retries (llm_call_count is logical calls); the fixed
+    # model's session caps count requests. Tokens are server-reported when available, else estimated.
+    llm_http_attempts: int = 0
+    llm_tokens_estimated: bool = False
     llm_success_count: int = 0
     llm_failure_count: int = 0
     llm_fallback_count: int = 0
@@ -238,7 +351,7 @@ class PatientState(BaseModel):
         key = f"ask:{discriminator}"
         if key not in self.asked_questions:
             self.asked_questions.append(key)
-        turn = ConversationTurn(turn=self.turn_count, action_type="ASK", content=question_text, result=answer)
+        turn = ConversationTurn(turn=self.turn_count, action_type="ASK", content=question_text, result=answer, key=discriminator)
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
         self._absorb_answer(discriminator, answer)
@@ -249,7 +362,7 @@ class PatientState(BaseModel):
             self.completed_examinations.append(exam_id)
         spec = EXAM_CATALOG.get(exam_id)
         content = spec["name_en"] if spec else exam_id
-        turn = ConversationTurn(turn=self.turn_count, action_type="EXAM", content=content, result=result)
+        turn = ConversationTurn(turn=self.turn_count, action_type="EXAM", content=content, result=result, key=exam_id)
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
         self.physical_examinations[exam_id] = result
@@ -261,13 +374,46 @@ class PatientState(BaseModel):
                     if finding not in self.vital_sign_findings:
                         self.vital_sign_findings.append(finding)
 
+    def record_initial_vitals(self, text: str) -> None:
+        """Vital signs handed over WITH the first patient statement (preliminary-round rules): real
+        objective evidence, but obtained by no action, so no turn is consumed. Recorded under the
+        same keys an EXAM would use so every downstream consumer treats it identically."""
+        if not text:
+            return
+        if "vital_signs" not in self.completed_examinations:
+            self.completed_examinations.append("vital_signs")
+        self.physical_examinations["vital_signs"] = text
+        parsed = parse_vital_signs(text)
+        if parsed is not None:
+            self.vital_signs.append(parsed)
+            for finding in describe_vital_sign_abnormalities(parsed):
+                if finding not in self.vital_sign_findings:
+                    self.vital_sign_findings.append(finding)
+        self.initial_vitals_text = text
+
+    def record_exam_rejected(self, exam_id: str) -> None:
+        """The environment rejected an examination request (not on its list). Per the preliminary
+        rules a rejected request costs NO turn; it is marked done so it is never re-sent, and it
+        contributes no evidence (never recorded as a normal finding)."""
+        if exam_id not in self.completed_examinations:
+            self.completed_examinations.append(exam_id)
+        self.rejected_exams.append(exam_id)
+
+    def record_say(self, content: str, reply: str = "", key: str = "") -> None:
+        """A conversational turn (explanation/empathy) that gathers no new history: costs one turn,
+        and the patient's reply is NOT absorbed as clinical evidence."""
+        self.turn_count += 1
+        turn = ConversationTurn(turn=self.turn_count, action_type="SAY", content=content, result=reply, key=key)
+        self.performed_actions.append(turn)
+        self.conversation_history.append(turn)
+
     def record_test(self, test_id: str, result: str) -> None:
         self.turn_count += 1
         if test_id not in self.completed_tests:
             self.completed_tests.append(test_id)
         spec = TEST_CATALOG.get(test_id)
         content = spec["name_en"] if spec else test_id
-        turn = ConversationTurn(turn=self.turn_count, action_type="TEST", content=content, result=result)
+        turn = ConversationTurn(turn=self.turn_count, action_type="TEST", content=content, result=result, key=test_id)
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
         if spec and spec["kind"] == "imaging":
@@ -279,6 +425,15 @@ class PatientState(BaseModel):
         self.turn_count += 1
         self.final_diagnosis = diagnosis
         self.final_diagnosis_rationale = rationale
+        # Consume whatever orchestrator.DoctorAgent.decide() staged in `pending_diagnosis_quality`
+        # (see this class's own field docstrings) -- defaults to all-False only when decide() never
+        # ran first (e.g. a test constructing state directly), never silently left as None once an
+        # actual DIAGNOSE is recorded.
+        quality = self.pending_diagnosis_quality or {}
+        self.final_diagnosis_forced_due_to_turn_limit = quality.get("forced_due_to_turn_limit", False)
+        self.final_diagnosis_zero_evidence_at_diagnosis = quality.get("zero_evidence_at_diagnosis", False)
+        self.final_diagnosis_fallback_candidate_selected = quality.get("fallback_candidate_selected", False)
+        self.pending_diagnosis_quality = None
         turn = ConversationTurn(turn=self.turn_count, action_type="DIAGNOSE", content=diagnosis, result=rationale)
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
@@ -356,15 +511,39 @@ class PatientState(BaseModel):
     def latest_vital_signs(self) -> Optional[VitalSigns]:
         return self.vital_signs[-1] if self.vital_signs else None
 
-    def all_findings_text(self) -> List[str]:
+    def all_findings_text(self, include_context: bool = True) -> List[str]:
         """Flat bag of every free-text clinical finding gathered so far, used by keyword-matching
         modules (differential.py, safety.py) as the evidence corpus."""
         out = list(self.symptoms) + list(self.associated_symptoms) + list(self.pertinent_positives)
-        out += list(self.past_medical_history) + list(self.social_history) + list(self.family_history)
+        if include_context:
+            out += list(self.past_medical_history) + list(self.social_history) + list(self.family_history)
         out += [self.chief_complaint, self.symptom_onset or "", self.severity or "", self.duration or ""]
         out += list(self.physical_examinations.values()) + list(self.imaging.values())
         out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
-        out += list(self.medication_text) + list(self.allergy_text)
-        out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
+        if include_context:
+            out += list(self.medication_text) + list(self.allergy_text)
+            out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
+        out = [t for t in out if t]
+        # Localized (ko/ja) symptom phrases also count as their canonical English wording, so
+        # scoring (which matches English KB features) treats them like the English patient.
+        from nova_agent.multilingual_concepts import english_evidence_for
+        for t in list(out):
+            out += [e for e in english_evidence_for(t) if e not in out]
+        return out
+
+    def objective_findings_text(self) -> List[str]:
+        """Narrower than all_findings_text(): only text that came from an EXAM/TEST actually
+        performed (physical_examinations, imaging, laboratory_tests, vital_sign_findings) --
+        excludes patient-reported symptoms, chief complaint, and (critically) past_medical_history/
+        social_history/family_history. A knowledge-base `confirmatory_findings` phrase (e.g.
+        cardiac_arrhythmia's "atrial fibrillation on ecg") represents a specific objective test/exam
+        result, not a patient history fact -- scoring it against the full findings bag let a patient
+        merely REPORTING a past diagnosis of atrial fibrillation (in past_medical_history, with no
+        ECG ever performed) spuriously satisfy an ECG-specific confirmatory finding via plain
+        word-overlap. Confirmatory findings must only ever be earned by evidence an EXAM/TEST action
+        actually produced this encounter."""
+        out = list(self.physical_examinations.values()) + list(self.imaging.values())
+        out += list(self.vital_sign_findings)
+        out += list(self.laboratory_tests.values())
         return [t for t in out if t]

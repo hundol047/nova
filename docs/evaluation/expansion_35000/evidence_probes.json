@@ -1,0 +1,1778 @@
+{
+  "scope": "SYNTHETIC_SOFTWARE_PROBES_NOT_DIAGNOSTIC_ACCURACY",
+  "profiles_checked": 7,
+  "probes": 54,
+  "passed": 54,
+  "failed": 0,
+  "profiles_sha256": "db60ddd7162449d738061dd5d1add8f97cd30e19cfc34623cc6f3e17497f07c3",
+  "probes_sha256": "664e1e572c9877fdf93a5bbdf3bb22a5eca6d79e5544f38e0a502d3c3b46bb63",
+  "independent_clinical_validation": false,
+  "runtime_activated": false,
+  "limitation": "Structured feature semantics only; not diagnosis, clinical accuracy, external validation or model training.",
+  "results": [
+    {
+      "id": "guillain_barre_positive",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:guillain_barre",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "progressive_bilateral_limb_weakness"
+          ],
+          [
+            "reduced_or_absent_tendon_reflexes"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Document progression and neurologic examination; assess alternatives.",
+          "CSF and electrophysiology support evaluation; normal early findings do not exclude GBS."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "guillain_barre_absent",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:guillain_barre",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "reduced_or_absent_tendon_reflexes"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "progressive_bilateral_limb_weakness"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Document progression and neurologic examination; assess alternatives.",
+          "CSF and electrophysiology support evaluation; normal early findings do not exclude GBS."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "guillain_barre_uncertain",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:guillain_barre",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "reduced_or_absent_tendon_reflexes"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "progressive_bilateral_limb_weakness"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Document progression and neurologic examination; assess alternatives.",
+          "CSF and electrophysiology support evaluation; normal early findings do not exclude GBS."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "guillain_barre_historical",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:guillain_barre",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "reduced_or_absent_tendon_reflexes"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "progressive_bilateral_limb_weakness"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [
+          {
+            "feature": "progressive_bilateral_limb_weakness",
+            "status": "present",
+            "temporality": "historical"
+          }
+        ],
+        "confirmation_needed": [
+          "Document progression and neurologic examination; assess alternatives.",
+          "CSF and electrophysiology support evaluation; normal early findings do not exclude GBS."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "guillain_barre_missing",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:guillain_barre",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "reduced_or_absent_tendon_reflexes"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "progressive_bilateral_limb_weakness"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Document progression and neurologic examination; assess alternatives.",
+          "CSF and electrophysiology support evaluation; normal early findings do not exclude GBS."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "guillain_barre_conflicting",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:guillain_barre",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "reduced_or_absent_tendon_reflexes"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "progressive_bilateral_limb_weakness"
+          ]
+        ],
+        "conflicting_features": [
+          "progressive_bilateral_limb_weakness"
+        ],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Document progression and neurologic examination; assess alternatives.",
+          "CSF and electrophysiology support evaluation; normal early findings do not exclude GBS."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pericarditis_positive",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pericarditis",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "pleuritic_or_positional_chest_pain"
+          ],
+          [
+            "pericardial_rub"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review ECG, cardiac biomarkers and echocardiography in clinical context.",
+          "Assess alternative chest-pain emergencies and myocardial involvement."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pericarditis_absent",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pericarditis",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "pericardial_rub"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "pleuritic_or_positional_chest_pain"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review ECG, cardiac biomarkers and echocardiography in clinical context.",
+          "Assess alternative chest-pain emergencies and myocardial involvement."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pericarditis_uncertain",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pericarditis",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "pericardial_rub"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "pleuritic_or_positional_chest_pain"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review ECG, cardiac biomarkers and echocardiography in clinical context.",
+          "Assess alternative chest-pain emergencies and myocardial involvement."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pericarditis_historical",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pericarditis",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "pericardial_rub"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "pleuritic_or_positional_chest_pain"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [
+          {
+            "feature": "pleuritic_or_positional_chest_pain",
+            "status": "present",
+            "temporality": "historical"
+          }
+        ],
+        "confirmation_needed": [
+          "Review ECG, cardiac biomarkers and echocardiography in clinical context.",
+          "Assess alternative chest-pain emergencies and myocardial involvement."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pericarditis_missing",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pericarditis",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "pericardial_rub"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "pleuritic_or_positional_chest_pain"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review ECG, cardiac biomarkers and echocardiography in clinical context.",
+          "Assess alternative chest-pain emergencies and myocardial involvement."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pericarditis_conflicting",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pericarditis",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "pericardial_rub"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "pleuritic_or_positional_chest_pain"
+          ]
+        ],
+        "conflicting_features": [
+          "pleuritic_or_positional_chest_pain"
+        ],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review ECG, cardiac biomarkers and echocardiography in clinical context.",
+          "Assess alternative chest-pain emergencies and myocardial involvement."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pheochromocytoma_positive",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pheochromocytoma",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "episodic_hypertension"
+          ],
+          [
+            "episodic_headache"
+          ],
+          [
+            "episodic_palpitations"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Evaluate plasma free or urinary fractionated metanephrines with sampling and confounders reviewed.",
+          "Positive biochemical findings require appropriate clinical follow-up; symptoms alone do not confirm a tumor."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pheochromocytoma_absent",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pheochromocytoma",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "episodic_headache"
+          ],
+          [
+            "episodic_palpitations"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "episodic_hypertension"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Evaluate plasma free or urinary fractionated metanephrines with sampling and confounders reviewed.",
+          "Positive biochemical findings require appropriate clinical follow-up; symptoms alone do not confirm a tumor."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pheochromocytoma_uncertain",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pheochromocytoma",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "episodic_headache"
+          ],
+          [
+            "episodic_palpitations"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "episodic_hypertension"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Evaluate plasma free or urinary fractionated metanephrines with sampling and confounders reviewed.",
+          "Positive biochemical findings require appropriate clinical follow-up; symptoms alone do not confirm a tumor."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pheochromocytoma_historical",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pheochromocytoma",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "episodic_headache"
+          ],
+          [
+            "episodic_palpitations"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "episodic_hypertension"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [
+          {
+            "feature": "episodic_hypertension",
+            "status": "present",
+            "temporality": "historical"
+          }
+        ],
+        "confirmation_needed": [
+          "Evaluate plasma free or urinary fractionated metanephrines with sampling and confounders reviewed.",
+          "Positive biochemical findings require appropriate clinical follow-up; symptoms alone do not confirm a tumor."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pheochromocytoma_missing",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pheochromocytoma",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "episodic_headache"
+          ],
+          [
+            "episodic_palpitations"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "episodic_hypertension"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Evaluate plasma free or urinary fractionated metanephrines with sampling and confounders reviewed.",
+          "Positive biochemical findings require appropriate clinical follow-up; symptoms alone do not confirm a tumor."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "pheochromocytoma_conflicting",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pheochromocytoma",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "episodic_headache"
+          ],
+          [
+            "episodic_palpitations"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "episodic_hypertension"
+          ]
+        ],
+        "conflicting_features": [
+          "episodic_hypertension"
+        ],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Evaluate plasma free or urinary fractionated metanephrines with sampling and confounders reviewed.",
+          "Positive biochemical findings require appropriate clinical follow-up; symptoms alone do not confirm a tumor."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "fabry_disease_positive",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:fabry_disease",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "acral_neuropathic_pain"
+          ],
+          [
+            "angiokeratoma"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review alpha-galactosidase A activity and GLA molecular testing in the appropriate sex and phenotype context.",
+          "Normal enzyme activity in a female does not exclude Fabry; variant interpretation is required."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "fabry_disease_absent",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:fabry_disease",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "angiokeratoma"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "acral_neuropathic_pain"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review alpha-galactosidase A activity and GLA molecular testing in the appropriate sex and phenotype context.",
+          "Normal enzyme activity in a female does not exclude Fabry; variant interpretation is required."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "fabry_disease_uncertain",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:fabry_disease",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "angiokeratoma"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "acral_neuropathic_pain"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review alpha-galactosidase A activity and GLA molecular testing in the appropriate sex and phenotype context.",
+          "Normal enzyme activity in a female does not exclude Fabry; variant interpretation is required."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "fabry_disease_historical",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:fabry_disease",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "angiokeratoma"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "acral_neuropathic_pain"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [
+          {
+            "feature": "acral_neuropathic_pain",
+            "status": "present",
+            "temporality": "historical"
+          }
+        ],
+        "confirmation_needed": [
+          "Review alpha-galactosidase A activity and GLA molecular testing in the appropriate sex and phenotype context.",
+          "Normal enzyme activity in a female does not exclude Fabry; variant interpretation is required."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "fabry_disease_missing",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:fabry_disease",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "angiokeratoma"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "acral_neuropathic_pain"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review alpha-galactosidase A activity and GLA molecular testing in the appropriate sex and phenotype context.",
+          "Normal enzyme activity in a female does not exclude Fabry; variant interpretation is required."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "fabry_disease_conflicting",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:fabry_disease",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "angiokeratoma"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "acral_neuropathic_pain"
+          ]
+        ],
+        "conflicting_features": [
+          "acral_neuropathic_pain"
+        ],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review alpha-galactosidase A activity and GLA molecular testing in the appropriate sex and phenotype context.",
+          "Normal enzyme activity in a female does not exclude Fabry; variant interpretation is required."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "croup_positive",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:croup",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "barking_cough"
+          ],
+          [
+            "inspiratory_stridor"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Clinical assessment of airway severity and alternative causes; typical croup does not need routine tests."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "croup_absent",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:croup",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "inspiratory_stridor"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "barking_cough"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Clinical assessment of airway severity and alternative causes; typical croup does not need routine tests."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "croup_uncertain",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:croup",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "inspiratory_stridor"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "barking_cough"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Clinical assessment of airway severity and alternative causes; typical croup does not need routine tests."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "croup_historical",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:croup",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "inspiratory_stridor"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "barking_cough"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [
+          {
+            "feature": "barking_cough",
+            "status": "present",
+            "temporality": "historical"
+          }
+        ],
+        "confirmation_needed": [
+          "Clinical assessment of airway severity and alternative causes; typical croup does not need routine tests."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "croup_missing",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:croup",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "inspiratory_stridor"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "barking_cough"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Clinical assessment of airway severity and alternative causes; typical croup does not need routine tests."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "croup_conflicting",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:croup",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "inspiratory_stridor"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "barking_cough"
+          ]
+        ],
+        "conflicting_features": [
+          "barking_cough"
+        ],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Clinical assessment of airway severity and alternative causes; typical croup does not need routine tests."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "preeclampsia_positive",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:preeclampsia",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "new_hypertension_after_20_weeks"
+          ],
+          [
+            "new_proteinuria"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify gestation, blood-pressure measurements, urine protein and relevant organ/placental assessment.",
+          "Evaluate severe features and maternal/fetal wellbeing."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "preeclampsia_absent",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:preeclampsia",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "new_proteinuria"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "new_hypertension_after_20_weeks"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify gestation, blood-pressure measurements, urine protein and relevant organ/placental assessment.",
+          "Evaluate severe features and maternal/fetal wellbeing."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "preeclampsia_uncertain",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:preeclampsia",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "new_proteinuria"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "new_hypertension_after_20_weeks"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify gestation, blood-pressure measurements, urine protein and relevant organ/placental assessment.",
+          "Evaluate severe features and maternal/fetal wellbeing."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "preeclampsia_historical",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:preeclampsia",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "new_proteinuria"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "new_hypertension_after_20_weeks"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [
+          {
+            "feature": "new_hypertension_after_20_weeks",
+            "status": "present",
+            "temporality": "historical"
+          }
+        ],
+        "confirmation_needed": [
+          "Verify gestation, blood-pressure measurements, urine protein and relevant organ/placental assessment.",
+          "Evaluate severe features and maternal/fetal wellbeing."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "preeclampsia_missing",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:preeclampsia",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "new_proteinuria"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "new_hypertension_after_20_weeks"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify gestation, blood-pressure measurements, urine protein and relevant organ/placental assessment.",
+          "Evaluate severe features and maternal/fetal wellbeing."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "preeclampsia_conflicting",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:preeclampsia",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "new_proteinuria"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "new_hypertension_after_20_weeks"
+          ]
+        ],
+        "conflicting_features": [
+          "new_hypertension_after_20_weeks"
+        ],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify gestation, blood-pressure measurements, urine protein and relevant organ/placental assessment.",
+          "Evaluate severe features and maternal/fetal wellbeing."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "acute_kidney_injury_positive",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:acute_kidney_injury",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "creatinine_rise_at_least_0_3_mg_dl_within_48h"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+          "Assess cause and distinguish acute change from chronic kidney dysfunction."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "acute_kidney_injury_absent",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:acute_kidney_injury",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          []
+        ],
+        "missing_groups": [
+          [
+            "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+            "creatinine_at_least_1_5_times_baseline_within_7d",
+            "urine_output_below_0_5_ml_kg_h_for_at_least_6h"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+          "Assess cause and distinguish acute change from chronic kidney dysfunction."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "acute_kidney_injury_uncertain",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:acute_kidney_injury",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          []
+        ],
+        "missing_groups": [
+          [
+            "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+            "creatinine_at_least_1_5_times_baseline_within_7d",
+            "urine_output_below_0_5_ml_kg_h_for_at_least_6h"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+          "Assess cause and distinguish acute change from chronic kidney dysfunction."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "acute_kidney_injury_historical",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:acute_kidney_injury",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          []
+        ],
+        "missing_groups": [
+          [
+            "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+            "creatinine_at_least_1_5_times_baseline_within_7d",
+            "urine_output_below_0_5_ml_kg_h_for_at_least_6h"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [
+          {
+            "feature": "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+            "status": "present",
+            "temporality": "historical"
+          }
+        ],
+        "confirmation_needed": [
+          "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+          "Assess cause and distinguish acute change from chronic kidney dysfunction."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "acute_kidney_injury_missing",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:acute_kidney_injury",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          []
+        ],
+        "missing_groups": [
+          [
+            "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+            "creatinine_at_least_1_5_times_baseline_within_7d",
+            "urine_output_below_0_5_ml_kg_h_for_at_least_6h"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+          "Assess cause and distinguish acute change from chronic kidney dysfunction."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "acute_kidney_injury_conflicting",
+      "kind": "structured_observation_semantics",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:acute_kidney_injury",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          []
+        ],
+        "missing_groups": [
+          [
+            "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+            "creatinine_at_least_1_5_times_baseline_within_7d",
+            "urine_output_below_0_5_ml_kg_h_for_at_least_6h"
+          ]
+        ],
+        "conflicting_features": [
+          "creatinine_rise_at_least_0_3_mg_dl_within_48h"
+        ],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+          "Assess cause and distinguish acute change from chronic kidney dysfunction."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "aki_single_high_value",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:acute_kidney_injury",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          []
+        ],
+        "missing_groups": [
+          [
+            "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+            "creatinine_at_least_1_5_times_baseline_within_7d",
+            "urine_output_below_0_5_ml_kg_h_for_at_least_6h"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+          "Assess cause and distinguish acute change from chronic kidney dysfunction."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "aki_subjective_oliguria",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:acute_kidney_injury",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          []
+        ],
+        "missing_groups": [
+          [
+            "creatinine_rise_at_least_0_3_mg_dl_within_48h",
+            "creatinine_at_least_1_5_times_baseline_within_7d",
+            "urine_output_below_0_5_ml_kg_h_for_at_least_6h"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+          "Assess cause and distinguish acute change from chronic kidney dysfunction."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "aki_timed_measured_oliguria",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:acute_kidney_injury",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "urine_output_below_0_5_ml_kg_h_for_at_least_6h"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+          "Assess cause and distinguish acute change from chronic kidney dysfunction."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "aki_serial_ratio",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:acute_kidney_injury",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "creatinine_at_least_1_5_times_baseline_within_7d"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify creatinine units, baseline and measurement times, or measured weight-adjusted urine output and duration.",
+          "Assess cause and distinguish acute change from chronic kidney dysfunction."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "preeclampsia_without_proteinuria",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:preeclampsia",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "new_hypertension_after_20_weeks"
+          ],
+          [
+            "new_maternal_organ_dysfunction"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify gestation, blood-pressure measurements, urine protein and relevant organ/placental assessment.",
+          "Evaluate severe features and maternal/fetal wellbeing."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "hypertension_only",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:preeclampsia",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [
+            "new_hypertension_after_20_weeks"
+          ],
+          []
+        ],
+        "missing_groups": [
+          [
+            "new_proteinuria",
+            "new_maternal_organ_dysfunction",
+            "new_uteroplacental_dysfunction"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Verify gestation, blood-pressure measurements, urine protein and relevant organ/placental assessment.",
+          "Evaluate severe features and maternal/fetal wellbeing."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "chest_pain_only",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pericarditis",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [
+            "pleuritic_or_positional_chest_pain"
+          ],
+          []
+        ],
+        "missing_groups": [
+          [
+            "pericardial_rub",
+            "diffuse_st_or_pr_changes",
+            "new_or_worsening_pericardial_effusion",
+            "imaging_pericardial_inflammation",
+            "inflammatory_markers_elevated"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review ECG, cardiac biomarkers and echocardiography in clinical context.",
+          "Assess alternative chest-pain emergencies and myocardial involvement."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "chest_pain_and_imaging",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pericarditis",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "pleuritic_or_positional_chest_pain"
+          ],
+          [
+            "imaging_pericardial_inflammation"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review ECG, cardiac biomarkers and echocardiography in clinical context.",
+          "Assess alternative chest-pain emergencies and myocardial involvement."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "stridor_only",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:croup",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [
+            "inspiratory_stridor"
+          ]
+        ],
+        "missing_groups": [
+          [
+            "barking_cough"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Clinical assessment of airway severity and alternative causes; typical croup does not need routine tests."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "barking_and_hoarseness",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:croup",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "barking_cough"
+          ],
+          [
+            "hoarse_voice"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Clinical assessment of airway severity and alternative causes; typical croup does not need routine tests."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "fabry_normal_enzyme_not_exclusion",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": true,
+      "passed": true,
+      "result": {
+        "profile": "tier2:fabry_disease",
+        "status": "PATTERN_FOR_REVIEW",
+        "matched_groups": [
+          [
+            "acral_neuropathic_pain"
+          ],
+          [
+            "angiokeratoma"
+          ]
+        ],
+        "missing_groups": [],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Review alpha-galactosidase A activity and GLA molecular testing in the appropriate sex and phenotype context.",
+          "Normal enzyme activity in a female does not exclude Fabry; variant interpretation is required."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    },
+    {
+      "id": "metanephrines_alone_need_review",
+      "kind": "author_designed_evidence_contrast",
+      "expected_pattern_supported": false,
+      "passed": true,
+      "result": {
+        "profile": "tier2:pheochromocytoma",
+        "status": "INSUFFICIENT_PATTERN_EVIDENCE",
+        "matched_groups": [
+          [],
+          [],
+          []
+        ],
+        "missing_groups": [
+          [
+            "episodic_hypertension"
+          ],
+          [
+            "episodic_headache"
+          ],
+          [
+            "episodic_palpitations",
+            "episodic_sweating"
+          ]
+        ],
+        "conflicting_features": [],
+        "ignored_noncurrent_observations": [],
+        "confirmation_needed": [
+          "Evaluate plasma free or urinary fractionated metanephrines with sampling and confounders reviewed.",
+          "Positive biochemical findings require appropriate clinical follow-up; symptoms alone do not confirm a tumor."
+        ],
+        "clinical_validation_status": "NOT_VERIFIED",
+        "runtime_eligible": false,
+        "final_diagnosis": null,
+        "probability": null,
+        "disease_excluded": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "scope": "synthetic_final_turn_uncertainty_safety_probes",
+  "baseline_commit": "e603ac8",
+  "clinical_validation": false,
+  "limitations": [
+    "Five evidence families reused across phrasing variants.",
+    "Forced final turn with no affirmative clinical history, not autonomous workup or independent patients.",
+    "Correct means unknown for unsupported uncertain evidence; this does not measure disease recognition."
+  ],
+  "files": {
+    "development.json": {
+      "sha256": "61d7595eb0a577679b0fdfff9b0ae4a6eaa1ebe4d9044424bd101818ba1888f3",
+      "count": 20
+    },
+    "validation.json": {
+      "sha256": "fb1e6f14872d186dd9bb341d77e885ad853e2d2a94bebff1a7b7a134afe496cd",
+      "count": 20
+    }
+  }
+}

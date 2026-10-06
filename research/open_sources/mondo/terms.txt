@@ -1,0 +1,5 @@
+Mondo licence evidence (copied verbatim from the downloaded mondo-edit.obo header)
+
+sha256 30fd1b2d50ea2a14330f1d93e7ef5e61607a05c1a36e1ce8e0f54b6aceaabf7e
+property_value: http://purl.org/dc/terms/license http://creativecommons.org/licenses/by/4.0/
+Repository LICENSE: https://raw.githubusercontent.com/monarch-initiative/mondo/master/LICENSE (Creative Commons Attribution 4.0 International)

@@ -1,0 +1,11 @@
+{
+  "branch": "offline/nova-competition-agent-optimization",
+  "final_reasoning_sha": "1046986c04e40d1c8b0d995adf1ab0e866724f3d",
+  "blind_v17_authoring_sha": "cf9970a0ba893d99b53f971a8ee6222cda29347b",
+  "blind_v17_first_run_sha": "cf9970a0ba893d99b53f971a8ee6222cda29347b",
+  "verification_v8_artifact_introducing_sha": "b114831d4d709a8155ade213e28edfddd76275a0",
+  "remote_artifact_snapshot_verified": true,
+  "final_remote_head_note": "Final receipt commit SHA is reported after push, not embedded into its own contents.",
+  "runtime_changed_after_freeze": false,
+  "main_changed": false
+}

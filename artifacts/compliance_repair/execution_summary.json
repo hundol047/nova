@@ -1,0 +1,44 @@
+{
+  "schema": "nova-compliance-repair-v1",
+  "executed_utc": "2026-10-04T18:17:13.855786+00:00",
+  "audited_remote_head": "fe4d981353e6b2c3703b6f6ab790c6688144c725",
+  "verified_runtime_sha": "9b607b49c56e64b072645f1539d53d1ca4b92c74",
+  "runtime_changed": false,
+  "reasoning_release": "nova-verification-v12",
+  "status": "NOT READY",
+  "official_interface": "EXTERNAL_OFFICIAL_INTERFACE_BLOCKED",
+  "prompt": "docs/compliance/REPAIR_PROMPT_KO.md",
+  "report": "docs/compliance/REPAIR_EXECUTION_REPORT.md",
+  "tests": {
+    "passed": 973,
+    "failed": 0,
+    "skipped": 1,
+    "skip_reasons": [
+      {
+        "test": "tests.test_learning_training.test_torch_training_and_checkpoint_roundtrip",
+        "reason": "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"
+      }
+    ],
+    "command": "python -m pytest tests -q --disable-warnings --junitxml=artifacts/compliance_repair/pytest.xml"
+  },
+  "retrieval_experiment": "REJECTED: same accuracy/retrieval/rerank, higher tests and turns",
+  "experiment_artifact": "artifacts/compliance_repair/retrieval_experiment_decision.json",
+  "ood_policy": "UNCHANGED: safe early-stop improvement not established; 36-44 control turns remain a weakness",
+  "source_inventory_count": 70,
+  "source_hash_mismatches": 0,
+  "missing_generation_inventory_entries": 0,
+  "clinical_source_license_clearance": "UNRESOLVED",
+  "new_clinical_knowledge_or_labels": false,
+  "standalone_full_loop": "PASS / explicit mock / 20 turns",
+  "source_submission_byte_equivalence": true,
+  "secret_scan": "PASS / heuristic scan, reviewed synthetic fixtures excluded",
+  "zip": {
+    "path": "artifacts/compliance_repair/nova-pre-guide-repair.zip",
+    "bytes": 285189,
+    "sha256": "961d8c2bf64812112a783e05a17a2e39ef82ec13624b6634addc947c9f6d6457",
+    "status": "LOCAL_PRE_GUIDE_CANDIDATE_ONLY"
+  },
+  "blind_v19": "NOT EXECUTED / REFERENCE-ONLY",
+  "fresh_final_blind": "NOT YET AUTHORED",
+  "regression_note": "Full tests rerun. Eight development regression artifacts in v12 retained: reasoning runtime unchanged. Experimental Round M rerun is not a promoted runtime validation."
+}

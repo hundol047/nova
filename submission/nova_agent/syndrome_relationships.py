@@ -43,3 +43,19 @@ SYNDROME_ROLE: dict[str, SyndromeRole] = {
 
 def syndrome_role(diagnosis_id: str) -> "SyndromeRole | None":
     return SYNDROME_ROLE.get(diagnosis_id)
+
+
+def supported_source_syndrome_pairs(differential):
+    """Expose concurrently evidenced roles without declaring a causal diagnosis or boosting rank.
+
+    The existing role table supports source/systemic coexistence only; it has no adjudicated
+    cause/manifestation/complication edges. Those relationships remain unasserted.
+    """
+    sources = [d for d in differential if syndrome_role(d.diagnosis_id) == 'localized_source'
+               and d.supporting_evidence]
+    systemic = [d for d in differential if syndrome_role(d.diagnosis_id) == 'systemic_syndrome'
+                and d.supporting_evidence]
+    return [{'source_id': a.diagnosis_id, 'syndrome_id': b.diagnosis_id,
+             'relationship': 'CONCURRENTLY_SUPPORTED_ROLES', 'causality': 'UNCONFIRMED',
+             'source_evidence': list(a.supporting_evidence), 'syndrome_evidence': list(b.supporting_evidence)}
+            for a in sources for b in systemic]

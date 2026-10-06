@@ -1,0 +1,1147 @@
+{
+  "data_type": "SYNTHETIC DEVELOPMENT",
+  "independent_clinical_validation": false,
+  "expert_reviewed": false,
+  "provider": "mock",
+  "cases": 32,
+  "stage": "evidence snapshot at forced final turn; not a diagnostic accuracy benchmark",
+  "metrics": {
+    "supported_false_ood": {
+      "numerator": 0,
+      "denominator": 12,
+      "rate": 0.0
+    },
+    "ood_detection": {
+      "numerator": 6,
+      "denominator": 8,
+      "rate": 0.75
+    },
+    "unsupported_uncertainty_detection": {
+      "numerator": 20,
+      "denominator": 20,
+      "rate": 1.0
+    },
+    "insufficient_information": {
+      "numerator": 23,
+      "denominator": 32,
+      "rate": 0.71875
+    },
+    "forced_protocol_diagnosis": {
+      "numerator": 29,
+      "denominator": 32,
+      "rate": 0.90625
+    },
+    "unsafe_confident_diagnosis_proxy": {
+      "numerator": 0,
+      "denominator": 20,
+      "rate": 0.0
+    },
+    "supported_evidenced_acceptance": {
+      "numerator": 3,
+      "denominator": 4,
+      "rate": 0.75
+    }
+  },
+  "rows": [
+    {
+      "id": "task1",
+      "group": "ood",
+      "critical": false,
+      "internal": {
+        "internal_result": "OUT_OF_DOMAIN",
+        "reasons": [
+          "outside_diagnostic_task_without_patient_evidence"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": true,
+          "task_intent": true,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "task2",
+      "group": "ood",
+      "critical": false,
+      "internal": {
+        "internal_result": "OUT_OF_DOMAIN",
+        "reasons": [
+          "outside_diagnostic_task_without_patient_evidence"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": true,
+          "task_intent": true,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "task3",
+      "group": "ood",
+      "critical": false,
+      "internal": {
+        "internal_result": "OUT_OF_DOMAIN",
+        "reasons": [
+          "outside_diagnostic_task_without_patient_evidence"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": true,
+          "task_intent": true,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "task4",
+      "group": "ood",
+      "critical": false,
+      "internal": {
+        "internal_result": "OUT_OF_DOMAIN",
+        "reasons": [
+          "outside_diagnostic_task_without_patient_evidence"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": true,
+          "task_intent": true,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "task5",
+      "group": "ood",
+      "critical": false,
+      "internal": {
+        "internal_result": "OUT_OF_DOMAIN",
+        "reasons": [
+          "outside_diagnostic_task_without_patient_evidence"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": true,
+          "task_intent": true,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "task6",
+      "group": "ood",
+      "critical": false,
+      "internal": {
+        "internal_result": "OUT_OF_DOMAIN",
+        "reasons": [
+          "outside_diagnostic_task_without_patient_evidence"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": true,
+          "task_intent": true,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "task7",
+      "group": "ood",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "task8",
+      "group": "ood",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "vague1",
+      "group": "insufficient",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "vague2",
+      "group": "insufficient",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "vague3",
+      "group": "insufficient",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "vague4",
+      "group": "insufficient",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "scope1",
+      "group": "unsupported_medical",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "scope2",
+      "group": "unsupported_medical",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "scope3",
+      "group": "unsupported_medical",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "scope4",
+      "group": "unsupported_medical",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "mixed1",
+      "group": "insufficient",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "mixed2",
+      "group": "insufficient",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": false,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "mixed3",
+      "group": "supported_sparse",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "safety_candidate",
+            "symptom_match"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": true,
+          "task_intent": true,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "mixed4",
+      "group": "supported_sparse",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 2,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "safety_candidate",
+            "symptom_match"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": true,
+          "task_intent": true,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "sparse1",
+      "group": "supported_sparse",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "weak_profile_support"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 1,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 1.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "symptom_match"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "sparse2",
+      "group": "supported_sparse",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 1,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "symptom_match"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "sparse3",
+      "group": "supported_sparse",
+      "critical": true,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "safety_candidate",
+            "symptom_match"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "sparse4",
+      "group": "supported_sparse",
+      "critical": true,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "weak_profile_support"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 1,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 1.25,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "safety_candidate",
+            "symptom_match"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "sparse5",
+      "group": "supported_sparse",
+      "critical": true,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "safety_candidate",
+            "symptom_match"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "sparse6",
+      "group": "supported_sparse",
+      "critical": true,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "weak_profile_support"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 1,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 1.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "symptom_match"
+          ],
+          "objective_observations_present": false,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "conflict1",
+      "group": "insufficient",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "safety_candidate",
+            "symptom_match"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "conflict2",
+      "group": "insufficient",
+      "critical": false,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 2,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "objective_finding",
+            "symptom_match"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "strong1",
+      "group": "supported_evidenced",
+      "critical": true,
+      "internal": {
+        "internal_result": "SUPPORTED_DIAGNOSIS",
+        "reasons": [
+          "convergent_deterministic_evidence"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 5,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 10.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "imaging_match",
+            "objective_finding",
+            "safety_candidate",
+            "symptom_match"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": false
+    },
+    {
+      "id": "strong2",
+      "group": "supported_evidenced",
+      "critical": false,
+      "internal": {
+        "internal_result": "SUPPORTED_DIAGNOSIS",
+        "reasons": [
+          "convergent_deterministic_evidence"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 5,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 1.5,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "objective_finding",
+            "symptom_match"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": false
+    },
+    {
+      "id": "strong3",
+      "group": "supported_evidenced",
+      "critical": true,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "weak_profile_support"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 2,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 1.0,
+          "known_presentation_concepts": 2,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "symptom_match"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": true
+    },
+    {
+      "id": "strong4",
+      "group": "supported_evidenced",
+      "critical": true,
+      "internal": {
+        "internal_result": "SUPPORTED_DIAGNOSIS",
+        "reasons": [
+          "convergent_deterministic_evidence"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 5,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 4.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "objective_finding",
+            "safety_candidate",
+            "symptom_match"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire_type": "DIAGNOSE",
+      "forced_due_to_protocol": false
+    }
+  ]
+}

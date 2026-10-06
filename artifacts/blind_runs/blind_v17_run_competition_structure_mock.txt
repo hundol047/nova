@@ -1,0 +1,77 @@
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+Blind17_01                      critical              YES       38      0          NO             
+Blind17_02                      medication_risk       YES       35      0          NO             
+Blind17_03                      candidate_survival_trapYES       35      0          NO             
+Blind17_04                      polypharmacy          YES       37      0          NO             
+Blind17_05                      elderly               YES       40      0          NO             
+Blind17_06                      vague_early_presentationYES       10      0          NO             
+Blind17_07                      premature_diagnosis_trapYES       38      0          NO             
+Blind17_08                      critical              YES       36      0          NO             
+Blind17_09                      benign_mimic          NO        35      0          NO             
+Blind17_10                      over_testing_trap     YES       44      0          NO             
+Blind17_11                      common                YES       38      0          NO             
+Blind17_12                      common                YES       29      0          NO             
+Blind17_13                      objective_evidence    YES       41      0          NO             
+Blind17_14                      pediatric             YES       41      0          NO             
+Blind17_15                      medication_risk       YES       11      0          NO             
+Blind17_16                      candidate_reentry_trapYES       41      0          NO             
+Blind17_17                      polypharmacy          YES       42      0          NO             
+Blind17_18                      benign_mimic          YES       37      0          NO             
+Blind17_19                      common                YES       42      0          NO             
+Blind17_20                      common                NO        36      0          NO             
+Blind17_21                      negative_evidence     YES       36      0          NO             
+Blind17_22                      objective_evidence    YES       16      0          NO             
+Blind17_23                      ranking_drift_trap    NO        40      0          NO             
+Blind17_24                      critical              YES       36      0          NO             
+Blind17_25                      multimorbidity        YES       12      0          NO             
+Blind17_26                      common                YES       36      0          NO             
+Blind17_27                      critical              YES       41      0          NO             
+Blind17_28                      dangerous_mimic       YES       37      0          NO             
+Blind17_29                      over_testing_trap     YES       31      0          NO             
+Blind17_30                      critical              YES       15      0          NO             
+Blind17_31                      polypharmacy          NO        36      0          YES            
+Blind17_32                      dangerous_mimic       NO        36      0          NO             
+Blind17_33                      negative_evidence     NO        45      0          NO             
+Blind17_34                      common                NO        39      0          NO             
+Blind17_35                      multilingual_korean   YES       11      0          NO             
+Blind17_36                      multilingual_korean   YES       10      0          NO             
+Blind17_37                      multilingual_korean   YES       36      0          NO             
+Blind17_38                      multilingual_negation YES       40      0          NO             
+Blind17_39                      multilingual_japanese YES       10      0          NO             
+Blind17_40                      multilingual_japanese YES       6       0          NO             
+Blind17_41                      multilingual_japanese YES       39      0          NO             
+Blind17_42                      multilingual_negation YES       38      0          NO             
+Blind17_43                      mixed_language        YES       39      0          NO             
+Blind17_44                      mixed_language        YES       36      0          NO             
+Blind17_45                      mixed_language        YES       11      0          NO             
+Blind17_46                      mixed_language        YES       38      0          NO             
+Blind17_47                      sparse_evidence       YES       12      0          NO             
+Blind17_48                      reproductive_emergencyYES       12      0          NO             
+Blind17_49                      multimorbidity        YES       9       0          NO             
+Blind17_50                      ranking_drift_trap    YES       41      0          NO             
+Blind17_51                      reproductive_emergencyYES       42      0          NO             
+Blind17_52                      candidate_survival_trapYES       35      0          NO             
+Blind17_53                      pediatric             YES       27      0          NO             
+Blind17_54                      late_diagnosis_trap   YES       36      0          NO             
+Blind17_55                      over_testing_trap     YES       44      0          NO             
+Blind17_56                      sparse_evidence       NO (not scored)35      0          NO             
+Blind17_57                      unknown_ood           NO (not scored)45      0          NO             
+Blind17_58                      unknown_ood           NO (not scored)40      0          NO             
+Blind17_59                      long_tail             NO (not scored)45      0          NO             
+Blind17_60                      long_tail             NO (not scored)45      0          NO             
+
+Blind v17: one declared mock run (60 cases, 55 scored, 25 critical)
+  Scored Diagnostic Accuracy:   87.3%  (excludes: Blind17_56, Blind17_57, Blind17_58, Blind17_59, Blind17_60)
+  All-Case Diagnostic Accuracy: 80.0%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (safe handling of excluded cases: diagnosed, no critical miss)
+  Critical Diagnosis Recall:    96.0%
+  Critical Miss Rate:           4.0%
+  Average / Median Turns:       32.4 / 36.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        4.75 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        9.1 / 8.5 / 13.8
+  Utility Score Proxy:          0.230  (informal local metric, evaluation/scoring.py -- not an official competition score)

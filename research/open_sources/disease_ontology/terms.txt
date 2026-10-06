@@ -1,0 +1,5 @@
+Disease Ontology licence evidence (copied verbatim from the downloaded doid.obo header)
+releases/2026-09-30/doid.obo
+sha256 51e717b6b9f5d391f2793f9e16faf9c8629a661ab8f21c3a024458129f182ad2
+remark: The Disease Ontology content is available via the Creative Commons Public Domain Dedication CC0 1.0 Universal license (https://creativecommons.org/publicdomain/zero/1.0/).
+property_value: terms:license https://creativecommons.org/publicdomain/zero/1.0/

@@ -1,0 +1,80 @@
+{
+  "baseline_label": "commit a1b92c8 (pre-IDF/typical_features-index/multi-query-RRF)",
+  "baseline_recall": {
+    "chief_complaint_only": {
+      "20": 11.4,
+      "50": 11.4,
+      "100": 11.4
+    },
+    "chief_complaint_plus_history": {
+      "20": 31.8,
+      "50": 34.1,
+      "100": 34.1
+    }
+  },
+  "reports": [
+    {
+      "condition": "chief_complaint_only",
+      "n_cases": 44,
+      "recall_at": {
+        "20": 50.0,
+        "50": 61.4,
+        "100": 61.4,
+        "150": 61.4
+      },
+      "mrr": 0.1754,
+      "mean_rank": 13.4,
+      "median_rank": 11,
+      "tier_recall_at_50": {
+        "TIER1_DEEP": 61.4
+      },
+      "misses": [
+        "Dyspnea02_AgeSexVariation",
+        "Dizziness02_NegativeFindingCentric",
+        "Unknown01_UnmappedComplaint",
+        "ChestPain06_Korean",
+        "Dyspnea03_PregnancyRiskFactor",
+        "Dyspnea04_Anaphylaxis",
+        "Dizziness03_AtypicalStroke",
+        "Weakness01_ElderlyPolypharmacyHypoglycemia",
+        "AbdominalPain04_AnticoagulantGIBleed",
+        "BackPain02_Nephrolithiasis",
+        "Syncope01_BenignMimicVasovagal",
+        "Palpitations01_ElderlyAtypicalArrhythmia",
+        "Dyspnea06_YoungAdultAsthmaExacerbation",
+        "Stress01_YoungAdultAtypicalHypoglycemia",
+        "Stress02_NonDiabeticAlcoholicHypoglycemia",
+        "Stress07_PolypharmacyWeaknessHyperkalemia",
+        "Stress08_NormalGlucoseWeaknessGIBleed"
+      ]
+    },
+    {
+      "condition": "chief_complaint_plus_history",
+      "n_cases": 44,
+      "recall_at": {
+        "20": 50.0,
+        "50": 75.0,
+        "100": 90.9,
+        "150": 90.9
+      },
+      "mrr": 0.2976,
+      "mean_rank": 24.0,
+      "median_rank": 10.0,
+      "tier_recall_at_50": {
+        "TIER1_DEEP": 75.0
+      },
+      "misses": [
+        "ChestPain06_Korean",
+        "AbdominalPain04_AnticoagulantGIBleed",
+        "Stress07_PolypharmacyWeaknessHyperkalemia",
+        "Stress08_NormalGlucoseWeaknessGIBleed"
+      ]
+    }
+  ],
+  "latency": {
+    "retrieval_p50_ms": 6.69,
+    "retrieval_p95_ms": 15.49,
+    "rerank_p50_ms": 0.12,
+    "rerank_p95_ms": 0.25
+  }
+}

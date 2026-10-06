@@ -1,0 +1,230 @@
+{
+  "all_round_m_metrics_equal": true,
+  "metrics": {
+    "Top1": {
+      "before": 0.959349593495935,
+      "after": 0.959349593495935
+    },
+    "Top3": {
+      "before": 0.983739837398374,
+      "after": 0.983739837398374
+    },
+    "Top5": {
+      "before": 0.991869918699187,
+      "after": 0.991869918699187
+    },
+    "Top10": {
+      "before": 0.991869918699187,
+      "after": 0.991869918699187
+    },
+    "critical_Top1": {
+      "before": 1.0,
+      "after": 1.0
+    },
+    "critical_Top3": {
+      "before": 1.0,
+      "after": 1.0
+    },
+    "critical_Top5": {
+      "before": 1.0,
+      "after": 1.0
+    },
+    "scored_cases": {
+      "before": 123,
+      "after": 123
+    },
+    "critical_count": {
+      "before": 43,
+      "after": 43
+    },
+    "accuracy": {
+      "before": 0.959349593495935,
+      "after": 0.959349593495935
+    },
+    "critical_recall": {
+      "before": 1.0,
+      "after": 1.0
+    },
+    "critical_miss": {
+      "before": 0.0,
+      "after": 0.0
+    },
+    "MRR": {
+      "before": 0.9735772357723578,
+      "after": 0.9735772357723578
+    },
+    "median_true_rank": {
+      "before": 1.0,
+      "after": 1.0
+    },
+    "missing_rank_count": {
+      "before": 1,
+      "after": 1
+    },
+    "median_definition": {
+      "before": "active ranks only; missing rank count reported separately",
+      "after": "active ranks only; missing rank count reported separately"
+    },
+    "retrieval_truth_retention": {
+      "before": 0.8455284552845529,
+      "after": 0.8455284552845529
+    },
+    "rerank_truth_retention": {
+      "before": 0.7317073170731707,
+      "after": 0.7317073170731707
+    },
+    "active_truth_retention": {
+      "before": 0.991869918699187,
+      "after": 0.991869918699187
+    },
+    "average_turns": {
+      "before": 25.8984375,
+      "after": 25.8984375
+    },
+    "average_tests": {
+      "before": 8.9921875,
+      "after": 8.9921875
+    },
+    "average_diagnostic_delay": {
+      "before": 0,
+      "after": 0
+    },
+    "diagnostic_delay_observed_count": {
+      "before": 124,
+      "after": 124
+    },
+    "diagnostic_delay_definition": {
+      "before": "policy-eligible non-forced stop, not clinical safety certification; null != zero",
+      "after": "policy-eligible non-forced stop, not clinical safety certification; null != zero"
+    },
+    "critical_candidate_retention": {
+      "before": 1.0,
+      "after": 1.0
+    },
+    "failure_counts": {
+      "before": {
+        "FINAL_RANKING_ERROR": 4,
+        "RERANK_MISS": 1
+      },
+      "after": {
+        "FINAL_RANKING_ERROR": 4,
+        "RERANK_MISS": 1
+      }
+    },
+    "action_selection_error_rate": {
+      "before": 0.0,
+      "after": 0.0
+    },
+    "final_ranking_error_rate": {
+      "before": 0.032520325203252036,
+      "after": 0.032520325203252036
+    },
+    "long_tail": {
+      "before": {
+        "count": 26,
+        "retrieved": 1.0,
+        "rerank_top25": 0.9615384615384616,
+        "active": 1.0,
+        "Top5": 1.0,
+        "Top1": 0.9230769230769231,
+        "interpretation": "Round M category-defined symptom-only development probes, no independent medical adjudication",
+        "Top10": 1.0,
+        "retrieval_at150": 1.0,
+        "rerank_at25": 0.9615384615384616
+      },
+      "after": {
+        "count": 26,
+        "retrieved": 1.0,
+        "rerank_top25": 0.9615384615384616,
+        "active": 1.0,
+        "Top5": 1.0,
+        "Top1": 0.9230769230769231,
+        "interpretation": "Round M category-defined symptom-only development probes, no independent medical adjudication",
+        "Top10": 1.0,
+        "retrieval_at150": 1.0,
+        "rerank_at25": 0.9615384615384616
+      }
+    },
+    "cases": {
+      "before": 128,
+      "after": 128
+    },
+    "median_turns": {
+      "before": 20.5,
+      "after": 20.5
+    },
+    "average_ask": {
+      "before": 9.90625,
+      "after": 9.90625
+    },
+    "average_exam": {
+      "before": 6,
+      "after": 6
+    },
+    "retrieval_at150": {
+      "before": 0.8455284552845529,
+      "after": 0.8455284552845529
+    },
+    "rerank_at25": {
+      "before": 0.7235772357723578,
+      "after": 0.7235772357723578
+    },
+    "redundant_tests": {
+      "before": 0,
+      "after": 0
+    },
+    "average_unresolved_critical_alternatives": {
+      "before": 11.390625,
+      "after": 11.390625
+    },
+    "languages": {
+      "before": {
+        "EN": {
+          "count": 113,
+          "correct": 108,
+          "accuracy": 0.9557522123893806
+        },
+        "KO": {
+          "count": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "JA": {
+          "count": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        },
+        "Mixed": {
+          "count": 7,
+          "correct": 7,
+          "accuracy": 1.0
+        }
+      },
+      "after": {
+        "EN": {
+          "count": 113,
+          "correct": 108,
+          "accuracy": 0.9557522123893806
+        },
+        "KO": {
+          "count": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "JA": {
+          "count": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        },
+        "Mixed": {
+          "count": 7,
+          "correct": 7,
+          "accuracy": 1.0
+        }
+      }
+    }
+  },
+  "clinical_files_byte_unchanged": true,
+  "baseline_runtime": "9b607b49c56e64b072645f1539d53d1ca4b92c74",
+  "current_runtime": "9d86b047fcc9c501491ee9ec4c104fd64628001f"
+}

@@ -1,0 +1,984 @@
+{
+ "provenance": {
+  "source": "engineering-agent authored summary of widely taught textbook clinical features (general medical-education knowledge); no external dataset or LLM service queried at runtime",
+  "clinician_reviewed": false,
+  "evidence_level": "unreviewed_general_knowledge",
+  "intended_use": "retrieval recall and low-weight feature matching for otherwise empty Tier-2 entries only; makes no diagnostic claim and is NOT a substitute for the Tier-1 deep profiles",
+  "scope": "typical_features and (where a defining objective finding is textbook-standard) confirmatory_findings; risk_factors, specific_features, objective_findings, contradictions and minimum_workup intentionally left empty where no reliable source was available"
+ },
+ "entries": [
+  {
+   "id": "cholecystitis",
+   "typical_features": [
+    "right upper quadrant pain",
+    "pain after fatty meals",
+    "fever",
+    "nausea and vomiting",
+    "pain radiating to right shoulder",
+    "tender right upper abdomen on breathing in"
+   ],
+   "confirmatory_findings": [
+    "gallstones with gallbladder wall thickening",
+    "positive sonographic Murphy sign"
+   ]
+  },
+  {
+   "id": "cholangitis",
+   "typical_features": [
+    "right upper quadrant pain",
+    "fever and chills",
+    "jaundice",
+    "dark urine",
+    "confusion in severe cases",
+    "history of gallstones"
+   ],
+   "confirmatory_findings": [
+    "dilated bile ducts on imaging",
+    "elevated bilirubin"
+   ]
+  },
+  {
+   "id": "biliary_colic",
+   "typical_features": [
+    "episodic right upper abdominal pain",
+    "pain after eating fatty food",
+    "nausea",
+    "pain lasting hours then easing",
+    "pain radiating to back or shoulder blade"
+   ]
+  },
+  {
+   "id": "choledocholithiasis",
+   "typical_features": [
+    "right upper quadrant pain",
+    "jaundice",
+    "pale stools",
+    "dark urine",
+    "history of gallstones"
+   ]
+  },
+  {
+   "id": "bowel_obstruction",
+   "typical_features": [
+    "colicky abdominal pain",
+    "repeated vomiting",
+    "abdominal distension",
+    "unable to pass gas or stool",
+    "previous abdominal surgery",
+    "high-pitched bowel sounds"
+   ],
+   "confirmatory_findings": [
+    "dilated small bowel loops on imaging",
+    "air-fluid levels on abdominal x-ray",
+    "transition point on CT"
+   ]
+  },
+  {
+   "id": "large_bowel_obstruction",
+   "typical_features": [
+    "abdominal distension",
+    "constipation with no gas passed",
+    "crampy lower abdominal pain",
+    "vomiting late",
+    "history of bowel cancer or volvulus"
+   ]
+  },
+  {
+   "id": "diverticulitis",
+   "typical_features": [
+    "left lower quadrant pain",
+    "fever",
+    "change in bowel habit",
+    "constipation or diarrhea",
+    "nausea",
+    "tender left lower abdomen"
+   ],
+   "confirmatory_findings": [
+    "colonic wall thickening with inflamed diverticula on CT",
+    "pericolic fat stranding on CT"
+   ]
+  },
+  {
+   "id": "mesenteric_ischemia",
+   "typical_features": [
+    "severe abdominal pain out of proportion to examination",
+    "pain after eating",
+    "atrial fibrillation or vascular disease",
+    "vomiting",
+    "bloody stool late",
+    "older age"
+   ],
+   "confirmatory_findings": [
+    "filling defect in the mesenteric artery on CT angiography",
+    "elevated lactate"
+   ]
+  },
+  {
+   "id": "peptic_ulcer_disease",
+   "typical_features": [
+    "burning upper abdominal pain",
+    "pain relieved or worsened by eating",
+    "night time pain",
+    "bloating",
+    "NSAID use",
+    "Helicobacter pylori infection"
+   ],
+   "confirmatory_findings": [
+    "ulcer crater seen on endoscopy"
+   ]
+  },
+  {
+   "id": "gi_duodenal_ulcer",
+   "typical_features": [
+    "burning upper abdominal pain",
+    "pain relieved by eating",
+    "night time pain waking from sleep",
+    "NSAID use"
+   ]
+  },
+  {
+   "id": "gi_perforated_ulcer",
+   "typical_features": [
+    "sudden severe upper abdominal pain",
+    "rigid abdomen",
+    "pain spreading across abdomen",
+    "history of ulcer or NSAID use",
+    "fever and rapid pulse"
+   ]
+  },
+  {
+   "id": "perforated_viscus",
+   "typical_features": [
+    "sudden severe abdominal pain",
+    "rigid board-like abdomen",
+    "rebound tenderness",
+    "lying still",
+    "free air under diaphragm"
+   ]
+  },
+  {
+   "id": "gi_peritonitis_gi",
+   "typical_features": [
+    "severe diffuse abdominal pain",
+    "rigid abdomen",
+    "rebound tenderness",
+    "fever",
+    "pain worse with movement"
+   ]
+  },
+  {
+   "id": "gi_liver_abscess",
+   "typical_features": [
+    "fever and chills",
+    "right upper quadrant pain",
+    "malaise",
+    "weight loss",
+    "recent abdominal infection"
+   ]
+  },
+  {
+   "id": "acute_hepatitis",
+   "typical_features": [
+    "jaundice",
+    "dark urine",
+    "fatigue",
+    "nausea and loss of appetite",
+    "right upper quadrant discomfort",
+    "pale stools"
+   ]
+  },
+  {
+   "id": "toxic_megacolon",
+   "typical_features": [
+    "bloody diarrhea",
+    "abdominal distension",
+    "fever",
+    "rapid heart rate",
+    "history of ulcerative colitis or Crohn disease"
+   ]
+  },
+  {
+   "id": "ulcerative_colitis",
+   "typical_features": [
+    "bloody diarrhea",
+    "urgency to defecate",
+    "crampy lower abdominal pain",
+    "mucus in stool",
+    "weight loss"
+   ]
+  },
+  {
+   "id": "crohn_disease",
+   "typical_features": [
+    "chronic diarrhea",
+    "right lower abdominal pain",
+    "weight loss",
+    "mouth ulcers",
+    "perianal disease"
+   ]
+  },
+  {
+   "id": "esophageal_varices",
+   "typical_features": [
+    "vomiting blood",
+    "black tarry stools",
+    "history of cirrhosis or alcohol use",
+    "large volume bleeding",
+    "dizziness on standing"
+   ]
+  },
+  {
+   "id": "mallory_weiss_tear",
+   "typical_features": [
+    "vomiting blood after retching",
+    "forceful vomiting",
+    "alcohol binge",
+    "upper abdominal pain"
+   ]
+  },
+  {
+   "id": "pericarditis",
+   "typical_features": [
+    "sharp chest pain",
+    "pain eased by leaning forward",
+    "pain worse lying flat or breathing in",
+    "recent viral illness",
+    "fever",
+    "friction rub"
+   ],
+   "confirmatory_findings": [
+    "widespread ST elevation on ECG",
+    "PR segment depression on ECG",
+    "pericardial effusion on echocardiogram"
+   ]
+  },
+  {
+   "id": "myocarditis",
+   "typical_features": [
+    "chest pain",
+    "palpitations",
+    "recent viral illness",
+    "shortness of breath",
+    "fatigue",
+    "raised troponin"
+   ],
+   "confirmatory_findings": [
+    "elevated troponin",
+    "myocardial edema on cardiac MRI"
+   ]
+  },
+  {
+   "id": "cardiac_tamponade",
+   "typical_features": [
+    "shortness of breath",
+    "low blood pressure",
+    "distended neck veins",
+    "muffled heart sounds",
+    "rapid heart rate",
+    "recent chest trauma or pericarditis"
+   ]
+  },
+  {
+   "id": "infective_endocarditis",
+   "typical_features": [
+    "fever",
+    "new heart murmur",
+    "night sweats",
+    "intravenous drug use",
+    "splinter hemorrhages",
+    "prosthetic valve"
+   ]
+  },
+  {
+   "id": "deep_vein_thrombosis",
+   "typical_features": [
+    "unilateral calf swelling",
+    "calf pain or tenderness",
+    "warmth and redness of leg",
+    "recent immobility or long travel",
+    "recent surgery",
+    "previous clot"
+   ],
+   "confirmatory_findings": [
+    "thrombus on compression ultrasound",
+    "non-compressible vein on ultrasound"
+   ]
+  },
+  {
+   "id": "hypertrophic_cardiomyopathy",
+   "typical_features": [
+    "exertional syncope",
+    "chest pain on exertion",
+    "family history of sudden death",
+    "palpitations",
+    "shortness of breath on exertion"
+   ]
+  },
+  {
+   "id": "supraventricular_tachycardia",
+   "typical_features": [
+    "sudden onset rapid regular palpitations",
+    "sudden stop of palpitations",
+    "lightheadedness",
+    "chest discomfort",
+    "episodes lasting minutes"
+   ]
+  },
+  {
+   "id": "ventricular_tachycardia",
+   "typical_features": [
+    "palpitations",
+    "syncope",
+    "chest pain",
+    "history of heart attack or cardiomyopathy",
+    "low blood pressure"
+   ]
+  },
+  {
+   "id": "atrial_flutter",
+   "typical_features": [
+    "regular rapid palpitations",
+    "shortness of breath",
+    "fatigue",
+    "heart rate near 150"
+   ]
+  },
+  {
+   "id": "heart_failure_acute",
+   "typical_features": [
+    "worsening shortness of breath",
+    "unable to lie flat",
+    "leg swelling",
+    "weight gain",
+    "waking breathless at night",
+    "crackles in lungs"
+   ]
+  },
+  {
+   "id": "chronic_heart_failure",
+   "typical_features": [
+    "shortness of breath on exertion",
+    "ankle swelling",
+    "fatigue",
+    "needing extra pillows",
+    "weight gain"
+   ]
+  },
+  {
+   "id": "hypertensive_emergency",
+   "typical_features": [
+    "severe headache",
+    "blood pressure above 180 over 120",
+    "blurred vision",
+    "chest pain",
+    "confusion",
+    "shortness of breath"
+   ]
+  },
+  {
+   "id": "aortic_stenosis",
+   "typical_features": [
+    "exertional chest pain",
+    "exertional syncope",
+    "shortness of breath on exertion",
+    "ejection systolic murmur",
+    "older age"
+   ]
+  },
+  {
+   "id": "pheochromocytoma",
+   "typical_features": [
+    "episodic severe headache",
+    "sweating",
+    "palpitations",
+    "episodic high blood pressure",
+    "pallor",
+    "anxiety"
+   ]
+  },
+  {
+   "id": "stable_angina",
+   "typical_features": [
+    "chest pressure on exertion",
+    "relieved by rest",
+    "radiation to arm or jaw",
+    "predictable pattern",
+    "risk factors for heart disease"
+   ]
+  },
+  {
+   "id": "hyperthyroidism",
+   "typical_features": [
+    "weight loss despite good appetite",
+    "palpitations",
+    "heat intolerance",
+    "tremor",
+    "sweating",
+    "anxiety",
+    "diarrhea",
+    "goiter"
+   ],
+   "confirmatory_findings": [
+    "suppressed TSH with raised free T4",
+    "diffuse goiter on examination"
+   ]
+  },
+  {
+   "id": "thyroid_storm",
+   "typical_features": [
+    "high fever",
+    "rapid heart rate",
+    "agitation or confusion",
+    "tremor",
+    "known hyperthyroidism",
+    "vomiting and diarrhea"
+   ]
+  },
+  {
+   "id": "myxedema_coma",
+   "typical_features": [
+    "low body temperature",
+    "confusion or drowsiness",
+    "slow heart rate",
+    "known hypothyroidism",
+    "cold intolerance",
+    "swelling of face"
+   ]
+  },
+  {
+   "id": "adrenal_crisis",
+   "typical_features": [
+    "severe weakness",
+    "low blood pressure",
+    "vomiting and abdominal pain",
+    "long-term steroid use stopped suddenly",
+    "confusion",
+    "low sodium"
+   ]
+  },
+  {
+   "id": "addison_disease",
+   "typical_features": [
+    "fatigue",
+    "weight loss",
+    "darkened skin",
+    "salt craving",
+    "low blood pressure",
+    "nausea"
+   ]
+  },
+  {
+   "id": "hyperosmolar_hyperglycemic",
+   "typical_features": [
+    "very high blood glucose",
+    "extreme thirst",
+    "frequent urination",
+    "confusion or drowsiness",
+    "dehydration",
+    "older adult with type 2 diabetes"
+   ]
+  },
+  {
+   "id": "hypercalcemia",
+   "typical_features": [
+    "excessive thirst",
+    "frequent urination",
+    "constipation",
+    "abdominal pain",
+    "confusion",
+    "bone pain",
+    "history of cancer or hyperparathyroidism"
+   ]
+  },
+  {
+   "id": "hypocalcemia",
+   "typical_features": [
+    "tingling around mouth and fingers",
+    "muscle cramps",
+    "carpopedal spasm",
+    "seizure",
+    "recent thyroid or parathyroid surgery"
+   ]
+  },
+  {
+   "id": "siadh",
+   "typical_features": [
+    "low sodium",
+    "confusion",
+    "headache",
+    "nausea",
+    "seizure",
+    "concentrated urine"
+   ]
+  },
+  {
+   "id": "pituitary_apoplexy",
+   "typical_features": [
+    "sudden severe headache",
+    "visual loss or double vision",
+    "known pituitary tumor",
+    "vomiting",
+    "low blood pressure"
+   ]
+  },
+  {
+   "id": "rhabdomyolysis",
+   "typical_features": [
+    "severe muscle pain",
+    "dark cola colored urine",
+    "muscle weakness",
+    "recent intense exercise or crush injury",
+    "statin use",
+    "markedly raised creatine kinase"
+   ],
+   "confirmatory_findings": [
+    "markedly raised creatine kinase",
+    "myoglobin in urine"
+   ]
+  },
+  {
+   "id": "epididymitis",
+   "typical_features": [
+    "scrotal pain and swelling",
+    "gradual onset testicular pain",
+    "burning urination",
+    "fever",
+    "relief on lifting the testis",
+    "urethral discharge"
+   ],
+   "confirmatory_findings": [
+    "tender swollen epididymis on examination",
+    "raised epididymal blood flow on doppler ultrasound"
+   ]
+  },
+  {
+   "id": "gu_epididymo_orchitis",
+   "typical_features": [
+    "scrotal pain and swelling",
+    "fever",
+    "burning urination",
+    "tender swollen testis",
+    "urethral discharge"
+   ]
+  },
+  {
+   "id": "testicular_torsion",
+   "typical_features": [
+    "sudden severe testicular pain",
+    "nausea and vomiting",
+    "high riding testis",
+    "swollen tender testis",
+    "absent cremasteric reflex",
+    "adolescent male"
+   ],
+   "confirmatory_findings": [
+    "absent testicular blood flow on doppler ultrasound",
+    "twisted spermatic cord on ultrasound"
+   ]
+  },
+  {
+   "id": "ovarian_torsion",
+   "typical_features": [
+    "sudden severe lower abdominal pain on one side",
+    "nausea and vomiting",
+    "pelvic mass or cyst",
+    "intermittent colicky pain",
+    "history of ovarian cyst"
+   ],
+   "confirmatory_findings": [
+    "enlarged ovary with absent blood flow on doppler ultrasound",
+    "twisted ovarian pedicle on imaging"
+   ]
+  },
+  {
+   "id": "pelvic_inflammatory_disease",
+   "typical_features": [
+    "lower abdominal pain",
+    "abnormal vaginal discharge",
+    "fever",
+    "pain with intercourse",
+    "cervical motion tenderness",
+    "new sexual partner"
+   ],
+   "confirmatory_findings": [
+    "cervical motion tenderness on examination",
+    "mucopurulent cervical discharge on examination"
+   ]
+  },
+  {
+   "id": "ruptured_ovarian_cyst",
+   "typical_features": [
+    "sudden lower abdominal pain on one side",
+    "pain during or after exercise or intercourse",
+    "pelvic tenderness",
+    "negative pregnancy test"
+   ]
+  },
+  {
+   "id": "prostatitis",
+   "typical_features": [
+    "fever and chills",
+    "pain between scrotum and anus",
+    "burning urination",
+    "frequent urination",
+    "tender boggy prostate"
+   ]
+  },
+  {
+   "id": "urinary_retention",
+   "typical_features": [
+    "unable to pass urine",
+    "lower abdominal fullness",
+    "suprapubic pain",
+    "enlarged prostate",
+    "dribbling"
+   ]
+  },
+  {
+   "id": "acute_kidney_injury",
+   "typical_features": [
+    "reduced urine output",
+    "rising creatinine",
+    "swelling",
+    "recent vomiting or diarrhea or nephrotoxic drug",
+    "fatigue"
+   ]
+  },
+  {
+   "id": "cellulitis",
+   "typical_features": [
+    "red warm swollen skin",
+    "spreading redness",
+    "tender skin",
+    "fever",
+    "skin break or wound",
+    "leg most common"
+   ]
+  },
+  {
+   "id": "cellulitis_derm",
+   "typical_features": [
+    "red warm swollen skin",
+    "spreading redness",
+    "tender skin",
+    "fever",
+    "skin break or wound",
+    "leg most common"
+   ]
+  },
+  {
+   "id": "erysipelas",
+   "typical_features": [
+    "sharply demarcated red raised skin",
+    "fever",
+    "facial or leg involvement",
+    "tender hot skin",
+    "abrupt onset"
+   ]
+  },
+  {
+   "id": "der_cutaneous_abscess",
+   "typical_features": [
+    "painful fluctuant lump",
+    "red warm swelling",
+    "pus drainage",
+    "fever"
+   ]
+  },
+  {
+   "id": "stevens_johnson_syndrome",
+   "typical_features": [
+    "painful blistering rash",
+    "mouth and eye sores",
+    "fever",
+    "recent new drug",
+    "skin peeling"
+   ]
+  },
+  {
+   "id": "angioedema",
+   "typical_features": [
+    "swelling of lips tongue or face",
+    "sudden onset",
+    "difficulty swallowing or breathing",
+    "ACE inhibitor use",
+    "no itching"
+   ]
+  },
+  {
+   "id": "sym_hemoptysis",
+   "typical_features": [
+    "coughing up blood",
+    "cough",
+    "shortness of breath",
+    "chest pain",
+    "weight loss",
+    "smoking history"
+   ]
+  },
+  {
+   "id": "sym_syncope",
+   "typical_features": [
+    "transient loss of consciousness",
+    "rapid recovery",
+    "lightheadedness before",
+    "palpitations",
+    "injury from fall"
+   ]
+  },
+  {
+   "id": "sym_seizure_symptom",
+   "typical_features": [
+    "convulsions",
+    "loss of consciousness",
+    "tongue biting",
+    "incontinence",
+    "post-ictal confusion"
+   ]
+  },
+  {
+   "id": "heat_stroke",
+   "typical_features": [
+    "body temperature above 40 degrees",
+    "confusion",
+    "hot dry skin or profuse sweating",
+    "recent heat or exertion",
+    "collapse"
+   ]
+  },
+  {
+   "id": "hypothermia",
+   "typical_features": [
+    "body temperature below 35 degrees",
+    "shivering",
+    "confusion",
+    "slow heart rate",
+    "cold exposure"
+   ]
+  },
+  {
+   "id": "sickle_cell_disease",
+   "typical_features": [
+    "severe bone pain crisis",
+    "anemia",
+    "jaundice",
+    "history of sickle cell",
+    "chest pain",
+    "recurrent infections"
+   ]
+  },
+  {
+   "id": "hereditary_angioedema",
+   "typical_features": [
+    "recurrent swelling without itching",
+    "abdominal pain attacks",
+    "family history",
+    "swelling of airway",
+    "no response to antihistamines"
+   ]
+  },
+  {
+   "id": "epistaxis",
+   "typical_features": [
+    "nosebleed",
+    "blood from nostril",
+    "dry mucosa or nose picking",
+    "anticoagulant use",
+    "hypertension"
+   ]
+  },
+  {
+   "id": "cir_carotid_dissection",
+   "typical_features": [
+    "neck pain",
+    "headache",
+    "horner syndrome",
+    "transient or fixed neurologic deficit",
+    "recent neck trauma or manipulation"
+   ]
+  },
+  {
+   "id": "aortic_aneurysm_unruptured",
+   "typical_features": [
+    "pulsatile abdominal mass",
+    "abdominal or back pain",
+    "older male smoker",
+    "often asymptomatic"
+   ]
+  },
+  {
+   "id": "gout",
+   "typical_features": [
+    "sudden hot red swollen joint",
+    "severe joint pain",
+    "big toe joint involvement",
+    "night onset",
+    "previous similar attacks",
+    "high uric acid"
+   ],
+   "confirmatory_findings": [
+    "urate crystals in joint fluid",
+    "negatively birefringent needle-shaped crystals"
+   ]
+  },
+  {
+   "id": "acute_otitis_media",
+   "typical_features": [
+    "ear pain",
+    "fever",
+    "feeling of blocked ear",
+    "child pulling at ear",
+    "recent cold",
+    "bulging red eardrum"
+   ],
+   "confirmatory_findings": [
+    "bulging red tympanic membrane on otoscopy"
+   ]
+  },
+  {
+   "id": "optic_neuritis",
+   "typical_features": [
+    "vision loss in one eye",
+    "pain on moving the eye",
+    "washed out colors",
+    "young adult",
+    "relative afferent pupillary defect"
+   ],
+   "confirmatory_findings": [
+    "optic nerve enhancement on MRI",
+    "relative afferent pupillary defect on examination"
+   ]
+  },
+  {
+   "id": "herpes_zoster",
+   "typical_features": [
+    "burning pain on one side of body",
+    "band-like blistering rash",
+    "rash following a nerve distribution",
+    "tingling before rash",
+    "older age or weakened immunity"
+   ],
+   "confirmatory_findings": [
+    "grouped vesicles in a dermatomal distribution on examination"
+   ]
+  },
+  {
+   "id": "acute_angle_closure_glaucoma",
+   "typical_features": [
+    "severe eye pain",
+    "red eye",
+    "halos around lights",
+    "blurred vision",
+    "headache with nausea and vomiting",
+    "fixed mid-dilated pupil"
+   ],
+   "confirmatory_findings": [
+    "raised intraocular pressure",
+    "fixed mid-dilated pupil on examination"
+   ]
+  },
+  {
+   "id": "giant_cell_arteritis",
+   "typical_features": [
+    "new headache in person over 50",
+    "scalp tenderness",
+    "jaw pain on chewing",
+    "visual disturbance",
+    "fever and malaise",
+    "high ESR"
+   ],
+   "confirmatory_findings": [
+    "positive temporal artery biopsy",
+    "temporal artery halo sign on ultrasound"
+   ]
+  },
+  {
+   "id": "gca",
+   "typical_features": [
+    "new headache in person over 50",
+    "scalp tenderness",
+    "jaw pain on chewing",
+    "visual disturbance",
+    "fever and malaise",
+    "high ESR"
+   ],
+   "confirmatory_findings": [
+    "positive temporal artery biopsy",
+    "temporal artery halo sign on ultrasound"
+   ]
+  },
+  {
+   "id": "spontaneous_pneumothorax",
+   "typical_features": [
+    "sudden one-sided chest pain",
+    "shortness of breath",
+    "tall thin young man or smoker",
+    "reduced breath sounds on one side",
+    "onset at rest"
+   ],
+   "confirmatory_findings": [
+    "pneumothorax on chest x-ray",
+    "absent lung markings on chest x-ray",
+    "reduced breath sounds on one side"
+   ]
+  },
+  {
+   "id": "guillain_barre",
+   "typical_features": [
+    "ascending weakness starting in legs",
+    "loss of reflexes",
+    "tingling in feet and hands",
+    "recent infection",
+    "difficulty breathing in severe cases"
+   ],
+   "confirmatory_findings": [
+    "albuminocytologic dissociation in cerebrospinal fluid",
+    "absent reflexes in affected limbs"
+   ]
+  },
+  {
+   "id": "cauda_equina",
+   "typical_features": [
+    "low back pain",
+    "saddle numbness",
+    "urinary retention or incontinence",
+    "bilateral leg weakness or sciatica",
+    "bowel incontinence",
+    "reduced anal tone"
+   ],
+   "confirmatory_findings": [
+    "compression of the cauda equina on MRI",
+    "reduced anal sphincter tone",
+    "saddle sensory loss on examination"
+   ]
+  },
+  {
+   "id": "septic_arthritis",
+   "typical_features": [
+    "hot swollen painful joint",
+    "inability to move the joint",
+    "fever",
+    "single joint involvement",
+    "recent joint procedure or infection"
+   ],
+   "confirmatory_findings": [
+    "purulent joint fluid",
+    "high synovial fluid white cell count"
+   ]
+  },
+  {
+   "id": "septic_arthritis_ortho",
+   "typical_features": [
+    "hot swollen painful joint",
+    "inability to move the joint",
+    "fever",
+    "single joint involvement",
+    "recent joint procedure or infection"
+   ],
+   "confirmatory_findings": [
+    "purulent joint fluid",
+    "high synovial fluid white cell count"
+   ]
+  }
+ ]
+}

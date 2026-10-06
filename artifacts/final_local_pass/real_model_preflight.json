@@ -1,0 +1,23 @@
+{
+  "model_weights_attested": false,
+  "official_api": "NOT VERIFIED",
+  "official_schema": "PLACEHOLDER",
+  "official_submission_ready": false,
+  "short_case": "NOT VERIFIED",
+  "status": "NOT_CONFIGURED",
+  "transport": {
+    "attempts": 0,
+    "endpoint_configured": false,
+    "expected_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+    "host": null,
+    "http_status_category": null,
+    "identity_basis": "SERVER_REPORTED; NOT WEIGHT ATTESTATION",
+    "input_tokens": null,
+    "latency_seconds": null,
+    "model": "openai/gpt-oss-20b",
+    "output_tokens": null,
+    "revision_status": "NOT_VERIFIABLE_FROM_RUNTIME",
+    "runtime_ready": false,
+    "status": "NOT_CONFIGURED"
+  }
+}

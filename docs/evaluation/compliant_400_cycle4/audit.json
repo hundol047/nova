@@ -1,0 +1,11 @@
+{
+  "cases": 400,
+  "excluded_prior_exact_inputs": 800,
+  "overlap": 0,
+  "verified_shard_hashes": true,
+  "correct": 386,
+  "engine_modified": false,
+  "model_training": false,
+  "real_llm_calls": 0,
+  "competition_submission_ready": false
+}

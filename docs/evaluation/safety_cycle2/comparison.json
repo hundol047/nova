@@ -1,0 +1,183 @@
+{
+  "original": {
+    "before": {
+      "total": {
+        "cases": 400,
+        "correct": 383,
+        "critical": 194,
+        "critical_correct": 182,
+        "unknown_output": 6,
+        "turns": 8220,
+        "real_llm_calls": 0,
+        "accuracy": 0.9575,
+        "critical_recall": 0.9381443298969072
+      },
+      "safety": {
+        "tp": 172,
+        "fp": 65,
+        "fn": 22,
+        "tn": 141,
+        "observed_cases": 400,
+        "uninstrumented_cases": 0,
+        "sensitivity": 0.8865979381443299,
+        "specificity": 0.6844660194174758,
+        "false_negative_rate": 0.1134020618556701,
+        "missed_case_ids": [
+          "SIM50_low_development_03430",
+          "SIM50_low_development_15011",
+          "SIM50_low_development_18230",
+          "SIM50_low_development_03208",
+          "SIM50_low_development_15973",
+          "SIM50_high_development_02497",
+          "SIM50_high_development_03199",
+          "SIM50_high_validation_02940",
+          "SIM50_high_development_15485",
+          "SIM50_high_validation_03829",
+          "SIM50_high_development_02190",
+          "SIM50_high_development_02376",
+          "SIM50_high_development_19866",
+          "SIM50_high_development_05897",
+          "SIM50_high_development_10837",
+          "SIM50_high_development_14669",
+          "SIM50_high_development_02010",
+          "SIM50_high_development_05948",
+          "SIM50_high_development_19026",
+          "SIM50_high_validation_02184",
+          "SIM50_high_development_18460",
+          "SIM50_high_validation_03559"
+        ],
+        "interpretation": "Any final SafetyLayer flag versus synthetic critical label; not condition-specific recall, triage correctness or clinical validation."
+      }
+    },
+    "after": {
+      "total": {
+        "cases": 400,
+        "correct": 383,
+        "critical": 194,
+        "critical_correct": 182,
+        "unknown_output": 6,
+        "turns": 8190,
+        "real_llm_calls": 0,
+        "accuracy": 0.9575,
+        "critical_recall": 0.9381443298969072
+      },
+      "safety": {
+        "tp": 179,
+        "fp": 65,
+        "fn": 15,
+        "tn": 141,
+        "observed_cases": 400,
+        "uninstrumented_cases": 0,
+        "sensitivity": 0.9226804123711341,
+        "specificity": 0.6844660194174758,
+        "false_negative_rate": 0.07731958762886598,
+        "missed_case_ids": [
+          "SIM50_high_development_02497",
+          "SIM50_high_development_03199",
+          "SIM50_high_validation_02940",
+          "SIM50_high_validation_03829",
+          "SIM50_high_development_02190",
+          "SIM50_high_development_02376",
+          "SIM50_high_development_19866",
+          "SIM50_high_development_05897",
+          "SIM50_high_development_10837",
+          "SIM50_high_development_14669",
+          "SIM50_high_development_02010",
+          "SIM50_high_development_05948",
+          "SIM50_high_development_19026",
+          "SIM50_high_validation_02184",
+          "SIM50_high_validation_03559"
+        ],
+        "interpretation": "Any final SafetyLayer flag versus synthetic critical label; not condition-specific recall, triage correctness or clinical validation."
+      }
+    }
+  },
+  "extra": {
+    "before": {
+      "total": {
+        "cases": 400,
+        "correct": 387,
+        "critical": 197,
+        "critical_correct": 190,
+        "unknown_output": 5,
+        "turns": 8245,
+        "real_llm_calls": 0,
+        "accuracy": 0.9675,
+        "critical_recall": 0.9644670050761421
+      },
+      "safety": {
+        "tp": 178,
+        "fp": 63,
+        "fn": 19,
+        "tn": 140,
+        "observed_cases": 400,
+        "uninstrumented_cases": 0,
+        "sensitivity": 0.9035532994923858,
+        "specificity": 0.6896551724137931,
+        "false_negative_rate": 0.09644670050761421,
+        "missed_case_ids": [
+          "SIM50_low_development_00100",
+          "SIM50_low_development_01395",
+          "SIM50_low_development_14974",
+          "SIM50_low_development_02098",
+          "SIM50_low_development_00063",
+          "SIM50_high_development_07206",
+          "SIM50_high_development_12900",
+          "SIM50_high_development_01296",
+          "SIM50_high_development_02730",
+          "SIM50_high_validation_03048",
+          "SIM50_high_development_05936",
+          "SIM50_high_development_15002",
+          "SIM50_high_development_03925",
+          "SIM50_high_development_12610",
+          "SIM50_high_validation_04801",
+          "SIM50_high_development_10130",
+          "SIM50_high_development_00151",
+          "SIM50_high_development_12204",
+          "SIM50_high_development_06355"
+        ],
+        "interpretation": "Any final SafetyLayer flag versus synthetic critical label; not condition-specific recall, triage correctness or clinical validation."
+      }
+    },
+    "after": {
+      "total": {
+        "cases": 400,
+        "correct": 387,
+        "critical": 197,
+        "critical_correct": 190,
+        "unknown_output": 5,
+        "turns": 8245,
+        "real_llm_calls": 0,
+        "accuracy": 0.9675,
+        "critical_recall": 0.9644670050761421
+      },
+      "safety": {
+        "tp": 184,
+        "fp": 63,
+        "fn": 13,
+        "tn": 140,
+        "observed_cases": 400,
+        "uninstrumented_cases": 0,
+        "sensitivity": 0.934010152284264,
+        "specificity": 0.6896551724137931,
+        "false_negative_rate": 0.06598984771573604,
+        "missed_case_ids": [
+          "SIM50_high_development_07206",
+          "SIM50_high_development_12900",
+          "SIM50_high_development_01296",
+          "SIM50_high_development_02730",
+          "SIM50_high_validation_03048",
+          "SIM50_high_development_05936",
+          "SIM50_high_development_15002",
+          "SIM50_high_development_03925",
+          "SIM50_high_development_12610",
+          "SIM50_high_validation_04801",
+          "SIM50_high_development_00151",
+          "SIM50_high_development_12204",
+          "SIM50_high_development_06355"
+        ],
+        "interpretation": "Any final SafetyLayer flag versus synthetic critical label; not condition-specific recall, triage correctness or clinical validation."
+      }
+    }
+  }
+}

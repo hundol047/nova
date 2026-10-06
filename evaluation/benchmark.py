@@ -18,6 +18,8 @@ from nova_agent.orchestrator import DoctorAgent
 
 from evaluation.cases import CASES
 from evaluation.generalization_cases_v2 import GENERALIZATION_CASES_V2
+from evaluation.generalization_dev_cases_round_d import GENERALIZATION_DEV_CASES_ROUND_D
+from evaluation.generalization_dev_cases_round_e import GENERALIZATION_DEV_CASES_ROUND_E
 from evaluation.generalization_stress_cases import GENERALIZATION_STRESS_CASES
 from evaluation.held_out_cases import HELD_OUT_CASES
 from evaluation.scoring import score_case
@@ -35,7 +37,7 @@ def print_case_table(results: list[CaseResult]) -> None:
     print(header)
     print("-" * len(header))
     for r in results:
-        expected_marker = "" if r.scoring_expected else " (not scored)"
+        expected_marker = "" if r.scoring_expected or r.ground_truth not in {"unknown", ""} else " (unknown handling)"
         print(f"{r.case_id:<32}{r.category:<22}{(('YES' if r.correct else 'NO') + expected_marker):<10}"
               f"{r.turns:<8}{r.duplicate_actions:<11}{('YES' if r.critical_miss else 'NO'):<15}")
 
@@ -45,8 +47,9 @@ def compute_summary(results: list[CaseResult]) -> dict:
     denominator is always named explicitly -- never silently drop hard cases just to inflate one
     headline accuracy number."""
     n = len(results) or 1
-    scored = [r for r in results if r.scoring_expected]
-    unsupported = [r for r in results if not r.scoring_expected]
+    # A named ground truth remains scored even if an old fixture excluded Tier-2.
+    scored = [r for r in results if r.scoring_expected or r.ground_truth not in {"unknown", ""}]
+    unsupported = [r for r in results if r not in scored]
     scored_n = len(scored) or 1
     critical_cases = [r for r in results if r.critical]
     turns_list = [r.turns for r in results]
@@ -68,7 +71,7 @@ def compute_summary(results: list[CaseResult]) -> dict:
         # Unsupported (excluded-from-scoring) cases: not "correct/incorrect" (no single right
         # answer), but still checked for safe handling -- reached a diagnosis, no critical miss.
         "unsupported_case_success_rate": (
-            sum(1 for r in unsupported if not r.failed_to_diagnose and not r.critical_miss) / len(unsupported)
+            sum(1 for r in unsupported if r.correct and not r.failed_to_diagnose and not r.critical_miss) / len(unsupported)
             if unsupported else None
         ),
         "critical_diagnosis_recall": (
@@ -113,7 +116,7 @@ def print_summary(title: str, results: list[CaseResult]) -> None:
     print(f"  All-Case Diagnostic Accuracy: {s['all_case_diagnostic_accuracy'] * 100:.1f}%  (every case, no exclusions)")
     if s["unsupported_case_success_rate"] is not None:
         print(f"  Unsupported-Case Success Rate:{s['unsupported_case_success_rate'] * 100:.1f}%  "
-              f"(safe handling of excluded cases: diagnosed, no critical miss)")
+              f"(explicit unknown correctly preserved)")
     if s["critical_diagnosis_recall"] is not None:
         print(f"  Critical Diagnosis Recall:    {s['critical_diagnosis_recall'] * 100:.1f}%")
     print(f"  Critical Miss Rate:           {s['critical_miss_rate'] * 100:.1f}%")
@@ -143,6 +146,19 @@ def main() -> None:
                               "17-18: a small, targeted set probing the two known generalization "
                               "miss patterns from both directions -- run only after held-out and "
                               "generalization-v2 both stay clean).")
+    parser.add_argument("--dev-round-d", action="store_true",
+                         help="Also run evaluation/generalization_dev_cases_round_d.py (a small "
+                              "DEVELOPMENT set, distinct wording from Blind v13, never Blind v14 -- "
+                              "probes the four Round D architectural fixes: chief-complaint "
+                              "taxonomy coverage, morphology normalization, specific-over-generic "
+                              "routing precedence, and zero-evidence UNKNOWN_PRESENTATION "
+                              "handling).")
+    parser.add_argument("--dev-round-e", action="store_true",
+                         help="Also run evaluation/generalization_dev_cases_round_e.py (a small "
+                              "DEVELOPMENT set, distinct wording from Blind v14, never Blind v15 -- "
+                              "probes Round E's five architectural fixes: feature-match "
+                              "specificity, context-aware critical safety, specific-vs-generic "
+                              "severity, multilingual routing, and morphology truncation removal).")
     parser.add_argument("--save-json", default=None,
                          help="Write each run set's compute_summary() output to this path (spec "
                               "section 25: a single generated source of truth for benchmark "
@@ -179,6 +195,24 @@ def main() -> None:
         print_case_table(stress_results)
         print_summary("Stress set summary", stress_results)
         results_for_json["stress"] = compute_summary(stress_results)
+
+    if args.dev_round_d:
+        dev_results = run_all(GENERALIZATION_DEV_CASES_ROUND_D)
+        print("\n=== Round D development set (evaluation/generalization_dev_cases_round_d.py -- "
+              "distinct wording from Blind v13, never Blind v14; probes the four Round D "
+              "architectural fixes) ===")
+        print_case_table(dev_results)
+        print_summary("Round D development set summary", dev_results)
+        results_for_json["dev_round_d"] = compute_summary(dev_results)
+
+    if args.dev_round_e:
+        dev_e_results = run_all(GENERALIZATION_DEV_CASES_ROUND_E)
+        print("\n=== Round E development set (evaluation/generalization_dev_cases_round_e.py -- "
+              "distinct wording from Blind v14, never Blind v15; probes Round E's architectural "
+              "fixes) ===")
+        print_case_table(dev_e_results)
+        print_summary("Round E development set summary", dev_e_results)
+        results_for_json["dev_round_e"] = compute_summary(dev_e_results)
 
     if args.save_json:
         import json

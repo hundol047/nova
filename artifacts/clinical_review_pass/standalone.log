@@ -1,0 +1,31 @@
+Ran 20 turn(s) standalone (isolated copy, PYTHONPATH cleared):
+  turn  1: TEST     'Troponin'
+  turn  2: TEST     'Chest X-ray'
+  turn  3: ASK      'What makes it worse (exertion, movement, eating, breathing)?'
+  turn  4: ASK      'Are there any other symptoms occurring alongside this?'
+  turn  5: ASK      'Do you have any chronic illnesses or past major medical hist'
+  turn  6: EXAM     'Cardiac auscultation'
+  turn  7: ASK      'Is there a relevant family history of this kind of illness?'
+  turn  8: EXAM     'General appearance / distress level'
+  turn  9: ASK      'How would you describe the quality of the symptom (sharp, du'
+  turn 10: EXAM     'Vital signs (BP/HR/RR/Temp/SpO2)'
+  turn 11: TEST     '12-lead ECG'
+  turn 12: ASK      'When did the symptoms start?'
+  turn 13: ASK      'Where exactly do you feel it?'
+  turn 14: EXAM     'Extremity exam (edema, pulses, calf tenderness)'
+  turn 15: TEST     'CT angiography of the aorta'
+  turn 16: EXAM     'Abdominal palpation / peritoneal signs'
+  turn 17: ASK      'How long does each episode last?'
+  turn 18: TEST     'Basic metabolic panel (electrolytes/renal function)'
+  turn 19: ASK      'What makes it better (rest, medication, position)?'
+  turn 20: DIAGNOSE 'Acute Coronary Syndrome'
+
+Final action: DIAGNOSE -- 'Acute Coronary Syndrome'
+
+Process exit code: 0
+
+--- stderr tail (LLM-unavailable warnings etc., expected in this sandbox) ---
+Runtime preflight passed: explicit local mock; official execution NOT VERIFIED
+
+
+STANDALONE FULL-LOOP VERIFICATION: PASSED (observation -> routing -> retrieval -> differential -> ASK/EXAM/TEST -> update -> DIAGNOSE)

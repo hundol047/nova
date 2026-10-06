@@ -69,7 +69,8 @@
     "chief_complaint_tags": [
       "abdominal_pain",
       "vomiting",
-      "weakness"
+      "weakness",
+      "gi_bleeding"
     ],
     "category": "abdominal_gi",
     "dangerous": true,
@@ -85,6 +86,7 @@
     "risk_factors": [
       "NSAID use",
       "anticoagulant use",
+      "antiplatelet use",
       "liver disease",
       "peptic ulcer disease",
       "alcohol use"
@@ -132,7 +134,8 @@
     ],
     "chief_complaint_tags": [
       "abdominal_pain",
-      "syncope"
+      "syncope",
+      "pelvic_gynecologic"
     ],
     "category": "abdominal_gi",
     "dangerous": true,
@@ -224,8 +227,18 @@
       "lipase",
       "abdominal_ultrasound"
     ],
+    "confirmatory_findings": [
+      "elevated lipase",
+      "peripancreatic fluid"
+    ],
     "red_flag_keywords": [],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "elevated lipase",
+      "pancreatic inflammation on imaging",
+      "peripancreatic fat stranding"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
   },
   {
     "id": "appendicitis",
@@ -266,7 +279,29 @@
       "rebound tenderness",
       "guarding"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "inflamed appendix",
+      "appendiceal wall thickening",
+      "dilated appendix",
+      "periappendiceal fat stranding",
+      "appendicolith",
+      "appendiceal inflammation",
+      "McBurney's point tenderness",
+      "right lower quadrant tenderness",
+      "rebound tenderness"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset",
+    "evidence_references": [
+      {
+        "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/appendicitis/diagnosis",
+        "scope": "Imaging evidence of appendiceal enlargement or inflammation supports evaluation of appendicitis; not a standalone diagnostic guarantee."
+      },
+      {
+        "url": "https://link.springer.com/article/10.1186/s13017-016-0090-5",
+        "scope": "Imaging findings including wall thickening and noncompressibility suggest appendicitis."
+      }
+    ]
   },
   {
     "id": "gastroenteritis",
@@ -279,7 +314,8 @@
     "chief_complaint_tags": [
       "abdominal_pain",
       "fever",
-      "vomiting"
+      "vomiting",
+      "diarrhea"
     ],
     "category": "abdominal_gi",
     "dangerous": false,

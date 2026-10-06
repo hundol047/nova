@@ -1,0 +1,122 @@
+[
+  {
+    "id": "validation_ecg_0",
+    "test_key": "ecg",
+    "report": "ST elevation cannot be excluded",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_ecg_1",
+    "test_key": "ecg",
+    "report": "ST elevation is suspected",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_ecg_2",
+    "test_key": "ecg",
+    "report": "question of ST elevation",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_ecg_3",
+    "test_key": "ecg",
+    "report": "ST elevation remains uncertain",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_cxr_0",
+    "test_key": "cxr",
+    "report": "focal consolidation cannot be excluded",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_cxr_1",
+    "test_key": "cxr",
+    "report": "focal consolidation is suspected",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_cxr_2",
+    "test_key": "cxr",
+    "report": "question of focal consolidation",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_cxr_3",
+    "test_key": "cxr",
+    "report": "focal consolidation remains uncertain",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_ct_abdomen_0",
+    "test_key": "ct_abdomen",
+    "report": "inflamed appendix cannot be excluded",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_ct_abdomen_1",
+    "test_key": "ct_abdomen",
+    "report": "inflamed appendix is suspected",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_ct_abdomen_2",
+    "test_key": "ct_abdomen",
+    "report": "question of inflamed appendix",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_ct_abdomen_3",
+    "test_key": "ct_abdomen",
+    "report": "inflamed appendix remains uncertain",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_troponin_0",
+    "test_key": "troponin",
+    "report": "elevated troponin cannot be excluded",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_troponin_1",
+    "test_key": "troponin",
+    "report": "elevated troponin is suspected",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_troponin_2",
+    "test_key": "troponin",
+    "report": "question of elevated troponin",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_troponin_3",
+    "test_key": "troponin",
+    "report": "elevated troponin remains uncertain",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_potassium_0",
+    "test_key": "potassium",
+    "report": "potassium 7.1 mEq/L cannot be excluded",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_potassium_1",
+    "test_key": "potassium",
+    "report": "potassium 7.1 mEq/L is suspected",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_potassium_2",
+    "test_key": "potassium",
+    "report": "question of potassium 7.1 mEq/L",
+    "expected": "unknown"
+  },
+  {
+    "id": "validation_potassium_3",
+    "test_key": "potassium",
+    "report": "potassium 7.1 mEq/L remains uncertain",
+    "expected": "unknown"
+  }
+]

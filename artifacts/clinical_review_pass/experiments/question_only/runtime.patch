@@ -1,0 +1,19 @@
+diff --git a/nova_agent/missing_info.py b/nova_agent/missing_info.py
+index 058e39b..83d958c 100644
+--- a/nova_agent/missing_info.py
++++ b/nova_agent/missing_info.py
+@@ -187,6 +187,14 @@ class MissingInformationAnalyzer:
+                 questions = entry.get("discriminating_questions", [])
+             for discriminator in questions:
+                 category = discriminator.split(":", 1)[0]
++                if cfg.competition_retrieval_enabled and ":" in discriminator:
++                    # A feature-specific question cannot add the very same feature
++                    # already supported for this hypothesis. Do not infer other
++                    # answers, match substrings, or suppress generic safety history.
++                    from nova_agent.ontology.normalizer import normalize
++                    feature = normalize(discriminator.split(":", 1)[1])
++                    if feature and feature in {normalize(s) for s in item.supporting_evidence}:
++                        continue
+                 key = f"ask:{discriminator}"
+                 if state.question_asked(discriminator) or _already_answered(state, category):
+                     continue

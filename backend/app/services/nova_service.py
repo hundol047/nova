@@ -1,0 +1,523 @@
+"""N.O.V.A. production service: the ONLY code in this backend allowed to construct or call
+nova_agent.orchestrator.DoctorAgent. A FastAPI endpoint (main.py) never touches nova_agent
+internals directly -- it calls NovaService methods and gets back plain dicts/dataclasses, the
+same separation-of-concerns main.py already keeps between its endpoints and services/rule_engine.py
+/services/risk_inference.py.
+
+Deliberately reuses `competition/`'s core reasoning engine only (nova_agent.orchestrator.
+DoctorAgent) -- never `competition/adapter.py`, which implements the competition PROTOCOL
+(stdin/stdout JSON-lines, competition-mode DIAGNOSE hard-fail rules) that has nothing to do with a
+production HTTP API and must stay untouched by it (spec: competition submission and production
+runtime stay separated).
+
+Clinical safety boundary (never relaxed by any code path here): this service produces a structured
+RECOMMENDATION only. It never calls MedicationOrderRepository/LabOrderRepository or any other
+write path that would place, modify, or cancel a real clinical order -- see the DecideResult's
+`clinician_review_required` field, always True, and main.py's nova endpoints, none of which write
+to app.state.medication_order_repo/lab_order_repo.
+
+Concurrency safety: a fresh `DoctorAgent` (and therefore a fresh LLM client instance) is
+constructed per decide()/add_observation() call rather than shared across requests -- see
+production/api.py's identical fix earlier in this project for the underlying reason
+(BaseLLMClient tracks its most recent call's outcome on plain instance attributes that
+orchestrator.decide() reads immediately after calling it; sharing one instance across concurrent
+requests would race).
+"""
+
+from __future__ import annotations
+
+import hashlib
+import os
+import sys
+import threading
+import time
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Optional
+
+# nova_agent/ lives at the repo root, a sibling of backend/ -- not on sys.path by default when
+# this app is launched with `--app-dir backend` (dev) or from /app/backend (container). Bootstrap
+# it here, the one place every nova_agent import in this backend transitively goes through, so
+# every entry point (uvicorn, pytest, a manual script) gets it consistently without each needing
+# its own PYTHONPATH setup. Idempotent and side-effect-free if already present.
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
+from nova_agent.action_selector import AgentAction
+from nova_agent.config import get_config
+from nova_agent.differential import DifferentialItem
+from nova_agent.llm_client import BaseLLMClient, MockLLMClient, get_llm_client
+from nova_agent.orchestrator import DoctorAgent
+from nova_agent.state import PatientState
+
+from ..schemas import ClinicalEncounter, Patient
+from .nova_fhir_mapper import apply_patient_context, demographics_for
+from .nova_observability import get_nova_metrics, log_event
+from .nova_repository import (CaseConflict, ConcurrentModificationError, NotFound, NovaCaseRecord,
+                               RepositoryError, build_nova_case_repository, new_case_id)
+
+AGENT_VERSION = "1.0.0"
+SCHEMA_VERSION = "1"
+PROMPT_VERSION = "1"
+
+CLINICAL_SAFETY_BANNER = (
+    "Decision Support / Not Autonomous Medical Diagnosis / Clinician Review Required. "
+    "This is a structured suggestion for a licensed clinician to evaluate, not a final diagnosis "
+    "or treatment directive. N.O.V.A. never places, modifies, or cancels a medication or lab "
+    "order, and never auto-confirms a clinical order."
+)
+
+
+class NovaServiceError(Exception):
+    error_code = "internal_error"
+    http_status = 500
+
+
+class PatientNotFoundError(NovaServiceError):
+    error_code = "patient_not_found"
+    http_status = 404
+
+
+class CaseNotFoundError(NovaServiceError):
+    error_code = "case_not_found"
+    http_status = 404
+
+
+class CaseConflictError(NovaServiceError):
+    error_code = "case_conflict"
+    http_status = 409
+
+
+class CaseClosedError(NovaServiceError):
+    error_code = "case_conflict"
+    http_status = 409
+
+
+class ValidationError(NovaServiceError):
+    error_code = "validation_error"
+    http_status = 422
+
+
+class EMRUnavailableError(NovaServiceError):
+    """The active EMR adapter (DemoAdapter or a real FHIRAdapter) raised while resolving a
+    patient/encounter -- distinct from PatientNotFoundError (a real, reachable answer of 'no such
+    patient') so a caller/operator can tell 'the hospital FHIR server is down' apart from 'this
+    patient id doesn't exist'."""
+    error_code = "EMR_unavailable"
+    http_status = 503
+
+
+class StorageError(NovaServiceError):
+    """An unexpected failure from the case repository itself -- never raised by the in-memory
+    NovaCaseRepository (a plain dict write cannot fail), but PostgresNovaCaseRepository raises
+    RepositoryError (connection loss, etc.) or ConcurrentModificationError (a genuine write race on
+    the same case -- see nova_repository.py's module docstring) and both are translated to this one
+    error here, so no call site below needs its own psycopg-specific translation logic. 503, not
+    500: this is a transient infrastructure condition a retry can resolve, not a code defect."""
+    error_code = "storage_error"
+    http_status = 503
+
+
+_KB_FINGERPRINT_CACHE: dict = {}
+
+
+def kb_fingerprint() -> str:
+    knowledge_dir = Path(get_config().knowledge_dir)
+    cache_key = str(knowledge_dir)
+    cached = _KB_FINGERPRINT_CACHE.get(cache_key)
+    if cached is not None:
+        return cached
+    digest = hashlib.sha256()
+    if knowledge_dir.is_dir():
+        for path in sorted(knowledge_dir.rglob("*")):
+            if path.is_file():
+                digest.update(str(path.relative_to(knowledge_dir)).encode("utf-8"))
+                digest.update(path.read_bytes())
+    fingerprint = digest.hexdigest()[:16]
+    _KB_FINGERPRINT_CACHE[cache_key] = fingerprint
+    return fingerprint
+
+
+def model_version() -> str:
+    cfg = get_config()
+    return cfg.llm_model if cfg.llm_provider != "mock" else "mock"
+
+
+class _LLMCircuitBreaker:
+    """Closed/open/half-open breaker over WHETHER to attempt a real LLM call this turn -- not a
+    wrapper around BaseLLMClient itself (orchestrator.decide() calls the client internally and
+    never raises; there is no exception here to intercept). Instead, decide() below inspects
+    PatientState's own llm_call_count/llm_success_count/llm_failure_count deltas before/after each
+    call and reports the outcome via record_outcome(); when open, decide() constructs the
+    DoctorAgent with a forced MockLLMClient for that one turn (the same graceful-degradation shape
+    nova_agent's own case-budget mechanism already uses in nova_agent/orchestrator.py) instead of
+    attempting a real network call that is very likely to fail and add latency for nothing."""
+
+    def __init__(self, failure_threshold: int = 5, cooldown_seconds: float = 30.0) -> None:
+        self.failure_threshold = failure_threshold
+        self.cooldown_seconds = cooldown_seconds
+        self._lock = threading.Lock()
+        self._state = "closed"
+        self._consecutive_failures = 0
+        self._opened_at: Optional[float] = None
+        self._half_open_probes_total = 0
+
+    def should_skip_real_llm(self) -> bool:
+        # Single-probe guarantee: while `_state == "half_open"`, exactly ONE caller -- the one that
+        # itself performs the open->half_open transition below -- gets `False` (permitted to
+        # attempt a real call); every other concurrent caller, whether it still sees "open" with
+        # the cooldown not yet elapsed or already sees "half_open", gets `True` (skip). The
+        # transition and both branches happen inside the SAME `_lock` acquisition, so two callers
+        # racing on the exact cooldown boundary cannot both observe "open" and both flip to
+        # "half_open" -- one always sees the other's already-flipped "half_open" first.
+        #
+        # Before this guarantee: this method only checked `self._state == "open"` on return, so
+        # once a first caller flipped the state to "half_open", EVERY other concurrent caller
+        # during that same window also read `self._state == "open"` as False and was also let
+        # through -- an unbounded stampede of real calls at a backend that had JUST started
+        # recovering, defeating the entire point of a half-open probe.
+        with self._lock:
+            if self._state == "closed":
+                return False
+            if self._state == "open":
+                if self._opened_at is not None and time.monotonic() - self._opened_at >= self.cooldown_seconds:
+                    self._state = "half_open"
+                    self._half_open_probes_total += 1
+                    return False  # this caller IS the single probe
+                return True
+            return True  # self._state == "half_open": a probe is already in flight
+
+    def record_outcome(self, *, attempted: bool, succeeded: bool) -> None:
+        if not attempted:
+            return
+        with self._lock:
+            if succeeded:
+                self._consecutive_failures = 0
+                self._state = "closed"
+                self._opened_at = None
+            else:
+                self._consecutive_failures += 1
+                if self._state == "half_open" or self._consecutive_failures >= self.failure_threshold:
+                    self._state = "open"
+                    self._opened_at = time.monotonic()
+
+    def snapshot(self) -> dict:
+        with self._lock:
+            return {"state": self._state, "consecutive_failures": self._consecutive_failures,
+                    "half_open_probes_total": self._half_open_probes_total}
+
+
+@dataclass
+class DecideResult:
+    record: NovaCaseRecord
+    action: AgentAction
+    differential: list
+    llm_circuit_open: bool = False
+    versions: dict = field(default_factory=dict)
+    # Optional audit of the governed ML ranker (shadow by default). None when ML is disabled or
+    # unavailable. In shadow mode this NEVER affects `action`/`differential`; it is audit-only.
+    ml_shadow: Optional[dict] = None
+
+
+def _consult_ml_shadow(case_id: str, differential: list) -> Optional[dict]:
+    """Fail-safe governed ML consultation for the current decision.
+
+    Runs ONLY the optional ML ranker subsystem behind its config gate (default disabled). In shadow
+    mode (default when enabled) this audits the ML ordering WITHOUT changing the clinician-facing
+    result. Any failure degrades silently to None — the ML subsystem must never crash a clinical
+    decision. The deterministic + LLM + Safety pipeline already produced `differential`; here we
+    only observe. The Safety Guard remains authoritative (Safety Guard > ML > LLM)."""
+    try:
+        from learning.runtime import GovernedMLRuntime, MLRuntimeConfig
+        from learning.schemas import CandidateFeature
+        cfg = MLRuntimeConfig.from_env()
+        if not cfg.enabled:
+            return None
+        det_order = [getattr(d, "diagnosis_id", None) for d in differential if getattr(d, "diagnosis_id", None)]
+        cands = [
+            CandidateFeature(
+                concept_id=d.diagnosis_id,
+                base_evidence_score=float(getattr(d, "score_ratio", 0.0) or 0.0),
+                is_critical=bool(getattr(d, "dangerous_if_missed", False)),
+                is_red_flag=bool(getattr(d, "dangerous_if_missed", False)),
+            )
+            for d in differential if getattr(d, "diagnosis_id", None)
+        ]
+        # Feature vector is not reconstructed here (the encoder runs upstream in a full deployment);
+        # a zero vector keeps this audit-only hook dependency-light. OOD/model govern trust.
+        runtime = GovernedMLRuntime(cfg)
+        decision = runtime.consult(case_id, [0.0] * 72, cands, det_order)
+        return decision.as_dict()
+    except Exception:  # noqa: BLE001 - ML subsystem must never break a clinical decision
+        return None
+
+
+def _int_env(name: str, default: int) -> int:
+    raw = os.environ.get(name)
+    if raw in (None, ""):
+        return default
+    try:
+        return int(raw)
+    except ValueError:
+        return default
+
+
+def _float_env(name: str, default: float) -> float:
+    raw = os.environ.get(name)
+    if raw in (None, ""):
+        return default
+    try:
+        return float(raw)
+    except ValueError:
+        return default
+
+
+# Bounded retry for the get()->mutate->save() race PostgresNovaCaseRepository's `version` column
+# detects (see nova_repository.py's module docstring) -- a genuine conflict here means another
+# concurrent request wrote this SAME case between our get() and save(), so the fix is simply to
+# re-read the now-current state and redo this call's mutation on top of it, not to fail the
+# request. NOVA_SAVE_RETRY_ATTEMPTS=1 (the in-memory NovaCaseRepository's default reality: save()
+# never raises ConcurrentModificationError) makes this a no-op single attempt, matching pre-retry
+# behavior exactly. A small randomized backoff between attempts (below) matters more than the
+# attempt count once several writers genuinely collide on the same case: without it, every loser
+# immediately retries and re-collides in lockstep (a thundering herd against one row) -- observed
+# directly under a 12-way-concurrent-writer test against a real Postgres server before this was
+# added, where attempt count alone still left several requests exhausting their retries.
+_SAVE_RETRY_ATTEMPTS = max(1, _int_env("NOVA_SAVE_RETRY_ATTEMPTS", 6))
+_SAVE_RETRY_BASE_DELAY_SECONDS = max(0.0, _float_env("NOVA_SAVE_RETRY_BASE_DELAY_SECONDS", 0.02))
+
+
+def _save_retry_backoff(attempt: int) -> None:
+    """Jittered, exponential-ish backoff before retry attempt `attempt` (0-indexed; never called
+    before the first attempt). random.uniform, not a fixed delay, so concurrent losers don't all
+    wake up and re-collide at the same instant."""
+    if _SAVE_RETRY_BASE_DELAY_SECONDS <= 0:
+        return
+    import random
+    time.sleep(random.uniform(0, _SAVE_RETRY_BASE_DELAY_SECONDS * (2 ** attempt)))
+
+
+class NovaService:
+    def __init__(self, repository=None) -> None:
+        # build_nova_case_repository() selects PostgresNovaCaseRepository when NOVA_POSTGRES_URL is
+        # set, else the in-memory NovaCaseRepository (dev/test default) -- see nova_repository.py's
+        # module docstring. `repository` lets tests inject a specific backend directly.
+        self.repository = repository if repository is not None else build_nova_case_repository()
+        self.circuit_breaker = _LLMCircuitBreaker(
+            failure_threshold=_int_env("NOVA_CB_FAILURE_THRESHOLD", 5),
+            cooldown_seconds=_float_env("NOVA_CB_COOLDOWN_SECONDS", 30.0),
+        )
+
+    def _new_llm_client(self, *, force_mock: bool) -> BaseLLMClient:
+        if force_mock:
+            return MockLLMClient()
+        return get_llm_client()
+
+    def create_case(self, *, adapter, patient_id: str, encounter: Optional[ClinicalEncounter],
+                     chief_complaint: Optional[str], created_by: str, max_turns: Optional[int] = None,
+                     locale: str = "en") -> NovaCaseRecord:
+        try:
+            patient: Optional[Patient] = adapter.get(patient_id)
+        except NotImplementedError:
+            raise
+        except Exception as exc:  # noqa: BLE001 - a real FHIRAdapter's network/auth failure surfaces here
+            raise EMRUnavailableError(f"EMR adapter failed to resolve patient {patient_id!r}: {exc}") from exc
+        if patient is None:
+            raise PatientNotFoundError(patient_id)
+        cc = (chief_complaint or "").strip() or (encounter.chief_complaint if encounter else "")
+        if not cc:
+            raise ValidationError(
+                "chief_complaint is required (pass it directly, or reference an encounter that already has one)."
+            )
+        agent = DoctorAgent(llm_client=self._new_llm_client(force_mock=self.circuit_breaker.should_skip_real_llm()),
+                             lang=locale)
+        case_id = new_case_id()
+        state: PatientState = agent.new_case(case_id=case_id, chief_complaint=cc,
+                                              demographics=demographics_for(patient), max_turns=max_turns)
+        state.locale = locale
+        unmapped_clinical_codes = apply_patient_context(state, patient, encounter)
+        if unmapped_clinical_codes:
+            # Never silently discarded (spec): counted for ops visibility and logged with enough
+            # detail (raw code/display) for a dev to add the missing clinical_code_mapper.py row --
+            # the case itself still proceeds normally (the raw-name key still lets plain
+            # word-overlap matching see the lab's value; only the canonical-id fast path is missing).
+            get_nova_metrics().increment("nova_unmapped_clinical_codes_total", len(unmapped_clinical_codes))
+            log_event("nova_fhir_mapper", "unmapped_clinical_codes", case_id=case_id,
+                       detail={"codes": unmapped_clinical_codes})
+        try:
+            return self.repository.create(case_id=case_id, patient_id=patient_id,
+                                           encounter_id=encounter.id if encounter else None,
+                                           state=state, created_by=created_by,
+                                           agent_version=AGENT_VERSION, kb_version=kb_fingerprint())
+        except CaseConflict as exc:
+            raise CaseConflictError(str(exc)) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
+
+    def add_observation(self, case_id: str, *, observation_id: str, action_type: str, key: str,
+                         result: str) -> tuple[NovaCaseRecord, bool]:
+        try:
+            record = self.repository.get(case_id)
+        except NotFound as exc:
+            raise CaseNotFoundError(case_id) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
+        if record.status == "closed":
+            raise CaseClosedError(f"Case {case_id!r} is closed; no further observations can be recorded.")
+        try:
+            # try_apply_observation is claimed at most ONCE, atomically, before the retry loop --
+            # a retry never re-claims it; it only redoes the (not-yet-persisted) state mutation
+            # against a freshly re-read record after losing a save() race (see _SAVE_RETRY_ATTEMPTS).
+            applied = self.repository.try_apply_observation(case_id, observation_id)
+            if applied:
+                for attempt in range(_SAVE_RETRY_ATTEMPTS):
+                    agent = DoctorAgent()
+                    action = AgentAction(action_type=action_type, key=key, content=key, rationale="")
+                    agent.observe(record.state, action, result)
+                    try:
+                        self.repository.save(record)
+                        break
+                    except ConcurrentModificationError:
+                        if attempt == _SAVE_RETRY_ATTEMPTS - 1:
+                            raise
+                        get_nova_metrics().increment("nova_save_retry_total")
+                        _save_retry_backoff(attempt)
+                        record = self.repository.get(case_id)
+        except (RepositoryError, ConcurrentModificationError) as exc:
+            # Every retry lost the race -- surfaced as a transient 503 (a caller retry re-reads the
+            # now-current state) rather than silently discarding this observation.
+            get_nova_metrics().increment("nova_case_conflict_total")
+            log_event("nova_service", "nova_storage_conflict", case_id=case_id, severity="WARNING",
+                       error_code="storage_conflict", detail={"op": "add_observation"})
+            raise StorageError(str(exc)) from exc
+        return record, applied
+
+    def decide(self, case_id: str) -> DecideResult:
+        try:
+            record = self.repository.get(case_id)
+        except NotFound as exc:
+            raise CaseNotFoundError(case_id) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
+
+        # A conflict here means another concurrent request wrote this SAME case between our get()
+        # and save() -- retried by re-fetching the now-current state and re-deciding against it
+        # (see _SAVE_RETRY_ATTEMPTS), which is also the clinically correct response: the fresher
+        # state may carry evidence (a concurrently-recorded observation) this decision should see.
+        # Each retry attempt is a full, real re-decide -- including a real LLM call when not
+        # circuit-broken -- so a conflict here is more costly than in add_observation(), but no
+        # less necessary: silently dropping a DIAGNOSE/ASK/EXAM/TEST recommendation is unacceptable.
+        for attempt in range(_SAVE_RETRY_ATTEMPTS):
+            if record.status == "closed":
+                raise CaseClosedError(f"Case {case_id!r} is closed; no further decisions can be made.")
+
+            skip_real_llm = self.circuit_breaker.should_skip_real_llm()
+            agent = DoctorAgent(llm_client=self._new_llm_client(force_mock=skip_real_llm), lang=record.state.locale)
+
+            calls_before, success_before = record.state.llm_call_count, record.state.llm_success_count
+            action, _llm_output, differential = agent.decide(record.state)
+            calls_after, success_after = record.state.llm_call_count, record.state.llm_success_count
+            attempted_real_call = calls_after > calls_before
+            self.circuit_breaker.record_outcome(attempted=attempted_real_call,
+                                                 succeeded=success_after > success_before)
+            try:
+                self.repository.save(record)
+                break
+            except ConcurrentModificationError:
+                if attempt == _SAVE_RETRY_ATTEMPTS - 1:
+                    get_nova_metrics().increment("nova_case_conflict_total")
+                    log_event("nova_service", "nova_storage_conflict", case_id=case_id,
+                               severity="WARNING", error_code="storage_conflict", detail={"op": "decide"})
+                    raise StorageError(
+                        f"Case {case_id!r} could not be saved after {_SAVE_RETRY_ATTEMPTS} attempts "
+                        "due to concurrent writes."
+                    )
+                get_nova_metrics().increment("nova_save_retry_total")
+                _save_retry_backoff(attempt)
+                try:
+                    record = self.repository.get(case_id)
+                except NotFound as exc:
+                    raise CaseNotFoundError(case_id) from exc
+            except RepositoryError as exc:
+                raise StorageError(str(exc)) from exc
+
+        versions = {"agent_version": AGENT_VERSION, "schema_version": SCHEMA_VERSION,
+                    "prompt_version": PROMPT_VERSION, "kb_version": kb_fingerprint(),
+                    "model_version": model_version()}
+        # Governed ML ranker (optional, default disabled; shadow when enabled). Audit-only in
+        # shadow mode — never changes `action`/`differential`. Fail-safe: None on any error.
+        ml_shadow = _consult_ml_shadow(case_id, differential)
+        return DecideResult(record=record, action=action, differential=differential,
+                             llm_circuit_open=skip_real_llm, versions=versions, ml_shadow=ml_shadow)
+
+    def get_case(self, case_id: str) -> NovaCaseRecord:
+        try:
+            return self.repository.get(case_id)
+        except NotFound as exc:
+            raise CaseNotFoundError(case_id) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
+
+    def update_locale(self, case_id: str, locale: str) -> NovaCaseRecord:
+        try:
+            return self.repository.update_locale(case_id, locale)
+        except NotFound as exc:
+            raise CaseNotFoundError(case_id) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
+
+    def close_case(self, case_id: str, *, reason: str = "",
+                   clinician_final_diagnosis_id: Optional[str] = None,
+                   clinician_label_source: Optional[str] = None) -> NovaCaseRecord:
+        try:
+            record = self.repository.close(case_id, reason=reason)
+        except NotFound as exc:
+            raise CaseNotFoundError(case_id) from exc
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
+        # Opt-in continual-learning outcome capture (fail-safe; default disabled). Runs AFTER the
+        # case is durably closed so learning capture can never block or fail the clinical action.
+        # Captures ONLY when NOVA_LEARNING_ENABLED=true AND a clinician-adjudicated final diagnosis
+        # from a permitted source is supplied. A NOVA/LLM prediction can never be the label.
+        try:
+            if clinician_final_diagnosis_id and clinician_label_source:
+                from .learning_admin import capture_case_outcome
+                nova_top = None
+                differential = getattr(record.state, "differential", None) or []
+                cand_ids = []
+                for d in differential:
+                    cid = getattr(d, "diagnosis_id", None) or (d.get("diagnosis_id") if isinstance(d, dict) else None)
+                    if cid:
+                        cand_ids.append(cid)
+                if cand_ids:
+                    nova_top = cand_ids[0]
+                capture_case_outcome(
+                    case_id=case_id,
+                    patient_id=record.patient_id,
+                    encounter_time=str(record.updated_at or record.created_at or ""),
+                    nova_top_concept_id=nova_top,
+                    candidate_concept_ids=cand_ids,
+                    clinician_final_diagnosis_id=clinician_final_diagnosis_id,
+                    clinician_label_source=clinician_label_source,
+                )
+        except Exception:  # noqa: BLE001 - learning capture must never break case-close
+            pass
+        return record
+
+    def list_cases_for_patient(self, patient_id: str, *, status: Optional[str] = None,
+                                encounter_id: Optional[str] = None) -> list[NovaCaseRecord]:
+        """Cases already known for a patient (for the "resume an open case" flow). Thin wrapper over
+        the repository's existing list_for_patient -- no new persistence path. Optional filters:
+        `status` ('open'/'closed') and `encounter_id` (a case is scoped to a patient AND encounter,
+        so a different encounter must NOT resume another encounter's case -- see the route)."""
+        try:
+            records = self.repository.list_for_patient(patient_id)
+        except RepositoryError as exc:
+            raise StorageError(str(exc)) from exc
+        if status is not None:
+            records = [r for r in records if r.status == status]
+        if encounter_id is not None:
+            records = [r for r in records if (r.encounter_id or None) == (encounter_id or None)]
+        # Most-recent-updated first, so the UI's default resume candidate is the freshest case.
+        return sorted(records, key=lambda r: r.updated_at or "", reverse=True)

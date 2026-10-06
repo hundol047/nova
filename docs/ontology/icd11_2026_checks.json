@@ -1,0 +1,11 @@
+{
+  "official_rows_preserved": 37052,
+  "source_fidelity": true,
+  "database_integrity": "ok",
+  "duplicate_codes": 0,
+  "missing_code_title_uri": 0,
+  "runtime_catalog_count": 1280,
+  "deep_profiles": 34,
+  "snapshot_sha256": "0612ece6172c8a36ae5eba32532c6cc88dc9e4931b090324b1c81076230a0152",
+  "code_lookup_ok": true
+}

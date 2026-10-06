@@ -1,0 +1,57 @@
+{
+  "file": "evaluation/blind_cases_v16.py",
+  "case_count": 65,
+  "file_sha256": "7be72a740a4ea04054c0301f0fcb18c867c4df44282a2c018698e7f62f5b6f11",
+  "frozen_at_utc": "2026-10-01T02:25:54Z",
+  "created_commit": "659c7dc6cdb484dc7dc351a39c52eea71a5b621f",
+  "language_distribution": {
+    "en": 60,
+    "ko_mixed": 3,
+    "ja_mixed": 2
+  },
+  "category_distribution": {
+    "atypical_presentation": 2,
+    "benign_mimic": 6,
+    "common": 5,
+    "conflicting_evidence": 1,
+    "critical": 8,
+    "dangerous_mimic": 4,
+    "elderly": 1,
+    "fuzzy_phrase_collision_trap": 3,
+    "late_diagnosis_trap": 1,
+    "long_tail": 4,
+    "medication_risk": 1,
+    "mixed_language": 1,
+    "multilingual_japanese": 2,
+    "multilingual_korean": 2,
+    "multimorbidity": 1,
+    "negative_evidence_heavy": 1,
+    "objective_evidence": 3,
+    "over_testing_trap": 1,
+    "pediatric": 2,
+    "polypharmacy": 2,
+    "pregnancy": 1,
+    "premature_diagnosis_trap": 1,
+    "reproductive_age_emergency": 2,
+    "routing_trap": 1,
+    "sparse_evidence": 1,
+    "specific_vs_generic_severity_conflict": 3,
+    "unknown_ood": 2,
+    "unseen_lay_phrasing": 3
+  },
+  "declared_runs": [
+    {
+      "id": "default_legacy",
+      "command": "python -m evaluation.blind_benchmark_v16",
+      "note": "legacy top_k_differential=5; comparable to Blind v12-v15"
+    },
+    {
+      "id": "competition_like",
+      "command": "NOVA_COMPETITION_RETRIEVAL=1 python -m evaluation.blind_benchmark_v16",
+      "note": "competition retrieval enabled (differential size 25), mock LLM provider"
+    }
+  ],
+  "diagnosis_coverage": "All 34 Tier-1 diagnoses, 4 Tier-2 long-tail (herpes_zoster, bowel_obstruction, acute_angle_closure_glaucoma, pelvic_inflammatory_disease), 2 unknown/OOD. Chief-complaint specificity deliberately spans detailed to vague (v15 skewed vague by design). Screened by a 6-gram narrative-overlap scan against Blind v14/v15, held-out, generalization-v2 and Round D/E dev sets; 5 overlaps found were rewritten before freeze, final scan 0 overlaps, 0 internal overlaps.",
+  "supersedes": "Blind v3-v15 are REFERENCE-ONLY. Round F made NO reasoning change: two attempted fixes (equal-score tie-break ordering; never splitting a tie at the top-k cutoff) were evaluated on development sets only, found to regress previously-100% suites or to violate documented prompt-size invariants, and fully reverted. Runtime is byte-identical to the Blind v15 measurement (FINAL_REASONING_SHA 659c7dc). Only backend/ bug fixes (f40738c) landed since, none touching nova_agent/competition/submission.",
+  "note": "SHA-256 computed BEFORE any v16 case was ever executed -- unlike Blind v15, NO smoke run of any case occurred before freeze. blind_cases_v16.py must not be edited after this point. Each declared run happens exactly once and is reported as-is. Neither result may be used to tune reasoning in this round; any later reasoning change makes v16 reference-only and requires a fresh v17."
+}

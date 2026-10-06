@@ -1,0 +1,20 @@
+[
+  {
+    "file": "medlineplus_reuse.html",
+    "url": "https://medlineplus.gov/about/using/usingcontent/",
+    "accessed": "2026-10-05",
+    "sha256": "e4ae0bbdd93a334e19a8f3e52f27b6150354fa2d79324cd66bc3e1ecc8251cff"
+  },
+  {
+    "file": "medlineplus_xml.html",
+    "url": "https://medlineplus.gov/xml.html",
+    "accessed": "2026-10-05",
+    "sha256": "019712e42277c4ed9694794222b42ccd74fc6c37405485325f446ae85a535581"
+  },
+  {
+    "file": "orphanet_pack.html",
+    "url": "https://www.orphacode.org/pack-nomenclature/",
+    "accessed": "2026-10-05",
+    "sha256": "9f2cb8f7d0f75f29ee7e22fc495e93efc4c93d0a387a04943b551fd28e76e033"
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "case_count": 64,
+  "scored_count": 58,
+  "critical_count": 25,
+  "catalog_labels": "PASS",
+  "schema": "PASS",
+  "prior_unique_cases": 751,
+  "exact_or_high_lexical_overlap": [],
+  "maximum_chief_complaint_jaccard": [
+    0.5333333333333333,
+    "V18_31",
+    "Blind16_01_SoreThroatAndSneezes"
+  ],
+  "case_sha256": "4444c4c8b8eede5534cf2f063a19a8d3d8687943639dc442d159657412f12980",
+  "independent_clinical_validation": false,
+  "expert_reviewed": false,
+  "limitation": "Lexical check cannot prove semantic independence; same author shares development context. Labels are synthetic author hypotheses."
+}

@@ -32,6 +32,7 @@ import re
 from typing import List, Optional
 
 from nova_agent.matching import feature_denied, feature_present
+from nova_agent.glucose_evidence import current_asserted_lab_clauses
 from nova_agent.state import PatientState
 
 HYPOTENSION_SBP_THRESHOLD = 90
@@ -63,6 +64,27 @@ _MULTI_ORGAN_DYSFUNCTION_PHRASES = [
     "thrombocytopenia", "elevated bilirubin", "liver dysfunction", "oliguria",
 ]
 
+# Round E (defect C: specific diagnostic evidence losing to generic physiologic severity): the
+# vital-sign/physiologic-derangement WORDS this module's own thresholds above describe (hypotension,
+# hypoxemia, marked tachycardia/tachypnea, fever) are shared, by definition, across dozens of
+# dangerous diagnoses' own `typical_features` lists -- they mark a PATIENT as sick, never identify
+# WHICH disease is present. differential.py's own docstring/module comment already establishes this
+# principle for `severity_score()` itself (never folded into any one diagnosis's score directly),
+# but a bare single-word typical_feature phrase like sepsis's "hypotension" or "tachycardia" could
+# still reach the SAME diagnostic-identity role through plain word-overlap matching, each counting
+# as full-weight disease-specific evidence via `_specificity_multiplier()`'s single-word floor --
+# exactly the "generic severity outscores real disease-specific evidence" failure mode (confirmed:
+# sepsis's typical_features 'tachycardia'+'hypotension'+'tachypnea' outscored anaphylaxis's own
+# 'wheeze'+'hypotension' for a textbook anaphylaxis presentation, purely by matching MORE generic
+# severity words). Exported for differential.py's `_specificity_multiplier()` to apply a reduced
+# (never zero -- still real, if weak, corroborating signal) weight to a typical_feature phrase that
+# reduces to nothing but one of these generic markers.
+GENERIC_PHYSIOLOGIC_SEVERITY_WORDS = {
+    "hypotension", "hypotensive", "tachycardia", "tachycardic", "bradycardia", "bradycardic",
+    "tachypnea", "tachypneic", "bradypnea", "hypoxia", "hypoxemia", "hypoxemic", "fever", "febrile",
+    "hyperthermia", "hypothermia", "shock",
+}
+
 
 def extract_lactate_mmol_l(lactate_result_text: Optional[str]) -> Optional[float]:
     """Parses PatientState.laboratory_tests.get("lactate") into a mmol/L value. None if no lactate
@@ -70,15 +92,28 @@ def extract_lactate_mmol_l(lactate_result_text: Optional[str]) -> Optional[float
     evidence either way", never as a value of 0 (mirrors glucose_evidence.extract_glucose_mg_dl)."""
     if not lactate_result_text:
         return None
-    match = _LACTATE_PATTERN.search(lactate_result_text)
-    if not match:
-        if _QUALITATIVE_ELEVATED_LACTATE_PATTERN.search(lactate_result_text):
-            return QUALITATIVE_ELEVATED_LACTATE_MMOL_L
+    # Unit safety (spec section 19): thresholds here are mmol/L. A value explicitly in mg/dL
+    # (~18x larger) must NOT be read as a bare mmol/L number. A qualitative "elevated" with a
+    # mg/dL number still counts via the qualitative path below; only the NUMERIC parse is refused.
+    from nova_agent.unit_safety import value_is_in_disallowed_unit
+    values = set()
+    qualitative_high = False
+    for clause in current_asserted_lab_clauses(lactate_result_text):
+        unsafe = value_is_in_disallowed_unit(clause, ("mmol/l",), ("mg/dl",))
+        matches = [] if unsafe else list(_LACTATE_PATTERN.finditer(clause))
+        values.update(float(match.group(1)) for match in matches)
+        if not matches and _QUALITATIVE_ELEVATED_LACTATE_PATTERN.search(clause):
+            qualitative_high = True
+        elif unsafe:
+            return None
+    if len(values) > 1:
         return None
-    try:
-        return float(match.group(1))
-    except ValueError:
-        return None
+    if values:
+        value = next(iter(values))
+        if qualitative_high and value < ELEVATED_LACTATE_MMOL_L:
+            return None
+        return value
+    return QUALITATIVE_ELEVATED_LACTATE_MMOL_L if qualitative_high else None
 
 
 def systemic_severity_signals(state: PatientState) -> List[str]:

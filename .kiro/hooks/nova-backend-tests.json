@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "backend change → backend tests",
+      "trigger": "PostFileSave",
+      "matcher": "backend/.*\\.py$",
+      "action": {
+        "type": "agent",
+        "prompt": "A file under backend/ was changed. Before considering this work complete, run the targeted backend tests (python -m pytest backend/tests/ -q). Postgres-backed tests will skip without a database — that is expected locally, but in CI the postgres-integration job runs them against a real postgres:16 (NOVA_CI_REQUIRE_POSTGRES=1 turns a skip into a failure). If you cannot run the tests in this environment, say so and rely on CI; never report a skipped or unrun test as PASS."
+      }
+    }
+  ]
+}

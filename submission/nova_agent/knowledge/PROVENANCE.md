@@ -43,9 +43,41 @@ standard teaching for that condition, structured for keyword-based matching (see
 `dangerous` follow conventional triage judgment (e.g. the 14 time-critical "can't-miss" diagnoses
 named in the original task spec) rather than a formal acuity scoring system.
 
+## P1 safety-language audit reference
+
+The small, scoped lay-language bridge in `nova_agent/safety.py` was checked against public
+patient-facing symptom descriptions from the U.S. CDC and NHS on 2026-10-02. It adds no copied
+clinical text, thresholds, or model weights; it only maps common phrases such as "sudden shortness
+of breath" and "racing heart" to the existing internally authored red-flag terms, with negation
+handling. These pages are an audit reference for wording, not evidence of clinical validation:
+
+- CDC, About Venous Thromboembolism: https://www.cdc.gov/blood-clots/about/index.html
+- NHS, Pulmonary embolism: https://www.nhs.uk/conditions/pulmonary-embolism/
+
 ## If official guidance becomes available
 
 If the N.O.V.A. 2026 competition rules specify a required knowledge source, an approved reference
 set, or a licensing constraint, that takes precedence over everything in this file and in
 `knowledge/*.json` -- update the affected entries (and this file) to cite it accurately rather than
 leaving this internally-authored-heuristic framing in place once a real source is confirmed.
+
+## Separately sourced publisher references (2026-10-05)
+
+`licensed_references.json` is distinct from the internal heuristics described above.
+It contains 372 MedlinePlus health-topic summaries, five MedlinePlus medical-test
+articles and 260 Orphanet active disorder-level definitions, selected by exact existing
+catalog vocabulary. Source: MedlinePlus, National Library of Medicine. Orphanet (c)
+2026, Nomenclature Pack July 2026, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
+
+Each record retains publisher identity/URL; the catalog retains versions, download
+hashes, terms links, attribution and modification notice. Selection, HTML removal and
+whitespace normalization are deterministic transformations. NLM's public-domain
+scope applies only to the selected summaries/test information, not A.D.A.M., ASHP,
+images or linked third-party pages. Orphanet material is reused under CC BY 4.0.
+
+These references are supplemental background, not diagnostic rules, patient evidence,
+clinician approval or provenance for existing features. No existing disease feature,
+weight, threshold, test utility or label is replaced or re-attributed. The original
+source fields and extraction code are retained outside the submission in
+`research/licensed_references/` and `scripts/import_licensed_references.py`.
+The runtime performs static local lookup only; no source website is contacted.

@@ -1,0 +1,3429 @@
+{
+  "scope": "synthetic_mock_only",
+  "suite": "validation",
+  "summary": {
+    "scored_diagnostic_accuracy": 1.0,
+    "all_case_diagnostic_accuracy": 1.0,
+    "unscored_case_names": [],
+    "unsupported_case_success_rate": null,
+    "critical_diagnosis_recall": 1.0,
+    "critical_miss_rate": 0.0,
+    "average_turns": 23.583333333333332,
+    "median_turns": 22.0,
+    "duplicate_action_rate": 0.0,
+    "unnecessary_test_rate": 0.5,
+    "malformed_output_rate": 0.0,
+    "failed_diagnosis_rate": 0.0,
+    "fallback_rate": null,
+    "average_ask_count": 8.0,
+    "average_exam_count": 6.416666666666667,
+    "average_test_count": 8.166666666666666,
+    "utility_score_proxy": 0.7391666666666666,
+    "n_cases": 12,
+    "n_scored_cases": 12,
+    "n_critical_cases": 6
+  },
+  "cases": [
+    {
+      "case_id": "new_aortic_dissection_0",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "aortic_dissection",
+      "final_diagnosis": "Aortic Dissection",
+      "correct": true,
+      "turns": 37,
+      "ask_count": 10,
+      "exam_count": 10,
+      "test_count": 16,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:pelvic_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:beta_hcg",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:ct_aorta",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 29,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 30,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 31,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 32,
+          "action": "TEST:d_dimer",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 33,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 34,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 35,
+          "action": "TEST:ct_chest_angio",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 36,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 37,
+          "action": "DIAGNOSE:aortic_dissection",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_aortic_dissection_1",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "aortic_dissection",
+      "final_diagnosis": "Aortic Dissection",
+      "correct": true,
+      "turns": 37,
+      "ask_count": 10,
+      "exam_count": 10,
+      "test_count": 16,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:pelvic_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:beta_hcg",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:ct_aorta",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 29,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 30,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 31,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 32,
+          "action": "TEST:d_dimer",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 33,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 34,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 35,
+          "action": "TEST:ct_chest_angio",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 36,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 37,
+          "action": "DIAGNOSE:aortic_dissection",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_aortic_dissection_2",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "aortic_dissection",
+      "final_diagnosis": "Aortic Dissection",
+      "correct": true,
+      "turns": 37,
+      "ask_count": 10,
+      "exam_count": 10,
+      "test_count": 16,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:lipase",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:severity",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:pelvic_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:beta_hcg",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:ct_aorta",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 28,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 29,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 30,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 31,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 32,
+          "action": "TEST:d_dimer",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 33,
+          "action": "TEST:ct_head",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 34,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 35,
+          "action": "TEST:ct_chest_angio",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 36,
+          "action": "TEST:mri_brain",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        },
+        {
+          "turn": 37,
+          "action": "DIAGNOSE:aortic_dissection",
+          "top5_differential": [
+            "Aortic Dissection",
+            "Sepsis",
+            "Acute Coronary Syndrome",
+            "Pulmonary Embolism",
+            "Ischemic Stroke"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_asthma_copd_exacerbation_0",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "asthma_copd_exacerbation",
+      "final_diagnosis": "Asthma / COPD Exacerbation",
+      "correct": true,
+      "turns": 12,
+      "ask_count": 5,
+      "exam_count": 4,
+      "test_count": 2,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation",
+            "Acute Coronary Syndrome",
+            "Panic Attack"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation",
+            "Acute Coronary Syndrome",
+            "Panic Attack"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation",
+            "Acute Coronary Syndrome",
+            "Panic Attack"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome",
+            "Panic Attack"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome",
+            "Panic Attack"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "DIAGNOSE:asthma_copd_exacerbation",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Anaphylaxis",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_asthma_copd_exacerbation_1",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "asthma_copd_exacerbation",
+      "final_diagnosis": "Asthma / COPD Exacerbation",
+      "correct": true,
+      "turns": 9,
+      "ask_count": 3,
+      "exam_count": 2,
+      "test_count": 3,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Anaphylaxis",
+            "Asthma / COPD Exacerbation",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Anaphylaxis",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "TEST:abg",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Anaphylaxis",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Anaphylaxis",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Anaphylaxis",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Anaphylaxis",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Anaphylaxis",
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "DIAGNOSE:asthma_copd_exacerbation",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Anaphylaxis",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Acute Coronary Syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_asthma_copd_exacerbation_2",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "asthma_copd_exacerbation",
+      "final_diagnosis": "Asthma / COPD Exacerbation",
+      "correct": true,
+      "turns": 16,
+      "ask_count": 7,
+      "exam_count": 4,
+      "test_count": 4,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Pulmonary Embolism",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Asthma / COPD Exacerbation",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:d_dimer",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "TEST:ct_chest_angio",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "DIAGNOSE:asthma_copd_exacerbation",
+          "top5_differential": [
+            "Asthma / COPD Exacerbation",
+            "Viral Upper Respiratory Infection",
+            "Tension Pneumothorax",
+            "Community-Acquired Pneumonia",
+            "Pulmonary Embolism"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_acute_coronary_syndrome_0",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "acute_coronary_syndrome",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "correct": true,
+      "turns": 21,
+      "ask_count": 9,
+      "exam_count": 6,
+      "test_count": 5,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:ct_aorta",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "ASK:relieving",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "DIAGNOSE:acute_coronary_syndrome",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_acute_coronary_syndrome_1",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "acute_coronary_syndrome",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "correct": true,
+      "turns": 21,
+      "ask_count": 9,
+      "exam_count": 6,
+      "test_count": 5,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)",
+            "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:extremity_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "TEST:ct_aorta",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "ASK:relieving",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "DIAGNOSE:acute_coronary_syndrome",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Aortic Dissection",
+            "Gastroesophageal Reflux Disease",
+            "Musculoskeletal Chest Pain (Costochondritis)"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_acute_coronary_syndrome_2",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "acute_coronary_syndrome",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "correct": true,
+      "turns": 27,
+      "ask_count": 9,
+      "exam_count": 7,
+      "test_count": 10,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 0,
+      "critical": true,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "EXAM:general_appearance",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "EXAM:mental_status_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "EXAM:skin_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "TEST:bmp",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:character",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "ASK:family_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:troponin",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "TEST:cxr",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:allergy",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:lung_auscultation",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:glucose_point_of_care",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "TEST:ketones",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:abg",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:lactate",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "TEST:blood_culture",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 23,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 24,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis",
+            "Anaphylaxis"
+          ]
+        },
+        {
+          "turn": 25,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 26,
+          "action": "ASK:duration",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        },
+        {
+          "turn": 27,
+          "action": "DIAGNOSE:acute_coronary_syndrome",
+          "top5_differential": [
+            "Acute Coronary Syndrome",
+            "Hypoglycemia",
+            "Panic Attack",
+            "Diabetic Ketoacidosis",
+            "Sepsis"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_unknown_0",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "unknown",
+      "final_diagnosis": "unknown",
+      "correct": true,
+      "turns": 22,
+      "ask_count": 8,
+      "exam_count": 6,
+      "test_count": 7,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 2,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:pelvic_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:beta_hcg",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:pelvic_ultrasound",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:relieving",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_unknown_1",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "unknown",
+      "final_diagnosis": "unknown",
+      "correct": true,
+      "turns": 22,
+      "ask_count": 8,
+      "exam_count": 6,
+      "test_count": 7,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 2,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:pelvic_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:beta_hcg",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:pelvic_ultrasound",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:relieving",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "new_unknown_2",
+      "category": "new_synthetic_validation",
+      "scoring_expected": true,
+      "ground_truth": "unknown",
+      "final_diagnosis": "unknown",
+      "correct": true,
+      "turns": 22,
+      "ask_count": 8,
+      "exam_count": 6,
+      "test_count": 7,
+      "duplicate_actions": 0,
+      "unnecessary_tests": 2,
+      "critical": false,
+      "critical_miss": false,
+      "malformed_turns": 0,
+      "failed_to_diagnose": false,
+      "llm_call_count": 0,
+      "llm_success_count": 0,
+      "llm_failure_count": 0,
+      "llm_fallback_count": 0,
+      "differential_trajectory": [
+        {
+          "turn": 1,
+          "action": "ASK:onset",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 2,
+          "action": "ASK:associated_symptoms",
+          "top5_differential": [
+            "Acute Abdomen (Surgical Abdomen)",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy",
+            "Acute Pancreatitis",
+            "Acute Appendicitis"
+          ]
+        },
+        {
+          "turn": 3,
+          "action": "EXAM:abdominal_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 4,
+          "action": "ASK:medication",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 5,
+          "action": "ASK:past_medical_history",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 6,
+          "action": "ASK:social_history",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 7,
+          "action": "ASK:location",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 8,
+          "action": "EXAM:pelvic_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 9,
+          "action": "TEST:cbc",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 10,
+          "action": "TEST:fecal_occult_blood",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 11,
+          "action": "TEST:beta_hcg",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 12,
+          "action": "ASK:aggravating",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 13,
+          "action": "TEST:pelvic_ultrasound",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 14,
+          "action": "EXAM:vital_signs",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 15,
+          "action": "ASK:relieving",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 16,
+          "action": "EXAM:neuro_exam",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 17,
+          "action": "EXAM:cardiac_auscultation",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 18,
+          "action": "TEST:ecg",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 19,
+          "action": "EXAM:costovertebral_tenderness",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 20,
+          "action": "TEST:urinalysis",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 21,
+          "action": "TEST:urine_culture",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        },
+        {
+          "turn": 22,
+          "action": "DIAGNOSE:unknown",
+          "top5_differential": [
+            "Vasovagal (Reflex) Syncope",
+            "Uncomplicated Cystitis (Lower UTI)",
+            "Orthostatic Hypotension",
+            "Gastrointestinal Bleeding",
+            "Ectopic Pregnancy"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -17,6 +17,7 @@ from nova_agent.action_canonicalizer import canonicalize_action
 from nova_agent.config import get_config
 from nova_agent.llm_client import CompetitionLLMClient, MockLLMClient, get_llm_client
 from nova_agent.llm_schema import AgentTurnOutput, DifferentialItemOutput, SelectedActionOutput
+from nova_agent.differential import DifferentialItem
 from nova_agent.resolution import is_resolved
 from nova_agent.safety_validator import SafetyValidator, build_candidate_pool
 from nova_agent.state import PatientState
@@ -191,6 +192,26 @@ def test_duplicate_diagnosis_alias_merge():
     assert "elevated troponin" in acs_entries[0].supporting_evidence
 
 
+def test_llm_restatement_cannot_erase_deterministic_evidence():
+    """A model restatement may add evidence, but must not erase parsed local evidence."""
+    deterministic = DifferentialItem(
+        diagnosis="Acute Coronary Syndrome", diagnosis_id="acute_coronary_syndrome", rank=1,
+        score=4.0, score_ratio=0.8, supporting_evidence=["ST elevation"],
+        contradictory_evidence=[], missing_discriminative_evidence=[], urgency="CRITICAL",
+        dangerous_if_missed=True, confidence_band="HIGH", candidate_sources=["objective_finding"],
+    )
+    llm_output = AgentTurnOutput(
+        summary="restated without evidence", differential=[DifferentialItemOutput(
+            diagnosis="Acute Coronary Syndrome", diagnosis_id="acute_coronary_syndrome", rank=1,
+            supporting_evidence=[], confidence="HIGH", dangerous_if_missed=True,
+        )], red_flags=[], candidate_actions=[],
+        selected_action=SelectedActionOutput(type="ASK", key="onset", content="When did it start?"),
+        ready_to_diagnose=False,
+    )
+    merged = SafetyValidator().merge_differential(llm_output, [deterministic], [])
+    assert merged[0].supporting_evidence == ["ST elevation"]
+
+
 # --- test_dangerous_workup_does_not_require_every_optional_test ---------------------------------
 
 def test_confirmatory_finding_negation_not_spuriously_matched():
@@ -285,7 +306,7 @@ def test_competition_provider_preflight():
     assert reason and isinstance(reason, str)
 
 
-def test_real_llm_client_bounded_retry_across_transient_failure_modes():
+def test_real_llm_client_bounded_retry_across_transient_failure_modes(monkeypatch):
     """Seven distinct real-world HTTP/network/parsing failure modes -- 429, a temporary 5xx,
     timeout, connection reset, invalid JSON, and truncated JSON -- must each be absorbed by
     generate_turn_output()'s bounded retry, never propagate as an unhandled exception out of
@@ -300,12 +321,17 @@ def test_real_llm_client_bounded_retry_across_transient_failure_modes():
     from nova_agent.llm_client import CompetitionLLMClient
     from nova_agent.orchestrator import DoctorAgent
 
+    monkeypatch.setenv("NOVA_COMPETITION_BASE_URL", "http://127.0.0.1:1/v1")
+    from nova_agent.config import get_config
+    get_config(reload=True)
+
     class _FakeResponse:
         """Minimal context-manager stand-in for urllib's response object, for the two failure
         modes that need a 200-looking response with a bad body rather than a raised exception."""
 
         def __init__(self, body: bytes) -> None:
             self._body = body
+            self.status = 200
 
         def read(self):
             return self._body
@@ -343,7 +369,7 @@ def test_real_llm_client_bounded_retry_across_transient_failure_modes():
                 return effect
             raise effect
 
-        with patch("nova_agent.llm_client.urllib.request.urlopen", side_effect=_fake_urlopen):
+        with patch.object(client, "_open_request", side_effect=_fake_urlopen):
             action, _llm_output, _differential = agent.decide(state)
 
         assert action.action_type in {"ASK", "EXAM", "TEST", "DIAGNOSE"}, \
@@ -645,6 +671,7 @@ def test_all_case_accuracy_metric():
         _make_result("c", correct=False),
         _make_result("d", correct=False, scoring_expected=False),  # ambiguous/unscored, and wrong
     ]
+    results[-1].ground_truth = "unknown"
     summary = compute_summary(results)
     assert summary["all_case_diagnostic_accuracy"] == pytest.approx(2 / 4)
     assert summary["scored_diagnostic_accuracy"] == pytest.approx(2 / 3)
@@ -708,7 +735,8 @@ def test_fallback_rate_is_distinct_from_malformed_output_rate():
 def _read_py_files(root: Path) -> dict:
     files = {}
     for path in root.rglob("*"):
-        if path.is_file() and "__pycache__" not in path.parts:
+        if (path.is_file() and "__pycache__" not in path.parts
+                and not path.name.endswith(".sqlite") and ".sqlite-" not in path.name):
             files[path.relative_to(root)] = path.read_bytes()
     return files
 
@@ -726,7 +754,9 @@ def test_build_script_aborts_on_leaked_secret():
             cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60,
         )
         assert proc.returncode != 0, "build script must exit non-zero when a secret is present"
-        assert "secret-shaped string" in proc.stdout or "secret-shaped string" in proc.stderr
+        # The staging allowlist may reject an untracked injected file before reading it.
+        assert any(reason in proc.stdout + proc.stderr for reason in
+                   ("secret-shaped string", "Unapproved staging files"))
     finally:
         leaked_file.unlink(missing_ok=True)
         # Restore submission/ to a real, non-leaked state for every other test in this session.
@@ -739,6 +769,8 @@ def test_submission_source_sync():
     nova_agent/ and competition/ packages (spec sections 16/23/24): submission/ is never
     hand-edited, only regenerated by scripts/build_nova_submission.py. This test is what a CI job
     runs to catch drift before it ships a stale submission."""
+    # Operator reference data is intentionally excluded, and must never leak into the package.
+    assert not list((REPO_ROOT / "submission" / "nova_agent").rglob("*.sqlite*"))
     for package in ("nova_agent", "competition"):
         root_files = _read_py_files(REPO_ROOT / package)
         submission_files = _read_py_files(REPO_ROOT / "submission" / package)

@@ -1,0 +1,71 @@
+[
+  {
+    "name": "Python",
+    "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "purpose": "Runtime/interpreter",
+    "license": "PSF terms; exact environment legal review NOT_VERIFIED"
+  },
+  {
+    "name": "pydantic",
+    "version": "2.13.5",
+    "license_metadata": "MIT",
+    "purpose": "runtime dependency",
+    "bundled": false
+  },
+  {
+    "name": "pydantic-core",
+    "version": "2.46.5",
+    "license_metadata": "MIT",
+    "purpose": "runtime dependency",
+    "bundled": false
+  },
+  {
+    "name": "typing-extensions",
+    "version": "4.16.0",
+    "license_metadata": "PSF-2.0",
+    "purpose": "runtime dependency",
+    "bundled": false
+  },
+  {
+    "name": "typing-inspection",
+    "version": "0.4.4",
+    "license_metadata": "MIT",
+    "purpose": "runtime dependency",
+    "bundled": false
+  },
+  {
+    "name": "annotated-types",
+    "version": "0.8.0",
+    "license_metadata": "MIT",
+    "purpose": "runtime dependency",
+    "bundled": false
+  },
+  {
+    "name": "pytest",
+    "version": "9.1.1",
+    "license_metadata": "MIT",
+    "purpose": "development tests only",
+    "bundled": false
+  },
+  {
+    "name": "fastapi",
+    "version": "0.142.2",
+    "license_metadata": "MIT",
+    "purpose": "development tests only",
+    "bundled": false
+  },
+  {
+    "name": "starlette",
+    "version": "1.7.0",
+    "license_metadata": "BSD-3-Clause",
+    "purpose": "development tests only",
+    "bundled": false
+  },
+  {
+    "name": "httpx",
+    "version": "0.28.1",
+    "license_metadata": "BSD-3-Clause",
+    "purpose": "development tests only",
+    "bundled": false
+  }
+]

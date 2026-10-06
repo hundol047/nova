@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites public_summary="sha256-identities-v1"><testsuite name="verified_tests" tests="3" failures="0" errors="0" skipped="0"><testcase classname="sha256" name="4309da301afa068b06c745f0607526f04a98d097babd9733529e3a3e6a92be7a" time="0.197" /><testcase classname="sha256" name="979015273a268c04bcdb021c0000350ef0820bce9d78358f70c49f5e1784f226" time="0.001" /><testcase classname="sha256" name="704ea2c1c0f0c503ab38f2c4842bd075089c40e3868158c0f9dc5a658ff2a283" time="0.175" /></testsuite></testsuites>

@@ -12,8 +12,8 @@ from typing import Dict, List
 
 from pydantic import BaseModel
 
-from nova_agent.chief_complaint import classify as classify_chief_complaint
-from nova_agent.differential import DifferentialItem
+from nova_agent.clinical_presentation import build_clinical_presentation
+from nova_agent.differential import DifferentialItem, FEATURE_ALIASES
 from nova_agent.knowledge.retrieval import (
     critical_condition_ids,
     demographic_risk_rules,
@@ -22,9 +22,52 @@ from nova_agent.knowledge.retrieval import (
     vital_sign_red_flags,
 )
 from nova_agent.matching import feature_present
+from nova_agent.objective_evidence import normalize_objective_evidence
 from nova_agent.state import PatientState, RedFlag
 
 _OPS = {">=": lambda v, t: v >= t, "<=": lambda v, t: v <= t, ">": lambda v, t: v > t, "<": lambda v, t: v < t}
+
+# Safety red-flag entries use concise clinical terms, while a patient usually uses a lay
+# description.  Keep these aliases scoped to the one red-flag phrase they expand (never a global
+# synonym table), and run the same negation-aware matcher used by the rest of the engine.  These
+# are generic paraphrases supported by public patient-facing PE symptom guidance (for example,
+# "sudden shortness of breath" for "sudden onset dyspnea" and "racing heart" for "tachycardia").
+# They are deliberately small: this table is a safety recall bridge, not a diagnostic model.
+_SAFETY_FEATURE_ALIASES: dict[str, tuple[str, ...]] = {
+    "sudden onset dyspnea": (
+        "sudden shortness of breath", "abrupt shortness of breath",
+        "sudden difficulty breathing", "sudden trouble breathing",
+        "can't breathe came on suddenly", "unable to breathe started suddenly",
+        "갑자기 숨이 차", "갑자기 숨이 차고", "갑자기 숨이 참", "갑자기 호흡이 곤란",
+    ),
+    "tachycardia": (
+        "racing heart", "fast heartbeat", "rapid heartbeat",
+        "heart beating very fast",
+    ),
+    "pleuritic": (
+        "chest pain worse with breathing", "pain worse when i breathe",
+        "pain when breathing in", "pain with deep breaths", "sharp pain with breathing",
+        "숨 쉴 때 가슴이 아프", "숨쉴 때 가슴이 아프", "호흡할 때 가슴 통증",
+    ),
+    "slurred speech": ("dysarthria", "어눌한 말", "말이 어눌"),
+    "hypoxia": (
+        "low oxygen", "low oxygen level", "oxygen saturation is low",
+    ),
+}
+
+
+def _safety_feature_present(keyword: str, findings: list[str]) -> bool:
+    """Match one red-flag keyword plus only its scoped lay aliases.
+
+    `feature_present(..., scrub_negated_spans=True)` remains the first check and is also used for
+    aliases, so a sentence such as "no racing heart" cannot raise a tachycardia/PE flag merely
+    because it contains the alias text.
+    """
+    if feature_present(keyword, findings, scrub_negated_spans=True):
+        return True
+    return any(feature_present(alias, findings, scrub_negated_spans=True, strict=True)
+               for alias in (*_SAFETY_FEATURE_ALIASES.get(keyword.lower(), ()),
+                             *FEATURE_ALIASES.get(keyword.lower(), ())))
 
 
 class SafetyFinding(BaseModel):
@@ -39,19 +82,50 @@ class SafetyFinding(BaseModel):
 class SafetyLayer:
     def assess(self, state: PatientState, differential: List[DifferentialItem]) -> List[SafetyFinding]:
         findings: List[SafetyFinding] = []
-        tag = classify_chief_complaint(state.chief_complaint)
-        differential_ids = {d.diagnosis_id for d in differential}
-        findings_text = state.all_findings_text()
+        # Safety relevance must see every currently positive presentation concept, not only the
+        # single primary router tag.  A mixed complaint such as fever+cough+pleuritic pain can
+        # still be PE-relevant even when fever wins the single-tag tie; the presentation builder
+        # already excludes negated clauses and folds in later positive observations.
+        presentation_tags = set(build_clinical_presentation(state).symptoms)
+        # A diagnosis counts as "already in the differential" here only if it has some evidence-
+        # based reason to be there (symptom/risk/objective match) -- not merely because it rides
+        # along as part of the fixed cross-cutting safety net every candidate pool now always
+        # carries (candidate_generator.py), nor because it is only present via the whole-catalog
+        # zero-evidence fallback (candidate_generator.py's "zero_evidence_fallback" source -- see
+        # that module's own docstring), nor because it was only contextually activated
+        # (nova_agent/contextual_safety.py's "contextual_safety" source -- a demographic/context
+        # match alone, e.g. reproductive-age + abdominal symptoms, is not itself red-flag SYMPTOM
+        # evidence). Without this distinction, every one of these small, evidence-free sources would
+        # always satisfy this OR-condition, defeating this layer's own stated purpose ("never a
+        # blanket test-everything-dangerous reflex") and measurably inflating turn counts by
+        # keeping irrelevant diagnoses "actively flagged" purely because they exist in the pool.
+        _NO_EVIDENCE_ONLY_SOURCES = ({"safety_candidate"}, {"zero_evidence_fallback"}, {"contextual_safety"})
+        differential_ids = {d.diagnosis_id for d in differential
+                             if set(d.candidate_sources) not in _NO_EVIDENCE_ONLY_SOURCES}
+        # Symptom triggers use current observations only. History/medication risk remains available to
+        # the separate demographic and medication rules below.
+        findings_text = state.all_findings_text(include_context=False)
+        # Specific current bleeding / focal neurological signs establish relevance even if language
+        # routing missed the complaint. Generic sweating, nausea, tachycardia or candidate score must
+        # NOT bypass complaint relevance.
+        direct_signs = {
+            "gi_bleeding": ("melena", "hematemesis", "hematochezia"),
+            "ischemic_stroke": ("facial droop", "slurred speech", "unilateral weakness", "focal deficit"),
+        }
+        for diagnosis_id, signs in direct_signs.items():
+            if any(_safety_feature_present(sign, findings_text) for sign in signs):
+                differential_ids.add(diagnosis_id)
 
         for diagnosis_id in critical_condition_ids():
             entry = disease_by_id(diagnosis_id)
             if entry is None:
                 continue
-            relevant = tag in entry.get("chief_complaint_tags", []) or diagnosis_id in differential_ids
+            relevant = bool(presentation_tags & set(entry.get("chief_complaint_tags", []))) \
+                or diagnosis_id in differential_ids
             if not relevant:
                 continue
             matched_keywords = [kw for kw in entry.get("red_flag_keywords", [])
-                                 if feature_present(kw, findings_text, scrub_negated_spans=True)]
+                                 if _safety_feature_present(kw, findings_text)]
             if matched_keywords:
                 findings.append(SafetyFinding(
                     diagnosis_id=diagnosis_id, condition=entry["name"],
@@ -70,7 +144,8 @@ class SafetyLayer:
                         entry = disease_by_id(diagnosis_id)
                         if entry is None:
                             continue
-                        if tag not in entry.get("chief_complaint_tags", []) and diagnosis_id not in differential_ids:
+                        if not (presentation_tags & set(entry.get("chief_complaint_tags", []))) \
+                                and diagnosis_id not in differential_ids:
                             continue  # not relevant to this case -- do not raise a flag for it
                         findings.append(SafetyFinding(
                             diagnosis_id=diagnosis_id, condition=entry["name"],
@@ -78,12 +153,29 @@ class SafetyLayer:
                             source="vital_sign", urgency=entry.get("urgency", "CRITICAL"),
                         ))
 
+        # Existing numeric critical ranges are independent of chief-complaint routing.
+        # A measured critical electrolyte value must remain visible even when a patient
+        # describes only fatigue and never supplies a keyword such as "arrhythmia".
+        objective = normalize_objective_evidence(state)
+        for lab_id in ("lab.potassium", "lab.sodium"):
+            measured = objective.get(lab_id)
+            if measured is None or measured.interpretation not in {"critical_low", "critical_high"}:
+                continue
+            entry = disease_by_id("severe_electrolyte_disorder")
+            if entry is not None:
+                findings.append(SafetyFinding(
+                    diagnosis_id=entry["id"], condition=entry["name"],
+                    reason="Measured electrolyte meets the existing critical laboratory range",
+                    evidence=[measured.evidence_label], source="objective_lab",
+                    urgency=entry.get("urgency", "CRITICAL"),
+                ))
+
         # Demographic risk (spec section 15): e.g. a reproductive-age female with abdominal pain
         # gets ectopic pregnancy actively considered even before any pregnancy-specific keyword
         # has come up -- still gated to the matching chief-complaint tag, never a blanket check.
         demographics = state.demographics
         for rule in demographic_risk_rules():
-            if tag not in rule.get("chief_complaint_tags", []):
+            if not (presentation_tags & set(rule.get("chief_complaint_tags", []))):
                 continue
             if rule.get("requires_sex") and (demographics.sex or "").lower() != rule["requires_sex"]:
                 continue
@@ -108,7 +200,7 @@ class SafetyLayer:
         medication_text_blob = " ".join(state.medication_text + [m.name for m in state.medications]).lower()
         if medication_text_blob:
             for rule in medication_risk_rules():
-                if tag not in rule.get("chief_complaint_tags", []):
+                if not (presentation_tags & set(rule.get("chief_complaint_tags", []))):
                     continue
                 matched = [kw for kw in rule["trigger_keywords"] if kw in medication_text_blob]
                 if not matched:

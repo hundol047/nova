@@ -1,0 +1,225 @@
+[
+  {
+    "rule_id": "fixed_model",
+    "official_requirement": "openai/gpt-oss-20b",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "nova_agent/config.py; competition/provider_lock.py",
+    "test_location": "tests/test_pre_guide_compliance.py",
+    "status": "NOT_VERIFIED",
+    "notes": "Configured target; actual organizer weights/transport cannot be attested."
+  },
+  {
+    "rule_id": "fixed_revision",
+    "official_requirement": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "nova_agent/config.py; competition/provider_lock.py",
+    "test_location": "tests/test_pre_guide_compliance.py",
+    "status": "NOT_VERIFIED",
+    "notes": "Configured target; actual organizer weights/transport cannot be attested."
+  },
+  {
+    "rule_id": "no_finetuning",
+    "official_requirement": "No fixed-model fine-tuning",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "submission/run.py; competition/provider_lock.py",
+    "test_location": "tests/test_hardening_boundaries.py; scripts/audit_pre_guide_package.py",
+    "status": "PASS",
+    "notes": "Official path fails before any inference; package has no training or weights. This is a negative safety property, not readiness."
+  },
+  {
+    "rule_id": "no_lora",
+    "official_requirement": "No LoRA/QLoRA or adapter weights",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "submission/run.py; competition/provider_lock.py",
+    "test_location": "tests/test_hardening_boundaries.py; scripts/audit_pre_guide_package.py",
+    "status": "PASS",
+    "notes": "Official path fails before any inference; package has no training or weights. This is a negative safety property, not readiness."
+  },
+  {
+    "rule_id": "no_fixed_weights",
+    "official_requirement": "No fixed-model weights bundled",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "submission/run.py; competition/provider_lock.py",
+    "test_location": "tests/test_hardening_boundaries.py; scripts/audit_pre_guide_package.py",
+    "status": "PASS",
+    "notes": "Official path fails before any inference; package has no training or weights. This is a negative safety property, not readiness."
+  },
+  {
+    "rule_id": "no_replacement_llm",
+    "official_requirement": "Use designated preliminary model",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "submission/run.py; competition/provider_lock.py",
+    "test_location": "tests/test_hardening_boundaries.py; scripts/audit_pre_guide_package.py",
+    "status": "PASS",
+    "notes": "Official path fails before any inference; package has no training or weights. This is a negative safety property, not readiness."
+  },
+  {
+    "rule_id": "per_case_call",
+    "official_requirement": "Successful fixed-model call with current-case information in every evaluated case",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "competition/adapter.py; submission/run.py",
+    "test_location": "tests/test_competition_runtime_boundaries.py; tests/test_hardening_boundaries.py",
+    "status": "BLOCKED",
+    "notes": "No organizer transport. Preflight/mock/another case do not count. Structured development parse is separately labelled; official call receipt remains NOT_VERIFIED."
+  },
+  {
+    "rule_id": "four_actions",
+    "official_requirement": "ASK / EXAM / TEST / DIAGNOSE",
+    "official_source": "https://nova.snubhai.org/evaluation/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "competition/schema.py; competition/adapter.py",
+    "test_location": "tests/test_hardening_boundaries.py",
+    "status": "PASS",
+    "notes": "Only action vocabulary verified, exact schema is PLACEHOLDER."
+  },
+  {
+    "rule_id": "sixty_interactions",
+    "official_requirement": "At most 60 interactions per case",
+    "official_source": "https://nova.snubhai.org/evaluation/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "nova_agent/config.py; state.py; competition/adapter.py",
+    "test_location": "tests/test_pre_guide_compliance.py; tests/test_hardening_boundaries.py",
+    "status": "PASS",
+    "notes": "Capped budgets and emitted action counter; retries do not increment patient interactions. Official turn semantics pending guide."
+  },
+  {
+    "rule_id": "external_api",
+    "official_requirement": "No external API or LLM calls in submitted evaluated inference",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "submission/run.py -> competition/provider_lock.py -> config",
+    "test_location": "tests/test_hardening_boundaries.py",
+    "status": "PASS",
+    "notes": "APPLICATION_LEVEL_NETWORK_POLICY_VERIFIED for blocked entrypoint; OS-level network isolation NOT_VERIFIED. Proxy/redirect target cannot be reached."
+  },
+  {
+    "rule_id": "static_rag",
+    "official_requirement": "Static local retrieval permitted within environment limits",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "nova_agent/knowledge/retrieval.py; retrieval_pipeline.py",
+    "test_location": "tests/test_pre_guide_compliance.py; existing retrieval tests",
+    "status": "PASS",
+    "notes": "Static local lexical index remains immutable with respect to patient data. Engineering retrieval/coverage experiments locally tested; official CPU/RAM/time fitness NOT_VERIFIED."
+  },
+  {
+    "rule_id": "auxiliary_embedding",
+    "official_requirement": "Small local CPU/RAM components may be used subject to environment",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "submission/requirements.txt",
+    "test_location": "scripts/audit_pre_guide_package.py",
+    "status": "NOT_APPLICABLE",
+    "notes": "No embedding weights included. Not classified as prohibited merely because local."
+  },
+  {
+    "rule_id": "private_learning",
+    "official_requirement": "No learning/tuning/rule updates from private cases",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "official entrypoint blocked; static development reasoning graph",
+    "test_location": "tests/test_hardening_boundaries.py",
+    "status": "PASS",
+    "notes": "Development learning env variables cannot unlock official path; unrelated hospital modules not imported."
+  },
+  {
+    "rule_id": "isolation",
+    "official_requirement": "Cases must not use each others information/predictions/statistics",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "competition/adapter.py; nova_agent/state.py",
+    "test_location": "tests/test_hardening_boundaries.py",
+    "status": "PASS",
+    "notes": "Deterministic alone/order/interleaved/reused-ID/cleanup tests; single-threaded local harness, no concurrent threaded guarantee."
+  },
+  {
+    "rule_id": "python",
+    "official_requirement": "Python",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "scripts/build_nova_submission.py; submission/",
+    "test_location": "scripts/audit_pre_guide_package.py",
+    "status": "PASS",
+    "notes": "Locally built pre-guide candidate only."
+  },
+  {
+    "rule_id": "utf8",
+    "official_requirement": "UTF-8 input/files/output",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "scripts/build_nova_submission.py; submission/",
+    "test_location": "scripts/audit_pre_guide_package.py",
+    "status": "PASS",
+    "notes": "Locally built pre-guide candidate only."
+  },
+  {
+    "rule_id": "zip",
+    "official_requirement": "ZIP containing run.py and requirements.txt",
+    "official_source": "https://nova.snubhai.org/evaluation/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "scripts/build_nova_submission.py; submission/",
+    "test_location": "scripts/audit_pre_guide_package.py",
+    "status": "PASS",
+    "notes": "Locally built pre-guide candidate only."
+  },
+  {
+    "rule_id": "size",
+    "official_requirement": "ZIP at most 50 MB",
+    "official_source": "https://nova.snubhai.org/evaluation/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "scripts/build_nova_submission.py; submission/",
+    "test_location": "scripts/audit_pre_guide_package.py",
+    "status": "PASS",
+    "notes": "Locally built pre-guide candidate only."
+  },
+  {
+    "rule_id": "provenance",
+    "official_requirement": "Document sources and research-publication-compatible use rights",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "artifacts/compliance_hardening/clinical_asset_inventory.json",
+    "test_location": "Inventory coverage/hash validation",
+    "status": "BLOCKED",
+    "notes": "Original authorship/use rights unresolved, not declared invalid solely for being internal. 75 entries including 3 absent snapshots. Field-level triage and five non-promoted test-purpose candidates do not clear legacy rights or clinical review."
+  },
+  {
+    "rule_id": "generated_labels",
+    "official_requirement": "Reproducible self-label code/procedure; external-LLM model/version/prompts/output records",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "docs/compliance/LLM_GENERATION_LOG.md",
+    "test_location": "artifacts/compliance_hardening/recovered_history.json",
+    "status": "BLOCKED",
+    "notes": "Historical model/prompt receipts incomplete. No newly generated clinical knowledge promoted."
+  },
+  {
+    "rule_id": "guide",
+    "official_requirement": "Official guide specifies API/environment/invocation",
+    "official_source": "https://nova.snubhai.org/faq/",
+    "source_date": "2026-10-05 (accessed; publication date unspecified)",
+    "implementation_location": "competition/schema.py; submission/run.py",
+    "test_location": "tests/test_hardening_boundaries.py",
+    "status": "BLOCKED",
+    "notes": "No guide in supplied material or public pages inspected. October 6 opening ceremony is not proof of guide publication."
+  },
+  {
+    "rule_id": "licensed_static_reference_integration",
+    "official_requirement": "External material must permit research publication; inference may use local static retrieval without external API calls",
+    "official_source": "https://nova.snubhai.org/rules/",
+    "source_date": "2026-10-05",
+    "implementation_location": [
+      "nova_agent/knowledge/licensed_reference_store.py",
+      "nova_agent/knowledge/licensed_references.json"
+    ],
+    "test_location": "tests/test_licensed_references.py",
+    "status": "PASS",
+    "notes": "Scope limited to newly extracted source fields; historical clinical assets remain unresolved. No real fixed-model performance claim. Field-level triage and five non-promoted test-purpose candidates do not clear legacy rights or clinical review."
+  }
+]

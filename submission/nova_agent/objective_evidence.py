@@ -1,0 +1,511 @@
+"""Generalized numeric/qualitative objective lab evidence normalization (spec: generalize the
+glucose/lactate-only numeric-interpretation pattern to the rest of the labs this knowledge base's
+`confirmatory_findings` actually reference -- troponin, D-dimer, potassium, sodium, creatinine,
+WBC, hemoglobin, platelet, pH, bicarbonate, ketones, CRP, beta-hCG).
+
+Word-overlap matching (matching.py) treats a bare number as opaque text: "potassium 6.9 mEq/L" and
+"potassium 3.9 mEq/L" share every content word, so a knowledge-base phrase like "hyperkalemia" or
+"elevated potassium" -- which requires the literal word "elevated"/"hyper-" to be PRESENT in the
+finding text -- gets NO credit at all from a raw, unannotated lab number, even though the number
+alone is exactly what a real FHIR Observation resource or an unembellished lab report would give a
+clinician. `glucose_evidence.py` and `severity_evidence.py`'s lactate handling already solved this
+for exactly two labs; this module is the same idea generalized to the rest, kept in ONE place with
+ONE canonical-ID naming scheme (`lab.<name>`) instead of N bespoke per-lab functions -- and, unlike
+glucose_evidence.py, using a REGISTRY (`LAB_SPECS`) so a new lab is one table entry, not one new
+function threaded through differential.py by hand.
+
+Threshold honesty (spec: never a number fitted to a specific benchmark case): every threshold
+below is the standard, textbook adult reference range/definition. A few labs (troponin, D-dimer,
+CRP) are deliberately handled QUALITATIVELY ONLY (an "elevated"/"positive"/"markedly elevated"
+word in the result text, or normal/negative) rather than a fixed numeric ng/mL or mg/L cutoff --
+real assays for these vary by roughly an order of magnitude between standard and high-sensitivity
+methods, and a single hardcoded cutoff across assay types would be clinically wrong, not just
+imprecise, so this module does not pretend to have one. This is a disclosed limitation, not an
+oversight: see each LabSpec's own `numeric_pattern=None` and docstring note below.
+
+Deliberately does NOT replace glucose_evidence.py or severity_evidence.py's lactate handling --
+both are already independently verified and tuned (differential.py's `_score_glucose`/
+`_score_lactate`); this module reads the same two values through their existing extractors for
+canonical-ID consistency (`lab.glucose`/`lab.lactate` alongside the labs newly added here), never
+re-deriving them with a second, competing implementation.
+"""
+
+from __future__ import annotations
+
+import re
+from dataclasses import dataclass
+from typing import Dict, List, Optional
+
+from nova_agent.glucose_evidence import extract_glucose_mg_dl
+from nova_agent.severity_evidence import extract_lactate_mmol_l
+from nova_agent.state import PatientState
+from nova_agent.assertion_status import is_uncertain
+from nova_agent.unit_safety import value_is_in_disallowed_unit
+
+Direction = str  # "high" | "low" -- which side of normal counts as abnormal for a given lab
+
+
+@dataclass(frozen=True)
+class LabSpec:
+    canonical_id: str
+    display_name: str
+    unit: str
+    raw_keys: tuple  # PatientState.laboratory_tests keys this lab's value may be reported under
+    # Numeric interpretation (omitted -- None -- for assay-variable labs, see module docstring).
+    numeric_pattern: Optional[re.Pattern]
+    low: Optional[float] = None
+    high: Optional[float] = None
+    critical_low: Optional[float] = None
+    critical_high: Optional[float] = None
+    # Qualitative fallback: words in the raw text that mean "abnormal in the `high`/`low`
+    # direction" even with no parseable number (e.g. "elevated troponin", "large ketones").
+    qualitative_high_words: tuple = ()
+    qualitative_low_words: tuple = ()
+    qualitative_normal_words: tuple = ()
+    # Unit safety (spec section 19): the units this lab's thresholds are defined in
+    # (`allowed_units`) and units that would MISinterpret the bare number against those thresholds
+    # (`disallowed_units`, e.g. creatinine mg/dL thresholds vs an SI umol/L value ~88x larger, or
+    # hemoglobin g/dL thresholds vs a g/L value ~10x larger that could HIDE a critical low). When
+    # the raw text states a disallowed unit with no registered conversion, parsing is refused
+    # (interpretation stays "unknown"), never silently interpreted. Empty tuples => no unit guard
+    # (unchanged behavior), used where the number is unit-agnostic or the units are numerically
+    # equivalent (mEq/L == mmol/L for monovalent ions) or intrinsically unitless (pH).
+    allowed_units: tuple = ()
+    disallowed_units: tuple = ()
+    # Explicit analyte-specific conversions to `unit`; never inferred from another result.
+    unit_divisors: tuple = ()
+
+
+_GENERIC_ABNORMAL_HIGH_WORDS = (
+    "above threshold", "above the threshold", "above the reference range", "above the upper limit",
+    "above the upper limit of normal", "exceeds the upper limit", "out of range", "flagged high",
+    "critically elevated", "positive result",
+)
+
+
+def _direction_words(direction: str, *specific: str) -> tuple:
+    """Shared generic phrasing for a QUALITATIVE-ONLY, single-abnormal-direction lab (troponin,
+    D-dimer, CRP, lipase, ketones, beta-hCG, urinalysis infection markers -- every LabSpec below
+    whose only clinically meaningful abnormality is "elevated"/"positive", never "low", so a bare
+    "out of range"/"flagged high" is unambiguous FOR THESE SPECIFIC LABS even though it says
+    nothing about direction on its own). A real lab report calling a result "above
+    threshold"/"out of range"/"flagged high" is exactly as abnormal as one that spells out the
+    specific analyte word ("elevated troponin") -- generalizing this generic vocabulary, shared
+    across every single-direction lab here, closes that gap without adding any lab- or case-
+    specific keyword. Kept OUT of the bidirectional labs above (potassium/sodium/wbc/hemoglobin/
+    platelet/pH/bicarbonate), which mostly have a numeric_pattern anyway and where a bare
+    "abnormal"/"out of range" word IS genuinely ambiguous about direction. `direction` is always
+    "high" for the labs that use this (asserted, not silently accepted, since the generic list
+    above is deliberately direction-specific to this module's actual single-direction labs).
+    `specific` appends the lab's own already-existing specific words (never removed)."""
+    assert direction == "high", "objective_evidence.py's qualitative-only labs are all high-only"
+    return _GENERIC_ABNORMAL_HIGH_WORDS + specific
+
+
+_GENERIC_NORMAL_WORDS = ("within reference range", "within normal range", "within the reference range",
+                          "unremarkable")
+
+
+def _panel_pattern(*names: str) -> re.Pattern:
+    """Builds a pattern that finds `<analyte name> <number>` anywhere in a combined panel string
+    (e.g. a single "bmp"/"basic_metabolic_panel" result reporting several analytes at once, such
+    as "potassium 6.9, creatinine elevated above baseline") -- not just a whole-string number, so
+    one analyte's presence/absence doesn't depend on where in the panel string it appears."""
+    # Callers supply literals, never regex fragments. A value must follow this analyte,
+    # not an intervening analyte name, reference range, or an unspecified pending value.
+    alternation = "|".join(re.escape(n) for n in sorted(names, key=len, reverse=True))
+    # A reported change still contains a measured endpoint. Interpret its NUMBER, not
+    # the word "fallen" as low: a fall can end within the normal range.
+    connector = r"(?:is\s+|of\s+|[:=]\s*|(?:has\s+)?(?:fallen|fell|dropped|decreased|risen|rose|increased)\s+to\s+)?"
+    return re.compile(rf"\b(?:{alternation})\b\s*{connector}(\d+(?:\.\d+)?)(?![\d.])", re.IGNORECASE)
+
+
+LAB_SPECS: Dict[str, LabSpec] = {
+    "lab.potassium": LabSpec(
+        canonical_id="lab.potassium", display_name="potassium", unit="mEq/L",
+        raw_keys=("potassium", "bmp", "basic_metabolic_panel"),
+        numeric_pattern=_panel_pattern("potassium", "K"),
+        low=3.5, high=5.0, critical_low=2.5, critical_high=6.5,
+        qualitative_high_words=("hyperkalemia", "elevated potassium"),
+        qualitative_low_words=("hypokalemia", "low potassium"),
+    ),
+    "lab.sodium": LabSpec(
+        canonical_id="lab.sodium", display_name="sodium", unit="mEq/L",
+        raw_keys=("sodium", "bmp", "basic_metabolic_panel"),
+        numeric_pattern=_panel_pattern("sodium", "Na"),
+        low=135.0, high=145.0, critical_low=120.0, critical_high=155.0,
+        qualitative_high_words=("hypernatremia", "elevated sodium"),
+        qualitative_low_words=("hyponatremia", "low sodium"),
+    ),
+    "lab.creatinine": LabSpec(
+        canonical_id="lab.creatinine", display_name="creatinine", unit="mg/dL",
+        raw_keys=("creatinine", "bmp", "basic_metabolic_panel"),
+        numeric_pattern=_panel_pattern("creatinine"),
+        allowed_units=("mg/dl",), disallowed_units=("umol/l", "mmol/l", "mg/l"),
+        # NIDDK eGFR equations: serum creatinine µmol/L / 88.4 = mg/dL.
+        unit_divisors=(("umol/l", 88.4),),
+        # A single absolute cutoff is a real simplification (true AKI is defined by a RISE from a
+        # patient's own baseline, not one absolute number) -- disclosed, not hidden: this flags a
+        # plausibly-abnormal single value only, it is not a substitute for trend/baseline
+        # comparison (see clinical_presentation.py's temporal-evidence item for that).
+        high=1.3, critical_high=4.0,
+        qualitative_high_words=("elevated creatinine", "rising creatinine", "acute kidney injury"),
+    ),
+    "lab.wbc": LabSpec(
+        canonical_id="lab.wbc", display_name="white blood cell count", unit="x10^3/uL",
+        raw_keys=("wbc", "cbc"),
+        numeric_pattern=_panel_pattern("wbc", "white blood cell count", "white blood cells"),
+        low=4.0, high=11.0, critical_low=1.0, critical_high=20.0,
+        qualitative_high_words=("elevated white blood cell count", "leukocytosis"),
+        qualitative_low_words=("low white blood cell count", "leukopenia", "neutropenic", "neutropenia"),
+    ),
+    "lab.hemoglobin": LabSpec(
+        canonical_id="lab.hemoglobin", display_name="hemoglobin", unit="g/dL",
+        raw_keys=("hemoglobin", "cbc"),
+        numeric_pattern=_panel_pattern("hemoglobin", "Hgb", "Hb"),
+        # Unisex conservative adult cutoff (true normal range is sex-specific) -- a disclosed
+        # simplification, same spirit as the creatinine note above.
+        low=12.0, critical_low=7.0,
+        # g/L is exactly 10x g/dL -- "hemoglobin 70 g/L" (=7.0 g/dL, critical) must NOT read as 70
+        # (which would look normal and HIDE a critical anemia).
+        allowed_units=("g/dl",), disallowed_units=("g/l",),
+        unit_divisors=(("g/l", 10.0),),
+        qualitative_low_words=("low hemoglobin", "anemia", "hemoglobin drop"),
+    ),
+    "lab.platelet": LabSpec(
+        canonical_id="lab.platelet", display_name="platelet count", unit="x10^3/uL",
+        raw_keys=("platelet", "platelets", "cbc"),
+        numeric_pattern=_panel_pattern("platelet", "platelets"),
+        low=150.0, critical_low=50.0,
+        qualitative_low_words=("thrombocytopenia", "low platelet"),
+    ),
+    "lab.ph": LabSpec(
+        canonical_id="lab.ph", display_name="pH", unit="",
+        raw_keys=("ph", "abg", "vbg"),
+        numeric_pattern=re.compile(r"\bph[^0-9]{0,10}?(\d\.\d{1,2})", re.IGNORECASE),
+        low=7.35, high=7.45, critical_low=7.20,
+        qualitative_low_words=("acidosis", "metabolic acidosis"),
+        qualitative_high_words=("alkalosis",),
+    ),
+    "lab.bicarbonate": LabSpec(
+        canonical_id="lab.bicarbonate", display_name="bicarbonate", unit="mEq/L",
+        raw_keys=("bicarbonate", "hco3", "abg", "bmp", "basic_metabolic_panel"),
+        numeric_pattern=_panel_pattern("bicarbonate", "hco3"),
+        low=22.0, high=26.0, critical_low=15.0,
+        qualitative_low_words=("metabolic acidosis",),
+    ),
+    # Troponin/D-dimer/CRP: no numeric_pattern -- deliberately qualitative-only, see module
+    # docstring (assay-dependent cutoffs; a single hardcoded number would be clinically wrong).
+    "lab.troponin": LabSpec(
+        canonical_id="lab.troponin", display_name="troponin", unit="",
+        raw_keys=("troponin",), numeric_pattern=None,
+        qualitative_high_words=_direction_words("high", "elevated troponin", "troponin elevated",
+                                                 "positive troponin", "markedly elevated"),
+        qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal")
+        + _GENERIC_NORMAL_WORDS,
+    ),
+    "lab.d_dimer": LabSpec(
+        canonical_id="lab.d_dimer", display_name="D-dimer", unit="",
+        raw_keys=("d_dimer",), numeric_pattern=None,
+        qualitative_high_words=_direction_words("high", "elevated d-dimer", "elevated d dimer",
+                                                 "d-dimer elevated", "d dimer elevated", "markedly elevated", "positive"),
+        qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal")
+        + _GENERIC_NORMAL_WORDS,
+    ),
+    "lab.crp": LabSpec(
+        canonical_id="lab.crp", display_name="CRP", unit="",
+        raw_keys=("crp",), numeric_pattern=None,
+        qualitative_high_words=_direction_words("high", "elevated crp", "elevated c-reactive protein",
+                                                 "markedly elevated"),
+        qualitative_normal_words=("not elevated", "within normal limits", "negative", "normal")
+        + _GENERIC_NORMAL_WORDS,
+    ),
+    "lab.ketones": LabSpec(
+        canonical_id="lab.ketones", display_name="urine/serum ketones", unit="",
+        raw_keys=("ketones", "urinalysis"), numeric_pattern=None,
+        qualitative_high_words=_direction_words("high", "large ketones", "moderate ketones",
+                                                 "positive ketones"),
+        qualitative_normal_words=("negative", "trace ketones", "no ketones") + _GENERIC_NORMAL_WORDS,
+    ),
+    "lab.beta_hcg": LabSpec(
+        canonical_id="lab.beta_hcg", display_name="beta-hCG", unit="",
+        raw_keys=("beta_hcg", "hcg", "pregnancy_test"), numeric_pattern=None,
+        qualitative_high_words=_direction_words("high", "positive beta-hcg", "positive hcg",
+                                                 "positive pregnancy test", "positive pregnancy hormone",
+                                                 "pregnancy test is positive", "pregnancy hormone is positive",
+                                                 "hcg is positive", "hcg positive"),
+        qualitative_normal_words=("negative",) + _GENERIC_NORMAL_WORDS,
+    ),
+    # Lipase -- the discriminating lab for acute_pancreatitis / acute_abdomen (KB confirmatory).
+    # Reference ULN varies by assay, so numeric interpretation is kept qualitative-only (like
+    # troponin/D-dimer): a value >= ~3x ULN is diagnostic, expressed in text as "3x the upper
+    # limit"/"markedly elevated" rather than a single hardcoded number that would be assay-wrong.
+    "lab.lipase": LabSpec(
+        canonical_id="lab.lipase", display_name="lipase", unit="",
+        raw_keys=("lipase", "amylase_lipase"), numeric_pattern=None,
+        qualitative_high_words=_direction_words("high", "elevated lipase", "lipase elevated",
+                                                 "markedly elevated", "three times the upper limit",
+                                                 "3x the upper limit", "above the upper limit of normal",
+                                                 "over three times"),
+        qualitative_normal_words=("normal lipase", "not elevated", "within normal limits", "normal")
+        + _GENERIC_NORMAL_WORDS,
+    ),
+    # Urinalysis dipstick positivity -- confirmatory for uncomplicated_cystitis / pyelonephritis
+    # (KB). Qualitative by nature (dipstick reads positive/negative/trace), so numeric_pattern=None.
+    "lab.urinalysis_infection": LabSpec(
+        canonical_id="lab.urinalysis_infection", display_name="urinalysis (infection markers)", unit="",
+        raw_keys=("urinalysis", "ua", "urine_dipstick"), numeric_pattern=None,
+        qualitative_high_words=("leukocyte esterase positive", "positive nitrites", "nitrite positive",
+                                 "pyuria", "positive leukocyte esterase", "bacteriuria"),
+        qualitative_normal_words=("negative leukocyte esterase", "no nitrites", "negative nitrites",
+                                   "no pyuria", "clean urinalysis",
+                                   "leukocyte esterase negative", "nitrites negative", "nitrite negative") + _GENERIC_NORMAL_WORDS,
+    ),
+}
+
+
+for _id, _name, _positive, _normal in (
+    ("leukocyte_esterase", "leukocyte esterase", ("positive leukocyte esterase", "leukocyte esterase positive"),
+     ("negative leukocyte esterase", "leukocyte esterase negative", "no leukocyte esterase")),
+    ("nitrites", "nitrites", ("positive nitrites", "positive nitrite", "nitrite positive", "nitrites positive"),
+     ("negative nitrites", "negative nitrite", "nitrite negative", "nitrites negative", "no nitrites")),
+    ("pyuria", "pyuria", ("pyuria",), ("no pyuria", "without pyuria", "pyuria absent")),
+):
+    LAB_SPECS["lab." + _id] = LabSpec(
+        canonical_id="lab." + _id, display_name=_name, unit="",
+        raw_keys=("urinalysis", "ua", "urine_dipstick"), numeric_pattern=None,
+        qualitative_high_words=_positive, qualitative_normal_words=_normal)
+
+
+@dataclass
+class ObjectiveFinding:
+    canonical_id: str
+    display_name: str
+    raw_text: str
+    value: Optional[float]
+    unit: str
+    # "critical_high" | "high" | "normal" | "low" | "critical_low" | "abnormal" | "unknown"
+    interpretation: str
+    evidence_label: str  # human-readable, for supporting/contradictory_evidence lists
+
+
+def _current_result_texts(raw_texts: List[str]) -> List[str]:
+    """Remove explicitly historical/reference clauses, never guess their chronology. A bare "reference range"
+    label ("reference range potassium 3.5") is not a result, but a comparison to it ("above the reference
+    range", "within reference range") IS the result and is kept."""
+    return [clause for text in raw_texts
+            for clause in re.split(r"[;,\n]|\b(?:but|however)\b", text, flags=re.I)
+            if not is_uncertain(clause) and not re.search(r"\b(?:previously|historical|baseline|last (?:year|month|week)|"
+                             r"prior result|old result|(?<!above the )(?<!above )(?<!below the )(?<!below )(?<!within the )(?<!within )"
+                             r"(?<!outside the )(?<!outside )(?<!beyond the )(?<!exceeds the )reference range|"
+                             r"if|will|would|could|should|expected|predicted)\b", clause, re.I)]
+
+
+def _extract_numeric_values(spec: LabSpec, raw_texts: List[str]) -> set[float]:
+    values = set()
+    if spec.numeric_pattern is None:
+        return values
+    for text in raw_texts:
+        for match in spec.numeric_pattern.finditer(text):
+            if re.search(r"\b(?:not|no|denies|without)\b[^.;,]*$", text[:match.start()], re.I):
+                continue
+            # Unit context belongs to this number only, not a neighboring analyte.
+            tail = text[match.end():]
+            suffix = re.split(r"[;,\n]|\b(?:and|but)\b", tail, maxsplit=1, flags=re.I)[0]
+            # Inspect only an immediately adjacent unit, before a parenthetical conversion.
+            suffix = suffix.split("(", 1)[0]
+            unit_match = re.match(r"\s*([a-zµμ]+\s*/\s*[a-z]+)", suffix, re.I)
+            divisor = 1.0
+            if unit_match:
+                unit = re.sub(r"\s+", "", unit_match.group(1).lower()).replace("µ", "u").replace("μ", "u")
+                conversions = dict(spec.unit_divisors)
+                if unit in conversions:
+                    divisor = conversions[unit]
+                elif spec.allowed_units and unit not in spec.allowed_units:
+                    continue
+            elif value_is_in_disallowed_unit(suffix, spec.allowed_units, spec.disallowed_units):
+                continue
+            try:
+                # Remove floating-point noise only; distinct measured results remain conflicts.
+                values.add(round(float(match.group(1)) / divisor, 10))
+            except (ValueError, IndexError):
+                continue
+    return values
+
+
+def _interpret_numeric(spec: LabSpec, value: float) -> str:
+    if spec.critical_low is not None and value <= spec.critical_low:
+        return "critical_low"
+    if spec.critical_high is not None and value >= spec.critical_high:
+        return "critical_high"
+    if spec.low is not None and value < spec.low:
+        return "low"
+    if spec.high is not None and value > spec.high:
+        return "high"
+    return "normal"
+
+
+# Round M: real reports state magnitude in many forms ("more than three times normal", "5x the upper
+# limit", "markedly raised") that an exact-phrase list can never enumerate. Applied ONLY to the
+# qualitative-only, high-only labs (those built with _direction_words), and only when not negated.
+_NUMBER_WORD = r"(?:\d+(?:\.\d+)?|one|two|three|four|five|six|seven|eight|nine|ten)"
+_MAGNITUDE_HIGH = re.compile(
+    rf"\b{_NUMBER_WORD}\s*(?:x|times|-?fold)\s*(?:the\s+|of\s+)?(?:normal|upper\s+(?:limit|normal)|uln|reference|baseline)", re.IGNORECASE)
+_RAISED_WORDS = re.compile(r"\b(?:markedly|significantly|greatly|very|severely)\s+(?:high|raised|increased|elevated)\b|\b(?:raised|increased|above normal|higher than normal)\b", re.IGNORECASE)
+_NEGATORS = re.compile(r"(?:\bnot\b|\bno\b|\bnever\b|\bwithout\b|n't|\bnormal\b)[^.;,]{0,14}$", re.IGNORECASE)
+
+
+def _asserts_high_magnitude(combined: str) -> bool:
+    for pattern in (_MAGNITUDE_HIGH, _RAISED_WORDS):
+        for match in pattern.finditer(combined):
+            if not _NEGATORS.search(combined[max(0, match.start() - 18):match.start()]):
+                return True
+    return False
+
+
+def _is_high_only_qualitative(spec: LabSpec) -> bool:
+    return not spec.qualitative_low_words and "out of range" in spec.qualitative_high_words
+
+
+def _interpret_qualitative(spec: LabSpec, raw_texts: List[str]) -> Optional[str]:
+    def term_pattern(term: str) -> re.Pattern:
+        # Lab reports often contain alignment whitespace ("D-DIMER  MARKEDLY  ELEVATED").
+        # Match whitespace flexibly without widening any clinical vocabulary or changing the
+        # assertion/negation handling below.
+        parts = [part for part in re.split(r"\s+", term.strip()) if part]
+        return re.compile(r"(?<!\w)" + r"\s+".join(re.escape(part) for part in parts) + r"(?!\w)")
+
+    directions = set()
+    for text in raw_texts:
+        for clause in re.split(r"[;,\n]|\b(?:but|however)\b", text.lower()):
+            if re.search(r"\b(?:previously|historical|last year|rule out|suspected|possible)\b", clause):
+                continue
+            clause_directions = set()
+            abnormal_spans = []
+            for direction, terms in (("high", spec.qualitative_high_words),
+                                     ("low", spec.qualitative_low_words)):
+                for word in terms:
+                    for match in term_pattern(word).finditer(clause):
+                        abnormal_spans.append(match.span())
+                        prefix = clause[:match.start()]
+                        suffix = clause[match.end():]
+                        negated = (re.search(r"\b(?:no|not|without|negative|denies)\b[^.;,]*$", prefix)
+                                   or re.match(r"\s*(?:is\s+|was\s+)?(?:negative|absent|not detected)\b", suffix))
+                        clause_directions.add("normal" if negated else direction)
+            for term in spec.qualitative_normal_words:
+                for match in term_pattern(term).finditer(clause):
+                    # "normal" inside "above the upper limit of normal" is
+                    # part of the abnormal assertion, not a second result.
+                    if any(start <= match.start() and match.end() <= end
+                           for start, end in abnormal_spans):
+                        continue
+                    if re.search(r"\b(?:not|no|without)\s+$", clause[:match.start()]):
+                        continue
+                    clause_directions.add("normal")
+            directions.update(clause_directions)
+    if _is_high_only_qualitative(spec) and _asserts_high_magnitude(" ".join(x.lower() for x in raw_texts)):
+        return "high"  # "markedly raised" style magnitude assertions (ours), after the assertion-aware pass
+    if len(directions) > 1:
+        return "unknown"  # conflicting assertions have no safe implicit precedence
+    return next(iter(directions), None)
+
+
+def normalize_one(spec: LabSpec, state: PatientState) -> Optional[ObjectiveFinding]:
+    """Normalizes ONE lab spec against whatever raw result text is present in
+    `state.laboratory_tests` under any of its `raw_keys`. Returns None if that lab was never
+    tested (no evidence either way -- never fabricated as "normal")."""
+    raw_texts = [state.laboratory_tests[k] for k in spec.raw_keys if state.laboratory_tests.get(k)]
+    if not raw_texts:
+        return None
+    if any(re.search(r"\b(?:hemoly[sz]ed|sample clotted|specimen clotted|invalid specimen|contaminated specimen)\b", t, re.I)
+           for t in raw_texts):
+        return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), None,
+                                spec.unit, "unknown", f"{spec.display_name} (unusable specimen)")
+    current_texts = _current_result_texts(raw_texts)
+    values = _extract_numeric_values(spec, current_texts)
+    if len(values) > 1:
+        return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), None,
+                                spec.unit, "unknown", f"{spec.display_name} (conflicting numeric results)")
+    value = next(iter(values), None)
+    if value is not None:
+        interpretation = _interpret_numeric(spec, value)
+        label = f"{spec.display_name} {value:g}{(' ' + spec.unit) if spec.unit else ''} ({interpretation.replace('_', ' ')})"
+        return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), value,
+                                 spec.unit, interpretation, label)
+    qualitative = _interpret_qualitative(spec, current_texts)
+    if qualitative is not None:
+        label = f"{spec.display_name} ({qualitative})" if qualitative != "normal" \
+            else f"{spec.display_name} not elevated"
+        return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), None,
+                                 spec.unit, qualitative, label)
+    # A result was recorded but neither a number nor a recognized qualitative word could be read
+    # from it -- real evidence that a test was DONE, but its direction is unreadable; callers must
+    # not treat this as either supporting or contradicting anything.
+    return ObjectiveFinding(spec.canonical_id, spec.display_name, "; ".join(raw_texts), None,
+                             spec.unit, "unknown", f"{spec.display_name} (result not interpretable)")
+
+
+def normalize_objective_evidence(state: PatientState) -> Dict[str, ObjectiveFinding]:
+    """Every objective lab finding actually available on `state` right now, keyed by canonical ID
+    (`lab.potassium`, `lab.troponin`, ...) -- re-derived fresh every call (never cached), the same
+    "recompute from current state every turn" discipline as differential.py's ranking and
+    clinical_presentation.build_clinical_presentation(). Includes glucose/lactate too (delegating
+    to their own already-verified extractors) so callers get ONE complete, canonically-keyed map
+    instead of having to separately special-case those two."""
+    findings: Dict[str, ObjectiveFinding] = {}
+    for spec in LAB_SPECS.values():
+        finding = normalize_one(spec, state)
+        if finding is not None:
+            findings[spec.canonical_id] = finding
+
+    glucose = extract_glucose_mg_dl(state.laboratory_tests.get("glucose_point_of_care"))
+    if glucose is not None:
+        findings["lab.glucose"] = ObjectiveFinding(
+            "lab.glucose", "glucose", state.laboratory_tests.get("glucose_point_of_care", ""),
+            glucose, "mg/dL",
+            "critical_low" if glucose < 54 else "low" if glucose < 70 else
+            "critical_high" if glucose >= 400 else "high" if glucose >= 250 else "normal",
+            f"point-of-care glucose {glucose:g} mg/dL",
+        )
+    lactate = extract_lactate_mmol_l(state.laboratory_tests.get("lactate"))
+    if lactate is not None:
+        findings["lab.lactate"] = ObjectiveFinding(
+            "lab.lactate", "lactate", state.laboratory_tests.get("lactate", ""), lactate, "mmol/L",
+            "critical_high" if lactate >= 4.0 else "high" if lactate >= 2.0 else "normal",
+            f"lactate {lactate:g} mmol/L",
+        )
+    return findings
+
+
+# Confirmatory-finding phrase -> (canonical lab id, direction the phrase asserts) -- used by
+# differential.py to give a numeric-aware score to the SPECIFIC knowledge-base phrases that name a
+# lab this module understands, while leaving every other confirmatory_finding phrase (ECG/imaging
+# text, qualitative-only findings with no lab mapping here) on the existing plain word-overlap
+# path untouched. Keys are lower-cased KB phrase text, matched exactly against
+# disease["confirmatory_findings"]/["typical_features"] entries.
+# Labs that rise in almost any infection or inflammation. A positive result is real evidence but does
+# not discriminate between diagnoses, so it is credited at ordinary-feature weight rather than as a
+# diagnosis-defining confirmatory finding (Round M: "elevated white blood cell count" at confirmatory
+# weight made pyelonephritis and meningitis outrank diagnoses with 3-5 matched specific features
+# for any febrile patient with a CBC).
+NONSPECIFIC_INFLAMMATORY_LAB_IDS = frozenset({"lab.wbc", "lab.crp"})
+
+CONFIRMATORY_PHRASE_TO_LAB: Dict[str, tuple] = {
+    "elevated troponin": ("lab.troponin", "high"),
+    "troponin elevated": ("lab.troponin", "high"),
+    "elevated d-dimer": ("lab.d_dimer", "high"),
+    "hyperkalemia": ("lab.potassium", "high"),
+    "elevated potassium": ("lab.potassium", "high"),
+    "hyponatremia": ("lab.sodium", "low"),
+    "low sodium": ("lab.sodium", "low"),
+    "elevated white blood cell count": ("lab.wbc", "high"),
+    "low hemoglobin": ("lab.hemoglobin", "low"),
+    "hemoglobin drop": ("lab.hemoglobin", "low"),
+    "large ketones": ("lab.ketones", "high"),
+    "positive beta-hcg": ("lab.beta_hcg", "high"),
+    "elevated lipase": ("lab.lipase", "high"),
+    "lipase elevated": ("lab.lipase", "high"),
+    "positive leukocyte esterase": ("lab.leukocyte_esterase", "high"),
+    "positive nitrites": ("lab.nitrites", "high"),
+    "pyuria": ("lab.pyuria", "high"),
+}

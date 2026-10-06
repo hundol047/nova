@@ -1,0 +1,272 @@
+{
+  "schema": "nova-verification-v6",
+  "branch": "offline/nova-competition-agent-optimization",
+  "verified_runtime_sha": "659c7dc6cdb484dc7dc351a39c52eea71a5b621f",
+  "verified_runtime_sha_note": "FINAL_REASONING_SHA -- the commit 'Add independent Round E generalization regression coverage' that froze all nova_agent/competition/submission runtime files for this round. Confirmed via `git diff 659c7dc6cdb484dc7dc351a39c52eea71a5b621f -- nova_agent competition submission` returning empty output at every checkpoint since (before Blind v15 authoring, before its first run, and again immediately before this artifact was written).",
+  "artifact_introducing_commit_sha": "28ac9510c99f97ced8089b0e805417c95b30c335",
+  "artifact_introducing_commit_sha_note": "Necessarily null at write time (self-referential -- a file cannot literally contain the hash of the commit that first introduces it). Populated in a small, documentation-only FOLLOW-UP commit ('Record verification v6 artifact commit SHA') that patches ONLY this field to the real SHA of the commit that created this file -- never left as a permanent, unexplained null, mirroring v5's own resolution.",
+  "current_remote_head_verified_externally": null,
+  "current_remote_head_verified_externally_note": "Also self-referential for the same reason, one level further out: the LAST commit of this round (after this artifact, the artifact-SHA patch, and submission rebuild are all committed and pushed) cannot contain its own hash either, and no later commit exists in this round to patch it into. This is NOT left unexplained: the literal final remote HEAD SHA is stated in this round's closing chat report and is independently, externally verifiable at any time via `git ls-remote origin refs/heads/offline/nova-competition-agent-optimization` -- the branch this round pushes to and nowhere else.",
+  "runtime_files_changed_after_verification": false,
+  "runtime_files_changed_after_verification_note": "verified_runtime_sha (659c7dc) is the reasoning-freeze commit. Every commit after it this round (Blind v15 authoring, first-run recording, this artifact, the artifact-SHA patch, submission rebuild) touches only evaluation/, artifacts/, tests/, scripts/, docs/, and submission/ byte-sync -- confirmed via `git diff --stat 659c7dc6 -- nova_agent/ competition/ submission/nova_agent submission/competition` showing zero output against nova_agent/competition (submission/ itself is a byte-sync target, expected to differ until rebuilt).",
+  "current_blind_version": "v15",
+  "current_blind_sha256": "638b5400d64be46761d403574d68f7d4833da375014cf991194f41de45d872b7",
+  "blind_authoring_commit_sha": "e21cdd0",
+  "blind_first_run_commit_sha": "c1d05e8",
+  "disease_coverage": {
+    "real_tier1_count": 34,
+    "real_tier2_count": 1246,
+    "real_imported_tier3_count": 0,
+    "synthetic_tier3_count": 0,
+    "real_searchable_total": 1280,
+    "test_searchable_total": null,
+    "note": "Unchanged from v3/v4/v5's artifacts -- this round touched nova_agent/matching.py, contextual_safety.py (new), candidate_generator.py, differential.py, severity_evidence.py, multilingual_concepts.py (new), chief_complaint.py, safety.py, safety_validator.py, state.py, orchestrator.py, config.py, and competition/{schema,adapter}.py -- not the ontology/catalog structure or any disease knowledge JSON file. This runtime environment loads no operator-supplied SNOMED/ICD terminology snapshot, so real_imported_tier3_count is honestly 0 (not fabricated)."
+  },
+  "chief_complaint_routing_benchmark": {
+    "measurement_method": "scripts/benchmark_chief_complaint_routing.py -- unchanged mechanism from v5, re-run this round.",
+    "known_route_success_rate_pct": 100.0,
+    "unknown_fallback_rate_pct": 100.0,
+    "specific_over_generic_accuracy_pct": 100.0,
+    "multi_concept_recall_pct": 100.0,
+    "critical_concept_recall_pct": 100.0,
+    "end_to_end_candidate_generation_rate_pct": 100.0,
+    "note": "Byte-identical to v5's own result -- this round's multilingual concept normalization (nova_agent/multilingual_concepts.py) merges into CONCEPT_ALIASES additively at import time and does not alter English-language routing behavior."
+  },
+  "retrieval_pipeline": {
+    "retrieval_top_k": 150,
+    "rerank_top_k": 25,
+    "reasoning_top_k": 25,
+    "competition_retrieval_enabled_default_for_competition_provider": true,
+    "baseline_recall_at_20": {
+      "chief_complaint_only": 11.4,
+      "chief_complaint_plus_history": 31.8
+    },
+    "new_recall_at_20": {
+      "chief_complaint_only": 56.8,
+      "chief_complaint_plus_history": 75.0
+    },
+    "baseline_recall_at_50": {
+      "chief_complaint_only": 11.4,
+      "chief_complaint_plus_history": 34.1
+    },
+    "new_recall_at_50": {
+      "chief_complaint_only": 61.4,
+      "chief_complaint_plus_history": 93.2
+    },
+    "baseline_recall_at_100": {
+      "chief_complaint_only": 11.4,
+      "chief_complaint_plus_history": 34.1
+    },
+    "new_recall_at_100": {
+      "chief_complaint_only": 61.4,
+      "chief_complaint_plus_history": 93.2
+    },
+    "measurement_method": "scripts/benchmark_competition_retrieval.py against the 44 real synthetic evaluation cases' own chief_complaint/history text. Re-run this round, byte-identical to v3/v4/v5's artifacts -- this round did not touch the retrieval/rerank pipeline itself (spec: do not change retrieval/RRF unless the new matching integration requires it -- it did not).",
+    "retrieval_latency_p50_ms": 8.06,
+    "retrieval_latency_p95_ms": 10.49,
+    "rerank_latency_p50_ms": 0.05,
+    "rerank_latency_p95_ms": 0.11,
+    "latency_note": "Single-process sandbox measurement (this machine), not a production/competition-hardware benchmark."
+  },
+  "feature_match_specificity_audit": {
+    "measurement_method": "scripts/audit_feature_match_specificity.py --known-reviewed-only (NEW this round) -- systematically scans every Tier-1 typical_feature/risk_factor/confirmatory_finding phrase for generic-word-dominated (\"no distinguishing content token\" or \"thin distinguishing-token ratio\") matching risk.",
+    "result": "OK: no new feature-match specificity risks beyond the 3 already-reviewed phrase(s)",
+    "known_reviewed_thin_phrases": [
+      [
+        "gerd",
+        "typical_features",
+        "worse after meals"
+      ],
+      [
+        "orthostatic_hypotension",
+        "typical_features",
+        "no palpitations before the episode"
+      ],
+      [
+        "vasovagal_syncope",
+        "typical_features",
+        "no palpitations before the episode"
+      ]
+    ],
+    "note": "Each reviewed phrase remains individually safe: matching.py's new distinguishing-content-token gate (feature_present()) still requires the phrase's own real distinguishing concept -- 'meal(s)'/'palpitat(ions)' -- to be present, not merely the relational/generic words it shares with unrelated text."
+  },
+  "morphology_normalization": {
+    "measurement_method": "tests/test_morphology_no_truncation_fallback.py (12 tests, all passing).",
+    "truncation_fallback_removed": true,
+    "irregular_stem_overrides": {
+      "exertional": "exertion"
+    },
+    "new_suffix_rule_this_round": "ish (e.g. feverish -> fever) -- a general, productive English adjectival suffix, added after removing the truncation fallback surfaced a real, narrow case (a plain 'fever' typical_feature failing to match 'felt a little feverish' text) that the old truncation shortcut used to cover by accident.",
+    "negative_controls_verified": [
+      "generic/generalized",
+      "several/severely",
+      "continue/continent",
+      "respond/responsible",
+      "cardiac/cardiology",
+      "abdomen/abdominal",
+      "selfish/finish (does not falsely satisfy an unrelated 'self harm' phrase)"
+    ]
+  },
+  "short_alias_word_boundary_safety": {
+    "measurement_method": "tests/test_feature_match_generic_word_collision.py (short-alias section, 7 new tests).",
+    "defect_found_and_fixed_this_round": "feature_present()'s EXACT/substring tier used a naive `feature in finding` substring check, so a short KB disease-name alias (e.g. pulmonary_embolism's 'PE', acute_coronary_syndrome's 'MI') matched as a raw substring inside a completely unrelated word ('PE' inside 'period', 'MI' inside 'family') -- discovered via a development case where a reproductive-age patient's 'period is about seven weeks late' spuriously activated pulmonary embolism and hijacked the candidate pool. Fixed with a word-boundary-safe check (`_exact_phrase_present`); legitimate exact matches (e.g. 'known PE diagnosed last year') still work.",
+    "short_aliases_in_kb_checked": [
+      "MI",
+      "AMI",
+      "ACS",
+      "GERD",
+      "afib",
+      "svt",
+      "DKA",
+      "UTI",
+      "CVA",
+      "SAH",
+      "BPPV",
+      "PE"
+    ]
+  },
+  "contextual_safety_activation": {
+    "measurement_method": "tests/test_cross_cutting_critical_activation.py, tests/test_reproductive_emergency_safety.py (11 tests total).",
+    "mechanism": "nova_agent/contextual_safety.py (NEW) -- a small table of narrow, predicate-gated CONTEXTUAL activation rules (currently: ectopic_pregnancy, gated on reproductive-age female + abdominal/pelvic symptoms or unexplained syncope/GI bleeding, and explicitly never activated on demographics alone or when pregnant=False is known) additive to (never replacing) the small fixed CROSS_CUTTING_DANGEROUS_DIAGNOSES safety net.",
+    "verified_properties": [
+      "activation requires both demographic AND symptom-context predicates, never demographics alone",
+      "explicit pregnant=False rules the activation out entirely",
+      "an activated candidate can still leave the differential via existing resolution logic once evidence excludes it (not unconditionally immortal)",
+      "generalizes beyond ectopic pregnancy -- verified in Blind v15's own reproductive_age_emergency category via a second mechanism (tier2:ovarian_torsion), which the fixed activation table does not itself enumerate but which reaches the pool through the same symptom/demographic context signals"
+    ]
+  },
+  "diagnostic_specificity_vs_generic_severity": {
+    "measurement_method": "tests/test_severity_not_diagnostic_identity.py (26 tests), tests/test_specific_evidence_over_generic_severity.py (3 tests).",
+    "mechanism": "nova_agent/severity_evidence.py's new GENERIC_PHYSIOLOGIC_SEVERITY_WORDS set + differential.py's _specificity_multiplier(): a typical_feature phrase whose content words are ENTIRELY generic severity markers (hypotension, tachycardia, tachypnea, hypoxia, fever, shock, ...) receives a reduced (never zero) specificity multiplier, so stacked generic-severity matches can no longer outscore a genuinely disease-specific finding.",
+    "ranking_remains_deterministic": true,
+    "ranking_remains_deterministic_note": "No calibrated/fabricated probabilities introduced -- LOW/MODERATE/HIGH/CONFIRMATORY-style specificity remains a deterministic multiplier on an interpretable integer-ish score, per spec (\"do not pretend to use calibrated probabilities\")."
+  },
+  "multilingual_concept_normalization": {
+    "measurement_method": "tests/test_multilingual_clinical_concepts.py (12 tests), tests/test_mixed_language_routing.py (8 tests).",
+    "mechanism": "nova_agent/multilingual_concepts.py (NEW) -- a bounded table mapping Korean/Japanese phrases for the currently-supported clinical domains (pain, abdominal/chest pain, headache, weakness, numbness, dyspnea, fever, vomiting, diarrhea, GI bleeding, dizziness, syncope) to the SAME canonical chief_complaint.py concept tags English phrasing already routes to, merged into CONCEPT_ALIASES at import time.",
+    "no_translation_api_used": true,
+    "no_translation_api_used_note": "No Google Translate/external LLM translation/online translation API of any kind -- fully offline, dependency-light, per spec. No separate per-language reasoning logic: a matched phrase flows through the identical exact/alias/fuzzy matching machinery as English.",
+    "languages_supported": [
+      "en",
+      "ko",
+      "ja"
+    ]
+  },
+  "forced_low_evidence_diagnosis_metadata": {
+    "measurement_method": "tests/test_forced_low_evidence_diagnosis_metadata.py (7 tests), tests/test_discriminator_priority.py (3 tests).",
+    "mechanism": "PatientState gains three independent flags (final_diagnosis_forced_due_to_turn_limit, final_diagnosis_zero_evidence_at_diagnosis, final_diagnosis_fallback_candidate_selected), staged by orchestrator.decide() and recorded by record_diagnose(). competition/adapter.py always attaches these to the wire response metadata; the action_type itself only relabels to the new, explicitly-speculative 'INSUFFICIENT_INFORMATION' value when NovaConfig.competition_supports_insufficient_information is deliberately turned on (default False, since no official schema confirms this label exists).",
+    "real_bug_found_and_fixed_this_round": "safety_validator.py's merge_differential() LLM-reconstruction path was not copying `fallback_candidate` from the deterministic match, silently defaulting it to False for every LLM/mock-reconstructed differential entry -- weakening Round D's own zero-evidence/UNKNOWN_PRESENTATION safety gate whenever the differential was reconstructed through that path (in practice, essentially always under the mock provider). Fixed.",
+    "discriminator_priority_retuned_this_round": false,
+    "discriminator_priority_note": "Verified (not retuned, per spec) that action_selector's existing utility function already prioritizes a plausible critical diagnosis's own high-specificity confirmatory test (e.g. troponin for ACS) over generic/low-value workup, when both are safe and legal."
+  },
+  "must_not_miss_reinjection_verified": true,
+  "must_not_miss_reinjection_note": "Unchanged mechanism from v3-v5 (candidate_generator.py pool-level, retrieval_pipeline.lightweight_rerank Stage 3, differential.py Stage A/B), extended this round to also cover 'contextual_safety'-sourced entries with the identical trim-protection and reinjection guarantees the fixed safety net already had.",
+  "zero_evidence_fallback_verified": true,
+  "zero_evidence_fallback_note": "Unchanged mechanism from Round D, re-verified this round; the safety_validator.py fallback_candidate propagation fix above strengthens (never weakens) this gate.",
+  "tier2_reaches_llm_verified": true,
+  "tier3_reaches_llm_verified": true,
+  "full_catalog_not_sent_to_llm_verified": true,
+  "competition_retrieval_enabled": false,
+  "competition_retrieval_enabled_note": "False in this local/mock-provider verification run (matches v3-v5) -- automatically true when NOVA_LLM_PROVIDER=competition (nova_agent/config.py), unchanged this round.",
+  "submission": {
+    "built": true,
+    "size_bytes": 1072848,
+    "size_human": "1.02 MB",
+    "file_count": 74,
+    "standalone_execution_verified": true,
+    "standalone_full_loop_verified": true,
+    "standalone_full_loop_note": "scripts/verify_submission_standalone_full_loop.py re-run this round against the rebuilt submission/ (PYTHONPATH cleared, isolated temp copy): 20 turns (9 ASK, 5 EXAM, 4 TEST, per the mock scripted conversation) ending in a correct DIAGNOSE (Acute Coronary Syndrome), clean process exit code 0, under the default mock provider.",
+    "contains_retrieval_pipeline": true,
+    "excludes_learning_package": true,
+    "excludes_web_package": true,
+    "excludes_torch": true,
+    "excludes_clinicalbert": true,
+    "excludes_streamlit": true,
+    "secret_scan_clean": true
+  },
+  "real_llm_status": {
+    "provider_configured": "competition",
+    "model_configured": "openai/gpt-oss-20b",
+    "revision_configured": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+    "real_competition_llm_status": "NOT VERIFIED",
+    "note": "No live gpt-oss-20b endpoint reachable in this sandbox (unchanged from v3-v5). real_llm_ever_succeeded gate (>=1 real LLM success required before a competition-mode DIAGNOSE) remains enforced in code and regression-tested, never bypassed by this round's changes, never substituted with a different commercial API."
+  },
+  "official_api_status": "NOT VERIFIED",
+  "official_api_note": "No official N.O.V.A. 2026 competition API/schema document was available at implementation time. competition/adapter.py + competition/schema.py remain the explicit, disclosed placeholder/adapter boundary. This round's only schema change is the new, explicitly-disclosed-as-speculative 'INSUFFICIENT_INFORMATION' action_type value, kept behind the competition_supports_insufficient_information config flag (default off) -- never invented as if it were confirmed official schema.",
+  "real_clinical_validation_status": "NOT VERIFIED",
+  "real_clinical_validation_note": "No clinical validation, institutional/hospital security review, or regulatory review has been performed at any point in this project. Out of software scope; must remain NOT VERIFIED until externally performed regardless of software maturity.",
+  "tests_passed": 712,
+  "tests_failed": 0,
+  "tests_skipped": 1,
+  "tests_note": "Up from 596/1 (v5) -- 116 net new tests this round across 13 new/updated test files (11 new Round E test files, test_blind_v15_integrity.py, plus test_blind_v14_integrity.py's own current-version assertion updated to reflect v14 now being reference-only, mirroring how Round D updated v13's). `python -m pytest tests/`.",
+  "unrelated_pre_existing_failure": {
+    "backend_tests": "CORRECTED after the first real GitHub Actions run of this branch (run 36802858254, job production-backend): the 3 backend/tests failures this artifact originally attributed to 'environment-dependent, no Postgres/Redis' were NOT environmental -- they reproduce locally and were real bugs unrelated to nova_agent/ reasoning: (1) backend/app/main.py used AGENT_VERSION and kb_fingerprint without importing them (NameError in the NOVA case-close endpoint, 2 tests); (2) backend/app/services/clinical_code_mapper.py had no LOINC/display rows for lab.lipase and lab.urinalysis_infection (1 test). Fixed in a follow-up commit touching only backend/; backend tests now 335 passed / 0 failed. No nova_agent/, competition/ or submission/ file changed, so verified_runtime_sha and the frozen Blind v15 result are unaffected."
+  },
+  "generalization_hardening_this_round": {
+    "summary": "Audited (never tuned directly against) Blind v14's own critical misses and Round D's own remaining architectural blind spots at an abstract architectural-failure-category level and fixed five root-cause defect classes generically.",
+    "fixes": [
+      "matching.py: distinguishing-content-token gate closes generic-word/relational-word fuzzy-match false positives (e.g. 'worse after meals' no longer satisfied by unrelated 'worse when I breathe')",
+      "matching.py: word-boundary-safe EXACT-tier matching closes a short-alias substring false-positive class (e.g. 'PE' no longer matches inside 'period'), plus a new general '-ish' suffix rule that legitimately covers what the old unsafe substring check used to catch by accident (feverish/fever)",
+      "matching.py: removed the residual 6-character morphology-truncation fallback, replaced with unchanged-token-on-no-match plus a small, explicit, tested table of genuine irregular pairs",
+      "nova_agent/contextual_safety.py (NEW): narrow, predicate-gated contextual critical-safety activation (ectopic pregnancy: reproductive-age + abdominal/pelvic symptoms or unexplained syncope/bleeding), additive to the fixed cross-cutting safety net, never a blanket expansion of it",
+      "severity_evidence.py/differential.py: generic physiologic-severity findings (tachycardia/hypotension/tachypnea/hypoxia/fever) now carry reduced specificity weight, so they can no longer outscore genuinely disease-specific evidence -- ranking stays fully deterministic, no fabricated probabilities",
+      "nova_agent/multilingual_concepts.py (NEW): bounded Korean/Japanese clinical-concept normalization merged additively into the existing English concept-alias machinery, no translation API, no per-language reasoning logic",
+      "state.py/orchestrator.py/config.py/competition/{schema,adapter}.py: forced/zero-evidence diagnosis metadata (three independent flags), surfaced always in competition metadata and only relabeled on the wire behind an explicit, off-by-default configurable adapter boundary",
+      "safety_validator.py: fixed a real, previously-undiscovered fallback_candidate propagation gap in the LLM-reconstruction differential-merge path that silently weakened Round D's own zero-evidence safety gate"
+    ],
+    "new_tests": [
+      "test_feature_match_specificity.py",
+      "test_feature_match_generic_word_collision.py",
+      "test_morphology_no_truncation_fallback.py",
+      "test_cross_cutting_critical_activation.py",
+      "test_reproductive_emergency_safety.py",
+      "test_specific_evidence_over_generic_severity.py",
+      "test_severity_not_diagnostic_identity.py",
+      "test_multilingual_clinical_concepts.py",
+      "test_mixed_language_routing.py",
+      "test_forced_low_evidence_diagnosis_metadata.py",
+      "test_discriminator_priority.py",
+      "test_blind_v15_integrity.py"
+    ],
+    "regression_status": "No regression: full pytest 712/1 (up from 596/1), tuning/held-out/generalization-v2/stress/dev-round-d/dev-round-e ALL 100% scored accuracy / 0% critical miss, retrieval recall floor unchanged (56.8/61.4/61.4 and 75.0/93.2/93.2), routing benchmark unchanged 100% across all 6 metrics, adversarial all PASS, leakage scan clean, feature-match specificity audit clean (0 new risks)."
+  },
+  "blind_v14": {
+    "case_count": 56,
+    "scored_case_count": 49,
+    "first_run_status": "EXECUTED_ONCE (Round D) -- now REFERENCE-ONLY",
+    "scored_diagnostic_accuracy_pct": 83.7,
+    "all_case_diagnostic_accuracy_pct": 73.2,
+    "critical_diagnosis_recall_pct": 87.0,
+    "critical_miss_rate_pct": 13.0,
+    "average_turns": 22.3,
+    "median_turns": 23.0,
+    "note": "Carried forward unchanged from v5's artifact. Reference-only as of this round (evaluation/current_blind.py bumped to v15); not re-run this round."
+  },
+  "blind_v15": {
+    "case_count": 61,
+    "scored_case_count": 54,
+    "critical_case_count": 26,
+    "first_run_status": "EXECUTED_ONCE",
+    "scored_diagnostic_accuracy_pct": 59.3,
+    "all_case_diagnostic_accuracy_pct": 52.5,
+    "critical_diagnosis_recall_pct": 61.5,
+    "critical_miss_rate_pct": 38.5,
+    "average_turns": 24.1,
+    "median_turns": 25.0,
+    "duplicate_action_rate": 0.0,
+    "malformed_output_rate": 0.0,
+    "note": "WORSE than Blind v14 (83.7%/13.0% miss) on both scored accuracy and critical miss rate -- reported honestly, as-is, with NO improvement claimed, per this round's explicit discipline. No reasoning/retrieval code was modified in response to this result; blind_cases_v15.py was not edited after this run. Read-only root-cause tracing (artifacts/blind_runs/blind_v15_failure_analysis.md) found the drop is NOT primarily a Round E regression (all five of this round's own defect fixes independently verified via unit tests, dev cases, and the full unchanged regression suite) but traces to a DIFFERENT, previously out-of-scope architectural boundary: the legacy top-5 differential-candidate cap combined with an insertion-order tie-break among zero-scored candidates on early turns, which Blind v15's broader, harder, more lay/vague/sparse-evidence-heavy required category spread exposes far more than Blind v14's narrower set did. Confirmed pre-existing (not new this round) by reproducing the identical mechanism on Blind v14's own historical case content run against the current, fully Round-E-fixed code. Flagged as the top architectural priority for a future round."
+  },
+  "not_verified": [
+    "real_competition_llm_execution",
+    "official_competition_api_schema",
+    "blind_v15_clinical_generalization (honest result recorded: WORSE than v14, root cause diagnosed as a pre-existing top-5-cap/tie-break architectural boundary outside this round's scope, not remediated this round)",
+    "production-scale/multi-machine retrieval latency",
+    "real_imported_tier3 coverage (no operator terminology snapshot supplied in this environment)",
+    "real_clinical_validation",
+    "institutional_security_review",
+    "regulatory_review",
+    "backend_tests (3 pre-existing, environment-dependent failures unrelated to this round's nova_agent/ scope -- see unrelated_pre_existing_failure above)"
+  ],
+  "timestamp_utc": "2026-09-29T05:45:00Z"
+}

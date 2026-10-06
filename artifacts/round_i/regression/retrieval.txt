@@ -1,0 +1,33 @@
+=== Competition retrieval evaluation (nova_agent/retrieval_pipeline.py) ===
+
+Query source: evaluation/{held_out_cases,generalization_cases_v2,generalization_stress_cases}.py -- real synthetic cases' own presenting text/history, NEVER the ground-truth diagnosis name (asserted per-case above).
+
+-- chief_complaint_only (n=44) --
+  Recall@20: baseline 11.4% -> new 56.8%  (delta +45.4 pts)
+  Recall@50: baseline 11.4% -> new 61.4%  (delta +50.0 pts)
+  Recall@100: baseline 11.4% -> new 61.4%  (delta +50.0 pts)
+  Recall@150: 61.4%  (no baseline recorded at this K)
+  MRR: 0.237
+  Mean true-diagnosis rank: 6.3
+  Median true-diagnosis rank: 4
+  Recall@50 by tier: {'TIER1_DEEP': 61.4}
+  Cases where the true diagnosis never appeared in top-150: ['Dyspnea02_AgeSexVariation', 'Dizziness02_NegativeFindingCentric', 'Unknown01_UnmappedComplaint', 'ChestPain06_Korean', 'Dyspnea03_PregnancyRiskFactor', 'Dyspnea04_Anaphylaxis', 'Dizziness03_AtypicalStroke', 'Weakness01_ElderlyPolypharmacyHypoglycemia', 'AbdominalPain04_AnticoagulantGIBleed', 'BackPain02_Nephrolithiasis', 'Syncope01_BenignMimicVasovagal', 'Palpitations01_ElderlyAtypicalArrhythmia', 'Dyspnea06_YoungAdultAsthmaExacerbation', 'Stress01_YoungAdultAtypicalHypoglycemia', 'Stress02_NonDiabeticAlcoholicHypoglycemia', 'Stress07_PolypharmacyWeaknessHyperkalemia', 'Stress08_NormalGlucoseWeaknessGIBleed']
+
+-- chief_complaint_plus_history (n=44) --
+  Recall@20: baseline 31.8% -> new 75.0%  (delta +43.2 pts)
+  Recall@50: baseline 34.1% -> new 93.2%  (delta +59.1 pts)
+  Recall@100: baseline 34.1% -> new 93.2%  (delta +59.1 pts)
+  Recall@150: 93.2%  (no baseline recorded at this K)
+  MRR: 0.3813
+  Mean true-diagnosis rank: 9.2
+  Median true-diagnosis rank: 4
+  Recall@50 by tier: {'TIER1_DEEP': 93.2}
+  Cases where the true diagnosis never appeared in top-150: ['ChestPain06_Korean', 'AbdominalPain04_AnticoagulantGIBleed', 'Stress08_NormalGlucoseWeaknessGIBleed']
+
+Baseline reference: commit a1b92c8 (pre-IDF/typical_features-index/multi-query-RRF)
+
+-- Latency (this machine, single process, not a production benchmark) --
+  retrieval_p50_ms: 5.87 ms
+  retrieval_p95_ms: 8.05 ms
+  rerank_p50_ms: 0.03 ms
+  rerank_p95_ms: 0.11 ms

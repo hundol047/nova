@@ -45,6 +45,7 @@ class SelectedActionOutput(BaseModel):
     type: ActionTypeLiteral
     key: str = ""
     content: str
+    reason: str = ""
 
 
 class AgentTurnOutput(BaseModel):

@@ -1,0 +1,2836 @@
+{
+  "mode": "SYNTHETIC DEVELOPMENT / MOCK LLM; no real-model or clinical validation",
+  "baseline_source": "Retained, previously executed v14 evidence; not a newly rerun baseline",
+  "round_m": {
+    "MRR": {
+      "before": 0.9735772357723578,
+      "after": 0.9735772357723578,
+      "delta": 0.0
+    },
+    "Top1": {
+      "before": 0.959349593495935,
+      "after": 0.959349593495935,
+      "delta": 0.0
+    },
+    "Top10": {
+      "before": 0.991869918699187,
+      "after": 0.991869918699187,
+      "delta": 0.0
+    },
+    "Top3": {
+      "before": 0.983739837398374,
+      "after": 0.983739837398374,
+      "delta": 0.0
+    },
+    "Top5": {
+      "before": 0.991869918699187,
+      "after": 0.991869918699187,
+      "delta": 0.0
+    },
+    "accuracy": {
+      "before": 0.959349593495935,
+      "after": 0.959349593495935,
+      "delta": 0.0
+    },
+    "action_selection_error_rate": {
+      "before": 0.0,
+      "after": 0.0,
+      "delta": 0.0
+    },
+    "active_truth_retention": {
+      "before": 0.991869918699187,
+      "after": 0.991869918699187,
+      "delta": 0.0
+    },
+    "average_ask": {
+      "before": 9.90625,
+      "after": 8.65625,
+      "delta": -1.25
+    },
+    "average_diagnostic_delay": {
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    "average_exam": {
+      "before": 6,
+      "after": 6,
+      "delta": 0
+    },
+    "average_tests": {
+      "before": 8.9921875,
+      "after": 9.0234375,
+      "delta": 0.03125
+    },
+    "average_turns": {
+      "before": 25.8984375,
+      "after": 24.6796875,
+      "delta": -1.21875
+    },
+    "average_unresolved_critical_alternatives": {
+      "before": 11.390625,
+      "after": 11.359375,
+      "delta": -0.03125
+    },
+    "cases": {
+      "before": 128,
+      "after": 128,
+      "delta": 0
+    },
+    "critical_Top1": {
+      "before": 1.0,
+      "after": 1.0,
+      "delta": 0.0
+    },
+    "critical_Top3": {
+      "before": 1.0,
+      "after": 1.0,
+      "delta": 0.0
+    },
+    "critical_Top5": {
+      "before": 1.0,
+      "after": 1.0,
+      "delta": 0.0
+    },
+    "critical_candidate_retention": {
+      "before": 1.0,
+      "after": 1.0,
+      "delta": 0.0
+    },
+    "critical_count": {
+      "before": 43,
+      "after": 43,
+      "delta": 0
+    },
+    "critical_miss": {
+      "before": 0.0,
+      "after": 0.0,
+      "delta": 0.0
+    },
+    "critical_recall": {
+      "before": 1.0,
+      "after": 1.0,
+      "delta": 0.0
+    },
+    "diagnostic_delay_definition": {
+      "before": "policy-eligible non-forced stop, not clinical safety certification; null != zero",
+      "after": "policy-eligible non-forced stop, not clinical safety certification; null != zero",
+      "delta": null
+    },
+    "diagnostic_delay_observed_count": {
+      "before": 124,
+      "after": 125,
+      "delta": 1
+    },
+    "failure_counts": {
+      "FINAL_RANKING_ERROR": {
+        "before": 4,
+        "after": 4,
+        "delta": 0
+      },
+      "RERANK_MISS": {
+        "before": 1,
+        "after": 1,
+        "delta": 0
+      }
+    },
+    "final_ranking_error_rate": {
+      "before": 0.032520325203252036,
+      "after": 0.032520325203252036,
+      "delta": 0.0
+    },
+    "languages": {
+      "EN": {
+        "accuracy": {
+          "before": 0.9557522123893806,
+          "after": 0.9557522123893806,
+          "delta": 0.0
+        },
+        "correct": {
+          "before": 108,
+          "after": 108,
+          "delta": 0
+        },
+        "count": {
+          "before": 113,
+          "after": 113,
+          "delta": 0
+        }
+      },
+      "JA": {
+        "accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "correct": {
+          "before": 2,
+          "after": 2,
+          "delta": 0
+        },
+        "count": {
+          "before": 2,
+          "after": 2,
+          "delta": 0
+        }
+      },
+      "KO": {
+        "accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "correct": {
+          "before": 1,
+          "after": 1,
+          "delta": 0
+        },
+        "count": {
+          "before": 1,
+          "after": 1,
+          "delta": 0
+        }
+      },
+      "Mixed": {
+        "accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "correct": {
+          "before": 7,
+          "after": 7,
+          "delta": 0
+        },
+        "count": {
+          "before": 7,
+          "after": 7,
+          "delta": 0
+        }
+      }
+    },
+    "long_tail": {
+      "Top1": {
+        "before": 0.9230769230769231,
+        "after": 0.9230769230769231,
+        "delta": 0.0
+      },
+      "Top10": {
+        "before": 1.0,
+        "after": 1.0,
+        "delta": 0.0
+      },
+      "Top5": {
+        "before": 1.0,
+        "after": 1.0,
+        "delta": 0.0
+      },
+      "active": {
+        "before": 1.0,
+        "after": 1.0,
+        "delta": 0.0
+      },
+      "count": {
+        "before": 26,
+        "after": 26,
+        "delta": 0
+      },
+      "interpretation": {
+        "before": "Round M category-defined symptom-only development probes, no independent medical adjudication",
+        "after": "Round M category-defined symptom-only development probes, no independent medical adjudication",
+        "delta": null
+      },
+      "rerank_at25": {
+        "before": 0.9615384615384616,
+        "after": 0.9615384615384616,
+        "delta": 0.0
+      },
+      "rerank_top25": {
+        "before": 0.9615384615384616,
+        "after": 0.9615384615384616,
+        "delta": 0.0
+      },
+      "retrieval_at150": {
+        "before": 1.0,
+        "after": 1.0,
+        "delta": 0.0
+      },
+      "retrieved": {
+        "before": 1.0,
+        "after": 1.0,
+        "delta": 0.0
+      }
+    },
+    "median_definition": {
+      "before": "active ranks only; missing rank count reported separately",
+      "after": "active ranks only; missing rank count reported separately",
+      "delta": null
+    },
+    "median_true_rank": {
+      "before": 1.0,
+      "after": 1.0,
+      "delta": 0.0
+    },
+    "median_turns": {
+      "before": 20.5,
+      "after": 19.0,
+      "delta": -1.5
+    },
+    "missing_rank_count": {
+      "before": 1,
+      "after": 1,
+      "delta": 0
+    },
+    "redundant_tests": {
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    "rerank_at25": {
+      "before": 0.7235772357723578,
+      "after": 0.7235772357723578,
+      "delta": 0.0
+    },
+    "rerank_truth_retention": {
+      "before": 0.7317073170731707,
+      "after": 0.7317073170731707,
+      "delta": 0.0
+    },
+    "retrieval_at150": {
+      "before": 0.8455284552845529,
+      "after": 0.8455284552845529,
+      "delta": 0.0
+    },
+    "retrieval_truth_retention": {
+      "before": 0.8455284552845529,
+      "after": 0.8455284552845529,
+      "delta": 0.0
+    },
+    "scored_cases": {
+      "before": 123,
+      "after": 123,
+      "delta": 0
+    }
+  },
+  "round_m_case_changes": [
+    {
+      "case_id": "RoundM_002",
+      "changes": {
+        "turns": {
+          "before": 25,
+          "after": 23
+        },
+        "asks": {
+          "before": 16,
+          "after": 14
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_003",
+      "changes": {
+        "turns": {
+          "before": 29,
+          "after": 27
+        },
+        "asks": {
+          "before": 17,
+          "after": 15
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_005",
+      "changes": {
+        "turns": {
+          "before": 21,
+          "after": 20
+        },
+        "asks": {
+          "before": 11,
+          "after": 10
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_007",
+      "changes": {
+        "turns": {
+          "before": 17,
+          "after": 16
+        },
+        "asks": {
+          "before": 7,
+          "after": 6
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_015",
+      "changes": {
+        "turns": {
+          "before": 24,
+          "after": 22
+        },
+        "asks": {
+          "before": 9,
+          "after": 7
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_016",
+      "changes": {
+        "turns": {
+          "before": 24,
+          "after": 20
+        },
+        "asks": {
+          "before": 12,
+          "after": 8
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_018",
+      "changes": {
+        "turns": {
+          "before": 53,
+          "after": 49
+        },
+        "asks": {
+          "before": 27,
+          "after": 23
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_019",
+      "changes": {
+        "turns": {
+          "before": 17,
+          "after": 16
+        },
+        "asks": {
+          "before": 8,
+          "after": 7
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_020",
+      "changes": {
+        "turns": {
+          "before": 46,
+          "after": 44
+        },
+        "asks": {
+          "before": 20,
+          "after": 18
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_023",
+      "changes": {
+        "turns": {
+          "before": 53,
+          "after": 51
+        },
+        "asks": {
+          "before": 28,
+          "after": 26
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_028",
+      "changes": {
+        "turns": {
+          "before": 30,
+          "after": 28
+        },
+        "asks": {
+          "before": 17,
+          "after": 15
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_030",
+      "changes": {
+        "turns": {
+          "before": 30,
+          "after": 29
+        },
+        "asks": {
+          "before": 14,
+          "after": 13
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_031",
+      "changes": {
+        "turns": {
+          "before": 41,
+          "after": 40
+        },
+        "asks": {
+          "before": 11,
+          "after": 10
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_033",
+      "changes": {
+        "turns": {
+          "before": 47,
+          "after": 45
+        },
+        "asks": {
+          "before": 17,
+          "after": 15
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_034",
+      "changes": {
+        "turns": {
+          "before": 45,
+          "after": 42
+        },
+        "asks": {
+          "before": 15,
+          "after": 12
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_037",
+      "changes": {
+        "turns": {
+          "before": 39,
+          "after": 37
+        },
+        "asks": {
+          "before": 14,
+          "after": 12
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_038",
+      "changes": {
+        "turns": {
+          "before": 47,
+          "after": 46
+        },
+        "asks": {
+          "before": 13,
+          "after": 12
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_041",
+      "changes": {
+        "turns": {
+          "before": 20,
+          "after": 17
+        },
+        "asks": {
+          "before": 8,
+          "after": 5
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_042",
+      "changes": {
+        "turns": {
+          "before": 38,
+          "after": 37
+        },
+        "asks": {
+          "before": 13,
+          "after": 12
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_046",
+      "changes": {
+        "turns": {
+          "before": 20,
+          "after": 18
+        },
+        "asks": {
+          "before": 10,
+          "after": 8
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_047",
+      "changes": {
+        "turns": {
+          "before": 34,
+          "after": 33
+        },
+        "asks": {
+          "before": 11,
+          "after": 10
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_048",
+      "changes": {
+        "turns": {
+          "before": 48,
+          "after": 47
+        },
+        "asks": {
+          "before": 14,
+          "after": 13
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_056",
+      "changes": {
+        "turns": {
+          "before": 18,
+          "after": 17
+        },
+        "asks": {
+          "before": 10,
+          "after": 9
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_061",
+      "changes": {
+        "turns": {
+          "before": 54,
+          "after": 50
+        },
+        "asks": {
+          "before": 25,
+          "after": 21
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_062",
+      "changes": {
+        "turns": {
+          "before": 20,
+          "after": 19
+        },
+        "asks": {
+          "before": 11,
+          "after": 10
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_063",
+      "changes": {
+        "turns": {
+          "before": 48,
+          "after": 46
+        },
+        "asks": {
+          "before": 22,
+          "after": 20
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_064",
+      "changes": {
+        "turns": {
+          "before": 22,
+          "after": 20
+        },
+        "asks": {
+          "before": 10,
+          "after": 8
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_068",
+      "changes": {
+        "turns": {
+          "before": 12,
+          "after": 11
+        },
+        "asks": {
+          "before": 10,
+          "after": 9
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_069",
+      "changes": {
+        "turns": {
+          "before": 53,
+          "after": 50
+        },
+        "asks": {
+          "before": 23,
+          "after": 20
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_070",
+      "changes": {
+        "turns": {
+          "before": 19,
+          "after": 18
+        },
+        "asks": {
+          "before": 9,
+          "after": 8
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_073",
+      "changes": {
+        "turns": {
+          "before": 21,
+          "after": 19
+        },
+        "asks": {
+          "before": 10,
+          "after": 8
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_076",
+      "changes": {
+        "turns": {
+          "before": 25,
+          "after": 23
+        },
+        "asks": {
+          "before": 20,
+          "after": 18
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_080",
+      "changes": {
+        "turns": {
+          "before": 16,
+          "after": 15
+        },
+        "asks": {
+          "before": 9,
+          "after": 8
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_084",
+      "changes": {
+        "turns": {
+          "before": 24,
+          "after": 23
+        },
+        "asks": {
+          "before": 10,
+          "after": 9
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_087",
+      "changes": {
+        "turns": {
+          "before": 54,
+          "after": 50
+        },
+        "asks": {
+          "before": 21,
+          "after": 17
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_096",
+      "changes": {
+        "turns": {
+          "before": 46,
+          "after": 45
+        },
+        "asks": {
+          "before": 14,
+          "after": 13
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_098",
+      "changes": {
+        "turns": {
+          "before": 51,
+          "after": 46
+        },
+        "asks": {
+          "before": 17,
+          "after": 12
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_099",
+      "changes": {
+        "turns": {
+          "before": 54,
+          "after": 49
+        },
+        "asks": {
+          "before": 24,
+          "after": 19
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_100",
+      "changes": {
+        "tests": {
+          "before": 1,
+          "after": 2
+        },
+        "asks": {
+          "before": 3,
+          "after": 2
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_101",
+      "changes": {
+        "turns": {
+          "before": 46,
+          "after": 40
+        },
+        "asks": {
+          "before": 21,
+          "after": 15
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_102",
+      "changes": {
+        "turns": {
+          "before": 19,
+          "after": 15
+        },
+        "asks": {
+          "before": 10,
+          "after": 6
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_103",
+      "changes": {
+        "turns": {
+          "before": 53,
+          "after": 47
+        },
+        "asks": {
+          "before": 24,
+          "after": 18
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_104",
+      "changes": {
+        "turns": {
+          "before": 41,
+          "after": 38
+        },
+        "asks": {
+          "before": 12,
+          "after": 9
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_105",
+      "changes": {
+        "turns": {
+          "before": 52,
+          "after": 48
+        },
+        "asks": {
+          "before": 21,
+          "after": 17
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_106",
+      "changes": {
+        "turns": {
+          "before": 14,
+          "after": 10
+        },
+        "asks": {
+          "before": 8,
+          "after": 4
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_107",
+      "changes": {
+        "turns": {
+          "before": 46,
+          "after": 39
+        },
+        "asks": {
+          "before": 19,
+          "after": 12
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_108",
+      "changes": {
+        "turns": {
+          "before": 58,
+          "after": 56
+        },
+        "tests": {
+          "before": 19,
+          "after": 22
+        },
+        "asks": {
+          "before": 27,
+          "after": 22
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_109",
+      "changes": {
+        "turns": {
+          "before": 46,
+          "after": 42
+        },
+        "asks": {
+          "before": 16,
+          "after": 12
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_110",
+      "changes": {
+        "turns": {
+          "before": 47,
+          "after": 44
+        },
+        "asks": {
+          "before": 20,
+          "after": 17
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_111",
+      "changes": {
+        "turns": {
+          "before": 50,
+          "after": 44
+        },
+        "asks": {
+          "before": 20,
+          "after": 14
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_112",
+      "changes": {
+        "turns": {
+          "before": 46,
+          "after": 44
+        },
+        "asks": {
+          "before": 18,
+          "after": 16
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_114",
+      "changes": {
+        "turns": {
+          "before": 49,
+          "after": 44
+        },
+        "asks": {
+          "before": 24,
+          "after": 19
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_115",
+      "changes": {
+        "turns": {
+          "before": 47,
+          "after": 42
+        },
+        "asks": {
+          "before": 20,
+          "after": 15
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_116",
+      "changes": {
+        "turns": {
+          "before": 35,
+          "after": 31
+        },
+        "asks": {
+          "before": 20,
+          "after": 16
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_117",
+      "changes": {
+        "turns": {
+          "before": 42,
+          "after": 39
+        },
+        "asks": {
+          "before": 12,
+          "after": 9
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_118",
+      "changes": {
+        "turns": {
+          "before": 53,
+          "after": 49
+        },
+        "asks": {
+          "before": 24,
+          "after": 20
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_121",
+      "changes": {
+        "turns": {
+          "before": 47,
+          "after": 43
+        },
+        "asks": {
+          "before": 18,
+          "after": 14
+        }
+      }
+    },
+    {
+      "case_id": "RoundM_122",
+      "changes": {
+        "turns": {
+          "before": 43,
+          "after": 40
+        },
+        "asks": {
+          "before": 13,
+          "after": 10
+        }
+      }
+    }
+  ],
+  "regressions": {
+    "held_out": {
+      "metrics": {
+        "all_case_diagnostic_accuracy": {
+          "before": 0.9444444444444444,
+          "after": 0.9444444444444444,
+          "delta": 0.0
+        },
+        "average_ask_count": {
+          "before": 13.277777777777779,
+          "after": 11.61111111111111,
+          "delta": -1.6666666666666679
+        },
+        "average_exam_count": {
+          "before": 6.333333333333333,
+          "after": 6.333333333333333,
+          "delta": 0.0
+        },
+        "average_test_count": {
+          "before": 9.222222222222221,
+          "after": 9.222222222222221,
+          "delta": 0.0
+        },
+        "average_turns": {
+          "before": 29.833333333333332,
+          "after": 28.166666666666668,
+          "delta": -1.6666666666666643
+        },
+        "critical_diagnosis_recall": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "critical_miss_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "duplicate_action_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "failed_diagnosis_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "fallback_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "malformed_output_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "median_turns": {
+          "before": 29.0,
+          "after": 28.5,
+          "delta": -0.5
+        },
+        "n_cases": {
+          "before": 18,
+          "after": 18,
+          "delta": 0
+        },
+        "n_critical_cases": {
+          "before": 13,
+          "after": 13,
+          "delta": 0
+        },
+        "n_scored_cases": {
+          "before": 15,
+          "after": 15,
+          "delta": 0
+        },
+        "scored_diagnostic_accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "unnecessary_test_rate": {
+          "before": 1.7777777777777777,
+          "after": 1.7777777777777777,
+          "delta": 0.0
+        },
+        "unscored_case_names": {
+          "before": [
+            "ChestPain03_Ambiguous",
+            "Headache02_InsufficientInfo",
+            "Unknown01_UnmappedComplaint"
+          ],
+          "after": [
+            "ChestPain03_Ambiguous",
+            "Headache02_InsufficientInfo",
+            "Unknown01_UnmappedComplaint"
+          ],
+          "delta": null
+        },
+        "unsupported_case_success_rate": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "utility_score_proxy": {
+          "before": 0.5572222222222222,
+          "after": 0.5738888888888889,
+          "delta": 0.01666666666666672
+        }
+      },
+      "case_changes": [
+        {
+          "case_id": "ChestPain02_Paraphrase",
+          "changes": {
+            "turns": {
+              "before": 23,
+              "after": 22
+            },
+            "ask_count": {
+              "before": 11,
+              "after": 10
+            }
+          }
+        },
+        {
+          "case_id": "Dyspnea02_AgeSexVariation",
+          "changes": {
+            "turns": {
+              "before": 39,
+              "after": 34
+            },
+            "ask_count": {
+              "before": 21,
+              "after": 16
+            }
+          }
+        },
+        {
+          "case_id": "ChestPain03_Ambiguous",
+          "changes": {
+            "turns": {
+              "before": 28,
+              "after": 26
+            },
+            "ask_count": {
+              "before": 17,
+              "after": 15
+            }
+          }
+        },
+        {
+          "case_id": "AbdominalPain02_DangerousMimic",
+          "changes": {
+            "turns": {
+              "before": 29,
+              "after": 28
+            },
+            "ask_count": {
+              "before": 16,
+              "after": 15
+            }
+          }
+        },
+        {
+          "case_id": "ChestPain04_BenignMimic",
+          "changes": {
+            "turns": {
+              "before": 46,
+              "after": 43
+            },
+            "ask_count": {
+              "before": 20,
+              "after": 17
+            }
+          }
+        },
+        {
+          "case_id": "Dizziness02_NegativeFindingCentric",
+          "changes": {
+            "turns": {
+              "before": 49,
+              "after": 48
+            },
+            "ask_count": {
+              "before": 21,
+              "after": 20
+            }
+          }
+        },
+        {
+          "case_id": "Headache02_InsufficientInfo",
+          "changes": {
+            "turns": {
+              "before": 44,
+              "after": 43
+            },
+            "ask_count": {
+              "before": 17,
+              "after": 16
+            }
+          }
+        },
+        {
+          "case_id": "ChestPain05_NoisyText",
+          "changes": {
+            "turns": {
+              "before": 10,
+              "after": 9
+            },
+            "ask_count": {
+              "before": 9,
+              "after": 8
+            }
+          }
+        },
+        {
+          "case_id": "Fever02_MeningitisPresentation",
+          "changes": {
+            "turns": {
+              "before": 37,
+              "after": 36
+            },
+            "ask_count": {
+              "before": 11,
+              "after": 10
+            }
+          }
+        },
+        {
+          "case_id": "Dyspnea03_PregnancyRiskFactor",
+          "changes": {
+            "turns": {
+              "before": 42,
+              "after": 38
+            },
+            "ask_count": {
+              "before": 24,
+              "after": 20
+            }
+          }
+        },
+        {
+          "case_id": "Headache03_AnticoagulantRisk",
+          "changes": {
+            "turns": {
+              "before": 28,
+              "after": 24
+            },
+            "ask_count": {
+              "before": 16,
+              "after": 12
+            }
+          }
+        },
+        {
+          "case_id": "Fever03_DiabeticUrosepsis",
+          "changes": {
+            "turns": {
+              "before": 31,
+              "after": 29
+            },
+            "ask_count": {
+              "before": 13,
+              "after": 11
+            }
+          }
+        },
+        {
+          "case_id": "Dyspnea04_Anaphylaxis",
+          "changes": {
+            "turns": {
+              "before": 40,
+              "after": 39
+            },
+            "ask_count": {
+              "before": 14,
+              "after": 13
+            }
+          }
+        },
+        {
+          "case_id": "Urinary02_Pyelonephritis",
+          "changes": {
+            "turns": {
+              "before": 23,
+              "after": 20
+            },
+            "ask_count": {
+              "before": 12,
+              "after": 9
+            }
+          }
+        }
+      ]
+    },
+    "generalization_v2": {
+      "metrics": {
+        "all_case_diagnostic_accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "average_ask_count": {
+          "before": 8.277777777777779,
+          "after": 7.388888888888889,
+          "delta": -0.8888888888888893
+        },
+        "average_exam_count": {
+          "before": 4.833333333333333,
+          "after": 4.833333333333333,
+          "delta": 0.0
+        },
+        "average_test_count": {
+          "before": 7.277777777777778,
+          "after": 7.277777777777778,
+          "delta": 0.0
+        },
+        "average_turns": {
+          "before": 21.38888888888889,
+          "after": 20.5,
+          "delta": -0.8888888888888893
+        },
+        "critical_diagnosis_recall": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "critical_miss_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "duplicate_action_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "failed_diagnosis_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "fallback_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "malformed_output_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "median_turns": {
+          "before": 16.0,
+          "after": 14.5,
+          "delta": -1.5
+        },
+        "n_cases": {
+          "before": 18,
+          "after": 18,
+          "delta": 0
+        },
+        "n_critical_cases": {
+          "before": 5,
+          "after": 5,
+          "delta": 0
+        },
+        "n_scored_cases": {
+          "before": 18,
+          "after": 18,
+          "delta": 0
+        },
+        "scored_diagnostic_accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "unnecessary_test_rate": {
+          "before": 1.2777777777777777,
+          "after": 1.2777777777777777,
+          "delta": 0.0
+        },
+        "unscored_case_names": {
+          "before": [],
+          "after": [],
+          "delta": null
+        },
+        "unsupported_case_success_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "utility_score_proxy": {
+          "before": 0.7222222222222222,
+          "after": 0.731111111111111,
+          "delta": 0.008888888888888835
+        }
+      },
+      "case_changes": [
+        {
+          "case_id": "AbdominalPain03_YoungAdultAppendicitis",
+          "changes": {
+            "turns": {
+              "before": 16,
+              "after": 15
+            },
+            "ask_count": {
+              "before": 10,
+              "after": 9
+            }
+          }
+        },
+        {
+          "case_id": "Fever05_ImmunocompromisedSepsis",
+          "changes": {
+            "turns": {
+              "before": 42,
+              "after": 41
+            },
+            "ask_count": {
+              "before": 12,
+              "after": 11
+            }
+          }
+        },
+        {
+          "case_id": "ChestPain07_ConflictingFindingsMusculoskeletal",
+          "changes": {
+            "turns": {
+              "before": 18,
+              "after": 17
+            },
+            "ask_count": {
+              "before": 15,
+              "after": 14
+            }
+          }
+        },
+        {
+          "case_id": "Cough01_CommonBronchitis",
+          "changes": {
+            "turns": {
+              "before": 10,
+              "after": 7
+            },
+            "ask_count": {
+              "before": 6,
+              "after": 3
+            }
+          }
+        },
+        {
+          "case_id": "Headache04_ReassuringMigraine",
+          "changes": {
+            "turns": {
+              "before": 16,
+              "after": 14
+            },
+            "ask_count": {
+              "before": 9,
+              "after": 7
+            }
+          }
+        },
+        {
+          "case_id": "AbdominalPain06_ElderlyAcuteAbdomen",
+          "changes": {
+            "turns": {
+              "before": 30,
+              "after": 29
+            },
+            "ask_count": {
+              "before": 11,
+              "after": 10
+            }
+          }
+        },
+        {
+          "case_id": "Dyspnea06_YoungAdultAsthmaExacerbation",
+          "changes": {
+            "turns": {
+              "before": 42,
+              "after": 40
+            },
+            "ask_count": {
+              "before": 16,
+              "after": 14
+            }
+          }
+        },
+        {
+          "case_id": "AbdominalPain07_TravelersGastroenteritis",
+          "changes": {
+            "turns": {
+              "before": 56,
+              "after": 53
+            },
+            "ask_count": {
+              "before": 22,
+              "after": 19
+            }
+          }
+        },
+        {
+          "case_id": "Fever06_ElderlyPneumonia",
+          "changes": {
+            "turns": {
+              "before": 28,
+              "after": 26
+            },
+            "ask_count": {
+              "before": 10,
+              "after": 8
+            }
+          }
+        }
+      ]
+    },
+    "stress": {
+      "metrics": {
+        "all_case_diagnostic_accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "average_ask_count": {
+          "before": 9.0,
+          "after": 8.0,
+          "delta": -1.0
+        },
+        "average_exam_count": {
+          "before": 6.5,
+          "after": 6.5,
+          "delta": 0.0
+        },
+        "average_test_count": {
+          "before": 9.625,
+          "after": 9.625,
+          "delta": 0.0
+        },
+        "average_turns": {
+          "before": 26.125,
+          "after": 25.125,
+          "delta": -1.0
+        },
+        "critical_diagnosis_recall": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "critical_miss_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "duplicate_action_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "failed_diagnosis_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "fallback_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "malformed_output_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "median_turns": {
+          "before": 21.0,
+          "after": 20.0,
+          "delta": -1.0
+        },
+        "n_cases": {
+          "before": 8,
+          "after": 8,
+          "delta": 0
+        },
+        "n_critical_cases": {
+          "before": 5,
+          "after": 5,
+          "delta": 0
+        },
+        "n_scored_cases": {
+          "before": 8,
+          "after": 8,
+          "delta": 0
+        },
+        "scored_diagnostic_accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "unnecessary_test_rate": {
+          "before": 1.5,
+          "after": 1.5,
+          "delta": 0.0
+        },
+        "unscored_case_names": {
+          "before": [],
+          "after": [],
+          "delta": null
+        },
+        "unsupported_case_success_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "utility_score_proxy": {
+          "before": 0.6637500000000001,
+          "after": 0.67375,
+          "delta": 0.009999999999999898
+        }
+      },
+      "case_changes": [
+        {
+          "case_id": "Stress04_MigraineWithAura",
+          "changes": {
+            "turns": {
+              "before": 43,
+              "after": 41
+            },
+            "ask_count": {
+              "before": 16,
+              "after": 14
+            }
+          }
+        },
+        {
+          "case_id": "Stress05_StrokeWithHeadache",
+          "changes": {
+            "turns": {
+              "before": 49,
+              "after": 46
+            },
+            "ask_count": {
+              "before": 21,
+              "after": 18
+            }
+          }
+        },
+        {
+          "case_id": "Stress06_ElderlyNewOnsetDangerousHeadache",
+          "changes": {
+            "turns": {
+              "before": 24,
+              "after": 22
+            },
+            "ask_count": {
+              "before": 9,
+              "after": 7
+            }
+          }
+        },
+        {
+          "case_id": "Stress07_PolypharmacyWeaknessHyperkalemia",
+          "changes": {
+            "turns": {
+              "before": 39,
+              "after": 38
+            },
+            "ask_count": {
+              "before": 13,
+              "after": 12
+            }
+          }
+        }
+      ]
+    },
+    "round_d": {
+      "metrics": {
+        "all_case_diagnostic_accuracy": {
+          "before": 0.8571428571428571,
+          "after": 0.8571428571428571,
+          "delta": 0.0
+        },
+        "average_ask_count": {
+          "before": 11.285714285714286,
+          "after": 10.285714285714286,
+          "delta": -1.0
+        },
+        "average_exam_count": {
+          "before": 8.571428571428571,
+          "after": 8.571428571428571,
+          "delta": 0.0
+        },
+        "average_test_count": {
+          "before": 13.428571428571429,
+          "after": 13.428571428571429,
+          "delta": 0.0
+        },
+        "average_turns": {
+          "before": 34.285714285714285,
+          "after": 33.285714285714285,
+          "delta": -1.0
+        },
+        "critical_diagnosis_recall": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "critical_miss_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "duplicate_action_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "failed_diagnosis_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "fallback_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "malformed_output_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "median_turns": {
+          "before": 39,
+          "after": 38,
+          "delta": -1
+        },
+        "n_cases": {
+          "before": 7,
+          "after": 7,
+          "delta": 0
+        },
+        "n_critical_cases": {
+          "before": 3,
+          "after": 3,
+          "delta": 0
+        },
+        "n_scored_cases": {
+          "before": 6,
+          "after": 6,
+          "delta": 0
+        },
+        "scored_diagnostic_accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "unnecessary_test_rate": {
+          "before": 4.0,
+          "after": 4.0,
+          "delta": 0.0
+        },
+        "unscored_case_names": {
+          "before": [
+            "Dev04_ZeroEvidenceVagueMalaise"
+          ],
+          "after": [
+            "Dev04_ZeroEvidenceVagueMalaise"
+          ],
+          "delta": null
+        },
+        "unsupported_case_success_rate": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "utility_score_proxy": {
+          "before": 0.3142857142857143,
+          "after": 0.3242857142857143,
+          "delta": 0.010000000000000009
+        }
+      },
+      "case_changes": [
+        {
+          "case_id": "Dev01_UnroutedDiarrheaGastroenteritis",
+          "changes": {
+            "turns": {
+              "before": 39,
+              "after": 38
+            },
+            "ask_count": {
+              "before": 13,
+              "after": 12
+            }
+          }
+        },
+        {
+          "case_id": "Dev02_MorphologyOrthostaticSpinning",
+          "changes": {
+            "turns": {
+              "before": 49,
+              "after": 48
+            },
+            "ask_count": {
+              "before": 21,
+              "after": 20
+            }
+          }
+        },
+        {
+          "case_id": "Dev05_MultiConceptFeverNeckStiffness",
+          "changes": {
+            "turns": {
+              "before": 46,
+              "after": 43
+            },
+            "ask_count": {
+              "before": 16,
+              "after": 13
+            }
+          }
+        },
+        {
+          "case_id": "Dev06_LayLanguagePEAfterFlight",
+          "changes": {
+            "turns": {
+              "before": 30,
+              "after": 28
+            },
+            "ask_count": {
+              "before": 10,
+              "after": 8
+            }
+          }
+        }
+      ]
+    },
+    "round_e": {
+      "metrics": {
+        "all_case_diagnostic_accuracy": {
+          "before": 0.8571428571428571,
+          "after": 0.8571428571428571,
+          "delta": 0.0
+        },
+        "average_ask_count": {
+          "before": 12.142857142857142,
+          "after": 10.571428571428571,
+          "delta": -1.5714285714285712
+        },
+        "average_exam_count": {
+          "before": 7.428571428571429,
+          "after": 7.428571428571429,
+          "delta": 0.0
+        },
+        "average_test_count": {
+          "before": 11.714285714285714,
+          "after": 11.714285714285714,
+          "delta": 0.0
+        },
+        "average_turns": {
+          "before": 32.285714285714285,
+          "after": 30.714285714285715,
+          "delta": -1.5714285714285694
+        },
+        "critical_diagnosis_recall": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "critical_miss_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "duplicate_action_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "failed_diagnosis_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "fallback_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "malformed_output_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "median_turns": {
+          "before": 44,
+          "after": 41,
+          "delta": -3
+        },
+        "n_cases": {
+          "before": 7,
+          "after": 7,
+          "delta": 0
+        },
+        "n_critical_cases": {
+          "before": 5,
+          "after": 5,
+          "delta": 0
+        },
+        "n_scored_cases": {
+          "before": 6,
+          "after": 6,
+          "delta": 0
+        },
+        "scored_diagnostic_accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "unnecessary_test_rate": {
+          "before": 3.5714285714285716,
+          "after": 3.5714285714285716,
+          "delta": 0.0
+        },
+        "unscored_case_names": {
+          "before": [
+            "DevE06_ZeroEvidenceTerminalBehavior"
+          ],
+          "after": [
+            "DevE06_ZeroEvidenceTerminalBehavior"
+          ],
+          "delta": null
+        },
+        "unsupported_case_success_rate": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "utility_score_proxy": {
+          "before": 0.3557142857142857,
+          "after": 0.37142857142857144,
+          "delta": 0.015714285714285736
+        }
+      },
+      "case_changes": [
+        {
+          "case_id": "DevE01_PleuriticPainNotGERD",
+          "changes": {
+            "turns": {
+              "before": 48,
+              "after": 43
+            },
+            "ask_count": {
+              "before": 22,
+              "after": 17
+            }
+          }
+        },
+        {
+          "case_id": "DevE02_MassivePEnotSepsis",
+          "changes": {
+            "turns": {
+              "before": 44,
+              "after": 41
+            },
+            "ask_count": {
+              "before": 19,
+              "after": 16
+            }
+          }
+        },
+        {
+          "case_id": "DevE03_VagueReproductiveAgeEmergency",
+          "changes": {
+            "turns": {
+              "before": 17,
+              "after": 16
+            },
+            "ask_count": {
+              "before": 10,
+              "after": 9
+            }
+          }
+        },
+        {
+          "case_id": "DevE07_DiscriminatorPriorityMeningitis",
+          "changes": {
+            "turns": {
+              "before": 44,
+              "after": 42
+            },
+            "ask_count": {
+              "before": 14,
+              "after": 12
+            }
+          }
+        }
+      ]
+    },
+    "round_g": {
+      "metrics": {
+        "all_case_diagnostic_accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "average_ask_count": {
+          "before": 7.75,
+          "after": 7.583333333333333,
+          "delta": -0.16666666666666696
+        },
+        "average_exam_count": {
+          "before": 5.666666666666667,
+          "after": 5.666666666666667,
+          "delta": 0.0
+        },
+        "average_test_count": {
+          "before": 9.166666666666666,
+          "after": 9.166666666666666,
+          "delta": 0.0
+        },
+        "average_turns": {
+          "before": 23.583333333333332,
+          "after": 23.416666666666668,
+          "delta": -0.1666666666666643
+        },
+        "critical_diagnosis_recall": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "critical_miss_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "duplicate_action_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "failed_diagnosis_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "fallback_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "malformed_output_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "median_turns": {
+          "before": 21.5,
+          "after": 21.5,
+          "delta": 0.0
+        },
+        "n_cases": {
+          "before": 12,
+          "after": 12,
+          "delta": 0
+        },
+        "n_critical_cases": {
+          "before": 4,
+          "after": 4,
+          "delta": 0
+        },
+        "n_scored_cases": {
+          "before": 12,
+          "after": 12,
+          "delta": 0
+        },
+        "scored_diagnostic_accuracy": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "unnecessary_test_rate": {
+          "before": 1.8333333333333333,
+          "after": 1.8333333333333333,
+          "delta": 0.0
+        },
+        "unscored_case_names": {
+          "before": [],
+          "after": [],
+          "delta": null
+        },
+        "unsupported_case_success_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "utility_score_proxy": {
+          "before": 0.6725,
+          "after": 0.6741666666666667,
+          "delta": 0.0016666666666667052
+        }
+      },
+      "case_changes": [
+        {
+          "case_id": "RoundG_ko_mix",
+          "changes": {
+            "turns": {
+              "before": 45,
+              "after": 44
+            },
+            "ask_count": {
+              "before": 15,
+              "after": 14
+            }
+          }
+        },
+        {
+          "case_id": "RoundG_en",
+          "changes": {
+            "turns": {
+              "before": 45,
+              "after": 44
+            },
+            "ask_count": {
+              "before": 15,
+              "after": 14
+            }
+          }
+        }
+      ]
+    },
+    "round_i": {
+      "metrics": {
+        "all_case_diagnostic_accuracy": {
+          "before": 0.9,
+          "after": 0.9,
+          "delta": 0.0
+        },
+        "average_ask_count": {
+          "before": 6.6,
+          "after": 6.1,
+          "delta": -0.5
+        },
+        "average_exam_count": {
+          "before": 4.7,
+          "after": 4.7,
+          "delta": 0.0
+        },
+        "average_test_count": {
+          "before": 6.9,
+          "after": 6.95,
+          "delta": 0.04999999999999982
+        },
+        "average_turns": {
+          "before": 19.2,
+          "after": 18.75,
+          "delta": -0.4499999999999993
+        },
+        "critical_diagnosis_recall": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "critical_miss_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "duplicate_action_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "failed_diagnosis_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "fallback_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "malformed_output_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "median_turns": {
+          "before": 15.0,
+          "after": 15.0,
+          "delta": 0.0
+        },
+        "n_cases": {
+          "before": 20,
+          "after": 20,
+          "delta": 0
+        },
+        "n_critical_cases": {
+          "before": 8,
+          "after": 8,
+          "delta": 0
+        },
+        "n_scored_cases": {
+          "before": 19,
+          "after": 19,
+          "delta": 0
+        },
+        "scored_diagnostic_accuracy": {
+          "before": 0.9473684210526315,
+          "after": 0.9473684210526315,
+          "delta": 0.0
+        },
+        "unnecessary_test_rate": {
+          "before": 2.0,
+          "after": 2.0,
+          "delta": 0.0
+        },
+        "unscored_case_names": {
+          "before": [
+            "RoundI_unsupported"
+          ],
+          "after": [
+            "RoundI_unsupported"
+          ],
+          "delta": null
+        },
+        "unsupported_case_success_rate": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "utility_score_proxy": {
+          "before": 0.608,
+          "after": 0.6124999999999999,
+          "delta": 0.0044999999999999485
+        }
+      },
+      "case_changes": [
+        {
+          "case_id": "RoundI_sodium",
+          "changes": {
+            "turns": {
+              "before": 19,
+              "after": 17
+            },
+            "ask_count": {
+              "before": 9,
+              "after": 7
+            }
+          }
+        },
+        {
+          "case_id": "RoundI_primary_rhythm",
+          "changes": {
+            "turns": {
+              "before": 13,
+              "after": 10
+            },
+            "ask_count": {
+              "before": 8,
+              "after": 5
+            }
+          }
+        },
+        {
+          "case_id": "RoundI_negative_cardiac",
+          "changes": {
+            "ask_count": {
+              "before": 3,
+              "after": 2
+            },
+            "test_count": {
+              "before": 1,
+              "after": 2
+            }
+          }
+        },
+        {
+          "case_id": "RoundI_late_reversal",
+          "changes": {
+            "turns": {
+              "before": 12,
+              "after": 11
+            },
+            "ask_count": {
+              "before": 10,
+              "after": 9
+            }
+          }
+        },
+        {
+          "case_id": "RoundI_pleural",
+          "changes": {
+            "turns": {
+              "before": 37,
+              "after": 35
+            },
+            "ask_count": {
+              "before": 16,
+              "after": 14
+            }
+          }
+        },
+        {
+          "case_id": "RoundI_long_tail",
+          "changes": {
+            "turns": {
+              "before": 45,
+              "after": 44
+            },
+            "ask_count": {
+              "before": 15,
+              "after": 14
+            }
+          }
+        }
+      ]
+    },
+    "round_j": {
+      "metrics": {
+        "all_case_diagnostic_accuracy": {
+          "before": 0.8888888888888888,
+          "after": 0.8888888888888888,
+          "delta": 0.0
+        },
+        "average_ask_count": {
+          "before": 9.481481481481481,
+          "after": 8.648148148148149,
+          "delta": -0.8333333333333321
+        },
+        "average_exam_count": {
+          "before": 5.796296296296297,
+          "after": 5.796296296296297,
+          "delta": 0.0
+        },
+        "average_test_count": {
+          "before": 8.074074074074074,
+          "after": 8.11111111111111,
+          "delta": 0.03703703703703631
+        },
+        "average_turns": {
+          "before": 24.35185185185185,
+          "after": 23.555555555555557,
+          "delta": -0.7962962962962941
+        },
+        "critical_diagnosis_recall": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "critical_miss_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "duplicate_action_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "failed_diagnosis_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "fallback_rate": {
+          "before": null,
+          "after": null,
+          "delta": null
+        },
+        "malformed_output_rate": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "median_turns": {
+          "before": 20.5,
+          "after": 19.0,
+          "delta": -1.5
+        },
+        "n_cases": {
+          "before": 54,
+          "after": 54,
+          "delta": 0
+        },
+        "n_critical_cases": {
+          "before": 20,
+          "after": 20,
+          "delta": 0
+        },
+        "n_scored_cases": {
+          "before": 52,
+          "after": 52,
+          "delta": 0
+        },
+        "scored_diagnostic_accuracy": {
+          "before": 0.9230769230769231,
+          "after": 0.9230769230769231,
+          "delta": 0.0
+        },
+        "unnecessary_test_rate": {
+          "before": 2.8333333333333335,
+          "after": 2.8333333333333335,
+          "delta": 0.0
+        },
+        "unscored_case_names": {
+          "before": [
+            "RoundJ_53",
+            "RoundJ_54"
+          ],
+          "after": [
+            "RoundJ_53",
+            "RoundJ_54"
+          ],
+          "delta": null
+        },
+        "unsupported_case_success_rate": {
+          "before": 1.0,
+          "after": 1.0,
+          "delta": 0.0
+        },
+        "utility_score_proxy": {
+          "before": 0.5037037037037037,
+          "after": 0.5116666666666666,
+          "delta": 0.00796296296296295
+        }
+      },
+      "case_changes": [
+        {
+          "case_id": "RoundJ_01",
+          "changes": {
+            "turns": {
+              "before": 20,
+              "after": 17
+            },
+            "ask_count": {
+              "before": 13,
+              "after": 10
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_02",
+          "changes": {
+            "ask_count": {
+              "before": 3,
+              "after": 2
+            },
+            "test_count": {
+              "before": 1,
+              "after": 2
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_05",
+          "changes": {
+            "turns": {
+              "before": 32,
+              "after": 28
+            },
+            "ask_count": {
+              "before": 15,
+              "after": 11
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_07",
+          "changes": {
+            "turns": {
+              "before": 39,
+              "after": 38
+            },
+            "ask_count": {
+              "before": 14,
+              "after": 13
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_11",
+          "changes": {
+            "turns": {
+              "before": 44,
+              "after": 43
+            },
+            "ask_count": {
+              "before": 17,
+              "after": 16
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_13",
+          "changes": {
+            "turns": {
+              "before": 24,
+              "after": 22
+            },
+            "ask_count": {
+              "before": 9,
+              "after": 7
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_14",
+          "changes": {
+            "turns": {
+              "before": 21,
+              "after": 19
+            },
+            "ask_count": {
+              "before": 9,
+              "after": 7
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_17",
+          "changes": {
+            "turns": {
+              "before": 16,
+              "after": 14
+            },
+            "ask_count": {
+              "before": 9,
+              "after": 7
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_18",
+          "changes": {
+            "turns": {
+              "before": 40,
+              "after": 39
+            },
+            "ask_count": {
+              "before": 23,
+              "after": 22
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_19",
+          "changes": {
+            "turns": {
+              "before": 27,
+              "after": 25
+            },
+            "ask_count": {
+              "before": 11,
+              "after": 9
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_20",
+          "changes": {
+            "turns": {
+              "before": 49,
+              "after": 46
+            },
+            "ask_count": {
+              "before": 19,
+              "after": 16
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_24",
+          "changes": {
+            "turns": {
+              "before": 40,
+              "after": 39
+            },
+            "ask_count": {
+              "before": 15,
+              "after": 14
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_25",
+          "changes": {
+            "turns": {
+              "before": 14,
+              "after": 12
+            },
+            "ask_count": {
+              "before": 8,
+              "after": 6
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_26",
+          "changes": {
+            "turns": {
+              "before": 28,
+              "after": 27
+            },
+            "ask_count": {
+              "before": 12,
+              "after": 11
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_27",
+          "changes": {
+            "turns": {
+              "before": 16,
+              "after": 15
+            },
+            "ask_count": {
+              "before": 8,
+              "after": 7
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_28",
+          "changes": {
+            "turns": {
+              "before": 28,
+              "after": 26
+            },
+            "ask_count": {
+              "before": 10,
+              "after": 8
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_29",
+          "changes": {
+            "turns": {
+              "before": 53,
+              "after": 50
+            },
+            "ask_count": {
+              "before": 21,
+              "after": 18
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_30",
+          "changes": {
+            "turns": {
+              "before": 52,
+              "after": 50
+            },
+            "ask_count": {
+              "before": 22,
+              "after": 20
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_34",
+          "changes": {
+            "turns": {
+              "before": 47,
+              "after": 46
+            },
+            "ask_count": {
+              "before": 21,
+              "after": 20
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_38",
+          "changes": {
+            "ask_count": {
+              "before": 3,
+              "after": 2
+            },
+            "test_count": {
+              "before": 1,
+              "after": 2
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_40",
+          "changes": {
+            "turns": {
+              "before": 48,
+              "after": 45
+            },
+            "ask_count": {
+              "before": 18,
+              "after": 15
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_41",
+          "changes": {
+            "turns": {
+              "before": 15,
+              "after": 13
+            },
+            "ask_count": {
+              "before": 9,
+              "after": 7
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_43",
+          "changes": {
+            "turns": {
+              "before": 16,
+              "after": 15
+            },
+            "ask_count": {
+              "before": 9,
+              "after": 8
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_46",
+          "changes": {
+            "turns": {
+              "before": 22,
+              "after": 21
+            },
+            "ask_count": {
+              "before": 19,
+              "after": 18
+            }
+          }
+        },
+        {
+          "case_id": "RoundJ_52",
+          "changes": {
+            "turns": {
+              "before": 53,
+              "after": 51
+            },
+            "ask_count": {
+              "before": 28,
+              "after": 26
+            }
+          }
+        }
+      ]
+    }
+  },
+  "unchanged_case_selection_labels_and_scoring": true
+}

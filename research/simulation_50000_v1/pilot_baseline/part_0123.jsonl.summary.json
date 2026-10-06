@@ -1,0 +1,68 @@
+{
+  "part": 123,
+  "counts": {
+    "cases": 8,
+    "correct": 0,
+    "critical": 0,
+    "critical_correct": 0,
+    "real_llm_calls": 0
+  },
+  "case_ids": [
+    "SIM50_low_development_00012",
+    "SIM50_low_development_00049",
+    "SIM50_low_development_00086",
+    "SIM50_low_development_00123",
+    "SIM50_low_development_00160",
+    "SIM50_low_development_00197",
+    "SIM50_low_development_00234",
+    "SIM50_low_development_00271"
+  ],
+  "elapsed_seconds": 3.0087996030051727,
+  "run_metadata": {
+    "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+    "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+    "runtime_sha256": "75e454c6950da1269bc6fe562b4ce9187b16c6439d6f4ff76e7262030564cc91",
+    "runner_sha256": "4f5551b37a209fd3d0937b7660d998b2871a1a10fd1a2c0d5c3e90f3afc9c705",
+    "cache_sha256": "a72dba51b16d87abd8d385aef819254638f625b58ac13655cb6489e764cf0581",
+    "runtime_commit": "1c44c6797381cb6b77a77397f872aca8af9d10f5",
+    "split": "development",
+    "limit_per_family": 8,
+    "memoized": true,
+    "cases": 1248,
+    "families": 156,
+    "real_llm_provider": false
+  },
+  "output_sha256": "e198884a20ea08939a52abd4a8ed65cd80800904aeff14d31add0d76f73d194b",
+  "cache_stats": {
+    "_content_words": {
+      "hits": 732290,
+      "misses": 1542,
+      "maxsize": 16384,
+      "currsize": 1542
+    },
+    "_strip_negated_spans": {
+      "hits": 178176,
+      "misses": 613,
+      "maxsize": 16384,
+      "currsize": 613
+    },
+    "feature_finding_pair": {
+      "hits": 14234808,
+      "misses": 190639,
+      "maxsize": 131072,
+      "currsize": 131072
+    },
+    "catalog_context": {
+      "hits": 2419,
+      "misses": 2039,
+      "maxsize": 2048,
+      "currsize": 2039
+    },
+    "catalog_search": {
+      "hits": 4259,
+      "misses": 213,
+      "maxsize": 8192,
+      "currsize": 213
+    }
+  }
+}

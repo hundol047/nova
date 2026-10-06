@@ -13,7 +13,8 @@
       "syncope",
       "palpitations",
       "cough",
-      "leg_swelling"
+      "leg_swelling",
+      "hemoptysis"
     ],
     "category": "pulmonary",
     "dangerous": true,
@@ -80,7 +81,8 @@
     "chief_complaint_tags": [
       "dyspnea",
       "chest_pain",
-      "cough"
+      "cough",
+      "trauma"
     ],
     "category": "pulmonary",
     "dangerous": true,
@@ -178,10 +180,15 @@
     "confirmatory_findings": [
       "consolidation",
       "infiltrate",
-      "focal consolidation",
-      "crackles"
+      "focal consolidation"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "evidence_references": [
+      {
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6812437/",
+        "scope": "Auscultatory signs alone are nonspecific; crackles are retained as a typical feature, not independent confirmatory evidence."
+      }
+    ]
   },
   {
     "id": "asthma_copd_exacerbation",
@@ -201,14 +208,18 @@
     "urgency": "MEDIUM",
     "typical_features": [
       "wheeze",
-      "known asthma or COPD",
       "worse with triggers",
-      "prolonged expiration"
+      "prolonged expiration",
+      "dyspnea",
+      "cough",
+      "worsening dyspnea"
     ],
     "risk_factors": [
       "smoking",
       "known reactive airway disease",
-      "allergen exposure"
+      "allergen exposure",
+      "asthma",
+      "COPD"
     ],
     "discriminating_questions": [
       "past_medical_history",
@@ -228,7 +239,18 @@
       "unable to speak in full sentences",
       "hypoxia"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "confirmatory_findings": [
+      "reduced peak flow",
+      "hyperinflation on chest x-ray"
+    ],
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset",
+    "evidence_references": [
+      {
+        "url": "https://www.nhlbi.nih.gov/health/copd/symptoms",
+        "scope": "Known disease is risk context; worsening respiratory symptoms require evaluation and are not confirmed by history alone."
+      }
+    ]
   },
   {
     "id": "acute_bronchitis",

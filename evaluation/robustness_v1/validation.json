@@ -1,0 +1,2326 @@
+[
+  {
+    "family": "Fever04_CommonViralURI",
+    "variant": "original",
+    "case": {
+      "case_id": "Fever04_CommonViralURI__original",
+      "chief_complaint": "runny nose and sore throat",
+      "demographics": {
+        "age": 27,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "viral_uri",
+      "answers": {
+        "associated_symptoms": "runny nose, sore throat, mild cough; denies shortness of breath, denies chest pain, denies neck stiffness",
+        "duration": "about two days",
+        "social_history": "my roommate had a cold last week"
+      },
+      "exam_results": {
+        "vital_signs": "BP 118/74, HR 78, RR 14, Temp 37.6, SpO2 99%",
+        "lung_auscultation": "clear bilaterally"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever04_CommonViralURI",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Fever04_CommonViralURI__uppercase",
+      "chief_complaint": "runny nose and sore throat",
+      "demographics": {
+        "age": 27,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "viral_uri",
+      "answers": {
+        "associated_symptoms": "RUNNY NOSE, SORE THROAT, MILD COUGH; DENIES SHORTNESS OF BREATH, DENIES CHEST PAIN, DENIES NECK STIFFNESS",
+        "duration": "ABOUT TWO DAYS",
+        "social_history": "MY ROOMMATE HAD A COLD LAST WEEK"
+      },
+      "exam_results": {
+        "vital_signs": "BP 118/74, HR 78, RR 14, TEMP 37.6, SPO2 99%",
+        "lung_auscultation": "CLEAR BILATERALLY"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever04_CommonViralURI",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Fever04_CommonViralURI__extra_spaces",
+      "chief_complaint": "runny nose and sore throat",
+      "demographics": {
+        "age": 27,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "viral_uri",
+      "answers": {
+        "associated_symptoms": "  runny  nose,  sore  throat,  mild  cough;  denies  shortness  of  breath,  denies  chest  pain,  denies  neck  stiffness  ",
+        "duration": "  about  two  days  ",
+        "social_history": "  my  roommate  had  a  cold  last  week  "
+      },
+      "exam_results": {
+        "vital_signs": "  BP  118/74,  HR  78,  RR  14,  Temp  37.6,  SpO2  99%  ",
+        "lung_auscultation": "  clear  bilaterally  "
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever04_CommonViralURI",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Fever04_CommonViralURI__sentence_breaks",
+      "chief_complaint": "runny nose and sore throat",
+      "demographics": {
+        "age": 27,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "viral_uri",
+      "answers": {
+        "associated_symptoms": "runny nose, sore throat, mild cough. denies shortness of breath, denies chest pain, denies neck stiffness",
+        "duration": "about two days",
+        "social_history": "my roommate had a cold last week"
+      },
+      "exam_results": {
+        "vital_signs": "BP 118/74, HR 78, RR 14, Temp 37.6, SpO2 99%",
+        "lung_auscultation": "clear bilaterally"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dizziness03_AtypicalStroke",
+    "variant": "original",
+    "case": {
+      "case_id": "Dizziness03_AtypicalStroke__original",
+      "chief_complaint": "dizzy and a little off-balance",
+      "demographics": {
+        "age": 68,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "ischemic_stroke",
+      "answers": {
+        "onset": "sudden, about an hour ago",
+        "associated_symptoms": "some trouble with my balance and my words felt slightly off; denies chest pain, denies palpitations",
+        "past_medical_history": "atrial fibrillation, hypertension",
+        "medication": "I stopped taking my blood thinner a few weeks ago"
+      },
+      "exam_results": {
+        "neuro_exam": "mild left-sided ataxia, subtle dysarthria",
+        "vital_signs": "BP 168/94, HR 88 irregularly irregular, RR 16, Temp 36.8, SpO2 97%",
+        "mental_status_exam": "alert, oriented x3"
+      },
+      "test_results": {
+        "ct_head": "acute infarct in the cerebellar region",
+        "glucose_point_of_care": "98 mg/dL"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "atypical_presentation",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dizziness03_AtypicalStroke",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Dizziness03_AtypicalStroke__uppercase",
+      "chief_complaint": "dizzy and a little off-balance",
+      "demographics": {
+        "age": 68,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "ischemic_stroke",
+      "answers": {
+        "onset": "SUDDEN, ABOUT AN HOUR AGO",
+        "associated_symptoms": "SOME TROUBLE WITH MY BALANCE AND MY WORDS FELT SLIGHTLY OFF; DENIES CHEST PAIN, DENIES PALPITATIONS",
+        "past_medical_history": "ATRIAL FIBRILLATION, HYPERTENSION",
+        "medication": "I STOPPED TAKING MY BLOOD THINNER A FEW WEEKS AGO"
+      },
+      "exam_results": {
+        "neuro_exam": "MILD LEFT-SIDED ATAXIA, SUBTLE DYSARTHRIA",
+        "vital_signs": "BP 168/94, HR 88 IRREGULARLY IRREGULAR, RR 16, TEMP 36.8, SPO2 97%",
+        "mental_status_exam": "ALERT, ORIENTED X3"
+      },
+      "test_results": {
+        "ct_head": "ACUTE INFARCT IN THE CEREBELLAR REGION",
+        "glucose_point_of_care": "98 MG/DL"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "atypical_presentation",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dizziness03_AtypicalStroke",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Dizziness03_AtypicalStroke__extra_spaces",
+      "chief_complaint": "dizzy and a little off-balance",
+      "demographics": {
+        "age": 68,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "ischemic_stroke",
+      "answers": {
+        "onset": "  sudden,  about  an  hour  ago  ",
+        "associated_symptoms": "  some  trouble  with  my  balance  and  my  words  felt  slightly  off;  denies  chest  pain,  denies  palpitations  ",
+        "past_medical_history": "  atrial  fibrillation,  hypertension  ",
+        "medication": "  I  stopped  taking  my  blood  thinner  a  few  weeks  ago  "
+      },
+      "exam_results": {
+        "neuro_exam": "  mild  left-sided  ataxia,  subtle  dysarthria  ",
+        "vital_signs": "  BP  168/94,  HR  88  irregularly  irregular,  RR  16,  Temp  36.8,  SpO2  97%  ",
+        "mental_status_exam": "  alert,  oriented  x3  "
+      },
+      "test_results": {
+        "ct_head": "  acute  infarct  in  the  cerebellar  region  ",
+        "glucose_point_of_care": "  98  mg/dL  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "atypical_presentation",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dizziness03_AtypicalStroke",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Dizziness03_AtypicalStroke__sentence_breaks",
+      "chief_complaint": "dizzy and a little off-balance",
+      "demographics": {
+        "age": 68,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "ischemic_stroke",
+      "answers": {
+        "onset": "sudden, about an hour ago",
+        "associated_symptoms": "some trouble with my balance and my words felt slightly off. denies chest pain, denies palpitations",
+        "past_medical_history": "atrial fibrillation, hypertension",
+        "medication": "I stopped taking my blood thinner a few weeks ago"
+      },
+      "exam_results": {
+        "neuro_exam": "mild left-sided ataxia, subtle dysarthria",
+        "vital_signs": "BP 168/94, HR 88 irregularly irregular, RR 16, Temp 36.8, SpO2 97%",
+        "mental_status_exam": "alert, oriented x3"
+      },
+      "test_results": {
+        "ct_head": "acute infarct in the cerebellar region",
+        "glucose_point_of_care": "98 mg/dL"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "atypical_presentation",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Weakness01_ElderlyPolypharmacyHypoglycemia",
+    "variant": "original",
+    "case": {
+      "case_id": "Weakness01_ElderlyPolypharmacyHypoglycemia__original",
+      "chief_complaint": "feeling weak and shaky",
+      "demographics": {
+        "age": 81,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "hypoglycemia",
+      "answers": {
+        "onset": "started about thirty minutes ago, came on quickly",
+        "associated_symptoms": "sweating a lot and shaky, and I feel confused; denies chest pain, denies slurred speech",
+        "past_medical_history": "type 2 diabetes, high blood pressure, hasn't eaten much today",
+        "medication": "glipizide, lisinopril, and a water pill"
+      },
+      "exam_results": {
+        "mental_status_exam": "confused, diaphoretic",
+        "vital_signs": "BP 132/80, HR 102, RR 16, Temp 36.6, SpO2 98%"
+      },
+      "test_results": {
+        "glucose_point_of_care": "blood glucose 42 mg/dL"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "elderly_polypharmacy",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Weakness01_ElderlyPolypharmacyHypoglycemia",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Weakness01_ElderlyPolypharmacyHypoglycemia__uppercase",
+      "chief_complaint": "feeling weak and shaky",
+      "demographics": {
+        "age": 81,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "hypoglycemia",
+      "answers": {
+        "onset": "STARTED ABOUT THIRTY MINUTES AGO, CAME ON QUICKLY",
+        "associated_symptoms": "SWEATING A LOT AND SHAKY, AND I FEEL CONFUSED; DENIES CHEST PAIN, DENIES SLURRED SPEECH",
+        "past_medical_history": "TYPE 2 DIABETES, HIGH BLOOD PRESSURE, HASN'T EATEN MUCH TODAY",
+        "medication": "GLIPIZIDE, LISINOPRIL, AND A WATER PILL"
+      },
+      "exam_results": {
+        "mental_status_exam": "CONFUSED, DIAPHORETIC",
+        "vital_signs": "BP 132/80, HR 102, RR 16, TEMP 36.6, SPO2 98%"
+      },
+      "test_results": {
+        "glucose_point_of_care": "BLOOD GLUCOSE 42 MG/DL"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "elderly_polypharmacy",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Weakness01_ElderlyPolypharmacyHypoglycemia",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Weakness01_ElderlyPolypharmacyHypoglycemia__extra_spaces",
+      "chief_complaint": "feeling weak and shaky",
+      "demographics": {
+        "age": 81,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "hypoglycemia",
+      "answers": {
+        "onset": "  started  about  thirty  minutes  ago,  came  on  quickly  ",
+        "associated_symptoms": "  sweating  a  lot  and  shaky,  and  I  feel  confused;  denies  chest  pain,  denies  slurred  speech  ",
+        "past_medical_history": "  type  2  diabetes,  high  blood  pressure,  hasn't  eaten  much  today  ",
+        "medication": "  glipizide,  lisinopril,  and  a  water  pill  "
+      },
+      "exam_results": {
+        "mental_status_exam": "  confused,  diaphoretic  ",
+        "vital_signs": "  BP  132/80,  HR  102,  RR  16,  Temp  36.6,  SpO2  98%  "
+      },
+      "test_results": {
+        "glucose_point_of_care": "  blood  glucose  42  mg/dL  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "elderly_polypharmacy",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Weakness01_ElderlyPolypharmacyHypoglycemia",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Weakness01_ElderlyPolypharmacyHypoglycemia__sentence_breaks",
+      "chief_complaint": "feeling weak and shaky",
+      "demographics": {
+        "age": 81,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "hypoglycemia",
+      "answers": {
+        "onset": "started about thirty minutes ago, came on quickly",
+        "associated_symptoms": "sweating a lot and shaky, and I feel confused. denies chest pain, denies slurred speech",
+        "past_medical_history": "type 2 diabetes, high blood pressure, hasn't eaten much today",
+        "medication": "glipizide, lisinopril, and a water pill"
+      },
+      "exam_results": {
+        "mental_status_exam": "confused, diaphoretic",
+        "vital_signs": "BP 132/80, HR 102, RR 16, Temp 36.6, SpO2 98%"
+      },
+      "test_results": {
+        "glucose_point_of_care": "blood glucose 42 mg/dL"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "elderly_polypharmacy",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain03_YoungAdultAppendicitis",
+    "variant": "original",
+    "case": {
+      "case_id": "AbdominalPain03_YoungAdultAppendicitis__original",
+      "chief_complaint": "stomach pain that moved",
+      "demographics": {
+        "age": 22,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "appendicitis",
+      "answers": {
+        "location": "started around my belly button, now it's moved to my lower right side",
+        "onset": "started yesterday evening, getting worse",
+        "associated_symptoms": "no appetite, felt a little feverish, nauseous; denies diarrhea, denies vomiting blood"
+      },
+      "exam_results": {
+        "abdominal_exam": "right lower quadrant tenderness with rebound and guarding",
+        "vital_signs": "BP 122/78, HR 96, RR 16, Temp 38.1, SpO2 99%"
+      },
+      "test_results": {
+        "cbc": "elevated white blood cell count",
+        "ct_abdomen": "dilated, thickened appendix"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "young_adult",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain03_YoungAdultAppendicitis",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "AbdominalPain03_YoungAdultAppendicitis__uppercase",
+      "chief_complaint": "stomach pain that moved",
+      "demographics": {
+        "age": 22,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "appendicitis",
+      "answers": {
+        "location": "STARTED AROUND MY BELLY BUTTON, NOW IT'S MOVED TO MY LOWER RIGHT SIDE",
+        "onset": "STARTED YESTERDAY EVENING, GETTING WORSE",
+        "associated_symptoms": "NO APPETITE, FELT A LITTLE FEVERISH, NAUSEOUS; DENIES DIARRHEA, DENIES VOMITING BLOOD"
+      },
+      "exam_results": {
+        "abdominal_exam": "RIGHT LOWER QUADRANT TENDERNESS WITH REBOUND AND GUARDING",
+        "vital_signs": "BP 122/78, HR 96, RR 16, TEMP 38.1, SPO2 99%"
+      },
+      "test_results": {
+        "cbc": "ELEVATED WHITE BLOOD CELL COUNT",
+        "ct_abdomen": "DILATED, THICKENED APPENDIX"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "young_adult",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain03_YoungAdultAppendicitis",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "AbdominalPain03_YoungAdultAppendicitis__extra_spaces",
+      "chief_complaint": "stomach pain that moved",
+      "demographics": {
+        "age": 22,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "appendicitis",
+      "answers": {
+        "location": "  started  around  my  belly  button,  now  it's  moved  to  my  lower  right  side  ",
+        "onset": "  started  yesterday  evening,  getting  worse  ",
+        "associated_symptoms": "  no  appetite,  felt  a  little  feverish,  nauseous;  denies  diarrhea,  denies  vomiting  blood  "
+      },
+      "exam_results": {
+        "abdominal_exam": "  right  lower  quadrant  tenderness  with  rebound  and  guarding  ",
+        "vital_signs": "  BP  122/78,  HR  96,  RR  16,  Temp  38.1,  SpO2  99%  "
+      },
+      "test_results": {
+        "cbc": "  elevated  white  blood  cell  count  ",
+        "ct_abdomen": "  dilated,  thickened  appendix  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "young_adult",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain03_YoungAdultAppendicitis",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "AbdominalPain03_YoungAdultAppendicitis__sentence_breaks",
+      "chief_complaint": "stomach pain that moved",
+      "demographics": {
+        "age": 22,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "appendicitis",
+      "answers": {
+        "location": "started around my belly button, now it's moved to my lower right side",
+        "onset": "started yesterday evening, getting worse",
+        "associated_symptoms": "no appetite, felt a little feverish, nauseous. denies diarrhea, denies vomiting blood"
+      },
+      "exam_results": {
+        "abdominal_exam": "right lower quadrant tenderness with rebound and guarding",
+        "vital_signs": "BP 122/78, HR 96, RR 16, Temp 38.1, SpO2 99%"
+      },
+      "test_results": {
+        "cbc": "elevated white blood cell count",
+        "ct_abdomen": "dilated, thickened appendix"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "young_adult",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever05_ImmunocompromisedSepsis",
+    "variant": "original",
+    "case": {
+      "case_id": "Fever05_ImmunocompromisedSepsis__original",
+      "chief_complaint": "fever, no clear reason",
+      "demographics": {
+        "age": 54,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "sepsis",
+      "answers": {
+        "onset": "fever started overnight, feels worse than a normal cold",
+        "associated_symptoms": "chills and feeling very tired; denies cough, denies burning with urination, denies abdominal pain, denies rash",
+        "past_medical_history": "breast cancer, currently on chemotherapy, last cycle was five days ago"
+      },
+      "exam_results": {
+        "vital_signs": "BP 88/56, HR 122, RR 24, Temp 39.3, SpO2 94%",
+        "skin_exam": "no rash, no obvious infection source",
+        "mental_status_exam": "alert but fatigued"
+      },
+      "test_results": {
+        "lactate": "elevated lactate",
+        "cbc": "low white blood cell count (neutropenic)",
+        "blood_culture": "pending"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "immunocompromised",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever05_ImmunocompromisedSepsis",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Fever05_ImmunocompromisedSepsis__uppercase",
+      "chief_complaint": "fever, no clear reason",
+      "demographics": {
+        "age": 54,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "sepsis",
+      "answers": {
+        "onset": "FEVER STARTED OVERNIGHT, FEELS WORSE THAN A NORMAL COLD",
+        "associated_symptoms": "CHILLS AND FEELING VERY TIRED; DENIES COUGH, DENIES BURNING WITH URINATION, DENIES ABDOMINAL PAIN, DENIES RASH",
+        "past_medical_history": "BREAST CANCER, CURRENTLY ON CHEMOTHERAPY, LAST CYCLE WAS FIVE DAYS AGO"
+      },
+      "exam_results": {
+        "vital_signs": "BP 88/56, HR 122, RR 24, TEMP 39.3, SPO2 94%",
+        "skin_exam": "NO RASH, NO OBVIOUS INFECTION SOURCE",
+        "mental_status_exam": "ALERT BUT FATIGUED"
+      },
+      "test_results": {
+        "lactate": "ELEVATED LACTATE",
+        "cbc": "LOW WHITE BLOOD CELL COUNT (NEUTROPENIC)",
+        "blood_culture": "PENDING"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "immunocompromised",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever05_ImmunocompromisedSepsis",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Fever05_ImmunocompromisedSepsis__extra_spaces",
+      "chief_complaint": "fever, no clear reason",
+      "demographics": {
+        "age": 54,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "sepsis",
+      "answers": {
+        "onset": "  fever  started  overnight,  feels  worse  than  a  normal  cold  ",
+        "associated_symptoms": "  chills  and  feeling  very  tired;  denies  cough,  denies  burning  with  urination,  denies  abdominal  pain,  denies  rash  ",
+        "past_medical_history": "  breast  cancer,  currently  on  chemotherapy,  last  cycle  was  five  days  ago  "
+      },
+      "exam_results": {
+        "vital_signs": "  BP  88/56,  HR  122,  RR  24,  Temp  39.3,  SpO2  94%  ",
+        "skin_exam": "  no  rash,  no  obvious  infection  source  ",
+        "mental_status_exam": "  alert  but  fatigued  "
+      },
+      "test_results": {
+        "lactate": "  elevated  lactate  ",
+        "cbc": "  low  white  blood  cell  count  (neutropenic)  ",
+        "blood_culture": "  pending  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "immunocompromised",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever05_ImmunocompromisedSepsis",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Fever05_ImmunocompromisedSepsis__sentence_breaks",
+      "chief_complaint": "fever, no clear reason",
+      "demographics": {
+        "age": 54,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "sepsis",
+      "answers": {
+        "onset": "fever started overnight, feels worse than a normal cold",
+        "associated_symptoms": "chills and feeling very tired. denies cough, denies burning with urination, denies abdominal pain, denies rash",
+        "past_medical_history": "breast cancer, currently on chemotherapy, last cycle was five days ago"
+      },
+      "exam_results": {
+        "vital_signs": "BP 88/56, HR 122, RR 24, Temp 39.3, SpO2 94%",
+        "skin_exam": "no rash, no obvious infection source",
+        "mental_status_exam": "alert but fatigued"
+      },
+      "test_results": {
+        "lactate": "elevated lactate",
+        "cbc": "low white blood cell count (neutropenic)",
+        "blood_culture": "pending"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "immunocompromised",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain04_AnticoagulantGIBleed",
+    "variant": "original",
+    "case": {
+      "case_id": "AbdominalPain04_AnticoagulantGIBleed__original",
+      "chief_complaint": "dark stools and feeling weak",
+      "demographics": {
+        "age": 71,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "gi_bleeding",
+      "answers": {
+        "associated_symptoms": "my stools have looked black and tarry for two days, and I feel lightheaded when I stand up; denies vomiting blood, denies fever",
+        "medication": "warfarin for a heart valve, and I also take aspirin",
+        "past_medical_history": "mechanical heart valve, peptic ulcer years ago"
+      },
+      "exam_results": {
+        "abdominal_exam": "mild diffuse tenderness, no rebound or guarding",
+        "vital_signs": "BP 98/62, HR 114, RR 18, Temp 36.9, SpO2 97%",
+        "fecal_occult_blood": "positive"
+      },
+      "test_results": {
+        "cbc": "low hemoglobin"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "polypharmacy_anticoagulant",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain04_AnticoagulantGIBleed",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "AbdominalPain04_AnticoagulantGIBleed__uppercase",
+      "chief_complaint": "dark stools and feeling weak",
+      "demographics": {
+        "age": 71,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "gi_bleeding",
+      "answers": {
+        "associated_symptoms": "MY STOOLS HAVE LOOKED BLACK AND TARRY FOR TWO DAYS, AND I FEEL LIGHTHEADED WHEN I STAND UP; DENIES VOMITING BLOOD, DENIES FEVER",
+        "medication": "WARFARIN FOR A HEART VALVE, AND I ALSO TAKE ASPIRIN",
+        "past_medical_history": "MECHANICAL HEART VALVE, PEPTIC ULCER YEARS AGO"
+      },
+      "exam_results": {
+        "abdominal_exam": "MILD DIFFUSE TENDERNESS, NO REBOUND OR GUARDING",
+        "vital_signs": "BP 98/62, HR 114, RR 18, TEMP 36.9, SPO2 97%",
+        "fecal_occult_blood": "POSITIVE"
+      },
+      "test_results": {
+        "cbc": "LOW HEMOGLOBIN"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "polypharmacy_anticoagulant",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain04_AnticoagulantGIBleed",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "AbdominalPain04_AnticoagulantGIBleed__extra_spaces",
+      "chief_complaint": "dark stools and feeling weak",
+      "demographics": {
+        "age": 71,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "gi_bleeding",
+      "answers": {
+        "associated_symptoms": "  my  stools  have  looked  black  and  tarry  for  two  days,  and  I  feel  lightheaded  when  I  stand  up;  denies  vomiting  blood,  denies  fever  ",
+        "medication": "  warfarin  for  a  heart  valve,  and  I  also  take  aspirin  ",
+        "past_medical_history": "  mechanical  heart  valve,  peptic  ulcer  years  ago  "
+      },
+      "exam_results": {
+        "abdominal_exam": "  mild  diffuse  tenderness,  no  rebound  or  guarding  ",
+        "vital_signs": "  BP  98/62,  HR  114,  RR  18,  Temp  36.9,  SpO2  97%  ",
+        "fecal_occult_blood": "  positive  "
+      },
+      "test_results": {
+        "cbc": "  low  hemoglobin  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "polypharmacy_anticoagulant",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain04_AnticoagulantGIBleed",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "AbdominalPain04_AnticoagulantGIBleed__sentence_breaks",
+      "chief_complaint": "dark stools and feeling weak",
+      "demographics": {
+        "age": 71,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "gi_bleeding",
+      "answers": {
+        "associated_symptoms": "my stools have looked black and tarry for two days, and I feel lightheaded when I stand up. denies vomiting blood, denies fever",
+        "medication": "warfarin for a heart valve, and I also take aspirin",
+        "past_medical_history": "mechanical heart valve, peptic ulcer years ago"
+      },
+      "exam_results": {
+        "abdominal_exam": "mild diffuse tenderness, no rebound or guarding",
+        "vital_signs": "BP 98/62, HR 114, RR 18, Temp 36.9, SpO2 97%",
+        "fecal_occult_blood": "positive"
+      },
+      "test_results": {
+        "cbc": "low hemoglobin"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "polypharmacy_anticoagulant",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AlteredMentalStatus02_MultiSymptomDKA",
+    "variant": "original",
+    "case": {
+      "case_id": "AlteredMentalStatus02_MultiSymptomDKA__original",
+      "chief_complaint": "throwing up, stomach pain, and confused",
+      "demographics": {
+        "age": 16,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "diabetic_ketoacidosis",
+      "answers": {
+        "onset": "started yesterday, getting worse through the night",
+        "associated_symptoms": "throwing up several times, stomach hurts all over, and I've been really thirsty and peeing a lot; denies diarrhea, denies fever",
+        "past_medical_history": "type 1 diabetes, ran out of insulin four days ago"
+      },
+      "exam_results": {
+        "mental_status_exam": "drowsy but arousable, oriented to person only",
+        "vital_signs": "BP 102/64, HR 122, RR 30, Temp 37.0, SpO2 98%",
+        "abdominal_exam": "diffuse mild tenderness, no rebound or guarding"
+      },
+      "test_results": {
+        "glucose_point_of_care": "blood glucose 3 (critical high, unreadable on meter)",
+        "ketones": "large ketones present",
+        "abg": "metabolic acidosis, kussmaul breathing"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "multiple_simultaneous_symptoms",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AlteredMentalStatus02_MultiSymptomDKA",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "AlteredMentalStatus02_MultiSymptomDKA__uppercase",
+      "chief_complaint": "throwing up, stomach pain, and confused",
+      "demographics": {
+        "age": 16,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "diabetic_ketoacidosis",
+      "answers": {
+        "onset": "STARTED YESTERDAY, GETTING WORSE THROUGH THE NIGHT",
+        "associated_symptoms": "THROWING UP SEVERAL TIMES, STOMACH HURTS ALL OVER, AND I'VE BEEN REALLY THIRSTY AND PEEING A LOT; DENIES DIARRHEA, DENIES FEVER",
+        "past_medical_history": "TYPE 1 DIABETES, RAN OUT OF INSULIN FOUR DAYS AGO"
+      },
+      "exam_results": {
+        "mental_status_exam": "DROWSY BUT AROUSABLE, ORIENTED TO PERSON ONLY",
+        "vital_signs": "BP 102/64, HR 122, RR 30, TEMP 37.0, SPO2 98%",
+        "abdominal_exam": "DIFFUSE MILD TENDERNESS, NO REBOUND OR GUARDING"
+      },
+      "test_results": {
+        "glucose_point_of_care": "BLOOD GLUCOSE 3 (CRITICAL HIGH, UNREADABLE ON METER)",
+        "ketones": "LARGE KETONES PRESENT",
+        "abg": "METABOLIC ACIDOSIS, KUSSMAUL BREATHING"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "multiple_simultaneous_symptoms",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AlteredMentalStatus02_MultiSymptomDKA",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "AlteredMentalStatus02_MultiSymptomDKA__extra_spaces",
+      "chief_complaint": "throwing up, stomach pain, and confused",
+      "demographics": {
+        "age": 16,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "diabetic_ketoacidosis",
+      "answers": {
+        "onset": "  started  yesterday,  getting  worse  through  the  night  ",
+        "associated_symptoms": "  throwing  up  several  times,  stomach  hurts  all  over,  and  I've  been  really  thirsty  and  peeing  a  lot;  denies  diarrhea,  denies  fever  ",
+        "past_medical_history": "  type  1  diabetes,  ran  out  of  insulin  four  days  ago  "
+      },
+      "exam_results": {
+        "mental_status_exam": "  drowsy  but  arousable,  oriented  to  person  only  ",
+        "vital_signs": "  BP  102/64,  HR  122,  RR  30,  Temp  37.0,  SpO2  98%  ",
+        "abdominal_exam": "  diffuse  mild  tenderness,  no  rebound  or  guarding  "
+      },
+      "test_results": {
+        "glucose_point_of_care": "  blood  glucose  3  (critical  high,  unreadable  on  meter)  ",
+        "ketones": "  large  ketones  present  ",
+        "abg": "  metabolic  acidosis,  kussmaul  breathing  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "multiple_simultaneous_symptoms",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AlteredMentalStatus02_MultiSymptomDKA",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "AlteredMentalStatus02_MultiSymptomDKA__sentence_breaks",
+      "chief_complaint": "throwing up, stomach pain, and confused",
+      "demographics": {
+        "age": 16,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "diabetic_ketoacidosis",
+      "answers": {
+        "onset": "started yesterday, getting worse through the night",
+        "associated_symptoms": "throwing up several times, stomach hurts all over, and I've been really thirsty and peeing a lot. denies diarrhea, denies fever",
+        "past_medical_history": "type 1 diabetes, ran out of insulin four days ago"
+      },
+      "exam_results": {
+        "mental_status_exam": "drowsy but arousable, oriented to person only",
+        "vital_signs": "BP 102/64, HR 122, RR 30, Temp 37.0, SpO2 98%",
+        "abdominal_exam": "diffuse mild tenderness, no rebound or guarding"
+      },
+      "test_results": {
+        "glucose_point_of_care": "blood glucose 3 (critical high, unreadable on meter)",
+        "ketones": "large ketones present",
+        "abg": "metabolic acidosis, kussmaul breathing"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "multiple_simultaneous_symptoms",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "ChestPain07_ConflictingFindingsMusculoskeletal",
+    "variant": "original",
+    "case": {
+      "case_id": "ChestPain07_ConflictingFindingsMusculoskeletal__original",
+      "chief_complaint": "chest pain",
+      "demographics": {
+        "age": 52,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+      "answers": {
+        "onset": "started two days ago after I moved some heavy furniture",
+        "character": "sharp, localized pain, not a pressure or squeezing feeling",
+        "aggravating": "much worse when I press on it or twist my torso; denies radiation to my arm or jaw, denies shortness of breath, denies sweating",
+        "past_medical_history": "high cholesterol",
+        "family_history": "father had a heart attack in his 70s"
+      },
+      "exam_results": {
+        "abdominal_exam": "reproducible tenderness over the left costochondral junction, worse with palpation",
+        "vital_signs": "BP 128/82, HR 76, RR 16, Temp 36.8, SpO2 99%"
+      },
+      "test_results": {
+        "ecg": "normal sinus rhythm, no ST changes"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "conflicting_findings",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "ChestPain07_ConflictingFindingsMusculoskeletal",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "ChestPain07_ConflictingFindingsMusculoskeletal__uppercase",
+      "chief_complaint": "chest pain",
+      "demographics": {
+        "age": 52,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+      "answers": {
+        "onset": "STARTED TWO DAYS AGO AFTER I MOVED SOME HEAVY FURNITURE",
+        "character": "SHARP, LOCALIZED PAIN, NOT A PRESSURE OR SQUEEZING FEELING",
+        "aggravating": "MUCH WORSE WHEN I PRESS ON IT OR TWIST MY TORSO; DENIES RADIATION TO MY ARM OR JAW, DENIES SHORTNESS OF BREATH, DENIES SWEATING",
+        "past_medical_history": "HIGH CHOLESTEROL",
+        "family_history": "FATHER HAD A HEART ATTACK IN HIS 70S"
+      },
+      "exam_results": {
+        "abdominal_exam": "REPRODUCIBLE TENDERNESS OVER THE LEFT COSTOCHONDRAL JUNCTION, WORSE WITH PALPATION",
+        "vital_signs": "BP 128/82, HR 76, RR 16, TEMP 36.8, SPO2 99%"
+      },
+      "test_results": {
+        "ecg": "NORMAL SINUS RHYTHM, NO ST CHANGES"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "conflicting_findings",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "ChestPain07_ConflictingFindingsMusculoskeletal",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "ChestPain07_ConflictingFindingsMusculoskeletal__extra_spaces",
+      "chief_complaint": "chest pain",
+      "demographics": {
+        "age": 52,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+      "answers": {
+        "onset": "  started  two  days  ago  after  I  moved  some  heavy  furniture  ",
+        "character": "  sharp,  localized  pain,  not  a  pressure  or  squeezing  feeling  ",
+        "aggravating": "  much  worse  when  I  press  on  it  or  twist  my  torso;  denies  radiation  to  my  arm  or  jaw,  denies  shortness  of  breath,  denies  sweating  ",
+        "past_medical_history": "  high  cholesterol  ",
+        "family_history": "  father  had  a  heart  attack  in  his  70s  "
+      },
+      "exam_results": {
+        "abdominal_exam": "  reproducible  tenderness  over  the  left  costochondral  junction,  worse  with  palpation  ",
+        "vital_signs": "  BP  128/82,  HR  76,  RR  16,  Temp  36.8,  SpO2  99%  "
+      },
+      "test_results": {
+        "ecg": "  normal  sinus  rhythm,  no  ST  changes  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "conflicting_findings",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "ChestPain07_ConflictingFindingsMusculoskeletal",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "ChestPain07_ConflictingFindingsMusculoskeletal__sentence_breaks",
+      "chief_complaint": "chest pain",
+      "demographics": {
+        "age": 52,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+      "answers": {
+        "onset": "started two days ago after I moved some heavy furniture",
+        "character": "sharp, localized pain, not a pressure or squeezing feeling",
+        "aggravating": "much worse when I press on it or twist my torso. denies radiation to my arm or jaw, denies shortness of breath, denies sweating",
+        "past_medical_history": "high cholesterol",
+        "family_history": "father had a heart attack in his 70s"
+      },
+      "exam_results": {
+        "abdominal_exam": "reproducible tenderness over the left costochondral junction, worse with palpation",
+        "vital_signs": "BP 128/82, HR 76, RR 16, Temp 36.8, SpO2 99%"
+      },
+      "test_results": {
+        "ecg": "normal sinus rhythm, no ST changes"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "conflicting_findings",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "BackPain02_Nephrolithiasis",
+    "variant": "original",
+    "case": {
+      "case_id": "BackPain02_Nephrolithiasis__original",
+      "chief_complaint": "something feels really wrong in my side",
+      "demographics": {
+        "age": 39,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "nephrolithiasis",
+      "answers": {
+        "location": "my right side, kind of low down, comes in waves",
+        "character": "sharp, colicky, comes and goes in waves; can't get comfortable in any position",
+        "family_history": "my father had kidney stones",
+        "associated_symptoms": "some blood-tinged urine, nauseous; denies fever, denies burning with urination"
+      },
+      "exam_results": {
+        "costovertebral_tenderness": "positive right-sided costovertebral angle tenderness",
+        "vital_signs": "BP 138/86, HR 98, RR 18, Temp 36.9, SpO2 98%"
+      },
+      "test_results": {
+        "urinalysis": "microscopic hematuria",
+        "ct_abdomen": "right ureteral stone with mild hydronephrosis"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "vague_chief_complaint",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "BackPain02_Nephrolithiasis",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "BackPain02_Nephrolithiasis__uppercase",
+      "chief_complaint": "something feels really wrong in my side",
+      "demographics": {
+        "age": 39,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "nephrolithiasis",
+      "answers": {
+        "location": "MY RIGHT SIDE, KIND OF LOW DOWN, COMES IN WAVES",
+        "character": "SHARP, COLICKY, COMES AND GOES IN WAVES; CAN'T GET COMFORTABLE IN ANY POSITION",
+        "family_history": "MY FATHER HAD KIDNEY STONES",
+        "associated_symptoms": "SOME BLOOD-TINGED URINE, NAUSEOUS; DENIES FEVER, DENIES BURNING WITH URINATION"
+      },
+      "exam_results": {
+        "costovertebral_tenderness": "POSITIVE RIGHT-SIDED COSTOVERTEBRAL ANGLE TENDERNESS",
+        "vital_signs": "BP 138/86, HR 98, RR 18, TEMP 36.9, SPO2 98%"
+      },
+      "test_results": {
+        "urinalysis": "MICROSCOPIC HEMATURIA",
+        "ct_abdomen": "RIGHT URETERAL STONE WITH MILD HYDRONEPHROSIS"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "vague_chief_complaint",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "BackPain02_Nephrolithiasis",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "BackPain02_Nephrolithiasis__extra_spaces",
+      "chief_complaint": "something feels really wrong in my side",
+      "demographics": {
+        "age": 39,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "nephrolithiasis",
+      "answers": {
+        "location": "  my  right  side,  kind  of  low  down,  comes  in  waves  ",
+        "character": "  sharp,  colicky,  comes  and  goes  in  waves;  can't  get  comfortable  in  any  position  ",
+        "family_history": "  my  father  had  kidney  stones  ",
+        "associated_symptoms": "  some  blood-tinged  urine,  nauseous;  denies  fever,  denies  burning  with  urination  "
+      },
+      "exam_results": {
+        "costovertebral_tenderness": "  positive  right-sided  costovertebral  angle  tenderness  ",
+        "vital_signs": "  BP  138/86,  HR  98,  RR  18,  Temp  36.9,  SpO2  98%  "
+      },
+      "test_results": {
+        "urinalysis": "  microscopic  hematuria  ",
+        "ct_abdomen": "  right  ureteral  stone  with  mild  hydronephrosis  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "vague_chief_complaint",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "BackPain02_Nephrolithiasis",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "BackPain02_Nephrolithiasis__sentence_breaks",
+      "chief_complaint": "something feels really wrong in my side",
+      "demographics": {
+        "age": 39,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "nephrolithiasis",
+      "answers": {
+        "location": "my right side, kind of low down, comes in waves",
+        "character": "sharp, colicky, comes and goes in waves. can't get comfortable in any position",
+        "family_history": "my father had kidney stones",
+        "associated_symptoms": "some blood-tinged urine, nauseous. denies fever, denies burning with urination"
+      },
+      "exam_results": {
+        "costovertebral_tenderness": "positive right-sided costovertebral angle tenderness",
+        "vital_signs": "BP 138/86, HR 98, RR 18, Temp 36.9, SpO2 98%"
+      },
+      "test_results": {
+        "urinalysis": "microscopic hematuria",
+        "ct_abdomen": "right ureteral stone with mild hydronephrosis"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "vague_chief_complaint",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain05_DangerousMimicPancreatitis",
+    "variant": "original",
+    "case": {
+      "case_id": "AbdominalPain05_DangerousMimicPancreatitis__original",
+      "chief_complaint": "nausea and stomach pain",
+      "demographics": {
+        "age": 46,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_pancreatitis",
+      "answers": {
+        "location": "upper abdomen, radiates straight through to my back",
+        "character": "severe, constant, boring pain, not crampy",
+        "aggravating": "worse after eating, especially anything fatty",
+        "social_history": "I drink heavily, especially on weekends"
+      },
+      "exam_results": {
+        "abdominal_exam": "epigastric tenderness, voluntary guarding, no rebound",
+        "vital_signs": "BP 108/68, HR 108, RR 20, Temp 37.4, SpO2 97%"
+      },
+      "test_results": {
+        "lipase": "markedly elevated lipase",
+        "abdominal_ultrasound": "peripancreatic fluid, no gallstones seen"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "dangerous_mimic",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain05_DangerousMimicPancreatitis",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "AbdominalPain05_DangerousMimicPancreatitis__uppercase",
+      "chief_complaint": "nausea and stomach pain",
+      "demographics": {
+        "age": 46,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_pancreatitis",
+      "answers": {
+        "location": "UPPER ABDOMEN, RADIATES STRAIGHT THROUGH TO MY BACK",
+        "character": "SEVERE, CONSTANT, BORING PAIN, NOT CRAMPY",
+        "aggravating": "WORSE AFTER EATING, ESPECIALLY ANYTHING FATTY",
+        "social_history": "I DRINK HEAVILY, ESPECIALLY ON WEEKENDS"
+      },
+      "exam_results": {
+        "abdominal_exam": "EPIGASTRIC TENDERNESS, VOLUNTARY GUARDING, NO REBOUND",
+        "vital_signs": "BP 108/68, HR 108, RR 20, TEMP 37.4, SPO2 97%"
+      },
+      "test_results": {
+        "lipase": "MARKEDLY ELEVATED LIPASE",
+        "abdominal_ultrasound": "PERIPANCREATIC FLUID, NO GALLSTONES SEEN"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "dangerous_mimic",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain05_DangerousMimicPancreatitis",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "AbdominalPain05_DangerousMimicPancreatitis__extra_spaces",
+      "chief_complaint": "nausea and stomach pain",
+      "demographics": {
+        "age": 46,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_pancreatitis",
+      "answers": {
+        "location": "  upper  abdomen,  radiates  straight  through  to  my  back  ",
+        "character": "  severe,  constant,  boring  pain,  not  crampy  ",
+        "aggravating": "  worse  after  eating,  especially  anything  fatty  ",
+        "social_history": "  I  drink  heavily,  especially  on  weekends  "
+      },
+      "exam_results": {
+        "abdominal_exam": "  epigastric  tenderness,  voluntary  guarding,  no  rebound  ",
+        "vital_signs": "  BP  108/68,  HR  108,  RR  20,  Temp  37.4,  SpO2  97%  "
+      },
+      "test_results": {
+        "lipase": "  markedly  elevated  lipase  ",
+        "abdominal_ultrasound": "  peripancreatic  fluid,  no  gallstones  seen  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "dangerous_mimic",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain05_DangerousMimicPancreatitis",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "AbdominalPain05_DangerousMimicPancreatitis__sentence_breaks",
+      "chief_complaint": "nausea and stomach pain",
+      "demographics": {
+        "age": 46,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_pancreatitis",
+      "answers": {
+        "location": "upper abdomen, radiates straight through to my back",
+        "character": "severe, constant, boring pain, not crampy",
+        "aggravating": "worse after eating, especially anything fatty",
+        "social_history": "I drink heavily, especially on weekends"
+      },
+      "exam_results": {
+        "abdominal_exam": "epigastric tenderness, voluntary guarding, no rebound",
+        "vital_signs": "BP 108/68, HR 108, RR 20, Temp 37.4, SpO2 97%"
+      },
+      "test_results": {
+        "lipase": "markedly elevated lipase",
+        "abdominal_ultrasound": "peripancreatic fluid, no gallstones seen"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "dangerous_mimic",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Syncope01_BenignMimicVasovagal",
+    "variant": "original",
+    "case": {
+      "case_id": "Syncope01_BenignMimicVasovagal__original",
+      "chief_complaint": "I passed out",
+      "demographics": {
+        "age": 19,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "vasovagal_syncope",
+      "answers": {
+        "onset": "happened during a blood draw this morning",
+        "aggravating": "felt hot, sweaty, and my vision went dark right before I went down; woke up within a few seconds feeling fine",
+        "associated_symptoms": "felt nauseous and lightheaded right before; denies chest pain, denies palpitations before the episode, denies tongue biting",
+        "past_medical_history": "none, has fainted once before during a similar situation"
+      },
+      "exam_results": {
+        "cardiac_auscultation": "normal heart sounds, no murmur",
+        "vital_signs": "BP 108/68, HR 66, RR 14, Temp 36.7, SpO2 99%"
+      },
+      "test_results": {
+        "ecg": "normal sinus rhythm"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "benign_mimic",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Syncope01_BenignMimicVasovagal",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Syncope01_BenignMimicVasovagal__uppercase",
+      "chief_complaint": "I passed out",
+      "demographics": {
+        "age": 19,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "vasovagal_syncope",
+      "answers": {
+        "onset": "HAPPENED DURING A BLOOD DRAW THIS MORNING",
+        "aggravating": "FELT HOT, SWEATY, AND MY VISION WENT DARK RIGHT BEFORE I WENT DOWN; WOKE UP WITHIN A FEW SECONDS FEELING FINE",
+        "associated_symptoms": "FELT NAUSEOUS AND LIGHTHEADED RIGHT BEFORE; DENIES CHEST PAIN, DENIES PALPITATIONS BEFORE THE EPISODE, DENIES TONGUE BITING",
+        "past_medical_history": "NONE, HAS FAINTED ONCE BEFORE DURING A SIMILAR SITUATION"
+      },
+      "exam_results": {
+        "cardiac_auscultation": "NORMAL HEART SOUNDS, NO MURMUR",
+        "vital_signs": "BP 108/68, HR 66, RR 14, TEMP 36.7, SPO2 99%"
+      },
+      "test_results": {
+        "ecg": "NORMAL SINUS RHYTHM"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "benign_mimic",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Syncope01_BenignMimicVasovagal",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Syncope01_BenignMimicVasovagal__extra_spaces",
+      "chief_complaint": "I passed out",
+      "demographics": {
+        "age": 19,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "vasovagal_syncope",
+      "answers": {
+        "onset": "  happened  during  a  blood  draw  this  morning  ",
+        "aggravating": "  felt  hot,  sweaty,  and  my  vision  went  dark  right  before  I  went  down;  woke  up  within  a  few  seconds  feeling  fine  ",
+        "associated_symptoms": "  felt  nauseous  and  lightheaded  right  before;  denies  chest  pain,  denies  palpitations  before  the  episode,  denies  tongue  biting  ",
+        "past_medical_history": "  none,  has  fainted  once  before  during  a  similar  situation  "
+      },
+      "exam_results": {
+        "cardiac_auscultation": "  normal  heart  sounds,  no  murmur  ",
+        "vital_signs": "  BP  108/68,  HR  66,  RR  14,  Temp  36.7,  SpO2  99%  "
+      },
+      "test_results": {
+        "ecg": "  normal  sinus  rhythm  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "benign_mimic",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Syncope01_BenignMimicVasovagal",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Syncope01_BenignMimicVasovagal__sentence_breaks",
+      "chief_complaint": "I passed out",
+      "demographics": {
+        "age": 19,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "vasovagal_syncope",
+      "answers": {
+        "onset": "happened during a blood draw this morning",
+        "aggravating": "felt hot, sweaty, and my vision went dark right before I went down. woke up within a few seconds feeling fine",
+        "associated_symptoms": "felt nauseous and lightheaded right before. denies chest pain, denies palpitations before the episode, denies tongue biting",
+        "past_medical_history": "none, has fainted once before during a similar situation"
+      },
+      "exam_results": {
+        "cardiac_auscultation": "normal heart sounds, no murmur",
+        "vital_signs": "BP 108/68, HR 66, RR 14, Temp 36.7, SpO2 99%"
+      },
+      "test_results": {
+        "ecg": "normal sinus rhythm"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "benign_mimic",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Palpitations01_ElderlyAtypicalArrhythmia",
+    "variant": "original",
+    "case": {
+      "case_id": "Palpitations01_ElderlyAtypicalArrhythmia__original",
+      "chief_complaint": "just feel dizzy and off lately",
+      "demographics": {
+        "age": 77,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "cardiac_arrhythmia",
+      "answers": {
+        "onset": "on and off for the past three days",
+        "associated_symptoms": "my heart feels like it skips sometimes, comes and goes; denies chest pain, denies fainting",
+        "past_medical_history": "hypertension",
+        "duration": "each episode lasts a few minutes"
+      },
+      "exam_results": {
+        "cardiac_auscultation": "irregularly irregular rhythm",
+        "vital_signs": "BP 128/78, HR 118 irregular, RR 16, Temp 36.8, SpO2 98%"
+      },
+      "test_results": {
+        "ecg": "atrial fibrillation on ecg",
+        "bmp": "normal electrolytes"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "atypical_presentation",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Palpitations01_ElderlyAtypicalArrhythmia",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Palpitations01_ElderlyAtypicalArrhythmia__uppercase",
+      "chief_complaint": "just feel dizzy and off lately",
+      "demographics": {
+        "age": 77,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "cardiac_arrhythmia",
+      "answers": {
+        "onset": "ON AND OFF FOR THE PAST THREE DAYS",
+        "associated_symptoms": "MY HEART FEELS LIKE IT SKIPS SOMETIMES, COMES AND GOES; DENIES CHEST PAIN, DENIES FAINTING",
+        "past_medical_history": "HYPERTENSION",
+        "duration": "EACH EPISODE LASTS A FEW MINUTES"
+      },
+      "exam_results": {
+        "cardiac_auscultation": "IRREGULARLY IRREGULAR RHYTHM",
+        "vital_signs": "BP 128/78, HR 118 IRREGULAR, RR 16, TEMP 36.8, SPO2 98%"
+      },
+      "test_results": {
+        "ecg": "ATRIAL FIBRILLATION ON ECG",
+        "bmp": "NORMAL ELECTROLYTES"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "atypical_presentation",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Palpitations01_ElderlyAtypicalArrhythmia",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Palpitations01_ElderlyAtypicalArrhythmia__extra_spaces",
+      "chief_complaint": "just feel dizzy and off lately",
+      "demographics": {
+        "age": 77,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "cardiac_arrhythmia",
+      "answers": {
+        "onset": "  on  and  off  for  the  past  three  days  ",
+        "associated_symptoms": "  my  heart  feels  like  it  skips  sometimes,  comes  and  goes;  denies  chest  pain,  denies  fainting  ",
+        "past_medical_history": "  hypertension  ",
+        "duration": "  each  episode  lasts  a  few  minutes  "
+      },
+      "exam_results": {
+        "cardiac_auscultation": "  irregularly  irregular  rhythm  ",
+        "vital_signs": "  BP  128/78,  HR  118  irregular,  RR  16,  Temp  36.8,  SpO2  98%  "
+      },
+      "test_results": {
+        "ecg": "  atrial  fibrillation  on  ecg  ",
+        "bmp": "  normal  electrolytes  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "atypical_presentation",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Palpitations01_ElderlyAtypicalArrhythmia",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Palpitations01_ElderlyAtypicalArrhythmia__sentence_breaks",
+      "chief_complaint": "just feel dizzy and off lately",
+      "demographics": {
+        "age": 77,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "cardiac_arrhythmia",
+      "answers": {
+        "onset": "on and off for the past three days",
+        "associated_symptoms": "my heart feels like it skips sometimes, comes and goes. denies chest pain, denies fainting",
+        "past_medical_history": "hypertension",
+        "duration": "each episode lasts a few minutes"
+      },
+      "exam_results": {
+        "cardiac_auscultation": "irregularly irregular rhythm",
+        "vital_signs": "BP 128/78, HR 118 irregular, RR 16, Temp 36.8, SpO2 98%"
+      },
+      "test_results": {
+        "ecg": "atrial fibrillation on ecg",
+        "bmp": "normal electrolytes"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "atypical_presentation",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Cough01_CommonBronchitis",
+    "variant": "original",
+    "case": {
+      "case_id": "Cough01_CommonBronchitis__original",
+      "chief_complaint": "cough that won't go away",
+      "demographics": {
+        "age": 34,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "acute_bronchitis",
+      "answers": {
+        "duration": "about a week now, started after a cold",
+        "associated_symptoms": "coughing up some clear mucus, chest feels sore from coughing so much; denies shortness of breath at rest, denies high fever, denies hemoptysis",
+        "social_history": "doesn't smoke"
+      },
+      "exam_results": {
+        "lung_auscultation": "clear to mildly coarse breath sounds, no focal consolidation",
+        "vital_signs": "BP 116/74, HR 82, RR 16, Temp 37.3, SpO2 98%"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Cough01_CommonBronchitis",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Cough01_CommonBronchitis__uppercase",
+      "chief_complaint": "cough that won't go away",
+      "demographics": {
+        "age": 34,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "acute_bronchitis",
+      "answers": {
+        "duration": "ABOUT A WEEK NOW, STARTED AFTER A COLD",
+        "associated_symptoms": "COUGHING UP SOME CLEAR MUCUS, CHEST FEELS SORE FROM COUGHING SO MUCH; DENIES SHORTNESS OF BREATH AT REST, DENIES HIGH FEVER, DENIES HEMOPTYSIS",
+        "social_history": "DOESN'T SMOKE"
+      },
+      "exam_results": {
+        "lung_auscultation": "CLEAR TO MILDLY COARSE BREATH SOUNDS, NO FOCAL CONSOLIDATION",
+        "vital_signs": "BP 116/74, HR 82, RR 16, TEMP 37.3, SPO2 98%"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Cough01_CommonBronchitis",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Cough01_CommonBronchitis__extra_spaces",
+      "chief_complaint": "cough that won't go away",
+      "demographics": {
+        "age": 34,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "acute_bronchitis",
+      "answers": {
+        "duration": "  about  a  week  now,  started  after  a  cold  ",
+        "associated_symptoms": "  coughing  up  some  clear  mucus,  chest  feels  sore  from  coughing  so  much;  denies  shortness  of  breath  at  rest,  denies  high  fever,  denies  hemoptysis  ",
+        "social_history": "  doesn't  smoke  "
+      },
+      "exam_results": {
+        "lung_auscultation": "  clear  to  mildly  coarse  breath  sounds,  no  focal  consolidation  ",
+        "vital_signs": "  BP  116/74,  HR  82,  RR  16,  Temp  37.3,  SpO2  98%  "
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Cough01_CommonBronchitis",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Cough01_CommonBronchitis__sentence_breaks",
+      "chief_complaint": "cough that won't go away",
+      "demographics": {
+        "age": 34,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "acute_bronchitis",
+      "answers": {
+        "duration": "about a week now, started after a cold",
+        "associated_symptoms": "coughing up some clear mucus, chest feels sore from coughing so much. denies shortness of breath at rest, denies high fever, denies hemoptysis",
+        "social_history": "doesn't smoke"
+      },
+      "exam_results": {
+        "lung_auscultation": "clear to mildly coarse breath sounds, no focal consolidation",
+        "vital_signs": "BP 116/74, HR 82, RR 16, Temp 37.3, SpO2 98%"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Headache04_ReassuringMigraine",
+    "variant": "original",
+    "case": {
+      "case_id": "Headache04_ReassuringMigraine__original",
+      "chief_complaint": "really bad headache",
+      "demographics": {
+        "age": 29,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "migraine",
+      "answers": {
+        "character": "throbbing, one-sided, similar to headaches I've had before",
+        "onset": "built up gradually over an hour, not sudden or thunderclap",
+        "associated_symptoms": "sensitive to light and sound, saw some shimmering lights before it started, nauseous; denies neck stiffness, denies fever, denies confusion",
+        "family_history": "my mother gets migraines too",
+        "past_medical_history": "diagnosed with migraines a few years ago, this feels the same"
+      },
+      "exam_results": {
+        "neuro_exam": "no focal neurological deficit",
+        "vital_signs": "BP 118/76, HR 74, RR 14, Temp 36.8, SpO2 99%"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "conflicting_findings",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Headache04_ReassuringMigraine",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Headache04_ReassuringMigraine__uppercase",
+      "chief_complaint": "really bad headache",
+      "demographics": {
+        "age": 29,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "migraine",
+      "answers": {
+        "character": "THROBBING, ONE-SIDED, SIMILAR TO HEADACHES I'VE HAD BEFORE",
+        "onset": "BUILT UP GRADUALLY OVER AN HOUR, NOT SUDDEN OR THUNDERCLAP",
+        "associated_symptoms": "SENSITIVE TO LIGHT AND SOUND, SAW SOME SHIMMERING LIGHTS BEFORE IT STARTED, NAUSEOUS; DENIES NECK STIFFNESS, DENIES FEVER, DENIES CONFUSION",
+        "family_history": "MY MOTHER GETS MIGRAINES TOO",
+        "past_medical_history": "DIAGNOSED WITH MIGRAINES A FEW YEARS AGO, THIS FEELS THE SAME"
+      },
+      "exam_results": {
+        "neuro_exam": "NO FOCAL NEUROLOGICAL DEFICIT",
+        "vital_signs": "BP 118/76, HR 74, RR 14, TEMP 36.8, SPO2 99%"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "conflicting_findings",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Headache04_ReassuringMigraine",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Headache04_ReassuringMigraine__extra_spaces",
+      "chief_complaint": "really bad headache",
+      "demographics": {
+        "age": 29,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "migraine",
+      "answers": {
+        "character": "  throbbing,  one-sided,  similar  to  headaches  I've  had  before  ",
+        "onset": "  built  up  gradually  over  an  hour,  not  sudden  or  thunderclap  ",
+        "associated_symptoms": "  sensitive  to  light  and  sound,  saw  some  shimmering  lights  before  it  started,  nauseous;  denies  neck  stiffness,  denies  fever,  denies  confusion  ",
+        "family_history": "  my  mother  gets  migraines  too  ",
+        "past_medical_history": "  diagnosed  with  migraines  a  few  years  ago,  this  feels  the  same  "
+      },
+      "exam_results": {
+        "neuro_exam": "  no  focal  neurological  deficit  ",
+        "vital_signs": "  BP  118/76,  HR  74,  RR  14,  Temp  36.8,  SpO2  99%  "
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "conflicting_findings",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Headache04_ReassuringMigraine",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Headache04_ReassuringMigraine__sentence_breaks",
+      "chief_complaint": "really bad headache",
+      "demographics": {
+        "age": 29,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "migraine",
+      "answers": {
+        "character": "throbbing, one-sided, similar to headaches I've had before",
+        "onset": "built up gradually over an hour, not sudden or thunderclap",
+        "associated_symptoms": "sensitive to light and sound, saw some shimmering lights before it started, nauseous. denies neck stiffness, denies fever, denies confusion",
+        "family_history": "my mother gets migraines too",
+        "past_medical_history": "diagnosed with migraines a few years ago, this feels the same"
+      },
+      "exam_results": {
+        "neuro_exam": "no focal neurological deficit",
+        "vital_signs": "BP 118/76, HR 74, RR 14, Temp 36.8, SpO2 99%"
+      },
+      "test_results": {},
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "conflicting_findings",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain06_ElderlyAcuteAbdomen",
+    "variant": "original",
+    "case": {
+      "case_id": "AbdominalPain06_ElderlyAcuteAbdomen__original",
+      "chief_complaint": "sudden severe stomach pain",
+      "demographics": {
+        "age": 79,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_abdomen",
+      "answers": {
+        "onset": "sudden, about two hours ago, came on all at once",
+        "severity": "the worst pain I've ever had, 10 out of 10",
+        "location": "all over my belly now, started near my stomach",
+        "character": "constant, sharp, unbearable",
+        "past_medical_history": "had my gallbladder removed years ago"
+      },
+      "exam_results": {
+        "abdominal_exam": "rigid, board-like abdomen with diffuse rebound and guarding",
+        "vital_signs": "BP 96/60, HR 122, RR 24, Temp 38.4, SpO2 96%"
+      },
+      "test_results": {
+        "cbc": "elevated white blood cell count",
+        "ct_abdomen": "free air under the diaphragm, perforation"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "rare_dangerous",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain06_ElderlyAcuteAbdomen",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "AbdominalPain06_ElderlyAcuteAbdomen__uppercase",
+      "chief_complaint": "sudden severe stomach pain",
+      "demographics": {
+        "age": 79,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_abdomen",
+      "answers": {
+        "onset": "SUDDEN, ABOUT TWO HOURS AGO, CAME ON ALL AT ONCE",
+        "severity": "THE WORST PAIN I'VE EVER HAD, 10 OUT OF 10",
+        "location": "ALL OVER MY BELLY NOW, STARTED NEAR MY STOMACH",
+        "character": "CONSTANT, SHARP, UNBEARABLE",
+        "past_medical_history": "HAD MY GALLBLADDER REMOVED YEARS AGO"
+      },
+      "exam_results": {
+        "abdominal_exam": "RIGID, BOARD-LIKE ABDOMEN WITH DIFFUSE REBOUND AND GUARDING",
+        "vital_signs": "BP 96/60, HR 122, RR 24, TEMP 38.4, SPO2 96%"
+      },
+      "test_results": {
+        "cbc": "ELEVATED WHITE BLOOD CELL COUNT",
+        "ct_abdomen": "FREE AIR UNDER THE DIAPHRAGM, PERFORATION"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "rare_dangerous",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain06_ElderlyAcuteAbdomen",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "AbdominalPain06_ElderlyAcuteAbdomen__extra_spaces",
+      "chief_complaint": "sudden severe stomach pain",
+      "demographics": {
+        "age": 79,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_abdomen",
+      "answers": {
+        "onset": "  sudden,  about  two  hours  ago,  came  on  all  at  once  ",
+        "severity": "  the  worst  pain  I've  ever  had,  10  out  of  10  ",
+        "location": "  all  over  my  belly  now,  started  near  my  stomach  ",
+        "character": "  constant,  sharp,  unbearable  ",
+        "past_medical_history": "  had  my  gallbladder  removed  years  ago  "
+      },
+      "exam_results": {
+        "abdominal_exam": "  rigid,  board-like  abdomen  with  diffuse  rebound  and  guarding  ",
+        "vital_signs": "  BP  96/60,  HR  122,  RR  24,  Temp  38.4,  SpO2  96%  "
+      },
+      "test_results": {
+        "cbc": "  elevated  white  blood  cell  count  ",
+        "ct_abdomen": "  free  air  under  the  diaphragm,  perforation  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "rare_dangerous",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain06_ElderlyAcuteAbdomen",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "AbdominalPain06_ElderlyAcuteAbdomen__sentence_breaks",
+      "chief_complaint": "sudden severe stomach pain",
+      "demographics": {
+        "age": 79,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "acute_abdomen",
+      "answers": {
+        "onset": "sudden, about two hours ago, came on all at once",
+        "severity": "the worst pain I've ever had, 10 out of 10",
+        "location": "all over my belly now, started near my stomach",
+        "character": "constant, sharp, unbearable",
+        "past_medical_history": "had my gallbladder removed years ago"
+      },
+      "exam_results": {
+        "abdominal_exam": "rigid, board-like abdomen with diffuse rebound and guarding",
+        "vital_signs": "BP 96/60, HR 122, RR 24, Temp 38.4, SpO2 96%"
+      },
+      "test_results": {
+        "cbc": "elevated white blood cell count",
+        "ct_abdomen": "free air under the diaphragm, perforation"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "rare_dangerous",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dyspnea06_YoungAdultAsthmaExacerbation",
+    "variant": "original",
+    "case": {
+      "case_id": "Dyspnea06_YoungAdultAsthmaExacerbation__original",
+      "chief_complaint": "wheezing and can't catch my breath",
+      "demographics": {
+        "age": 21,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "asthma_copd_exacerbation",
+      "answers": {
+        "onset": "started about an hour ago after I went for a run in the cold",
+        "aggravating": "cold air and exercise always set it off; my inhaler usually helps but it's not working as well this time",
+        "past_medical_history": "diagnosed with asthma as a kid, use an albuterol inhaler",
+        "associated_symptoms": "wheezing and chest tightness; denies fever, denies productive cough"
+      },
+      "exam_results": {
+        "lung_auscultation": "diffuse expiratory wheeze, prolonged expiration",
+        "vital_signs": "BP 122/78, HR 104, RR 26, Temp 36.9, SpO2 94%"
+      },
+      "test_results": {
+        "cxr": "hyperinflated lungs, no focal consolidation"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dyspnea06_YoungAdultAsthmaExacerbation",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Dyspnea06_YoungAdultAsthmaExacerbation__uppercase",
+      "chief_complaint": "wheezing and can't catch my breath",
+      "demographics": {
+        "age": 21,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "asthma_copd_exacerbation",
+      "answers": {
+        "onset": "STARTED ABOUT AN HOUR AGO AFTER I WENT FOR A RUN IN THE COLD",
+        "aggravating": "COLD AIR AND EXERCISE ALWAYS SET IT OFF; MY INHALER USUALLY HELPS BUT IT'S NOT WORKING AS WELL THIS TIME",
+        "past_medical_history": "DIAGNOSED WITH ASTHMA AS A KID, USE AN ALBUTEROL INHALER",
+        "associated_symptoms": "WHEEZING AND CHEST TIGHTNESS; DENIES FEVER, DENIES PRODUCTIVE COUGH"
+      },
+      "exam_results": {
+        "lung_auscultation": "DIFFUSE EXPIRATORY WHEEZE, PROLONGED EXPIRATION",
+        "vital_signs": "BP 122/78, HR 104, RR 26, TEMP 36.9, SPO2 94%"
+      },
+      "test_results": {
+        "cxr": "HYPERINFLATED LUNGS, NO FOCAL CONSOLIDATION"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dyspnea06_YoungAdultAsthmaExacerbation",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Dyspnea06_YoungAdultAsthmaExacerbation__extra_spaces",
+      "chief_complaint": "wheezing and can't catch my breath",
+      "demographics": {
+        "age": 21,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "asthma_copd_exacerbation",
+      "answers": {
+        "onset": "  started  about  an  hour  ago  after  I  went  for  a  run  in  the  cold  ",
+        "aggravating": "  cold  air  and  exercise  always  set  it  off;  my  inhaler  usually  helps  but  it's  not  working  as  well  this  time  ",
+        "past_medical_history": "  diagnosed  with  asthma  as  a  kid,  use  an  albuterol  inhaler  ",
+        "associated_symptoms": "  wheezing  and  chest  tightness;  denies  fever,  denies  productive  cough  "
+      },
+      "exam_results": {
+        "lung_auscultation": "  diffuse  expiratory  wheeze,  prolonged  expiration  ",
+        "vital_signs": "  BP  122/78,  HR  104,  RR  26,  Temp  36.9,  SpO2  94%  "
+      },
+      "test_results": {
+        "cxr": "  hyperinflated  lungs,  no  focal  consolidation  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Dyspnea06_YoungAdultAsthmaExacerbation",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Dyspnea06_YoungAdultAsthmaExacerbation__sentence_breaks",
+      "chief_complaint": "wheezing and can't catch my breath",
+      "demographics": {
+        "age": 21,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "asthma_copd_exacerbation",
+      "answers": {
+        "onset": "started about an hour ago after I went for a run in the cold",
+        "aggravating": "cold air and exercise always set it off. my inhaler usually helps but it's not working as well this time",
+        "past_medical_history": "diagnosed with asthma as a kid, use an albuterol inhaler",
+        "associated_symptoms": "wheezing and chest tightness. denies fever, denies productive cough"
+      },
+      "exam_results": {
+        "lung_auscultation": "diffuse expiratory wheeze, prolonged expiration",
+        "vital_signs": "BP 122/78, HR 104, RR 26, Temp 36.9, SpO2 94%"
+      },
+      "test_results": {
+        "cxr": "hyperinflated lungs, no focal consolidation"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "common_disease",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain07_TravelersGastroenteritis",
+    "variant": "original",
+    "case": {
+      "case_id": "AbdominalPain07_TravelersGastroenteritis__original",
+      "chief_complaint": "diarrhea and stomach cramps",
+      "demographics": {
+        "age": 33,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "gastroenteritis",
+      "answers": {
+        "onset": "started yesterday, several episodes of watery diarrhea",
+        "associated_symptoms": "crampy diffuse belly pain that comes and goes, some vomiting; denies blood in stool, denies severe constant pain",
+        "social_history": "just got back from a trip abroad, drank tap water"
+      },
+      "exam_results": {
+        "abdominal_exam": "diffusely mildly tender, soft, no rebound, no guarding, no rigidity",
+        "vital_signs": "BP 114/72, HR 92, RR 16, Temp 37.8, SpO2 99%"
+      },
+      "test_results": {
+        "cbc": "mildly elevated white blood cell count"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "negative_finding_centric",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain07_TravelersGastroenteritis",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "AbdominalPain07_TravelersGastroenteritis__uppercase",
+      "chief_complaint": "diarrhea and stomach cramps",
+      "demographics": {
+        "age": 33,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "gastroenteritis",
+      "answers": {
+        "onset": "STARTED YESTERDAY, SEVERAL EPISODES OF WATERY DIARRHEA",
+        "associated_symptoms": "CRAMPY DIFFUSE BELLY PAIN THAT COMES AND GOES, SOME VOMITING; DENIES BLOOD IN STOOL, DENIES SEVERE CONSTANT PAIN",
+        "social_history": "JUST GOT BACK FROM A TRIP ABROAD, DRANK TAP WATER"
+      },
+      "exam_results": {
+        "abdominal_exam": "DIFFUSELY MILDLY TENDER, SOFT, NO REBOUND, NO GUARDING, NO RIGIDITY",
+        "vital_signs": "BP 114/72, HR 92, RR 16, TEMP 37.8, SPO2 99%"
+      },
+      "test_results": {
+        "cbc": "MILDLY ELEVATED WHITE BLOOD CELL COUNT"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "negative_finding_centric",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain07_TravelersGastroenteritis",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "AbdominalPain07_TravelersGastroenteritis__extra_spaces",
+      "chief_complaint": "diarrhea and stomach cramps",
+      "demographics": {
+        "age": 33,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "gastroenteritis",
+      "answers": {
+        "onset": "  started  yesterday,  several  episodes  of  watery  diarrhea  ",
+        "associated_symptoms": "  crampy  diffuse  belly  pain  that  comes  and  goes,  some  vomiting;  denies  blood  in  stool,  denies  severe  constant  pain  ",
+        "social_history": "  just  got  back  from  a  trip  abroad,  drank  tap  water  "
+      },
+      "exam_results": {
+        "abdominal_exam": "  diffusely  mildly  tender,  soft,  no  rebound,  no  guarding,  no  rigidity  ",
+        "vital_signs": "  BP  114/72,  HR  92,  RR  16,  Temp  37.8,  SpO2  99%  "
+      },
+      "test_results": {
+        "cbc": "  mildly  elevated  white  blood  cell  count  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "negative_finding_centric",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "AbdominalPain07_TravelersGastroenteritis",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "AbdominalPain07_TravelersGastroenteritis__sentence_breaks",
+      "chief_complaint": "diarrhea and stomach cramps",
+      "demographics": {
+        "age": 33,
+        "sex": "male"
+      },
+      "ground_truth_diagnosis": "gastroenteritis",
+      "answers": {
+        "onset": "started yesterday, several episodes of watery diarrhea",
+        "associated_symptoms": "crampy diffuse belly pain that comes and goes, some vomiting. denies blood in stool, denies severe constant pain",
+        "social_history": "just got back from a trip abroad, drank tap water"
+      },
+      "exam_results": {
+        "abdominal_exam": "diffusely mildly tender, soft, no rebound, no guarding, no rigidity",
+        "vital_signs": "BP 114/72, HR 92, RR 16, Temp 37.8, SpO2 99%"
+      },
+      "test_results": {
+        "cbc": "mildly elevated white blood cell count"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "negative_finding_centric",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever06_ElderlyPneumonia",
+    "variant": "original",
+    "case": {
+      "case_id": "Fever06_ElderlyPneumonia__original",
+      "chief_complaint": "cough and fever",
+      "demographics": {
+        "age": 84,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "pneumonia",
+      "answers": {
+        "onset": "three days of worsening cough and fever",
+        "duration": "getting worse each day, not better",
+        "associated_symptoms": "bringing up thick yellow-green mucus, sharp pain when I take a deep breath, feeling more short of breath than usual",
+        "past_medical_history": "COPD, lives in an assisted living facility"
+      },
+      "exam_results": {
+        "lung_auscultation": "focal crackles and decreased breath sounds at the right lower lobe",
+        "vital_signs": "BP 108/66, HR 108, RR 24, Temp 38.7, SpO2 91%"
+      },
+      "test_results": {
+        "cxr": "right lower lobe consolidation",
+        "cbc": "elevated white blood cell count"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "elderly",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever06_ElderlyPneumonia",
+    "variant": "uppercase",
+    "case": {
+      "case_id": "Fever06_ElderlyPneumonia__uppercase",
+      "chief_complaint": "cough and fever",
+      "demographics": {
+        "age": 84,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "pneumonia",
+      "answers": {
+        "onset": "THREE DAYS OF WORSENING COUGH AND FEVER",
+        "duration": "GETTING WORSE EACH DAY, NOT BETTER",
+        "associated_symptoms": "BRINGING UP THICK YELLOW-GREEN MUCUS, SHARP PAIN WHEN I TAKE A DEEP BREATH, FEELING MORE SHORT OF BREATH THAN USUAL",
+        "past_medical_history": "COPD, LIVES IN AN ASSISTED LIVING FACILITY"
+      },
+      "exam_results": {
+        "lung_auscultation": "FOCAL CRACKLES AND DECREASED BREATH SOUNDS AT THE RIGHT LOWER LOBE",
+        "vital_signs": "BP 108/66, HR 108, RR 24, TEMP 38.7, SPO2 91%"
+      },
+      "test_results": {
+        "cxr": "RIGHT LOWER LOBE CONSOLIDATION",
+        "cbc": "ELEVATED WHITE BLOOD CELL COUNT"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "elderly",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever06_ElderlyPneumonia",
+    "variant": "extra_spaces",
+    "case": {
+      "case_id": "Fever06_ElderlyPneumonia__extra_spaces",
+      "chief_complaint": "cough and fever",
+      "demographics": {
+        "age": 84,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "pneumonia",
+      "answers": {
+        "onset": "  three  days  of  worsening  cough  and  fever  ",
+        "duration": "  getting  worse  each  day,  not  better  ",
+        "associated_symptoms": "  bringing  up  thick  yellow-green  mucus,  sharp  pain  when  I  take  a  deep  breath,  feeling  more  short  of  breath  than  usual  ",
+        "past_medical_history": "  COPD,  lives  in  an  assisted  living  facility  "
+      },
+      "exam_results": {
+        "lung_auscultation": "  focal  crackles  and  decreased  breath  sounds  at  the  right  lower  lobe  ",
+        "vital_signs": "  BP  108/66,  HR  108,  RR  24,  Temp  38.7,  SpO2  91%  "
+      },
+      "test_results": {
+        "cxr": "  right  lower  lobe  consolidation  ",
+        "cbc": "  elevated  white  blood  cell  count  "
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "elderly",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  },
+  {
+    "family": "Fever06_ElderlyPneumonia",
+    "variant": "sentence_breaks",
+    "case": {
+      "case_id": "Fever06_ElderlyPneumonia__sentence_breaks",
+      "chief_complaint": "cough and fever",
+      "demographics": {
+        "age": 84,
+        "sex": "female"
+      },
+      "ground_truth_diagnosis": "pneumonia",
+      "answers": {
+        "onset": "three days of worsening cough and fever",
+        "duration": "getting worse each day, not better",
+        "associated_symptoms": "bringing up thick yellow-green mucus, sharp pain when I take a deep breath, feeling more short of breath than usual",
+        "past_medical_history": "COPD, lives in an assisted living facility"
+      },
+      "exam_results": {
+        "lung_auscultation": "focal crackles and decreased breath sounds at the right lower lobe",
+        "vital_signs": "BP 108/66, HR 108, RR 24, Temp 38.7, SpO2 91%"
+      },
+      "test_results": {
+        "cxr": "right lower lobe consolidation",
+        "cbc": "elevated white blood cell count"
+      },
+      "default_answer": "No, I don't have that.",
+      "default_exam_result": "Unremarkable, within normal limits.",
+      "default_test_result": "Normal / negative.",
+      "category": "elderly",
+      "notes": "Formatting robustness variant; same underlying clinical content.",
+      "scoring_expected": true
+    }
+  }
+]

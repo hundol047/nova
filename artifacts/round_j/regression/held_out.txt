@@ -1,0 +1,37 @@
+
+=== Held-out set (evaluation/held_out_cases.py -- never used to tune defaults) ===
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+ChestPain02_Paraphrase          paraphrase            YES       28      0          NO             
+Dyspnea02_AgeSexVariation       age_sex_variation     YES       17      0          NO             
+ChestPain03_Ambiguous           ambiguous             YES (not scored)20      0          NO             
+AbdominalPain02_DangerousMimic  dangerous_mimic       YES       25      0          NO             
+ChestPain04_BenignMimic         benign_mimic          YES       21      0          NO             
+Dizziness02_NegativeFindingCentricnegative_finding_centricYES       19      0          NO             
+Headache02_InsufficientInfo     insufficient_info     NO (not scored)20      0          NO             
+ChestPain05_NoisyText           noisy_text            YES       11      0          NO             
+Unknown01_UnmappedComplaint     unknown_complaint     YES (not scored)26      0          NO             
+ChestPain06_Korean              korean_language       YES       16      0          NO             
+Fever02_MeningitisPresentation  paraphrase            YES       24      0          NO             
+Dyspnea03_PregnancyRiskFactor   pregnancy_risk_factor YES       17      0          NO             
+Headache03_AnticoagulantRisk    medication_risk       YES       23      0          NO             
+Fever03_DiabeticUrosepsis       comorbidity           YES       24      0          NO             
+Dyspnea04_Anaphylaxis           long_tail             YES       22      0          NO             
+BackPain01_AorticDissection     long_tail             YES       19      0          NO             
+Dyspnea05_TensionPneumothorax   long_tail             YES       24      0          NO             
+Urinary02_Pyelonephritis        paraphrase            YES       21      0          NO             
+
+Held-out set summary (18 cases, 15 scored, 13 critical)
+  Scored Diagnostic Accuracy:   100.0%  (excludes: ChestPain03_Ambiguous, Headache02_InsufficientInfo, Unknown01_UnmappedComplaint)
+  All-Case Diagnostic Accuracy: 94.4%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (safe handling of excluded cases: diagnosed, no critical miss)
+  Critical Diagnosis Recall:    100.0%
+  Critical Miss Rate:           0.0%
+  Average / Median Turns:       20.9 / 21.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        0.50 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        7.4 / 5.8 / 6.7
+  Utility Score Proxy:          0.710  (informal local metric, evaluation/scoring.py -- not an official competition score)

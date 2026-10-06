@@ -1,0 +1,708 @@
+{
+  "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+  "total": {
+    "cases": 35,
+    "correct": 28,
+    "critical": 20,
+    "critical_correct": 17,
+    "unknown_output": 4,
+    "turns": 853,
+    "real_llm_calls": 0,
+    "accuracy": 0.8,
+    "critical_recall": 0.85
+  },
+  "dataset_provenance": {
+    "dataset_type": "synthetic_mock",
+    "train_cases": 0,
+    "development_cases": 0,
+    "validation_cases": 35,
+    "independent_cases": 0,
+    "clinical_adjudication": false,
+    "real_llm_calls": 0
+  },
+  "metrics_v2": {
+    "top1_accuracy": 0.8,
+    "top3_recall": 0.8285714285714286,
+    "top5_recall": 0.8285714285714286,
+    "classification_micro": {
+      "precision": 0.8,
+      "recall": 0.8,
+      "f1": 0.8
+    },
+    "classification_macro": {
+      "precision": 0.37777777777777777,
+      "recall": 0.34090909090909094,
+      "f1": 0.3494047619047619,
+      "labels": 10
+    },
+    "critical_target": {
+      "cases": 20,
+      "correct": 17,
+      "false_negatives": 3,
+      "sensitivity": 0.85,
+      "false_negative_rate": 0.15
+    },
+    "critical": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "tn": 15,
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "false_negative_rate": 0.0
+    },
+    "ood": {
+      "tp": 0,
+      "fp": 4,
+      "fn": 0,
+      "tn": 31,
+      "precision": 0.0,
+      "recall": null,
+      "specificity": 0.8857142857142857,
+      "false_negative_rate": null
+    },
+    "calibration": "NOT_AVAILABLE_NO_CALIBRATOR",
+    "followup_effect": {
+      "cases_with_trajectory": 35,
+      "first_final_top1_changed": 23,
+      "first_top3_hit": 9,
+      "final_top3_hit": 29,
+      "interpretation": "descriptive trajectory change; not causal gain"
+    }
+  },
+  "metrics_v2_by_split": {
+    "validation": {
+      "cases": 35,
+      "accuracy": 0.8,
+      "top3_recall": 0.8285714285714286,
+      "top5_recall": 0.8285714285714286,
+      "critical_cases": 20,
+      "critical_sensitivity": 0.85,
+      "critical_false_negatives": 3,
+      "critical_false_negative_rate": 0.15,
+      "ood": {
+        "tp": 0,
+        "fp": 4,
+        "fn": 0,
+        "tn": 31,
+        "recall": null
+      }
+    }
+  },
+  "metrics_v2_by_difficulty": {
+    "high": {
+      "cases": 27,
+      "accuracy": 0.7777777777777778,
+      "top3_recall": 0.8148148148148148,
+      "top5_recall": 0.8148148148148148,
+      "critical_cases": 17,
+      "critical_sensitivity": 0.8235294117647058,
+      "critical_false_negatives": 3,
+      "critical_false_negative_rate": 0.17647058823529413,
+      "ood": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 0,
+        "tn": 24,
+        "recall": null
+      }
+    },
+    "low": {
+      "cases": 8,
+      "accuracy": 0.875,
+      "top3_recall": 0.875,
+      "top5_recall": 0.875,
+      "critical_cases": 3,
+      "critical_sensitivity": 1.0,
+      "critical_false_negatives": 0,
+      "critical_false_negative_rate": 0.0,
+      "ood": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 0,
+        "tn": 7,
+        "recall": null
+      }
+    }
+  },
+  "breakdown": {
+    "difficulty": {
+      "high": {
+        "cases": 27,
+        "correct": 21,
+        "critical": 17,
+        "critical_correct": 14,
+        "unknown_output": 3,
+        "turns": 676,
+        "real_llm_calls": 0,
+        "accuracy": 0.7777777777777778,
+        "critical_recall": 0.8235294117647058
+      },
+      "low": {
+        "cases": 8,
+        "correct": 7,
+        "critical": 3,
+        "critical_correct": 3,
+        "unknown_output": 1,
+        "turns": 177,
+        "real_llm_calls": 0,
+        "accuracy": 0.875,
+        "critical_recall": 1.0
+      }
+    },
+    "split": {
+      "validation": {
+        "cases": 35,
+        "correct": 28,
+        "critical": 20,
+        "critical_correct": 17,
+        "unknown_output": 4,
+        "turns": 853,
+        "real_llm_calls": 0,
+        "accuracy": 0.8,
+        "critical_recall": 0.85
+      }
+    },
+    "diagnostic_group": {
+      "bppv": {
+        "cases": 4,
+        "correct": 3,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 1,
+        "turns": 68,
+        "real_llm_calls": 0,
+        "accuracy": 0.75,
+        "critical_recall": null
+      },
+      "musculoskeletal_chest_pain": {
+        "cases": 6,
+        "correct": 3,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 3,
+        "turns": 102,
+        "real_llm_calls": 0,
+        "accuracy": 0.5,
+        "critical_recall": null
+      },
+      "pulmonary_embolism": {
+        "cases": 11,
+        "correct": 10,
+        "critical": 11,
+        "critical_correct": 10,
+        "unknown_output": 0,
+        "turns": 314,
+        "real_llm_calls": 0,
+        "accuracy": 0.9090909090909091,
+        "critical_recall": 0.9090909090909091
+      },
+      "sepsis": {
+        "cases": 7,
+        "correct": 7,
+        "critical": 7,
+        "critical_correct": 7,
+        "unknown_output": 0,
+        "turns": 204,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "tier2:croup": {
+        "cases": 1,
+        "correct": 0,
+        "critical": 1,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 21,
+        "real_llm_calls": 0,
+        "accuracy": 0.0,
+        "critical_recall": 0.0
+      },
+      "tier2:stevens_johnson_syndrome": {
+        "cases": 1,
+        "correct": 0,
+        "critical": 1,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 25,
+        "real_llm_calls": 0,
+        "accuracy": 0.0,
+        "critical_recall": 0.0
+      },
+      "uncomplicated_cystitis": {
+        "cases": 5,
+        "correct": 5,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 119,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      }
+    },
+    "source_family": {
+      "evaluation.blind_cases_v10:Blind10_02_DysuriaFrequencyWoman": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 31,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v10:Blind10_04_FeverConfusionHypotension": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 18,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v10:Blind10_06_PositionalChestWallPain": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 3,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v10:Blind10_10_TargetoidRashMucosaDrug": {
+        "cases": 1,
+        "correct": 0,
+        "critical": 1,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 25,
+        "real_llm_calls": 0,
+        "accuracy": 0.0,
+        "critical_recall": 0.0
+      },
+      "evaluation.blind_cases_v10:Blind10_15_ChildBarkingCoughStridor": {
+        "cases": 1,
+        "correct": 0,
+        "critical": 1,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 21,
+        "real_llm_calls": 0,
+        "accuracy": 0.0,
+        "critical_recall": 0.0
+      },
+      "evaluation.blind_cases_v10:Blind10_20_ConflictingPEvsAnxiety": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 28,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v8:Blind8_03_LongHaulFlightPleuritic": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 31,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v8:Blind8_13_RollingOverSpins": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 19,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v8:Blind8_17_MovedFurnitureChestWall": {
+        "cases": 1,
+        "correct": 0,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 1,
+        "turns": 20,
+        "real_llm_calls": 0,
+        "accuracy": 0.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v8:Blind8_25_DysuriaFrequency": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 25,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v8:Blind8_31_NursingHomeAlteredHypotension": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 34,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v8:Blind8_38_MixedImagingPE": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 31,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v8:Blind8_42_MultimorbidUrosepsis": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 32,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v8:Blind8_46_EarlyPregnancyRoundLigament": {
+        "cases": 1,
+        "correct": 0,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 1,
+        "turns": 28,
+        "real_llm_calls": 0,
+        "accuracy": 0.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v8:Blind8_48_ConflictingPEvsPneumonia": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 29,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v8:Blind8_50_ScaryButMSKChest": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 19,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v8:Blind8_55_LowerTractOnly": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 30,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v8:Blind8_65_PositionalOnlyVertigo": {
+        "cases": 1,
+        "correct": 0,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 1,
+        "turns": 20,
+        "real_llm_calls": 0,
+        "accuracy": 0.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v8:Blind8_66_SparseAcuteDyspnea": {
+        "cases": 1,
+        "correct": 0,
+        "critical": 1,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 31,
+        "real_llm_calls": 0,
+        "accuracy": 0.0,
+        "critical_recall": 0.0
+      },
+      "evaluation.blind_cases_v9:Blind9_03_PostpartumSuddenDyspnea": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 31,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v9:Blind9_13_TurningInBedSpins": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 19,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v9:Blind9_17_PaintedCeilingChestSore": {
+        "cases": 1,
+        "correct": 0,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 1,
+        "turns": 20,
+        "real_llm_calls": 0,
+        "accuracy": 0.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v9:Blind9_25_BurningFrequencyWell": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 25,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.blind_cases_v9:Blind9_31_CareHomeAlteredHot": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 33,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v9:Blind9_39_WrongUnitGlucoseSepsis": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 33,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v9:Blind9_41_AnxietyHistoryHypoxia": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 33,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.blind_cases_v9:Blind9_44_ConflictingPEvsPneumonia": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 29,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.cases:Dizziness01": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 10,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.cases:Dyspnea01": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 30,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.cases:UrinarySymptoms01": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 8,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.generalization_cases_v2:ChestPain07_ConflictingFindingsMusculoskeletal": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 0,
+        "critical_correct": 0,
+        "unknown_output": 0,
+        "turns": 12,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": null
+      },
+      "evaluation.generalization_cases_v2:Fever05_ImmunocompromisedSepsis": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 28,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.held_out_cases:Dyspnea02_AgeSexVariation": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 25,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.held_out_cases:Dyspnea03_PregnancyRiskFactor": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 16,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      },
+      "evaluation.held_out_cases:Fever03_DiabeticUrosepsis": {
+        "cases": 1,
+        "correct": 1,
+        "critical": 1,
+        "critical_correct": 1,
+        "unknown_output": 0,
+        "turns": 26,
+        "real_llm_calls": 0,
+        "accuracy": 1.0,
+        "critical_recall": 1.0
+      }
+    },
+    "documentation": {
+      "clean": {
+        "cases": 8,
+        "correct": 7,
+        "critical": 3,
+        "critical_correct": 3,
+        "unknown_output": 1,
+        "turns": 177,
+        "real_llm_calls": 0,
+        "accuracy": 0.875,
+        "critical_recall": 1.0
+      },
+      "historical_positive": {
+        "cases": 4,
+        "correct": 3,
+        "critical": 2,
+        "critical_correct": 2,
+        "unknown_output": 1,
+        "turns": 82,
+        "real_llm_calls": 0,
+        "accuracy": 0.75,
+        "critical_recall": 1.0
+      },
+      "prior_negative": {
+        "cases": 8,
+        "correct": 7,
+        "critical": 4,
+        "critical_correct": 3,
+        "unknown_output": 0,
+        "turns": 200,
+        "real_llm_calls": 0,
+        "accuracy": 0.875,
+        "critical_recall": 0.75
+      },
+      "source_atypical": {
+        "cases": 4,
+        "correct": 2,
+        "critical": 3,
+        "critical_correct": 2,
+        "unknown_output": 1,
+        "turns": 101,
+        "real_llm_calls": 0,
+        "accuracy": 0.5,
+        "critical_recall": 0.6666666666666666
+      },
+      "uncertain_positive": {
+        "cases": 11,
+        "correct": 9,
+        "critical": 8,
+        "critical_correct": 7,
+        "unknown_output": 1,
+        "turns": 293,
+        "real_llm_calls": 0,
+        "accuracy": 0.8181818181818182,
+        "critical_recall": 0.875
+      }
+    }
+  },
+  "source_families": 35,
+  "families_all_variants_correct": 28,
+  "family_macro_accuracy": 0.8,
+  "failure_types": {
+    "unimplemented_deep_target_requires_review": 2,
+    "abstention_on_named_target": 4,
+    "incorrect_named_output": 1
+  },
+  "failure_signals": {
+    "expected_in_final_top3": 1,
+    "expected_in_final_top5": 1,
+    "returned_unknown": 4,
+    "critical_false_negative": 3,
+    "reached_turn_limit": 0
+  },
+  "independent_clinical_validation": false,
+  "limitation": "Correlated synthetic variants with inherited unverified labels; not population accuracy or calibrated probabilities."
+}

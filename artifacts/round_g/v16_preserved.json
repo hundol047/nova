@@ -1,0 +1,6 @@
+{
+  "evaluation/blind_cases_v16.py": "7be72a740a4ea04054c0301f0fcb18c867c4df44282a2c018698e7f62f5b6f11",
+  "evaluation/blind_v16_manifest.json": "1ed39e815f507bc38a73b072403370cb335bae24749e5284e183002c09bab796",
+  "artifacts/blind_runs/blind_v16_run_default_legacy.txt": "85119a75c368218f34a9c7ae012235051ef74dc00275d620121af6a14a3100c5",
+  "artifacts/blind_runs/blind_v16_run_competition_like.txt": "e5f260651065e1431bb14acaeccb495fa055f67454205a2edf797d7711406569"
+}

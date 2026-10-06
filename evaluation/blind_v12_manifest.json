@@ -1,0 +1,20 @@
+{
+  "file": "evaluation/blind_cases_v12.py",
+  "case_count": 32,
+  "file_sha256": "e20b932be62a4a5d76f0a9ff03ceb9b1b0458d245d35080c473159df3528ef71",
+  "frozen_at_utc": "2026-09-28T00:00:00Z",
+  "created_commit": "b3fdccd3751998f173c6a0a88c84d4691cda5cf6",
+  "language_distribution": {"en": 30, "ko_mixed": 1, "ja_mixed": 1},
+  "category_distribution": {
+    "common": 2, "time_critical": 2, "dangerous_mimic": 2, "benign_mimic": 2,
+    "retrieval_miss_trap": 1, "long_tail": 2, "shallow_tier3": 1, "rare_wording": 1,
+    "synonym_paraphrase": 2, "objective_evidence_heavy": 1, "negative_evidence_heavy": 1,
+    "multimorbidity": 1, "polypharmacy": 1, "elderly": 1, "pediatric": 1, "pregnancy": 1,
+    "atypical": 1, "mixed_language": 2, "sparse_information": 1, "conflicting_evidence": 1,
+    "unit_issue": 1, "inter_arm_bp": 1, "over_testing_trap": 1, "premature_diagnosis_trap": 1,
+    "duplicate_question_trap": 1
+  },
+  "diagnosis_coverage": "Representative across the axes this round's competition retrieval-recall rebuild touched (multi-query weighted RRF fusion, objective-finding/imaging signal weighting, typical_features indexing, IDF-like token weighting), plus the standing safety/action-selection/stop-policy traps (over-testing, premature-diagnosis, duplicate-question, inter-arm BP, unit-safety). Deliberately smaller than an ideal 60-80 given this round's time budget (32 cases, similar in scale to v11's own 24) -- NOT an exhaustive enumeration, NOT tuned to any case. Tier-1 targets use knowledge/diseases ids; Tier-2/long-tail/shallow-Tier-3/pediatric/pregnancy targets use 'tier2:<id>' or 'unknown' with scoring_expected=false (excluded from the accuracy denominator, still checked for safe/crash/turn-limit behavior).",
+  "supersedes": "Blind v3, v4, v5, v6, v8, v9, v10, v11 are ALL REFERENCE-ONLY as of this round. This round rebuilt Stage 1 of the competition retrieval pipeline (nova_agent/retrieval_pipeline.py's multi-query weighted RRF fusion + SIGNAL_WEIGHTS, nova_agent/ontology/search.py's typical_features indexing + IDF-like corpus-frequency token weighting), which is reasoning-adjacent code any prior blind set predates. Blind v12 is authored/frozen after these changes (commit b3fdccd, the reasoning-freeze point) and is the untouched check for the current code.",
+  "note": "SHA-256 computed BEFORE evaluation.blind_benchmark_v12 was ever run, against commit b3fdccd (the reasoning-freeze commit -- no runtime/reasoning files changed after this point through the first run). blind_cases_v12.py must not be edited after this point; a pre-first-run correction would require a NEW manifest entry documenting why, never a silent edit. FIRST RUN of evaluation.blind_benchmark_v12 happens exactly once, reported as-is, and is never re-tuned against. If reasoning/retrieval code changes again after this freeze, v12 becomes reference-only and a fresh v13 is authored."
+}

@@ -1,0 +1,21 @@
+[
+  {
+    "candidate_id": "medlineplus_health_topics",
+    "owner": "US National Library of Medicine",
+    "terms_url": "https://medlineplus.gov/about/using/usingcontent/",
+    "terms_last_updated": "2022-10-26",
+    "accessed": "2026-10-05",
+    "data_index": "https://medlineplus.gov/xml.html",
+    "version_observed": "2026-10-03 XML listed; source bytes not downloaded in this pass",
+    "scope": "Health-topic summaries and explicit public-domain sections only; excludes ADAM encyclopedia, drug monographs, images and linked third-party pages",
+    "terms_evidence": "NLM permits reproduction and redistribution of specified public-domain sections, requests NLM attribution; XML page allows customization/repurposing",
+    "research_publication_permission": "Scope-limited publisher evidence, not legal clearance for other sections or existing assets",
+    "redistribution_permission": "As stated for specified public-domain content",
+    "modification_permission": "XML customization/repurposing supported by publisher; preserve attribution and avoid false endorsement",
+    "attribution": "Source: MedlinePlus, National Library of Medicine.",
+    "deterministic_transform_candidate": "Historical importer a534580:scripts/import_medline_candidates.py; source hash and topic selection must be revalidated before reuse",
+    "status": "NOT_USED_IN_SUBMISSION",
+    "promotion": "BLOCKED pending exact snapshot verification, field-level relevance, review and before/after regressions",
+    "not_original_source_of_current_assets": true
+  }
+]

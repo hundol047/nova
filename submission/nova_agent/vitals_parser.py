@@ -19,6 +19,11 @@ from nova_agent.models import VitalSigns
 _OPS = {">=": lambda v, t: v >= t, "<=": lambda v, t: v <= t, ">": lambda v, t: v > t, "<": lambda v, t: v < t}
 
 _BP = re.compile(r"\b(?:bp|blood pressure)\s*[:\s]*?(\d{2,3})\s*/\s*(\d{2,3})", re.IGNORECASE)
+# ANY blood-pressure-shaped number pair, not just ones with a leading "BP"/"blood pressure" label
+# -- used only to detect a SECOND bilateral reading in the same text (e.g. "BP 180/60 right arm,
+# 130/50 left arm"), where the second pair often has no repeated label. Gated below on the text
+# also naming both sides explicitly, so an unrelated pair of numbers is never misread as a limb.
+_BP_PAIR = re.compile(r"\b(\d{2,3})\s*/\s*(\d{2,3})\b")
 _HR = re.compile(r"\b(?:hr|heart rate|pulse)\s*[:\s]*?(\d{2,3})\b", re.IGNORECASE)
 _RR = re.compile(r"\b(?:rr|respiratory rate|resp(?:iration)? rate)\s*[:\s]*?(\d{1,2})\b", re.IGNORECASE)
 _TEMP = re.compile(r"\b(?:temp(?:erature)?)\s*[:\s]*?(\d{2,3}(?:\.\d)?)\s*(f|fahrenheit)?", re.IGNORECASE)
@@ -38,10 +43,23 @@ def parse_vital_signs(text: str) -> Optional[VitalSigns]:
 
     sbp = dbp = heart_rate = respiratory_rate = spo2 = None
     temperature_c = None
+    sbp_arm_differential = None
 
     bp_match = _BP.search(text)
     if bp_match:
         sbp, dbp = int(bp_match.group(1)), int(bp_match.group(2))
+
+    # Bilateral BP reading (spec: an objective inter-arm differential -- a classic aortic
+    # dissection sign, but generic to any vascular presentation -- must actually affect the
+    # differential, not be silently discarded by the single-BP-only parse above). Gated on the
+    # text explicitly naming BOTH sides so an unrelated pair of numbers (e.g. a same-arm trend
+    # note like "BP 150/95 improved to 120/80") is never misread as two different limbs.
+    lowered = text.lower()
+    if "left" in lowered and "right" in lowered and lowered.count("arm") >= 2:
+        pairs = _BP_PAIR.findall(text)
+        if len(pairs) >= 2:
+            sbp1, sbp2 = int(pairs[0][0]), int(pairs[1][0])
+            sbp_arm_differential = abs(sbp1 - sbp2)
 
     hr_match = _HR.search(text)
     if hr_match:
@@ -60,12 +78,14 @@ def parse_vital_signs(text: str) -> Optional[VitalSigns]:
     if spo2_match:
         spo2 = int(spo2_match.group(1))
 
-    if not any([sbp, dbp, heart_rate, respiratory_rate, temperature_c, spo2]):
+    if all(v is None for v in
+           (sbp, dbp, heart_rate, respiratory_rate, temperature_c, spo2, sbp_arm_differential)):
         return None
 
     try:
         return VitalSigns(sbp=sbp, dbp=dbp, heart_rate=heart_rate, respiratory_rate=respiratory_rate,
-                           temperature_c=temperature_c, spo2=spo2, raw_text=text)
+                           temperature_c=temperature_c, spo2=spo2,
+                           sbp_arm_differential=sbp_arm_differential, raw_text=text)
     except Exception:
         # An extracted number fell outside VitalSigns' physiologic validation range (e.g. a typo'd
         # observation) -- keep the raw text available elsewhere (physical_examinations) but don't

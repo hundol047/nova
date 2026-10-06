@@ -1,0 +1,178 @@
+=== Tuning set (evaluation/cases.py) ===
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+ChestPain01                     standard              YES       12      0          NO             
+AbdominalPain01                 standard              YES       34      0          NO             
+Headache01                      standard              YES       33      0          NO             
+Fever01                         standard              YES       40      0          NO             
+Dyspnea01                       standard              YES       23      0          NO             
+Dizziness01                     standard              YES       36      0          NO             
+AlteredMentalStatus01           standard              YES       13      0          NO             
+UrinarySymptoms01               standard              YES       23      0          NO             
+
+Tuning set summary (8 cases, 8 scored, 6 critical)
+  Scored Diagnostic Accuracy:   100.0%  (excludes: none)
+  All-Case Diagnostic Accuracy: 100.0%  (every case, no exclusions)
+  Critical Diagnosis Recall:    100.0%
+  Critical Miss Rate:           0.0%
+  Average / Median Turns:       26.8 / 28.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        3.75 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        7.8 / 7.1 / 10.9
+  Utility Score Proxy:          0.545  (informal local metric, evaluation/scoring.py -- not an official competition score)
+
+=== Held-out set (evaluation/held_out_cases.py -- never used to tune defaults) ===
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+ChestPain02_Paraphrase          paraphrase            YES       16      0          NO             
+Dyspnea02_AgeSexVariation       age_sex_variation     YES       20      0          NO             
+ChestPain03_Ambiguous           ambiguous             YES (not scored)38      0          NO             
+AbdominalPain02_DangerousMimic  dangerous_mimic       YES       31      0          NO             
+ChestPain04_BenignMimic         benign_mimic          YES       30      0          NO             
+Dizziness02_NegativeFindingCentricnegative_finding_centricYES       36      0          NO             
+Headache02_InsufficientInfo     insufficient_info     NO (not scored)37      0          NO             
+ChestPain05_NoisyText           noisy_text            YES       12      0          NO             
+Unknown01_UnmappedComplaint     unknown_complaint     YES (not scored)29      0          NO             
+ChestPain06_Korean              korean_language       YES       18      0          NO             
+Fever02_MeningitisPresentation  paraphrase            YES       40      0          NO             
+Dyspnea03_PregnancyRiskFactor   pregnancy_risk_factor YES       20      0          NO             
+Headache03_AnticoagulantRisk    medication_risk       YES       34      0          NO             
+Fever03_DiabeticUrosepsis       comorbidity           YES       38      0          NO             
+Dyspnea04_Anaphylaxis           long_tail             YES       31      0          NO             
+BackPain01_AorticDissection     long_tail             YES       21      0          NO             
+Dyspnea05_TensionPneumothorax   long_tail             YES       35      0          NO             
+Urinary02_Pyelonephritis        paraphrase            YES       37      0          NO             
+
+Held-out set summary (18 cases, 15 scored, 13 critical)
+  Scored Diagnostic Accuracy:   100.0%  (excludes: ChestPain03_Ambiguous, Headache02_InsufficientInfo, Unknown01_UnmappedComplaint)
+  All-Case Diagnostic Accuracy: 94.4%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (safe handling of excluded cases: diagnosed, no critical miss)
+  Critical Diagnosis Recall:    100.0%
+  Critical Miss Rate:           0.0%
+  Average / Median Turns:       29.1 / 31.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        2.83 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        8.7 / 8.0 / 11.4
+  Utility Score Proxy:          0.512  (informal local metric, evaluation/scoring.py -- not an official competition score)
+
+=== Generalization v2 set (evaluation/generalization_cases_v2.py -- never used to tune defaults) ===
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+Fever04_CommonViralURI          common_disease        YES       3       0          NO             
+Dizziness03_AtypicalStroke      atypical_presentation YES       36      0          NO             
+Weakness01_ElderlyPolypharmacyHypoglycemiaelderly_polypharmacy  YES       40      0          NO             
+AbdominalPain03_YoungAdultAppendicitisyoung_adult           YES       33      0          NO             
+Fever05_ImmunocompromisedSepsis immunocompromised     YES       33      0          NO             
+AbdominalPain04_AnticoagulantGIBleedpolypharmacy_anticoagulantYES       30      0          NO             
+AlteredMentalStatus02_MultiSymptomDKAmultiple_simultaneous_symptomsYES       15      0          NO             
+ChestPain07_ConflictingFindingsMusculoskeletalconflicting_findings  YES       8       0          NO             
+BackPain02_Nephrolithiasis      vague_chief_complaint YES       32      0          NO             
+AbdominalPain05_DangerousMimicPancreatitisdangerous_mimic       YES       39      0          NO             
+Syncope01_BenignMimicVasovagal  benign_mimic          YES       38      0          NO             
+Palpitations01_ElderlyAtypicalArrhythmiaatypical_presentation YES       36      0          NO             
+Cough01_CommonBronchitis        common_disease        YES       27      0          NO             
+Headache04_ReassuringMigraine   conflicting_findings  YES       4       0          NO             
+AbdominalPain06_ElderlyAcuteAbdomenrare_dangerous        YES       17      0          NO             
+Dyspnea06_YoungAdultAsthmaExacerbationcommon_disease        YES       30      0          NO             
+AbdominalPain07_TravelersGastroenteritisnegative_finding_centricYES       43      0          NO             
+Fever06_ElderlyPneumonia        elderly               YES       42      0          NO             
+
+Generalization v2 summary (18 cases, 18 scored, 5 critical)
+  Scored Diagnostic Accuracy:   100.0%  (excludes: none)
+  All-Case Diagnostic Accuracy: 100.0%  (every case, no exclusions)
+  Critical Diagnosis Recall:    100.0%
+  Critical Miss Rate:           0.0%
+  Average / Median Turns:       28.1 / 32.5
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        3.00 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        8.2 / 7.3 / 11.6
+  Utility Score Proxy:          0.569  (informal local metric, evaluation/scoring.py -- not an official competition score)
+
+=== Stress set (evaluation/generalization_stress_cases.py -- targeted probes of the two known miss patterns) ===
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+Stress01_YoungAdultAtypicalHypoglycemiaatypical_presentation YES       15      0          NO             
+Stress02_NonDiabeticAlcoholicHypoglycemiaatypical_presentation YES       37      0          NO             
+Stress03_StrokeMimickingMigrainedangerous_mimic       YES       38      0          NO             
+Stress04_MigraineWithAura       conflicting_findings  YES       37      0          NO             
+Stress05_StrokeWithHeadache     atypical_presentation YES       32      0          NO             
+Stress06_ElderlyNewOnsetDangerousHeadacheelderly               YES       37      0          NO             
+Stress07_PolypharmacyWeaknessHyperkalemiaelderly_polypharmacy  YES       34      0          NO             
+Stress08_NormalGlucoseWeaknessGIBleednegative_finding_centricYES       39      0          NO             
+
+Stress set summary (8 cases, 8 scored, 5 critical)
+  Scored Diagnostic Accuracy:   100.0%  (excludes: none)
+  All-Case Diagnostic Accuracy: 100.0%  (every case, no exclusions)
+  Critical Diagnosis Recall:    100.0%
+  Critical Miss Rate:           0.0%
+  Average / Median Turns:       33.6 / 37.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        3.62 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        9.2 / 8.8 / 14.6
+  Utility Score Proxy:          0.482  (informal local metric, evaluation/scoring.py -- not an official competition score)
+
+=== Round D development set (evaluation/generalization_dev_cases_round_d.py -- distinct wording from Blind v13, never Blind v14; probes the four Round D architectural fixes) ===
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+Dev01_UnroutedDiarrheaGastroenteritisunrouted_common_complaintYES       28      0          NO             
+Dev02_MorphologyOrthostaticSpinningmorphological_variant YES       40      0          NO             
+Dev03_GenericWeaknessMaskingFocalStrokegeneric_vs_specific_conflictYES       36      0          NO             
+Dev04_ZeroEvidenceVagueMalaise  zero_evidence_presentationNO (not scored)45      0          NO             
+Dev05_MultiConceptFeverNeckStiffnessmulti_concept_complaintYES       40      0          NO             
+Dev06_LayLanguagePEAfterFlight  lay_language_complaintYES       32      0          NO             
+Dev07_VagueComplaintHypoglycemiaOnLabsobjective_evidence_after_vague_complaintYES       40      0          NO             
+
+Round D development set summary (7 cases, 6 scored, 3 critical)
+  Scored Diagnostic Accuracy:   100.0%  (excludes: Dev04_ZeroEvidenceVagueMalaise)
+  All-Case Diagnostic Accuracy: 85.7%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (safe handling of excluded cases: diagnosed, no critical miss)
+  Critical Diagnosis Recall:    100.0%
+  Critical Miss Rate:           0.0%
+  Average / Median Turns:       37.3 / 40.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        4.43 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        10.3 / 10.1 / 15.9
+  Utility Score Proxy:          0.263  (informal local metric, evaluation/scoring.py -- not an official competition score)
+
+=== Round E development set (evaluation/generalization_dev_cases_round_e.py -- distinct wording from Blind v14, never Blind v15; probes Round E's architectural fixes) ===
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+DevE01_PleuriticPainNotGERD     generic_phrase_false_positive_matchingYES       35      0          NO             
+DevE02_MassivePEnotSepsis       specific_vs_generic_severity_conflictYES       33      0          NO             
+DevE03_VagueReproductiveAgeEmergencyreproductive_age_vague_emergencyYES       36      0          NO             
+DevE04_KoreanMixedPyelonephritismultilingual_routing  YES       40      0          NO             
+DevE05_ExertionalAnginaNegativeControlmorphology_negative_controlYES       14      0          NO             
+DevE06_ZeroEvidenceTerminalBehaviorzero_evidence_terminal_behaviorNO (not scored)45      0          NO             
+DevE07_DiscriminatorPriorityMeningitisdiscriminator_priorityYES       40      0          NO             
+
+Round E development set summary (7 cases, 6 scored, 5 critical)
+  Scored Diagnostic Accuracy:   100.0%  (excludes: DevE06_ZeroEvidenceTerminalBehavior)
+  All-Case Diagnostic Accuracy: 85.7%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (safe handling of excluded cases: diagnosed, no critical miss)
+  Critical Diagnosis Recall:    100.0%
+  Critical Miss Rate:           0.0%
+  Average / Median Turns:       34.7 / 36.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        4.57 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        9.4 / 9.7 / 14.6
+  Utility Score Proxy:          0.281  (informal local metric, evaluation/scoring.py -- not an official competition score)
+
+Wrote artifacts/round_g/regression/competition_metrics.json

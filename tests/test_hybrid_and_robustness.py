@@ -112,6 +112,16 @@ def test_negation_scope():
         assert expect_negative_substr not in state.pertinent_positives
 
 
+def test_leading_no_list_preserves_following_positive_findings():
+    """A leading ``no`` applies to its first item in a mixed comma-list, not every later
+    symptom (e.g. ``NO APPETITE, NAUSEA, LOW FEVER``)."""
+    state = PatientState(case_id="mixed-list", chief_complaint="abdominal pain")
+    state.record_ask("associated_symptoms", "?", "NO APPETITE, NAUSEA, LOW FEVER; DENIES DIARRHEA")
+    assert any("NO APPETITE" in item for item in state.pertinent_negatives)
+    assert any("NAUSEA" in item and "LOW FEVER" in item for item in state.pertinent_positives)
+    assert any("DENIES DIARRHEA" in item for item in state.pertinent_negatives)
+
+
 # --- test_llm_can_change_differential / test_llm_can_select_valid_non_deterministic_candidate ---
 
 class _NovelDifferentialClient:
@@ -328,19 +338,19 @@ def test_standalone_without_backend():
 
 
 def test_submission_run_entrypoint():
-    """Runs submission/run.py as a real subprocess with its own sys.path (only submission/ on it,
-    nothing from the outer repo), proving the packaged submission is self-contained end to end."""
+    """Runs the explicitly local mock module as a subprocess (only submission/ on its path,
+    nothing from the outer repo), proving packaged clinical modules can be tested independently of the blocked official entrypoint."""
     submission_dir = REPO_ROOT / "submission"
     assert (submission_dir / "run.py").exists()
     assert (submission_dir / "nova_agent").is_dir()
     assert (submission_dir / "competition").is_dir()
 
     proc = subprocess.run(
-        [sys.executable, "run.py"],
+        [sys.executable, "-m", "competition.local_runner"],
         input='{"case_id": "pytest1", "observation_type": "initial", "chief_complaint": "chest pain", '
               '"demographics": {"age": 55, "sex": "male"}}\n',
         cwd=str(submission_dir), capture_output=True, text=True, timeout=30,
-        env={"PATH": "/usr/bin:/bin"},  # deliberately minimal env, no inherited PYTHONPATH
+        env={"PATH": "/usr/bin:/bin", "NOVA_LLM_PROVIDER": "mock"},  # explicit offline, no PYTHONPATH
     )
     assert proc.returncode == 0, f"submission/run.py failed: {proc.stderr}"
     assert '"action_type"' in proc.stdout
@@ -349,8 +359,7 @@ def test_submission_run_entrypoint():
 def test_submission_stdout_contains_only_protocol_json():
     """A harness reading stdout as a JSON-lines protocol must never see anything else on it --
     not a log line, not a warning, not the preflight diagnostic -- or it breaks. Runs multiple
-    observations (including forcing the preflight-unavailable warning path, via an unreachable
-    competition endpoint) and asserts EVERY stdout line parses as the expected JSON action shape,
+    observations in explicit mock mode (unreachable competition is now a fatal startup error) and asserts EVERY stdout line parses as the expected JSON action shape,
     with every non-protocol message landing on stderr instead."""
     import json as _json
 
@@ -364,10 +373,10 @@ def test_submission_stdout_contains_only_protocol_json():
     stdin_text = "\n".join(_json.dumps(o) for o in observations) + "\n"
 
     proc = subprocess.run(
-        [sys.executable, "run.py"],
+        [sys.executable, "-m", "competition.local_runner"],
         input=stdin_text, cwd=str(submission_dir), capture_output=True, text=True, timeout=30,
         env={"PATH": "/usr/bin:/bin",
-             "NOVA_LLM_PROVIDER": "competition", "NOVA_COMPETITION_BASE_URL": "http://127.0.0.1:1/v1"},
+             "NOVA_LLM_PROVIDER": "mock"},
     )
     assert proc.returncode == 0, f"submission/run.py failed: {proc.stderr}"
 
@@ -378,7 +387,7 @@ def test_submission_stdout_contains_only_protocol_json():
         parsed = _json.loads(line)  # raises if stdout carried anything non-JSON
         assert "action_type" in parsed or "error" in parsed
 
-    # The preflight-unavailable diagnostic this run should have triggered (unreachable endpoint)
-    # must have landed on stderr, never mixed into stdout.
-    assert "Competition LLM unavailable" in proc.stderr
-    assert "Competition LLM unavailable" not in proc.stdout
+    # Runtime diagnostics must stay off the protocol stdout. Failure mode is separately covered
+    # by test_isolated_submission_runtime_modes[unreachable].
+    assert "Runtime preflight passed" in proc.stderr
+    assert "Runtime preflight passed" not in proc.stdout

@@ -116,6 +116,11 @@ def test_health_model_integrity_and_fhir(client):
     r=client.get('/health').json();assert r['model_loaded'];assert r['input']['shape']==['batch',7]
     p=Path(__file__).resolve().parents[2];original=p/'research/original/risk_model_deep_v3.onnx'
     assert r['model_sha256']==hashlib.sha256(original.read_bytes()).hexdigest()
+    # /health's environment indicator must be config-derived (production_guard.environment_label()),
+    # never the old hardcoded 'demo': True -- default test config (NOVA_ENV unset, EMR_MODE=demo)
+    # resolves to 'demo'.
+    assert 'demo' not in r
+    assert r['environment']=='demo'
     b=client.get('/patients/SYN-001/fhir').json();assert b['resourceType']=='Bundle'
     assert {'Patient','MedicationStatement','Observation'}<={e['resource']['resourceType'] for e in b['entry']}
 

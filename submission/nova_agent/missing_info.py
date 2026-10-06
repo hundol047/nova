@@ -9,7 +9,7 @@ turns those axis scores into the final utility ranking (section 7) using the con
 from __future__ import annotations
 
 import math
-from typing import Dict, Iterable, List, Literal
+from typing import Dict, Iterable, List, Literal, Optional
 
 from pydantic import BaseModel
 
@@ -41,12 +41,18 @@ class CandidateInfo(BaseModel):
     key: str
     content_en: str
     content_ko: str
+    content_ja: str = ""
+    content_zh: str = ""
     disease_ids_discriminated: List[str]
     diagnostic_discrimination: float
     safety_relevance: float
     information_gain: float
     redundancy: float
     turn_cost: int
+    top_competitor_separation: float = 0.0
+    critical_resolution_gain: float = 0.0
+    specificity_gain: float = 0.0
+    decision_changing_value: float = 0.0
 
 
 def _diagnosis_prior(differential: List[DifferentialItem]) -> Dict[str, float]:
@@ -91,6 +97,40 @@ def _expected_information_gain(prior: Dict[str, float], affected_ids: set) -> fl
     return max(0.0, prior_entropy - expected_posterior_entropy)
 
 
+MAX_TIER2_QUESTION_RANK = 6
+
+
+def _resolve_entry(diagnosis_id: str) -> Optional[dict]:
+    """Resolve a differential item's diagnosis_id to a KB-shaped dict, covering BOTH real Tier-1 KB
+    diseases (disease_by_id) and ontology-sourced Tier-2/3 candidates (`onto::<concept_id>`, added
+    to the pool by candidate_generator's ontology_broadening/ontology_retrieval steps).
+
+    Before this fix, `disease_by_id()` alone returned None for every `onto::` id and analyze()
+    silently `continue`d past it -- an ontology-sourced candidate could appear in the differential
+    but never generate a single discriminating ASK/EXAM/TEST action of its own. Tier-2/3 entries now
+    resolve to the SAME shallow, tier-aware dict `candidate_generator._concept_to_kb_entry()`
+    already builds (Tier-2: bounded generic questions from real typical_features; Tier-3: correctly
+    empty, no fabricated clinical content) -- reusing that logic rather than forking it."""
+    entry = disease_by_id(diagnosis_id)
+    if entry is not None:
+        return entry
+    if not diagnosis_id.startswith("onto::"):
+        return None
+    try:
+        from nova_agent.candidate_generator import _concept_to_kb_entry
+        from nova_agent.ontology.registry import get_default_catalog
+    except Exception:
+        return None
+    concept_id = diagnosis_id[len("onto::"):]
+    try:
+        concept = get_default_catalog().get_condition(concept_id)
+    except Exception:
+        return None
+    if concept is None:
+        return None
+    return _concept_to_kb_entry(concept)
+
+
 def _already_answered(state: PatientState, category: str) -> bool:
     field = _ANSWERED_CATEGORY_FIELD.get(category)
     if field and getattr(state, field, None):
@@ -108,10 +148,23 @@ def _already_answered(state: PatientState, category: str) -> bool:
     return False
 
 
+def normalize_feature(text: str) -> str:
+    from nova_agent.ontology.normalizer import normalize
+    return normalize(text)
+
+
 class MissingInformationAnalyzer:
     def analyze(self, state: PatientState, differential: List[DifferentialItem],
                 safety_findings: List[SafetyFinding]) -> List[CandidateInfo]:
         top_k = differential
+        from nova_agent.config import get_config
+        from nova_agent.resolution import is_resolved
+        cfg = get_config()
+        if cfg.competition_retrieval_enabled and cfg.focus_resolved_actions and differential:
+            # Action focus only: safety/stop/ranking continue to see the full differential.
+            # Never spend another discriminator on an addressed non-leading alternative.
+            top_k = [d for i, d in enumerate(differential)
+                     if i == 0 or not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)]
         top_k_count = len(top_k) or 1
         safety = SafetyLayer()
 
@@ -119,24 +172,51 @@ class MissingInformationAnalyzer:
         exam_candidates: dict[str, CandidateInfo] = {}
         test_candidates: dict[str, CandidateInfo] = {}
 
-        for item in top_k:
-            entry = disease_by_id(item.diagnosis_id)
-            if entry is None:
-                continue
+        def add_entry(diagnosis_id: str, entry: dict, item: Optional[DifferentialItem] = None) -> None:
+            """Add actions for one diagnosis, including a safety-only diagnosis.
 
-            for discriminator in entry.get("discriminating_questions", []):
+            The deterministic differential is intentionally capped at top-K for ordinary
+            ranking. A diagnosis actively raised by SafetyLayer must still contribute its
+            minimum workup actions when it ranks below that cap; otherwise a red flag could block
+            premature diagnosis but have no legal action capable of investigating it. ``item`` is
+            the ranked differential entry when there is one (None for a safety-only diagnosis).
+            """
+            # A retrieval-only ontology candidate (no supporting evidence yet) must not spend turns on
+            # its own generic feature questions: it is in the pool for RECALL, and the case's real
+            # evidence has to earn it a place in the action budget first (Round M: enriched Tier-2
+            # entries otherwise generated dozens of unrelated "associated_symptoms:<feature>" asks).
+            if item is not None and diagnosis_id.startswith("onto::") and (
+                    not item.supporting_evidence or item.rank > MAX_TIER2_QUESTION_RANK):
+                # ...and only while it is actually in contention (top ranks): every supported
+                # long-tail candidate otherwise adds up to four generic questions to the action
+                # pool, and since the encounter ends once no action has value left, a longer pool
+                # meant longer encounters on cases that never involved those candidates.
+                questions = []
+            else:
+                questions = entry.get("discriminating_questions", [])
+            supported_features = {normalize_feature(s) for s in item.supporting_evidence} if item is not None else set()
+            for discriminator in questions:
                 category = discriminator.split(":", 1)[0]
+                if cfg.competition_retrieval_enabled and ":" in discriminator:
+                    # A feature-specific question cannot add the very same feature
+                    # already supported for this hypothesis. Do not infer other
+                    # answers, match substrings, or suppress generic safety history.
+                    feature = normalize_feature(discriminator.split(":", 1)[1])
+                    if feature and feature in supported_features:
+                        continue
                 key = f"ask:{discriminator}"
                 if state.question_asked(discriminator) or _already_answered(state, category):
                     continue
-                spec = disease_specific_question(item.diagnosis_id, discriminator)
+                spec = disease_specific_question(diagnosis_id, discriminator)
                 cand = ask_candidates.setdefault(key, CandidateInfo(
                     action_type="ASK", key=discriminator, content_en=spec["text_en"], content_ko=spec["text_ko"],
+                    content_ja=spec.get("text_ja", ""), content_zh=spec.get("text_zh", ""),
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
-                cand.disease_ids_discriminated.append(item.diagnosis_id)
-                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
+                if diagnosis_id not in cand.disease_ids_discriminated:
+                    cand.disease_ids_discriminated.append(diagnosis_id)
+                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
 
             for exam_id in entry.get("discriminating_exams", []):
                 if state.exam_done(exam_id):
@@ -146,11 +226,13 @@ class MissingInformationAnalyzer:
                     continue
                 cand = exam_candidates.setdefault(exam_id, CandidateInfo(
                     action_type="EXAM", key=exam_id, content_en=spec["name_en"], content_ko=spec["name_ko"],
+                    content_ja=spec.get("name_ja", ""), content_zh=spec.get("name_zh", ""),
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
-                cand.disease_ids_discriminated.append(item.diagnosis_id)
-                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
+                if diagnosis_id not in cand.disease_ids_discriminated:
+                    cand.disease_ids_discriminated.append(diagnosis_id)
+                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
 
             for test_id in entry.get("discriminating_tests", []):
                 if state.test_done(test_id):
@@ -160,17 +242,37 @@ class MissingInformationAnalyzer:
                     continue
                 cand = test_candidates.setdefault(test_id, CandidateInfo(
                     action_type="TEST", key=test_id, content_en=spec["name_en"], content_ko=spec["name_ko"],
+                    content_ja=spec.get("name_ja", ""), content_zh=spec.get("name_zh", ""),
                     disease_ids_discriminated=[], diagnostic_discrimination=0.0, safety_relevance=0.0,
                     information_gain=0.0, redundancy=0.0, turn_cost=spec["turn_cost"],
                 ))
-                cand.disease_ids_discriminated.append(item.diagnosis_id)
-                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(item.diagnosis_id, safety_findings))
+                if diagnosis_id not in cand.disease_ids_discriminated:
+                    cand.disease_ids_discriminated.append(diagnosis_id)
+                cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
+
+        for item in top_k:
+            entry = _resolve_entry(item.diagnosis_id)
+            if entry is not None:
+                add_entry(item.diagnosis_id, entry, item)
+
+        # Safety findings are additive: they do not rewrite the diagnostic ranking, but they keep
+        # an actively flagged dangerous condition actionable when it falls below display top-K.
+        ranked_ids = {item.diagnosis_id for item in top_k}
+        for finding in safety_findings:
+            if finding.diagnosis_id in ranked_ids:
+                continue
+            entry = _resolve_entry(finding.diagnosis_id)
+            if entry is not None:
+                add_entry(finding.diagnosis_id, entry)
 
         prior = _diagnosis_prior(top_k)
         all_candidates = list(ask_candidates.values()) + list(exam_candidates.values()) + list(test_candidates.values())
         for cand in all_candidates:
             affected_ids = set(cand.disease_ids_discriminated)
-            n = len(affected_ids)
+            # A safety-only diagnosis may be added outside the display top-K.  The original
+            # split score is defined over the top-K prior, so do not let that additive safety
+            # provenance make n > top_k_count and turn the discrimination score negative.
+            n = min(len(affected_ids), top_k_count)
             # Peaks when the item splits the top-K roughly in half (maximally discriminative);
             # low when it's either irrelevant (n=0, filtered out already) or shared by every
             # candidate (doesn't separate anything, though it may still confirm/exclude the group).
@@ -180,6 +282,23 @@ class MissingInformationAnalyzer:
             # confidence-weighted differential, not how highly-ranked the touched diseases happen
             # to be (that was the previous, incorrect implementation).
             cand.information_gain = round(_expected_information_gain(prior, affected_ids), 3)
+            if cfg.competition_retrieval_enabled:
+                leaders = [d for d in top_k[:3] if d.supporting_evidence or d.rank == 1]
+                pairs = [(a, b) for i, a in enumerate(leaders) for b in leaders[i+1:]]
+                cand.top_competitor_separation = (
+                    sum((a.diagnosis_id in affected_ids) != (b.diagnosis_id in affected_ids) for a,b in pairs)
+                    / len(pairs) if pairs else 0.0)
+                touched_leader = any(d.diagnosis_id in affected_ids for d in leaders)
+                # Inverse metadata coverage is a transparent specificity proxy, not an outcome
+                # likelihood. It prevents "relevant to everyone" from meaning "separates everyone".
+                cand.specificity_gain = (1.0 / len(affected_ids) if affected_ids and touched_leader
+                                         and cand.action_type in {"EXAM", "TEST"} else 0.0)
+                unresolved = [d for d in top_k[:5] if d.diagnosis_id in affected_ids
+                              and d.dangerous_if_missed and d.supporting_evidence
+                              and not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)]
+                cand.critical_resolution_gain = max((1.0 / max(d.rank, 1) for d in unresolved), default=0.0)
+                cand.decision_changing_value = max(cand.top_competitor_separation,
+                                                  cand.critical_resolution_gain, cand.specificity_gain)
             cand.redundancy = 0.0  # already-performed items were excluded above, never generated here
 
         return all_candidates

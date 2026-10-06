@@ -1,0 +1,47 @@
+Failed to parse LLM structured output as JSON (or a repairable variant of it).
+decide() failed for case=adv_timeout turn=0; using safe fallback.
+Traceback (most recent call last):
+  File "/workspace/scratch/e28fb512402a/nova/nova_agent/orchestrator.py", line 111, in decide
+    llm_output = self.llm_client.generate_turn_output(ctx)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/e28fb512402a/nova/evaluation/adversarial.py", line 121, in generate_turn_output
+    raise TimeoutError("simulated LLM timeout")
+TimeoutError: simulated LLM timeout
+decide() failed for case=adv_unavailable turn=0; using safe fallback.
+Traceback (most recent call last):
+  File "/workspace/scratch/e28fb512402a/nova/nova_agent/orchestrator.py", line 111, in decide
+    llm_output = self.llm_client.generate_turn_output(ctx)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/e28fb512402a/nova/evaluation/adversarial.py", line 133, in generate_turn_output
+    raise ConnectionError("simulated LLM unavailable")
+ConnectionError: simulated LLM unavailable
+decide() failed for case=adv_unavailable turn=1; using safe fallback.
+Traceback (most recent call last):
+  File "/workspace/scratch/e28fb512402a/nova/nova_agent/orchestrator.py", line 111, in decide
+    llm_output = self.llm_client.generate_turn_output(ctx)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/e28fb512402a/nova/evaluation/adversarial.py", line 133, in generate_turn_output
+    raise ConnectionError("simulated LLM unavailable")
+ConnectionError: simulated LLM unavailable
+decide() failed for case=adv_unavailable turn=2; using safe fallback.
+Traceback (most recent call last):
+  File "/workspace/scratch/e28fb512402a/nova/nova_agent/orchestrator.py", line 111, in decide
+    llm_output = self.llm_client.generate_turn_output(ctx)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/e28fb512402a/nova/evaluation/adversarial.py", line 133, in generate_turn_output
+    raise ConnectionError("simulated LLM unavailable")
+ConnectionError: simulated LLM unavailable
+PASS  uncooperative_patient_repeats
+PASS  empty_and_whitespace_observations
+PASS  conflicting_information
+PASS  extremely_long_response
+PASS  irrelevant_response
+PASS  duplicate_response_to_same_action
+PASS  llm_malformed_json
+PASS  llm_timeout
+PASS  llm_unavailable_full_case
+PASS  unknown_chief_complaint_adapter
+PASS  malformed_competition_observation
+PASS  random_seed_reproducibility
+
+ALL CHECKS PASSED

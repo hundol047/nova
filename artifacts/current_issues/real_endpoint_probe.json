@@ -1,0 +1,12 @@
+{
+  "endpoint_explicitly_configured": false,
+  "endpoint_host": "localhost",
+  "model": "openai/gpt-oss-20b",
+  "configured_revision": null,
+  "endpoint_available": false,
+  "live_call": "NOT VERIFIED",
+  "structured_parse": "NOT VERIFIED",
+  "real_gpt_oss": "NOT VERIFIED",
+  "reason": "Competition endpoint/identity/structured probe failed: URLError.",
+  "test_stub": false
+}

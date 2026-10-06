@@ -1,0 +1,41 @@
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+Blind11_01_ExertionalChestPressurecommon                YES       20      0          NO             
+Blind11_02_LowerUtiWoman        common                YES       24      0          NO             
+Blind11_03_ThunderclapHeadache  critical              YES       20      0          NO             
+Blind11_04_FebrileHypotensiveConfusedcritical              YES       22      0          NO             
+Blind11_05_TearingInterscapular dangerous_mimic       NO        26      0          YES            
+Blind11_06_ReproduciblePleuriticYoungbenign_mimic          YES       4       0          NO             
+Blind11_07_RetrievalMiss_AscendingParalysisretrieval_miss_trap   NO        18      0          YES            
+Blind11_08_RouterMiss_EpigastricMIrouter_miss_trap      YES       24      0          NO             
+Blind11_09_LeanForwardPleuriticViralrare                  NO        18      0          YES            
+Blind11_10_SpellsHeadacheSweatHTNvery_rare             NO        21      0          YES            
+Blind11_11_LongTail_Acroparesthesialong_tail             NO        26      0          NO             
+Blind11_12_VagueMalaise         unknown               YES (unknown handling)22      0          NO             
+Blind11_13_OOD_ExpeditionFevers ood                   NO (unknown handling)23      0          NO             
+Blind11_14_Multimorbid_Breathlessmultimorbidity        NO        19      0          NO             
+Blind11_15_Polypharmacy_Drowsy  polypharmacy          YES       4       0          NO             
+Blind11_16_Peds_BarkingCough    pediatric             NO        21      0          YES            
+Blind11_17_Pregnancy_HeadacheHTNpregnancy             NO        24      0          YES            
+Blind11_18_MixedKoEn_MigratingRLQmixed_language        NO        21      0          NO             
+Blind11_19_Ja_FlankFeverDysuria mixed_language        YES       26      0          NO             
+Blind11_20_Atypical_SilentMI    atypical              YES       30      0          NO             
+Blind11_21_Conflicting_PEvsAnxietyconflicting_findings  YES       30      0          NO             
+Blind11_22_DataFreshness_StaleTroponindata_freshness        YES       20      0          NO             
+Blind11_23_Units_HemoglobinGramsPerLiterunit_safety           NO        28      0          YES            
+Blind11_24_Units_CreatinineSI   unit_safety           NO        24      0          YES            
+
+blind_benchmark_v11 (reference after audit fixes) (24 cases, 22 scored, 15 critical)
+  Scored Diagnostic Accuracy:   50.0%  (excludes: Blind11_12_VagueMalaise, Blind11_13_OOD_ExpeditionFevers)
+  All-Case Diagnostic Accuracy: 50.0%  (every case, no exclusions)
+  Unsupported-Case Success Rate:50.0%  (explicit unknown correctly preserved)
+  Critical Diagnosis Recall:    46.7%
+  Critical Miss Rate:           53.3%
+  Average / Median Turns:       21.5 / 22.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        1.58 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        7.0 / 5.8 / 7.7
+  Utility Score Proxy:          0.040  (informal local metric, evaluation/scoring.py -- not an official competition score)

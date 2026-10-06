@@ -1,0 +1,12 @@
+[
+  {
+    "check": "preflight",
+    "returncode": 1,
+    "expected_blocked": true
+  },
+  {
+    "check": "real_smoke",
+    "returncode": 1,
+    "expected_blocked": true
+  }
+]

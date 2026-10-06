@@ -1,0 +1,82 @@
+{
+  "part": 4,
+  "counts": {
+    "cases": 20,
+    "correct": 20,
+    "critical": 9,
+    "critical_correct": 9,
+    "real_llm_calls": 0
+  },
+  "case_ids": [
+    "SIM50_low_development_06770",
+    "SIM50_low_development_05713",
+    "SIM50_low_development_15045",
+    "SIM50_low_development_11116",
+    "SIM50_low_development_03858",
+    "SIM50_low_validation_04078",
+    "SIM50_low_development_19783",
+    "SIM50_low_development_18887",
+    "SIM50_low_development_00779",
+    "SIM50_low_development_19024",
+    "SIM50_low_validation_00720",
+    "SIM50_low_development_15956",
+    "SIM50_low_development_06727",
+    "SIM50_low_development_11740",
+    "SIM50_low_development_13574",
+    "SIM50_low_validation_00356",
+    "SIM50_low_validation_03441",
+    "SIM50_low_development_13176",
+    "SIM50_low_development_04570",
+    "SIM50_low_development_11890"
+  ],
+  "elapsed_seconds": 5.250453673001175,
+  "run_metadata": {
+    "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+    "selection": "200 per difficulty; deterministic round-robin source families; no prediction filtering",
+    "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+    "selected_sha256": "72e2ef03392c5a2b2ef2cdc397fbcc9c0c7518027dfffaa9ba57ba3f4342ae2c",
+    "runtime_sha256": "ecebd3807bd9b6318d2dcebe2267d08df6d57f9e79b6ec506358a6453ae23d2b",
+    "runtime_commit": "2ab7684767fb899f5d6d32099ad18ee8e757cee7",
+    "runner_sha256": "c7bca17826e2319208ee17dbf1248397f6a75c260d950bc061b055e82dd7a222",
+    "response_policy": "mapped_unknown_missing",
+    "memoized": true,
+    "cases": 400,
+    "independent_test": false,
+    "clinical_validation": false,
+    "training": false,
+    "limitation": "Previously development-exposed synthetic source families and correlated variants; English scripted dialogues; not ICD-11-wide coverage."
+  },
+  "output_sha256": "a8ab4c3fc22793f0c14e19d6c47fecb6341e90df6af32b950b4c72b10574ff58",
+  "cache_stats": {
+    "_content_words": {
+      "hits": 263621,
+      "misses": 1224,
+      "maxsize": 16384,
+      "currsize": 1224
+    },
+    "_strip_negated_spans": {
+      "hits": 99821,
+      "misses": 228,
+      "maxsize": 16384,
+      "currsize": 228
+    },
+    "feature_finding_pair": {
+      "hits": 5763608,
+      "misses": 106806,
+      "maxsize": 131072,
+      "currsize": 106806
+    },
+    "catalog_context": {
+      "hits": 412,
+      "misses": 403,
+      "maxsize": 2048,
+      "currsize": 403
+    },
+    "catalog_search": {
+      "hits": 1003,
+      "misses": 81,
+      "maxsize": 8192,
+      "currsize": 81
+    }
+  }
+}

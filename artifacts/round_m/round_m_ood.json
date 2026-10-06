@@ -1,0 +1,392 @@
+{
+  "cases": [
+    {
+      "case_id": "RoundM_124",
+      "scored": false,
+      "turns": 44,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire": {
+        "case_id": "RoundM_124",
+        "action_type": "DIAGNOSE",
+        "content": "Acute Abdomen (Surgical Abdomen)",
+        "metadata": {
+          "key": "acute_abdomen",
+          "rationale": "UNKNOWN_PRESENTATION: no symptom, risk, medication, history, imaging, or objective evidence has matched anything yet -- the current top-ranked entry is an artifact of candidate order, not real clinical support. Further clarifying information is required before any diagnosis can be made.",
+          "internal_result": "INSUFFICIENT_INFORMATION",
+          "evidence_assessment": {
+            "internal_result": "INSUFFICIENT_INFORMATION",
+            "reasons": [
+              "no_evidenced_selected_candidate",
+              "too_few_distinct_evidence_items",
+              "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+              "weak_profile_support",
+              "candidate_separation_or_agreement_insufficient"
+            ],
+            "signals": {
+              "meaningful_evidence_items": 0,
+              "contradiction_count": 0,
+              "rank1_rank2_score_gap": 0.0,
+              "known_presentation_concepts": 0,
+              "selected_matches_rank1": true,
+              "candidate_sources": [
+                "zero_evidence_fallback"
+              ],
+              "objective_observations_present": true,
+              "nonmedical_domain": false,
+              "task_intent": false,
+              "clinical_signal_present": true,
+              "nondiagnostic_request": false,
+              "medication_information_request": false,
+              "retrieval_confidence": null,
+              "independent_candidate_agreement": null
+            },
+            "calibrated": false
+          },
+          "forced_due_to_protocol": true,
+          "completion_type": "FORCED_FINAL_DIAGNOSIS",
+          "wire_result": "DIAGNOSE",
+          "protocol_status": "PLACEHOLDER"
+        },
+        "soap": null,
+        "primary_diagnosis": null
+      }
+    },
+    {
+      "case_id": "RoundM_125",
+      "scored": false,
+      "turns": 44,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire": {
+        "case_id": "RoundM_125",
+        "action_type": "DIAGNOSE",
+        "content": "Acute Abdomen (Surgical Abdomen)",
+        "metadata": {
+          "key": "acute_abdomen",
+          "rationale": "UNKNOWN_PRESENTATION: no symptom, risk, medication, history, imaging, or objective evidence has matched anything yet -- the current top-ranked entry is an artifact of candidate order, not real clinical support. Further clarifying information is required before any diagnosis can be made.",
+          "internal_result": "INSUFFICIENT_INFORMATION",
+          "evidence_assessment": {
+            "internal_result": "INSUFFICIENT_INFORMATION",
+            "reasons": [
+              "no_evidenced_selected_candidate",
+              "too_few_distinct_evidence_items",
+              "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+              "weak_profile_support",
+              "candidate_separation_or_agreement_insufficient"
+            ],
+            "signals": {
+              "meaningful_evidence_items": 0,
+              "contradiction_count": 0,
+              "rank1_rank2_score_gap": 0.0,
+              "known_presentation_concepts": 0,
+              "selected_matches_rank1": true,
+              "candidate_sources": [
+                "zero_evidence_fallback"
+              ],
+              "objective_observations_present": true,
+              "nonmedical_domain": false,
+              "task_intent": false,
+              "clinical_signal_present": true,
+              "nondiagnostic_request": false,
+              "medication_information_request": false,
+              "retrieval_confidence": null,
+              "independent_candidate_agreement": null
+            },
+            "calibrated": false
+          },
+          "forced_due_to_protocol": true,
+          "completion_type": "FORCED_FINAL_DIAGNOSIS",
+          "wire_result": "DIAGNOSE",
+          "protocol_status": "PLACEHOLDER"
+        },
+        "soap": null,
+        "primary_diagnosis": null
+      }
+    },
+    {
+      "case_id": "RoundM_126",
+      "scored": false,
+      "turns": 36,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 1,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "symptom_match"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire": {
+        "case_id": "RoundM_126",
+        "action_type": "DIAGNOSE",
+        "content": "Gastrointestinal Bleeding",
+        "metadata": {
+          "key": "gi_bleeding",
+          "rationale": "No further question/exam/test would meaningfully change the current ranking.",
+          "internal_result": "INSUFFICIENT_INFORMATION",
+          "evidence_assessment": {
+            "internal_result": "INSUFFICIENT_INFORMATION",
+            "reasons": [
+              "too_few_distinct_evidence_items",
+              "weak_profile_support",
+              "candidate_separation_or_agreement_insufficient"
+            ],
+            "signals": {
+              "meaningful_evidence_items": 0,
+              "contradiction_count": 0,
+              "rank1_rank2_score_gap": 0.0,
+              "known_presentation_concepts": 1,
+              "selected_matches_rank1": true,
+              "candidate_sources": [
+                "symptom_match"
+              ],
+              "objective_observations_present": true,
+              "nonmedical_domain": false,
+              "task_intent": false,
+              "clinical_signal_present": true,
+              "nondiagnostic_request": false,
+              "medication_information_request": false,
+              "retrieval_confidence": null,
+              "independent_candidate_agreement": null
+            },
+            "calibrated": false
+          },
+          "forced_due_to_protocol": true,
+          "completion_type": "FORCED_FINAL_DIAGNOSIS",
+          "wire_result": "DIAGNOSE",
+          "protocol_status": "PLACEHOLDER"
+        },
+        "soap": null,
+        "primary_diagnosis": null
+      }
+    },
+    {
+      "case_id": "RoundM_127",
+      "scored": false,
+      "turns": 40,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 1,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.6,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire": {
+        "case_id": "RoundM_127",
+        "action_type": "DIAGNOSE",
+        "content": "Migraine",
+        "metadata": {
+          "key": "migraine",
+          "rationale": "LLM-selected diagnosis; passed deterministic safety validation (no unresolved dangerous alternative).",
+          "internal_result": "INSUFFICIENT_INFORMATION",
+          "evidence_assessment": {
+            "internal_result": "INSUFFICIENT_INFORMATION",
+            "reasons": [
+              "too_few_distinct_evidence_items",
+              "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+              "weak_profile_support"
+            ],
+            "signals": {
+              "meaningful_evidence_items": 1,
+              "contradiction_count": 0,
+              "rank1_rank2_score_gap": 0.6,
+              "known_presentation_concepts": 0,
+              "selected_matches_rank1": true,
+              "candidate_sources": [
+                "zero_evidence_fallback"
+              ],
+              "objective_observations_present": true,
+              "nonmedical_domain": false,
+              "task_intent": false,
+              "clinical_signal_present": true,
+              "nondiagnostic_request": false,
+              "medication_information_request": false,
+              "retrieval_confidence": null,
+              "independent_candidate_agreement": null
+            },
+            "calibrated": false
+          },
+          "forced_due_to_protocol": true,
+          "completion_type": "FORCED_FINAL_DIAGNOSIS",
+          "wire_result": "DIAGNOSE",
+          "protocol_status": "PLACEHOLDER"
+        },
+        "soap": null,
+        "primary_diagnosis": null
+      }
+    },
+    {
+      "case_id": "RoundM_128",
+      "scored": false,
+      "turns": 44,
+      "internal": {
+        "internal_result": "INSUFFICIENT_INFORMATION",
+        "reasons": [
+          "no_evidenced_selected_candidate",
+          "too_few_distinct_evidence_items",
+          "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+          "weak_profile_support",
+          "candidate_separation_or_agreement_insufficient"
+        ],
+        "signals": {
+          "meaningful_evidence_items": 0,
+          "contradiction_count": 0,
+          "rank1_rank2_score_gap": 0.0,
+          "known_presentation_concepts": 0,
+          "selected_matches_rank1": true,
+          "candidate_sources": [
+            "zero_evidence_fallback"
+          ],
+          "objective_observations_present": true,
+          "nonmedical_domain": false,
+          "task_intent": false,
+          "clinical_signal_present": true,
+          "nondiagnostic_request": false,
+          "medication_information_request": false,
+          "retrieval_confidence": null,
+          "independent_candidate_agreement": null
+        },
+        "calibrated": false
+      },
+      "wire": {
+        "case_id": "RoundM_128",
+        "action_type": "DIAGNOSE",
+        "content": "Acute Abdomen (Surgical Abdomen)",
+        "metadata": {
+          "key": "acute_abdomen",
+          "rationale": "UNKNOWN_PRESENTATION: no symptom, risk, medication, history, imaging, or objective evidence has matched anything yet -- the current top-ranked entry is an artifact of candidate order, not real clinical support. Further clarifying information is required before any diagnosis can be made.",
+          "internal_result": "INSUFFICIENT_INFORMATION",
+          "evidence_assessment": {
+            "internal_result": "INSUFFICIENT_INFORMATION",
+            "reasons": [
+              "no_evidenced_selected_candidate",
+              "too_few_distinct_evidence_items",
+              "retrieval_or_safety_membership_is_not_diagnostic_evidence",
+              "weak_profile_support",
+              "candidate_separation_or_agreement_insufficient"
+            ],
+            "signals": {
+              "meaningful_evidence_items": 0,
+              "contradiction_count": 0,
+              "rank1_rank2_score_gap": 0.0,
+              "known_presentation_concepts": 0,
+              "selected_matches_rank1": true,
+              "candidate_sources": [
+                "zero_evidence_fallback"
+              ],
+              "objective_observations_present": true,
+              "nonmedical_domain": false,
+              "task_intent": false,
+              "clinical_signal_present": true,
+              "nondiagnostic_request": false,
+              "medication_information_request": false,
+              "retrieval_confidence": null,
+              "independent_candidate_agreement": null
+            },
+            "calibrated": false
+          },
+          "forced_due_to_protocol": true,
+          "completion_type": "FORCED_FINAL_DIAGNOSIS",
+          "wire_result": "DIAGNOSE",
+          "protocol_status": "PLACEHOLDER"
+        },
+        "soap": null,
+        "primary_diagnosis": null
+      }
+    }
+  ],
+  "interpretation": "Forced four-action completion is not a supported diagnosis; no accuracy credit."
+}

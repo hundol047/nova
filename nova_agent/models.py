@@ -35,4 +35,11 @@ class VitalSigns(BaseModel):
     respiratory_rate: Optional[int] = Field(default=None, ge=4, le=60)
     temperature_c: Optional[float] = Field(default=None, ge=25, le=45)
     spo2: Optional[int] = Field(default=None, ge=0, le=100)
+    # Derived, not a direct measurement: |systolic1 - systolic2| when vitals_parser.py detects TWO
+    # distinct blood-pressure readings reported for opposite limbs in the same result text (e.g.
+    # "BP 180/60 right arm, 130/50 left arm") -- a classic objective sign for aortic dissection
+    # (and other vascular pathology), previously structurally invisible to the scoring engine
+    # because the old single-BP-only parser only ever kept the first reading. None means "no
+    # bilateral reading reported", never "no differential" (that would be 0, a real finding).
+    sbp_arm_differential: Optional[int] = Field(default=None, ge=0, le=200)
     raw_text: str = ""

@@ -1,0 +1,15 @@
+{
+  "scope": "Target branch workflow runs; all events",
+  "source_url": "https://api.github.com/repos/hundol047/nova/actions/runs?branch=offline%2Fnova-competition-agent-optimization&per_page=100",
+  "observed_utc": "2026-10-03T12:29:33.286Z",
+  "total_runs": 4,
+  "run_ids": [
+    36853770462,
+    36853323647,
+    36803318412,
+    36802858254
+  ],
+  "latest_created_at": "2026-10-01T11:11:08Z",
+  "new_runs_since_2026_10_03": 0,
+  "workflow_dispatch_requested": false
+}

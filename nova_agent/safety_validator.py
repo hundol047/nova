@@ -34,9 +34,17 @@ from nova_agent.resolution import is_resolved
 from nova_agent.safety import SafetyFinding
 from nova_agent.semantic_dedup import is_semantic_duplicate
 from nova_agent.state import PatientState, normalize_key
+from nova_agent.diagnosis_normalizer import same_diagnosis
+from nova_agent.evidence_grounding import grounded_quotes, distinct_support_count
 from nova_agent.stop_policy import StopDecision
 
 CandidatePool = Dict[Tuple[str, str], ScoredCandidate]
+
+
+def selected_diagnosis_item(content: str, differential: List[DifferentialItem]) -> Optional[DifferentialItem]:
+    # Match the proposed NAME, not a synthetic novel: ID that cannot normalize to it.
+    matches = [d for d in differential if same_diagnosis(d.diagnosis, content)]
+    return matches[0] if len(matches) == 1 else None
 
 
 def build_candidate_pool(candidates: List[ScoredCandidate]) -> CandidatePool:
@@ -55,7 +63,8 @@ class ValidationResult(BaseModel):
 class SafetyValidator:
     def merge_differential(self, llm_output: Optional[AgentTurnOutput],
                             deterministic_differential: List[DifferentialItem],
-                            safety_findings: List[SafetyFinding]) -> List[DifferentialItem]:
+                            safety_findings: List[SafetyFinding],
+                            state: Optional[PatientState] = None) -> List[DifferentialItem]:
         """LLM's differential (when present and non-empty) is authoritative for ranking and
         evidence -- including introducing diagnoses outside the local knowledge base. The
         deterministic knowledge-based ranking is only the fallback when there's no usable LLM
@@ -70,7 +79,11 @@ class SafetyValidator:
         # bandderived proxy instead of a fabricated-looking precise number.
         det_by_id = {d.diagnosis_id: d for d in deterministic_differential}
         band_proxy = {"HIGH": 0.75, "MEDIUM": 0.45, "LOW": 0.15}
-        top_k = get_config().top_k_differential
+        # Kept consistent with differential.py's own final-differential size (see NovaConfig.
+        # effective_differential_top_k()) -- otherwise an LLM given up to reasoning_top_k
+        # candidates in its context could have its own returned differential arbitrarily
+        # truncated back down to the legacy 5 here, undoing the wider competition-mode context.
+        top_k = get_config().effective_differential_top_k()
 
         if llm_output is not None and llm_output.differential:
             # LLM differential validation hardening (spec section 10): canonicalize each entry,
@@ -80,6 +93,11 @@ class SafetyValidator:
             # rank=0, rank=999, or a missing/duplicate rank) and reassign clean sequential ranks.
             by_id: "OrderedDict[str, DifferentialItem]" = OrderedDict()
             for item in llm_output.differential:
+                if state is not None:
+                    item = item.model_copy(update={
+                        'supporting_evidence': grounded_quotes(item.supporting_evidence, state, positive=True),
+                        'contradictory_evidence': grounded_quotes(item.contradictory_evidence, state, positive=False),
+                    })
                 diagnosis_id = item.diagnosis_id or normalize_diagnosis(item.diagnosis).canonical_id
                 entry = disease_by_id(diagnosis_id) if diagnosis_id else None
                 # Known-diagnosis metadata (dangerous/urgency) is authoritative from the local KB
@@ -103,10 +121,39 @@ class SafetyValidator:
 
                 by_id[resolved_id] = DifferentialItem(
                     diagnosis=item.diagnosis, diagnosis_id=resolved_id, rank=raw_rank, score=score,
-                    score_ratio=score_ratio, supporting_evidence=list(item.supporting_evidence),
-                    contradictory_evidence=list(item.contradictory_evidence),
-                    missing_discriminative_evidence=item.missing_information,
+                    score_ratio=score_ratio,
+                    # Preserve deterministic evidence when the LLM restates the differential.
+                    # The LLM may add or reorder evidence, but it must not erase a finding the
+                    # local parser already extracted (especially multilingual/negation-aware
+                    # evidence). This keeps the final support gate and safety checks grounded in
+                    # the same structured state that produced the deterministic score.
+                    supporting_evidence=list(dict.fromkeys(
+                        (det_match.supporting_evidence if det_match else [])
+                        + list(item.supporting_evidence))),
+                    contradictory_evidence=list(dict.fromkeys(
+                        (det_match.contradictory_evidence if det_match else [])
+                        + list(item.contradictory_evidence))),
+                    missing_discriminative_evidence=list(dict.fromkeys(
+                        (det_match.missing_discriminative_evidence if det_match else [])
+                        + list(item.missing_information))),
                     urgency=urgency or "LOW", dangerous_if_missed=dangerous, confidence_band=item.confidence,
+                    # Carry the deterministic pool's provenance through the LLM-authored rebuild --
+                    # without this, safety.py's "already evidence-backed in the differential" check
+                    # (candidate_sources != ["safety_candidate"]) sees an empty list for every
+                    # entry (LLM output never sets this field) and falls back to treating every
+                    # diagnosis as equally relevant, which is exactly the over-flagging this field
+                    # exists to prevent. A novel LLM-introduced diagnosis with no deterministic
+                    # match at all gets an empty list here, same as "no evidence-based source yet".
+                    candidate_sources=det_match.candidate_sources if det_match else [],
+                    # Round E: same reasoning as candidate_sources immediately above -- without
+                    # this, this method's own LLM-authored rebuild path silently reset
+                    # fallback_candidate to its pydantic default (False) for EVERY entry, breaking
+                    # both this method's own `llm_item.fallback_candidate` UNKNOWN_PRESENTATION
+                    # gate a few lines below AND orchestrator.py's forced-low-evidence-diagnosis
+                    # metadata, specifically whenever an LLM/mock provider call returned ANY
+                    # non-empty differential of its own (the pass-through `else` branch below never
+                    # had this gap -- only this reconstruction branch did).
+                    fallback_candidate=bool(det_match and det_match.fallback_candidate),
                 )
 
             ordered = sorted(by_id.values(), key=lambda d: d.rank)[:top_k]
@@ -174,7 +221,34 @@ class SafetyValidator:
                                      f"{content_norm.canonical_id!r}.",
                 )
 
-            llm_diagnosis_id = picked.key or (normalize_diagnosis(picked.content).canonical_id or "")
+            # Match the proposed NAME first (PR #15: a synthetic novel: id must not stand in for a label it
+            # cannot normalize to), then fall back to the proposed key / normalized id.
+            llm_item = selected_diagnosis_item(picked.content, merged_differential)
+            llm_diagnosis_id = llm_item.diagnosis_id if llm_item else (
+                picked.key or (normalize_diagnosis(picked.content).canonical_id or ""))
+            if llm_item is None:
+                llm_item = next((d for d in merged_differential if d.diagnosis_id == llm_diagnosis_id), None)
+
+            # UNKNOWN_PRESENTATION (spec: zero-evidence file-order bug fix): an explicit,
+            # unconditional block on a diagnosis reached only through candidate_generator.py's
+            # whole-catalog zero-evidence fallback (fallback_candidate=True, always zero real
+            # supporting evidence) -- checked FIRST, ahead of the unresolved-dangerous-alternative
+            # check below, so the reported reason names the real root cause (nothing matched at
+            # all) rather than the misleading "a specific danger is still unresolved" framing that
+            # check would otherwise report (every zero-evidence candidate is technically
+            # "unresolved dangerous", which is true but not the actual reason to refuse). Never
+            # bypassable via the turn-count/evidence-count minimum-readiness fallback further
+            # below. stop_policy.py already refuses `should_diagnose` in this state; this closes
+            # the same gate for the SEPARATE LLM-selected-diagnosis path, which could otherwise
+            # still pick this diagnosis on its own.
+            if llm_item is not None and llm_item.fallback_candidate:
+                return ValidationResult(
+                    action=deterministic_action, differential=merged_differential, overridden=True,
+                    override_reason=f"Blocked DIAGNOSE: {picked.content!r} has no real supporting evidence -- "
+                                     "the presentation is unmatched (UNKNOWN_PRESENTATION); further clarifying "
+                                     "information is required before any diagnosis can be made.",
+                )
+
             unresolved = [
                 d for d in merged_differential
                 if d.dangerous_if_missed and d.diagnosis_id != llm_diagnosis_id
@@ -196,8 +270,9 @@ class SafetyValidator:
             # regardless of which diagnosis it names, not only ones that happen to leave a
             # dangerous alternative dangling.
             cfg = get_config().stop_policy
-            llm_item = next((d for d in merged_differential if d.diagnosis_id == llm_diagnosis_id), None)
             evidence_count = len(llm_item.supporting_evidence) if llm_item else 0
+            if llm_item and disease_by_id(llm_item.diagnosis_id) is None:
+                evidence_count = distinct_support_count(llm_item.supporting_evidence, state)
             minimally_ready = stop_decision.should_diagnose or (
                 state.turn_count >= cfg.min_turns_before_diagnose and evidence_count >= cfg.min_evidence_items
             )
@@ -229,6 +304,8 @@ class SafetyValidator:
             # the LLM's proposal onto a REAL taxonomy entry before giving up on it entirely.
             canonicalized = canonicalize_action(picked.type, picked.key, picked.content, state)
             if canonicalized is not None:
+                if picked.reason:
+                    canonicalized.rationale += ' LLM-reported evidence gap: ' + picked.reason[:600]
                 return ValidationResult(action=canonicalized, differential=merged_differential, overridden=False)
             return ValidationResult(action=deterministic_action, differential=merged_differential, overridden=True,
                                      override_reason=f"selected_action key {picked.key!r} is not a known "
@@ -249,5 +326,6 @@ class SafetyValidator:
                                                       "an already-covered item.")
         action = AgentAction(action_type=picked.type, key=picked.key, content=content,
                               rationale="LLM-selected action; passed deterministic safety validation "
-                                        "(legal, non-duplicate candidate).")
+                                        "(legal, non-duplicate candidate)." +
+                                        (" LLM-reported evidence gap: " + picked.reason[:600] if picked.reason else ""))
         return ValidationResult(action=action, differential=merged_differential, overridden=False)

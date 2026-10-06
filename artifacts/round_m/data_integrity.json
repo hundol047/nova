@@ -1,0 +1,18 @@
+{
+  "evaluation/generalization_dev_cases_round_m.py": {
+    "unchanged_from_audited_remote": true,
+    "sha256": "09af49cf1c590a85d02659a30798f33a9018799bcd2e8bcab2e948c3d3fd67ec"
+  },
+  "evaluation/blind_cases_v19.py": {
+    "unchanged_from_audited_remote": true,
+    "sha256": "d2c76470346107e398f823a208767e4d019ee2f72a122130cf8369abffa5bee9"
+  },
+  "evaluation/blind_benchmark_v19.py": {
+    "unchanged_from_audited_remote": true,
+    "sha256": "cf11e3daa3537311cef78c1361781beab495cb7b38c46116c1ccd28244814a8e"
+  },
+  "v19_attempt_absent": true,
+  "v19_results_absent": true,
+  "v19_manifest_absent": true,
+  "v20_absent": true
+}

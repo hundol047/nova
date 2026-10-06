@@ -1,0 +1,69 @@
+diff --git a/nova_agent/missing_info.py b/nova_agent/missing_info.py
+index 058e39b..83d958c 100644
+--- a/nova_agent/missing_info.py
++++ b/nova_agent/missing_info.py
+@@ -187,6 +187,14 @@ class MissingInformationAnalyzer:
+                 questions = entry.get("discriminating_questions", [])
+             for discriminator in questions:
+                 category = discriminator.split(":", 1)[0]
++                if cfg.competition_retrieval_enabled and ":" in discriminator:
++                    # A feature-specific question cannot add the very same feature
++                    # already supported for this hypothesis. Do not infer other
++                    # answers, match substrings, or suppress generic safety history.
++                    from nova_agent.ontology.normalizer import normalize
++                    feature = normalize(discriminator.split(":", 1)[1])
++                    if feature and feature in {normalize(s) for s in item.supporting_evidence}:
++                        continue
+                 key = f"ask:{discriminator}"
+                 if state.question_asked(discriminator) or _already_answered(state, category):
+                     continue
+diff --git a/nova_agent/ontology/search.py b/nova_agent/ontology/search.py
+index 702b256..8907f81 100644
+--- a/nova_agent/ontology/search.py
++++ b/nova_agent/ontology/search.py
+@@ -122,7 +122,7 @@ class ConceptSearchIndex:
+         #    The final score is still normalized into the same [0.5, 0.9] band the caller already
+         #    depends on (open_world.py's KNOWN/POSSIBLE thresholds, etc.) -- only the RELATIVE
+         #    ranking among token-overlap matches changes, not the score's meaning or range.
+-        q_tokens = tokens(query)
++        q_tokens = list(dict.fromkeys(tokens(query)))
+         if q_tokens:
+             total_concepts = max(1, len(self._concepts))
+             tok_weight: Dict[str, float] = {}
+diff --git a/nova_agent/resolution.py b/nova_agent/resolution.py
+index 12a66e7..fdcd9fc 100644
+--- a/nova_agent/resolution.py
++++ b/nova_agent/resolution.py
+@@ -103,4 +103,18 @@ def _ontology_workup_addressed(diagnosis_id: str, state: PatientState) -> bool:
+         return False
+     if entry is None:
+         return False
+-    return all(state.question_asked(q) for q in entry.get("discriminating_questions", []))
++    # Match the action generator: a specific positive feature already in this
++    # patient's evidence does not need to be elicited again. This only records
++    # discriminator coverage; it does not exclude the disease or bypass stop safety.
++    from nova_agent.differential import _score_disease
++    from nova_agent.ontology.normalizer import normalize
++    _, _, support, _, _ = _score_disease(entry, state)
++    supported = {normalize(s) for s in support}
++    def covered(question):
++        if state.question_asked(question):
++            return True
++        if ":" not in question:
++            return False
++        feature = normalize(question.split(":", 1)[1])
++        return bool(feature and feature in supported)
++    return all(covered(q) for q in entry.get("discriminating_questions", []))
+diff --git a/nova_agent/retrieval_pipeline.py b/nova_agent/retrieval_pipeline.py
+index c69af5d..1d64162 100644
+--- a/nova_agent/retrieval_pipeline.py
++++ b/nova_agent/retrieval_pipeline.py
+@@ -82,7 +82,7 @@ _RRF_K = 60
+ # Each signal-typed sub-query independently asks the catalog for this many candidates before
+ # fusion -- bounded so no single signal can dominate purely by returning more raw hits than
+ # another; the fused, deduplicated result is then truncated to the caller's retrieval_top_k.
+-_PER_SIGNAL_QUERY_LIMIT = 80
++_PER_SIGNAL_QUERY_LIMIT = 150
+ 
+ 
+ @dataclass

@@ -1,0 +1,20 @@
+{
+  "file": "evaluation/blind_cases_v13.py",
+  "case_count": 52,
+  "file_sha256": "d2444b1f491ee847683110ff133e94fb604002b79d8c38d4f182c4f885d6b789",
+  "frozen_at_utc": "2026-09-28T00:00:00Z",
+  "created_commit": "faa1701a1954239074cc9dea1137525eb19b3a22",
+  "language_distribution": {"en": 50, "ko_mixed": 1, "ja_mixed": 1},
+  "category_distribution": {
+    "common": 4, "critical": 6, "dangerous_mimic": 3, "benign_mimic": 3,
+    "unseen_lay_phrasing": 2, "objective_evidence_heavy": 2, "risk_context_heavy": 2,
+    "medication_risk": 2, "negative_evidence_heavy": 2, "atypical_presentation": 2,
+    "elderly": 1, "pediatric": 2, "pregnancy": 1, "polypharmacy": 1, "multimorbidity": 1,
+    "mixed_language": 2, "long_tail": 5, "unknown_ood": 2, "retrieval_miss_trap": 2,
+    "safety_trap": 1, "over_testing_trap": 2, "premature_diagnosis_trap": 2,
+    "conflicting_evidence": 1, "sparse_evidence": 1
+  },
+  "diagnosis_coverage": "Representative across the abstract failure categories this round's generalization audit targeted (candidate-present-then-dropped, objective-evidence vocabulary narrowness, lay-language/risk-context not reaching candidate pool membership, converging-evidence keyword-volume) plus the full required spread: common/critical/dangerous-mimic/benign-mimic/unseen-lay-phrasing/objective-evidence-heavy/risk-context-heavy/medication-risk/negative-evidence-heavy/atypical/elderly/pediatric/pregnancy/polypharmacy/multimorbidity/mixed-language/long-tail-Tier-2/UNKNOWN-OOD/retrieval-miss-trap/safety-trap/over-testing-trap/premature-diagnosis-trap/conflicting-evidence/sparse-evidence. 52 genuinely distinct cases, not padded toward a larger count. Deliberately does NOT reword v12's own ACS/PE/GI-bleed/stroke miss cases merely to prove those four now pass -- samples a fresh, balanced distribution instead. Tier-1 targets use knowledge/diseases ids; Tier-2/long-tail targets use 'tier2:<id>' (validated against the real default ontology catalog); unknown/OOD targets use 'unknown' -- all with scoring_expected=false where appropriate (excluded from the accuracy denominator, still checked for safe/crash/turn-limit behavior).",
+  "supersedes": "Blind v3, v4, v5, v6, v8, v9, v10, v11, v12 are ALL REFERENCE-ONLY as of this round. This round audited (never tuned directly against) Blind v12's 4 critical misses at an abstract failure-category level and fixed each root cause generically in nova_agent/candidate_generator.py, differential.py, objective_evidence.py, and matching.py -- reasoning-adjacent code every prior blind set predates. Blind v13 is authored/frozen after these changes (commit faa1701a1954239074cc9dea1137525eb19b3a22, the FINAL_REASONING_SHA / reasoning-freeze point) and is the untouched check for the current code.",
+  "note": "SHA-256 computed BEFORE evaluation.blind_benchmark_v13 was ever run, against commit faa1701a1954239074cc9dea1137525eb19b3a22 (the reasoning-freeze commit -- no nova_agent/competition/submission-reasoning files changed after this point through the first run, only this evaluation/ authoring). blind_cases_v13.py must not be edited after this point; a pre-first-run correction would require a NEW manifest entry documenting why, never a silent edit. FIRST RUN of evaluation.blind_benchmark_v13 happens exactly once, reported as-is, and is never re-tuned against. If reasoning/retrieval code changes again after this freeze, v13 becomes reference-only and a fresh v14 is authored."
+}

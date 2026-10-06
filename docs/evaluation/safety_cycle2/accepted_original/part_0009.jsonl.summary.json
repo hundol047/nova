@@ -1,0 +1,84 @@
+{
+  "part": 9,
+  "counts": {
+    "cases": 20,
+    "correct": 20,
+    "critical": 9,
+    "critical_correct": 9,
+    "real_llm_calls": 0
+  },
+  "case_ids": [
+    "SIM50_low_validation_00672",
+    "SIM50_low_development_10998",
+    "SIM50_low_development_10020",
+    "SIM50_low_development_03711",
+    "SIM50_low_development_03325",
+    "SIM50_low_validation_03484",
+    "SIM50_low_validation_03721",
+    "SIM50_low_development_18023",
+    "SIM50_low_development_14079",
+    "SIM50_low_development_13666",
+    "SIM50_low_development_13266",
+    "SIM50_low_validation_01423",
+    "SIM50_low_development_15672",
+    "SIM50_low_development_18037",
+    "SIM50_low_validation_02685",
+    "SIM50_low_development_19900",
+    "SIM50_low_development_08339",
+    "SIM50_low_development_01485",
+    "SIM50_low_development_07548",
+    "SIM50_low_development_15973"
+  ],
+  "elapsed_seconds": 7.910534842998459,
+  "run_metadata": {
+    "scope": "SYNTHETIC_MOCK_DIALOGUES_NOT_CLINICAL_ACCURACY",
+    "selection": "200 per difficulty; deterministic round-robin source families; no prediction filtering",
+    "seed": "balanced400-v1",
+    "excluded_inputs": 0,
+    "corpus_sha256": "0aaf7a72d17da6bf4cd181938d42f4de6903c79e73d10ffbd80a715c732146ad",
+    "selected_sha256": "72e2ef03392c5a2b2ef2cdc397fbcc9c0c7518027dfffaa9ba57ba3f4342ae2c",
+    "runtime_sha256": "b2d01d1bfcbfc1ee8e2902fda3401cc9081430524519ed4edbf8e825f026857f",
+    "runtime_commit": "b9c2d38a1f4cb37f55cedde36e74e5e8a7575083",
+    "runner_sha256": "9a3fdc526d792212139de7ad8104fa99416b7211ce3f47f0eda9e95e154e0f1a",
+    "response_policy": "mapped_unknown_missing",
+    "memoized": true,
+    "cases": 400,
+    "independent_test": false,
+    "clinical_validation": false,
+    "training": false,
+    "limitation": "Previously development-exposed synthetic source families and correlated variants; English scripted dialogues; not ICD-11-wide coverage."
+  },
+  "output_sha256": "cc67f5a0b1f0e8fc9c920aab092778555685ab2fac08aefecab73a1cf2d355ae",
+  "cache_stats": {
+    "_content_words": {
+      "hits": 411697,
+      "misses": 1372,
+      "maxsize": 16384,
+      "currsize": 1372
+    },
+    "_strip_negated_spans": {
+      "hits": 161140,
+      "misses": 364,
+      "maxsize": 16384,
+      "currsize": 364
+    },
+    "feature_finding_pair": {
+      "hits": 9091245,
+      "misses": 170896,
+      "maxsize": 131072,
+      "currsize": 131072
+    },
+    "catalog_context": {
+      "hits": 596,
+      "misses": 587,
+      "maxsize": 2048,
+      "currsize": 587
+    },
+    "catalog_search": {
+      "hits": 1500,
+      "misses": 130,
+      "maxsize": 8192,
+      "currsize": 130
+    }
+  }
+}

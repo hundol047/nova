@@ -1,0 +1,195 @@
+{
+  "data_type": "FRESH BLIND v18 / COMPETITION-STRUCTURE / MOCK-LLM / SYNTHETIC HOLDOUT / NOT INDEPENDENT CLINICAL VALIDATION",
+  "run_count": 1,
+  "reasoning_patch": false,
+  "unknown_stage_note": "The original execution captured only active Top5 and selected actions. Retrieval/rerank and ranks beyond 5 are not reconstructable without a forbidden rerun; absence from Top5 does not prove absence from Top25.",
+  "errors": [
+    {
+      "case_id": "V18_04",
+      "ground_truth": "tension_pneumothorax",
+      "final_diagnosis": "Sepsis",
+      "critical": true,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": true,
+      "final_rank": 4,
+      "failure_category": "FINAL_RANKING_ERROR"
+    },
+    {
+      "case_id": "V18_05",
+      "ground_truth": "ischemic_stroke",
+      "final_diagnosis": "Pulmonary Embolism",
+      "critical": true,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": true,
+      "final_rank": 3,
+      "failure_category": "FINAL_RANKING_ERROR"
+    },
+    {
+      "case_id": "V18_19",
+      "ground_truth": "ischemic_stroke",
+      "final_diagnosis": "Migraine",
+      "critical": true,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": true,
+      "final_rank": 5,
+      "failure_category": "FINAL_RANKING_ERROR"
+    },
+    {
+      "case_id": "V18_27",
+      "ground_truth": "appendicitis",
+      "final_diagnosis": "Bacterial Meningitis",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    },
+    {
+      "case_id": "V18_28",
+      "ground_truth": "nephrolithiasis",
+      "final_diagnosis": "Uncomplicated Cystitis (Lower UTI)",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    },
+    {
+      "case_id": "V18_33",
+      "ground_truth": "asthma_copd_exacerbation",
+      "final_diagnosis": "Panic Attack",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": true,
+      "final_rank": 3,
+      "failure_category": "FINAL_RANKING_ERROR"
+    },
+    {
+      "case_id": "V18_35",
+      "ground_truth": "musculoskeletal_chest_pain",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": true,
+      "final_rank": 4,
+      "failure_category": "FINAL_RANKING_ERROR"
+    },
+    {
+      "case_id": "V18_37",
+      "ground_truth": "orthostatic_hypotension",
+      "final_diagnosis": "Acute Coronary Syndrome",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    },
+    {
+      "case_id": "V18_40",
+      "ground_truth": "tension_headache",
+      "final_diagnosis": "Acute Abdomen (Surgical Abdomen)",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    },
+    {
+      "case_id": "V18_41",
+      "ground_truth": "bppv",
+      "final_diagnosis": "Vasovagal (Reflex) Syncope",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    },
+    {
+      "case_id": "V18_47",
+      "ground_truth": "bppv",
+      "final_diagnosis": "Vasovagal (Reflex) Syncope",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    },
+    {
+      "case_id": "V18_51",
+      "ground_truth": "orthostatic_hypotension",
+      "final_diagnosis": "Vasovagal (Reflex) Syncope",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": true,
+      "final_rank": 2,
+      "failure_category": "FINAL_RANKING_ERROR"
+    },
+    {
+      "case_id": "V18_53",
+      "ground_truth": "Herpes Zoster (Shingles)",
+      "final_diagnosis": "Acute Abdomen (Surgical Abdomen)",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    },
+    {
+      "case_id": "V18_54",
+      "ground_truth": "Bell's Palsy",
+      "final_diagnosis": "Ischemic Stroke",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    },
+    {
+      "case_id": "V18_55",
+      "ground_truth": "Acute Gout Flare",
+      "final_diagnosis": "Gastroesophageal Reflux Disease",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    },
+    {
+      "case_id": "V18_56",
+      "ground_truth": "Myasthenia Gravis",
+      "final_diagnosis": "Acute Abdomen (Surgical Abdomen)",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    },
+    {
+      "case_id": "V18_64",
+      "ground_truth": "Carpal Tunnel Syndrome",
+      "final_diagnosis": "Ischemic Stroke",
+      "critical": false,
+      "retrieval_present": "NOT_RECORDED",
+      "rerank_present": "NOT_RECORDED",
+      "active_differential_present": "NOT_OBSERVED_IN_CAPTURED_TOP5",
+      "final_rank": "NOT_RECORDED_BEYOND_TOP5",
+      "failure_category": "OTHER"
+    }
+  ]
+}
