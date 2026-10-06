@@ -18,7 +18,8 @@ from typing import List, Optional, Tuple
 from nova_agent.action_selector import ActionSelector, AgentAction
 from nova_agent.chief_complaint import classify as classify_chief_complaint
 from nova_agent.clinical_summary import build_clinical_summary
-from nova_agent.config import get_config, effective_max_turns
+from nova_agent.config import (PRELIMINARY_CASE_SECONDS, PRELIMINARY_MAX_LLM_CALLS_PER_CASE,
+                               PRELIMINARY_MAX_TURNS, effective_max_turns, get_config)
 from nova_agent.differential import DifferentialEngine, DifferentialItem
 from nova_agent.knowledge.retrieval import retrieve_turn_context
 from nova_agent.knowledge.licensed_reference_store import retrieve_licensed_references
@@ -50,11 +51,18 @@ class DoctorAgent:
         self.safety_validator = SafetyValidator()
 
     def new_case(self, case_id: str, chief_complaint: str, demographics: Optional[dict] = None,
-                 max_turns: Optional[int] = None) -> PatientState:
+                 max_turns: Optional[int] = None, preliminary: Optional[bool] = None) -> PatientState:
+        """``preliminary`` applies the preliminary-round rules (50 turns, 20 minutes, no TEST, a
+        bounded number of model calls); None follows ``NovaConfig.preliminary_rules``."""
+        cfg = get_config()
+        prelim = cfg.preliminary_rules if preliminary is None else bool(preliminary)
+        ceiling = PRELIMINARY_MAX_TURNS if prelim else 60
         return PatientState(
             case_id=case_id, chief_complaint=chief_complaint,
             demographics=Demographics(**(demographics or {})),
-            max_turns=effective_max_turns(max_turns, get_config().max_turns),
+            max_turns=effective_max_turns(max_turns, min(cfg.max_turns, ceiling), ceiling),
+            preliminary_rules=prelim,
+            time_limit_seconds=PRELIMINARY_CASE_SECONDS if prelim else None,
         )
 
     # --- core turn loop -----------------------------------------------------------------------
@@ -89,6 +97,8 @@ class DoctorAgent:
                 (cfg.case_timeout_seconds is not None and state.case_elapsed_seconds >= cfg.case_timeout_seconds)
                 or (cfg.max_llm_calls_per_case is not None and state.llm_call_count >= cfg.max_llm_calls_per_case)
             )
+            if state.preliminary_rules and not budget_exhausted:
+                budget_exhausted = not self._preliminary_llm_call_due(state, deterministic_action)
 
             if budget_exhausted:
                 retrieved_context: List[dict] = []
@@ -184,6 +194,18 @@ class DoctorAgent:
             log.exception("decide() failed for case=%s turn=%s; using safe fallback.", state.case_id, state.turn_count)
             return self._safe_fallback(state), None, []
 
+    def _preliminary_llm_call_due(self, state: PatientState, deterministic_action: AgentAction) -> bool:
+        """Preliminary-round model-call schedule. The fixed model is capped per session and its
+        usage is part of the efficiency score, but a case with NO model call scores 0. So: always
+        call on the first turn and on the turn that would submit the diagnosis, otherwise only every
+        4th turn, never beyond PRELIMINARY_MAX_LLM_CALLS_PER_CASE (one slot stays reserved for the
+        final turn). The deterministic engine decides every other turn unaided."""
+        cap = PRELIMINARY_MAX_LLM_CALLS_PER_CASE
+        calls = state.llm_call_count
+        if calls == 0 or deterministic_action.action_type == "DIAGNOSE":
+            return calls < cap
+        return calls < cap - 1 and state.turn_count % 4 == 0
+
     def observe(self, state: PatientState, action: AgentAction, result: str = "") -> None:
         """Records the environment's response to `action` into PatientState. For DIAGNOSE, `result`
         is an optional rationale string rather than an environment observation."""
@@ -198,6 +220,8 @@ class DoctorAgent:
                 if action.key not in TEST_CATALOG:
                     raise ValueError(f"Unknown TEST key: {action.key!r}")
                 state.record_test(action.key, result)
+            elif action.action_type == "SAY":
+                state.record_say(action.content, result)
             elif action.action_type == "DIAGNOSE":
                 state.record_diagnose(action.content, result)
             else:

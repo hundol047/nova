@@ -45,6 +45,9 @@ def is_resolved(diagnosis_id: str, contradictory_evidence: List[str], state: Pat
     required = entry.get("minimum_workup") or (
         list(entry.get("discriminating_exams", [])) + list(entry.get("discriminating_tests", []))
     )
+    if getattr(state, "preliminary_rules", False):
+        from nova_agent.taxonomy import TEST_CATALOG
+        required = [k for k in required if k not in TEST_CATALOG]  # no TEST action in the preliminary round
     if not required:
         return True
     done = set(state.completed_examinations) | set(state.completed_tests)
@@ -68,6 +71,15 @@ def _competition_resolved(diagnosis_id, contradictory_evidence, state):
     required = entry.get("minimum_workup")
     if required is None:
         required = list(entry.get("discriminating_exams", [])) + list(entry.get("discriminating_tests", []))
+    if getattr(state, "preliminary_rules", False):
+        # No TEST action exists in the preliminary round, so a workup that needs a test can never
+        # be completed. The diagnosis counts as ADDRESSED once every EXAM in its workup is done and
+        # every discriminating question has been asked; the tests it still needs are written into
+        # the SOAP plan. Addressed never means excluded: a decisive lead is still required to stop.
+        from nova_agent.taxonomy import TEST_CATALOG
+        exams = [k for k in required if k not in TEST_CATALOG]
+        asked_all = all(state.question_asked(q) for q in entry.get("discriminating_questions", []))
+        return all(k in set(state.completed_examinations) for k in exams) and asked_all
     results = {**state.physical_examinations, **state.imaging, **state.laboratory_tests}
     unavailable = re.compile(r"\b(pending|unavailable|unknown|not (?:done|performed|available)|insufficient sample|awaiting)\b", re.I)
     completed = set(state.completed_examinations) | set(state.completed_tests)

@@ -19,7 +19,7 @@ from nova_agent.safety import SafetyFinding
 from nova_agent.state import PatientState
 from nova_agent.stop_policy import StopDecision, StopPolicy
 
-AgentActionType = Literal["ASK", "EXAM", "TEST", "DIAGNOSE"]
+AgentActionType = Literal["ASK", "EXAM", "TEST", "DIAGNOSE", "SAY"]
 
 
 def _time_critical_ids() -> set:
@@ -140,6 +140,10 @@ class ActionSelector:
         time_critical_ids = _time_critical_ids()
         decisively_supported = self._decisively_supported_dangerous_ids(differential)
         raw_candidates = self.missing_info.analyze(state, differential, safety_findings)
+        if state.preliminary_rules:
+            # Preliminary round: there is no TEST action. Tests the diagnosis would need are
+            # carried into the SOAP plan instead (nova_agent/soap.py), never requested.
+            raw_candidates = [c for c in raw_candidates if c.action_type != "TEST"]
 
         scored: List[ScoredCandidate] = []
         for cand in raw_candidates:
