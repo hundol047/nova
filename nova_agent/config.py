@@ -24,6 +24,11 @@ PRELIMINARY_CASE_SECONDS = 20 * 60
 # Fraction of the wall-clock limit after which the agent stops gathering and submits its diagnosis
 # (leaves headroom for the final SOAP submission and for model latency on the last turn).
 PRELIMINARY_TIME_SAFETY_FRACTION = 0.85
+# Adaptive guard on top of the fixed fraction: with the MEASURED seconds per turn (model + environment
+# latency), force the diagnosis as soon as the closing dialogue (history top-up, diagnosis and next-step
+# SAY, DIAGNOSE) would no longer fit; PRELIMINARY_CLOSING_TURNS turns at 1.5x the average, inside 97%.
+PRELIMINARY_CLOSING_TURNS = 4
+PRELIMINARY_TIME_HARD_FRACTION = 0.97
 # Real-model calls per case in the preliminary round. The fixed model is limited to 200 calls and
 # 500k input / 100k output tokens per session, and the efficiency score counts model usage; at least
 # one call per case is REQUIRED (a case with no model call scores 0). Sized so that a session of 10
@@ -160,6 +165,10 @@ class NovaConfig:
             "NOVA_PRELIMINARY_RULES", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"
         )
     )
+    # Mondo (CC BY 4.0) EXACT synonyms as Tier-2 aliases. OFF by default: measured on the Round M
+    # development set it changed no decision (Top1 unchanged) and lowered retrieval@150/rerank@25 by
+    # 0.8 points each, so it is shipped as opt-in data (NOVA_MONDO_SYNONYMS=1) rather than active.
+    mondo_synonyms_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_MONDO_SYNONYMS", False))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"

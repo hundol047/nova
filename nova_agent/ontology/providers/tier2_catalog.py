@@ -78,7 +78,8 @@ class Tier2CatalogProvider:
     def _load_mondo_synonyms(self) -> dict:
         """id -> EXACT synonyms from knowledge/tier2_mondo_synonyms.json (Mondo, CC BY 4.0; attribution in
         docs/compliance/SOURCES_AND_LICENSES.md). Aliases only, lowest precedence, NOT clinician reviewed."""
-        if self._path != _CATALOG_PATH or not _MONDO_SYNONYMS_PATH.is_file():
+        from nova_agent.config import get_config
+        if self._path != _CATALOG_PATH or not _MONDO_SYNONYMS_PATH.is_file() or not get_config().mondo_synonyms_enabled:
             return {}
         try:
             data = json.loads(_MONDO_SYNONYMS_PATH.read_text(encoding="utf-8"))

@@ -21,7 +21,7 @@ from typing import Dict, Optional
 from nova_agent.action_selector import AgentAction
 from nova_agent.config import get_config
 from nova_agent.orchestrator import DoctorAgent
-from nova_agent.preliminary import (detect_language, exam_request_text, explanation_text, looks_like_rejection,
+from nova_agent.preliminary import (detect_language, exam_request_text, explanation_text, rejection_signal,
                                     parse_first_statement, plan_say_text, say_text)
 from nova_agent.soap import build_soap, localized_name
 from nova_agent.state import PatientState
@@ -82,8 +82,7 @@ def observation_to_state(obs: CompetitionObservation, agent: DoctorAgent,
         log.warning("Non-initial observation for case=%s with no pending action; ignoring content.", obs.case_id)
         return existing_state
 
-    rejected = bool((obs.raw or {}).get("rejected")) or (
-        pending_action.action_type == "EXAM" and looks_like_rejection(obs.content or ""))
+    rejected = pending_action.action_type == "EXAM" and rejection_signal(obs.raw, obs.content)
     if pending_action.action_type == "EXAM" and rejected:
         # Preliminary rules: a request not on the organizer's list is rejected and costs no turn.
         existing_state.record_exam_rejected(pending_action.key)
@@ -224,9 +223,7 @@ class NovaCompetitionAgent:
 
     @staticmethod
     def _time_nearly_up(state: PatientState) -> bool:
-        from nova_agent.config import PRELIMINARY_TIME_SAFETY_FRACTION
-        return (state.time_limit_seconds is not None
-                and state.case_elapsed_seconds >= state.time_limit_seconds * PRELIMINARY_TIME_SAFETY_FRACTION)
+        return state.time_nearly_up()
 
     def close_case(self, case_id: str) -> None:
         """Drop patient-derived state on completion/error; retain no patient tombstones."""

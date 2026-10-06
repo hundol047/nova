@@ -2,6 +2,8 @@
 
 An environment variable is not approval. Integrate a reviewed organizer transport here
 only after the participant guide arrives. Development clients remain outside this gate.
+When it is integrated, build the agent with ``competition.submission_profile.build_submission_agent``
+(preliminary-round rules forced on, independent of the environment).
 """
 from nova_agent.config import get_config
 

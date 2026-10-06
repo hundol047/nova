@@ -117,17 +117,51 @@ _PLAN_SAY = {
 # A short empathic opener attached to the very first question (only when the total still fits).
 _EMPATHY = {"ko": "힘드시겠어요. ", "en": "I'm sorry. ", "ja": "お辛いですね。", "zh": "辛苦了。"}
 
-# Markers an environment is likely to use when it refuses an examination that is not on its list.
-# The real wording is unpublished, so this is a conservative heuristic, not a contract.
+# How an environment is likely to refuse an examination that is not on its list. The real wording is
+# unpublished, so this is a documented heuristic, not a contract. Three signals, strongest first:
+#   1. structured fields on the observation (rejected / error / status / ok=false ...), which a real
+#      protocol is far more likely to carry than a particular sentence;
+#   2. an empty reply (nothing was found, nothing can be recorded);
+#   3. request-scoped refusal wording in ko/en/ja/zh. The wording must be about the REQUEST itself so
+#      that a clinical finding ("breath sounds not available on the left") is never mistaken for one,
+#      and long replies are treated as findings, not refusals.
 _REJECTION = re.compile(
-    r"거절|지원하지 않|수행할 수 없|할 수 없는 요청|목록에 없|\b(?:request(?:ed)? (?:was )?(?:rejected|refused|denied)|"
-    r"not (?:a )?(?:supported|available|permitted)|unsupported|cannot (?:perform|be performed)|unable to perform)\b",
+    "|".join((
+        r"거절|지원하지 않|지원되지 않|수행할 수 없|할 수 없는 요청|목록에 없|허용되지 않|제공되지 않는 (?:진찰|검사|요청)|유효하지 않은 (?:진찰|요청)",
+        r"対応していません|サポートされていません|実行できません|許可されていません|拒否されました|リストにありません",
+        r"不支持|无法执行|不允许|已拒绝|无效(?:的)?(?:请求|检查)|不在(?:列表|清单)",
+        r"\b(?:invalid|unsupported|unknown|unrecognized|unrecognised)\s+(?:request|exam(?:ination)?|maneuver|action)\b",
+        r"\b(?:request|exam(?:ination)?|maneuver|action)\b[^.\n]{0,40}\b(?:rejected|refused|denied|not (?:supported|allowed|permitted|available|recognized|recognised)|cannot be (?:performed|done))",
+        r"\b(?:cannot|can't|unable to) (?:perform|carry out)\b",
+        r"\bnot (?:in|on) the (?:allowed |available |supported )?(?:list|set)\b",
+        r"\bno such (?:exam|examination|maneuver|action)\b",
+    )),
     re.IGNORECASE,
 )
+_MAX_REFUSAL_CHARS = 160
+_REJECTION_STATUS = {"rejected", "reject", "refused", "denied", "unsupported", "invalid", "error", "failed",
+                     "failure", "not_allowed", "not_supported", "not_available", "unavailable", "unknown_action"}
 
 
 def looks_like_rejection(text: str) -> bool:
-    return bool(text) and bool(_REJECTION.search(text))
+    """Request-scoped refusal wording (ko/en/ja/zh) in a SHORT reply."""
+    return bool(text) and len(text) <= _MAX_REFUSAL_CHARS and bool(_REJECTION.search(text))
+
+
+def rejection_signal(raw: Optional[dict], content: Optional[str]) -> bool:
+    """True when the environment refused an examination request (see the comment above): a structured
+    refusal field, an explicitly false success flag, an empty reply, or request-scoped refusal wording."""
+    raw = raw or {}
+    if raw.get("rejected") is True or raw.get("error") not in (None, "", False):
+        return True
+    for key in ("status", "result", "outcome", "state"):
+        value = raw.get(key)
+        if isinstance(value, str) and value.strip().lower().replace(" ", "_") in _REJECTION_STATUS:
+            return True
+    if any(raw.get(key) is False for key in ("ok", "success", "accepted", "valid", "allowed")):
+        return True
+    text = (content or "").strip()
+    return not text or looks_like_rejection(text)
 
 
 def _pick(table: dict, lang: str) -> Optional[str]:

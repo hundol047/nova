@@ -224,6 +224,23 @@ class PatientState(BaseModel):
     def case_elapsed_seconds(self) -> float:
         return time.time() - self.case_started_at_unix
 
+    def time_nearly_up(self) -> bool:
+        """Preliminary round (20 minutes per case; a case never submitted scores 0): True once the fixed
+        safety fraction of the budget is spent, OR once the measured seconds per turn show that the
+        closing dialogue plus the final submission would no longer fit. Always False without a limit."""
+        from nova_agent.config import (PRELIMINARY_CLOSING_TURNS, PRELIMINARY_TIME_HARD_FRACTION,
+                                       PRELIMINARY_TIME_SAFETY_FRACTION)
+        if self.time_limit_seconds is None:
+            return False
+        elapsed = self.case_elapsed_seconds
+        if elapsed >= self.time_limit_seconds * PRELIMINARY_TIME_SAFETY_FRACTION:
+            return True
+        turns = len(self.performed_actions)
+        if turns >= 3:  # need a few samples before the average means anything
+            per_turn = elapsed / turns
+            return elapsed + PRELIMINARY_CLOSING_TURNS * per_turn * 1.5 >= self.time_limit_seconds * PRELIMINARY_TIME_HARD_FRACTION
+        return False
+
     # LLM call reliability (spec: an evaluation run must never look "normal" while the real LLM is
     # actually failing every turn and the agent is silently riding the deterministic fallback).
     # Only incremented for a REAL LLM provider attempt -- MockLLMClient never touches these, since

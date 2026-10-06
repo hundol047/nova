@@ -21,7 +21,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from nova_agent.config import PRELIMINARY_TIME_SAFETY_FRACTION, get_config
+from nova_agent.config import get_config
 from nova_agent.differential import DifferentialItem
 from nova_agent.resolution import is_resolved
 from nova_agent.safety import SafetyFinding
@@ -87,8 +87,7 @@ class StopPolicy:
         # Preliminary round: a case ends at 50 turns OR 20 minutes, and a case that never submits
         # scores 0, so the wall clock forces the diagnosis too (with headroom for the closing
         # explanation and the final submission), and three turns are kept in reserve for the closing dialogue (history top-up, diagnosis and next-step SAY).
-        time_up = (state.time_limit_seconds is not None
-                   and state.case_elapsed_seconds >= state.time_limit_seconds * PRELIMINARY_TIME_SAFETY_FRACTION)
+        time_up = state.time_nearly_up()
         reserve = cfg.forced_diagnose_remaining_turns + (3 if state.preliminary_rules else 0)
         if state.remaining_turns <= reserve or time_up:
             return StopDecision(should_diagnose=True, forced=True,
