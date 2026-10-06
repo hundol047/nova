@@ -62,7 +62,10 @@ def main():
                for c in cases if c.find("skipped") is not None]
     tests = {"passed": len(cases) - len(skipped), "failed": 0, "skipped": len(skipped), "skip_reasons": skipped,
              "stage": "Runtime suite complete; the release-consistency test that reads this record is checked separately",
-             "scope": "tests/ minus tests/test_current_pre_guide_release.py::test_current_runtime_exact_archive_and_commit",
+             "scope": "tests/ minus the three tests that read this record or the freshly refreshed inventory (they are run AFTER the record is written): "
+                      "tests/test_current_pre_guide_release.py::test_current_runtime_exact_archive_and_commit, "
+                      "tests/test_current_pre_guide_release.py::test_complete_round_m_denominators_and_failure_coverage, "
+                      "tests/test_provenance_evidence.py::test_current_inventory_has_complete_hash_coverage_but_no_fake_clearance",
              "junit": BASE + "pytest_runtime.xml", "junit_sha256": sha(BASE + "pytest_runtime.xml")}
     summary = read("artifacts/round_m/final_summary.json")
     package = "artifacts/verification/nova-pre-guide-" + args.schema.rsplit("-", 1)[-1] + ".zip"
@@ -75,9 +78,9 @@ def main():
                   failure_analysis_artifact="artifacts/round_m/failure_analysis.json",
                   regressions={n: r["summary"] for n, r in reg["suites"].items()},
                   transport_note="Executed bytes recorded by hash; every file matched against the runtime commit.",
-                  scope_of_change="Preliminary-round rules (SAY/EXAM/no TEST/SOAP/50 turns, bounded model calls) as state-flag "
-                                  "behaviour, plus CC0 Disease Ontology EXACT synonyms as Tier-2 aliases. No disease facts, score "
-                                  "weights or labels edited; dev accuracy unchanged (Round M Top1 0.9593).",
+                  scope_of_change="Integration of PR #15 (clause-level matching, aliases, audit guards) into the preliminary-round line "
+                                  "(SAY/EXAM/no TEST/SOAP/50 turns, bounded model calls incl. retries, fixed-LLM wiring, reproducible ZIP). "
+                                  "No labels or answers edited; scanner and evaluation data unchanged. Round M numbers are in round_m.",
                   evaluation_conditions=conditions(),
                   submission={"zip": package, "bytes": (ROOT / package).stat().st_size, "sha256": sha(package),
                               "status": "LOCAL PRE-GUIDE CANDIDATE ONLY; official transport BLOCKED"})
