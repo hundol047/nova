@@ -18,7 +18,8 @@ from typing import List, Optional, Tuple
 from nova_agent.action_selector import ActionSelector, AgentAction
 from nova_agent.chief_complaint import classify as classify_chief_complaint
 from nova_agent.clinical_summary import build_clinical_summary
-from nova_agent.config import (PRELIMINARY_CASE_SECONDS, PRELIMINARY_MAX_LLM_CALLS_PER_CASE,
+from nova_agent.config import (PRELIMINARY_CASE_INPUT_TOKENS, PRELIMINARY_CASE_OUTPUT_TOKENS,
+                               PRELIMINARY_CASE_SECONDS, PRELIMINARY_MAX_LLM_CALLS_PER_CASE,
                                PRELIMINARY_MAX_TURNS, effective_max_turns, get_config)
 from nova_agent.differential import DifferentialEngine, DifferentialItem
 from nova_agent.knowledge.retrieval import retrieve_turn_context
@@ -130,6 +131,8 @@ class DoctorAgent:
                                    safety_findings=safety_findings, candidates=candidates,
                                    chosen_action=deterministic_action, stop_decision=stop_decision,
                                    retrieved_context=retrieved_context,
+                                   max_attempts=(self._attempt_allowance(state, deterministic_action)
+                                                 if state.preliminary_rules else None),
                                    external_references=retrieve_licensed_references(
                                        [d.diagnosis for d in deterministic_differential], candidate_test_ids,
                                    ) if cfg.rag_enabled else [])
@@ -147,6 +150,9 @@ class DoctorAgent:
                 # outside this branch would double-count a call that was never made this turn.
                 if getattr(self.llm_client, "_last_call_was_real", False):
                     state.llm_call_count += 1
+                    state.llm_http_attempts += int(getattr(self.llm_client, "_last_call_attempts", 1) or 1)
+                    if getattr(self.llm_client, "_last_call_tokens_estimated", False):
+                        state.llm_tokens_estimated = True
                     if getattr(self.llm_client, "_last_call_succeeded", False):
                         state.llm_success_count += 1
                     else:
@@ -234,17 +240,34 @@ class DoctorAgent:
             log.exception("decide() failed for case=%s turn=%s; using safe fallback.", state.case_id, state.turn_count)
             return self._safe_fallback(state), None, []
 
-    def _preliminary_llm_call_due(self, state: PatientState, deterministic_action: AgentAction) -> bool:
+    def _preliminary_llm_call_due(self, state: PatientState, deterministic_action: AgentAction,
+                                  estimated_input_tokens: int = 0) -> bool:
         """Preliminary-round model-call schedule. The fixed model is capped per session and its
         usage is part of the efficiency score, but a case with NO model call scores 0. So: always
         call on the first turn and on the turn that would submit the diagnosis, otherwise only every
-        4th turn, never beyond PRELIMINARY_MAX_LLM_CALLS_PER_CASE (one slot stays reserved for the
-        final turn). The deterministic engine decides every other turn unaided."""
+        4th turn, never beyond PRELIMINARY_MAX_LLM_CALLS_PER_CASE HTTP requests (retries included; one
+        slot stays reserved for the final turn) and never beyond the per-case token ceilings. The
+        deterministic engine decides every other turn unaided. Budgets are fixed per case -- never
+        derived from what other cases consumed -- so a case's behaviour does not depend on its neighbours."""
         cap = PRELIMINARY_MAX_LLM_CALLS_PER_CASE
-        calls = state.llm_call_count
-        if calls == 0 or deterministic_action.action_type == "DIAGNOSE":
-            return calls < cap
-        return calls < cap - 1 and state.turn_count % 4 == 0
+        spent = state.llm_http_attempts
+        first_or_final = state.llm_call_count == 0 or deterministic_action.action_type == "DIAGNOSE"
+        if first_or_final:
+            within_requests = spent < cap
+        else:
+            within_requests = spent < cap - 1 and state.turn_count % 4 == 0
+        within_tokens = (state.llm_total_input_tokens + estimated_input_tokens <= PRELIMINARY_CASE_INPUT_TOKENS
+                         and state.llm_total_output_tokens <= PRELIMINARY_CASE_OUTPUT_TOKENS)
+        # The very first call of a case is the REQUIRED one: only the request cap can stop it.
+        return within_requests and (within_tokens or state.llm_call_count == 0)
+
+    def _attempt_allowance(self, state: PatientState, deterministic_action: AgentAction) -> int:
+        """Requests this logical call may spend including retries: all that remain for the first/final
+        call, otherwise all but the slot reserved for the final diagnosis."""
+        remaining = PRELIMINARY_MAX_LLM_CALLS_PER_CASE - state.llm_http_attempts
+        if state.llm_call_count == 0 or deterministic_action.action_type == "DIAGNOSE":
+            return max(1, remaining)
+        return max(1, remaining - 1)
 
     def observe(self, state: PatientState, action: AgentAction, result: str = "") -> None:
         """Records the environment's response to `action` into PatientState. For DIAGNOSE, `result`
@@ -261,7 +284,7 @@ class DoctorAgent:
                     raise ValueError(f"Unknown TEST key: {action.key!r}")
                 state.record_test(action.key, result)
             elif action.action_type == "SAY":
-                state.record_say(action.content, result)
+                state.record_say(action.content, result, action.key)
             elif action.action_type == "DIAGNOSE":
                 state.record_diagnose(action.content, result)
             else:

@@ -123,17 +123,22 @@ def test_time_budget_forces_the_diagnosis():
 
 
 def test_preliminary_model_call_schedule_is_bounded_and_always_calls_first_and_last():
+    """The cap counts HTTP REQUESTS (state.llm_http_attempts, retries included), not logical calls."""
     agent = DoctorAgent(llm_client=MockLLMClient())
     state = agent.new_case("m", "headache", {"age": 30, "sex": "male"}, preliminary=True)
     ask = AgentAction(action_type="ASK", key="onset", content="x", rationale="")
     dx = AgentAction(action_type="DIAGNOSE", key="migraine", content="Migraine", rationale="")
     assert agent._preliminary_llm_call_due(state, ask)  # the first call is mandatory
     state.llm_call_count = 3
+    state.llm_http_attempts = 3
     state.turn_count = 5
     assert not agent._preliminary_llm_call_due(state, ask)  # off-schedule turn
     assert agent._preliminary_llm_call_due(state, dx)  # the submitting turn always calls
-    state.llm_call_count = PRELIMINARY_MAX_LLM_CALLS_PER_CASE
-    assert not agent._preliminary_llm_call_due(state, dx)  # hard cap
+    state.llm_http_attempts = PRELIMINARY_MAX_LLM_CALLS_PER_CASE
+    assert not agent._preliminary_llm_call_due(state, dx)  # hard cap on requests
+    # Retries consume the budget: 2 logical calls that each needed 4 requests already hit the cap.
+    state.llm_call_count, state.llm_http_attempts = 2, 8
+    assert not agent._preliminary_llm_call_due(state, dx)
 
 
 def test_soap_is_rebuilt_from_the_turn_log_and_records_only_what_was_asked():

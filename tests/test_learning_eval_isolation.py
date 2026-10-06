@@ -27,19 +27,30 @@ def test_learning_never_imports_evaluation():
     assert not offenders, f"learning/ must not import evaluation/: {offenders}"
 
 
-def test_submission_contains_only_runtime_learning_subset():
-    forbidden = {"training.py", "train_reranker.py", "eval_synthetic.py", "model_torch.py", "checkpoint.py"}
-    assert (SUBMISSION / "learning/pipeline.py").is_file()
-    assert not any(p.name in forbidden for p in (SUBMISSION / "learning").rglob("*.py"))
-    # No training/evaluation data or mandatory torch dependency may ship.
+def test_submission_contains_no_learning_package_at_all():
+    """Policy reconciliation (integration of PR #15 with the preliminary-round line): PR #15 shipped an
+    inference-only subset of learning/ in the ZIP; the preliminary submission must instead carry NO
+    training/embedding infrastructure (tests/test_submission_excludes_learning.py, and the organizers'
+    rule that only inference code and static assets are submitted). So the ZIP has no learning/ at all,
+    no evaluation data, and no torch dependency."""
+    assert not (SUBMISSION / "learning").exists()
     assert not (SUBMISSION / "evaluation").exists()
     assert "torch" not in (SUBMISSION / "requirements.txt").read_text().lower()
 
 
-def test_runtime_import_does_not_load_torch():
+def test_submission_runtime_import_does_not_load_torch_or_learning():
+    import subprocess, sys
+    script = ("import nova_agent, nova_agent.orchestrator, competition.adapter, sys; "
+              "assert 'torch' not in sys.modules and 'learning' not in sys.modules, sorted(m for m in sys.modules if m.split('.')[0] in ('torch','learning'))")
+    p = subprocess.run([sys.executable, "-c", script], cwd=SUBMISSION, capture_output=True, text=True)
+    assert p.returncode == 0, p.stderr
+
+
+def test_repository_catalog_context_pipeline_does_not_load_torch():
+    """The repository-level (non-submission) hospital/research pipeline keeps PR #15's guarantee."""
     import subprocess, sys
     script = "from nova_agent.catalog_context import runtime_pipeline; runtime_pipeline(); import sys; assert 'torch' not in sys.modules"
-    p = subprocess.run([sys.executable, "-c", script], cwd=SUBMISSION, capture_output=True, text=True)
+    p = subprocess.run([sys.executable, "-c", script], cwd=ROOT, capture_output=True, text=True)
     assert p.returncode == 0, p.stderr
 
 

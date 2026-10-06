@@ -544,7 +544,10 @@ def generate_candidates(presentation: ClinicalPresentation,
     # safety net retrieved it. Other `dangerous` entries are NOT protected on that flag alone: protecting all
     # of them let weakly supported ones (e.g. hypoglycemia from "sweating") displace the disease-specific
     # leaders in the top-K and shift action utilities (tests/test_discriminator_priority.py).
-    protected = [c for c in candidates if c.id in CROSS_CUTTING_DANGEROUS_DIAGNOSES
+    # In competition retrieval mode the pool is held to the budget and the must-not-miss list is restored by
+    # the bounded safety reinjection below instead (tests/test_competition_5k_integration.py).
+    protect_cross_cutting = not competition_retrieval
+    protected = [c for c in candidates if (protect_cross_cutting and c.id in CROSS_CUTTING_DANGEROUS_DIAGNOSES)
                  or not set(c.sources).issubset(trimmable_only_sources)]
     # Round M: an ontology candidate whose OWN typical/confirmatory features are matched by the
     # patient's evidence is no longer a zero-evidence supplement. Trimming by insertion order cut

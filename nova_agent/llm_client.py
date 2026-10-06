@@ -78,6 +78,9 @@ class TurnContext(BaseModel):
     stop_decision: StopDecision
     retrieved_context: List[dict] = []
     external_references: List[dict] = []
+    # Upper bound on HTTP requests this one logical model call may spend INCLUDING retries (the fixed model's
+    # per-session call/token caps count every request). None = the client's own retry setting.
+    max_attempts: Optional[int] = None
 
     model_config = {"arbitrary_types_allowed": True}
 
@@ -447,27 +450,47 @@ class OpenAICompatibleLLMClient(BaseLLMClient):
         self._last_call_latency_seconds = None
         self._last_call_input_tokens = None
         self._last_call_output_tokens = None
+        self._last_call_attempts = 0
+        self._last_call_tokens_estimated = False
         prompt = build_reasoning_prompt(ctx)
-        for attempt in range(self.max_retries + 1):
+        # Usage accounting counts EVERY request, retries included. A failed attempt returns no usage block,
+        # so its input is estimated from the prompt (~3 characters/token, deliberately pessimistic) and
+        # flagged; a successful attempt contributes the server-reported prompt/completion tokens.
+        estimated_input = max(1, len(prompt) // 3)
+        input_total = output_total = 0
+        attempts_allowed = self.max_retries + 1
+        if ctx.max_attempts is not None:
+            attempts_allowed = max(1, min(attempts_allowed, ctx.max_attempts))
+        for attempt in range(attempts_allowed):
             start = time.perf_counter()
+            self._last_call_attempts += 1
             try:
                 content, raw = self._post_chat_completion([{"role": "user", "content": prompt}])
                 self._last_call_latency_seconds = time.perf_counter() - start
                 usage = raw.get("usage") if isinstance(raw, dict) else None
-                if isinstance(usage, dict):
-                    # OpenAI Chat Completions naming; not every OpenAI-compatible server returns
-                    # this block at all -- left None (never estimated) when absent.
-                    self._last_call_input_tokens = usage.get("prompt_tokens")
-                    self._last_call_output_tokens = usage.get("completion_tokens")
+                if isinstance(usage, dict) and usage.get("prompt_tokens") is not None \
+                        and usage.get("completion_tokens") is not None:
+                    # OpenAI Chat Completions naming; not every OpenAI-compatible server returns this block.
+                    input_total += usage.get("prompt_tokens") or 0
+                    output_total += usage.get("completion_tokens") or 0
+                else:
+                    input_total += estimated_input
+                    self._last_call_tokens_estimated = True
+                self._last_call_input_tokens = input_total
+                self._last_call_output_tokens = output_total
                 parsed = parse_agent_turn_output(content)
                 if parsed is not None:
                     self._last_call_succeeded = True
                     return parsed
             except Exception as exc:
                 self._last_call_latency_seconds = time.perf_counter() - start
+                input_total += estimated_input
+                self._last_call_tokens_estimated = True
+                self._last_call_input_tokens = input_total
+                self._last_call_output_tokens = output_total
                 log.warning("%s call failed (attempt %d/%d): %s", type(self).__name__, attempt + 1,
-                            self.max_retries + 1, type(exc).__name__)
-        log.warning("Falling back to deterministic turn output after %d failed attempt(s).", self.max_retries + 1)
+                            attempts_allowed, type(exc).__name__)
+        log.warning("Falling back to deterministic turn output after %d failed attempt(s).", attempts_allowed)
         return fallback
 
     def preflight(self) -> Tuple[bool, str]:

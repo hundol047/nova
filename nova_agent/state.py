@@ -280,6 +280,10 @@ class PatientState(BaseModel):
     # Only incremented for a REAL LLM provider attempt -- MockLLMClient never touches these, since
     # it makes no real call at all (see orchestrator.decide() / llm_client.BaseLLMClient).
     llm_call_count: int = 0
+    # HTTP requests actually sent to the model INCLUDING retries (llm_call_count is logical calls); the fixed
+    # model's session caps count requests. Tokens are server-reported when available, else estimated.
+    llm_http_attempts: int = 0
+    llm_tokens_estimated: bool = False
     llm_success_count: int = 0
     llm_failure_count: int = 0
     llm_fallback_count: int = 0
@@ -395,11 +399,11 @@ class PatientState(BaseModel):
             self.completed_examinations.append(exam_id)
         self.rejected_exams.append(exam_id)
 
-    def record_say(self, content: str, reply: str = "") -> None:
+    def record_say(self, content: str, reply: str = "", key: str = "") -> None:
         """A conversational turn (explanation/empathy) that gathers no new history: costs one turn,
         and the patient's reply is NOT absorbed as clinical evidence."""
         self.turn_count += 1
-        turn = ConversationTurn(turn=self.turn_count, action_type="SAY", content=content, result=reply)
+        turn = ConversationTurn(turn=self.turn_count, action_type="SAY", content=content, result=reply, key=key)
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
 

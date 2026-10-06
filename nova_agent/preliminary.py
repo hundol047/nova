@@ -196,15 +196,40 @@ def plan_say_text(urgent: bool, lang: str = "en") -> str:
     return fit_say(texts[0] if urgent else texts[1])
 
 
+_FILLER_WORDS = {"the", "a", "an", "of", "in", "on", "with", "to", "from", "or", "and", "then", "for", "at", "by",
+                 "is", "are", "was", "were"}
+
+
+def _compress_feature(feature: str) -> str:
+    """Drops pure filler words only ("blood pressure falls on standing" -> "blood pressure falls standing");
+    never a content word, so the compressed phrase asks about the same thing."""
+    words = [w for w in feature.split() if w.lower() not in _FILLER_WORDS]
+    return " ".join(words) if words else feature
+
+
+def _faithful_feature_question(feature: str, lang: str) -> Optional[str]:
+    """A question about the WHOLE feature that fits the limit, or None. A question is never produced by
+    cutting a feature off mid-phrase ("blood pressure falls on?" asks something else, or nothing)."""
+    frames = (_FEATURE_FRAME.get(lang, _FEATURE_FRAME["en"]), _FEATURE_FRAME_TIGHT.get(lang, _FEATURE_FRAME_TIGHT["en"]))
+    for candidate in (feature, _compress_feature(feature)):
+        for frame in frames:
+            text = frame.format(f=candidate)
+            if len(text) <= SAY_MAX_CHARS:
+                return text
+    return None
+
+
 def _say_core(key: str, lang: str, fallback: str) -> str:
     category, _, detail = key.partition(":")
     if detail:
         feature = detail.replace("_", " ").strip()
-        frame = _FEATURE_FRAME.get(lang, _FEATURE_FRAME["en"])
-        text = frame.format(f=feature)
-        if len(text) > SAY_MAX_CHARS:
-            text = _FEATURE_FRAME_TIGHT.get(lang, _FEATURE_FRAME_TIGHT["en"]).format(f=feature)
-        return fit_say(text)
+        faithful = _faithful_feature_question(feature, lang)
+        if faithful is not None:
+            return faithful
+        # The feature cannot be asked about faithfully in 30 characters: ask the generic follow-up instead
+        # of a truncated (misleading) fragment. The feature itself stays in the case log and SOAP only if
+        # the patient actually reports it.
+        return fit_say(_pick(_SHORT_QUESTIONS["associated_symptoms"], lang))
     table = _SHORT_QUESTIONS.get(category)
     if table is not None:
         return fit_say(_pick(table, lang))

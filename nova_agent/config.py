@@ -35,6 +35,11 @@ PRELIMINARY_TIME_HARD_FRACTION = 0.97
 # cases stays inside every cap: 10 x 8 = 80 calls, ~8k characters (~3-4k tokens) of prompt per call
 # (~320k input) and max_tokens=1024 per call (~82k output), leaving headroom for retries.
 PRELIMINARY_MAX_LLM_CALLS_PER_CASE = 8
+# INTERNAL operating policy, not an organizer limit: the cap above counts HTTP REQUESTS (retries included,
+# state.llm_http_attempts), because the session caps count requests. Per-case token ceilings are the
+# session caps divided by the 10 cases that policy assumes (500k input / 100k output per session).
+PRELIMINARY_CASE_INPUT_TOKENS = 50_000
+PRELIMINARY_CASE_OUTPUT_TOKENS = 10_000
 
 
 def effective_max_turns(value, default=60, ceiling=60):
