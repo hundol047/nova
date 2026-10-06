@@ -14,7 +14,7 @@
   "attribution": "Source: Human Disease Ontology (https://disease-ontology.org), CC0 1.0. Schriml LM et al.",
   "extraction": "has_symptom clauses and EXACT synonyms copied from DO term definitions for terms matched to a catalog concept by exact name/alias or exact ICD-10 code; quality guards in scripts/build_open_disease_features.py; nothing generated or paraphrased",
   "clinician_reviewed": false,
-  "use": "Low-weight typical_features / aliases for Tier-2 concepts that had none; never patient evidence"
+  "use": "Aliases (EXACT synonyms) for Tier-2 concepts; typical_features only when built with --include-features (off by default, see script help); never patient evidence"
  },
  "entries": [
   {
@@ -73,13 +73,7 @@
    "doid": "DOID:10608",
    "do_name": "celiac disease",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "abdominal pain",
-    "constipation",
-    "diarrhea",
-    "nausea and vomiting",
-    "loss of appetite"
-   ],
+   "typical_features": [],
    "synonyms": [
     "celiac sprue",
     "coeliac disease",
@@ -677,22 +671,6 @@
    ]
   },
   {
-   "id": "cir_acute_rheumatic_fever",
-   "doid": "DOID:1586",
-   "do_name": "rheumatic fever",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "carditis",
-    "polyarthritis",
-    "chorea",
-    "erythema marginatum",
-    "subcutaneous nodules",
-    "arthralgia",
-    "prolonged pr interval"
-   ],
-   "synonyms": []
-  },
-  {
    "id": "cir_carotid_dissection",
    "doid": "DOID:9348",
    "do_name": "carotid artery dissection",
@@ -1248,10 +1226,7 @@
    "doid": "DOID:9063",
    "do_name": "Ritter's disease",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "redness of skin",
-    "fluid-filled blister formation"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Dermatitis exfoliativa neonatorum",
     "Pemphigus neonatorum",
@@ -1433,11 +1408,7 @@
    "doid": "DOID:4337",
    "do_name": "tinea capitis",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "itching of the scalp",
-    "pus filled lesions on the scalp",
-    "patches of hair loss"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Scalp ringworm",
     "Trichophyton rubrum tinea capitis"
@@ -1988,21 +1959,6 @@
    "synonyms": [
     "swimmer's ear"
    ]
-  },
-  {
-   "id": "mi3_acute_chest_syndrome",
-   "doid": "DOID:1584",
-   "do_name": "acute chest syndrome",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "pleuritic chest pain",
-    "tachypnea",
-    "cough",
-    "hypoxemia",
-    "marked leukocytosis",
-    "diffuse infiltrates on chest radiograph"
-   ],
-   "synonyms": []
   },
   {
    "id": "mi3_drug_induced_lupus",
@@ -2824,13 +2780,7 @@
    "doid": "DOID:12549",
    "do_name": "hepatitis A",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "loss of appetite",
-    "abdominal pain",
-    "clay-colored bowel movements",
-    "joint pain",
-    "jaundice"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Viral hepatitis, type A"
    ]
@@ -2851,13 +2801,7 @@
    "doid": "DOID:1883",
    "do_name": "hepatitis C",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "loss of appetite",
-    "abdominal pain",
-    "clay-colored bowel movements",
-    "joint pain",
-    "jaundice"
-   ],
+   "typical_features": [],
    "synonyms": [
     "chronic hepatitis C",
     "hepatitis C infection",
@@ -2980,11 +2924,7 @@
    "doid": "DOID:11077",
    "do_name": "brucellosis",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "back pain",
-    "physical weakness",
-    "joint pain"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Maltese fever",
     "undulant fever"
@@ -3072,11 +3012,7 @@
    "doid": "DOID:11258",
    "do_name": "cat-scratch disease",
    "matched_by": "exact ICD-10 code A28.1",
-   "typical_features": [
-    "regional lymphadenopathy",
-    "backache",
-    "abdominal pain"
-   ],
+   "typical_features": [],
    "synonyms": [
     "benign lymphoreticulosis",
     "cat scratch fever",
@@ -3094,18 +3030,6 @@
    "synonyms": [
     "human ehrlichiosis"
    ]
-  },
-  {
-   "id": "if3_erysipeloid",
-   "doid": "DOID:0050061",
-   "do_name": "erysipeloid",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "redness of skin",
-    "tenderness of skin",
-    "warmth of skin"
-   ],
-   "synonyms": []
   },
   {
    "id": "if3_filariasis",
@@ -3130,28 +3054,11 @@
    ]
   },
   {
-   "id": "if3_leprosy",
-   "doid": "DOID:1024",
-   "do_name": "leprosy",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "skin lesions",
-    "sensory loss",
-    "motor loss",
-    "eye damage"
-   ],
-   "synonyms": []
-  },
-  {
    "id": "if3_melioidosis",
    "doid": "DOID:5052",
    "do_name": "melioidosis",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "respiratory distress",
-    "chest pain",
-    "stomach pain"
-   ],
+   "typical_features": [],
    "synonyms": [
     "acute and fulminating melioidosis",
     "Nightcliff gardener's disease",
@@ -3176,12 +3083,7 @@
    "doid": "DOID:2312",
    "do_name": "nocardiosis",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "pneumonia",
-    "cellulitis",
-    "lesions in the brain or meninges",
-    "ascending regional lymphadenopathy"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Nocardia infectious disease"
    ]
@@ -3257,10 +3159,7 @@
    "doid": "DOID:0050012",
    "do_name": "chikungunya",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "arthralgia",
-    "maculopapular rash"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Chikungunya fever"
    ]
@@ -3291,10 +3190,7 @@
    "doid": "DOID:13450",
    "do_name": "coccidioidomycosis",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "conjunctivitis",
-    "arthritis"
-   ],
+   "typical_features": [],
    "synonyms": [
     "primary extrapulmonary coccidioidomycosis"
    ]
@@ -3353,16 +3249,7 @@
    "doid": "DOID:4325",
    "do_name": "Ebola virus disease",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "joint pain",
-    "muscle aches",
-    "sore throat",
-    "diarrhea",
-    "stomach pain",
-    "red eyes",
-    "hiccups",
-    "internal and external bleeding"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Ebola",
     "Ebola disease",
@@ -3405,39 +3292,11 @@
    ]
   },
   {
-   "id": "inf_gonorrhea",
-   "doid": "DOID:7551",
-   "do_name": "gonorrhea",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "burning sensation during urination",
-    "discharge from the penis",
-    "increased vaginal discharge",
-    "vaginal bleeding between periods"
-   ],
-   "synonyms": []
-  },
-  {
-   "id": "inf_histoplasmosis",
-   "doid": "DOID:1731",
-   "do_name": "histoplasmosis",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "nonproductive cough",
-    "loss of appetite",
-    "muscle pains"
-   ],
-   "synonyms": []
-  },
-  {
    "id": "inf_listeriosis",
    "doid": "DOID:11573",
    "do_name": "listeriosis",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "diarrhea",
-    "back pain"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Infection by Listeria monocytogenes",
     "Listeria infection"
@@ -3470,27 +3329,11 @@
    ]
   },
   {
-   "id": "inf_q_fever",
-   "doid": "DOID:11100",
-   "do_name": "Q fever",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "cough",
-    "pleuritic chest pain",
-    "myalgia",
-    "arthralgia"
-   ],
-   "synonyms": []
-  },
-  {
    "id": "inf_rocky_mountain",
    "doid": "DOID:0050052",
    "do_name": "Rocky Mountain spotted fever",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "abdominal pain",
-    "maculopapular rash progressing into papular or petechial rash"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Tick typhus"
    ]
@@ -3578,17 +3421,6 @@
    ]
   },
   {
-   "id": "inf_zika",
-   "doid": "DOID:0060478",
-   "do_name": "Zika fever",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "headaches",
-    "joint pain"
-   ],
-   "synonyms": []
-  },
-  {
    "id": "infectious_mononucleosis",
    "doid": "DOID:8568",
    "do_name": "infectious mononucleosis",
@@ -3645,12 +3477,7 @@
    "doid": "DOID:8622",
    "do_name": "measles",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "cough",
-    "coryza",
-    "conjunctivitis",
-    "maculopapular"
-   ],
+   "typical_features": [],
    "synonyms": [
     "morbilli",
     "rubeola"
@@ -3671,12 +3498,7 @@
    "doid": "DOID:8781",
    "do_name": "rubella",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "rash on the face",
-    "lymphadenopathy",
-    "joint pains",
-    "conjunctivitis"
-   ],
+   "typical_features": [],
    "synonyms": [
     "german measles"
    ]
@@ -3716,13 +3538,7 @@
    "doid": "DOID:14115",
    "do_name": "toxic shock syndrome",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "hypotension",
-    "multiorgan failure",
-    "desquamation",
-    "diarrhea",
-    "nonfocal neurologic abnormalities"
-   ],
+   "typical_features": [],
    "synonyms": [
     "toxic shock",
     "TSS"
@@ -3733,14 +3549,7 @@
    "doid": "DOID:13258",
    "do_name": "typhoid fever",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "diarrhea",
-    "prostration",
-    "splenomegaly",
-    "liver enlargement",
-    "eruption of rose-colored spots",
-    "leukopenia"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Typhoid"
    ]
@@ -3750,12 +3559,7 @@
    "doid": "DOID:8659",
    "do_name": "chickenpox",
    "matched_by": "exact ICD-10 code B01.9",
-   "typical_features": [
-    "anorexia",
-    "myalgia",
-    "sore throat",
-    "blisters"
-   ],
+   "typical_features": [],
    "synonyms": [
     "varicella"
    ]
@@ -4130,21 +3934,6 @@
    ]
   },
   {
-   "id": "myasthenia_gravis",
-   "doid": "DOID:437",
-   "do_name": "myasthenia gravis",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "ptosis",
-    "diplopia",
-    "dysphagia",
-    "dysarthria",
-    "muscle weakness",
-    "shortness of breath"
-   ],
-   "synonyms": []
-  },
-  {
    "id": "neu_bells_palsy_neu",
    "doid": "DOID:12506",
    "do_name": "Bell's palsy",
@@ -4289,18 +4078,6 @@
     "Racemose Angioma",
     "Racemose hemangioma"
    ]
-  },
-  {
-   "id": "nu2_central_pontine_myelinolysis",
-   "doid": "DOID:636",
-   "do_name": "central pontine myelinolysis",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "acute paralysis",
-    "dysphagia",
-    "dysarthria"
-   ],
-   "synonyms": []
   },
   {
    "id": "nu2_creutzfeldt_jakob",
@@ -4964,17 +4741,6 @@
    ]
   },
   {
-   "id": "eye_dacryocystitis",
-   "doid": "DOID:9938",
-   "do_name": "dacryocystitis",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "conjunctivitis",
-    "purulent discharge"
-   ],
-   "synonyms": []
-  },
-  {
    "id": "eye_dry_eye",
    "doid": "DOID:10140",
    "do_name": "dry eye syndrome",
@@ -5009,21 +4775,6 @@
    ]
   },
   {
-   "id": "orbital_cellulitis",
-   "doid": "DOID:11234",
-   "do_name": "orbital cellulitis",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "eyelid edema",
-    "erythema",
-    "chemiosis",
-    "proptosis",
-    "blurred vision",
-    "double vision"
-   ],
-   "synonyms": []
-  },
-  {
    "id": "osteoarthritis",
    "doid": "DOID:8398",
    "do_name": "osteoarthritis",
@@ -5036,20 +4787,6 @@
     "osteoarthrosis",
     "Osteoarthrosis and allied disorder"
    ]
-  },
-  {
-   "id": "bronchiolitis",
-   "doid": "DOID:2942",
-   "do_name": "bronchiolitis",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "cough",
-    "wheezing",
-    "shortness of breath",
-    "nasal flaring in infants",
-    "bluish skin due to lack of oxygen"
-   ],
-   "synonyms": []
   },
   {
    "id": "croup",
@@ -5079,11 +4816,7 @@
    "doid": "DOID:10881",
    "do_name": "hand, foot and mouth disease",
    "matched_by": "exact ICD-10 code B08.4",
-   "typical_features": [
-    "poor appetite",
-    "sore throat",
-    "painful sores in the mouth"
-   ],
+   "typical_features": [],
    "synonyms": [
     "HFMD",
     "Vesicular stomatitis and exanthem"
@@ -5265,12 +4998,7 @@
    "doid": "DOID:1273",
    "do_name": "respiratory syncytial virus infectious disease",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "runny nose",
-    "cough",
-    "wheezing",
-    "respiratory distress"
-   ],
+   "typical_features": [],
    "synonyms": [
     "respiratory syncytial virus",
     "RSV"
@@ -5325,18 +5053,6 @@
     "attention deficit disorder",
     "hyperkinetic disorder"
    ]
-  },
-  {
-   "id": "psy_autism_spectrum",
-   "doid": "DOID:0060041",
-   "do_name": "autism spectrum disorder",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "widespread abnormalities of social interactions and communication",
-    "severely restricted interests",
-    "highly repetitive behavior"
-   ],
-   "synonyms": []
   },
   {
    "id": "psy_bulimia",
@@ -5440,27 +5156,11 @@
    ]
   },
   {
-   "id": "aspiration_pneumonia",
-   "doid": "DOID:0050152",
-   "do_name": "aspiration pneumonia",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "tachypnea",
-    "cough"
-   ],
-   "synonyms": []
-  },
-  {
    "id": "asthma_stable",
    "doid": "DOID:2841",
    "do_name": "asthma",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "chest tightness",
-    "shortness of breath",
-    "mucus production",
-    "coughing"
-   ],
+   "typical_features": [],
    "synonyms": [
     "bronchial hyperreactivity",
     "chronic obstructive asthma"
@@ -5550,13 +5250,7 @@
    "doid": "DOID:8469",
    "do_name": "influenza",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "sore throat",
-    "runny nose",
-    "muscle pains",
-    "severe headache",
-    "cough"
-   ],
+   "typical_features": [],
    "synonyms": [
     "influenza with non-respiratory manifestation",
     "Influenza with other manifestations"
@@ -5718,22 +5412,6 @@
    ]
   },
   {
-   "id": "pulmonary_tuberculosis",
-   "doid": "DOID:2957",
-   "do_name": "pulmonary tuberculosis",
-   "matched_by": "exact name/alias",
-   "typical_features": [
-    "cough",
-    "difficulty in breathing",
-    "inflammatory infiltrations",
-    "formation of tubercles",
-    "caseation",
-    "pleural effusion",
-    "fibrosis"
-   ],
-   "synonyms": []
-  },
-  {
    "id": "res_acute_pharyngitis",
    "doid": "DOID:2275",
    "do_name": "pharyngitis",
@@ -5777,12 +5455,7 @@
    "doid": "DOID:6132",
    "do_name": "bronchitis",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "cough with mucus",
-    "shortness of breath",
-    "low fever",
-    "chest tightness"
-   ],
+   "typical_features": [],
    "synonyms": [
     "acute Bronchitis",
     "recurrent wheezy bronchitis"
@@ -5838,13 +5511,7 @@
    "doid": "DOID:7147",
    "do_name": "ankylosing spondylitis",
    "matched_by": "exact name/alias",
-   "typical_features": [
-    "stiffness in the spine",
-    "stiffness in the neck",
-    "stiffness in the hips",
-    "stiffness in the jaw",
-    "stiffness in the rib cage"
-   ],
+   "typical_features": [],
    "synonyms": [
     "Bekhterev syndrome",
     "Bekhterev's disease",

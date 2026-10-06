@@ -120,7 +120,7 @@ def usable_synonym(syn: str) -> bool:
         and " - " not in syn and "and/or" not in syn and not re.search(r"\d", syn)
 
 
-def build(obo: Path) -> dict:
+def build(obo: Path, include_features: bool = False) -> dict:
     terms = parse_obo(obo)
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))["conditions"]
     enriched = {e["id"] for e in json.loads(ENRICHMENT.read_text(encoding="utf-8"))["entries"]}
@@ -156,7 +156,7 @@ def build(obo: Path) -> dict:
             continue
         term = hits[0]
         has_features = bool(c.get("typical_features")) or c["id"] in enriched
-        features = [] if has_features else usable_features(term["symptoms"])
+        features = [] if has_features or not include_features else usable_features(term["symptoms"])
         synonyms = []
         for syn in term["syn"]:
             key = norm(syn)
@@ -185,7 +185,7 @@ def build(obo: Path) -> dict:
                           "catalog concept by exact name/alias or exact ICD-10 code; quality guards in "
                           "scripts/build_open_disease_features.py; nothing generated or paraphrased",
             "clinician_reviewed": False,
-            "use": "Low-weight typical_features / aliases for Tier-2 concepts that had none; never patient evidence",
+            "use": "Aliases (EXACT synonyms) for Tier-2 concepts; typical_features only when built with --include-features (off by default, see script help); never patient evidence",
         },
         "entries": entries,
     }
@@ -194,8 +194,12 @@ def build(obo: Path) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--obo", required=True, type=Path)
+    parser.add_argument("--include-features", action="store_true",
+                        help="also emit has_symptom features. OFF by default: measured on the Round M development set "
+                             "they HURT (generic GI symptom lists made celiac disease outrank gastroenteritis; "
+                             "Top1 95.9%% -> 95.1%%, rerank@25 72.4%% -> 69.1%%); only EXACT synonyms are kept.")
     args = parser.parse_args()
-    result = build(args.obo)
+    result = build(args.obo, args.include_features)
     OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     TERMS_DIR.mkdir(parents=True, exist_ok=True)
     prov = result["provenance"]
