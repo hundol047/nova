@@ -1,7 +1,7 @@
 {
-  "zip": "/home/user/nova-int/submission/submission.zip",
-  "bytes": 763501,
-  "sha256": "521eebf1da6dcd0b196edb6cbcdfa3e25b84a9fe97e81bf9d0cf82cc41358ec8",
+  "zip": "artifacts/verification/nova-pre-guide-v18.zip",
+  "bytes": 772413,
+  "sha256": "9e1af6ac2f0646a38a8224edca714f6116ce3b4a9555b0c7581165fe7bfa7067",
   "checks": {
     "root_has_run_py_and_requirements": true,
     "under_50MB": true,
