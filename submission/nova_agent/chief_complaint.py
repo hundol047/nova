@@ -101,6 +101,7 @@ CONCEPT_ALIASES = {
     "chest_pain": ["chest tightness", "chest pressure", "chest hurts", "chest discomfort", "chest is sore",
                    "sore chest", "one spot in my chest", "chest twinge",
                    "pain in my chest",
+                   "burning in my chest", "burning in the chest", "chest burning", "burning chest",
                    "흉통", "가슴 통증", "가슴이 아프", "가슴이 아파",
                    "胸が痛い", "胸の痛み", "胸が締め付けられる",
                    "胸痛", "胸闷", "胸口疼"],
@@ -373,6 +374,12 @@ _KEYWORD_CONTENT_WORDS: dict = {
           for words in [_meaningful_words(_content_words(kw))] if len(words) >= 2]
     for tag, keywords in CONCEPT_PHRASES.items()
 }
+# The same phrases with their text, for the Round N proximity requirement below.
+_KEYWORD_PHRASES: dict = {
+    tag: [(kw.lower(), words) for kw in keywords
+          for words in [_meaningful_words(_content_words(kw))] if len(words) >= 2]
+    for tag, keywords in CONCEPT_PHRASES.items()
+}
 
 
 def _fuzzy_score(text_words: set, tag: str) -> float:
@@ -397,15 +404,30 @@ def _fuzzy_score_and_overlap(text_words: set, tag: str) -> Tuple[float, int]:
     complete phrase match, not a coincidence)."""
     best_ratio = 0.0
     best_overlap = 0
-    for kw_words in _KEYWORD_CONTENT_WORDS[tag]:
+    proximity_text = _PROXIMITY_TEXT.get()
+    for kw_text, kw_words in _KEYWORD_PHRASES[tag]:
         if not text_words:
             continue
         overlap = kw_words & text_words
         ratio = len(overlap) / len(kw_words)
+        if (ratio == 1.0 and len(kw_words) == 2 and proximity_text is not None
+                and set(kw_text.split()) & _ADJACENCY_TRANSPARENT
+                and not _alias_words_close_together(kw_text, kw_words, proximity_text)):
+            # Round N: a two-word IDIOM (a phrasal verb such as "burning up") fully "matched" only by words
+            # scattered across the sentence ("a burning feeling climbs up my chest") is not that idiom. A
+            # compositional keyword ("chest tightness") keeps matching anywhere in the complaint.
+            continue
         if ratio > best_ratio:
             best_ratio = ratio
             best_overlap = len(overlap)
     return best_ratio, best_overlap
+
+
+from contextvars import ContextVar  # noqa: E402
+
+from nova_agent.matching import _ADJACENCY_TRANSPARENT, _alias_words_close_together  # noqa: E402
+
+_PROXIMITY_TEXT: ContextVar = ContextVar("nova_routing_text", default=None)
 
 
 @dataclass
@@ -425,6 +447,15 @@ def _scores(chief_complaint_text: str) -> List[Tuple[str, float, MatchType]]:
     terms miss, never override a real hit."""
     lowered = (chief_complaint_text or "").lower()
     text_words = _meaningful_words(_content_words(lowered))
+    from nova_agent.config import get_config
+    token = _PROXIMITY_TEXT.set(lowered if get_config().evidence_v2_enabled else None)
+    try:
+        return _scores_for(lowered, text_words)
+    finally:
+        _PROXIMITY_TEXT.reset(token)  # never leak one complaint's text into a later, unrelated fuzzy lookup
+
+
+def _scores_for(lowered: str, text_words: set) -> List[Tuple[str, float, MatchType]]:
     scored: List[Tuple[str, float, MatchType]] = []
     for tag, phrases in CONCEPT_PHRASES.items():
         matched = [p for p in phrases if p.lower() in lowered]

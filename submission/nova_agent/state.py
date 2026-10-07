@@ -123,6 +123,19 @@ class Demographics(BaseModel):
     pregnant: Optional[bool] = None
 
 
+def _with_canonical_concepts(texts: List[str]) -> List[str]:
+    """Append canonical knowledge-base phrases for clinical wording found in ``texts`` (see
+    nova_agent/clinical_concepts.py); the original texts are kept unchanged."""
+    from nova_agent.config import get_config
+    if not get_config().concept_normalization_enabled:
+        return texts
+    from nova_agent.clinical_concepts import canonical_findings_for
+    out = list(texts)
+    for text in texts:
+        out += [c for c in canonical_findings_for(text) if c not in out]
+    return out
+
+
 class ConversationTurn(BaseModel):
     turn: int
     action_type: ActionType
@@ -530,7 +543,7 @@ class PatientState(BaseModel):
         from nova_agent.multilingual_concepts import english_evidence_for
         for t in list(out):
             out += [e for e in english_evidence_for(t) if e not in out]
-        return out
+        return _with_canonical_concepts(out)
 
     def objective_findings_text(self) -> List[str]:
         """Narrower than all_findings_text(): only text that came from an EXAM/TEST actually
@@ -546,4 +559,4 @@ class PatientState(BaseModel):
         out = list(self.physical_examinations.values()) + list(self.imaging.values())
         out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
-        return [t for t in out if t]
+        return _with_canonical_concepts([t for t in out if t])

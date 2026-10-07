@@ -173,6 +173,10 @@ def build_clinical_presentation(state: "PatientState") -> ClinicalPresentation:
         *state.associated_symptoms,
         *state.pertinent_positives,
     ]
+    from nova_agent.config import get_config
+    if get_config().concept_normalization_enabled:
+        from nova_agent.clinical_concepts import canonical_findings_for
+        positive_sources = list(positive_sources) + [c for s in positive_sources if s for c in canonical_findings_for(s)]
     combined_text = " ".join(s for s in positive_sources if s)
     demographics = (state.demographics.model_dump()
                     if hasattr(state.demographics, "model_dump") else dict(state.demographics or {}))

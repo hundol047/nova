@@ -3,7 +3,7 @@
     "disease_id": "acute_abdomen",
     "name": "Acute Abdomen (Surgical Abdomen)",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -709,7 +709,7 @@
     "disease_id": "ectopic_pregnancy",
     "name": "Ectopic Pregnancy",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -806,7 +806,7 @@
     "disease_id": "gi_bleeding",
     "name": "Gastrointestinal Bleeding",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1535,7 +1535,7 @@
     "disease_id": "appendicitis",
     "name": "Acute Appendicitis",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -1587,9 +1587,9 @@
         "appendiceal inflammation",
         "McBurney's point tenderness",
         "right lower quadrant tenderness",
-        "rebound tenderness"
+        "right lower quadrant rebound tenderness"
       ],
-      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset",
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset. Round N: unlocalised 'rebound tenderness' (a generalised peritoneal sign, already a typical feature of acute_abdomen) narrowed to its right-lower-quadrant form so diffuse peritonitis is not credited as appendicitis-confirmatory.",
       "evidence_references": [
         {
           "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/appendicitis/diagnosis",
@@ -1717,7 +1717,7 @@
     "disease_id": "gastroenteritis",
     "name": "Acute Gastroenteritis",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -1794,7 +1794,7 @@
     "disease_id": "acute_pancreatitis",
     "name": "Acute Pancreatitis",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {

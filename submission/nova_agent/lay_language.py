@@ -249,6 +249,9 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
 # Additive extensions (merged into existing keys, never replacing them -- a duplicate key in the literal above
 # would silently drop the earlier list). Engineering-authored plain wording; NOT clinician-reviewed.
 _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
+    "right lower quadrant rebound tenderness": ["rlq rebound", "rebound in the right lower quadrant",
+                                                "right lower quadrant tenderness with rebound", "rebound tenderness in the rlq",
+                                                "rebound tenderness in the right lower quadrant"],
     "polydipsia": ["thirsty", "excessive thirst"],
     # --- venous-thromboembolism risk context (plain wording for an operation / being bed-bound)
     "recent surgery": ["after my operation", "hip operation", "knee operation", "hip replacement", "knee replacement",

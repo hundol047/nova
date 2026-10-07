@@ -51,6 +51,12 @@ class AgentAction(BaseModel):
 
 # Small tie-break (utility points; typical utilities are ~3) -- see generate_and_select().
 LEADER_CONFIRMATORY_BONUS = 0.05
+# Round N: priority for the outstanding minimum workup of a dangerous diagnosis that is currently BLOCKING the
+# stop (an active safety flag, or a substantively supported unresolved dangerous alternative). Same order of
+# magnitude as the measured gap between the chosen action and the best resolving action (median 0.19, p75 0.45
+# utility on the development suites). Only after core history is taken, so history is never skipped for tests.
+BLOCKING_WORKUP_BONUS = 0.5
+_CORE_HISTORY = ("onset", "associated_symptoms", "past_medical_history")
 
 
 class ActionSelector:
@@ -137,6 +143,33 @@ class ActionSelector:
         }
         return utility, components
 
+    @staticmethod
+    def _blocking_workup(state: PatientState, differential: List[DifferentialItem],
+                         safety_findings: List[SafetyFinding]) -> set:
+        """Outstanding minimum-workup actions of dangerous diagnoses that currently keep the encounter open."""
+        if not get_config().action_v2_enabled or not differential:
+            return set()
+        if not all(state.question_asked(k) for k in _CORE_HISTORY):
+            return set()
+        from nova_agent.missing_info import _resolve_entry
+        from nova_agent.resolution import is_resolved
+        from nova_agent.stop_policy import _substantively_supported
+        leader = differential[0].diagnosis_id
+        by_id = {d.diagnosis_id: d for d in differential}
+        blocking = {f.diagnosis_id for f in safety_findings if f.diagnosis_id != leader}
+        blocking |= {d.diagnosis_id for d in differential[1:5] if d.dangerous_if_missed and _substantively_supported(d)}
+        done = set(state.completed_tests) | set(state.completed_examinations)
+        out = set()
+        for did in blocking:
+            item = by_id.get(did)
+            if is_resolved(did, list(item.contradictory_evidence) if item else [], state):
+                continue
+            entry = _resolve_entry(did) or {}
+            workup = entry.get("minimum_workup") or (list(entry.get("discriminating_exams", []))
+                                                      + list(entry.get("discriminating_tests", [])))
+            out |= set(workup) - done
+        return out
+
     def generate_and_select(self, state: PatientState, differential: List[DifferentialItem],
                              safety_findings: List[SafetyFinding], lang: str = "en"
                              ) -> tuple[AgentAction, List[ScoredCandidate], StopDecision]:
@@ -154,6 +187,7 @@ class ActionSelector:
             from nova_agent.missing_info import _resolve_entry
             leader_workup = set((_resolve_entry(leader.diagnosis_id) or {}).get("minimum_workup") or ())
         decisively_supported = self._decisively_supported_dangerous_ids(differential)
+        blocking_workup = self._blocking_workup(state, differential, safety_findings)
         raw_candidates = self.missing_info.analyze(state, differential, safety_findings)
         if state.preliminary_rules:
             # Preliminary round: there is no TEST action. Tests the diagnosis would need are
@@ -182,6 +216,9 @@ class ActionSelector:
             # differential (e.g. ACS in a crushing-chest-pain presentation) its own confirmatory test must
             # keep outranking generic early actions (tests/test_discriminator_priority.py). In the
             # preliminary round vitals arrive with the first patient statement, so this is already satisfied.
+            if cand.action_type in {"TEST", "EXAM"} and cand.key in blocking_workup:
+                utility += BLOCKING_WORKUP_BONUS
+                components["blocking_danger_workup"] = BLOCKING_WORKUP_BONUS
             if (safety_only_ids and cand.action_type == "EXAM" and cand.key == "vital_signs"
                     and not state.exam_done("vital_signs")):
                 gate_bonus = get_config().weights.safety_weight + get_config().weights.time_critical_weight

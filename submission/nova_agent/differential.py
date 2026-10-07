@@ -193,6 +193,8 @@ def has_required_diagnostic_context(item: DifferentialItem, state: PatientState)
     current = [clause for text in current for clause in re.split(r"[;,\n]", text)
                if not re.search(r"\b(?:previously|historical|baseline|history of|last (?:year|month|week)|"
                                 r"prior result|old result|reference range)\b", clause, re.I)]
+    from nova_agent.state import _with_canonical_concepts
+    current = _with_canonical_concepts(current)  # "nuchal rigidity" is current neck stiffness (negation/history-aware)
     return any(_present_with_aliases(phrase, current, strict=True)
                for phrase in required)
 
@@ -226,8 +228,24 @@ def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict
     if finding.interpretation in opposite:
         contradictory.append(phrase)
         return -CONTRADICTION_PENALTY
+    if finding.interpretation == "normal" and lab_id in RULE_OUT_WHEN_NORMAL and _evidence_v2_enabled():
+        # A performed, readable NEGATIVE result for a test whose positivity is a prerequisite of the diagnosis
+        # (no pregnancy -> no ectopic pregnancy) is evidence against it -- not merely "missing". Ordering a test
+        # never counts; only a recorded result does. Deliberately NOT applied to troponin/D-dimer etc., where a
+        # single normal value does not exclude the disease.
+        contradictory.append(phrase)
+        return -CONTRADICTION_PENALTY
     missing.append(phrase)
     return 0.0
+
+
+# Labs whose NORMAL result excludes the diagnosis that requires them to be positive.
+RULE_OUT_WHEN_NORMAL = frozenset({"lab.beta_hcg"})
+
+
+def _evidence_v2_enabled() -> bool:
+    from nova_agent.config import get_config
+    return get_config().evidence_v2_enabled
 
 
 # A confirmatory phrase such as "atrial fibrillation on ecg" names the test the result came from. The objective

@@ -599,7 +599,60 @@ def _strict_alias_present_uncached(alias: str, findings: List[str], scrub_negate
             return True
         if alias_words and alias_words <= _content_words(finding_lower) and all(
                 re.search(rf"\b{re.escape(w)}", finding_lower) for w in alias_generic):
-            return True
+            if not _evidence_v2() or _alias_words_close_together(alias_lower, alias_words, finding_lower):
+                return True
+    return False
+
+
+def _evidence_v2() -> bool:
+    from nova_agent.config import get_config
+    return get_config().evidence_v2_enabled
+
+
+_TOKEN = re.compile(r"[a-z0-9]+")
+# Words that never break the adjacency of a paraphrase's words (unless they ARE one of its words):
+#  - linking verbs joining a body part to its state ("chest GOT tight", "fingers WENT tingly", "head FEELS heavy");
+#  - degree adverbs modifying that state ("neck is SO stiff", "chest felt REALLY tight");
+#  - phrasal-verb particles and quantifiers ("coughed UP blood", "spit out SOME blood").
+# Aspectual verbs ("keeps", "stays") are deliberately NOT included: "a warning light keeps flashing" describes an
+# ongoing external event, not the symptom "flashing lights".
+_ADJACENCY_TRANSPARENT = frozenset({
+    "got", "get", "gets", "getting", "gotten", "went", "go", "goes", "going", "feel", "feels", "felt",
+    "feeling", "became", "become", "becomes", "turned", "turn", "turns", "seem", "seems", "seemed",
+    "is", "was", "are", "were", "be", "been", "being",
+    "so", "very", "really", "too", "quite", "pretty", "extremely", "super", "rather", "bit", "little", "kind", "sort",
+    "up", "out", "down", "off", "some", "any", "much", "lot", "lots", "bunch",
+})
+
+
+def _alias_words_close_together(alias_lower: str, alias_words: Set[str], finding_lower: str) -> bool:
+    """A paraphrase is matched by its words only when they occur TOGETHER: inside one clause, with no unrelated
+    CONTENT word between them (function words such as "in my" may intervene; for paraphrases of three or more
+    content words, one extra content word is tolerated). Otherwise an idiom's words scattered over a sentence
+    assert something else ("burning up" = fever was matched by "a burning feeling climbs up my chest"), while
+    "burning in my chest" still matches "chest burning".
+
+    Word positions are only meaningful for space-separated Latin-script text: an alias written in another script
+    (Korean attaches particles to the noun, "머리가") keeps the previous subset-only behaviour."""
+    if not alias_lower.isascii():
+        return True
+    limit = len(alias_words) + (0 if len(alias_words) <= 2 else 1)
+    for clause in re.split(r"[;,.\n]", finding_lower):
+        stems = []
+        for t in _TOKEN.findall(clause):
+            if t in _IGNORED:
+                continue
+            st = _stem(_LAY_ANATOMY.get(t, t))
+            if t in _ADJACENCY_TRANSPARENT and st not in alias_words:
+                continue
+            stems.append(st)
+        positions = {w: [i for i, st in enumerate(stems) if st == w] for w in alias_words}
+        if any(not p for p in positions.values()):
+            continue
+        for start in sorted({i for p in positions.values() for i in p}):
+            ends = [min((i for i in p if i >= start), default=None) for p in positions.values()]
+            if None not in ends and max(ends) - start + 1 <= limit:
+                return True
     return False
 
 

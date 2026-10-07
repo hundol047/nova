@@ -1,7 +1,7 @@
 {
   "scope": "Every JSON leaf in legacy diseases/catalog/enrichment/tests/guidelines/red-flags; selected module-level literal constants",
   "source_hashes": {
-    "nova_agent/knowledge/diseases/abdominal_gi.json": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "nova_agent/knowledge/diseases/abdominal_gi.json": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "nova_agent/knowledge/diseases/cardiac.json": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
     "nova_agent/knowledge/diseases/endocrine_metabolic.json": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
     "nova_agent/knowledge/diseases/genitourinary.json": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
@@ -1898,7 +1898,7 @@
     {
       "path": "nova_agent/knowledge/diseases/abdominal_gi.json",
       "pointer": "/4/confirmatory_findings/8",
-      "value": "rebound tenderness",
+      "value": "right lower quadrant rebound tenderness",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -1908,7 +1908,7 @@
     {
       "path": "nova_agent/knowledge/diseases/abdominal_gi.json",
       "pointer": "/4/confirmatory_findings_provenance",
-      "value": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset",
+      "value": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset. Round N: unlocalised 'rebound tenderness' (a generalised peritoneal sign, already a typical feature of acute_abdomen) narrowed to its right-lower-quadrant form so diffuse peritonitis is not credited as appendicitis-confirmatory.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -190483,13 +190483,18 @@
         "muddled",
         "disoriented",
         "not making sense",
-        "drowsy and confused"
+        "drowsy and confused",
+        "confusion",
+        "unusual sleepiness",
+        "unusually sleepy",
+        "lethargic",
+        "hard to wake"
       ],
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 26,
+      "line": 27,
       "names": [
         "_BREATHLESS"
       ],
@@ -190504,7 +190509,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 27,
+      "line": 28,
       "names": [
         "_DYSURIA"
       ],
@@ -190519,6 +190524,8 @@
         "burns when i wee",
         "pain passing urine",
         "pain when urinating",
+        "pain on urinating",
+        "pain on urination",
         "stings when i pee",
         "hurts when i pee",
         "urinating hurts",
@@ -190529,7 +190536,53 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 246,
+      "line": 251,
+      "names": [
+        "_ADDITIONAL_LAY_ALIASES"
+      ],
+      "value": {
+        "right lower quadrant rebound tenderness": [
+          "rlq rebound",
+          "rebound in the right lower quadrant",
+          "right lower quadrant tenderness with rebound",
+          "rebound tenderness in the rlq",
+          "rebound tenderness in the right lower quadrant"
+        ],
+        "polydipsia": [
+          "thirsty",
+          "excessive thirst"
+        ],
+        "recent surgery": [
+          "after my operation",
+          "hip operation",
+          "knee operation",
+          "hip replacement",
+          "knee replacement",
+          "operation last week",
+          "recent operation",
+          "post-op",
+          "after surgery"
+        ],
+        "immobilization": [
+          "mostly in bed",
+          "stuck in bed",
+          "bedbound",
+          "bed-bound",
+          "confined to bed"
+        ],
+        "exertional chest pain": [
+          "comes on walking",
+          "comes on when i walk",
+          "eases when i rest",
+          "goes away with rest",
+          "on walking uphill"
+        ]
+      },
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/lay_language.py",
+      "line": 272,
       "names": [
         "_TIER2_LAY"
       ],
@@ -191059,6 +191112,11 @@
         "dyspnea": [
           "숨쉬기가 힘들어요",
           "숨이 차요",
+          "숨이 차고",
+          "숨이 안 쉬어",
+          "숨을 쉴 수 없",
+          "숨이 가빠",
+          "숨이 가쁘",
           "息が苦しいです",
           "呼吸が苦しいです"
         ],
@@ -191092,9 +191150,20 @@
           "めまいがします",
           "頭がふらふらします"
         ],
+        "allergic": [
+          "온몸이 가려",
+          "전신이 가려",
+          "알레르기 반응",
+          "입술이 붓",
+          "얼굴이 붓",
+          "두드러기가 났"
+        ],
         "syncope": [
           "정신을 잃었어요",
           "기절했어요",
+          "쓰러졌어요",
+          "쓰러졌습니다",
+          "쓰러졌다",
           "気を失いました",
           "意識を失いました"
         ]
@@ -191103,7 +191172,7 @@
     },
     {
       "path": "nova_agent/multilingual_concepts.py",
-      "line": 131,
+      "line": 134,
       "names": [
         "_BARE_CLINICAL_NOUNS"
       ],
@@ -191167,7 +191236,7 @@
     },
     {
       "path": "nova_agent/multilingual_concepts.py",
-      "line": 142,
+      "line": 145,
       "names": [
         "_NEGATION_MARKERS"
       ],
@@ -191186,7 +191255,7 @@
     },
     {
       "path": "nova_agent/multilingual_concepts.py",
-      "line": 151,
+      "line": 154,
       "names": [
         "_CANONICAL_ENGLISH_EVIDENCE"
       ],
@@ -191208,7 +191277,7 @@
     },
     {
       "path": "nova_agent/multilingual_concepts.py",
-      "line": 164,
+      "line": 167,
       "names": [
         "_DIRECT_LOCALIZED_EVIDENCE"
       ],
@@ -192022,7 +192091,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 30,
+      "line": 66,
       "names": [
         "_STOPWORDS"
       ],
@@ -192059,7 +192128,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 34,
+      "line": 70,
       "names": [
         "_GENERIC_MEDICAL_WORDS"
       ],
@@ -192077,7 +192146,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 36,
+      "line": 72,
       "names": [
         "_OVERLAP_RATIO_THRESHOLD"
       ],
@@ -192086,7 +192155,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 51,
+      "line": 87,
       "names": [
         "_RELATIONAL_WORDS"
       ],
@@ -192108,7 +192177,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 125,
+      "line": 163,
       "names": [
         "_SUFFIX_RULES"
       ],
@@ -192150,7 +192219,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 128,
+      "line": 166,
       "names": [
         "_MIN_STEM_LENGTH"
       ],
@@ -192159,7 +192228,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 143,
+      "line": 181,
       "names": [
         "_IRREGULAR_STEM_OVERRIDES"
       ],
@@ -192169,6 +192238,7 @@
         "breathes": "breath",
         "breathing": "breath",
         "breaths": "breath",
+        "irregularly": "irregular",
         "testicular": "testicle",
         "testis": "testicle",
         "testes": "testicle",
@@ -192191,7 +192261,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 225,
+      "line": 269,
       "names": [
         "_LAY_ANATOMY"
       ],
@@ -192203,7 +192273,16 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 287,
+      "line": 298,
+      "names": [
+        "_ABSENT_SIGN"
+      ],
+      "value": "(?:breath|bowel|heart|lung|air entry|tendon|deep tendon|corneal|gag|femoral|radial|pedal|distal|peripheral|carotid|pulses?|reflexes?|bruits?)\\b",
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/matching.py",
+      "line": 365,
       "names": [
         "_POLARITY_UP"
       ],
@@ -192220,7 +192299,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 288,
+      "line": 366,
       "names": [
         "_POLARITY_DOWN"
       ],
@@ -192236,7 +192315,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 424,
+      "line": 528,
       "names": [
         "FEATURE_ALIASES"
       ],
@@ -192414,7 +192493,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 469,
+      "line": 573,
       "names": [
         "_LAY_VARIANTS"
       ],
@@ -192753,6 +192832,28 @@
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
+      "path": "nova_agent/action_selector.py",
+      "line": 58,
+      "names": [
+        "BLOCKING_WORKUP_BONUS"
+      ],
+      "value": 0.5,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/action_selector.py",
+      "line": 59,
+      "names": [
+        "_CORE_HISTORY"
+      ],
+      "value": [
+        "onset",
+        "associated_symptoms",
+        "past_medical_history"
+      ],
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
       "path": "nova_agent/config.py",
       "line": 13,
       "names": [
@@ -192808,7 +192909,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 37,
+      "line": 39,
       "names": [
         "PRELIMINARY_MAX_LLM_CALLS_PER_CASE"
       ],
@@ -192817,7 +192918,25 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 288,
+      "line": 43,
+      "names": [
+        "PRELIMINARY_CASE_INPUT_TOKENS"
+      ],
+      "value": 50000,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/config.py",
+      "line": 44,
+      "names": [
+        "PRELIMINARY_CASE_OUTPUT_TOKENS"
+      ],
+      "value": 10000,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/config.py",
+      "line": 304,
       "names": [
         "_config"
       ],

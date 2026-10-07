@@ -351,7 +351,7 @@
 현재 코드 분류: urgency=MEDIUM, dangerous=False (미검토)
 
 - 증상 특징: ["periumbilical pain migrating to right lower quadrant", "anorexia", "low grade fever", "nausea"]
-- 현재 확진 관련 소견: ["inflamed appendix", "appendiceal wall thickening", "dilated appendix", "periappendiceal fat stranding", "appendicolith", "appendiceal inflammation", "McBurney's point tenderness", "right lower quadrant tenderness", "rebound tenderness"]
+- 현재 확진 관련 소견: ["inflamed appendix", "appendiceal wall thickening", "dilated appendix", "periappendiceal fat stranding", "appendicolith", "appendiceal inflammation", "McBurney's point tenderness", "right lower quadrant tenderness", "right lower quadrant rebound tenderness"]
 - 위험 인자: ["young age"]
 - 최소 검사: []
 - 위험 신호: ["rebound tenderness", "guarding"]

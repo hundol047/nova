@@ -181,6 +181,15 @@ class NovaConfig:
     # integrated release keeps them opt-in (NOVA_OPEN_SYNONYMS=1) rather than silently active.
     open_synonyms_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_OPEN_SYNONYMS", False))
     mondo_synonyms_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_MONDO_SYNONYMS", False))
+    # Round N switches (ablation): clinical concept normalisation (nova_agent/clinical_concepts.py) feeding
+    # the evidence bag and routing. Default ON; NOVA_CONCEPT_NORMALIZATION=0 reproduces the previous behaviour.
+    concept_normalization_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_CONCEPT_NORMALIZATION", True))
+    # Round N evidence-interpretation switch: proximity-bounded alias matching, negative beta-hCG as evidence
+    # against its pregnancy finding, lying/standing blood-pressure interpretation. NOVA_EVIDENCE_V2=0 disables.
+    evidence_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_EVIDENCE_V2", True))
+    # Round N action switch: once core history is taken, prefer the outstanding minimum workup of a dangerous
+    # diagnosis that is actively blocking the stop (resolves the danger sooner). NOVA_ACTION_V2=0 disables.
+    action_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ACTION_V2", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"
