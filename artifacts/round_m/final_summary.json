@@ -1,26 +1,26 @@
 {
-  "runtime_sha": "286ca7d5f38177f836e4e8eed710fc2756c21b9d",
+  "runtime_sha": "fd238d7f3b4447d32345b973239e7537115cf5f6",
   "runtime_sha256": {
-    "nova_agent/multilingual_concepts.py": "57e277310c3d214be36f0459511498f662b6af5a9eedde2413ebfa5f2306b339",
+    "nova_agent/multilingual_concepts.py": "5738bcacd015299aeb4af88685146d27cdc64a75ccc6f48ac268bd5fd16d2c8a",
     "nova_agent/vitals_parser.py": "a1904c19c79da2930ec1784c36257030c028ed1275a2d5a8fb9a965f4118dbfa",
     "nova_agent/lay_language.py": "f788118d54bc27845d0f3e0e27152b70949f7f6c61b5239f2a23c3fb430ef27d",
     "nova_agent/candidate_generator.py": "da5d4856fa6cb5c34f5ab6dc5582a68dcb5d1df6ab12177d1ea72b470a5412ac",
     "nova_agent/glucose_evidence.py": "439d58b5fdf3620504cd65e279a13806424927abf1de88d4c8615d2a0b93baab",
     "nova_agent/_synex.py": "5889d42af17fb777f4715c9739e0ec2f27be50ad102e148e026dbfca7efc0e09",
     "nova_agent/severity_evidence.py": "989ecd8d2adbd1da9d8c1f73db9cc33301cdef165fc66f16b02087bdf30094fd",
-    "nova_agent/config.py": "5f5ba65809611dbed8ad5cbdbda4a9d69eb33d4f3db2d86c0d81cabf5615b564",
+    "nova_agent/config.py": "344d335e2def8d09b6919ccb1e110dc50e8030d32b55bd3945d2090fb13a639a",
     "nova_agent/llm_client.py": "84a25054bc7d20fe8f9bde4441d6eeeb8ea7e35dd1917558858a8ede99ac678c",
     "nova_agent/clinical_summary.py": "24d1195e8102ef32b214c7ea52d549be18f0ef5d3773f360ac65f2d73c23316e",
     "nova_agent/__init__.py": "b5daddc1f1cfdc584094b957cf7f70244dbc53807744cc3ab9e1deebab26d706",
-    "nova_agent/differential.py": "dff55a1a62687c42994642e1d85c0e5febfd9c38c54aa08db638782508d933bc",
+    "nova_agent/differential.py": "6827feeee744fdc7828e06b6719900e2ac59edcd6f29910449b48255dbf7010d",
     "nova_agent/resolution.py": "a91545af69e09c1b022cc4245717f39b0305ce9efa4fe0ab97583516a345d1b2",
     "nova_agent/contextual_safety.py": "8df37655c6a65741eac67d2b33297efade496448b18e7fd30e1ac28932940be9",
     "nova_agent/syndrome_relationships.py": "01dcff286a02ab68b5c576d90eb7c8c94b4318174572f5369c345ae165065d68",
     "nova_agent/matching.py": "2f58a88af5895ae7026a2b453118538b4a96dd79ddd053d95ca70eda5ec34e0a",
     "nova_agent/diagnosis_normalizer.py": "ad276deb16934457f379f97c0e09086c9344b0c55a9154fe78ae29f846560ace",
     "nova_agent/chief_complaint.py": "f5601cb113b8c600cb45ee15e541848e89ca993e96328dc3746daf5cdcd34eb1",
-    "nova_agent/preliminary.py": "1aab97f1d5aed6a464431c115c20f89ac7e0e08afd3a6537e8641f50865c109e",
-    "nova_agent/state.py": "72cebaa013ad0bd4ecb834346e5b62571bc5382be36246432ab4640592e613b8",
+    "nova_agent/preliminary.py": "e82d5a73ba34a32b1a71ced8b5efc7a794915774125ad12d53cc840514934d68",
+    "nova_agent/state.py": "4876c08d34f94b199a27ec46a8f2aa23ea3345b09b8fec10bee5ec9d67b59a77",
     "nova_agent/unit_safety.py": "d5df12c6481a114975cb2a49c9a6d55316576833ee0338710aca9a4f18c53056",
     "nova_agent/semantic_dedup.py": "d7b9d3913c9a2f1e66ea2ace68452156f6c39dd932f4fe7fa44effa28ad5207e",
     "nova_agent/action_canonicalizer.py": "8f720d348cb5beb727c92af9465d913dcba62bb37da0eda65daf8be65676e678",
@@ -31,8 +31,8 @@
     "nova_agent/orchestrator.py": "a6e83dfbc055fc6e0576c8059d147bc726bdbb7f0bde12ce61c3466526beff76",
     "nova_agent/missing_info.py": "f3ebec186ffdd933f9c8dea7a9e7f73ed9f268e461b36adf579e24643c6c4541",
     "nova_agent/objective_evidence.py": "1e27c0978125cef88f07fd32b907f84675e531727fb6cb047ed9eb673e2fc074",
-    "nova_agent/stop_policy.py": "e421093f246504f826aac50aca0cd4726536c5963673345aa13927074c7318d8",
-    "nova_agent/soap.py": "dd9467ab1a2c7600526400af4a07da55f50eecd4850f34dc10a0f1b06f054356",
+    "nova_agent/stop_policy.py": "98e6530f946241b462c83415d45183298ddcf1a233a3ead00706dcea9f93fcda",
+    "nova_agent/soap.py": "0100f4d28d4f9981f019df5f2c8ed96ce6370a087261098e49a1fe8874d438d5",
     "nova_agent/models.py": "3d26e2b67263db0f371098200b4c026fce9c47816f37328316730cb5fbb07f45",
     "nova_agent/open_world.py": "ae0bfe185e3f542b099d36b52dff71eb1685ced7cb015e2d069cf35398c4c58d",
     "nova_agent/clinical_presentation.py": "3c08ac16777dff0524035aa934452fc22634e58584886613ebb20924b0193527",
@@ -45,21 +45,11 @@
     "nova_agent/knowledge/tier2_catalog.json": "03a1cfe485f52c18665312f7b589fa51853f8bac122faff6ce2231c2298c08fd",
     "nova_agent/knowledge/licensed_reference_store.py": "752956c93d4c859119942951a40a4f8ce867dbda8061b76e3b877adf36534cc2",
     "nova_agent/knowledge/__init__.py": "1d6e6e8e96a20516815a620b28f6b90dd21726036c5a4812c2d90ef18bee18a6",
-    "nova_agent/knowledge/tier2_open_features.json": "7d88e9b0c8709c79f6f6baf0f0fb26a9862c6d7aef7379c2b3c2bf4318891a16",
+    "nova_agent/knowledge/tier2_open_features.json": "7ea122cb0b8746548f39a0e1d230dc306149199d8a51e78a2715809cb4fd66f9",
+    "nova_agent/knowledge/tier2_mondo_synonyms.json": "df0427050f21e76a77ae28a62a0073c0dc76b400d59bc7092ea310f938489596",
     "nova_agent/knowledge/tier2_enrichment.json": "a127120bc1b5c73a40a57b6441aecda54b43c9e2ecc4ab1ac7a96e458c1adc74",
     "nova_agent/knowledge/retrieval.py": "4b6954be365186926d29d53cbfe82cb1981cc24f2797a5ea09cfcb2df89bdaea",
     "nova_agent/knowledge/PROVENANCE.md": "74e9b684b56153403b2baae5b9d945fd394d5197d2457269e839f48b570aea7c",
-    "nova_agent/knowledge/guidelines/chief_complaint_guidelines.json": "958288db5865bd02917b1ad0a5431074f7c5e13b11ec1db2200c97790e69f471",
-    "nova_agent/knowledge/diseases/pulmonary.json": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
-    "nova_agent/knowledge/diseases/genitourinary.json": "0e1275f2fc43d5aec7b4880e115fba11cbf4b9785b05bef3026ad18d80358dce",
-    "nova_agent/knowledge/diseases/cardiac.json": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
-    "nova_agent/knowledge/diseases/infectious.json": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
-    "nova_agent/knowledge/diseases/abdominal_gi.json": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
-    "nova_agent/knowledge/diseases/endocrine_metabolic.json": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
-    "nova_agent/knowledge/diseases/neuro.json": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
-    "nova_agent/knowledge/red_flags/critical_conditions.json": "caae9d4d5520417eed70721b27e9ebdd299c14db10ecd2b684a0cdbd3a572609",
-    "nova_agent/knowledge/red_flags/demographic_and_medication_risk.json": "bca3d6b97636685a59d4dec197eb33bda38dc93d3fe8e98c12c65e3b2941ebf2",
-    "nova_agent/knowledge/diagnostic_tests/notes.json": "6cc5f51ac1c69c2a17354e5606e83749cb39ab19a313d0719afb1fe4ebadf161",
     "nova_agent/i18n/__init__.py": "4364b709729553cbb08d134278077d6b16a4ad69359b6e18ec6358ffdb8192f3",
     "nova_agent/i18n/diagnosis_display.py": "db03770c3f2a5983a76dd1fbab73bb7ffd3fb58a4419162f9521abe00f45b472",
     "nova_agent/ontology/hierarchy.py": "a03338f6ca4ad7a0d514a1b9087cf7238da5dbfa91da13a277027b094d7cd151",
@@ -76,14 +66,27 @@
     "nova_agent/ontology/providers/snomed.py": "82869031b39df0d6ce5831ad2ddd5996b0f3ca08933925df9450bbb31031eb9c",
     "nova_agent/ontology/providers/custom.py": "1a74e102964ec79cdd16ba1070f763c48e52ba481e963c64f20978579d40fdfe",
     "nova_agent/ontology/providers/icd10.py": "4b9c8860428e1304d7134926e9101614a8251cf2e40f49cda9127874e11b2a74",
-    "nova_agent/ontology/providers/tier2_catalog.py": "948998b58e529ce013f3c6990d4d63e6318b9dae09468c7d9fcbc73fa345cabd",
+    "nova_agent/ontology/providers/tier2_catalog.py": "89ac0a098effb66cfdfb16af56247cda9355d1308a3398642bf202d2dfeb17c1",
     "nova_agent/ontology/snapshots/README.md": "8f5a0109db449fe882f9ef7ad943419c2e3617de0ed1d9a80e90040bd636a7cc",
+    "nova_agent/knowledge/guidelines/chief_complaint_guidelines.json": "958288db5865bd02917b1ad0a5431074f7c5e13b11ec1db2200c97790e69f471",
+    "nova_agent/knowledge/diseases/pulmonary.json": "78ca08a64ade206c7b541e41bd846cfd0931e3d0110f3f5accf68eb15fb78fa7",
+    "nova_agent/knowledge/diseases/genitourinary.json": "0e1275f2fc43d5aec7b4880e115fba11cbf4b9785b05bef3026ad18d80358dce",
+    "nova_agent/knowledge/diseases/cardiac.json": "d8333c0aad7b75ae888df2bf0104c9fcf188fe1a7ccbe81dde709699850c7c64",
+    "nova_agent/knowledge/diseases/infectious.json": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
+    "nova_agent/knowledge/diseases/abdominal_gi.json": "f603fa06904046845a2e54b2778307d3791e9438a6ecf6882170b56bd52bed3a",
+    "nova_agent/knowledge/diseases/endocrine_metabolic.json": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "nova_agent/knowledge/diseases/neuro.json": "93c4e1f71604f0edc339f8876b875beca4037beb1e69b29f1a30b1dd2a582bc3",
+    "nova_agent/knowledge/red_flags/critical_conditions.json": "caae9d4d5520417eed70721b27e9ebdd299c14db10ecd2b684a0cdbd3a572609",
+    "nova_agent/knowledge/red_flags/demographic_and_medication_risk.json": "bca3d6b97636685a59d4dec197eb33bda38dc93d3fe8e98c12c65e3b2941ebf2",
+    "nova_agent/knowledge/diagnostic_tests/notes.json": "6cc5f51ac1c69c2a17354e5606e83749cb39ab19a313d0719afb1fe4ebadf161",
     "competition/local_runner.py": "801d97192c52455a9546c4bb2d66dbba15fe9f5735cf70096b61dfdcbee74dd2",
     "competition/__init__.py": "ee70b1ed0048ab3ad9444d7ac11073b624d30caf811906758e2ff65ef1f870c1",
+    "competition/official_transport.py": "88da0262e746ebce13d1eebffd44c792b6217f298bfd2faab5b7429e87145a83",
+    "competition/submission_profile.py": "c4818b450dba75c7b87510ea1611e2d2d255118cdfeae4341abe498e18657b4f",
     "competition/schema.py": "143df15d62c8c8f6082428fea7746cefbc00b8a13dad583b4b6a5716eca21534",
     "competition/readiness.py": "ac8940459c6135e54110ee483071ddc44623928799762e4ad23a591b635038f7",
-    "competition/adapter.py": "fd5e5d9ec81582ef38cb8a366ab11ccda633e016535730f54f3757dbb29b3b9b",
-    "competition/provider_lock.py": "86997b02177f8dc5964a018495b484cb50deaf101bab241205c9a4b4ecccb41c"
+    "competition/adapter.py": "b1d9365ed17e12c4343db6458cfcb21ca29c9d65cabbe5d131ba17e0db4e583f",
+    "competition/provider_lock.py": "78093f101c0ad182f2bdbe27162c07412622b23804d6eac969a476994bd9e5ff"
   },
   "effective_config": {
     "focus_resolved_actions": true,
@@ -95,6 +98,7 @@
     "ontology_broadening_enabled": false,
     "ontology_broadening_max": 5,
     "preliminary_rules": false,
+    "mondo_synonyms_enabled": false,
     "competition_retrieval_enabled": true,
     "competition_supports_insufficient_information": false,
     "retrieval_top_k": 150,
@@ -163,8 +167,8 @@
     "retrieval_truth_retention": 0.8536585365853658,
     "rerank_truth_retention": 0.7154471544715447,
     "active_truth_retention": 0.991869918699187,
-    "average_turns": 25.2734375,
-    "average_tests": 9.296875,
+    "average_turns": 25.25,
+    "average_tests": 9.28125,
     "average_diagnostic_delay": 0,
     "diagnostic_delay_observed_count": 125,
     "diagnostic_delay_definition": "policy-eligible non-forced stop, not clinical safety certification; null != zero",
@@ -189,7 +193,7 @@
     },
     "cases": 128,
     "median_turns": 20.0,
-    "average_ask": 8.828125,
+    "average_ask": 8.8203125,
     "average_exam": 6.1484375,
     "retrieval_at150": 0.8536585365853658,
     "rerank_at25": 0.6991869918699187,
@@ -269,7 +273,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_001.json",
-      "trace_sha256": "827941196ab84a082a053f3f9d05250637d18d0e734be9adb769e6e386c12c7d",
+      "trace_sha256": "ee69710741ef5241020440c43f221374075543b478491f4523891b3207e829e6",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -321,7 +325,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_002.json",
-      "trace_sha256": "e25e543f0c476965cdde4a5fbd2ddd8f7aa2e823ea7c050dc5faa20ee5627333",
+      "trace_sha256": "c9d57c9906c5af5ebd4dab63b7e2dde580bbf2ccdb9ad03a6a77c684e231c238",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -374,7 +378,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_003.json",
-      "trace_sha256": "07091558bcb98af7cb5788e22d210cac7b0d013f16e9e600c8e4325d8c0b9425",
+      "trace_sha256": "a3456939dfe7893429a532ba9e591aab7b6fcfc5869ab6739b39c3dc213f5d92",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -476,7 +480,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_005.json",
-      "trace_sha256": "44c94b750fb50e550b6b357fb6bf3ec0dc8bccdf3da77caea9575143763af9cf",
+      "trace_sha256": "5923466184ac89e6d786a07566103177bed1268a6341595c17051f5dd3cbfa06",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -526,7 +530,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_006.json",
-      "trace_sha256": "794ceb66c0a1521db7b5a801af566878c6e7268ea9db2583d0f14f3d4ff8a747",
+      "trace_sha256": "a1887be6fd873a66af658c1ac9e00e6c8e49bd034dcd26d7fa2fab0aaad602ac",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -670,12 +674,12 @@
       "exams": 3,
       "internal_result": null,
       "redundant_tests": 0,
-      "unresolved_critical_alternatives": 20,
+      "unresolved_critical_alternatives": 19,
       "language": "EN",
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_009.json",
-      "trace_sha256": "5b79b8be0aeb7903f570e8a853905393163a6d837452a1bdc5b6d9764a0a0485",
+      "trace_sha256": "d16b48e295d45d6628fdea2385c601748ee9fb2173ab7f35a9f03c5bbca6ac5d",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -728,7 +732,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_010.json",
-      "trace_sha256": "5573ad22239fccd3fc9a798271382cb768a221c49e86213ae468148c421fbfec",
+      "trace_sha256": "367ba666d983e57d9f724c7487d577ff9a00cae996825c232b520dd5fd253fc7",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -778,7 +782,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_011.json",
-      "trace_sha256": "de62ac0fafb17a88a9dd7c1517a8f4f8577f01fc2eea2e91261cfafd8a2c4ae6",
+      "trace_sha256": "a8957b2d1405c11813a64f7995c225cf40a37afe0489f2ecb5d78b678000e1fa",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -878,7 +882,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_013.json",
-      "trace_sha256": "446429e4b4df3db8b36208516463bba3cfb8748f7d5f003e943257d39fb12d6c",
+      "trace_sha256": "6c70957864b7338f7df66117ecf990031aab81fc2840361e8df46e714a87d296",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -962,8 +966,8 @@
       "stop_was_unforced": true,
       "unrequested_scripted_objective": [],
       "scripted_objective_observed": 4,
-      "eligible_critical_candidate_turns": 73,
-      "retained_critical_candidate_turns": 73,
+      "eligible_critical_candidate_turns": 83,
+      "retained_critical_candidate_turns": 83,
       "duplicate": 0,
       "malformed": 0,
       "failed_to_diagnose": false,
@@ -977,7 +981,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_015.json",
-      "trace_sha256": "082b9f70e36313c5634fdc749e8983d06eb97b874b93969d872c131dceb4961d",
+      "trace_sha256": "5666cfe389aa718036b4c574fe1535f1baf9ae59f08252568da550930afd2932",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1029,7 +1033,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_016.json",
-      "trace_sha256": "2f016ee4c741e99dea382893a3f1bcb7cc24dc7245ab1f5f0d96126c17530bc5",
+      "trace_sha256": "2ab41a8c574de8cc31c5b9a08c3cd1f85b8e63e6bb6493fd7594234a5b0cccc1",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1078,7 +1082,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_017.json",
-      "trace_sha256": "70a41ea36ebb437206b1a458115ab74cbc7944c75b952810a6cede741181ed7a",
+      "trace_sha256": "d541f5c9c9cc459de1c0cd205373aa48906efc7c48220769ed5aa3e7b6872f46",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1125,7 +1129,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_018.json",
-      "trace_sha256": "af75bb16f244328e5a46f2e5bc1711c0a9a18887a941cf293ecaa1dca2f2c5b5",
+      "trace_sha256": "073162041f130996e4680edb14679764f6420d3b33e4a826a2c6ee458444fe3c",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1177,7 +1181,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_019.json",
-      "trace_sha256": "dcf256d770dc691dd27507faf366eca23b1c3e7904b0be7acd963daf0ab466da",
+      "trace_sha256": "cba4131d146721e531fe174a94e76f93281f0db1e8b514b8ca078b66c205cb44",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1227,7 +1231,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_020.json",
-      "trace_sha256": "b82aa9a644871b40e4fb2dd68b1756fac82d7636ab14aff25b2f5758ad962d12",
+      "trace_sha256": "aa6c2a0a8a3107518d5256356994166a01bfad8c15ed68367a6a8f3bc0cc152a",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1325,7 +1329,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_022.json",
-      "trace_sha256": "b9d8b9296b4d01ca9fb18a78d26b2dcd0dcd71e3b99a15044f9d7be08241b28c",
+      "trace_sha256": "23d21f7d286d48ef470079ac124234eb6fb01d4b8af2f35be2aaff9d57dc17cd",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1373,7 +1377,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_023.json",
-      "trace_sha256": "b898f0a6c4d8b8047824579efa31aefdcb70930c84ecb5564e0d19c6b3a63e1b",
+      "trace_sha256": "8e754da7a142e5e6c06afb30e24475cea38741ed2ed7b0ba4193d09875c6642b",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1422,7 +1426,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_024.json",
-      "trace_sha256": "223a9b36ca581f4f8d8ef140f78c9ecf787ab5bbe86b701623196abe2a99293b",
+      "trace_sha256": "360f2c82bc0e205800158e04f27dbe25d72d3f3284b62bf73e2acbaeff01f64b",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1474,7 +1478,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_025.json",
-      "trace_sha256": "b8ada0ad3f5298826aeee300a9c9eaf86469b5ad4111cc266d5dfcb1d82dcd3b",
+      "trace_sha256": "0fb8e4df4ba6802a0e87a8ce753bbcee767f751e089c6a63928553dca92e7bdf",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1522,7 +1526,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_026.json",
-      "trace_sha256": "b1ba6b1dc565f63b0e8bd1c43eb7dd7f5a8b296f7d47b674fd2a4ea0d931c1e2",
+      "trace_sha256": "e5240297d8fe1119fd0828895c1c4324b5fa76ca9cf2dc902ae6cbcca73ee014",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1572,7 +1576,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_027.json",
-      "trace_sha256": "35ca40ea23d5b678203eadbc868d60b99648a4bef92c8c7fa7e5e164d9cb1800",
+      "trace_sha256": "d164843b5d7b70a1bff0124d65e9578b8244310034fc36ae8e36fb5de246c35f",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1625,7 +1629,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_028.json",
-      "trace_sha256": "653e49e3a7680da3c0ba768ba71938125ebd86a29a1ae09ad50b82385cd50271",
+      "trace_sha256": "eefc5b83db73aab1ef7d516bb942e1dcec1d54b8361c81e63f6aa13d2cd22685",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1731,7 +1735,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_030.json",
-      "trace_sha256": "2de86dde2518c3e685a753bfc71e9c4810ab48351c60ddf1cd3cab04c7e9a57a",
+      "trace_sha256": "a94ea71380549f6a2783a1132d205dfd0e43aa4b7b923849c2560d3e62cda453",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1785,7 +1789,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_031.json",
-      "trace_sha256": "6fa3b0ae160d57f5df8079db08a7baec20080853a23c435d02149b534787d484",
+      "trace_sha256": "917fbb4d397686f00236d0de593f0f9f13217eb18dc52d04ece8f349d3144826",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1838,7 +1842,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_032.json",
-      "trace_sha256": "2485eb30d214fbd0cc04ec3eac8397fbbb965b88da9ab8e128fb8e975d9b20ed",
+      "trace_sha256": "80543bb07e4dab27403b32d6ce971480fd5239dbca66c50dfa6901b81e695533",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1892,7 +1896,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_033.json",
-      "trace_sha256": "d9abedf2d1c89d13a998b0bfc113f90959b5304696dea079e220cda209b9b099",
+      "trace_sha256": "092394c4e890f0532980eb61364acc0a9539874c888b96b3a7dd9946c39c6431",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -1992,7 +1996,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_035.json",
-      "trace_sha256": "b08ba2afee05cc87eb54b5218d9d5534e4848ec0bea11ce63f69255ddb2109fe",
+      "trace_sha256": "7533552e6da7cdac82bbc0f89437d3a45051051970b90d73eae39654447af730",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2043,7 +2047,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_036.json",
-      "trace_sha256": "e56f1fbcfcbbb93bfba6ceced30a31eaaceb95024b7d0b6e8beda2e270901a66",
+      "trace_sha256": "895617b74a608eec83b78ce81b405ddf0be3eb013d07a60cca8cc237f050212c",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2142,7 +2146,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_038.json",
-      "trace_sha256": "808f4c3372f899b395ecabb04934825b2d7b6941368634456dcc2b2f2f74144b",
+      "trace_sha256": "9eff68e19dbbe285d8706ad65f797bb06232c6c91a80de2320877b9a111ea995",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2194,7 +2198,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_039.json",
-      "trace_sha256": "49515ac30ae37cc0913a7838e7f81764a0e210a256e8c7f8896d59959b175a82",
+      "trace_sha256": "7aa6cd357f645aefde0d88f43469e138fade6e4cf30621a15abda8aacdb6f939",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2245,7 +2249,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_040.json",
-      "trace_sha256": "c7c348e101f083781c5f0212489bbc55f72d2e0020c6da39f77155259d87d957",
+      "trace_sha256": "4c07d8d024b34cf96ada594074ca0ccc9f8eae53f601519e824c62ef49037d7a",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2293,7 +2297,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_041.json",
-      "trace_sha256": "d5c5667c29d87ab3f6f69f486703f60e971246c8b119f529612f5139224c0714",
+      "trace_sha256": "be484c06e8364dc9618fd2bd20a91a663e35376849d9de2c0b0153fc3506ba97",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2327,8 +2331,8 @@
       "stop_was_unforced": true,
       "unrequested_scripted_objective": [],
       "scripted_objective_observed": 1,
-      "eligible_critical_candidate_turns": 70,
-      "retained_critical_candidate_turns": 70,
+      "eligible_critical_candidate_turns": 67,
+      "retained_critical_candidate_turns": 67,
       "duplicate": 0,
       "malformed": 0,
       "failed_to_diagnose": false,
@@ -2342,7 +2346,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_042.json",
-      "trace_sha256": "3738bc7e15ff3bc193a32f5fa2116520efe0d320bf76745346b298af76479b11",
+      "trace_sha256": "7e21f20fe7ae5a4cdd413555c4334e213311cfcdec07fed8e88852adfe4eab04",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2392,7 +2396,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_043.json",
-      "trace_sha256": "9bb3ae37a8f16f64db3e2cdced5b78ed5c6edc4fb5dcd598387cc8cc499e2af8",
+      "trace_sha256": "2b6978d15db20c451ca8fca07916e94ac80d79f40d28ddc30783353db9873762",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2440,7 +2444,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_044.json",
-      "trace_sha256": "ab3a9d76cd6525ed4f9287e4dfe867c394a5cb69ce5ef5db934cbdf66752e3cd",
+      "trace_sha256": "8acaca5743ff23860473f4a3f660bb9f255635303be8c1789533a2afa53632b1",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2538,7 +2542,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_046.json",
-      "trace_sha256": "94d0153fe5f7fbe9561f1f19cc6be971685604c86e00fd8f1e67e38b99973a19",
+      "trace_sha256": "7bd715eb60dfbfae149192c64ec60024dca836c0f4662dca4e9aeff11db28039",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2588,7 +2592,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_047.json",
-      "trace_sha256": "05d046a3969c2ce55649a770a64df197fe374acbff443dbe115d4f9e3394465c",
+      "trace_sha256": "ae2459dda62fd51adc5f24d3d1549fb0ab0beeadd8e064c9b310bf8c6e7dfc1a",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2637,7 +2641,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_048.json",
-      "trace_sha256": "5aefc0348356d65267ca8965e21f0d0d3916563fd3784081d6e36391f09041bc",
+      "trace_sha256": "e1ee9d0ddc6576c1887a1afd5d7764971f8bcf7ecdff591d3ec07ad0bc938ac5",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2682,7 +2686,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_049.json",
-      "trace_sha256": "5e26ff02b2630e6a9760ca6e22048f4b9ae6d412499f834fa24ca3bce6cd0b7c",
+      "trace_sha256": "915d380cafc7074aca04aa5aab7914c8a012c4640b0e925f72c2dbe5e37a8135",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2733,7 +2737,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_050.json",
-      "trace_sha256": "d5c59ca882f038d5badfc2ead09e9a138c193685f61702051898a3b4d5bcf79f",
+      "trace_sha256": "46cb2d9b33ac7ab409fb234bc8f11e94cb1de64474355456069a385327683d19",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2785,7 +2789,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_051.json",
-      "trace_sha256": "5491eb8ac394fe44c2aedd3806fe4dae9ec1fd55e06f7cd5a4da60b1207d9ad8",
+      "trace_sha256": "5a962284918b7b13468da81ee2c4b64ab330570d0cb7f33cfc3925f794474df7",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2836,7 +2840,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_052.json",
-      "trace_sha256": "92c67bfecc8efc3696a8262b957450ade41bf7b0c491e96687e1254f1221d068",
+      "trace_sha256": "59166bd6f1434f329776ba87b2d421fe565eb414f551f55f9963bb938a75fa6d",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2887,7 +2891,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_053.json",
-      "trace_sha256": "b3c8579f81007cb3a2c9b9ffc81a97de216d4fb335d50e83bdc28b32ccf8f5e7",
+      "trace_sha256": "64c92dd17ff14a96f96ad9ee36f94f7978684684fef038129e5406392cbb8e4f",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2935,7 +2939,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_054.json",
-      "trace_sha256": "e361a134e8b9cc72de338af2932fed7aeab82a45291ce490c497d387a958cc42",
+      "trace_sha256": "723ed503bb690bb93d45c0388e44f9675e9c7cd556d06c5798693be90386fbec",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -2985,7 +2989,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_055.json",
-      "trace_sha256": "7929ee7aea7d8be534dc9fae3391c1905a087db4064424fa9988baada903624e",
+      "trace_sha256": "ce9e5f38396c5a65d8cf302a0cdbd72838fc76a919fc25fccdb7ab6caed6d00c",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3037,7 +3041,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_056.json",
-      "trace_sha256": "12c9ec14f720cf5ec245cf8ad13aec13f2190af0e659877adabc789d55a6ffed",
+      "trace_sha256": "0883b806c69d94a020b025cd3dfbde72b1e067061e9535372fb50418785c0247",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3084,12 +3088,12 @@
       "exams": 7,
       "internal_result": null,
       "redundant_tests": 0,
-      "unresolved_critical_alternatives": 7,
+      "unresolved_critical_alternatives": 8,
       "language": "EN",
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_057.json",
-      "trace_sha256": "7c8f8f849e3590eb3de3a86c3e9b977ef1f8dce6ba1283bacedab9d276dca043",
+      "trace_sha256": "57dae098dc2ea3b60b6bd160972c0c4abe4f0d2f007f8d7f3516e2684811f783",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3137,7 +3141,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_058.json",
-      "trace_sha256": "84db5dc5c936b998881c8e7f1ae29c806183b723c3fa714512455a8039d113e9",
+      "trace_sha256": "a03a887dc307387c81319a4b51bc3f59fd8c1af4f4d3b803b5a03cb27aefb6fb",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3188,7 +3192,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_059.json",
-      "trace_sha256": "f63795e3f6f1c19e787b8a26af7c477ba12f6af170ea34dfeddeadb5f1a37b70",
+      "trace_sha256": "b5b26e2ab6a4fe85599c082deff7a7fdbcefca0444809694b8d4f0ba4b7f684c",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3238,7 +3242,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_060.json",
-      "trace_sha256": "a3df217ba5d74057b247272eb8a1a6a152c74f1cdeecc3db466c0bb927eb57e5",
+      "trace_sha256": "196c012fa0681e84c9bbc33ce81674ee35349cb9d23a96a964ec03dc5a63e1bc",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3286,7 +3290,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_061.json",
-      "trace_sha256": "e2392bf96c4be1ead7cb7f284d7de51be4e1859145cb0564269231030d7f7410",
+      "trace_sha256": "8efc66d839367ca08b92a12d68efea4df0eb1c78bf9809afa7f10999aceacbeb",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3336,7 +3340,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_062.json",
-      "trace_sha256": "a6ceee343a912ffb1ce93b90b41b654f1bfaed22abe443ca0477c27a7fee0eb2",
+      "trace_sha256": "9d40fa76598d9fa66e96c8b6b6aa78123e049b580210e9b32f825fbf0525762b",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3366,16 +3370,16 @@
         "objective_evidence_score": 2.5
       },
       "final_rank": 1,
-      "turns": 47,
-      "tests": 16,
-      "first_safe_diagnose_turn": 47,
-      "actual_diagnose_turn": 47,
+      "turns": 46,
+      "tests": 15,
+      "first_safe_diagnose_turn": 46,
+      "actual_diagnose_turn": 46,
       "diagnostic_delay": 0,
       "stop_was_unforced": true,
       "unrequested_scripted_objective": [],
       "scripted_objective_observed": 4,
-      "eligible_critical_candidate_turns": 417,
-      "retained_critical_candidate_turns": 417,
+      "eligible_critical_candidate_turns": 434,
+      "retained_critical_candidate_turns": 434,
       "duplicate": 0,
       "malformed": 0,
       "failed_to_diagnose": false,
@@ -3384,12 +3388,12 @@
       "exams": 10,
       "internal_result": null,
       "redundant_tests": 0,
-      "unresolved_critical_alternatives": 3,
+      "unresolved_critical_alternatives": 4,
       "language": "EN",
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_063.json",
-      "trace_sha256": "902f7c2d28e0fdced7610431c69a10abc88c5bc8558469102ffba59767e79140",
+      "trace_sha256": "44d39c8358ccd678ec874360bf135b2705ca1d8c7ba2e9626071758d439d6ce6",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3438,7 +3442,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_064.json",
-      "trace_sha256": "bf729f086ef2644e83f4fb68516c8b69580531bb69f05b240c81f68b68783575",
+      "trace_sha256": "5cacb0cea338bc0ef39e182056203be25b3f696a1ad77541dcd2f491bba58360",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3582,7 +3586,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_067.json",
-      "trace_sha256": "f6f35bdceb8d74ed04ad52cd3ba2a563b920db928e5a85bb25492b2493321d54",
+      "trace_sha256": "d223371b6334ebeabdcfbdf11ef93f21d11ff308f9e890f84198289765c00ea2",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3775,7 +3779,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_071.json",
-      "trace_sha256": "f89ac029d95670e21fde8df6bb8f6af60034b994bc05e3099ac4331e563706ec",
+      "trace_sha256": "09ca96c70b05d5c255b08c989ca6c4c2ec5cc74db3245c49e9c71e7759375aec",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3823,7 +3827,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_072.json",
-      "trace_sha256": "3c90be45aec4412f8c33958f7cac884286ae7646834d4c57679d852386aaffde",
+      "trace_sha256": "50088e11dafe61c88356e16ba1cf687e78c81427558d407f7d8a5bfcbc64509b",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3874,7 +3878,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_073.json",
-      "trace_sha256": "1b437221c6a060225bc0c298baf2d5897fb4bb054f0fc1af9c0b30c1fe0f1b0d",
+      "trace_sha256": "e7d5ed975968fd0ce62ccfd05d0b9f2218eb12493788d7db458f60298b7bf931",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3926,7 +3930,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_074.json",
-      "trace_sha256": "dcbea0d40ce73a2be180c077a76aa9918e607e8d16de59500abc94e15fafaabe",
+      "trace_sha256": "c8b90ec69884ad4c77a82459ed6a4678e8dd0a71c20c143a0ce7bd428a919573",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -3962,8 +3966,8 @@
         "EXAM:vital_signs"
       ],
       "scripted_objective_observed": 3,
-      "eligible_critical_candidate_turns": 48,
-      "retained_critical_candidate_turns": 48,
+      "eligible_critical_candidate_turns": 41,
+      "retained_critical_candidate_turns": 41,
       "duplicate": 0,
       "malformed": 0,
       "failed_to_diagnose": false,
@@ -3977,7 +3981,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_075.json",
-      "trace_sha256": "867d197fbc04c7f429e31daefab8f945bd1a25384185a31424650ffa8d6d0e81",
+      "trace_sha256": "d95aaf14828e90d4902d3a5bab2788609f1ff06b83b56f6312cb7e9d9f31fe56",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4169,7 +4173,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_079.json",
-      "trace_sha256": "4856c1e888dee66e9e992946c4bf9b0b02d3658a61b59cee4426d06671312366",
+      "trace_sha256": "3e34046c3c46d9a0b9a65ac08d9dbea8efc90e4784f3c0030f7880d120d00fb5",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4221,7 +4225,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_080.json",
-      "trace_sha256": "389d84ca5cf6872cd4fe64b65d9cdd2ec9f7979b2cea61ecfa9dfcc15fa7471b",
+      "trace_sha256": "a793fbf6cf9f214f40f2ff4281fd9b27dcd005079a8ecf4bfafd17edce3087ee",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4274,7 +4278,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_081.json",
-      "trace_sha256": "6db18f0cfc3ac9347e9b57ceecbba97afd30b44c0b10f2561cf2444752420e7d",
+      "trace_sha256": "efd9d9cead619b737117ff1b20a1ad38ffec9669a9242448de31273377ad5997",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4324,7 +4328,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_082.json",
-      "trace_sha256": "3497b005ed581ff0af74836887ee6c28449b34cf405e2376a89557be0dce60d3",
+      "trace_sha256": "33a294372f79bc4d5fe8989142e25f9730e7bca8580c86f0fdea0ff271595496",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4374,7 +4378,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_083.json",
-      "trace_sha256": "1028e56c24c4be24214ff0202b1a1bff43416cf972cbda224bd17bf6fad29ebf",
+      "trace_sha256": "589e27745b95733e1976148c3163cc0a57ad82adfccf3e327e4df7b01a076b7a",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4423,7 +4427,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_084.json",
-      "trace_sha256": "53b6cadf50ee7a6fbd7f64575692dbfb313dc017b9f0e980d844987f4b2f765e",
+      "trace_sha256": "c5957ae7261f9b4955f6ebcdaed2284915f450408d960ef20ecf7031b6375a1a",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4471,7 +4475,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_085.json",
-      "trace_sha256": "93fb20d6fc684fd1349756d48934a80570b7f2aa1861b4389bc3399e65455233",
+      "trace_sha256": "89fb443fded0f0ebbf44f447001458b3622579a24140333acf11360196ebbb90",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4568,7 +4572,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_087.json",
-      "trace_sha256": "1dac34a7d74764abf8f8e2d98e729e36d017c545bc8ba850bc521383abcf726b",
+      "trace_sha256": "62ee4f3260f624dd936fe1dde5995d49312af61702801c5b37f1d01343739317",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4587,6 +4591,7 @@
         "active_rank": 1,
         "resolved": false,
         "supporting": [
+          "substernal pressure",
           "diaphoresis",
           "nausea",
           "hyperlipidemia",
@@ -4620,7 +4625,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_088.json",
-      "trace_sha256": "5e84cdc579ccf53014f47f6847dbd2dd93ff1a0ad24759a1cecde418d898d963",
+      "trace_sha256": "c728d6329dacab81134b6bf649f7f25c874c95225cacdc331f4cc5645ccca052",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4673,7 +4678,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_089.json",
-      "trace_sha256": "eb3ce29ecd546f8e7a9cf11acbe1530077186f8685d98ae34b1f00b12cc080d6",
+      "trace_sha256": "06d0333ed4a8f759a1e4f0977ce3bf66f57efac553541c99d4d87fd83da068e4",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -4698,10 +4703,10 @@
         "objective_evidence_score": 0.0
       },
       "final_rank": 1,
-      "turns": 10,
-      "tests": 2,
-      "first_safe_diagnose_turn": 10,
-      "actual_diagnose_turn": 10,
+      "turns": 8,
+      "tests": 1,
+      "first_safe_diagnose_turn": 8,
+      "actual_diagnose_turn": 8,
       "diagnostic_delay": 0,
       "stop_was_unforced": true,
       "unrequested_scripted_objective": [
@@ -4709,22 +4714,22 @@
         "TEST:mri_brain"
       ],
       "scripted_objective_observed": 1,
-      "eligible_critical_candidate_turns": 1,
-      "retained_critical_candidate_turns": 1,
+      "eligible_critical_candidate_turns": 8,
+      "retained_critical_candidate_turns": 8,
       "duplicate": 0,
       "malformed": 0,
       "failed_to_diagnose": false,
       "primary_failure": null,
-      "asks": 4,
+      "asks": 3,
       "exams": 3,
       "internal_result": null,
       "redundant_tests": 0,
-      "unresolved_critical_alternatives": 14,
+      "unresolved_critical_alternatives": 13,
       "language": "KO",
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_090.json",
-      "trace_sha256": "57c59fef6df6123b993daeeb60d4cab95dba7ee42a155b9303baf64e749e3de7",
+      "trace_sha256": "c20156b0d2adc5f7e5c9b453129e13935c80cc4f6a2916b4b9660a21347da10b",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5003,8 +5008,8 @@
       "stop_was_unforced": true,
       "unrequested_scripted_objective": [],
       "scripted_objective_observed": 2,
-      "eligible_critical_candidate_turns": 28,
-      "retained_critical_candidate_turns": 28,
+      "eligible_critical_candidate_turns": 35,
+      "retained_critical_candidate_turns": 35,
       "duplicate": 0,
       "malformed": 0,
       "failed_to_diagnose": false,
@@ -5018,7 +5023,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_096.json",
-      "trace_sha256": "1beea7454de9ec768d35cec9790d9c545f036816f7b2e4abc4cd13c7516131f0",
+      "trace_sha256": "7eb46d6c345db30c56196b38a920d3ffa3c4d6e0e0afc698a15e7fe7bfa8e357",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5066,7 +5071,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_097.json",
-      "trace_sha256": "96dcb768b70c3a5c1831cfaa1487f095bd5e78017f8401dc50aa95e31eb133f4",
+      "trace_sha256": "d2183e2e15f75f136874900d44533eafe75f721422c327d1be1b93fca2260295",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5116,7 +5121,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_098.json",
-      "trace_sha256": "6f6ed66599127734508d41e3a35b545307223b3d629e5c1d3a1c10dea235bc6a",
+      "trace_sha256": "617e5937877757700ea647721988cd4e6a892c3e0b5bb85dfd54cace0cf6d79b",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5167,7 +5172,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_099.json",
-      "trace_sha256": "fb772f00445fc159d941ab3a4f17c84898458599f2dd1dc58accc5649085a6f6",
+      "trace_sha256": "edff549e687777416722e77b4f5ce4cfffdb631a10503841a06daad418ffefa3",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5218,7 +5223,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_100.json",
-      "trace_sha256": "f5956786ab648fee0d826e5690c0a52f16cd61f167e0fb5ed321be051e652079",
+      "trace_sha256": "37788c3fa16336418c2a3dfc257225c06a12aaa30e06b72ed2f9545d17939d6d",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5268,7 +5273,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_101.json",
-      "trace_sha256": "75162dd1008e13092730e53ed022380706ebfa57c33cf1e865c6e05bf7186b53",
+      "trace_sha256": "450ff867175127d9adfe883f7f72a1e6673e61ad3ca2545b8bbae4359de77978",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5368,7 +5373,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_103.json",
-      "trace_sha256": "2512203986f77f8d1e10ce8a2acd3850f2246b9858661afdb55b0f511820c9f6",
+      "trace_sha256": "72abcf6e4c60505c701d659d673f3a43ef8fcd58b9cd869ea73122dabdaeb62d",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5464,7 +5469,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_105.json",
-      "trace_sha256": "3cede77d20b4e455948ffa86aeb53951738f11bd9c5bc25ee003618ab8765534",
+      "trace_sha256": "65dc8912c6355a8f7036fd32d84336f44b6b6eba5e62ef0bbfff31298cd43f85",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5515,7 +5520,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_106.json",
-      "trace_sha256": "0705a932cf652aa39880ef2ded8fcc89f3cca12ebcbddb1f7f67bd31ce4c4c7c",
+      "trace_sha256": "f7c3bbfd7fded90b23a92d6d3a4f626d2777ba3d180d4c71e7ec0e17bd5b78cb",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5565,7 +5570,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_107.json",
-      "trace_sha256": "db777df3ad7f173f0d6feda90deb44167c1607cfc84d19a5f7ec05bf48821be6",
+      "trace_sha256": "3de0cee6edf288797c97bc7f7770788557bb6e864fc67c22d8f5e6a09a26685f",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5612,7 +5617,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": false,
       "trace_file": "RoundM_108.json",
-      "trace_sha256": "f7b89d20e2276f6e3ad1bdf1f8b9c541d2810aa37527d571ff7bb865dff5a327",
+      "trace_sha256": "bd7cc6d2b2f78c1eb445dd9cb470adcaf02ded10b6e53c00fec73017433c9513",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5661,7 +5666,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_109.json",
-      "trace_sha256": "f36c6b66ec4ef74c4fc9cbfe32b812bfc4bfbbc74d3ce4a54fdc7315f0f49134",
+      "trace_sha256": "0618088bd90fc67f0ba4f678ecdb2969257fd321f7f259570d48a188595f3456",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5709,7 +5714,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_110.json",
-      "trace_sha256": "ab4d9d8912589b195cead87aaefdb57384574aa18cd8281aeeff750e319eeb3f",
+      "trace_sha256": "1b711ac37a2fb2f94e2a5dd4eb243cf899dbc2a8f2d1b6fe2fb509333f5db736",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5760,7 +5765,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_111.json",
-      "trace_sha256": "ccadbbfe9fe4c5c0dde38857999da94c7a5ab83e2f170f65841325e07c3baef4",
+      "trace_sha256": "5a99f646ef163a01bd0c32b4992615e0c2909448f94195ff73ef32239456de0c",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5908,7 +5913,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_114.json",
-      "trace_sha256": "ad4b4e5b3089bf986bbf68a2fab61d45faabe885abbb1fa33f0840fa91b2e94c",
+      "trace_sha256": "5dffe9445e3939d69e32f9548aa178c58431e262b4188828989522a3d0b5cba2",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -5957,7 +5962,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_115.json",
-      "trace_sha256": "e37065be7df56e4e33d4b8676cb7d5f604e3aa981c731a2f360c8985e8888347",
+      "trace_sha256": "bdfc30517cf9f63faf09013b1f117a7598d9ce33dce7b051ef83fa20e53bfda8",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -6056,7 +6061,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_117.json",
-      "trace_sha256": "a8ed3ca84b9585bdb1e8e51030cdf3a9c41ec8f8065c502416a2b7275af8f03d",
+      "trace_sha256": "afdb1e2277e33bd560621ed8e02e7b94cce916ebfd2fcaba6928fc4cc85a405d",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -6106,7 +6111,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_118.json",
-      "trace_sha256": "4378b1e5d40ad591965b45da3ddb2c47666147ac3d2034fbb99f40393065830d",
+      "trace_sha256": "eb6270a343c36da0177f6eac6998a127c49da070aeb69edbe5158f9c05608251",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -6206,7 +6211,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_120.json",
-      "trace_sha256": "b1b0eff49575b9413da294f6138097a29f36fa1d7529dd8297e7c392d00cab35",
+      "trace_sha256": "bd7f9675058947a98281cb8924599e123064b0b539e7fa9410cfb4f12d29109f",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -6255,7 +6260,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_121.json",
-      "trace_sha256": "5243a4baaa9053facd9ac07c43e56d34c1fc9bcfef96a878770d060303972122",
+      "trace_sha256": "51f0262b7e7126a7d27de44626f9684c662a5c1d1f9f5d72a8cae49425b604a9",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -6304,7 +6309,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_122.json",
-      "trace_sha256": "c8d502d4e9f06989315c77faee15c696909d68031925188703015a40152e16d8",
+      "trace_sha256": "e0a2ee73d193c1f1ca90d772c685efecefd2162e3dab175a48a20dbfe7e41ee9",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -6353,7 +6358,7 @@
       "final_retrieval_at150": true,
       "final_rerank_at25": true,
       "trace_file": "RoundM_123.json",
-      "trace_sha256": "1099c868de5405565573ac05e9d7944af6368c59358f1fcea88939736333a056",
+      "trace_sha256": "bb707a823948856b6b29b204ccee4d9ef979c65a0a016f6d2d5b0a6f4d5d5114",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -6488,7 +6493,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_126.json",
-      "trace_sha256": "b2438ccbbfe39c8c72bddc0ee201ca6f695032abd3f40c38cdbe98a4021817a0",
+      "trace_sha256": "ab2f5ad122115eb1166b099c48e6e0a886d17c3faf9c212c8b026a69682ba69e",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -6533,7 +6538,7 @@
       "final_retrieval_at150": false,
       "final_rerank_at25": false,
       "trace_file": "RoundM_127.json",
-      "trace_sha256": "50c148b92da0bf268af8cbd1c5f5f1e5ce4d45567e33e7852e6e07366c517f69",
+      "trace_sha256": "c720aa84d99d7099fe0b418506e61a1e473959734b9b8070c0edbdc5e3447e9a",
       "trace_archive": "traces.tar.xz"
     },
     {
@@ -6582,7 +6587,7 @@
       "trace_archive": "traces.tar.xz"
     }
   ],
-  "trace_archive_sha256": "0b751d684b25cfd77b567e36cce43a8c2bdb9f2dd66b6327ad17402b62d0cf14",
+  "trace_archive_sha256": "d6ee35f5cb5ab56899c1ad3053d66d8dc1c6869cf014db9e888c6ad3f51300ad",
   "definitions": {
     "stage_retention": "Final decision turn, fixed scored denominator; core scoring can bypass ontology retrieval",
     "critical_recall": "Correct final diagnosis / existing critical property; critical-like long-tail tags are not relabeled critical",

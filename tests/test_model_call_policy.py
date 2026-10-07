@@ -40,7 +40,7 @@ def test_calls_stay_inside_the_internal_budget_and_include_first_and_final_turn(
 def test_prompt_is_compact_and_never_dumps_the_catalog():
     client, _ = _run("PrelimKo_Dyspnea_PE")
     longest = max(len(p) for p in client.prompts)
-    assert longest < 16_000, f"prompt grew to {longest} characters"
+    assert longest < 10_000, f"prompt grew to {longest} characters"
     from nova_agent.knowledge.retrieval import all_diseases
     names = [d["name"] for d in all_diseases().values()]
     assert sum(1 for p in client.prompts[-1:] for n in names if n in p) <= 3 * get_config().top_k_differential

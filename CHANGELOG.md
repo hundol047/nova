@@ -1,5 +1,17 @@
 # Changelog
 
+## Preliminary pre-guide candidate / verification v17 (runtime `fd238d7`)
+
+- **Fix SOAP data loss:** `classify_answer` marks an answer "denied" only when every clause is a clear denial; mixed, positive and uncertain answers keep the patient's words (EN/KO/JA/ZH, `but/however/except/and`, `; , .`, Korean connectives). 85 regression tests.
+- SOAP: Assessment separates supporting / contradictory / missing evidence; "Patient education" reports only what was actually said (else "Planned"); new `evaluation/soap_provenance.py` traceability checker with adversarial fabrication tests.
+- Diagnosis SAY (<= 30 chars) uses a short alias when the formal name does not fit (was "I will explain next.").
+- Korean colloquial symptom/history evidence bridge (negation-aware) + routing aliases; English suites bit-identical; Round M dev Top1 0.9593 / critical 1.0 unchanged.
+- `competition/official_transport.py`: isolated fail-closed transport boundary, evidence ladder, `TransportLLMClient`; stubs never count as official.
+- Preliminary-only benchmark (`scripts/evaluate_preliminary_benchmark.py`, LOCAL DEVELOPMENT / PRELIMINARY SIMULATION) + 20 new synthetic Korean cases; isolation, tripwire, failure-mode, call-policy, Korean and documentation-honesty tests.
+- The 8-call cap is labelled an INTERNAL ENGINEERING BUDGET. Provenance inventory re-hashed (statuses untouched; Mondo synonyms recorded VERIFIED from embedded provenance); 75 assets remain UNRESOLVED (submission clearance BLOCKED).
+- CI: Python 3.11 + 3.12, preliminary tests/benchmark gates, provenance coverage, fresh-directory package smoke, package audit; `offline/**` branches trigger CI. README/status rewritten: `docs/CURRENT_STATUS.md`.
+- Still NOT VERIFIED: real `openai/gpt-oss-20b` behaviour, the organizer interface, clinical review, asset licences. Status: PRE-GUIDE CANDIDATE, NOT OFFICIALLY READY.
+
 ## Round J / structural deficiency repair / verification v11
 
 - Freeze reasoning at `f315fbf`; final full suite 849 passed, 1 skipped. Publish verified source/mirror/package hashes.

@@ -94,6 +94,12 @@ jobs:
       - name: Build submission (validates requirements, secret scan, standalone smoke test, zip+manifest)
         run: python scripts/build_nova_submission.py
 
+      - name: Fresh-directory smoke of the built ZIP (run.py fail-closed + one offline preliminary encounter)
+        run: python scripts/smoke_fresh_package.py
+
+      - name: Package audit (secrets, forbidden files, UTF-8, source/submission byte equivalence)
+        run: python scripts/audit_pre_guide_package.py --output /tmp/package_audit.json
+
       - name: Verify submission/ is in sync with nova_agent/ + competition/ (fails on drift)
         run: python -m pytest tests/test_safety_regression.py::test_submission_source_sync -v
 
