@@ -1,0 +1,581 @@
+{
+ "label": "LOCAL DEVELOPMENT / PRELIMINARY SIMULATION -- mock LLM, synthetic cases, NOT AN OFFICIAL SCORE",
+ "retrieval_mode": "competition",
+ "summary": {
+  "scored": 222,
+  "wrong": 19,
+  "stages": {
+   "ranking:outscored": 9,
+   "rerank": 5,
+   "retrieval": 5
+  },
+  "premature_flag": 0,
+  "by_language": {
+   "en": {
+    "n": 188,
+    "top1": 0.904,
+    "critical_n": 73,
+    "critical_top1": 68
+   },
+   "ja/zh": {
+    "n": 7,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "ko": {
+    "n": 27,
+    "top1": 0.963,
+    "critical_n": 11,
+    "critical_top1": 10
+   }
+  },
+  "by_group": {
+   "abdominal_family": {
+    "n": 8,
+    "top1": 0.875,
+    "critical_n": 4,
+    "critical_top1": 3
+   },
+   "abdominal_mimic": {
+    "n": 4,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "abdominal_pain": {
+    "n": 3,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "allergic": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "benign": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "cardiac_family": {
+    "n": 8,
+    "top1": 1.0,
+    "critical_n": 4,
+    "critical_top1": 4
+   },
+   "cardiac_mimic": {
+    "n": 4,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "chest_pain": {
+    "n": 3,
+    "top1": 1.0,
+    "critical_n": 2,
+    "critical_top1": 2
+   },
+   "critical": {
+    "n": 13,
+    "top1": 0.923,
+    "critical_n": 13,
+    "critical_top1": 12
+   },
+   "development": {
+    "n": 18,
+    "top1": 1.0,
+    "critical_n": 8,
+    "critical_top1": 8
+   },
+   "dizziness": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "dyspnea": {
+    "n": 3,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "dyspnea_family": {
+    "n": 6,
+    "top1": 0.833,
+    "critical_n": 3,
+    "critical_top1": 2
+   },
+   "electrolyte_vs_arrhythmia": {
+    "n": 2,
+    "top1": 0.5,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "false_benign": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "fever": {
+    "n": 2,
+    "top1": 0.5,
+    "critical_n": 1,
+    "critical_top1": 0
+   },
+   "headache": {
+    "n": 2,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "infection_family": {
+    "n": 3,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "infection_source": {
+    "n": 2,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "infection_vs_systemic": {
+    "n": 3,
+    "top1": 1.0,
+    "critical_n": 2,
+    "critical_top1": 2
+   },
+   "long_tail": {
+    "n": 30,
+    "top1": 0.767,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "long_tail_author_hypothesis": {
+    "n": 1,
+    "top1": 0.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "medication": {
+    "n": 3,
+    "top1": 1.0,
+    "critical_n": 2,
+    "critical_top1": 2
+   },
+   "medication_family": {
+    "n": 5,
+    "top1": 1.0,
+    "critical_n": 3,
+    "critical_top1": 3
+   },
+   "metabolic": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "metabolic_family": {
+    "n": 5,
+    "top1": 0.8,
+    "critical_n": 2,
+    "critical_top1": 1
+   },
+   "multilingual": {
+    "n": 12,
+    "top1": 1.0,
+    "critical_n": 4,
+    "critical_top1": 4
+   },
+   "multimorbidity": {
+    "n": 6,
+    "top1": 0.833,
+    "critical_n": 4,
+    "critical_top1": 4
+   },
+   "negative": {
+    "n": 5,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "negative_objective": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "neuro": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "neuro_family": {
+    "n": 6,
+    "top1": 1.0,
+    "critical_n": 4,
+    "critical_top1": 4
+   },
+   "neurologic_mimic": {
+    "n": 4,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "objective": {
+    "n": 7,
+    "top1": 0.714,
+    "critical_n": 4,
+    "critical_top1": 4
+   },
+   "paraphrase_A": {
+    "n": 4,
+    "top1": 1.0,
+    "critical_n": 3,
+    "critical_top1": 3
+   },
+   "paraphrase_B": {
+    "n": 4,
+    "top1": 1.0,
+    "critical_n": 3,
+    "critical_top1": 3
+   },
+   "pelvic_gynecologic": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "pulmonary_mimic": {
+    "n": 3,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "reassuring": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "rhythm_family": {
+    "n": 5,
+    "top1": 0.8,
+    "critical_n": 3,
+    "critical_top1": 2
+   },
+   "source_vs_systemic": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "sparse": {
+    "n": 4,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "sparse_danger": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "standard": {
+    "n": 8,
+    "top1": 1.0,
+    "critical_n": 6,
+    "critical_top1": 6
+   },
+   "syncope": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "syncope_vs_vertigo": {
+    "n": 2,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "urinary": {
+    "n": 1,
+    "top1": 1.0,
+    "critical_n": 0,
+    "critical_top1": 0
+   },
+   "urinary_family": {
+    "n": 6,
+    "top1": 1.0,
+    "critical_n": 1,
+    "critical_top1": 1
+   },
+   "vertigo_family": {
+    "n": 5,
+    "top1": 0.8,
+    "critical_n": 0,
+    "critical_top1": 0
+   }
+  },
+  "critical": {
+   "n": 85,
+   "top1": 79,
+   "misses": [
+    [
+     "PrelimKo_Fever_Meningitis",
+     "meningitis",
+     "지주막하출혈 (Subarachnoid Hemorrhage)",
+     "ranking:outscored"
+    ],
+    [
+     "RoundM_018",
+     "pulmonary_embolism",
+     "Hypertrophic Cardiomyopathy",
+     "rerank"
+    ],
+    [
+     "RoundM_041",
+     "severe_electrolyte_disorder",
+     "Syndrome of Inappropriate ADH",
+     "rerank"
+    ],
+    [
+     "RoundM_046",
+     "acute_abdomen",
+     "Acute Appendicitis",
+     "ranking:outscored"
+    ],
+    [
+     "RoundM_054",
+     "severe_electrolyte_disorder",
+     "Adrenal Crisis",
+     "retrieval"
+    ],
+    [
+     "RoundJ_25",
+     "acute_abdomen",
+     "Acute Appendicitis",
+     "ranking:outscored"
+    ]
+   ]
+  }
+ },
+ "misses": [
+  {
+   "case_id": "PrelimKo_Fever_Meningitis",
+   "truth": "meningitis",
+   "primary": "지주막하출혈 (Subarachnoid Hemorrhage)",
+   "stage": "ranking:outscored",
+   "truth_rank": 2,
+   "language": "ko",
+   "critical": true
+  },
+  {
+   "case_id": "RoundM_018",
+   "truth": "pulmonary_embolism",
+   "primary": "Hypertrophic Cardiomyopathy",
+   "stage": "rerank",
+   "truth_rank": 10,
+   "language": "en",
+   "critical": true
+  },
+  {
+   "case_id": "RoundM_026",
+   "truth": "cardiac_arrhythmia",
+   "primary": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+   "stage": "ranking:outscored",
+   "truth_rank": 3,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundM_041",
+   "truth": "severe_electrolyte_disorder",
+   "primary": "Syndrome of Inappropriate ADH",
+   "stage": "rerank",
+   "truth_rank": 7,
+   "language": "en",
+   "critical": true
+  },
+  {
+   "case_id": "RoundM_046",
+   "truth": "acute_abdomen",
+   "primary": "Acute Appendicitis",
+   "stage": "ranking:outscored",
+   "truth_rank": 2,
+   "language": "en",
+   "critical": true
+  },
+  {
+   "case_id": "RoundM_054",
+   "truth": "severe_electrolyte_disorder",
+   "primary": "Adrenal Crisis",
+   "stage": "retrieval",
+   "truth_rank": null,
+   "language": "en",
+   "critical": true
+  },
+  {
+   "case_id": "RoundM_064",
+   "truth": "cardiac_arrhythmia",
+   "primary": "Pheochromocytoma",
+   "stage": "ranking:outscored",
+   "truth_rank": 2,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundM_069",
+   "truth": "acute_pancreatitis",
+   "primary": "Duodenal Ulcer",
+   "stage": "rerank",
+   "truth_rank": 9,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundM_070",
+   "truth": "cardiac_arrhythmia",
+   "primary": "Optic Neuritis",
+   "stage": "rerank",
+   "truth_rank": 13,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundM_105",
+   "truth": "Ovarian Torsion",
+   "primary": "Ectopic Pregnancy",
+   "stage": "ranking:outscored",
+   "truth_rank": 3,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundM_108",
+   "truth": "Peptic Ulcer Disease",
+   "primary": "Duodenal Ulcer",
+   "stage": "ranking:outscored",
+   "truth_rank": 2,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundM_112",
+   "truth": "Epididymitis",
+   "primary": "Epididymo-Orchitis",
+   "stage": "ranking:outscored",
+   "truth_rank": 2,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundJ_05",
+   "truth": "cardiac_arrhythmia",
+   "primary": "Supraventricular Tachycardia",
+   "stage": "ranking:outscored",
+   "truth_rank": 2,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundJ_25",
+   "truth": "acute_abdomen",
+   "primary": "Acute Appendicitis",
+   "stage": "ranking:outscored",
+   "truth_rank": 3,
+   "language": "en",
+   "critical": true
+  },
+  {
+   "case_id": "RoundJ_49",
+   "truth": "Peripheral Arterial Disease",
+   "primary": "Acute Abdomen (Surgical Abdomen)",
+   "stage": "retrieval",
+   "truth_rank": null,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundJ_50",
+   "truth": "Premature Ventricular Contractions",
+   "primary": "Acute Abdomen (Surgical Abdomen)",
+   "stage": "retrieval",
+   "truth_rank": null,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundJ_51",
+   "truth": "Meniere Disease",
+   "primary": "Ectopic Pregnancy",
+   "stage": "retrieval",
+   "truth_rank": null,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundJ_52",
+   "truth": "Acute Pericarditis",
+   "primary": "Acute Coronary Syndrome",
+   "stage": "rerank",
+   "truth_rank": 24,
+   "language": "en",
+   "critical": false
+  },
+  {
+   "case_id": "RoundI_long_tail",
+   "truth": "Sjogren syndrome",
+   "primary": "Stevens-Johnson Syndrome",
+   "stage": "retrieval",
+   "truth_rank": null,
+   "language": "en",
+   "critical": false
+  }
+ ],
+ "comparison": {
+  "against": "/tmp/claude-0/-home-user-nova/99de3515-6516-552e-bc75-07e279b756e2/scratchpad/bench_comp2.json",
+  "against_mode": "competition",
+  "common_scored": 222,
+  "worse": [],
+  "better": [
+   [
+    "RoundM_062",
+    "acute_coronary_syndrome",
+    "Panic Attack",
+    "Acute Coronary Syndrome",
+    true
+   ],
+   [
+    "RoundM_072",
+    "diabetic_ketoacidosis",
+    "Acute Coronary Syndrome",
+    "Diabetic Ketoacidosis",
+    true
+   ],
+   [
+    "RoundI_urinary_systemic",
+    "sepsis",
+    "Thyroid Storm",
+    "Sepsis",
+    true
+   ],
+   [
+    "AlteredMentalStatus01",
+    "diabetic_ketoacidosis",
+    "Hypoglycemia",
+    "Diabetic Ketoacidosis",
+    true
+   ]
+  ]
+ }
+}
