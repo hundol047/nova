@@ -197,6 +197,9 @@ class NovaConfig:
     # NOVA_LABS_V2: a lab result's bare value with an explicit unit is read as that lab (e.g. "4.6 mmol/L" under
     # the lactate test).
     labs_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_LABS_V2", True))
+    # NOVA_STOP_V2: the decisive-lead / mature-low-value stop (with its unchanged dangerous-alternative guards),
+    # previously reachable only in competition retrieval mode, also applies in legacy retrieval mode.
+    stop_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_STOP_V2", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"

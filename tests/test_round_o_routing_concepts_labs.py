@@ -19,7 +19,7 @@ def switch(monkeypatch):
         monkeypatch.setenv(name, value)
         get_config(reload=True)
     yield _set
-    for name in ("NOVA_ROUTING_V2", "NOVA_CONCEPTS_V2", "NOVA_LABS_V2"):
+    for name in ("NOVA_ROUTING_V2", "NOVA_CONCEPTS_V2", "NOVA_LABS_V2", "NOVA_STOP_V2"):
         monkeypatch.delenv(name, raising=False)
     get_config(reload=True)
 
@@ -149,3 +149,59 @@ def test_bare_lactate_makes_septic_hypoperfusion_count_for_sepsis():
 def test_labs_switch_off(switch):
     switch("NOVA_LABS_V2", "0")
     assert extract_lactate_mmol_l("4.6 mmol/L") is None
+
+
+# --- stop policy (NOVA_STOP_V2) ------------------------------------------------------------------
+
+def _item(did, name, score, support, dangerous, rank, band="LOW"):
+    from nova_agent.differential import DifferentialItem
+    return DifferentialItem(diagnosis=name, diagnosis_id=did, rank=rank, score=score, score_ratio=0.2,
+                            supporting_evidence=support, urgency="HIGH" if dangerous else "LOW",
+                            dangerous_if_missed=dangerous, confidence_band=band)
+
+
+def _stop_state(turns=8):
+    s = PatientState(case_id="stop", chief_complaint="ache in my chest", demographics={"age": 30, "sex": "male"})
+    for i in range(turns):
+        s.record_ask(f"q{i}", "q", "fine")
+    return s
+
+
+def test_decisive_benign_lead_now_stops_in_legacy_mode():
+    from nova_agent.stop_policy import StopPolicy
+    diff = [_item("musculoskeletal_chest_pain", "MSK", 2.6, ["reproducible with palpation", "worse with movement"], False, 1),
+            _item("gerd", "GERD", 0.5, ["burning chest pain"], False, 2)]
+    decision = StopPolicy().evaluate(_stop_state(), diff, [], 0.1, best_decision_value=0.1)
+    assert decision.should_diagnose
+
+
+def test_dangerous_leader_is_not_closed_on_history_alone():
+    from nova_agent.stop_policy import StopPolicy
+    diff = [_item("aortic_dissection", "Aortic Dissection", 2.4, ["pain radiates to back", "sudden onset severe pain"], True, 1),
+            _item("acute_pancreatitis", "Acute Pancreatitis", 1.0, ["vomiting"], False, 2)]
+    s = _stop_state()
+    assert not StopPolicy().evaluate(s, diff, [], 0.5, best_decision_value=0.5).should_diagnose
+    s.record_test("ct_aorta", "no dissection, normal calibre aorta")   # defining test done but NOT confirming
+    assert not StopPolicy().evaluate(s, diff, [], 0.5, best_decision_value=0.5).should_diagnose
+
+
+def test_dangerous_leader_with_objective_confirmation_may_stop():
+    from nova_agent.stop_policy import StopPolicy
+    diff = [_item("aortic_dissection", "Aortic Dissection", 4.4,
+                  ["pain radiates to back", "sudden onset severe pain", "intimal flap"], True, 1),
+            _item("acute_pancreatitis", "Acute Pancreatitis", 1.0, ["vomiting"], False, 2)]
+    s = _stop_state()
+    s.record_test("ct_aorta", "intimal flap in the ascending aorta")
+    assert StopPolicy().evaluate(s, diff, [], 0.5, best_decision_value=0.5).should_diagnose
+
+
+def test_supported_dangerous_alternative_still_blocks_a_benign_decisive_lead():
+    from nova_agent.stop_policy import StopPolicy
+    diff = [_item("gerd", "GERD", 3.0, ["burning chest pain", "relieved by antacids"], False, 1),
+            _item("acute_coronary_syndrome", "ACS", 1.2, ["exertional chest pain", "diaphoresis"], True, 2, band="MEDIUM")]
+    assert not StopPolicy().evaluate(_stop_state(), diff, [], 0.2, best_decision_value=0.2).should_diagnose
+
+
+def test_stop_switch_off_keeps_legacy_selector_behaviour(switch):
+    switch("NOVA_STOP_V2", "0")
+    assert not get_config().stop_v2_enabled

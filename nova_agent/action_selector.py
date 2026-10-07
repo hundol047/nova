@@ -254,7 +254,7 @@ class ActionSelector:
 
         stop_decision = self.stop_policy.evaluate(state, differential, safety_findings, best_info_gain,
             best_decision_value=max((c.decision_changing_value for c in raw_candidates), default=0.0)
-                if get_config().competition_retrieval_enabled else None)
+                if (get_config().competition_retrieval_enabled or get_config().stop_v2_enabled) else None)
 
         top_diagnosis_name = differential[0].diagnosis if differential else "Undifferentiated presentation"
         diagnose_candidate = ScoredCandidate(

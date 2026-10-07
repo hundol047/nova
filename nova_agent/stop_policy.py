@@ -84,7 +84,8 @@ class StopPolicy:
     def evaluate(self, state: PatientState, differential: List[DifferentialItem],
                  safety_findings: List[SafetyFinding], best_info_gain: Optional[float] = None,
                  best_decision_value: Optional[float] = None) -> StopDecision:
-        cfg = get_config().stop_policy
+        cfg_all = get_config()
+        cfg = cfg_all.stop_policy
 
         # Preliminary round: a case ends at 50 turns OR 20 minutes, and a case that never submits
         # scores 0, so the wall clock forces the diagnosis too (with headroom for the closing
@@ -205,6 +206,12 @@ class StopPolicy:
                              and len(top.supporting_evidence) >= _DECISIVE_LEAD_MIN_SUPPORT
                              and raw_gap >= _DECISIVE_LEAD_MIN_GAP
                              and not top.contradictory_evidence)
+            if decisive_lead and cfg_all.stop_v2_enabled and top.dangerous_if_missed and not objective_confirmed:
+                # Round O: a DANGEROUS leader is never closed on history alone, nor after its defining test came back
+                # without the confirming finding -- only an objective confirmatory finding lets it take this
+                # shortcut (otherwise the ordinary readiness path, with its own guards, still applies). A benign
+                # leader is unaffected (its dangerous alternatives are guarded separately just below).
+                decisive_lead = False
             should_diagnose = ((should_diagnose or mature_low_value) and not (
                 dangerous_alternative_exists or pending_critical)) or (
                 decisive_lead and not (dangerous_alternative_exists or pending_critical_alternative))
