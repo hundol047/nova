@@ -1,0 +1,55 @@
+=== Round O frozen validation set (synthetic, single author, mock LLM; not an official score) ===
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+ValO_01                         sepsis_local_source   YES       15      0          NO             
+ValO_02                         sepsis_local_source   YES       34      0          NO             
+ValO_03                         sepsis_local_source   YES       19      0          NO             
+ValO_04                         sepsis_local_source   YES       18      0          NO             
+ValO_05                         sepsis_atypical       YES       21      0          NO             
+ValO_06                         local_infection_controlYES       14      0          NO             
+ValO_07                         local_infection_controlYES       3       0          NO             
+ValO_08                         local_infection_controlYES       24      0          NO             
+ValO_09                         pe_paraphrase         YES       10      0          NO             
+ValO_10                         pe_paraphrase         YES       25      0          NO             
+ValO_11                         pe_paraphrase         YES       26      0          NO             
+ValO_12                         benign_chest_mimic    YES       7       0          NO             
+ValO_13                         benign_chest_mimic    YES       16      0          NO             
+ValO_14                         benign_chest_mimic    YES       7       0          NO             
+ValO_15                         benign_chest_mimic    YES       14      0          NO             
+ValO_16                         benign_chest_mimic    YES       25      0          NO             
+ValO_17                         danger_sounds_benign  YES       29      0          NO             
+ValO_18                         danger_sounds_benign  YES       21      0          NO             
+ValO_19                         danger_sounds_benign  YES       25      0          NO             
+ValO_20                         negation_history      YES       19      0          NO             
+ValO_21                         negation_history      YES       22      0          NO             
+ValO_22                         negation_history      YES       8       0          NO             
+ValO_23                         negation_history      YES       21      0          NO             
+ValO_24                         multi_symptom         YES       15      0          NO             
+ValO_25                         multi_symptom         YES       26      0          NO             
+ValO_26                         multi_symptom         NO        19      0          YES            
+ValO_27                         multi_symptom         YES       30      0          NO             
+ValO_28                         numeric_units         YES       15      0          NO             
+ValO_29                         numeric_units         YES       7       0          NO             
+ValO_30                         numeric_units         NO        25      0          NO             
+ValO_31                         numeric_units         YES       7       0          NO             
+ValO_32                         contradictory         YES       21      0          NO             
+ValO_33                         contradictory         YES       19      0          NO             
+ValO_34                         insufficient          YES (unknown handling)19      0          NO             
+ValO_35                         insufficient          YES (unknown handling)19      0          NO             
+ValO_36                         korean                YES       33      0          NO             
+ValO_37                         korean                YES       7       0          NO             
+
+Round O validation summary (37 cases, 35 scored, 16 critical)
+  Scored Diagnostic Accuracy:   94.3%  (excludes: ValO_34, ValO_35)
+  All-Case Diagnostic Accuracy: 94.6%  (every case, no exclusions)
+  Unsupported-Case Success Rate:100.0%  (explicit unknown correctly preserved)
+  Critical Diagnosis Recall:    93.8%
+  Critical Miss Rate:           6.2%
+  Average / Median Turns:       18.5 / 19.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        0.57 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        6.5 / 4.3 / 6.6
+  Utility Score Proxy:          0.719  (informal local metric, evaluation/scoring.py -- not an official competition score)
