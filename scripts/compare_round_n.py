@@ -27,7 +27,8 @@ SUITES = {
     "blind_v5_dev": ("evaluation.blind_cases_v5", "BLIND_CASES_V5"),  # failure analysis was read: DEVELOPMENT use
     "round_j_dev": ("evaluation.generalization_dev_cases_round_j", "ROUND_J_CASES"),
     "round_m_dev": ("evaluation.generalization_dev_cases_round_m", "ROUND_M_CASES"),
-    "validation_round_n": ("evaluation.validation_cases_round_n", "VALIDATION_CASES_ROUND_N"),  # frozen, held out
+    "validation_round_n": ("evaluation.validation_cases_round_n", "VALIDATION_CASES_ROUND_N"),  # consumed by Round N -> development
+    "validation_round_o": ("evaluation.validation_cases_round_o", "VALIDATION_CASES_ROUND_O"),  # frozen, held out (Round O)
 }
 
 
@@ -62,7 +63,7 @@ def summarize(rows):
             "failed": sum(r["failed"] for r in rows)}
 
 
-HIDE = set(filter(None, os.environ.get("ROUND_N_HIDE", "validation_round_n").split(",")))
+HIDE = set(filter(None, os.environ.get("ROUND_N_HIDE", "validation_round_o").split(",")))
 
 
 def run(output):
