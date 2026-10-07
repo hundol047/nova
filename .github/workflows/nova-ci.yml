@@ -33,7 +33,11 @@ jobs:
       matrix:
         python-version: ["3.11", "3.12"]
     steps:
+      # Full history: tests/test_current_pre_guide_release.py compares the runtime bytes with the recorded
+      # verification commit via `git show <sha>:<path>`, which a depth-1 checkout cannot resolve.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
