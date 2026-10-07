@@ -29,11 +29,13 @@ PRELIMINARY_TIME_SAFETY_FRACTION = 0.85
 # SAY, DIAGNOSE) would no longer fit; PRELIMINARY_CLOSING_TURNS turns at 1.5x the average, inside 97%.
 PRELIMINARY_CLOSING_TURNS = 4
 PRELIMINARY_TIME_HARD_FRACTION = 0.97
-# Real-model calls per case in the preliminary round. The fixed model is limited to 200 calls and
-# 500k input / 100k output tokens per session, and the efficiency score counts model usage; at least
-# one call per case is REQUIRED (a case with no model call scores 0). Sized so that a session of 10
-# cases stays inside every cap: 10 x 8 = 80 calls, ~8k characters (~3-4k tokens) of prompt per call
-# (~320k input) and max_tokens=1024 per call (~82k output), leaving headroom for retries.
+# Real-model calls per case in the preliminary round: an INTERNAL ENGINEERING BUDGET, NOT an organizer
+# requirement. The briefing (as transcribed by the team) says the fixed model is limited to 200 calls and
+# 500k input / 100k output tokens per session, that efficiency counts model usage, and that a case with no
+# model call scores 0 -- so at least one successful case-relevant call per case is needed. This cap of 8 is the
+# team's own sizing so that a session of 10 cases stays inside every transcribed cap: 10 x 8 = 80 calls,
+# ~8k characters (~3-4k tokens) of prompt per call (~320k input) and max_tokens=1024 per call (~82k output),
+# leaving headroom for retries. Re-derive it when the participant guide states the real session size/limits.
 PRELIMINARY_MAX_LLM_CALLS_PER_CASE = 8
 
 

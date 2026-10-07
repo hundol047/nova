@@ -81,7 +81,7 @@ MULTILINGUAL_CONCEPT_ALIASES: Dict[str, List[str]] = {
         "手足がしびれます", "感覚がありません",
     ],
     "dyspnea": [
-        "숨쉬기가 힘들어요", "숨이 차요",
+        "숨쉬기가 힘들어요", "숨이 차요", "숨이 차고", "숨이 안 쉬어", "숨을 쉴 수 없", "숨이 가빠", "숨이 가쁘",
         "息が苦しいです", "呼吸が苦しいです",
     ],
     "fever": [
@@ -104,8 +104,11 @@ MULTILINGUAL_CONCEPT_ALIASES: Dict[str, List[str]] = {
         "어지러워요", "머리가 빙빙 돌아요",
         "めまいがします", "頭がふらふらします",
     ],
+    "allergic": [
+        "온몸이 가려", "전신이 가려", "알레르기 반응", "입술이 붓", "얼굴이 붓", "두드러기가 났",
+    ],
     "syncope": [
-        "정신을 잃었어요", "기절했어요",
+        "정신을 잃었어요", "기절했어요", "쓰러졌어요", "쓰러졌습니다", "쓰러졌다",
         "気を失いました", "意識を失いました",
     ],
 }
@@ -180,6 +183,51 @@ _DIRECT_LOCALIZED_EVIDENCE: Dict[str, str] = {
     "발진": "rash", "発疹": "rash",
     "경련": "seizure", "けいれん": "seizure", "痙攣": "seizure",
 }
+
+
+# Korean colloquial history/symptom phrases -> canonical ENGLISH evidence (the wording the knowledge base's
+# typical_features and risk_factors use). Added after the Korean preliminary development set showed that
+# first-person Korean answers ("종아리가 붓고 아파요", "목이 뻣뻣해요") were recorded but never reached
+# differential scoring. Same discipline as above: only a non-ASCII phrase can fire, a following denial
+# marker cancels it ("종아리가 붓지 않아요"), one phrase maps to one plain English finding, and no
+# diagnosis is named. PROVENANCE: authored by the engineering agent from common Korean clinical
+# vocabulary; NOT clinician-reviewed; development-set cases in evaluation/preliminary_dev_cases.py.
+_DIRECT_LOCALIZED_EVIDENCE.update({
+    "종아리가 붓": "calf swelling", "종아리 부종": "calf swelling", "다리가 붓": "calf swelling leg swelling",
+    "한쪽 다리": "unilateral leg pain", "종아리가 아": "unilateral leg pain",
+    "피 섞인 가래": "hemoptysis", "피가 섞인 가래": "hemoptysis", "객혈": "hemoptysis",
+    "깊이 쉬면 더 아": "pleuritic chest pain", "숨 쉴 때마다": "pleuritic chest pain", "숨쉴 때마다": "pleuritic chest pain",
+    "숨이 차": "shortness of breath", "숨 차": "shortness of breath", "숨쉬기 힘": "shortness of breath",
+    "숨이 안 쉬어": "shortness of breath", "숨을 쉴 수 없": "shortness of breath",
+    "목이 뻣뻣": "neck stiffness", "목 뒤가 뻣뻣": "neck stiffness", "경부 강직": "neck stiffness", "목이 뻐근": "neck stiffness",
+    "빛이 눈부": "photophobia", "빛에 예민": "photophobia", "눈이 부셔": "photophobia", "소리에 예민": "phonophobia",
+    "벼락 치": "thunderclap headache sudden onset severe headache", "망치로 맞은": "thunderclap headache sudden onset severe headache",
+    "평생 이런 두통": "worst headache of life", "가장 심한 두통": "worst headache of life",
+    "맥박 뛰듯": "pulsating headache", "욱신욱신": "pulsating headache", "한쪽 머리": "unilateral headache",
+    "눈앞이 번쩍": "aura", "앞이 번쩍": "aura",
+    "입이 한쪽으로 돌아": "facial droop", "입꼬리가 처": "facial droop", "안면 마비": "facial droop",
+    "말이 어눌": "slurred speech", "발음이 이상": "slurred speech", "말이 꼬": "slurred speech",
+    "팔다리에 힘이 안": "sudden onset focal weakness", "한쪽 팔에 힘": "sudden onset focal weakness",
+    "두드러기": "urticaria hives", "입술이 붓": "facial swelling", "얼굴이 붓": "facial swelling",
+    "쌕쌕": "wheeze", "목이 조이": "throat tightness", "목이 막히": "throat tightness",
+    "질 출혈": "vaginal bleeding", "질출혈": "vaginal bleeding", "생리가 늦": "missed period", "생리를 안": "missed period",
+    "한쪽 아랫배": "unilateral pelvic pain", "왼쪽 아랫배": "unilateral pelvic pain", "오른쪽 아랫배": "right lower quadrant abdominal pain",
+    "가슴을 쥐어": "substernal pressure", "가슴이 쥐어": "substernal pressure", "가슴을 짓누르": "substernal pressure",
+    "가슴이 짓눌": "substernal pressure", "가슴이 조이": "substernal pressure", "가슴이 꽉": "substernal pressure",
+    "인슐린을 맞": "known diabetes on insulin insulin use", "인슐린은 맞": "known diabetes on insulin insulin use",
+    "인슐린 주사": "known diabetes on insulin insulin use", "손이 떨": "tremor", "몸이 떨": "tremor", "멍해": "confusion",
+    "혼란": "confusion", "아침을 걸렀": "missed meal", "식사를 걸렀": "missed meal", "끼니를 걸렀": "missed meal",
+    "왼팔": "left arm pain radiates to arm or jaw", "왼쪽 팔": "left arm pain radiates to arm or jaw", "턱까지": "radiates to arm or jaw",
+    "신물": "sour taste", "시큼": "sour taste", "타는 것처럼": "burning chest pain", "속이 쓰": "burning chest pain",
+    "누우면 더": "worse lying down", "누우면 심": "worse lying down", "먹고 나면": "worse after meals", "식사하고 나면": "worse after meals",
+    "제산제": "relieved by antacids", "방이 빙빙": "brief episodic vertigo", "빙글빙글": "brief episodic vertigo",
+    "고개를 돌리": "triggered by head position change", "누웠다 일어": "triggered by head position change",
+    "눈앞이 캄캄": "prodrome of lightheadedness", "어질어질": "prodrome of lightheadedness",
+    "금방 깨어": "rapid spontaneous recovery", "서 있다가": "triggered by standing", "쓰러졌": "brief loss of consciousness",
+    "고혈압": "hypertension", "당뇨": "diabetes", "고지혈증": "hyperlipidemia", "심방세동": "atrial fibrillation",
+    "천식": "known asthma or COPD", "수술을 받": "recent surgery", "배가 아": "abdominal pain", "윗배": "epigastric abdominal pain",
+    "미열": "fever", "열이 났": "fever", "열이 오르": "fever", "열이 심": "fever", "고열": "fever", "토했": "vomiting", "토해": "vomiting",
+})
 
 
 def _present_not_negated(phrase: str, text: str) -> bool:

@@ -17,7 +17,7 @@ name: N.O.V.A. Doctor Agent CI
 
 on:
   push:
-    branches: [main, "claude/**", "kiro/**"]
+    branches: [main, "claude/**", "kiro/**", "offline/**"]
   pull_request:
     # Run on PRs targeting main OR the integration branch used for staged delivery, so each
     # stage PR gets real CI before it is merged upward.
@@ -27,12 +27,17 @@ on:
 jobs:
   nova-agent:
     runs-on: ubuntu-latest
+    # The preliminary-round briefing material indicates a Python 3.12 runtime; keep 3.11 for the existing baseline.
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
 
       - name: Install nova_agent runtime + dev dependencies
         run: |
@@ -50,6 +55,21 @@ jobs:
         # Without this exclusion, pytest's collection imports test_production_api.py and fails on a
         # missing fastapi before any nova_agent test runs.
         run: python -m pytest tests/ -v --ignore=tests/test_production_api.py --ignore=tests/test_production_repository.py --ignore=tests/test_production_reliability.py --ignore=tests/test_production_units.py
+
+      - name: Preliminary-round tests (SOAP data-loss + provenance, EXAM rejection, communication, isolation, failure modes, tripwires)
+        run: |
+          python -m pytest -v tests/test_soap_regression.py tests/test_preliminary_rules.py tests/test_preliminary_hardening.py \
+            tests/test_preliminary_exam_and_communication.py tests/test_preliminary_failure_modes.py tests/test_case_isolation.py \
+            tests/test_no_evaluation_time_learning.py tests/test_official_transport_boundary.py
+
+      - name: Preliminary-ONLY development benchmark (LOCAL SIMULATION, not an official score) with rule/safety gates
+        run: python scripts/evaluate_preliminary_benchmark.py --gate --output artifacts/preliminary_benchmark/ci_latest.json
+
+      - name: Preliminary EXAM-rejection recovery scenario (assumed unsupported exams; hard gates only)
+        run: python scripts/evaluate_preliminary_benchmark.py --suites ko_new --exam-rejection --gate
+
+      - name: Runtime provenance inventory coverage (hashes current; permission status stays BLOCKED, never faked)
+        run: python scripts/validate_runtime_provenance.py
 
       - name: Benchmark (tuning + held-out + generalization-v2 + stress sets)
         run: python -m evaluation.benchmark --generalization-v2 --stress
@@ -86,7 +106,7 @@ jobs:
       - name: Upload submission.zip
         uses: actions/upload-artifact@v4
         with:
-          name: nova-submission
+          name: nova-submission-py${{ matrix.python-version }}
           path: submission/submission.zip
           retention-days: 14
 

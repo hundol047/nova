@@ -219,13 +219,17 @@ def exam_request_text(exam_id: str, lang: str = "en", fallback: str = "") -> str
     return fallback or exam_id.replace("_", " ")
 
 
-def explanation_text(diagnosis_label: str, lang: str = "en") -> str:
-    """A closing SAY (<= 30 characters) that tells the patient the working diagnosis; the longest
-    template that fits is used so a long disease name degrades to a name-free sentence."""
+def explanation_text(diagnosis_label: str, lang: str = "en", alternatives=()) -> str:
+    """A closing SAY (<= 30 characters) that tells the patient the working diagnosis. Every candidate name
+    (the full label first, then shorter aliases/abbreviations, e.g. "heart attack") is tried against every
+    template, preferring the most informative name; only when NO name fits does it degrade to a name-free
+    sentence."""
     templates = _EXPLAIN.get(lang, _EXPLAIN["en"])
-    label = diagnosis_label.strip()
-    for template in templates:
-        text = template.format(d=label)
-        if len(text) <= SAY_MAX_CHARS:
-            return text
+    named = [t for t in templates if "{d}" in t]
+    candidates = [c.strip() for c in [diagnosis_label, *alternatives] if c and c.strip()]
+    for label in sorted(dict.fromkeys(candidates), key=len, reverse=True):
+        for template in named:
+            text = template.format(d=label)
+            if len(text) <= SAY_MAX_CHARS:
+                return text
     return fit_say(templates[-1].format(d=""))
