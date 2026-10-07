@@ -24,8 +24,44 @@ finding regardless of relevance, and would otherwise register as a match. So:
 from __future__ import annotations
 
 import re
-from typing import List, Set
+from contextlib import contextmanager
+from contextvars import ContextVar
+from typing import Callable, Dict, Iterator, List, Optional, Set
 from nova_agent.assertion_status import is_uncertain
+
+# --- turn-scoped memoisation ---------------------------------------------------------------------
+# The differential re-derives the same pure string normalisations (stems, content-word sets, negation-
+# scrubbed clauses, word-boundary patterns) hundreds of thousands of times per decision. They are memoised
+# ONLY inside ``evaluation_scope()``, which the orchestrator opens around one decision and discards
+# afterwards. The memo lives in a ContextVar, so it is private to the calling thread/async task: nothing
+# patient-derived outlives the decision or crosses to another case. Outside a scope nothing is cached and
+# behaviour is byte-identical (the memoised functions are pure).
+_SCOPE: ContextVar[Optional[Dict[tuple, object]]] = ContextVar("nova_matching_scope", default=None)
+
+
+@contextmanager
+def evaluation_scope() -> Iterator[None]:
+    """Memoise pure matching normalisations for the duration of one decision (re-entrant)."""
+    if _SCOPE.get() is not None:
+        yield
+        return
+    token = _SCOPE.set({})
+    try:
+        yield
+    finally:
+        _SCOPE.reset(token)
+
+
+def _scoped(kind: str, key, compute: Callable[[], object]):
+    memo = _SCOPE.get()
+    if memo is None:
+        return compute()
+    slot = (kind, key)
+    try:
+        return memo[slot]
+    except KeyError:
+        value = memo[slot] = compute()
+        return value
 
 _STOPWORDS = {
     "a", "an", "the", "to", "of", "in", "on", "or", "and", "with", "is", "are", "was", "were",
@@ -76,14 +112,16 @@ _NON_LATIN_NEGATION_RE = re.compile(
 def _non_latin_phrase_present(feature: str, finding: str) -> bool:
     if not _NON_LATIN_RE.search(feature):
         return False
-    for match in re.finditer(re.escape(feature), finding):
+    start = finding.find(feature) if feature else -1
+    while start != -1:  # literal, non-overlapping occurrences (same as re.finditer(re.escape(feature)))
+        end = start + len(feature)
         # A short local window catches suffix negation ("発熱はありません") and prefix negation
         # ("没有发热") without treating distant unrelated clauses as negations.
-        before = finding[max(0, match.start() - 10):match.start()]
-        after = finding[match.end():match.end() + 12]
-        if _NON_LATIN_NEGATION_RE.search(before) or _NON_LATIN_NEGATION_RE.search(after):
-            continue
-        return True
+        before = finding[max(0, start - 10):start]
+        after = finding[end:end + 12]
+        if not (_NON_LATIN_NEGATION_RE.search(before) or _NON_LATIN_NEGATION_RE.search(after)):
+            return True
+        start = finding.find(feature, end)
     return False
 
 # EXAM/TEST result strings routinely embed a negation in the SAME string as a positive finding
@@ -171,6 +209,10 @@ def _reduce_doubled_consonant(stem: str) -> str:
 
 
 def _stem(word: str) -> str:
+    return _scoped("stem", word, lambda: _stem_uncached(word))
+
+
+def _stem_uncached(word: str) -> str:
     """Conservative, deterministic suffix-stripping morphology normalizer (spec: a common clinical
     morphological variant -- weak/weakness, spin/spinning, bleed/bleeding, vomit/vomiting, dizzy/
     dizziness, faint/fainting, numb/numbness -- must normalize to the same stem; an unrelated word
@@ -228,6 +270,10 @@ _LAY_ANATOMY = {"belly": "abdominal", "tummy": "abdominal"}
 
 
 def _content_words(text: str) -> Set[str]:
+    return set(_scoped("content", text, lambda: frozenset(_content_words_uncached(text))))
+
+
+def _content_words_uncached(text: str) -> Set[str]:
     # A patient's hyphenation must not split one clinical word into two fragments
     # ("light-headed" == "lightheaded").
     words = re.split(r"[^a-z0-9가-힣]+", _JOINABLE_HYPHEN.sub(r"\1\2", text.lower()))
@@ -254,6 +300,10 @@ _ABSENT_SIGN = (r"(?:breath|bowel|heart|lung|air entry|tendon|deep tendon|cornea
 
 
 def _strip_negated_spans(text: str) -> str:
+    return _scoped("strip", text, lambda: _strip_negated_spans_uncached(text))
+
+
+def _strip_negated_spans_uncached(text: str) -> str:
     # Negation ends at a clause boundary, not an arbitrary four-word window.
     # Keep affirmative clauses after "but"/"however" rather than erasing the entire report.
     # Sentence periods are boundaries too; decimal points are not.
@@ -285,7 +335,26 @@ def _exact_phrase_present(feature_lower: str, finding_lower: str) -> bool:
     correct for Korean/Japanese multi-character phrases too. A multi-word phrase like "one-sided
     headache" is unaffected -- the boundary only anchors the two ends of the whole phrase, any
     internal punctuation/spacing is matched literally exactly as before."""
-    return re.search(rf"\b{re.escape(feature_lower)}\b", finding_lower) is not None
+    if not feature_lower:
+        return re.search(r"\b\b", finding_lower) is not None
+    # Equivalent to re.search(rf"\b{re.escape(feature_lower)}\b", finding_lower) -- Python's Unicode \w is
+    # exactly str.isalnum() or "_" -- without compiling a new pattern per phrase (a measured hot spot).
+    start = finding_lower.find(feature_lower)
+    while start != -1:
+        if _word_boundary(finding_lower, start) and _word_boundary(finding_lower, start + len(feature_lower)):
+            return True
+        start = finding_lower.find(feature_lower, start + 1)
+    return False
+
+
+def _is_word_char(ch: str) -> bool:
+    return ch.isalnum() or ch == "_"
+
+
+def _word_boundary(text: str, index: int) -> bool:
+    before = index > 0 and _is_word_char(text[index - 1])
+    after = index < len(text) and _is_word_char(text[index])
+    return before != after
 
 
 # Direction-of-change words. A feature that asserts one direction ("low blood pressure") must not be
@@ -307,6 +376,23 @@ def _opposite_polarity(feature_content: Set[str], finding_content: Set[str]) -> 
 
 def feature_present(feature: str, findings_text: List[str], scrub_negated_spans: bool = False, strict: bool = False,
                     ignore_words: frozenset = frozenset()) -> bool:
+    return _scoped("feature", (feature, tuple(findings_text), scrub_negated_spans, strict, frozenset(ignore_words)),
+                   lambda: _feature_present_uncached(feature, findings_text, scrub_negated_spans, strict, ignore_words))
+
+
+_PAIN_FEATURE = re.compile(r"\b(?:pain|ache|aching)\b")
+_PAIN_ASSERTION = re.compile(
+    r"\b(?:pain|painful|ache|aches|aching|discomfort|hurt|hurts|hurting|radiat\w*|tight(?:ness)?|"
+    r"crushing|squeez\w*|burning|cramp\w*|stabbing|sharp|throbbing)\b|통증|아프|아파|痛|疼")
+_ASSERTION_SPLIT = re.compile(r"[;\n]|(?<=\w)\.(?=\s|$)")
+
+
+def _assertion_clauses(finding: str) -> tuple:
+    return _scoped("clauses", finding, lambda: tuple(_ASSERTION_SPLIT.split(finding.lower())))
+
+
+def _feature_present_uncached(feature: str, findings_text: List[str], scrub_negated_spans: bool = False,
+                              strict: bool = False, ignore_words: frozenset = frozenset()) -> bool:
     """`scrub_negated_spans=True` is for checking against a general finding bag (e.g.
     state.all_findings_text()) that can contain an EXAM/TEST result embedding an unrelated
     negation in the same string. Leave it False (the default) when checking against
@@ -319,24 +405,16 @@ def feature_present(feature: str, findings_text: List[str], scrub_negated_spans:
     # sentences ("left arm BP ... abdominal pain") invent "left arm pain". Negation
     # scrubbing also inserts semicolons for commas, so split ORIGINAL assertions first.
     # Comma-linked qualifiers ("cannot walk, started yesterday") stay together.
-    clauses = (
-        clause
-        for finding in findings_text
-        for clause in re.split(
-            r"[;\n]|(?<=\w)\.(?=\s|$)",
-            finding.lower(),
-        )
-    )
+    clauses = (clause for finding in findings_text for clause in _assertion_clauses(finding))
+    feature_is_pain = _scoped("is_pain", feature_lower, lambda: bool(_PAIN_FEATURE.search(feature_lower)))
     for finding_lower in clauses:
         if scrub_negated_spans:
             finding_lower = _strip_negated_spans(finding_lower)
         # Pain is excluded from specificity scoring, but it remains a required assertion.
         # A BP report mentioning the left arm must not become 'left arm pain'; a description of the sensation
         # itself ("pressure radiating to my left arm", "crushing", "sharp") IS a pain assertion.
-        if re.search(r"\b(?:pain|ache|aching)\b", feature_lower) and not re.search(
-                r"\b(?:pain|painful|ache|aches|aching|discomfort|hurt|hurts|hurting|radiat\w*|tight(?:ness)?|"
-                r"crushing|squeez\w*|burning|cramp\w*|stabbing|sharp|throbbing)\b|통증|아프|아파|痛|疼",
-                finding_lower):
+        if feature_is_pain and not _scoped("pain_assertion", finding_lower,
+                                           lambda: bool(_PAIN_ASSERTION.search(finding_lower))):
             continue
         # A prodrome is an explicitly preceding symptom. Preserve that temporal
         # qualifier instead of requiring patients to use the word "prodrome".
@@ -496,6 +574,11 @@ _LAY_VARIANTS: Set[tuple] = set()
 
 
 def _strict_alias_present(alias: str, findings: List[str], scrub_negated_spans: bool) -> bool:
+    return _scoped("strict_alias", (alias, tuple(findings), scrub_negated_spans),
+                   lambda: _strict_alias_present_uncached(alias, findings, scrub_negated_spans))
+
+
+def _strict_alias_present_uncached(alias: str, findings: List[str], scrub_negated_spans: bool) -> bool:
     """Lay-language variants are matched STRICTLY: the literal phrase on a word boundary, or EVERY
     one of its content words present in one finding -- never the 60% partial overlap feature_present()
     allows for a curated knowledge-base phrase (a 3-word variant must not be satisfied by 2 words)."""
@@ -548,8 +631,33 @@ _merge_lay_aliases()
 _merge_pr15_aliases()
 
 
+# A drug the patient stopped, ran out of, skipped or is no longer taking is not CURRENT use: "ran out of insulin
+# three days ago" must not satisfy "insulin use" / "known diabetes on insulin" (it is the opposite -- an omission).
+# Applied only to medication-USE features, so omission features ("missed insulin doses", "missed meal") and every
+# symptom/exam feature are untouched.
+_USE_FEATURE = re.compile(r"\b(?:use|user|on|takes?|taking)\b")
+_DISCONTINUED_SPAN = re.compile(
+    r"\b(?:ran|run|running) out of\b[^;,.\n]*"
+    r"|\b(?:stopped(?: taking)?|quit(?: taking)?|discontinued|no longer (?:takes?|taking|on|uses?|using)|not taking|"
+    r"(?:have|has)n'?t (?:been )?taking|missed|skipped|forgot(?: to take)?)\s+(?:all |any |my |the |his |her |their )?"
+    r"(?:doses? of |shots? of )?[a-z][\w\-]*(?:\s+(?!for\b|since\b|in\b|and\b|but\b)[a-z][\w\-]*)?",
+    re.IGNORECASE)
+
+
+def _without_discontinued(findings: List[str]) -> List[str]:
+    return [_DISCONTINUED_SPAN.sub(" ", f) for f in findings]
+
+
 def feature_present_with_aliases(phrase: str, findings: List[str], scrub_negated_spans: bool = True,
                                  strict: bool = False, ignore_words: frozenset = frozenset()) -> bool:
+    if _USE_FEATURE.search(phrase.lower()) and any(_DISCONTINUED_SPAN.search(f) for f in findings):
+        findings = _without_discontinued(findings)
+    return _scoped("with_aliases", (phrase, tuple(findings), scrub_negated_spans, strict, frozenset(ignore_words)),
+                   lambda: _feature_present_with_aliases(phrase, findings, scrub_negated_spans, strict, ignore_words))
+
+
+def _feature_present_with_aliases(phrase: str, findings: List[str], scrub_negated_spans: bool,
+                                  strict: bool, ignore_words: frozenset) -> bool:
     """feature_present() on `phrase` itself, OR on any of its feature-local aliases (see
     FEATURE_ALIASES above) -- the alias never widens matching for any OTHER knowledge-base phrase.
     The single shared entry point for alias-aware matching; both differential.py's scoring and

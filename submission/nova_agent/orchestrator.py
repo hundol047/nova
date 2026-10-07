@@ -69,6 +69,13 @@ class DoctorAgent:
     # --- core turn loop -----------------------------------------------------------------------
 
     def decide(self, state: PatientState) -> Tuple[AgentAction, Optional[AgentTurnOutput], List[DifferentialItem]]:
+        # One decision = one memo scope for pure string normalisation (see matching.evaluation_scope); the
+        # scope is discarded when this call returns, so nothing patient-derived is retained across cases.
+        from nova_agent.matching import evaluation_scope
+        with evaluation_scope():
+            return self._decide(state)
+
+    def _decide(self, state: PatientState) -> Tuple[AgentAction, Optional[AgentTurnOutput], List[DifferentialItem]]:
         # Never reuse a prior turn's confidence if this turn fails partway through.
         state.pending_diagnosis_quality = None
         state.evidence_assessment = {"internal_result": "INSUFFICIENT_INFORMATION",
@@ -117,7 +124,10 @@ class DoctorAgent:
                 # (retrieval_pipeline/open_world) into the differential the prompt is built from, and
                 # the submission package never ships the repository-level learning/ package this
                 # legacy catalog context needs -- so it applies to the non-competition path only.
-                if not cfg.competition_retrieval_enabled:
+                # Never under the preliminary-round rules either: the competition path must not import or
+                # run the repository-level learning/ package (it is not shipped, and a missing import must not
+                # be the reason it is skipped).
+                if not cfg.competition_retrieval_enabled and not state.preliminary_rules:
                     try:
                         from nova_agent.catalog_context import retrieve_catalog_context
                         retrieved_context.append(retrieve_catalog_context(state))

@@ -98,3 +98,20 @@ not promoted diagnostic replacements. Source markup, publisher terms, version an
 are retained. Neither new clinical facts nor new case labels were generated.
 Review status: no clinician has reviewed or approved this packet. Runtime engineering
 experiments and their rejected variants are recorded in artifacts/clinical_review_pass.
+
+## Pass of 2026-10-07 (preliminary integration / backend load / evidence interpretation)
+
+Tool: Claude Code (an Anthropic Claude model; the exact model identifier is not recorded in repository artifacts by
+session policy). Instruction: the repository owner's written task for this pass (backend load-test fix, preliminary
+diagnostic error analysis, provenance status, submission packaging). No external clinical source was consulted.
+Runtime content authored or edited in this pass, all engineering-authored and **not clinician-reviewed**:
+
+| File | What was written |
+|---|---|
+| `nova_agent/lay_language.py` | additive lay aliases: medication omission (`missed insulin doses`), VTE context (`recent surgery`, `immobilization`), exertional wording, `polydipsia` <- `thirsty`, confusion/sleepiness, dysuria wording |
+| `nova_agent/matching.py` | turn-scoped memoisation; regex-free word-boundary check; medication-USE features ignore stopped/run-out/skipped drugs |
+| `nova_agent/vitals_parser.py` | descriptive `Tachycardia` (HR 101-119) and `Fever` (38.0-38.9 C) findings below the existing red-flag thresholds |
+| `nova_agent/chief_complaint.py` | `pain on urinating/urination` routing aliases |
+| `nova_agent/orchestrator.py` | decision-scoped memo; legacy learning/ catalog context never runs under preliminary rules |
+| `nova_agent/soap.py` | clause-level answer classification merged with the integration branch's unclear/education handling |
+Existing rows above remain UNRESOLVED; this pass does not reconstruct earlier generation records.

@@ -23,7 +23,7 @@ from nova_agent.config import get_config
 from nova_agent.orchestrator import DoctorAgent
 from nova_agent.preliminary import (detect_language, exam_request_text, explanation_text, rejection_signal,
                                     parse_first_statement, plan_say_text, say_text)
-from nova_agent.soap import build_soap, localized_name
+from nova_agent.soap import build_soap, label_alternatives, localized_name
 from nova_agent.state import PatientState
 
 from competition.schema import CompetitionAction, CompetitionObservation
@@ -212,7 +212,7 @@ class NovaCompetitionAgent:
                 from nova_agent.soap import _entry_for
                 entry = _entry_for(top.diagnosis_id)
             label = localized_name(entry, top.diagnosis if top else "", lang)
-            return AgentAction(action_type="SAY", key="explanation", content=explanation_text(label, lang),
+            return AgentAction(action_type="SAY", key="explanation", content=explanation_text(label, lang, label_alternatives(entry, lang)),
                                rationale="Explain the working diagnosis to the patient before submitting the note.")
         if "plan" not in done and remaining >= 2:
             done.add("plan")
@@ -244,6 +244,9 @@ class NovaCompetitionAgent:
         if self._emitted_actions.get(obs.case_id, 0) >= state.max_turns:
             raise RuntimeError("Interaction budget exhausted; no further action may be emitted")
 
+        bind_case = getattr(self.agent.llm_client, "bind_case", None)
+        if callable(bind_case):  # transport-backed clients attribute model-call evidence to this case
+            bind_case(obs.case_id)
         action, _llm_output, _differential = self.agent.decide(state)
         in_competition_mode = get_config().llm_provider != "mock"
         if state.preliminary_rules and action.action_type == "TEST":

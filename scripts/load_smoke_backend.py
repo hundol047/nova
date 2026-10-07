@@ -35,7 +35,11 @@ def run(num_cases: int, concurrency: int) -> dict:
     errors: list = []
     lock = threading.Lock()
 
+    startup_started = time.perf_counter()
     with TestClient(app) as client:
+        # Startup (incl. the immutable-knowledge warm-up) is reported separately from request latency.
+        startup_seconds = time.perf_counter() - startup_started
+        warmup_seconds = getattr(app.state, "nova_warmup_seconds", None)
         def one_case(i: int) -> None:
             marker = f"load-{uuid.uuid4().hex[:12]}-{i}"
             start = time.perf_counter()
@@ -81,6 +85,8 @@ def run(num_cases: int, concurrency: int) -> dict:
         "num_cases": num_cases, "concurrency": concurrency, "succeeded": len(latencies_ms),
         "failed": len(errors), "error_rate": round(len(errors) / num_cases, 4) if num_cases else None,
         "wall_seconds": round(wall_seconds, 3),
+        "startup_seconds": round(startup_seconds, 3),
+        "startup_warmup_seconds": round(warmup_seconds, 3) if warmup_seconds is not None else None,
         "throughput_cases_per_sec": round(num_cases / wall_seconds, 2) if wall_seconds > 0 else None,
         "latency_ms": {"mean": round(statistics.mean(latencies_ms), 2) if latencies_ms else None,
                         "p50": round(pct(50), 2), "p95": round(pct(95), 2), "p99": round(pct(99), 2)},

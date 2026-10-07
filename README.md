@@ -1,48 +1,61 @@
-> **Current verification: Round J / v11, frozen runtime `f315fbf`.** 849 tests passed, 1 skipped. [Report](docs/round_j/FINAL_REPORT.md) · [release pointer](artifacts/verification/CURRENT_RELEASE.json). Round J synthetic development: 47/52 → 48/52; critical 20/20 retained. v18 is **REFERENCE-ONLY**, preserved and not rerun; no v19 created. Real GPT-OSS / official API remain **NOT VERIFIED / EXTERNAL BLOCKED**. These are same-author mock results, not clinical accuracy.
+> **Current status: PRE-GUIDE CANDIDATE — NOT OFFICIALLY READY.** The organizer's participant guide / runtime API
+> has not been published to us, so the official model transport, schema and `run.py` invocation are **not
+> integrated and not verified** (`submission/run.py` fails closed on purpose). Real `openai/gpt-oss-20b`
+> behaviour has **never been observed**; every number in this repository is a same-author, synthetic,
+> deterministic-**mock** development result — **not** an official score and **not** clinical accuracy.
+> Read [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) first: it is the single maintained status page
+> (what is verified, what is assumed, what is blocked). Older sections of this README and anything under
+> `docs/round_*`, `artifacts/` and `docs/compliance/*REPORT*` are **historical evidence for the commit they name**.
 
 # N.O.V.A. 2026 Doctor Agent
+
+A conversational medical-diagnosis agent built for the N.O.V.A. 2026 competition as an independent,
+standalone `nova_agent` module. It reasons iteratively from a limited initial presentation toward a
+differential diagnosis and actively guards against missing time-critical ("can't-miss") conditions.
+
+**Preliminary round (예선) wire actions** (organizer briefing of 2026-10-06 *as transcribed by the team*; it
+conflicts with the public web page in places and must be re-confirmed against the participant guide):
+`SAY` (patient dialogue, one question/explanation, ≤ 30 characters), `EXAM` (one physical-examination
+maneuver per request), `DIAGNOSE` (ends the encounter; one primary diagnosis + an S/O/A/P initial-visit note),
+≤ 50 interactions and ≤ 20 minutes per case; **no `TEST` action**. The development / hospital paths below still
+use the internal `ASK / EXAM / TEST / DIAGNOSE` vocabulary, and the public page's 60-turn limit applies only to
+the non-preliminary development mode. Only information actually asked or examined is recorded; unasked
+information is "not asked", never negative, and a rejected EXAM yields no finding.
 
 Latest reasoning/evaluation cycle: [implementation, measured results and live-model blockers](docs/evaluation/reasoning_cycle8/REPORT.md).
 History/medication context, grounded quoted evidence, novel-hypothesis handling and a fixed-model
 comparison runner are implemented. External clinical accuracy and competition readiness remain
 unverified; no fixed-model training was performed.
-
 External evidence intake (2026-10-03): [clinical sources, expert-review provenance, 3,370 downloaded benchmark rows, and remaining coverage gaps](research/external_evidence/README.md). Research/evaluation only; no training or clinical accuracy improvement is claimed.
 
-A conversational medical-diagnosis agent (**ASK / EXAM / TEST / DIAGNOSE**) built for the N.O.V.A.
-2026 competition as an independent, standalone `nova_agent` module. It reasons iteratively from a
-limited initial presentation toward a differential diagnosis, actively guards against missing
-time-critical ("can't-miss") conditions, and always submits a final diagnosis within a hard
-60-turn limit in the provisional competition protocol. A forced wire label is explicitly
-separated from internal evidence support; it is not a confirmed clinical diagnosis.
+Historical status of the earlier reasoning cycles: see the linked reports and `docs/CURRENT_STATUS.md`.
 
-Evaluation reports record the commands, provider, data provenance and limitations of each run.
-Older benchmark sections below describe historical snapshots; use the latest linked report for
-current regression results. See [Known Limitations](#9-known-limitations) for unverified behavior.
+**Fixed competition model (never fine-tuned, adapted, replaced or bundled):**
+`openai/gpt-oss-20b`, revision `4d7ae4984b7db7de8f8457170b3f1a419ee76d52`.
 
-**Verification status** (these are three genuinely different claims -- never conflate them):
-- **Code / regression**: local non-API software tests and frozen mock replays are recorded in the
-  latest report. The production API test file remains excluded because of a previously observed
-  TestClient hang; a skipped neural test and mock-only tests do not establish full service readiness.
+**What is and is not verified** (details and numbers: [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)):
+- Local code/tests/CI under the mock provider: verified on the commit named in the release pointer
+  ([`artifacts/verification/CURRENT_RELEASE.json`](artifacts/verification/CURRENT_RELEASE.json)).
+- Real fixed-model calls: **NOT VERIFIED**. Official API / schema: **NOT VERIFIED / PLACEHOLDER**
+  (`competition/schema.py`, `competition/adapter.py`; transport boundary in `competition/official_transport.py`).
+- Clinical review of the knowledge base: **none**. Runtime asset provenance/licence: **75 assets UNRESOLVED**
+  (submission clearance BLOCKED, see the status page).
+- Preliminary-only development benchmark: `scripts/evaluate_preliminary_benchmark.py`
+  (**LOCAL DEVELOPMENT / PRELIMINARY SIMULATION**, mock model, no `TEST`). Historical results below that used
+  `TEST` actions are **not** preliminary-round performance.
 
-**Historical verification status** (current local results are in the release pointer above):
-- **Code / test CI**: READY -- 520 unit tests (1 skipped), the full local benchmark suite (tuning, held-out,
-  generalization-v2, stress), adversarial, stability, ablation, and submission-build checks all pass
-  under the deterministic `mock` LLM provider, and are enforced in CI (see `.github/workflows/`).
-  A fresh, untouched blind set (**Blind v13**) scored materially lower (57.9%/42.9% critical
-  miss) -- see section 2.2b, reported honestly and not remediated this round.
-- **Real competition LLM (a live model actually generating turns)**: NOT VERIFIED -- no live call to
-  a real model has been observed in this environment (no GPU/API access at implementation time); the
-  HTTP client, prompt construction, and parse/repair/fallback path are only unit- and
-  subprocess-tested against scripted/mocked responses.
-- **Official N.O.V.A. 2026 competition API**: NOT VERIFIED / PLACEHOLDER -- no official interface
-  document was published at implementation time, so `competition/schema.py` and
-  `competition/adapter.py` are an explicit, disclosed placeholder behind the adapter boundary.
+> Everything competition-protocol-shaped lives behind `competition/` (adapter + schema + transport), so the real
+> interface can replace that layer without touching the clinical reasoning engine in `nova_agent/` — see
+> [Submission](#7-submission--competition-runtime).
 
-> No official N.O.V.A. 2026 Agent API/interface document was available at implementation time.
-> Everything competition-protocol-shaped lives behind `competition/adapter.py` + `schema.py` (an
-> explicit adapter pattern), so the real interface can be dropped in without touching the clinical
-> reasoning engine -- see [Submission](#7-submission--competition-runtime) below.
+<details><summary>Historical status text (kept for the record; superseded by the block above)</summary>
+
+> Round J / v11 (frozen runtime `f315fbf`): 849 tests passed, 1 skipped; Round J synthetic development 47/52 → 48/52;
+> critical 20/20 retained; v18 REFERENCE-ONLY. Earlier: 520 unit tests, Blind v13 57.9% / 42.9% critical miss
+> (reported honestly, not remediated that round). "60-turn hard limit in the provisional protocol" referred to
+> the public page, since superseded for the preliminary round by the briefing's 50 turns.
+
+</details>
 
 ## 1. Why an agent, not just a prompt
 
@@ -87,27 +100,27 @@ flowchart TD
 
 ### 2.1 Open-world ontology + optional learning ranker
 
-N.O.V.A. is not limited to a fixed disease list. A **tiered disease universe** — **1,280 catalog
-concepts bundled in-repo** (34 Tier-1 deep + 1,246 Tier-2 terminology entries) and a **5,000+ searchable
-disease universe** once an operator (or the reproducible synthetic) terminology snapshot is
-installed — sits alongside an **optional** deep-learning retrieval-and-rerank pipeline. N.O.V.A.
-offers terminology retrieval alongside a safety-governed differential with explicit uncertainty.
-The Round J depth audit found **zero populated clinical-feature/workup profiles in all 1,246 Tier-2 entries**;
-searchable names are not verified diagnostic coverage. It does **not** claim to diagnose "all diseases" or achieve
-"100% accuracy"; it is **not** a naive 5,000-way classifier, a self-learning system, or a fully
-autonomous diagnostician. Conditions outside its curated knowledge are surfaced as *possible* or
-*unknown*, never forced into a label. Coverage is reported from the actual catalog by
-`python scripts/report_disease_coverage.py` (see `docs/ontology/DISEASE_COVERAGE.md`); the
-5,000-diagnosis retrieval architecture is documented in `docs/learning/ARCHITECTURE.md` and
-compared to the baseline in `docs/evaluation/FIVE_THOUSAND_DISEASE_COMPARISON.md`.
+**Coverage terminology (use these words, not "diagnoses N diseases").** The submission bundles
+**1,280 searchable concepts** = **34 Tier-1 deep clinical profiles** (curated features, workup, red flags — the only
+entries with a full clinical profile) + **1,246 Tier-2 structured concepts** (name / aliases / urgency / ICD-10; a
+minority have partial feature enrichment — see `docs/CURRENT_STATUS.md` for the current count). Tier-3 is an
+*optional, local* expansion tier that stays **empty (0) in the submission**; the 5,000+ figure applies only to a
+reproducible **synthetic, test-only** snapshot (or an operator-imported licensed terminology) and is **not**
+clinically curated disease knowledge. Searchable names are candidate coverage, **not** verified diagnostic
+accuracy: the system does **not** claim to accurately diagnose 5,000+ diseases, "all diseases" or "100% accuracy";
+it is not a naive 5,000-way classifier, a self-learning system, or an autonomous diagnostician. Conditions outside
+its curated knowledge are surfaced as *possible* or *unknown*, never forced into a label. The optional
+deep-learning retrieval/rerank pipeline lives outside the competition package and is blocked from the submission.
+Coverage is reported from the actual catalog by `python scripts/report_disease_coverage.py`
+(`docs/ontology/DISEASE_COVERAGE.md`); the retrieval architecture is documented in `docs/learning/ARCHITECTURE.md`.
 
 ```mermaid
 flowchart TD
   Q["Presentation / candidate query"] --> CAT["ontology/registry.py\nDiseaseCatalog"]
-  subgraph TIERS["Tiered disease universe (1,280 bundled; 5,000+ searchable with snapshot)"]
-    T1["Tier-1 deep (34 profiles)\nfull reasoning"]
+  subgraph TIERS["Concept tiers (1,280 bundled searchable concepts; Tier-3 empty in the submission)"]
+    T1["Tier-1 deep clinical profiles (34)\nfull reasoning"]
     T2["Tier-2 structured (1,246)\nname/aliases/urgency/ICD-10"]
-    T3["Tier-3 ontology-only (4,000+)\noperator SNOMED/ICD or synthetic snapshot (local)"]
+    T3["Tier-3 optional/local (0 in submission)\noperator terminology or SYNTHETIC test snapshot - not curated"]
   end
   CAT --- T1
   CAT --- T2
@@ -411,7 +424,7 @@ the real-LLM prompt, which `mock` never constructs; see `test_rag_context_reache
 
 ```
 submission/
-  run.py               # JSON-lines protocol on stdin/stdout, or --interactive
+  run.py               # OFFICIAL entrypoint: FAIL-CLOSED (exits NOT READY) until the organizer interface is integrated
   requirements.txt      # pydantic only -- no `openai` package dependency (stdlib urllib HTTP client)
   nova_agent/, competition/   # copied from the repo root -- never hand-edited
 ```
@@ -419,10 +432,16 @@ submission/
 Regenerate after any change to `nova_agent/`/`competition/`: `python scripts/build_nova_submission.py`
 (`tests/test_safety_regression.py::test_submission_source_sync` fails CI on drift).
 
-`submission/run.py` defaults `NOVA_LLM_PROVIDER=competition` and runs a startup preflight
-(`client.preflight()`) before the first turn: if the real endpoint is unreachable, it prints a
-`NOT READY` diagnostic to stderr and exits non-zero with no action on stdout. Explicit mock mode
-remains available for development. Before a real run, gate
+`submission/run.py` is **fail-closed**: no organizer transport is integrated, so it prints `NOT READY:
+EXTERNAL_OFFICIAL_INTERFACE_BLOCKED` to stderr and exits non-zero, and no environment variable or argument can
+enable a mock or an arbitrary network provider there (`competition/provider_lock.py`). The final integration is
+intentionally small: implement `OfficialTransport._send` in `competition/official_transport.py` following the
+participant guide, wrap it in `TransportLLMClient`, and build the agent with
+`competition.submission_profile.build_submission_agent` (preliminary rules forced on). Transport progress is
+tracked as an evidence ladder (`NOT_CONFIGURED → CONFIGURED → CALL_ATTEMPTED → RESPONSE_RECEIVED →
+MODEL_IDENTITY_VERIFIED → REVISION_VERIFIED`); a stub can never reach the identity states. The legacy
+development tooling below (`preflight_competition.py`, `smoke_real_llm.py`, the `competition` provider) is a
+**provisional, unofficial OpenAI-compatible probe** for a locally hosted model, not the organizer interface. Before such a development run, gate
 on `scripts/preflight_competition.py`, which prints `READY`/`NOT READY` and exits non-zero unless a
 real provider is configured, reachable, produces legal structured/action output, **and actually
 succeeded at least once** (`real_llm_success_count_at_least_1` -- deliberately distinct from

@@ -1,5 +1,7 @@
 # Public official-source audit — 2026-10-05 KST
 
+> **Historical audit** written before the 2026-10-06 preliminary-round briefing: its "60 turns / four actions incl. TEST" statements describe the PUBLIC page and are superseded for the preliminary round (50 turns, SAY/EXAM/DIAGNOSE, no TEST) by the briefing as transcribed by the team. See [`OFFICIAL_INTERFACE_AUDIT.md`](OFFICIAL_INTERFACE_AUDIT.md) and [`../CURRENT_STATUS.md`](../CURRENT_STATUS.md).
+
 Sources read directly during this pass:
 - https://nova.snubhai.org/rules/
 - https://nova.snubhai.org/evaluation/

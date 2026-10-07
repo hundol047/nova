@@ -366,7 +366,7 @@
     {
       "asset_id": "nova_agent/chief_complaint.py",
       "path": "nova_agent/chief_complaint.py",
-      "sha256": "4cb8a3d492ff1fc7de415bce3ef3519b28dd703970e220bb98ca365f25190653",
+      "sha256": "00b38b7c0b1db46586b28a9d5207d7408728aef07fde33a4ceffa1faaa2b9f95",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -416,7 +416,8 @@
           "unchanged coverage and same-set accuracy/safety/efficiency regression"
         ],
         "status": "BLOCKED"
-      }
+      },
+      "bytes_changed_since_review": "sha256 refreshed to the current bytes; status/permissions unchanged and NOT re-reviewed"
     },
     {
       "asset_id": "nova_agent/clinical_presentation.py",
@@ -527,7 +528,7 @@
     {
       "asset_id": "nova_agent/config.py",
       "path": "nova_agent/config.py",
-      "sha256": "67fef9e105b9572120a5b29879e4c8303ef74726d0a88acf77f4e19641e58456",
+      "sha256": "7effcbe52c963e502d8db6fde4c1c5a4c80be763d06201bd2d137a12ed314c3d",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -577,7 +578,8 @@
           "unchanged coverage and same-set accuracy/safety/efficiency regression"
         ],
         "status": "BLOCKED"
-      }
+      },
+      "bytes_changed_since_review": "sha256 refreshed to the current bytes; status/permissions unchanged and NOT re-reviewed"
     },
     {
       "asset_id": "nova_agent/contextual_safety.py",
@@ -1968,7 +1970,7 @@
     {
       "asset_id": "nova_agent/lay_language.py",
       "path": "nova_agent/lay_language.py",
-      "sha256": "4bdd379ae9a473380bf0833c9abf0e197c0f9ee6982097cc78ce2913ff1d4a3d",
+      "sha256": "f2c4ea5d3a17e7e5679d508ad0db854138645a6c1a56efad6d693f8a1db3cb1d",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -2018,7 +2020,8 @@
           "unchanged coverage and same-set accuracy/safety/efficiency regression"
         ],
         "status": "BLOCKED"
-      }
+      },
+      "bytes_changed_since_review": "sha256 refreshed to the current bytes; status/permissions unchanged and NOT re-reviewed"
     },
     {
       "asset_id": "nova_agent/llm_client.py",
@@ -2235,7 +2238,7 @@
     {
       "asset_id": "nova_agent/matching.py",
       "path": "nova_agent/matching.py",
-      "sha256": "147ce87490d7a43d13619a0a71001f8bced75f2a87b4ab40bc4af02d1eee9ed9",
+      "sha256": "b5d44d3d2125f0ae3f02322fdcf27fcfb24557e9cef89058fb25355e0349db63",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -2285,7 +2288,8 @@
           "unchanged coverage and same-set accuracy/safety/efficiency regression"
         ],
         "status": "BLOCKED"
-      }
+      },
+      "bytes_changed_since_review": "sha256 refreshed to the current bytes; status/permissions unchanged and NOT re-reviewed"
     },
     {
       "asset_id": "nova_agent/missing_info.py",
@@ -2397,7 +2401,7 @@
     {
       "asset_id": "nova_agent/multilingual_concepts.py",
       "path": "nova_agent/multilingual_concepts.py",
-      "sha256": "57e277310c3d214be36f0459511498f662b6af5a9eedde2413ebfa5f2306b339",
+      "sha256": "5738bcacd015299aeb4af88685146d27cdc64a75ccc6f48ac268bd5fd16d2c8a",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -2447,7 +2451,8 @@
           "unchanged coverage and same-set accuracy/safety/efficiency regression"
         ],
         "status": "BLOCKED"
-      }
+      },
+      "bytes_changed_since_review": "sha256 refreshed to the current bytes; status/permissions unchanged and NOT re-reviewed"
     },
     {
       "asset_id": "nova_agent/objective_evidence.py",
@@ -3502,7 +3507,7 @@
     {
       "asset_id": "nova_agent/orchestrator.py",
       "path": "nova_agent/orchestrator.py",
-      "sha256": "9a60c0dbc46ab4c0718e4164a45d92884eefb1516022766aa7641302f39d74ba",
+      "sha256": "0d6c18bb6154b553713040c730b8869f97326245eeec3adc523d9eedf6c0ae0d",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -3554,7 +3559,8 @@
         "status": "BLOCKED"
       },
       "previous_sha256_before_reference_integration": "3d5d57d80978c0507931151327909833c455d6e078ac42f4b920583e145b7b18",
-      "reference_integration_note": "Engineering change 2026-10-05; no new medical facts or labels. Exact coding assistant model version unavailable; no fabricated generation receipt."
+      "reference_integration_note": "Engineering change 2026-10-05; no new medical facts or labels. Exact coding assistant model version unavailable; no fabricated generation receipt.",
+      "bytes_changed_since_review": "sha256 refreshed to the current bytes; status/permissions unchanged and NOT re-reviewed"
     },
     {
       "asset_id": "nova_agent/pr15_feature_aliases.py",
@@ -3607,7 +3613,7 @@
     {
       "asset_id": "nova_agent/preliminary.py",
       "path": "nova_agent/preliminary.py",
-      "sha256": "5ed1e21553186498d1327f01fdc646a04517a9ddea6bc33bead8285a6ee22028",
+      "sha256": "03c6173cd2419d70deefecb7385bbf7c4bc81b79e4cd73bd5159b4bd400c2ac4",
       "runtime_use": "Preliminary-round (2026-10-06 briefing) interaction text: SAY/EXAM wording, first-statement parsing; engineering-agent authored in this session",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this session from the organizer briefing; not independently established",
@@ -3651,7 +3657,8 @@
           "unchanged coverage and same-set accuracy/safety/efficiency regression"
         ],
         "status": "BLOCKED"
-      }
+      },
+      "bytes_changed_since_review": "sha256 refreshed to the current bytes; status/permissions unchanged and NOT re-reviewed"
     },
     {
       "asset_id": "nova_agent/resolution.py",
@@ -3978,7 +3985,7 @@
     {
       "asset_id": "nova_agent/soap.py",
       "path": "nova_agent/soap.py",
-      "sha256": "94d5ad54b39daacd0f125db46035d2b9671508bfe63f79ac48c1a581e7443f2b",
+      "sha256": "c57d3723ccddab6f699f4be4bf2593a12833871ac3e007e5cf79cc4c0b3efe3b",
       "runtime_use": "Preliminary-round SOAP note formatter rebuilt from the turn log; plan text is generic rule-derived, not clinician-authored",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this session from the organizer briefing; not independently established",
@@ -4022,7 +4029,8 @@
           "unchanged coverage and same-set accuracy/safety/efficiency regression"
         ],
         "status": "BLOCKED"
-      }
+      },
+      "bytes_changed_since_review": "sha256 refreshed to the current bytes; status/permissions unchanged and NOT re-reviewed"
     },
     {
       "asset_id": "nova_agent/state.py",
@@ -4346,7 +4354,7 @@
     {
       "asset_id": "nova_agent/vitals_parser.py",
       "path": "nova_agent/vitals_parser.py",
-      "sha256": "a1904c19c79da2930ec1784c36257030c028ed1275a2d5a8fb9a965f4118dbfa",
+      "sha256": "603d141fb812666f2092073516692c0eeda8d5d980e9384ae20399200d67dd2b",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -4394,7 +4402,8 @@
           "unchanged coverage and same-set accuracy/safety/efficiency regression"
         ],
         "status": "BLOCKED"
-      }
+      },
+      "bytes_changed_since_review": "sha256 refreshed to the current bytes; status/permissions unchanged and NOT re-reviewed"
     }
   ],
   "clearance": "BLOCKED",

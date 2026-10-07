@@ -22,13 +22,18 @@ _NAUSEA = ["feel sick", "feeling sick", "sick to my stomach", "queasy", "nauseat
 _VOMIT = ["throwing up", "threw up", "been sick", "vomited", "retching", "keep vomiting"]
 _SWEAT = ["sweating", "cold sweat", "clammy", "drenched in sweat", "sweaty", "breaking out in a sweat"]
 _FEVER = ["running a temperature", "high temperature", "feverish", "burning up", "slight fever", "low fever", "mild fever"]
-_CONFUSED = ["confused", "muddled", "disoriented", "not making sense", "drowsy and confused"]
+_CONFUSED = ["confused", "muddled", "disoriented", "not making sense", "drowsy and confused", "confusion", "unusual sleepiness",
+             "unusually sleepy", "lethargic", "hard to wake"]
 _BREATHLESS = ["short of breath", "out of breath", "breathless", "cannot catch my breath", "cannot get air in"]
 _DYSURIA = ["burning when i pee", "burns to pee", "stings to pee", "hurts to pee", "burning urination", "pee burns",
-            "burning when i wee", "burns when i wee", "pain passing urine", "pain when urinating", "stings when i pee",
+            "burning when i wee", "burns when i wee", "pain passing urine", "pain when urinating", "pain on urinating", "pain on urination", "stings when i pee",
             "hurts when i pee", "urinating hurts", "peeing hurts", "wee burns"]
 
 LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
+    # --- medication omission (a stopped/run-out drug is NOT current use; see matching._DISCONTINUED_SPAN)
+    "missed insulin doses": ["ran out of insulin", "run out of insulin", "stopped insulin",
+                             "stopped taking insulin", "skipped insulin", "skipped my insulin", "missed my insulin",
+                             "forgot my insulin"],
     # --- acute abdomen
     "severe abdominal pain": ["terrible belly pain", "awful stomach pain", "excruciating belly pain", "knife-like belly pain", "severe belly pain"],
     "rigid abdomen": ["stomach is rock hard", "belly is hard as a board", "belly rigid", "board-like belly"],
@@ -208,7 +213,8 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
     "no flank pain": ["no back pain", "no side pain"],
     # --- sepsis / critical care
     "tachypnea": ["breathing fast", "rapid breathing", "breathing very fast"],
-    "suspected infection source": ["chest infection", "urine infection", "infected wound", "urinary catheter", "recent pneumonia", "recent chest infection"],
+    "suspected infection source": ["chest infection", "urine infection", "infected wound", "urinary catheter", "recent pneumonia", "recent chest infection",
+                                   "pain on urinating", "pain when urinating", "burning when i pee"],
     # --- electrolytes
     "muscle weakness": ["legs feel like jelly", "weak muscles", "arms feel weak", "generalised weakness", "generalized weakness", "legs feel weak",
                          "arms and legs feel weak", "weak all over"],
@@ -238,6 +244,23 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
                                  "pain on one side of my chest after a"],
     "hypotension": ["low blood pressure"],
 }
+
+
+# Additive extensions (merged into existing keys, never replacing them -- a duplicate key in the literal above
+# would silently drop the earlier list). Engineering-authored plain wording; NOT clinician-reviewed.
+_ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
+    "polydipsia": ["thirsty", "excessive thirst"],
+    # --- venous-thromboembolism risk context (plain wording for an operation / being bed-bound)
+    "recent surgery": ["after my operation", "hip operation", "knee operation", "hip replacement", "knee replacement",
+                       "operation last week", "recent operation", "post-op", "after surgery"],
+    "immobilization": ["mostly in bed", "stuck in bed", "bedbound", "bed-bound", "confined to bed"],
+    # --- exertional angina wording
+    "exertional chest pain": ["comes on walking", "comes on when i walk", "eases when i rest", "goes away with rest",
+                              "on walking uphill"],
+}
+for _phrase, _variants in _ADDITIONAL_LAY_ALIASES.items():
+    _bucket = LAY_FEATURE_ALIASES.setdefault(_phrase, [])
+    _bucket.extend(v for v in _variants if v not in _bucket)
 
 
 # --- Tier-2 enrichment features (nova_agent/knowledge/tier2_enrichment.json) -------------------------

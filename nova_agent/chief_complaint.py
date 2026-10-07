@@ -144,7 +144,7 @@ CONCEPT_ALIASES = {
                               "의식", "혼돈", "의식저하",
                               "意識がぼんやりする", "意識障害", "反応が鈍い",
                               "意识模糊", "神志不清", "反应迟钝"],
-    "urinary_symptoms": ["blood in urine", "burning when I pee", "burns when I pee",
+    "urinary_symptoms": ["blood in urine", "burning when I pee", "burns when I pee", "pain on urinating", "pain on urination",
                           "burning when I urinate", "pain when urinating", "peeing", "urinate",
                           "bladder",
                           "소변", "배뇨통", "빈뇨",

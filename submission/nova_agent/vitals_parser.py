@@ -112,4 +112,12 @@ def describe_vital_sign_abnormalities(vitals: VitalSigns) -> List[str]:
             continue
         if _OPS[rule["op"]](value, rule["value"]):
             findings.append(rule["reason"])
+    # Standard adult descriptive definitions (not red flags): the red-flag table above only fires on MARKED
+    # derangement (HR >= 120, T >= 39.0), so an ordinary tachycardia (HR 118) or fever (T 38.4) previously
+    # never reached the evidence corpus at all. Each is added only when the stricter red flag did not fire.
+    hr, temp = values.get("heart_rate"), values.get("temperature_c")
+    if hr is not None and 100 < hr < 120:
+        findings.append("Tachycardia")
+    if temp is not None and 38.0 <= temp < 39.0:
+        findings.append("Fever")
     return findings
