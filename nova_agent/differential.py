@@ -193,6 +193,8 @@ def has_required_diagnostic_context(item: DifferentialItem, state: PatientState)
     current = [clause for text in current for clause in re.split(r"[;,\n]", text)
                if not re.search(r"\b(?:previously|historical|baseline|history of|last (?:year|month|week)|"
                                 r"prior result|old result|reference range)\b", clause, re.I)]
+    from nova_agent.state import _with_canonical_concepts
+    current = _with_canonical_concepts(current)  # "nuchal rigidity" is current neck stiffness (negation/history-aware)
     return any(_present_with_aliases(phrase, current, strict=True)
                for phrase in required)
 

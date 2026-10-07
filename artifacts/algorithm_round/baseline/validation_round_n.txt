@@ -1,0 +1,59 @@
+=== Round N frozen validation set (synthetic, single author, mock LLM; not an official score) ===
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+ValN_01                         paraphrase_danger     YES       22      0          NO             
+ValN_02                         atypical_danger       YES       27      0          NO             
+ValN_03                         paraphrase_danger     YES       24      0          NO             
+ValN_04                         paraphrase_danger     NO        31      0          YES            
+ValN_05                         paraphrase_danger     YES       29      0          NO             
+ValN_06                         paraphrase_danger     YES       26      0          NO             
+ValN_07                         paraphrase_danger     YES       20      0          NO             
+ValN_08                         paraphrase_danger     YES       20      0          NO             
+ValN_09                         pelvic_danger         YES       35      0          NO             
+ValN_10                         bleeding_danger       YES       31      0          NO             
+ValN_11                         bleeding_danger       YES       31      0          NO             
+ValN_12                         paraphrase_danger     YES       26      0          NO             
+ValN_13                         multi_symptom_danger  NO        33      0          YES            
+ValN_14                         multi_symptom_danger  YES       29      0          NO             
+ValN_15                         paraphrase_danger     YES       29      0          NO             
+ValN_16                         trauma_danger         YES       27      0          NO             
+ValN_17                         numeric_units         YES       4       0          NO             
+ValN_18                         numeric_units         YES       8       0          NO             
+ValN_19                         paraphrase_danger     YES       28      0          NO             
+ValN_20                         benign_mimic          NO        25      0          NO             
+ValN_21                         benign_mimic          NO        21      0          NO             
+ValN_22                         benign_mimic          YES       21      0          NO             
+ValN_23                         benign_mimic          YES       24      0          NO             
+ValN_24                         benign_mimic          YES       16      0          NO             
+ValN_25                         benign_mimic          YES       13      0          NO             
+ValN_26                         benign_mimic          NO        22      0          NO             
+ValN_27                         benign_mimic          YES       22      0          NO             
+ValN_28                         benign_mimic          YES       22      0          NO             
+ValN_29                         benign_mimic          YES       18      0          NO             
+ValN_30                         benign_mimic          YES       33      0          NO             
+ValN_31                         negation_history      NO        29      0          NO             
+ValN_32                         negation_history      YES       20      0          NO             
+ValN_33                         numeric_units         YES       26      0          NO             
+ValN_34                         numeric_units         YES       20      0          NO             
+ValN_35                         multi_symptom         YES       26      0          NO             
+ValN_36                         benign_mimic          YES       24      0          NO             
+ValN_37                         multi_symptom         YES       30      0          NO             
+ValN_38                         paraphrase            YES       22      0          NO             
+ValN_39                         paraphrase            YES       20      0          NO             
+ValN_40                         paraphrase            YES       24      0          NO             
+ValN_41                         contradictory         NO        21      0          NO             
+ValN_42                         insufficient          NO        20      0          NO             
+
+Round N validation summary (42 cases, 42 scored, 20 critical)
+  Scored Diagnostic Accuracy:   81.0%  (excludes: none)
+  All-Case Diagnostic Accuracy: 81.0%  (every case, no exclusions)
+  Critical Diagnosis Recall:    90.0%
+  Critical Miss Rate:           10.0%
+  Average / Median Turns:       23.8 / 24.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        1.00 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        7.7 / 6.3 / 8.8
+  Utility Score Proxy:          0.498  (informal local metric, evaluation/scoring.py -- not an official competition score)

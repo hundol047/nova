@@ -181,6 +181,9 @@ class NovaConfig:
     # integrated release keeps them opt-in (NOVA_OPEN_SYNONYMS=1) rather than silently active.
     open_synonyms_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_OPEN_SYNONYMS", False))
     mondo_synonyms_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_MONDO_SYNONYMS", False))
+    # Round N switches (ablation): clinical concept normalisation (nova_agent/clinical_concepts.py) feeding
+    # the evidence bag and routing. Default ON; NOVA_CONCEPT_NORMALIZATION=0 reproduces the previous behaviour.
+    concept_normalization_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_CONCEPT_NORMALIZATION", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"
