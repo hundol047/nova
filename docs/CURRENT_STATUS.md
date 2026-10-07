@@ -1,8 +1,8 @@
 # N.O.V.A. 2026 — current competition status
 
 **Status: PRE-GUIDE CANDIDATE — NOT OFFICIALLY READY.** This is the maintained status page. Older reports are
-historical evidence for the commit they name. Runtime commit: `8efd5d3` on branch `claude/determined-brahmagupta-wrfveb`
-(integration of `integration/nova-preliminary-readiness` @ 60e034d and `offline/nova-competition-agent-optimization` @ 8d37c73).
+historical evidence for the commit they name. Runtime commit: `ab623ae` on branch `claude/determined-brahmagupta-wrfveb` (Round N offline algorithm work on top of
+`8efd5d3`; see `docs/competition/ROUND_N_ALGORITHM_REPORT.md`, mock provider only). `8efd5d3` was the integration of `integration/nova-preliminary-readiness` @ 60e034d and `offline/nova-competition-agent-optimization` @ 8d37c73.
 Release pointer: `artifacts/verification/CURRENT_RELEASE.json`.
 
 | Question | Answer |
@@ -169,7 +169,7 @@ This pass's own edits are logged in `docs/compliance/LLM_GENERATION_LOG.md`.
 
 ## 5. Verification of this commit
 
-The test counts, ZIP hash and clean-room result are recorded in the v18 record named by `CURRENT_RELEASE.json`. Commands:
+The test counts, ZIP hash and clean-room result are recorded in the v19 record named by `CURRENT_RELEASE.json`. Commands:
 `pytest tests`, `pytest backend/tests`, `scripts/load_smoke_backend.py`, `scripts/evaluate_preliminary_benchmark.py --gate`,
 `scripts/validate_runtime_provenance.py`, `scripts/refresh_runtime_inventory.py --check`, `scripts/check_eval_leakage.py`,
 `scripts/build_nova_submission.py`, `scripts/validate_submission_zip.py`, `scripts/smoke_fresh_package.py`.

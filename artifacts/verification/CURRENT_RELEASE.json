@@ -1,12 +1,13 @@
 {
-  "current_verification_artifact": "artifacts/verification/local-release-8efd5d3-v18.json",
-  "current_verification_schema": "nova-verification-v18",
-  "verified_runtime_sha": "8efd5d367913d39edb00c537e83ccc7ffa4b0935",
+  "current_verification_artifact": "artifacts/verification/local-release-ab623ae-v19.json",
+  "current_verification_schema": "nova-verification-v19",
+  "verified_runtime_sha": "ab623ae1c119f40dbde67f3b467ebadee320e84a",
   "current_blind_version": "v19",
   "current_blind_manifest": null,
   "current_blind_status": "REFERENCE-ONLY",
   "fresh_final_blind": "NOT YET AUTHORED",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-8efd5d3-v18.json",
     "artifacts/verification/local-release-e9aa925-v17.json",
     "artifacts/verification/local-release-59a5f0a-v16.json",
     "artifacts/verification/local-release-920eb60-v15.json",
