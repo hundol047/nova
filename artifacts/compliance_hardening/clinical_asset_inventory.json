@@ -736,7 +736,7 @@
     {
       "asset_id": "nova_agent/differential.py",
       "path": "nova_agent/differential.py",
-      "sha256": "f4a800f6587415d15f0404fea85947e88c71b955573f8ae3ad67fb538e8cac74",
+      "sha256": "af96b127c22b80c23efc351d7ee66e87e8bcb5c6e64222d37cbcc09f33877c92",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",

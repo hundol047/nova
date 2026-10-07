@@ -167,12 +167,17 @@ class DifferentialItem(BaseModel):
 
 
 _ESCALATION_MIN_SUPPORT = 3
+# Only SYSTEMIC organ-dysfunction findings escalate: a local exam sign that is a red flag for its own organ
+# (rebound/guarding in appendicitis) still describes the same local disease, not a different systemic one.
+_ORGAN_DYSFUNCTION_FLAGS = frozenset({"hypotension", "shock", "hypoxia", "hypoxemia", "confusion",
+                                      "altered mental status"})
 
 
 def _apply_red_flag_escalation(kept: list, state: PatientState) -> list:
     """Round O: a localized diagnosis's own knowledge-base ``red_flag_keywords`` name the findings that mean it
     has escalated (pyelonephritis/pneumonia: "hypotension", "confusion"). When such a finding is present AND is
-    actively supporting a DANGEROUS diagnosis that lists it as a typical feature (sepsis), the dangerous systemic
+    actively supporting a DANGEROUS diagnosis that lists it as a typical feature (sepsis) -- and it is a systemic
+    organ-dysfunction finding (hypotension, hypoxia, confusion), not a local sign -- the dangerous systemic
     diagnosis is moved directly above the localized one: the local source then explains WHERE, not WHAT is
     threatening the patient. Purely a re-ordering among already-scored candidates; requires converging support
     (>= 3 matched items) and no contradiction for the dangerous diagnosis, and only fires on findings both
@@ -198,7 +203,7 @@ def _apply_red_flag_escalation(kept: list, state: PatientState) -> list:
                 if not low_entry.get("dangerous") or low_contra or len(low_support) < _ESCALATION_MIN_SUPPORT:
                     continue
                 typical = {f.lower() for f in low_entry.get("typical_features", [])}
-                shared = {p.lower() for p in low_support} & flags & typical
+                shared = {p.lower() for p in low_support} & flags & typical & _ORGAN_DYSFUNCTION_FLAGS
                 if shared:
                     order.insert(i, order.pop(j))
                     changed = True
