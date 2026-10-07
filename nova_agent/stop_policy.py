@@ -76,6 +76,8 @@ class StopDecision(BaseModel):
     forced: bool
     reason: str
     readiness_score: float
+    # Development trace only (never read by the decision): which conditions held the encounter open.
+    blockers: List[str] = []
 
 
 class StopPolicy:
@@ -207,6 +209,19 @@ class StopPolicy:
                 dangerous_alternative_exists or pending_critical)) or (
                 decisive_lead and not (dangerous_alternative_exists or pending_critical_alternative))
 
+        blockers: List[str] = []
+        if not should_diagnose:
+            blockers += [f"unresolved_dangerous:{d.diagnosis_id}" for d in unresolved_dangerous]
+            blockers += [f"safety_flag:{f.diagnosis_id}" for f in active_safety_flags]
+            if not enough_turns_gathered:
+                blockers.append("min_turns")
+            if readiness_score < cfg.diagnose_threshold:
+                blockers.append("readiness")
+            if gap_ratio < cfg.min_gap_rank1_rank2:
+                blockers.append("gap")
+            if best_decision_value is not None and pending_critical:
+                blockers.append("pending_critical")
+
         if should_diagnose:
             reason = ("Top diagnosis is well-supported, clearly separated from the next candidate, "
                        "and no unresolved dangerous alternative remains." if not no_more_value else
@@ -215,4 +230,4 @@ class StopPolicy:
             reason = "Insufficient confidence, unresolved dangerous alternative, or differential too close to call."
 
         return StopDecision(should_diagnose=should_diagnose, forced=False, reason=reason,
-                             readiness_score=round(readiness_score, 3))
+                             readiness_score=round(readiness_score, 3), blockers=blockers)

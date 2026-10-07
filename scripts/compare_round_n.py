@@ -62,6 +62,9 @@ def summarize(rows):
             "failed": sum(r["failed"] for r in rows)}
 
 
+HIDE = set(filter(None, os.environ.get("ROUND_N_HIDE", "validation_round_n").split(",")))
+
+
 def run(output):
     jobs = [(s, i) for s, (m, v) in SUITES.items() for i in range(len(getattr(importlib.import_module(m), v)))]
     rows = {s: [] for s in SUITES}
@@ -74,13 +77,17 @@ def run(output):
     Path(output).parent.mkdir(parents=True, exist_ok=True)
     Path(output).write_text(json.dumps(out, indent=1) + "\n")
     for s, v in out["summaries"].items():
+        if s in HIDE:
+            continue
         print(f"{s:20s} acc={v['accuracy']:.3f} crit={v['critical_correct']}/{v['critical']} turns={v['avg_turns']:.1f} "
               f"tests={v['avg_tests']:.1f} unnec={v['unnecessary_tests_per_case']:.2f} dup={v['duplicates']} malformed={v['malformed']}")
 
 
-def compare(a_path, b_path):
+def compare(a_path, b_path, exclude=()):
     a, b = json.loads(Path(a_path).read_text()), json.loads(Path(b_path).read_text())
     for suite in b["cases"]:
+        if suite in exclude:
+            continue
         ra = {r["case_id"]: r for r in a["cases"].get(suite, [])}
         better = [r["case_id"] for r in b["cases"][suite] if r["case_id"] in ra and r["correct"] and not ra[r["case_id"]]["correct"]]
         worse = [(r["case_id"], ra[r["case_id"]]["final"], r["final"]) for r in b["cases"][suite]
@@ -99,8 +106,9 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--output")
     p.add_argument("--compare", nargs=2)
+    p.add_argument("--exclude", default="", help="comma-separated suites to hide (e.g. the frozen validation set during development)")
     a = p.parse_args()
     if a.compare:
-        compare(*a.compare)
+        compare(*a.compare, exclude=set(filter(None, a.exclude.split(","))))
     else:
         run(a.output)

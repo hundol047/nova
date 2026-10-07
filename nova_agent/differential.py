@@ -228,8 +228,24 @@ def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict
     if finding.interpretation in opposite:
         contradictory.append(phrase)
         return -CONTRADICTION_PENALTY
+    if finding.interpretation == "normal" and lab_id in RULE_OUT_WHEN_NORMAL and _evidence_v2_enabled():
+        # A performed, readable NEGATIVE result for a test whose positivity is a prerequisite of the diagnosis
+        # (no pregnancy -> no ectopic pregnancy) is evidence against it -- not merely "missing". Ordering a test
+        # never counts; only a recorded result does. Deliberately NOT applied to troponin/D-dimer etc., where a
+        # single normal value does not exclude the disease.
+        contradictory.append(phrase)
+        return -CONTRADICTION_PENALTY
     missing.append(phrase)
     return 0.0
+
+
+# Labs whose NORMAL result excludes the diagnosis that requires them to be positive.
+RULE_OUT_WHEN_NORMAL = frozenset({"lab.beta_hcg"})
+
+
+def _evidence_v2_enabled() -> bool:
+    from nova_agent.config import get_config
+    return get_config().evidence_v2_enabled
 
 
 # A confirmatory phrase such as "atrial fibrillation on ecg" names the test the result came from. The objective

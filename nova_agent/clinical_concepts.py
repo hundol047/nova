@@ -63,6 +63,23 @@ _CONCEPTS: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
                        r"\btalking (?:funny|like (?:i'?m|he'?s|she'?s) drunk)\b"),
     ("facial droop", r"\b(?:face|mouth|smile)\b[^.;]{0,25}\b(?:droop\w*|lopsided|crooked|uneven|sagging)\b|"
                      r"\b(?:droop\w*|lopsided|crooked)\b[^.;]{0,10}\b(?:face|mouth|smile)\b|\bfacial (?:droop|weakness|palsy)\b"),
+    # syncope / orthostasis wording
+    ("lightheadedness on standing up", r"\b(?:stand(?:ing)?(?: up)?|get(?:ting)? up|rising|sit(?:ting)? up)\b[^.;]{0,40}"
+                                       r"\b(?:dizzy|lightheaded|light-headed|faint|pass(?:ing)? out|black(?:ing)? out|woozy)\b|"
+                                       r"\b(?:dizzy|lightheaded|light-headed|faint|woozy)\b[^.;]{0,20}\b(?:on|when|upon|after|every time|whenever) "
+                                       r"(?:standing|i stand|getting up|i get up|rising)\b"),
+    ("prodrome of lightheadedness", r"\b(?:everything|vision|eyes?|world)\b[^.;]{0,15}\b(?:went|going|turned|goes) "
+                                    r"(?:gr[ae]y|dark|black|white|fuzzy|dim)\b|\btunnel vision\b|\bgr[ae]ying out\b|"
+                                    r"\bfelt (?:faint|lightheaded|light-headed|woozy|clammy)\b[^.;]{0,25}\b(?:before|first|then)\b"),
+    ("rapid spontaneous recovery", r"\b(?:came|come|coming) (?:a)?round\b[^.;]{0,25}\b(?:seconds?|straight away|right away|"
+                                   r"immediately|quickly)\b|\b(?:woke|wake|waking) up\b[^.;]{0,15}\b(?:right away|immediately|"
+                                   r"straight away|within seconds|quickly)\b|\brecovered (?:quickly|fully within)\b"),
+    # urinary wording
+    ("dysuria", r"\b(?:pee|peeing|urinat\w*|wee|weeing|bathroom|toilet)\b[^.;]{0,25}\b(?:stings?|stinging|burns?|burning|hurts?)\b|"
+                r"\b(?:stings?|stinging|burns?|burning|hurts?)\b[^.;]{0,15}\b(?:to|when (?:i|you)|while (?:i|you)) "
+                r"(?:pee|wee|urinate)\b"),
+    ("urinary frequency", r"\b(?:going to the (?:bathroom|toilet|loo)|peeing|urinating|weeing|need(?:ing)? to (?:pee|go))\b"
+                          r"[^.;]{0,15}\b(?:constantly|all the time|every \w+ minutes|frequently|nonstop|a lot|so often)\b"),
     # breathlessness (everyday wording -> the KB's symptom phrase)
     ("shortness of breath", r"\b(?:can'?t|cannot|couldn'?t) (?:catch|get) (?:my |his |her )?breath\b|\bwinded\b|\bpuffed(?: out)?\b|"
                             r"\b(?:struggling|fighting|gasping) (?:to breathe|for (?:air|breath))\b|\b(?:can|could) (?:hardly|barely) breathe\b|"
@@ -82,11 +99,37 @@ def _current_positive_clauses(text: str) -> List[str]:
     return out
 
 
+_BP = r"(?:bp\s*)?(\d{2,3})\s*/\s*(\d{2,3})"
+_POSTURE = {"lying": r"(?:lying(?: down)?|supine|recumbent)", "standing": r"(?:standing|upright|on standing)"}
+
+
+def _posture_bp(text: str, posture: str):
+    """(systolic, diastolic) labelled with a posture; "<posture> ... 120/80" is preferred over "120/80 <posture>"."""
+    word = _POSTURE[posture]
+    for pattern in (r"\b" + word + r"\b[^.;\d]{0,15}" + _BP, _BP + r"[^.;\d]{0,6}\b" + word + r"\b"):
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            return int(match.group(1)), int(match.group(2))
+    return None
+
+
+def orthostatic_drop(text: str) -> bool:
+    """Lying vs standing blood pressure in one report with a systolic fall >= 20 or diastolic fall >= 10 mmHg
+    (the standard consensus definition of orthostatic hypotension)."""
+    lying, standing = _posture_bp(text or "", "lying"), _posture_bp(text or "", "standing")
+    if not lying or not standing or lying == standing:
+        return False
+    return lying[0] - standing[0] >= 20 or lying[1] - standing[1] >= 10
+
+
 def canonical_findings_for(text: str) -> List[str]:
     """Canonical KB phrases asserted (current, not negated) by ``text``; empty when nothing matches."""
     if not text or len(text) < 4:
         return []
     found: List[str] = []
+    from nova_agent.config import get_config
+    if get_config().evidence_v2_enabled and orthostatic_drop(text):
+        found.append("orthostatic drop in blood pressure")
     for clause in _current_positive_clauses(text):
         for canonical, pattern in _CONCEPTS:
             if canonical not in found and pattern.search(clause):
