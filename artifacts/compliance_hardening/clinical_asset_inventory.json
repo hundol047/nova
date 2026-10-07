@@ -366,7 +366,7 @@
     {
       "asset_id": "nova_agent/chief_complaint.py",
       "path": "nova_agent/chief_complaint.py",
-      "sha256": "eb75e512e15cbfb7a30463a13e0de1ee18d6d76361e5afdc7167fcbd1a6cfa0b",
+      "sha256": "978d315fbf7c2c29cd8084e7efa849300c7ac96aa9ae8ceed6016bced2077368",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -422,7 +422,7 @@
     {
       "asset_id": "nova_agent/clinical_concepts.py",
       "path": "nova_agent/clinical_concepts.py",
-      "sha256": "37a7167975ad9c35751e29809d4145cd62c6ab54345b5b7477df497882c6f65f",
+      "sha256": "f3245a116fce177b97461c3f3f35da7348d203542350a18f51df7d86a90454a7",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",
@@ -577,7 +577,7 @@
     {
       "asset_id": "nova_agent/config.py",
       "path": "nova_agent/config.py",
-      "sha256": "7ded698e60ffd0ac289af9bf987689e2658c2761e6d04be12be2e5a7abbb4ae5",
+      "sha256": "afa3382ece21b6f0d3bd2cfd990640610f5090da5ccd0630e46ab16037ff5db2",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -3980,7 +3980,7 @@
     {
       "asset_id": "nova_agent/severity_evidence.py",
       "path": "nova_agent/severity_evidence.py",
-      "sha256": "48ff827d915a385adaffd442faeeefe23f19958dcb4f650bf4f8ff933e4d7895",
+      "sha256": "9d88661ffa3f9bc2c79b667dc42927ac56e4b8b789a9b13dde17407ab4893398",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -4084,7 +4084,7 @@
     {
       "asset_id": "nova_agent/state.py",
       "path": "nova_agent/state.py",
-      "sha256": "8fe29ad53edc724073f0dd31bb22698724e338735e201d509cb13066d3c9b6d0",
+      "sha256": "3c1fbd4ac8103ce927651a4a4c9b19899e8e21b8c79ecad129ffcb7b04a6e135",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",

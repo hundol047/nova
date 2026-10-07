@@ -123,6 +123,21 @@ class Demographics(BaseModel):
     pregnant: Optional[bool] = None
 
 
+_MODIFIER_LEAD = re.compile(r"^\s*(?:worse|better|relieved|eased|eases|helps|helped|aggravated|brought on|triggered|"
+                            r"makes? it|nothing|none|no\b|not\b)", re.IGNORECASE)
+
+
+def _contextualise_modifier(category: str, segment: str) -> str:
+    """'twisting and pressing on it' answered to an AGGRAVATING question -> 'worse with twisting and pressing on it';
+    to a RELIEVING question -> 'relieved by ...'. Empty when off, not a modifier question, or already explicit."""
+    from nova_agent.config import get_config
+    if category not in ("aggravating", "relieving") or not get_config().concepts_v2_enabled:
+        return ""
+    if not segment or _MODIFIER_LEAD.search(segment):
+        return ""
+    return ("worse with " if category == "aggravating" else "relieved by ") + segment.strip()
+
+
 def _with_canonical_concepts(texts: List[str]) -> List[str]:
     """Append canonical knowledge-base phrases for clinical wording found in ``texts`` (see
     nova_agent/clinical_concepts.py); the original texts are kept unchanged."""
@@ -502,6 +517,11 @@ class PatientState(BaseModel):
             for seg in positive_segments:
                 if seg not in self.pertinent_positives:
                     self.pertinent_positives.append(seg)
+                contextual = _contextualise_modifier(category, seg)
+                if contextual and contextual not in self.pertinent_positives:
+                    # Round O: the question gives the answer its meaning ("twisting" asked as an aggravating factor
+                    # means "worse with twisting"); the bare answer is kept too.
+                    self.pertinent_positives.append(contextual)
                 if category == "associated_symptoms" and seg not in self.associated_symptoms:
                     self.associated_symptoms.append(seg)
             for seg in negative_segments:

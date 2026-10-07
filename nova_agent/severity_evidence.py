@@ -48,6 +48,9 @@ HIGH_LACTATE_MMOL_L = 4.0
 QUALITATIVE_ELEVATED_LACTATE_MMOL_L = ELEVATED_LACTATE_MMOL_L
 
 _LACTATE_PATTERN = re.compile(r"lactate[^0-9]{0,15}?(\d{1,2}(?:\.\d+)?)", re.IGNORECASE)
+# Round O: the result text read here is the LACTATE test's own result, so a bare value that explicitly carries the
+# mmol/L unit ("4.6 mmol/L") is that lactate even without the analyte name repeated.
+_BARE_MMOL_PATTERN = re.compile(r"^\s*(\d{1,2}(?:\.\d+)?)\s*mmol\s*/\s*l\b", re.IGNORECASE)
 _QUALITATIVE_ELEVATED_LACTATE_PATTERN = re.compile(
     r"lactate[^.]{0,20}?\belevated\b|\belevated\b[^.]{0,20}?lactate", re.IGNORECASE,
 )
@@ -86,6 +89,11 @@ GENERIC_PHYSIOLOGIC_SEVERITY_WORDS = {
 }
 
 
+def _labs_v2() -> bool:
+    from nova_agent.config import get_config
+    return get_config().labs_v2_enabled
+
+
 def extract_lactate_mmol_l(lactate_result_text: Optional[str]) -> Optional[float]:
     """Parses PatientState.laboratory_tests.get("lactate") into a mmol/L value. None if no lactate
     test has been performed or the result can't be interpreted -- callers must treat None as "no
@@ -101,6 +109,8 @@ def extract_lactate_mmol_l(lactate_result_text: Optional[str]) -> Optional[float
     for clause in current_asserted_lab_clauses(lactate_result_text):
         unsafe = value_is_in_disallowed_unit(clause, ("mmol/l",), ("mg/dl",))
         matches = [] if unsafe else list(_LACTATE_PATTERN.finditer(clause))
+        if not matches and not unsafe and _labs_v2():
+            matches = list(_BARE_MMOL_PATTERN.finditer(clause))
         values.update(float(match.group(1)) for match in matches)
         if not matches and _QUALITATIVE_ELEVATED_LACTATE_PATTERN.search(clause):
             qualitative_high = True

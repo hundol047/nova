@@ -87,6 +87,30 @@ _CONCEPTS: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
 )]
 
 
+# Round O (NOVA_CONCEPTS_V2): chest-wall / musculoskeletal wording. Kept separate so the switch can turn it off.
+_ACTION = r"(?:twist\w*|turn\w*|mov(?:e|es|ed|ing|ement)\b(?! (?:my|his|her|the) bowels?)|bend\w*|lift\w*|reach\w*|stretch\w*|rotat\w*|rais\w* my arms?)"
+_CONCEPTS_V2: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
+    ("reproducible with palpation",
+     r"\b(?:hurts?|sore|tender|aches?|pain\w*|worse)\b[^.;]{0,25}\b(?:press(?:ed|es|ing)?|push(?:ed|es|ing)?|touch(?:ed|es|ing)?|"
+     r"prod\w*|palpat\w*)\b|\bpress(?:ing)? on (?:it|the (?:spot|area)|my (?:chest|ribs?|breastbone|sternum))\b|"
+     r"\btender to (?:the )?touch\b|\breproduc\w+ (?:on|with|by) (?:palpation|pressure|pressing)\b"),
+    ("localized tenderness",
+     r"\b(?:one|a|single) (?:sore |tender |painful )?spot\b|\bpoint to (?:it|the pain|where it hurts)\b|"
+     r"\btender (?:spot|point|area)\b|\bpoint tenderness\b|\blocali[sz]ed tenderness\b|\btender (?:at|over) the (?:rib|costochondral)"),
+    ("pleuritic chest pain",
+     r"\b(?:pain\w*|hurts?|stab\w*|sharp|catch(?:es)?|stitch|twinge)\b[^.;]{0,40}\b(?:when|whenever|every time|each time|as) "
+     r"(?:i |you |he |she )?(?:breathe|take a (?:deep |big )?breath|inhale|cough)|"
+     r"\b(?:breathing in|deep breaths?|inhaling)\b[^.;]{0,15}\b(?:hurts?|is painful|makes it worse|stabs?)\b"),
+    ("filling defect in the pulmonary artery",
+     r"\bpulmonary (?:arter(?:y|ies) )?(?:embol\w*|thromb\w*|clots?)\b|\bsaddle embol\w*|"
+     r"\bembol\w*\b[^.;]{0,30}\bpulmonary arter(?:y|ies)\b|\bfilling defects?\b[^.;]{0,40}\b(?:pulmonary|lobar|segmental)\b"),
+    ("worse with movement",
+     r"\b(?:worse|hurts?|sore|sharper|aggravated|pain\w*)\b[^.;]{0,20}\b(?:with|when(?: i| you)?|on|if i) " + _ACTION + r"|"
+     r"\b" + _ACTION + r"\b[^.;]{0,20}\b(?:makes? it worse|brings? it on|hurts?|sets? it off)\b|"
+     r"\bworse with (?:movement|moving|activity)\b"),
+)]
+
+
 def _current_positive_clauses(text: str) -> List[str]:
     from nova_agent.matching import _strip_negated_spans
     out = []
@@ -130,8 +154,9 @@ def canonical_findings_for(text: str) -> List[str]:
     from nova_agent.config import get_config
     if get_config().evidence_v2_enabled and orthostatic_drop(text):
         found.append("orthostatic drop in blood pressure")
+    patterns = _CONCEPTS + (_CONCEPTS_V2 if get_config().concepts_v2_enabled else [])
     for clause in _current_positive_clauses(text):
-        for canonical, pattern in _CONCEPTS:
+        for canonical, pattern in patterns:
             if canonical not in found and pattern.search(clause):
                 found.append(canonical)
     return found

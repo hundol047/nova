@@ -190,6 +190,13 @@ class NovaConfig:
     # Round N action switch: once core history is taken, prefer the outstanding minimum workup of a dangerous
     # diagnosis that is actively blocking the stop (resolves the danger sooner). NOVA_ACTION_V2=0 disables.
     action_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ACTION_V2", True))
+    # Round O switches (ablation). NOVA_ROUTING_V2: fuzzy chief-complaint routing ignores connectives and knows
+    # chest-anatomy words; NOVA_CONCEPTS_V2: additional everyday-wording concepts (chest wall, reflux, sepsis).
+    routing_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ROUTING_V2", True))
+    concepts_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_CONCEPTS_V2", True))
+    # NOVA_LABS_V2: a lab result's bare value with an explicit unit is read as that lab (e.g. "4.6 mmol/L" under
+    # the lactate test).
+    labs_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_LABS_V2", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"

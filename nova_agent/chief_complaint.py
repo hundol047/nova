@@ -102,6 +102,8 @@ CONCEPT_ALIASES = {
                    "sore chest", "one spot in my chest", "chest twinge",
                    "pain in my chest",
                    "burning in my chest", "burning in the chest", "chest burning", "burning chest",
+                   # Round O: chest anatomy and the everyday name for retrosternal burning
+                   "breastbone", "sternum", "heartburn",
                    "흉통", "가슴 통증", "가슴이 아프", "가슴이 아파",
                    "胸が痛い", "胸の痛み", "胸が締め付けられる",
                    "胸痛", "胸闷", "胸口疼"],
@@ -147,6 +149,7 @@ CONCEPT_ALIASES = {
                               "意识模糊", "神志不清", "反应迟钝"],
     "urinary_symptoms": ["blood in urine", "burning when I pee", "burns when I pee", "pain on urinating", "pain on urination",
                           "burning when I urinate", "pain when urinating", "peeing", "urinate",
+                          "when I wee", "to wee", "weeing",
                           "bladder",
                           "소변", "배뇨통", "빈뇨",
                           "排尿時の痛み", "頻尿", "血尿",
@@ -405,9 +408,18 @@ def _fuzzy_score_and_overlap(text_words: set, tag: str) -> Tuple[float, int]:
     best_ratio = 0.0
     best_overlap = 0
     proximity_text = _PROXIMITY_TEXT.get()
+    routing_v2 = _routing_v2()
     for kw_text, kw_words in _KEYWORD_PHRASES[tag]:
         if not text_words:
             continue
+        if routing_v2:
+            # Round O: a conjunction/temporal connective ("WHEN I pee", "AFTER meals") is not evidence of a
+            # concept; counted as content it let "burning ... when I lie down" reach 2/3 of "burning when I
+            # pee". Ratios are computed on the phrase's clinical words only; a phrase left with fewer than two
+            # stays reachable by exact/alias matching but not by this fuzzy fallback.
+            kw_words = kw_words - _CONNECTIVES
+            if len(kw_words) < 2:
+                continue
         overlap = kw_words & text_words
         ratio = len(overlap) / len(kw_words)
         if (ratio == 1.0 and len(kw_words) == 2 and proximity_text is not None
@@ -428,6 +440,14 @@ from contextvars import ContextVar  # noqa: E402
 from nova_agent.matching import _ADJACENCY_TRANSPARENT, _alias_words_close_together  # noqa: E402
 
 _PROXIMITY_TEXT: ContextVar = ContextVar("nova_routing_text", default=None)
+
+_CONNECTIVES = frozenset({"when", "whenever", "while", "after", "before", "during", "then", "if", "since",
+                          "until", "because", "as", "but", "so", "every"})
+
+
+def _routing_v2() -> bool:
+    from nova_agent.config import get_config
+    return get_config().routing_v2_enabled
 
 
 @dataclass
