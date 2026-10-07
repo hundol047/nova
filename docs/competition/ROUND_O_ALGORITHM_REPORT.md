@@ -6,7 +6,7 @@
 > Blind v5와 Round N 검증 세트는 **개발 세트**입니다. 이번 라운드의 미사용 검증 세트는 Round O 세트 하나입니다.
 
 - 기준선 커밋: `60e29e6`
-- 최종 런타임 커밋: 릴리스 레코드 v20에 기록(`artifacts/verification/CURRENT_RELEASE.json`)
+- 최종 런타임 커밋: `f86bfcc` (릴리스 레코드 `artifacts/verification/local-release-f86bfcc-v20.json`)
 
 ## 1. 검증 세트 동결
 
@@ -140,7 +140,17 @@
   - 종료 가드(병력만, 음성 결정 검사, 확진 시 허용, 위험 대안 차단)
   - escalation(저혈압이면 패혈증 우선, 안정이면 국소 질환 유지)
   - 스위치
-- 패키지 빌드, ZIP 검증, fresh-directory smoke, 소스 동기화, 인벤토리 결과는 v20 레코드에 기록합니다.
+- `scripts/build_nova_submission.py` 결과:
+  - 94 files, 0.75 MB
+  - secret scan OK
+  - mock standalone smoke OK
+- `artifacts/verification/nova-pre-guide-v20.zip` sha256 `cb5bb370…2094`. `submission/submission.zip`과 바이트 동일합니다.
+- clean-room 검사는 전 항목 PASS, fresh-directory smoke는 OK입니다(`run.py`는 fail-closed).
+- 나머지 검사:
+  - package audit PASS
+  - 인벤토리 `--check` 변경 0건
+  - 평가 누출 스캔 이상 없음
+- 레코드 작성 후 릴리스·출처·패키지·동기화·문서 테스트 46개가 모두 통과했습니다.
 - CI: 작업 중 커밋들은 릴리스 레코드 고정 테스트 1건만 의도적으로 실패했습니다. PR hundol047/nova#17에 설명 댓글을 달았습니다.
   - 기존 `Package audit` 실패는 `ef04265`에서 수정했고, 해당 커밋 CI는 green이었습니다(이동한 픽스처 줄 번호 갱신).
 
