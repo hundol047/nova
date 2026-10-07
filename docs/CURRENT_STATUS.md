@@ -1,175 +1,189 @@
 # N.O.V.A. 2026 — current competition status
 
-**Status: PRE-GUIDE CANDIDATE — NOT OFFICIALLY READY.** Maintained page; older reports are historical evidence for the
-commit they name. Last regenerated for runtime commit `fd238d7` (see `artifacts/verification/CURRENT_RELEASE.json`).
+**Status: PRE-GUIDE CANDIDATE — NOT OFFICIALLY READY.** This is the maintained status page. Older reports are
+historical evidence for the commit they name. Runtime commit: `8efd5d3` on branch `claude/determined-brahmagupta-wrfveb`
+(integration of `integration/nova-preliminary-readiness` @ 60e034d and `offline/nova-competition-agent-optimization` @ 8d37c73).
+Release pointer: `artifacts/verification/CURRENT_RELEASE.json`.
 
 | Question | Answer |
 | --- | --- |
-| Fixed preliminary model | `openai/gpt-oss-20b`, revision `4d7ae4984b7db7de8f8457170b3f1a419ee76d52` (constants `EXPECTED_COMPETITION_MODEL/REVISION`). Never fine-tuned, adapted, replaced or bundled. |
-| Real fixed-model call ever observed | **NO — NOT VERIFIED.** All results below use the deterministic **mock** model. |
-| Official API / schema / `run.py` contract | **NOT VERIFIED / PLACEHOLDER.** Participant guide not available to us. `submission/run.py` is fail-closed by design. |
-| One successful case-relevant model call per case (eventual requirement) | Designed for (first turn + diagnosis turn always call; `TransportLLMClient` attributes calls to a case id); **not demonstrable** until the real interface exists. A startup/preflight call never counts. |
-| Clinical review of the knowledge base | **None.** Internally authored heuristics; see `nova_agent/knowledge/PROVENANCE.md`. |
-| Runtime asset provenance / licence | **Submission clearance BLOCKED**: 75 of 81 inventoried assets are `UNRESOLVED` (details below). |
-| Package | `submission/submission.zip` (≈0.7 MB, `run.py` + `requirements.txt` at the root, pydantic only), built from the current tree. |
+| Fixed preliminary model | `openai/gpt-oss-20b`, revision `4d7ae4984b7db7de8f8457170b3f1a419ee76d52`. Never fine-tuned, adapted, replaced or bundled. |
+| Real fixed-model call ever observed | **NO — NOT VERIFIED.** Every number on this page uses the deterministic **mock** model. |
+| Official API / schema / `run.py` contract | **NOT AVAILABLE.** No participant guide, example or connection settings exist in the repository, the environment or reachable public pages (nova.snubhai.org is blocked from this environment). `submission/run.py` stays fail-closed (`EXTERNAL_OFFICIAL_INTERFACE_BLOCKED`). |
+| Clinical review | **None.** |
+| Runtime asset rights | **80 UNRESOLVED**, 3 VERIFIED, 3 not shipped — see `docs/compliance/PROVENANCE_STATUS.md`. Hash coverage PASS is not a usage right. |
+| Independent evaluation | **None.** All cases are same-author synthetic development cases. |
 
-## 1. What changed in this round (all local, none needs the guide)
+## 1. Backend load check (production-backend CI step) — fixed
 
-1. **SOAP data-loss bug fixed at the root.** `nova_agent/soap.py::classify_answer` now reports `denied` only when *every* clause
-   of an answer is a clear denial. Mixed/positive/uncertain answers keep the patient's words:
-   `"No insulin. I take metformin."`, `"No penicillin allergy; aspirin causes a rash."`,
-   `"아니요, 아스피린 알레르기가 있어요."` are retained verbatim. Covers English/Korean/Japanese/Chinese denials, `but/however/except/and`,
-   `; , .`, Korean connectives (`하지만/그러나/-지만/-고/…`), "only/just/except" guards and uncertainty ("not sure", "모르겠어요" is *not* a denial).
-   Regression tests: `tests/test_soap_regression.py` (85 cases). The submission copy is produced by `scripts/build_nova_submission.py`
-   and `tests/test_safety_regression.py::test_submission_source_sync` fails on drift.
-2. **SOAP evidence integrity.** `evaluation/soap_provenance.py` checks that every S/O line is traceable to the encounter log
-   (chief complaint, initial vitals, actual ASK answers, actual successful EXAM results), that rejected EXAMs are
-   "request rejected (no result)", that no TEST appears, that Assessment has exactly one primary diagnosis with supporting /
-   contradictory / missing evidence, and that no drug dose is generated. Adversarial mutation tests prove fabricated facts are detected.
-   "Patient education" now shows what was *actually said* (verbatim SAY) or an explicit "Planned:" — never an unperformed explanation.
-3. **Closing explanation fixed.** The diagnosis SAY (≤ 30 chars) previously degraded to "I will explain next." for any long name
-   ("Acute Coronary Syndrome"); it now uses a short alias ("This may be heart attack.").
-4. **Korean evidence bridge.** First-person Korean answers were stored but never reached differential scoring (e.g. "종아리가 붓고 아파요").
-   A bounded, negation-aware vocabulary in `multilingual_concepts.py` maps ~100 colloquial phrases to canonical evidence; routing aliases added
-   for fainting, allergic reaction and dyspnea wording. Authored by the engineering agent, **not clinician-reviewed**.
-5. **Isolated official-transport boundary** `competition/official_transport.py` (no endpoint/schema/header invented): evidence ladder
-   `NOT_CONFIGURED → CONFIGURED → CALL_ATTEMPTED → RESPONSE_RECEIVED → MODEL_IDENTITY_VERIFIED → REVISION_VERIFIED`; a stub can never
-   leave `RESPONSE_RECEIVED`; `official_case_call_made(case_id)` requires an OFFICIAL response carrying that case id.
-6. **Preliminary-only benchmark** and 20 **new synthetic Korean development cases** (`evaluation/preliminary_dev_cases.py`), run through the
-   same adapter path as the submission; **TEST is a recorded rule violation**.
-7. Tests added: case isolation (A/B/A, interleaved, id reuse, exception/timeout), evaluation-time-learning tripwires (audit-hook: no file
-   writes, no sockets, no learning/ML/web modules loaded), EXAM-rejection recovery, patient communication, malformed-output / timeout /
-   network failure, model-call policy, Korean, documentation honesty.
-8. CI: Python 3.11 **and 3.12** matrix; preliminary tests + benchmark gates; provenance coverage; `offline/**` branches now trigger CI.
+Command unchanged: `python scripts/load_smoke_backend.py --cases 100 --concurrency 10 --max-p95-ms 3000`.
+Evidence: `artifacts/backend_load/before_after.json`.
 
-## 2. Organizer assumptions (centralised, UNCONFIRMED)
+| Run | p95 | Throughput | Errors | Verdict |
+| --- | --- | --- | --- | --- |
+| CI 37564554756, 8d37c73 (GitHub runner) | 4,680 ms | 2.2 cases/s | 0/100 | FAIL |
+| local, 8d37c73 | 7,590 ms | 1.4 cases/s | 0/100 | FAIL |
+| local, merged line before the fix | 17,846 ms | 0.62 cases/s | 0/100 | FAIL |
+| local, `8efd5d3` (3 runs) | 2,324 / 2,498 / 2,326 ms | 4.4–4.7 cases/s | 0/100 | PASS |
 
-Source: briefing of 2026-10-06 **as transcribed by the team from slide photos**; it conflicts with the public page in places.
-Code: `evaluation/preliminary_driver.py::ORGANIZER_ASSUMPTIONS`, `nova_agent/config.py` (`PRELIMINARY_*`), `competition/schema.py`.
+This container measured the same baseline about 1.6× slower than the GitHub runner. Startup (lifespan and knowledge warm-up,
+0.25–0.36 s) is reported separately from steady-state latency. Root cause (cProfile): 80% of a decision was pure string
+normalisation repeated inside `matching.feature_present_with_aliases`, called once per (disease, phrase, alias, finding), with
+1.5 M `_stem`, 254 k negation-scrub and 1.67 M `re._compile` calls. The fixes:
+- A decision-scoped memo (ContextVar, discarded after each decision, private to the calling thread, so no patient data crosses cases).
+- Regex-free boundary scans, property-tested equal to the regexes they replace.
+- A sparse query dot product in `learning/retrieval/index.py` (identical scores).
+- A synthetic, patient-free warm-up of the immutable caches at backend startup.
+
+Decisions are unchanged: `tests/test_matching_performance_equivalence.py` compares transcripts with and without the memo, and every
+development suite is unchanged case by case. The threshold, case count and concurrency were **not** changed.
+
+## 2. Preliminary diagnostic performance — LOCAL DEVELOPMENT / PRELIMINARY SIMULATION (mock, not an official score)
+
+**Metric definitions.**
+- **Top-1** is final *primary-diagnosis* accuracy: the submitted primary diagnosis, or its internal key, matches the case label via `same_diagnosis()`.
+- **Top-3/5** count the label inside the first 3/5 entries of the final validated differential.
+- The denominator is scored cases (`scoring_expected=True`).
+- **Critical recall** is Top-1 over scored cases whose label is a critical condition.
+
+TEST is a rule violation. Scripted patients answer by internal question key.
+
+**Why PR #16 said 89.4% and the last offline report said 75.7%.** The two runs used different retrieval modes, not different
+scoring. PR #16 measured Round M only (123 scored) with `NOVA_COMPETITION_RETRIEVAL=1`, the mode the submission uses: the
+`competition` provider turns it on. The offline report measured all 230 cases with the legacy/hospital retrieval path, which was the
+unset default. On the same merged code before this pass's evidence fixes, both evaluators reproduce 89.4% on Round M in competition
+mode (`scripts/evaluate_preliminary_rules.py` and `scripts/evaluate_preliminary_benchmark.py` agree). The table below is competition
+mode; the legacy column is shown for completeness.
+
+| Suite | Cases (scored) | Top-1 | Top-3 | Top-5 | Critical Top-1 | Avg / median interactions | Legacy-retrieval Top-1 |
+|---|---|---|---|---|---|---|---|
+| NEW Korean set | 20 (20) | 95.0% | 100.0% | 100.0% | 87.5% of 8 | 18.1 / 18 | 95.0% |
+| Round M dev | 128 (123) | 91.1% | 95.9% | 95.9% | 90.7% of 43 | 20.1 / 21 | 70.7% |
+| Round J dev | 54 (52) | 88.5% | 92.3% | 92.3% | 95.0% of 20 | 19.7 / 22 | 84.6% |
+| Round I dev | 20 (19) | 94.7% | 94.7% | 94.7% | 100.0% of 8 | 19.2 / 22 | 89.5% |
+| Original tuning set | 8 (8) | 100.0% | 100.0% | 100.0% | 100.0% of 6 | 23.1 / 23 | 100.0% |
+| **All** | 230 (222) | 91.4% | 95.5% | 95.5% | 92.9% of 85 | 19.9 / 21 | 78.8% |
+
+**Change in this pass (same code base, competition mode, all 230 cases):** Top-1 89.6% → **91.4%**, critical Top-1
+75/85 → **79/85 (92.9%)**, **0 cases worse**, 4 better (RoundM_062 ACS, RoundM_072 DKA,
+RoundI_urinary_systemic sepsis, AlteredMentalStatus01 DKA). The integration evaluator on Round M moves from 89.4% to 91.1% and critical recall
+from 86.0% to 90.7%. In legacy mode, 0 cases got worse and 3 got better. The TEST-enabled development suites (held-out, generalization-v2, stress, rounds D/E/G/I/J)
+and Round M with TEST (Top-1 96.7%, critical 97.7%) are **unchanged case by case**. Every rule/safety gate holds: 0 rule violations, 0 TEST,
+0 SAY > 30 characters, 0 malformed outputs, 0 unsupported SOAP lines, 100% information retention, an explanation before every DIAGNOSE,
+and a maximum of 41 interactions (cap 50).
+
+**Generic fixes, motivated by the error analysis.** No case ids, labels or test sentences are used, and nothing was added to the
+runtime retrieval data from evaluation answers. These are lexicon/rule changes informed by *development* cases, so they are
+development evidence, not proof of generalisation:
+1. **Assertion interpretation.** A drug the patient stopped, ran out of or skipped is not *current use* ("ran out of insulin" no
+   longer supports "insulin use"; it supports "missed insulin doses").
+2. **Objective evidence.** A descriptive `Tachycardia` (HR 101–119) and `Fever` (38.0–38.9 °C) below the existing red-flag
+   thresholds. Before this, HR 118 contributed nothing.
+3. **Language interpretation.** Plain wording for an operation or bed-bound state (VTE context), exertional chest symptoms,
+   "thirsty", confusion/sleepiness, and "pain on urinating" (routing plus infection-source alias).
+4. **Isolation.** The repository-level `learning/` catalog retriever never runs under the preliminary rules.
+
+**Stage attribution of the remaining 19 wrong scored cases** (`scripts/analyze_preliminary_failures.py`; a heuristic engineering
+attribution, not clinical adjudication): {'ranking:outscored': 9, 'rerank': 5, 'retrieval': 5}. No premature-diagnosis flags. Final-name normalisation failures: 0.
+Several "outscored" misses are hierarchy pairs (appendicitis vs acute abdomen, SVT vs cardiac arrhythmia, epididymo-orchitis vs
+epididymitis, duodenal ulcer vs peptic ulcer disease). They are still scored as wrong.
+
+| Language | Scored | Top-1 | Critical Top-1 |
+|---|---|---|---|
+| en | 188 | 90.4% | 68/73 |
+| ja/zh | 7 | 100.0% | 1/1 |
+| ko | 27 | 96.3% | 10/11 |
+
+| Wrong case | Label | Submitted | Stage | Label rank | Critical |
+|---|---|---|---|---|---|
+| PrelimKo_Fever_Meningitis | meningitis | 지주막하출혈 (Subarachnoid Hemorrhage) | ranking:outscored | 2 | yes |
+| RoundM_018 | pulmonary_embolism | Hypertrophic Cardiomyopathy | rerank | 10 | yes |
+| RoundM_026 | cardiac_arrhythmia | Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia) | ranking:outscored | 3 |  |
+| RoundM_041 | severe_electrolyte_disorder | Syndrome of Inappropriate ADH | rerank | 7 | yes |
+| RoundM_046 | acute_abdomen | Acute Appendicitis | ranking:outscored | 2 | yes |
+| RoundM_054 | severe_electrolyte_disorder | Adrenal Crisis | retrieval | None | yes |
+| RoundM_064 | cardiac_arrhythmia | Pheochromocytoma | ranking:outscored | 2 |  |
+| RoundM_069 | acute_pancreatitis | Duodenal Ulcer | rerank | 9 |  |
+| RoundM_070 | cardiac_arrhythmia | Optic Neuritis | rerank | 13 |  |
+| RoundM_105 | Ovarian Torsion | Ectopic Pregnancy | ranking:outscored | 3 |  |
+| RoundM_108 | Peptic Ulcer Disease | Duodenal Ulcer | ranking:outscored | 2 |  |
+| RoundM_112 | Epididymitis | Epididymo-Orchitis | ranking:outscored | 2 |  |
+| RoundJ_05 | cardiac_arrhythmia | Supraventricular Tachycardia | ranking:outscored | 2 |  |
+| RoundJ_25 | acute_abdomen | Acute Appendicitis | ranking:outscored | 3 | yes |
+| RoundJ_49 | Peripheral Arterial Disease | Acute Abdomen (Surgical Abdomen) | retrieval | None |  |
+| RoundJ_50 | Premature Ventricular Contractions | Acute Abdomen (Surgical Abdomen) | retrieval | None |  |
+| RoundJ_51 | Meniere Disease | Ectopic Pregnancy | retrieval | None |  |
+| RoundJ_52 | Acute Pericarditis | Acute Coronary Syndrome | rerank | 24 |  |
+| RoundI_long_tail | Sjogren syndrome | Stevens-Johnson Syndrome | retrieval | None |  |
+
+The remaining critical misses are left as they are and documented here:
+- **RoundM_018 (PE).** Risk context and tachycardia now count, but post-operative dyspnoea with hypoxia still ranks PE 16th, below
+  cardiomyopathies. PE's knowledge-base features carry no hypoxia, and a weight change could not be validated without a real model.
+- Two electrolyte cases (retrieval and rerank).
+- Meningitis vs SAH. Both are critical, and the label is rank 2.
+- Two acute-abdomen hierarchy cases.
+
+By-symptom-group results are in `artifacts/preliminary_benchmark/failure_analysis.json`. SOAP records the uncertainty: a
+*Missing discriminating evidence* line, a *Contradictory findings* line, and further tests in Plan. No test is ever reported as performed.
+
+## 3. Official interface — blocked (nothing guessed)
+
+Checked:
+- The repository and its documentation contain no participant guide, example or connection settings.
+- The environment has no `NOVA_COMPETITION_*` or `NOVA_LLM_*` settings.
+- nova.snubhai.org is blocked by this environment's network egress.
+
+The submission therefore stays fail-closed, and no stub result is reported as official success.
+`competition/official_transport.py` is the single integration point (an evidence ladder from NOT_CONFIGURED to REVISION_VERIFIED;
+a stub can never reach the identity states).
+
+**Needed to finish:**
+1. The participant guide: the `run.py` invocation (CLI, stdin/stdout or HTTP callback).
+2. The observation JSON schema: the first statement with name/age/sex, the vitals field and the turn counter.
+3. The action JSON schema for SAY, EXAM and DIAGNOSE, including the SOAP and primary-diagnosis field names.
+4. The EXAM rejection format and whether a rejection costs a turn.
+5. The time-limit semantics.
+6. The model endpoint URL, route and request/response schema for `openai/gpt-oss-20b`, and how the revision is attested.
+7. Credentials and how they are delivered: the token format, the header name, and the environment-variable names the organizer will set.
+   Secrets must never enter Git or logs.
+8. Session caps: calls and tokens per session or case.
+9. An official example case and its expected output, to use as a contract test.
+
+## 4. Provenance / licence
+
+See `docs/compliance/PROVENANCE_STATUS.md` (record level; generated by `scripts/report_provenance_status.py`).
+
+**80 assets are UNRESOLVED:**
+- 44 engine code files,
+- 13 clinical data/rule files (the Tier-1 disease KB, red flags, guidelines, test notes, Tier-2 catalog and enrichment),
+- ontology and i18n code.
+
+**3 are VERIFIED from their embedded source terms:** MedlinePlus/Orphanet references, Disease Ontology CC0 synonyms, and Mondo CC BY 4.0
+synonyms. **3 ontology snapshots are not shipped.**
+
+The repository has **no LICENSE file**. The core knowledge base cannot be excluded without disabling diagnosis and safety, and it
+cannot be legitimately cleared by an engineering agent. The owner has to decide: substantiate team authorship and add a licence,
+re-derive the entries from licensed references and re-run the suites, or exclude them.
+
+This pass's own edits are logged in `docs/compliance/LLM_GENERATION_LOG.md`.
+
+## 5. Verification of this commit
+
+The test counts, ZIP hash and clean-room result are recorded in the v18 record named by `CURRENT_RELEASE.json`. Commands:
+`pytest tests`, `pytest backend/tests`, `scripts/load_smoke_backend.py`, `scripts/evaluate_preliminary_benchmark.py --gate`,
+`scripts/validate_runtime_provenance.py`, `scripts/refresh_runtime_inventory.py --check`, `scripts/check_eval_leakage.py`,
+`scripts/build_nova_submission.py`, `scripts/validate_submission_zip.py`, `scripts/smoke_fresh_package.py`.
+
+## 6. Organizer assumptions (UNCONFIRMED; centralised in `evaluation/preliminary_driver.py::ORGANIZER_ASSUMPTIONS` and `nova_agent/config.py`)
 
 | Assumption | Value | Status |
 | --- | --- | --- |
-| Max interactions per case | 50 (public page says 60) | UNCONFIRMED — re-check with the guide |
-| Max time per case | 20 minutes | UNCONFIRMED; enforced with an adaptive guard, not simulated by the benchmark |
-| Actions | `SAY`, `EXAM`, `DIAGNOSE`; no `TEST` | UNCONFIRMED |
-| SAY length | ≤ 30 characters, one question or explanation | UNCONFIRMED |
-| EXAM | one maneuver per request; unsupported wording is rejected, rejection costs no turn | rejection wording/format UNPUBLISHED (heuristic detector); "costs no turn" UNCONFIRMED — the simulator conservatively counts rejections toward the cap |
-| Result | one primary diagnosis + S/O/A/P note | field names PLACEHOLDER |
-| Model calls per case (8) | **INTERNAL ENGINEERING BUDGET — not an organizer requirement** | team sizing against the briefing's per-session caps (200 calls, 500k in / 100k out tokens) |
+| Interactions per case | 50 (the public page says 60) | UNCONFIRMED |
+| Time per case | 20 minutes | UNCONFIRMED |
+| Actions | SAY, EXAM, DIAGNOSE; no TEST | UNCONFIRMED |
+| SAY | ≤ 30 characters, one question | UNCONFIRMED |
+| EXAM | one maneuver; rejection costs no turn | UNCONFIRMED (the simulator counts rejections conservatively) |
+| Model calls per case: 8 | **INTERNAL ENGINEERING BUDGET — not an organizer requirement** | team sizing |
 
-Only the interface layer (`competition/`, wire field names, rejection detection, the constants above) should need to change.
-
-## 3. Preliminary-only development benchmark — LOCAL DEVELOPMENT / PRELIMINARY SIMULATION
-
-Mock model, synthetic same-author cases, scripted patient answers keyed by internal question category, **no `TEST`**. Not an official score,
-not clinical accuracy, and not comparable with the historical TEST-enabled numbers elsewhere in the repository.
-Reproduce: `python scripts/evaluate_preliminary_benchmark.py --gate --output artifacts/preliminary_benchmark/latest.json`
-(raw rows: `artifacts/preliminary_benchmark/latest.json`).
-
-| Suite (synthetic dev cases) | Cases | Top-1 | Top-3 | Top-5 | Critical recall (Top-1) | Avg / median interactions |
-|---|---|---|---|---|---|---|
-| NEW Korean (this round) | 20 | 95.0% | 100.0% | 100.0% | 87.5% (8) | 15.8 / 16 |
-| Round M dev (English/KO/JA mix) | 128 | 66.7% | 70.7% | 72.4% | 86.0% (43) | 16.7 / 17 |
-| Round J dev | 54 | 84.6% | 86.5% | 86.5% | 95.0% (20) | 16.8 / 17 |
-| Round I dev | 20 | 89.5% | 89.5% | 89.5% | 100.0% (8) | 16.4 / 16 |
-| Original tuning set | 8 | 75.0% | 100.0% | 100.0% | 66.7% (6) | 16.4 / 17 |
-| **All** | 230 | 75.7% | 79.7% | 80.6% | 88.2% (85) | 16.6 / 17 |
-
-All 230 cases (`ALL`): critical miss rate 11.8%; SAY 2572 / EXAM 1242 / rejected EXAM 0 (0 in the default run; see the rejection scenario);
-max interactions 22 (cap 50, 0 over); duplicate-action rate 0.000; semantically-duplicate-question rate 0.000;
-EXAMs outside any weighed diagnosis's discriminating set 2.4%; premature-diagnosis rate 0.4%;
-unresolved critical alternative at diagnosis 1.3% (3 cases, all Round M); SOAP completeness 100.0%;
-SOAP information retention 100.0%; SOAP unsupported-information rate 0.0%; explanation SAY before DIAGNOSE 100.0%;
-**rule violations 0** (TEST / SAY > 30 chars / multi-question SAY / multi-maneuver EXAM / > 50 interactions / malformed DIAGNOSE); malformed-output rate 0.0%;
-model-fallback turns 0 (mock never falls back; timeout/failure behaviour is covered by `tests/test_preliminary_failure_modes.py`).
-
-**Korean (new set, 20 cases) before → after this round's Korean bridge** (same adapter path): Top-1 50% → 95%, Top-3 65% → 100%,
-critical Top-1 3/8 → 7/8. The remaining Korean miss (meningitis ranked behind subarachnoid hemorrhage, both critical, truth is Top-2) is left
-as is: it is a scoring-weight question I did not tune against my own development cases. Gains on a set I authored are *development evidence
-for the bridge*, not a generalisation claim.
-
-Reading the other suites honestly: the existing English development sets were authored with `TEST` evidence in mind, so without TEST their
-Top-1 is lower than their historical numbers (e.g. Round M historically ≈ 96% with tests, here ≈ 67% without) — that gap is the cost of the
-preliminary rules, not a regression. English suites are **bit-identical before/after this round** (the multilingual code only fires on
-non-ASCII text).
-
-**Information collection.** Audit result: no duplicate actions, no semantically duplicated questions, 4% of EXAMs outside the
-discriminating set of any diagnosis the agent weighed, ~17 interactions per case (cap 50), core safety history (PMH / medication / allergy) and a
-diagnosis + next-step explanation always happen before `DIAGNOSE`. Premature diagnoses and unresolved critical alternatives at diagnosis are
-rare (see table). **I did not retune the action policy**: without the real model it cannot be validated, and the safety gates (critical
-recall, no unresolved critical alternative) must not regress. This is a gap to revisit once real-model behaviour is observable.
-
-**Model-call efficiency** (`tests/test_model_call_policy.py`, instrumented offline stand-in for a real client; no fixed-model call has been observed):
-architecture is deterministic state → local retrieval → compact clinical summary → model reasoning → deterministic validation/safety → action.
-Measured on six Korean cases: ≤ 8 model calls/case (**internal engineering budget**, first turn + diagnosis turn + every 4th turn), longest prompt
-8.6k characters (≈ 3–4k tokens), ≤ 64k prompt characters per case, active differential ≤ 5 entries; the 1,280-concept catalog is never put in the prompt
-(`tests/test_full_catalog_not_in_prompt.py`). Real tokenisation and output length are unmeasured.
-
-**EXAM rejection** (`--exam-rejection`, an *assumed* unsupported set — the organizer's list is unknown): rejected requests are never repeated, add no
-evidence, appear in the note as "request rejected (no result)", and the case still ends in one valid DIAGNOSE (16 rejections over 20 Korean cases, no rule violations).
-
-## 4. Case isolation and no evaluation-time learning
-
-* `tests/test_case_isolation.py`: A alone, B alone, A→B, B→A, A→B→A, interleaved A/B on one agent, reused case id, exception during A then B,
-  model timeout during A then B — transcripts equal a fresh agent every time. All process-wide caches in `nova_agent` are asserted to be
-  zero-argument static knowledge loaders (no argument-keyed cache that could retain patient text).
-* `tests/test_no_evaluation_time_learning.py`: an audit-hooked subprocess runs full encounters with **zero file writes and zero socket events**;
-  no `learning/backend/production/torch/sklearn/numpy/transformers/requests/…` module is imported or loaded; the ML ranker is off and blocked for
-  submissions; no training/online-adaptation entry point exists in `nova_agent/` or `competition/`; the zip contains no learning/training artifacts.
-
-## 5. Disease coverage terminology
-
-**1,280 searchable concepts** = **34 Tier-1 deep clinical profiles** + **1,246 Tier-2 structured concepts** (name/aliases/urgency/ICD-10;
-83 of them carry agent-authored, unreviewed `typical_features` and 27 `confirmatory_findings`; the other 1,163 are names/aliases/urgency/ICD-10 only). Tier-3 = **0** in the submission; the "5,000+" figure is a synthetic, test-only snapshot and is not clinically curated.
-Use "searchable concepts / candidate coverage / structured concepts / deep clinical profiles"; never "accurately diagnoses N diseases"
-(`tests/test_documentation_honesty.py` guards this).
-
-## 6. Runtime asset provenance (never fabricated)
-
-Inventory: `artifacts/compliance_hardening/clinical_asset_inventory.json` (path, SHA-256, source, author, licence, permissions, generation
-method/model/prompt, clinician review, status); validator: `python scripts/validate_runtime_provenance.py` (coverage **PASS**, permission **BLOCKED**).
-Maintenance: `python scripts/refresh_runtime_inventory.py` re-hashes changed bytes **without** touching status/licence fields and adds new files as
-`UNRESOLVED` unless their own embedded provenance + the attribution document back a `VERIFIED` record.
-
-| Status (validator vocabulary) | Count | Meaning |
-| --- | --- | --- |
-| UNRESOLVED | 75 | in the submission; source/licence/authorship not recoverable from the repository — **blocks clearance** |
-| NOT_USED_IN_SUBMISSION | 3 | not bundled (EXCLUDE_FROM_SUBMISSION) |
-| VERIFIED | 3 | in the submission; source, licence, version and transformation documented and checked against the source text (still not clinically reviewed) |
-
-Status mapping to the requested vocabulary: `VERIFIED` = VERIFIED; `UNRESOLVED` = UNRESOLVED; `NOT_USED_IN_SUBMISSION` = EXCLUDE_FROM_SUBMISSION.
-**Blocker, unchanged:** the knowledge-base JSON and the engineering code are internally authored by the implementer/AI agent; no original source,
-licence grant, generation record or clinician review can be *recovered from the repository*. I could not legitimately recover, regenerate or replace them
-offline, and I did **not** remove them (that would silently gut coverage). A human owner must decide per asset: (a) substantiate team authorship and
-generation records, (b) replace with licensed sources and re-run the regression suites, or (c) exclude. No clinician review is claimed anywhere.
-This round re-hashed 9 changed assets (their status is unchanged and they are **not re-reviewed**) and added `tier2_mondo_synonyms.json` as VERIFIED from
-its own embedded source URL/SHA-256/licence (Mondo, CC BY 4.0, attribution in `docs/compliance/SOURCES_AND_LICENSES.md`).
-
-## 7. Verification of this commit
-
-Executed locally against the committed runtime `fd238d7` (record: `artifacts/verification/local-release-fd238d7-v17.json`, pointer `CURRENT_RELEASE.json`):
-
-| Check | Result |
-| --- | --- |
-| Full suite, Python 3.13 (`pytest tests`, minus the four FastAPI `test_production_*` files that CI runs in a separate job) | **1288 passed, 1 skipped** (the skip is the pre-existing optional-`torch` test); junit: `artifacts/preliminary_candidate/pytest_runtime.xml` |
-| Same suite, Python 3.12 (the briefing's Python) | **1288 passed, 1 skipped** |
-| README benchmark numbers vs `evaluation/latest_results.json` (the check that failed in the earlier CI run, never disabled) | match — accuracy figures unchanged; turn statistics refreshed |
-| Historical development regressions (held-out, generalization-v2, stress, rounds D/E/G/I/J; mock, competition retrieval) | per-suite accuracy, critical recall and critical miss **identical to the previous record**, no per-case change (`artifacts/preliminary_candidate/regressions.json`) |
-| Round M dev (128 cases, with TEST) | Top-1 95.9 %, Top-3 98.4 %, critical 100 % — unchanged, no per-case change |
-| Preliminary-only benchmark gates | pass: 0 rule violations, 0 malformed, 0 unsupported SOAP lines, retention 100 % |
-| Evaluation-leakage scan | no leakage (807 blind cases vs 136 agent-core files; blind sets stay REFERENCE-ONLY and were not used) |
-| Package audit / secret scan | no credentials, no model weights/LoRA, no learning/training/frontend/backend/hospital code; source and `submission/` byte-identical |
-| Fresh-directory install + run | clean venv, `pip install -r requirements.txt` (pydantic only), `run.py` fails closed (exit 1, `NOT READY`), one complete Korean preliminary encounter OK (`scripts/smoke_fresh_package.py`) |
-| ZIP | `run.py` + `requirements.txt` at the root, UTF-8, ≈ 0.74 MB (< 50 MB), SHA-256 in the v17 record |
-| Provenance inventory | coverage PASS (every runtime file inventoried, hashes current); permission **BLOCKED** |
-
-Promotion rule applied: a diagnostic gain would not be accepted with a critical-recall regression; none was needed — critical recall is unchanged on every
-historical suite and improved on the new Korean set. Reference-only blind sets were not run and not used for tuning.
-
-## 8. What remains (cannot be done without the organizer / a human)
-
-1. Participant guide: real transport, request/response schema, auth, `run.py` invocation, SAY/EXAM/DIAGNOSE/SOAP wire fields, EXAM rejection format, turn/time semantics.
-2. Implement `OfficialTransport._send`, then observe REAL `gpt-oss-20b` behaviour (latency, structured-output reliability, calls per case) and re-validate the call budget and prompt size.
-3. Provenance/licence decisions for the 75 unresolved assets; clinician review if any clinical claim is to be made.
-4. Fresh, independently authored blind evaluation (the existing blind sets are REFERENCE-ONLY and were not used for tuning).
-5. OS-level network isolation (only application-level policy and the audit-hook test are verified).
+Disease coverage: **1,280 searchable concepts** = **34 Tier-1 deep clinical profiles** + **1,246 Tier-2 structured concepts**
+(83 with partial, unreviewed features). Tier-3 is 0 in the submission. This means candidate coverage, never "accurately diagnoses N diseases".
