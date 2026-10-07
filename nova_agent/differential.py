@@ -166,6 +166,48 @@ class DifferentialItem(BaseModel):
 
 
 
+_ESCALATION_MIN_SUPPORT = 3
+
+
+def _apply_red_flag_escalation(kept: list, state: PatientState) -> list:
+    """Round O: a localized diagnosis's own knowledge-base ``red_flag_keywords`` name the findings that mean it
+    has escalated (pyelonephritis/pneumonia: "hypotension", "confusion"). When such a finding is present AND is
+    actively supporting a DANGEROUS diagnosis that lists it as a typical feature (sepsis), the dangerous systemic
+    diagnosis is moved directly above the localized one: the local source then explains WHERE, not WHAT is
+    threatening the patient. Purely a re-ordering among already-scored candidates; requires converging support
+    (>= 3 matched items) and no contradiction for the dangerous diagnosis, and only fires on findings both
+    entries name, so a stable local infection (no red flag present) is never displaced."""
+    if len(kept) < 2:
+        return kept
+    order = list(kept)
+    changed = True
+    guard = 0
+    while changed and guard < len(order):
+        changed = False
+        guard += 1
+        for i, upper in enumerate(order):
+            up_entry = upper[2]
+            if up_entry.get("dangerous"):
+                continue
+            flags = {f.lower() for f in up_entry.get("red_flag_keywords", [])}
+            if not flags:
+                continue
+            for j in range(i + 1, len(order)):
+                lower = order[j]
+                low_entry, low_support, low_contra = lower[2], lower[3], lower[4]
+                if not low_entry.get("dangerous") or low_contra or len(low_support) < _ESCALATION_MIN_SUPPORT:
+                    continue
+                typical = {f.lower() for f in low_entry.get("typical_features", [])}
+                shared = {p.lower() for p in low_support} & flags & typical
+                if shared:
+                    order.insert(i, order.pop(j))
+                    changed = True
+                    break
+            if changed:
+                break
+    return order
+
+
 def has_positive_diagnostic_support(item: DifferentialItem) -> bool:
     """Risk factors and absent symptoms can adjust a differential, not establish it alone."""
     from nova_agent.knowledge.retrieval import disease_by_id
@@ -639,6 +681,9 @@ class DifferentialEngine:
                     kept.remove(weakest)
                 kept.append(missing)
             kept.sort(key=lambda t: t[0], reverse=True)
+
+        if _cfg.escalation_priority_enabled:
+            kept = _apply_red_flag_escalation(kept, state)
 
         items: List[DifferentialItem] = []
         for rank, (score, score_ratio, entry, supporting, contradictory, missing, band) in enumerate(kept, start=1):

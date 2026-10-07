@@ -200,6 +200,9 @@ class NovaConfig:
     # NOVA_STOP_V2: the decisive-lead / mature-low-value stop (with its unchanged dangerous-alternative guards),
     # previously reachable only in competition retrieval mode, also applies in legacy retrieval mode.
     stop_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_STOP_V2", True))
+    # NOVA_ESCALATION_PRIORITY: a localized diagnosis's own KB red flag (e.g. hypotension in pyelonephritis), when
+    # present and supporting a dangerous systemic diagnosis that lists it (sepsis), ranks that diagnosis above it.
+    escalation_priority_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ESCALATION_PRIORITY", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"

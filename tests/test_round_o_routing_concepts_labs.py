@@ -19,7 +19,7 @@ def switch(monkeypatch):
         monkeypatch.setenv(name, value)
         get_config(reload=True)
     yield _set
-    for name in ("NOVA_ROUTING_V2", "NOVA_CONCEPTS_V2", "NOVA_LABS_V2", "NOVA_STOP_V2"):
+    for name in ("NOVA_ROUTING_V2", "NOVA_CONCEPTS_V2", "NOVA_LABS_V2", "NOVA_STOP_V2", "NOVA_ESCALATION_PRIORITY"):
         monkeypatch.delenv(name, raising=False)
     get_config(reload=True)
 
@@ -205,3 +205,34 @@ def test_supported_dangerous_alternative_still_blocks_a_benign_decisive_lead():
 def test_stop_switch_off_keeps_legacy_selector_behaviour(switch):
     switch("NOVA_STOP_V2", "0")
     assert not get_config().stop_v2_enabled
+
+
+# --- red-flag escalation (NOVA_ESCALATION_PRIORITY) ----------------------------------------------
+
+def _uro_state(vitals, lactate=None):
+    s = PatientState(case_id="esc", chief_complaint="pain in my side with fevers and stinging when I pee",
+                     demographics={"age": 70, "sex": "female"})
+    s.record_ask("associated_symptoms", "q", "shaking chills, flank pain")
+    s.record_exam("vital_signs", vitals)
+    s.record_test("urinalysis", "nitrite positive, leukocyte esterase positive")
+    s.record_test("cbc", "white cell count raised")
+    if lactate:
+        s.record_test("lactate", lactate)
+    return s
+
+
+def test_hypotensive_urinary_infection_ranks_sepsis_above_the_local_source():
+    s = _uro_state("BP 78/44, HR 128, RR 28, Temp 39.4", "lactate 4.8 mmol/L")
+    ranked = [x.diagnosis_id for x in DifferentialEngine().update(s)]
+    assert ranked.index("sepsis") < ranked.index("pyelonephritis")
+
+
+def test_stable_urinary_infection_keeps_the_local_diagnosis_first():
+    s = _uro_state("BP 124/80, HR 92, RR 16, Temp 38.5")
+    assert DifferentialEngine().update(s)[0].diagnosis_id == "pyelonephritis"
+
+
+def test_escalation_switch_off(switch):
+    switch("NOVA_ESCALATION_PRIORITY", "0")
+    from nova_agent.differential import _apply_red_flag_escalation  # noqa: F401 (still importable)
+    assert not get_config().escalation_priority_enabled

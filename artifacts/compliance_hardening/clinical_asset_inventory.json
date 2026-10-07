@@ -577,7 +577,7 @@
     {
       "asset_id": "nova_agent/config.py",
       "path": "nova_agent/config.py",
-      "sha256": "296d404cb4f6084a67af5d8a799cbbd43e5c6a2944b3cf7c1f573d130ccd341f",
+      "sha256": "05fd06c6d6cb66310ecf06eadbafac70616cc75c9ab97a35a3e2e11f019d192a",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -736,7 +736,7 @@
     {
       "asset_id": "nova_agent/differential.py",
       "path": "nova_agent/differential.py",
-      "sha256": "dbcf6d36c670ba8e9d9b7dd872e418a75f403103c95a8e69c61f75893fd15c59",
+      "sha256": "f4a800f6587415d15f0404fea85947e88c71b955573f8ae3ad67fb538e8cac74",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
