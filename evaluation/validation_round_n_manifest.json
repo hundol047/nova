@@ -1,0 +1,10 @@
+{
+ "file": "evaluation/validation_cases_round_n.py",
+ "sha256": "0a3718f44c8d73dfeb704a87bb5b845d897541b319c7672574936a4cc9119851",
+ "cases": 42,
+ "scored": 41,
+ "critical": 20,
+ "frozen_at_commit_parent": "90479a0d953bf0cc4a1baa195abb68609ffb111d",
+ "authoring": "engineering agent, single author, labels fixed from the vignette before any run; not clinician-adjudicated",
+ "policy": "run at baseline and at the end of Round N only; not used for tuning"
+}
