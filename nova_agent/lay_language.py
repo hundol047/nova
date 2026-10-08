@@ -260,6 +260,12 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     # --- exertional angina wording
     "exertional chest pain": ["comes on walking", "comes on when i walk", "eases when i rest", "goes away with rest",
                               "on walking uphill"],
+    # --- Round P: either half of a disjunctive KB phrase states it ("vomiting or diarrhea" is met by vomiting)
+    "vomiting or diarrhea": ["vomiting", "vomited", "throwing up", "threw up", "diarrhea", "diarrhoea", "loose stools"],
+    "prior stroke or tia": ["previous stroke", "had a stroke before", "mini-stroke", "transient ischaemic attack",
+                            "transient ischemic attack"],
+    "prior dvt or pe": ["previous blood clot", "clot in my leg before", "clot in my lung before", "previous dvt"],
+    "muscle cramps": ["cramps in my legs", "leg cramps", "muscle cramps", "cramping muscles"],
 }
 for _phrase, _variants in _ADDITIONAL_LAY_ALIASES.items():
     _bucket = LAY_FEATURE_ALIASES.setdefault(_phrase, [])

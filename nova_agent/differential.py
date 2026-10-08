@@ -213,6 +213,51 @@ def _apply_red_flag_escalation(kept: list, state: PatientState) -> list:
     return order
 
 
+_CONVERGING_MIN_SUPPORT = 4
+_THIN_ONTOLOGY_MAX_SUPPORT = 2
+
+
+def _evidence_categories(entry: dict, support: List[str], state: PatientState) -> set:
+    """Which independent KINDS of evidence back a candidate: bedside/objective findings, risk context, symptoms."""
+    objective = " ".join(state.objective_findings_text()).lower()
+    risks = {r.lower() for r in entry.get("risk_factors", [])}
+    cats = set()
+    for phrase in support:
+        low = phrase.lower()
+        if low in risks:
+            cats.add("risk")
+        elif low and (low in objective or low in GENERIC_PHYSIOLOGIC_SEVERITY_WORDS):
+            cats.add("objective")
+        else:
+            cats.add("symptom")
+    return cats
+
+
+def _apply_converging_evidence_priority(kept: list, state: PatientState) -> list:
+    """Round P: an open-world ontology candidate whose ONLY support is one or two subjective symptoms
+    ("palpitations", "shortness of breath on exertion") must not outrank a DANGEROUS knowledge-base diagnosis backed
+    by converging evidence of several independent kinds (bedside vital-sign findings AND risk context, >= 4 items,
+    no contradiction) -- the typical-feature weighting of the vital signs is deliberately small (they are shared
+    severity markers), which let thin generic matches win on raw score. Re-ordering only."""
+    order = list(kept)
+    for j in range(1, len(order)):
+        lower = order[j]
+        entry, support, contra = lower[2], lower[3], lower[4]
+        if (str(entry.get("id", "")).startswith("onto::") or not entry.get("dangerous") or contra
+                or len(support) < _CONVERGING_MIN_SUPPORT):
+            continue
+        cats = _evidence_categories(entry, support, state)
+        if not {"objective", "risk"} <= cats:
+            continue
+        for i in range(j):
+            upper = order[i]
+            if (str(upper[2].get("id", "")).startswith("onto::") and len(upper[3]) <= _THIN_ONTOLOGY_MAX_SUPPORT
+                    and _evidence_categories(upper[2], upper[3], state) <= {"symptom"}):
+                order.insert(i, order.pop(j))
+                break
+    return order
+
+
 def has_positive_diagnostic_support(item: DifferentialItem) -> bool:
     """Risk factors and absent symptoms can adjust a differential, not establish it alone."""
     from nova_agent.knowledge.retrieval import disease_by_id
@@ -288,6 +333,11 @@ def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict
 
 # Labs whose NORMAL result excludes the diagnosis that requires them to be positive.
 RULE_OUT_WHEN_NORMAL = frozenset({"lab.beta_hcg"})
+
+
+def _evidence_v3_enabled() -> bool:
+    from nova_agent.config import get_config
+    return get_config().evidence_v3_enabled
 
 
 def _evidence_v2_enabled() -> bool:
@@ -449,6 +499,11 @@ def _score_disease(entry: dict, state: PatientState,
     # historical or hypothetical report is not a current observation either.
     objective_text = _current_result_texts(list(confirmatory_evidence_pool))
     counted_labs = set()
+    lab_directions: Dict[str, set] = {}
+    for _phrase in entry.get("confirmatory_findings", []):
+        _mapped = CONFIRMATORY_PHRASE_TO_LAB.get(_phrase.lower())
+        if _mapped is not None:
+            lab_directions.setdefault(_mapped[0], set()).add(_mapped[1])
     for finding in entry.get("confirmatory_findings", []):
         # Several knowledge-base phrasings can name the SAME lab reading ("elevated troponin" /
         # "troponin elevated", "positive nitrites" / "positive leukocyte esterase" / "pyuria"); one
@@ -456,9 +511,21 @@ def _score_disease(entry: dict, state: PatientState,
         # troponin by matching both phrasings).
         lab_key = CONFIRMATORY_PHRASE_TO_LAB.get(finding.lower())
         if lab_key is not None:
-            if lab_key in counted_labs:
+            bidirectional = len(lab_directions.get(lab_key[0], ())) == 2 and _evidence_v3_enabled()
+            count_key = lab_key[0] if bidirectional else lab_key  # one result, one piece of evidence
+            if count_key in counted_labs:
                 continue
-            counted_labs.add(lab_key)
+            counted_labs.add(count_key)
+            if bidirectional:
+                # Round P: this disease is confirmed by EITHER direction of this lab (sodium 118 and sodium 160 are
+                # both severe electrolyte disorders): score the phrase whose direction the result actually shows,
+                # never the opposite-direction phrase as a contradiction.
+                observed = objective_findings.get(lab_key[0])
+                interp = getattr(observed, "interpretation", "unknown")
+                wanted = "high" if interp in ("high", "critical_high") else "low" if interp in ("low", "critical_low") else None
+                if wanted is not None:
+                    finding = next(p for p in entry.get("confirmatory_findings", [])
+                                   if CONFIRMATORY_PHRASE_TO_LAB.get(p.lower()) == (lab_key[0], wanted))
         max_possible += CONFIRMATORY_WEIGHT
         lab_aware_delta = _score_lab_aware_phrase(finding, CONFIRMATORY_WEIGHT, objective_findings,
                                                    supporting, contradictory, missing)
@@ -689,6 +756,8 @@ class DifferentialEngine:
 
         if _cfg.escalation_priority_enabled:
             kept = _apply_red_flag_escalation(kept, state)
+        if _cfg.ranking_v3_enabled:
+            kept = _apply_converging_evidence_priority(kept, state)
 
         items: List[DifferentialItem] = []
         for rank, (score, score_ratio, entry, supporting, contradictory, missing, band) in enumerate(kept, start=1):

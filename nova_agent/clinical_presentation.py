@@ -180,9 +180,17 @@ def build_clinical_presentation(state: "PatientState") -> ClinicalPresentation:
     combined_text = " ".join(s for s in positive_sources if s)
     demographics = (state.demographics.model_dump()
                     if hasattr(state.demographics, "model_dump") else dict(state.demographics or {}))
+    medications = list(state.medication_text) + [m.name for m in state.medications]
+    history = list(state.past_medical_history) + list(state.social_history)
+    if get_config().evidence_v3_enabled:
+        # Round P: "a thiazide water tablet" is diuretic use; a symptom that is itself a KB risk factor
+        # ("vomiting yesterday" for "vomiting or diarrhea") reaches risk-factor candidate sourcing too.
+        from nova_agent.clinical_concepts import canonical_findings_for
+        medications += [c for m in list(medications) if m for c in canonical_findings_for(m)]
+        history += [s for s in (*state.associated_symptoms, *state.pertinent_positives) if s]
     return extract_presentation(
         combined_text,
-        past_medical_history=list(state.past_medical_history) + list(state.social_history),
-        medications=list(state.medication_text) + [m.name for m in state.medications],
+        past_medical_history=history,
+        medications=medications,
         demographics=demographics,
     )

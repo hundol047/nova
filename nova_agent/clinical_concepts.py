@@ -111,6 +111,23 @@ _CONCEPTS_V2: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
 )]
 
 
+# Round P (NOVA_EVIDENCE_V3): medication class, generalised weakness and rhythm wording.
+_STOPPED_DRUG = re.compile(r"\b(?:stopped|ran out|run out|quit|no longer|discontinued|came off|come off|off (?:my|the|his|her))\b")
+_CONCEPTS_V3: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
+    ("diuretic use",
+     r"\b(?:diuretics?|water (?:tablets?|pills?)|thiazides?|furosemide|frusemide|bumetanide|torsemide|bendroflumethiazide|"
+     r"hydrochlorothiazide|indapamide|chlortalidone|chlorthalidone|spironolactone|lasix)\b"),
+    ("generalized weakness",
+     r"\b(?:generally|all over|whole body|everywhere)\b[^.;]{0,10}\bweak\w*|\bweak(?:ness)? (?:all over|everywhere)\b|"
+     r"\b(?:feel|feels|felt|feeling)(?: so| very| really)? weak\b|\bno strength\b"),
+    ("irregular heartbeat",
+     r"\b(?:hr|pulse|heart rate|rhythm|heartbeat)\b[^.;]{0,15}\birregular\w*|\birregular(?:ly irregular)? "
+     r"(?:rhythm|pulse|heartbeat|heart rate|beat)\b|\bdropped beats\b"),
+    ("racing heart", r"\b(?:racing|pounding) heartbeat\b|\bheartbeat (?:is )?racing\b"),
+)]
+_DRUG_CONCEPTS = {"diuretic use"}
+
+
 def _current_positive_clauses(text: str) -> List[str]:
     from nova_agent.matching import _strip_negated_spans
     out = []
@@ -154,9 +171,28 @@ def canonical_findings_for(text: str) -> List[str]:
     from nova_agent.config import get_config
     if get_config().evidence_v2_enabled and orthostatic_drop(text):
         found.append("orthostatic drop in blood pressure")
-    patterns = _CONCEPTS + (_CONCEPTS_V2 if get_config().concepts_v2_enabled else [])
+    patterns = (_CONCEPTS + (_CONCEPTS_V2 if get_config().concepts_v2_enabled else [])
+                + (_CONCEPTS_V3 if get_config().evidence_v3_enabled else []))
     for clause in _current_positive_clauses(text):
         for canonical, pattern in patterns:
+            if canonical in _DRUG_CONCEPTS and _STOPPED_DRUG.search(clause):
+                continue  # a drug the patient stopped is not current use
             if canonical not in found and pattern.search(clause):
                 found.append(canonical)
     return found
+
+
+# Round P (NOVA_ACTION_V3): findings only an examiner or a laboratory can establish. Asking the patient "Any ejection
+# systolic murmur?" or "Any low sodium?" wastes a turn and invites a guessed answer; these features are reached by
+# EXAM (when the bedside can show them) or not at all in a test-free encounter.
+_OBJECTIVE_ONLY_FEATURE = re.compile(
+    r"\b(?:murmur|bruit|crackles|rales|rhonchi|nystagmus|papill?oedema|papilledema|reflex\w*|sign|tenderness|rebound|"
+    r"guarding|rigidity|sodium|potassium|calcium|magnesium|phosphate|creatinine|h(?:a)?emoglobin|platelets?|troponin|"
+    r"d-?dimer|ecg|ekg|ct|mri|x-?ray|ultrasound|imaging|echocardiogram|biopsy|culture|levels?|count|"
+    r"hypo(?:natr|kal|calc|magnes)a?emia|hyper(?:natr|kal|calc|magnes)a?emia|leukocytosis|elevated|"
+    r"(?:systolic|diastolic) (?:pressure|murmur)|on (?:examination|exam|auscultation|palpation))\b")
+
+
+def is_objective_only_feature(feature: str) -> bool:
+    """True for a finding the patient cannot report from experience (exam signs, lab values, imaging)."""
+    return bool(feature) and bool(_OBJECTIVE_ONLY_FEATURE.search(feature.lower()))

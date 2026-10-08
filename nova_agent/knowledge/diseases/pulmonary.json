@@ -25,7 +25,9 @@
       "tachycardia",
       "hemoptysis",
       "calf swelling",
-      "unilateral leg pain"
+      "unilateral leg pain",
+      "tachypnea",
+      "hypoxia"
     ],
     "risk_factors": [
       "recent surgery",
@@ -69,7 +71,8 @@
       "d_dimer",
       "ct_chest_angio"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "round_p_provenance": "Round P: tachypnea and hypoxia added as typical features (classic bedside signs, and the only objective PE signs a test-free encounter can obtain). Agent-authored; not clinician-reviewed."
   },
   {
     "id": "tension_pneumothorax",

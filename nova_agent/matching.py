@@ -465,8 +465,23 @@ def _feature_present_uncached(feature: str, findings_text: List[str], scrub_nega
             if overlap == feature_content:
                 return True
         elif len(overlap) / len(feature_content) >= _OVERLAP_RATIO_THRESHOLD:
+            if _direction_missing(feature_content, finding_content):
+                # Round P: a feature that asserts a DIRECTION ("low blood pressure") is not met by a finding that
+                # shares its other words but states no direction ("a blood pressure tablet").
+                continue
             return True
     return False
+
+
+def _direction_missing(feature_content: Set[str], finding_content: Set[str]) -> bool:
+    from nova_agent.config import get_config
+    if not get_config().evidence_v3_enabled:
+        return False
+    up, down = feature_content & _POLARITY_UP, feature_content & _POLARITY_DOWN
+    if bool(up) == bool(down):
+        return False
+    wanted = _POLARITY_UP if up else _POLARITY_DOWN
+    return not (finding_content & wanted)
 
 
 _LEADING_NEGATION = re.compile(r"^\s*(?:denies|denied|no|without|negative for|never had|not experiencing|"
