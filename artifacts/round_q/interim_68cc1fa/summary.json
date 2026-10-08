@@ -1,0 +1,308 @@
+{
+ "baseline_prelim": {
+  "top1": "215/222",
+  "critical_top1": "84/85",
+  "critical_misses": [
+   "RoundJ_25"
+  ],
+  "avg_interactions": 21.13,
+  "max_interactions": 40,
+  "unnecessary_exams": 404,
+  "semantic_duplicate_questions": 100,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 0,
+  "undifferentiated_unscored": 0,
+  "dangerous_named_on_nondangerous_truth": 3,
+  "dangerous_named_on_unscored": 7,
+  "unresolved_dangerous_alternative_cases": 61
+ },
+ "final_prelim": {
+  "top1": "202/222",
+  "critical_top1": "85/85",
+  "critical_misses": [],
+  "avg_interactions": 19.86,
+  "max_interactions": 36,
+  "unnecessary_exams": 297,
+  "semantic_duplicate_questions": 58,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 6,
+  "undifferentiated_unscored": 8,
+  "dangerous_named_on_nondangerous_truth": 3,
+  "dangerous_named_on_unscored": 0,
+  "unresolved_dangerous_alternative_cases": 76,
+  "newly_correct": [
+   "RoundJ_25"
+  ],
+  "newly_wrong": [
+   "RoundM_024",
+   "RoundM_026",
+   "RoundM_095",
+   "RoundM_098",
+   "RoundM_099",
+   "RoundM_101",
+   "RoundM_103",
+   "RoundM_104",
+   "RoundM_109",
+   "RoundM_110",
+   "RoundM_112",
+   "RoundM_115",
+   "RoundM_116",
+   "RoundM_117"
+  ]
+ },
+ "baseline_prelim_exam_rejection": {
+  "top1": "213/222",
+  "critical_top1": "83/85",
+  "critical_misses": [
+   "RoundJ_25",
+   "RoundM_087"
+  ],
+  "avg_interactions": 21.37,
+  "max_interactions": 40,
+  "unnecessary_exams": 409,
+  "semantic_duplicate_questions": 105,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 0,
+  "undifferentiated_unscored": 0,
+  "dangerous_named_on_nondangerous_truth": 3,
+  "dangerous_named_on_unscored": 7,
+  "unresolved_dangerous_alternative_cases": 57
+ },
+ "final_prelim_exam_rejection": {
+  "top1": "201/222",
+  "critical_top1": "85/85",
+  "critical_misses": [],
+  "avg_interactions": 20.08,
+  "max_interactions": 36,
+  "unnecessary_exams": 300,
+  "semantic_duplicate_questions": 63,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 6,
+  "undifferentiated_unscored": 8,
+  "dangerous_named_on_nondangerous_truth": 3,
+  "dangerous_named_on_unscored": 0,
+  "unresolved_dangerous_alternative_cases": 73,
+  "newly_correct": [
+   "RoundJ_25",
+   "RoundM_087"
+  ],
+  "newly_wrong": [
+   "RoundM_024",
+   "RoundM_026",
+   "RoundM_095",
+   "RoundM_098",
+   "RoundM_099",
+   "RoundM_101",
+   "RoundM_103",
+   "RoundM_104",
+   "RoundM_109",
+   "RoundM_110",
+   "RoundM_112",
+   "RoundM_115",
+   "RoundM_116",
+   "RoundM_117"
+  ]
+ },
+ "baseline_prelim_unscripted_unknown": {
+  "top1": "215/222",
+  "critical_top1": "84/85",
+  "critical_misses": [
+   "RoundJ_25"
+  ],
+  "avg_interactions": 20.98,
+  "max_interactions": 40,
+  "unnecessary_exams": 388,
+  "semantic_duplicate_questions": 93,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 0,
+  "undifferentiated_unscored": 0,
+  "dangerous_named_on_nondangerous_truth": 3,
+  "dangerous_named_on_unscored": 7,
+  "unresolved_dangerous_alternative_cases": 62
+ },
+ "final_prelim_unscripted_unknown": {
+  "top1": "212/222",
+  "critical_top1": "83/85",
+  "critical_misses": [
+   "RoundI_late_reversal",
+   "RoundJ_25"
+  ],
+  "avg_interactions": 21.23,
+  "max_interactions": 39,
+  "unnecessary_exams": 375,
+  "semantic_duplicate_questions": 104,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 4,
+  "undifferentiated_unscored": 8,
+  "dangerous_named_on_nondangerous_truth": 1,
+  "dangerous_named_on_unscored": 0,
+  "unresolved_dangerous_alternative_cases": 115,
+  "newly_correct": [],
+  "newly_wrong": [
+   "RoundI_late_reversal",
+   "RoundM_024",
+   "RoundM_095"
+  ]
+ },
+ "ablation_no_answer_grounding": {
+  "top1": "212/222",
+  "critical_top1": "83/85",
+  "critical_misses": [
+   "RoundI_late_reversal",
+   "RoundJ_25"
+  ],
+  "avg_interactions": 21.37,
+  "max_interactions": 39,
+  "unnecessary_exams": 404,
+  "semantic_duplicate_questions": 103,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 4,
+  "undifferentiated_unscored": 8,
+  "dangerous_named_on_nondangerous_truth": 1,
+  "dangerous_named_on_unscored": 0,
+  "unresolved_dangerous_alternative_cases": 116,
+  "newly_correct": [],
+  "newly_wrong": [
+   "RoundI_late_reversal",
+   "RoundM_024",
+   "RoundM_095"
+  ]
+ },
+ "ablation_no_final_decision": {
+  "top1": "203/222",
+  "critical_top1": "85/85",
+  "critical_misses": [],
+  "avg_interactions": 19.59,
+  "max_interactions": 36,
+  "unnecessary_exams": 297,
+  "semantic_duplicate_questions": 58,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 0,
+  "undifferentiated_unscored": 0,
+  "dangerous_named_on_nondangerous_truth": 6,
+  "dangerous_named_on_unscored": 7,
+  "unresolved_dangerous_alternative_cases": 76,
+  "newly_correct": [
+   "RoundJ_25"
+  ],
+  "newly_wrong": [
+   "RoundM_024",
+   "RoundM_026",
+   "RoundM_098",
+   "RoundM_099",
+   "RoundM_101",
+   "RoundM_103",
+   "RoundM_104",
+   "RoundM_109",
+   "RoundM_110",
+   "RoundM_112",
+   "RoundM_115",
+   "RoundM_116",
+   "RoundM_117"
+  ]
+ },
+ "baseline_validation_round_p": {
+  "top1": "24/32",
+  "critical_top1": "9/13",
+  "critical_misses": [
+   "ValP_11",
+   "ValP_12",
+   "ValP_13",
+   "ValP_21"
+  ],
+  "avg_interactions": 22.74,
+  "max_interactions": 34,
+  "unnecessary_exams": 77,
+  "semantic_duplicate_questions": 17,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 0,
+  "undifferentiated_unscored": 0,
+  "dangerous_named_on_nondangerous_truth": 2,
+  "dangerous_named_on_unscored": 2,
+  "unresolved_dangerous_alternative_cases": 5
+ },
+ "final_validation_round_p": {
+  "top1": "28/32",
+  "critical_top1": "11/13",
+  "critical_misses": [
+   "ValP_12",
+   "ValP_21"
+  ],
+  "avg_interactions": 19.91,
+  "max_interactions": 32,
+  "unnecessary_exams": 53,
+  "semantic_duplicate_questions": 8,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 0,
+  "undifferentiated_unscored": 2,
+  "dangerous_named_on_nondangerous_truth": 1,
+  "dangerous_named_on_unscored": 0,
+  "unresolved_dangerous_alternative_cases": 11,
+  "newly_correct": [
+   "ValP_11",
+   "ValP_13",
+   "ValP_16",
+   "ValP_17"
+  ],
+  "newly_wrong": []
+ },
+ "baseline_validation_round_p_exam_rejection": {
+  "top1": "23/32",
+  "critical_top1": "8/13",
+  "critical_misses": [
+   "ValP_07",
+   "ValP_11",
+   "ValP_12",
+   "ValP_13",
+   "ValP_21"
+  ],
+  "avg_interactions": 22.79,
+  "max_interactions": 34,
+  "unnecessary_exams": 76,
+  "semantic_duplicate_questions": 17,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 0,
+  "undifferentiated_unscored": 0,
+  "dangerous_named_on_nondangerous_truth": 2,
+  "dangerous_named_on_unscored": 2,
+  "unresolved_dangerous_alternative_cases": 5
+ },
+ "final_validation_round_p_exam_rejection": {
+  "top1": "27/32",
+  "critical_top1": "10/13",
+  "critical_misses": [
+   "ValP_07",
+   "ValP_12",
+   "ValP_21"
+  ],
+  "avg_interactions": 20.18,
+  "max_interactions": 32,
+  "unnecessary_exams": 51,
+  "semantic_duplicate_questions": 8,
+  "rule_violations": 0,
+  "soap_unsupported": 0,
+  "undifferentiated_scored": 0,
+  "undifferentiated_unscored": 2,
+  "dangerous_named_on_nondangerous_truth": 1,
+  "dangerous_named_on_unscored": 0,
+  "unresolved_dangerous_alternative_cases": 10,
+  "newly_correct": [
+   "ValP_11",
+   "ValP_13",
+   "ValP_16",
+   "ValP_17"
+  ],
+  "newly_wrong": []
+ }
+}

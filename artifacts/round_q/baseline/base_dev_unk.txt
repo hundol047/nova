@@ -1,0 +1,93 @@
+LOCAL DEVELOPMENT / PRELIMINARY SIMULATION -- mock LLM, synthetic cases, NOT AN OFFICIAL SCORE
+Round Q contrast DEVELOPMENT set (unscripted-unknown variant)
+DevQ_01  round_q;A_documented_current                     truth=cardiac_arrhythmia         -> cardiac_arrhythmia                 top1=YES I=14 
+DevQ_02  round_q;A_documented_negated                     truth=panic_attack               -> onto::tier2:hypertrophic_cardiomyo top1=NO  I=34 
+DevQ_03  round_q;A_family_history                         truth=tension_headache           -> tension_headache                   top1=YES I= 7 
+DevQ_04  round_q;A_documented_uncertain                   truth=pulmonary_embolism         -> pulmonary_embolism                 top1=YES I=22 
+DevQ_05  round_q;A_documented_negated_ko                  truth=uncomplicated_cystitis     -> uncomplicated_cystitis             top1=YES I=21 
+DevQ_06  round_q;A_documented_current                     truth=pneumonia                  -> pneumonia                          top1=YES I=25 
+DevQ_07  round_q;A_speculation                            truth=migraine                   -> migraine                           top1=YES I=23 
+DevQ_08  round_q;A_family_history                         truth=gerd                       -> gerd                               top1=YES I=10 
+DevQ_09  round_q;A_documented_negated                     truth=vasovagal_syncope          -> vasovagal_syncope                  top1=YES I=26 
+DevQ_10  round_q;A_history_vs_new                         truth=subarachnoid_hemorrhage    -> subarachnoid_hemorrhage            top1=YES I=24 
+DevQ_11  round_q;A_documented_uncertain                   truth=nephrolithiasis            -> nephrolithiasis                    top1=YES I=10 
+DevQ_12  round_q;A_historical                             truth=asthma_copd_exacerbation   -> asthma_copd_exacerbation           top1=YES I=29 
+DevQ_13  round_q;B_drug_plus_loss                         truth=severe_electrolyte_disorder -> severe_electrolyte_disorder        top1=YES I=20 
+DevQ_14  round_q;B_drug_alone_control                     truth=viral_uri                  -> viral_uri                          top1=YES I=10 
+DevQ_15  round_q;B_dialysis_missed                        truth=severe_electrolyte_disorder -> onto::tier2:hypothermia            top1=NO  I=25 
+DevQ_16  round_q;B_dialysis_control                       truth=pneumonia                  -> pneumonia                          top1=YES I=23 
+DevQ_17  round_q;B_intake_control                         truth=gastroenteritis            -> gastroenteritis                    top1=YES I=29 
+DevQ_18  round_q;B_drug_symptoms_unconfirmable;expect:not truth=unknown                    -> onto::tier2:siadh                  top1=NO  I=21 {'not:onto::tier2:siadh': False}
+DevQ_19  round_q;B_intake_unconfirmable;expect:not:onto:: truth=unknown                    -> meningitis                         top1=NO  I=24 {'not:onto::tier2:siadh': True}
+DevQ_20  round_q;B_drug_alone;expect:no_dangerous_named   truth=unknown                    -> acute_abdomen                      top1=NO  I=21 {'no_dangerous_named': False}
+DevQ_21  round_q;B_drug_plus_kidney                       truth=severe_electrolyte_disorder -> severe_electrolyte_disorder        top1=YES I=30 
+DevQ_22  round_q;B_drug_plus_loss_ko                      truth=severe_electrolyte_disorder -> severe_electrolyte_disorder        top1=YES I=24 
+DevQ_23  round_q;B_drug_alone_control                     truth=tension_headache           -> meningitis                         top1=NO  I=23 
+DevQ_24  round_q;B_metabolic_contrast                     truth=diabetic_ketoacidosis      -> diabetic_ketoacidosis              top1=YES I=11 
+DevQ_25  round_q;C_fast_rate                              truth=cardiac_arrhythmia         -> onto::tier2:cardiac_tamponade      top1=NO  I=29 
+DevQ_26  round_q;C_panic_control                          truth=panic_attack               -> panic_attack                       top1=YES I=15 
+DevQ_27  round_q;C_fever_tachycardia_control              truth=pneumonia                  -> pneumonia                          top1=YES I=31 
+DevQ_28  round_q;C_slow_rate                              truth=cardiac_arrhythmia         -> vasovagal_syncope                  top1=NO  I=20 
+DevQ_29  round_q;C_vasovagal_control                      truth=vasovagal_syncope          -> vasovagal_syncope                  top1=YES I=25 
+DevQ_30  round_q;C_orthostatic_control                    truth=orthostatic_hypotension    -> orthostatic_hypotension            top1=YES I=28 
+DevQ_31  round_q;C_fast_rate_ko                           truth=cardiac_arrhythmia         -> ectopic_pregnancy                  top1=NO  I=24 
+DevQ_32  round_q;C_fever_tachycardia_ko;expect:not:cardia truth=unknown                    -> viral_uri                          top1=NO  I=21 {'not:cardiac_arrhythmia': True}
+DevQ_33  round_q;C_ectopy_unconfirmable;expect:no_dangero truth=unknown                    -> cardiac_arrhythmia                 top1=NO  I=20 {'no_dangerous_named': False}
+DevQ_34  round_q;C_endocrine_control                      truth=hyperthyroidism            -> onto::tier2:hyperthyroidism        top1=YES I=24 
+DevQ_35  round_q;C_fast_rate_history                      truth=cardiac_arrhythmia         -> pulmonary_embolism                 top1=NO  I=31 
+DevQ_36  round_q;C_caffeine_unconfirmable;expect:not:pulm truth=unknown                    -> cardiac_arrhythmia                 top1=NO  I=30 {'not:pulmonary_embolism': True}
+DevQ_37  round_q;D_sparse;expect:no_dangerous_named       truth=unknown                    -> acute_abdomen                      top1=NO  I=21 {'no_dangerous_named': False}
+DevQ_38  round_q;D_sparse_ko;expect:no_dangerous_named    truth=unknown                    -> vasovagal_syncope                  top1=NO  I=20 {'no_dangerous_named': True}
+DevQ_39  round_q;D_sparse;expect:no_dangerous_named       truth=unknown                    -> diabetic_ketoacidosis              top1=NO  I=18 {'no_dangerous_named': False}
+DevQ_40  round_q;D_sparse;expect:not:ectopic_pregnancy    truth=unknown                    -> ectopic_pregnancy                  top1=NO  I=21 {'not:ectopic_pregnancy': False}
+DevQ_41  round_q;D_lookalike;expect:not:onto::tier2:sym_h truth=unknown                    -> acute_bronchitis                   top1=NO  I=24 {'not:onto::tier2:sym_hemoptysis': True}
+DevQ_42  round_q;D_lookalike;expect:not:onto::tier2:hyper truth=unknown                    -> onto::tier2:hypertensive_emergency top1=NO  I=36 {'not:onto::tier2:hypertensive_emergency': False}
+DevQ_43  round_q;D_required_context_present               truth=hypertensive_emergency     -> onto::tier2:hypertensive_emergency top1=YES I=29 
+DevQ_44  round_q;D_syndrome_label                         truth=acute_abdomen              -> onto::tier2:perforated_viscus      top1=NO  I=24 
+DevQ_45  round_q;D_dangerous_specific                     truth=aortic_dissection          -> aortic_dissection                  top1=YES I=14 
+DevQ_46  round_q;D_dangerous_specific                     truth=acute_coronary_syndrome    -> acute_coronary_syndrome            top1=YES I=36 
+DevQ_47  round_q;D_dangerous_specific                     truth=ischemic_stroke            -> ischemic_stroke                    top1=YES I=14 
+DevQ_48  round_q;D_benign_specific                        truth=uncomplicated_cystitis     -> sepsis                             top1=NO  I=24 
+{
+ "scored_top1": "27/36",
+ "critical_top1": "9/11",
+ "scored_undifferentiated": 0,
+ "unscored_expectations_met": "5/12",
+ "unscored_dangerous_named": 9,
+ "unscored_undifferentiated": "0/12",
+ "avg_interactions": 22.6,
+ "max_interactions": 36,
+ "rule_violations": 0,
+ "soap_unsupported": 0
+}
+{
+ "label": "LOCAL DEVELOPMENT / PRELIMINARY SIMULATION -- mock LLM, synthetic cases, NOT AN OFFICIAL SCORE",
+ "cases": 48,
+ "scored": 36,
+ "top1": 0.75,
+ "top3": 0.8333333333333334,
+ "top5": 0.8888888888888888,
+ "critical_cases": 11,
+ "critical_recall": 0.8181818181818182,
+ "critical_miss_rate": 0.18181818181818182,
+ "avg_interactions": 22.604166666666668,
+ "median_interactions": 23.5,
+ "max_interactions": 36,
+ "say_count": 829,
+ "exam_count": 256,
+ "rejected_exam_count": 0,
+ "unnecessary_exam_share": 0.40625,
+ "duplicate_action_rate": 0.0,
+ "semantic_duplicate_question_rate": 0.030156815440289506,
+ "premature_diagnosis_rate": 0.0,
+ "unresolved_critical_alternative_rate": 0.16666666666666666,
+ "soap_completeness": 1.0,
+ "soap_information_retention": 1.0,
+ "soap_unsupported_info_rate": 0.0,
+ "soap_unsupported_lines": 0,
+ "explained_before_diagnose_rate": 1.0,
+ "rule_violations": 0,
+ "malformed_output_rate": 0.0,
+ "llm_fallback_turns": 0,
+ "cases_over_cap": 0
+}

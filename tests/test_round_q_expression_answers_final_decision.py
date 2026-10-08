@@ -384,9 +384,9 @@ def test_unfaithful_detailed_question_is_sent_as_the_generic_question_once():
     from nova_agent.action_selector import ActionSelector, ScoredCandidate
     long_key = "associated_symptoms:history of heart attack or cardiomyopathy"
     s = _state("I blacked out")
-    cands = [ScoredCandidate(action_type="ASK", key=long_key, content="x", utility=3.0),
-             ScoredCandidate(action_type="ASK", key="associated_symptoms:blood pressure above 180 over 120", content="x", utility=2.0),
-             ScoredCandidate(action_type="ASK", key="associated_symptoms:palpitations", content="x", utility=1.0)]
+    cands = [ScoredCandidate(action_type="ASK", key=long_key, content="x", utility=3.0, components={}),
+             ScoredCandidate(action_type="ASK", key="associated_symptoms:blood pressure above 180 over 120", content="x", utility=2.0, components={}),
+             ScoredCandidate(action_type="ASK", key="associated_symptoms:palpitations", content="x", utility=1.0, components={})]
     out = ActionSelector._faithful_asks(s, cands)
     assert [c.key for c in out] == ["associated_symptoms", "associated_symptoms:palpitations"]
     s.record_ask("associated_symptoms", "Any other symptoms?", "my calf is swollen")
