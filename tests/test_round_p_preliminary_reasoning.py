@@ -346,8 +346,16 @@ def test_ontology_candidate_is_addressed_once_every_askable_discriminator_is_ask
         get_config(reload=True)
 
 
-def test_objective_discriminator_coverage_switch_off(monkeypatch, switch):
+def test_objective_discriminator_coverage_switch_off(monkeypatch):
+    # Environment is restored and the cached config reloaded here, in that order, so competition retrieval never
+    # leaks into later tests.
     monkeypatch.setenv("NOVA_COMPETITION_RETRIEVAL", "1")
-    switch("NOVA_ACTION_V3", "0")
+    monkeypatch.setenv("NOVA_ACTION_V3", "0")
+    get_config(reload=True)
     from nova_agent.resolution import is_resolved
-    assert not is_resolved("onto::tier2:siadh", [], _siadh_state(_SIADH_ASKABLE))
+    try:
+        assert not is_resolved("onto::tier2:siadh", [], _siadh_state(_SIADH_ASKABLE))
+    finally:
+        monkeypatch.delenv("NOVA_COMPETITION_RETRIEVAL")
+        monkeypatch.delenv("NOVA_ACTION_V3")
+        get_config(reload=True)
