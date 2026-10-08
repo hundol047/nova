@@ -470,9 +470,8 @@ def _feature_present_uncached(feature: str, findings_text: List[str], scrub_nega
                 # shares its other words but states no direction ("a blood pressure tablet").
                 continue
             if _head_or_pattern_missing(feature_lower, finding_content):
-                # Round P: a partial match must still contain the phrase's head noun ("washed out COLORS" is not
-                # "feeling washed out") and its time-pattern qualifier ("EPISODIC high blood pressure" is not a
-                # history of hypertension).
+                # Round P: a partial match must keep the phrase's time-pattern qualifier ("EPISODIC high blood
+                # pressure" is not a history of hypertension).
                 continue
             return True
     return False
@@ -493,8 +492,8 @@ def _head_or_pattern_missing(feature_lower: str, finding_content: Set[str]) -> b
     ordered = [t for t in ordered if t and t not in _RELATIONAL_STEMS]
     if not ordered:
         return False
-    if ordered[-1] not in finding_content:
-        return True
+    # (A head-noun requirement was tried here and reverted: it broke legitimate partial matches such as
+    # "periumbilical pain migrating to right lower quadrant", costing correct appendicitis diagnoses.)
     return any(q in t for t in ordered for q in _PATTERN_QUALIFIERS) and not any(
         q in w for w in finding_content for q in _PATTERN_QUALIFIERS if any(q in t for t in ordered))
 

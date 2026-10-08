@@ -269,6 +269,26 @@ def _apply_converging_evidence_priority(kept: list, state: PatientState) -> list
     return order
 
 
+def _documented_ids(state: PatientState) -> List[str]:
+    from nova_agent.documented_diagnosis import documented_diagnosis_ids
+    texts = [state.chief_complaint, *state.associated_symptoms, *state.pertinent_positives, *state.past_medical_history]
+    return documented_diagnosis_ids([t for t in texts if t])
+
+
+def _entry_for_candidate_id(candidate_id: str) -> Optional[dict]:
+    from nova_agent.knowledge.retrieval import disease_by_id
+    entry = disease_by_id(candidate_id)
+    if entry is not None or not candidate_id.startswith("onto::"):
+        return entry
+    try:
+        from nova_agent.ontology.registry import get_default_catalog
+        from nova_agent.candidate_generator import _concept_to_kb_entry
+        concept = get_default_catalog().get_condition(candidate_id[len("onto::"):])
+        return _concept_to_kb_entry(concept) if concept is not None else None
+    except Exception:
+        return None
+
+
 def has_positive_diagnostic_support(item: DifferentialItem) -> bool:
     """Risk factors and absent symptoms can adjust a differential, not establish it alone."""
     from nova_agent.knowledge.retrieval import disease_by_id
@@ -591,6 +611,11 @@ def _score_disease(entry: dict, state: PatientState,
             contradictory.append(reassuring)
             score -= CONTRADICTION_PENALTY
 
+    if entry.get("id") in _documented_ids(state):
+        # Round P: a clinician-documented diagnosis the patient reports (nova_agent/documented_diagnosis.py).
+        supporting.append("documented diagnosis")
+        score += FEATURE_WEIGHT
+        max_possible += FEATURE_WEIGHT
     return score, max(max_possible, 1.0), supporting, contradictory, missing
 
 
@@ -655,6 +680,15 @@ class DifferentialEngine:
         )
         candidates = [c.entry for c in candidate_records]
         sources_by_id = {c.id: c.sources for c in candidate_records}
+        documented = _documented_ids(state)
+        for did in documented:
+            if did not in sources_by_id:
+                entry = _entry_for_candidate_id(did)
+                if entry is not None:
+                    candidates.append(entry)
+                    sources_by_id[did] = ["documented_diagnosis"]
+            else:
+                sources_by_id[did] = list(sources_by_id[did]) + ["documented_diagnosis"]
 
         # UNKNOWN_PRESENTATION / zero-evidence detection (spec: the file-order fallback-ranking
         # bug's real fix). candidate_generator.py's whole-catalog fallback (fired only when

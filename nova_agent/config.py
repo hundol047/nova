@@ -216,6 +216,9 @@ class NovaConfig:
     # strongest evidence obtainable at the bedside is in -- its discriminating exams done (or rejected), its
     # discriminating questions asked, and an objective bedside finding supporting it. Alternative guards unchanged.
     stop_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_STOP_V3", True))
+    # NOVA_DOCUMENTED_DX: a diagnosis the patient reports as clinician-documented ("my referral mentions X") brings X
+    # into the pool with one feature's worth of support (nova_agent/documented_diagnosis.py).
+    documented_dx_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_DOCUMENTED_DX", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"

@@ -58,7 +58,7 @@ _LAB_TO_DIAGNOSES = _build_lab_to_diagnoses_index()
 CandidateSource = Literal["symptom_match", "risk_match", "medication_match", "history_match",
                            "imaging_match", "objective_finding", "safety_candidate",
                            "ontology_broadening", "ontology_retrieval", "zero_evidence_fallback",
-                           "contextual_safety"]
+                           "contextual_safety", "documented_diagnosis"]
 
 # Tier-2 structured concepts carry real curated typical_features but no KB-depth discriminating
 # questions of their own; this bounds how many of those features become generic ASK candidates
