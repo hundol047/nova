@@ -1,7 +1,7 @@
 {
-  "zip": "artifacts/verification/nova-pre-guide-v20.zip",
-  "bytes": 783169,
-  "sha256": "cb5bb370a1c09c4166ff06e4d47a90a5379eac33ca8422235f222826d9a02094",
+  "zip": "artifacts/verification/nova-pre-guide-v21.zip",
+  "bytes": 791611,
+  "sha256": "bc59f4a68e34abbfb4c4a448ab7e2a733e05c912dd6f96b8641d920aefe8770c",
   "checks": {
     "root_has_run_py_and_requirements": true,
     "under_50MB": true,

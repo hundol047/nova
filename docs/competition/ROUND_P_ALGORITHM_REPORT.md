@@ -202,7 +202,18 @@
 
 ## 10. 테스트와 패키지 검증
 
-TEST_RESULTS_PLACEHOLDER
+- 전체 `pytest tests`(최종 런타임 `3831555`, mock): **1893 passed, 0 failed, 1 skipped, 3 deselected**.
+  - skipped 1: `test_torch_training_and_checkpoint_roundtrip`(torch 미설치, 기존과 동일).
+  - deselected 3: 릴리스 레코드·인벤토리를 읽는 테스트(`test_current_runtime_exact_archive_and_commit`, `test_complete_round_m_denominators_and_failure_coverage`, `test_current_inventory_has_complete_hash_coverage_but_no_fake_clearance`). v21 레코드 작성 후 별도로 실행했습니다(아래).
+  - 첫 전체 실행에서 2건 실패(`test_safety_regression.py`): 이번에 추가한 스위치 OFF 테스트가 `NOVA_COMPETITION_RETRIEVAL`이 남은 상태에서 설정을 다시 읽어 이후 테스트로 새어 나간 **테스트 격리 결함**이었습니다. 런타임 문제가 아니며, 환경 복원 후 설정을 다시 읽도록 고친 뒤 위 결과를 얻었습니다.
+- 신규 테스트 `tests/test_round_p_preliminary_reasoning.py`(67): 부분 매칭(방향·시간 패턴), 개념과 부정·중단 약물, 한국어, 양방향 검사, 후보 생성, 수렴 근거 PE 순위, 폐렴을 PE로 바꾸지 않음, 패혈증 escalation 유지, 리듬 관찰 1회 계산, 객관 전용 질문 필터, 온톨로지 판별 항목 정책, 침상 종료, 문서화 진단, 스위치 OFF.
+- `scripts/build_nova_submission.py`: 95 files, 0.75 MB, secret scan OK, mock standalone smoke OK. 바이트 단위 재현 빌드(테스트 통과).
+- `artifacts/verification/nova-pre-guide-v21.zip`: 791,611 bytes, sha256 `bc59f4a68e34abbfb4c4a448ab7e2a733e05c912dd6f96b8641d920aefe8770c`.
+- clean-room ZIP 검사(`artifacts/integration/clean_room_zip_report.json`) 전 항목 PASS, `scripts/smoke_fresh_package.py` OK(`run.py`는 공식 인터페이스 전까지 fail-closed).
+- `validate_runtime_provenance` 실행(권리 상태 BLOCKED 그대로, 자동 승인 없음), `refresh_runtime_inventory --check` 변경 0건, `check_eval_leakage` 이상 없음, `audit_pre_guide_package` 통과, `check_readme_numbers` 일치.
+- 제출 소스 동기화: `submission/nova_agent`는 런타임과 동일(경계·동기화 테스트 통과, 레코드의 해시가 런타임 커밋·ZIP과 바이트 일치).
+- 임상 검토 문서(`docs/clinical_review/`)는 KB 변경을 반영해 갱신했고 모든 항목은 **PENDING**(검토 완료로 표시한 항목 없음).
+- 릴리스 레코드: `artifacts/verification/local-release-3831555-v21.json`(스키마 v21). 예선 조건 결과와 동결 검증 결과를 함께 기록했습니다.
 
 ## 11. 단위·표현 정책
 
