@@ -121,7 +121,7 @@ _CONCEPTS_V3: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
      r"\b(?:generally|all over|whole body|everywhere)\b[^.;]{0,10}\bweak\w*|\bweak(?:ness)? (?:all over|everywhere)\b|"
      r"\b(?:feel|feels|felt|feeling)(?: so| very| really)? weak\b|\bno strength\b"),
     ("irregular heartbeat",
-     r"\b(?:hr|pulse|heart rate|rhythm|heartbeat)\b[^.;]{0,15}\birregular\w*|\birregularly irregular\b|\birregular "
+     r"\b(?:hr|pulse|heart rate|rhythm|heartbeat)\b[^.;]{0,15}\birregular(?!ly)\b|\birregular "
      r"(?:rhythm|pulse|heartbeat|heart ?beat|heart rate|beats?)\b|\bdropped beats\b|\bheart\b[^.;]{0,25}\bskipping\b|\bskipped (?:a )?beats?\b"),
     ("racing heart", r"\b(?:racing|pounding|fast(?:er)?|rapid|quick(?:er)?) heart ?beats?\b|"
                      r"\bheart(?:beat)? (?:is |was |keeps )?(?:racing|pounding|beating (?:fast|quickly)|going (?:fast|quickly))\b"),
@@ -180,6 +180,8 @@ def canonical_findings_for(text: str) -> List[str]:
         for canonical, pattern in patterns:
             if canonical in _DRUG_CONCEPTS and _STOPPED_DRUG.search(clause):
                 continue  # a drug the patient stopped is not current use
+            if canonical == "irregular heartbeat" and "irregularly irregular" in clause:
+                continue  # one observation, one concept: the specific rhythm finding already represents it
             if canonical not in found and pattern.search(clause):
                 found.append(canonical)
     return found

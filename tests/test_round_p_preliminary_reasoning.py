@@ -251,3 +251,28 @@ def test_documented_diagnosis_switch_off(switch):
     monkey("NOVA_DOCUMENTED_DX", "0")
     from nova_agent.documented_diagnosis import documented_diagnosis_ids
     assert documented_diagnosis_ids(["The discharge letter mentions atrial fibrillation"]) == []
+
+
+# --- one observation, one piece of evidence; escalation needs converging support -----------------------------
+
+def test_irregularly_irregular_is_counted_once():
+    found = canonical_findings_for("rhythm irregularly irregular on auscultation")
+    assert "irregularly irregular rhythm" in found and "irregular heartbeat" not in found
+
+
+def test_af_found_at_examination_does_not_displace_a_confirmed_stroke():
+    s = PatientState(case_id="st", chief_complaint="sudden weakness of my left arm and a headache", demographics={"age": 76, "sex": "male"})
+    s.record_exam("cardiac_auscultation", "irregularly irregular")
+    s.record_exam("neuro_exam", "left arm drift and left facial droop")
+    s.record_test("ct_head", "acute infarct in the right middle cerebral artery territory")
+    assert _ranked(s)[0] == "ischemic_stroke"
+
+
+def test_well_supported_pneumonia_is_not_displaced_by_a_thinner_pe():
+    s = PatientState(case_id="pn2", chief_complaint="fever, cough and a sharp pain on breathing in", demographics={"age": 81, "sex": "female"})
+    s.record_ask("past_medical_history", "q", "COPD")
+    s.record_exam("vital_signs", "BP 124/70, HR 112, RR 26, Temp 38.9, SpO2 89%")
+    s.record_exam("lung_auscultation", "crackles at the left base")
+    s.record_test("cxr", "left lower lobe consolidation")
+    ranked = _ranked(s)
+    assert ranked.index("pneumonia") < ranked.index("pulmonary_embolism")
