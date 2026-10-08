@@ -465,8 +465,48 @@ def _feature_present_uncached(feature: str, findings_text: List[str], scrub_nega
             if overlap == feature_content:
                 return True
         elif len(overlap) / len(feature_content) >= _OVERLAP_RATIO_THRESHOLD:
+            if _direction_missing(feature_content, finding_content):
+                # Round P: a feature that asserts a DIRECTION ("low blood pressure") is not met by a finding that
+                # shares its other words but states no direction ("a blood pressure tablet").
+                continue
+            if _head_or_pattern_missing(feature_lower, finding_content):
+                # Round P: a partial match must keep the phrase's time-pattern qualifier ("EPISODIC high blood
+                # pressure" is not a history of hypertension).
+                continue
             return True
     return False
+
+
+_RELATIONAL_STEMS = {_stem(w) for w in _RELATIONAL_WORDS} | {"wors", "worse", "better", "bett"}
+_QUALIFIER_SPLIT = re.compile(r"\s(?:on|with|after|during|when|while|at|in|from|to|across|into|over|before|"
+                              r"following|without|for|due)\s")
+_PATTERN_QUALIFIERS = {"episod", "intermitt", "paroxysm", "recurr", "sudden", "chronic", "persist", "constant"}
+
+
+def _head_or_pattern_missing(feature_lower: str, finding_content: Set[str]) -> bool:
+    from nova_agent.config import get_config
+    if not get_config().evidence_v3_enabled:
+        return False
+    base = _QUALIFIER_SPLIT.split(feature_lower, maxsplit=1)[0]  # "shortness of breath | on exertion"
+    ordered = [_stem(t) for t in re.findall(r"[a-z0-9]+", base) if t not in _IGNORED]
+    ordered = [t for t in ordered if t and t not in _RELATIONAL_STEMS]
+    if not ordered:
+        return False
+    # (A head-noun requirement was tried here and reverted: it broke legitimate partial matches such as
+    # "periumbilical pain migrating to right lower quadrant", costing correct appendicitis diagnoses.)
+    return any(q in t for t in ordered for q in _PATTERN_QUALIFIERS) and not any(
+        q in w for w in finding_content for q in _PATTERN_QUALIFIERS if any(q in t for t in ordered))
+
+
+def _direction_missing(feature_content: Set[str], finding_content: Set[str]) -> bool:
+    from nova_agent.config import get_config
+    if not get_config().evidence_v3_enabled:
+        return False
+    up, down = feature_content & _POLARITY_UP, feature_content & _POLARITY_DOWN
+    if bool(up) == bool(down):
+        return False
+    wanted = _POLARITY_UP if up else _POLARITY_DOWN
+    return not (finding_content & wanted)
 
 
 _LEADING_NEGATION = re.compile(r"^\s*(?:denies|denied|no|without|negative for|never had|not experiencing|"

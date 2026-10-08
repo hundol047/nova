@@ -203,6 +203,22 @@ class NovaConfig:
     # NOVA_ESCALATION_PRIORITY: a localized diagnosis's own KB red flag (e.g. hypotension in pyelonephritis), when
     # present and supporting a dangerous systemic diagnosis that lists it (sepsis), ranks that diagnosis above it.
     escalation_priority_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ESCALATION_PRIORITY", True))
+    # Round P switches (ablation). NOVA_EVIDENCE_V3: direction words required in partial feature matches,
+    # medication-class / generalised-weakness / rhythm concepts, Korean petechiae / drowsiness / diuretic wording,
+    # direction-aware scoring of a lab both directions of which confirm the same disease.
+    evidence_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_EVIDENCE_V3", True))
+    # NOVA_RANKING_V3: an ontology (Tier-2) candidate supported only by generic features cannot outrank a dangerous
+    # knowledge-base diagnosis with converging specific support.
+    ranking_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RANKING_V3", True))
+    # NOVA_ACTION_V3: never ASK the patient about an exam/lab-only finding (murmur, sodium level, rebound...).
+    action_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ACTION_V3", True))
+    # NOVA_STOP_V3: under the PRELIMINARY rules (no TEST) a dangerous leader may take the decisive-lead stop once the
+    # strongest evidence obtainable at the bedside is in -- its discriminating exams done (or rejected), its
+    # discriminating questions asked, and an objective bedside finding supporting it. Alternative guards unchanged.
+    stop_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_STOP_V3", True))
+    # NOVA_DOCUMENTED_DX: a diagnosis the patient reports as clinician-documented ("my referral mentions X") brings X
+    # into the pool with one feature's worth of support (nova_agent/documented_diagnosis.py).
+    documented_dx_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_DOCUMENTED_DX", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"

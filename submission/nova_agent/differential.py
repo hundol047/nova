@@ -20,6 +20,7 @@ from pydantic import BaseModel
 
 from nova_agent.candidate_generator import generate_candidates
 from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
+from nova_agent.clinical_concepts import SPECIFIC_SUBSUMES
 from nova_agent.clinical_presentation import build_clinical_presentation
 from nova_agent.config import get_config
 from nova_agent.glucose_evidence import (
@@ -173,6 +174,11 @@ _ORGAN_DYSFUNCTION_FLAGS = frozenset({"hypotension", "shock", "hypoxia", "hypoxe
                                       "altered mental status"})
 
 
+def _has_specific_support(support: List[str]) -> bool:
+    from nova_agent.matching import content_words
+    return any(content_words(p) and not content_words(p).issubset(GENERIC_PHYSIOLOGIC_SEVERITY_WORDS) for p in support)
+
+
 def _apply_red_flag_escalation(kept: list, state: PatientState) -> list:
     """Round O: a localized diagnosis's own knowledge-base ``red_flag_keywords`` name the findings that mean it
     has escalated (pyelonephritis/pneumonia: "hypotension", "confusion"). When such a finding is present AND is
@@ -204,6 +210,14 @@ def _apply_red_flag_escalation(kept: list, state: PatientState) -> list:
                     continue
                 typical = {f.lower() for f in low_entry.get("typical_features", [])}
                 shared = {p.lower() for p in low_support} & flags & typical & _ORGAN_DYSFUNCTION_FLAGS
+                if shared and _evidence_v3_enabled() and (not _has_specific_support(low_support)
+                                                          or len(low_support) < len(upper[3])):
+                    # Round P: a dangerous candidate backed ONLY by shared physiologic severity signs (tachycardia,
+                    # tachypnea, hypoxia) is not an escalation of the local disease -- sepsis carries its own
+                    # specific evidence (an infection source, an elevated lactate); a PE with nothing but the
+                    # pneumonia's own hypoxia does not. Nor does a candidate with LESS converging support than the
+                    # local diagnosis it would displace (a 4-item PE over a 7-item consolidated pneumonia).
+                    shared = set()
                 if shared:
                     order.insert(i, order.pop(j))
                     changed = True
@@ -211,6 +225,71 @@ def _apply_red_flag_escalation(kept: list, state: PatientState) -> list:
             if changed:
                 break
     return order
+
+
+_CONVERGING_MIN_SUPPORT = 4
+_THIN_ONTOLOGY_MAX_SUPPORT = 2
+
+
+def _evidence_categories(entry: dict, support: List[str], state: PatientState) -> set:
+    """Which independent KINDS of evidence back a candidate: bedside/objective findings, risk context, symptoms."""
+    objective = " ".join(state.objective_findings_text()).lower()
+    risks = {r.lower() for r in entry.get("risk_factors", [])}
+    cats = set()
+    for phrase in support:
+        low = phrase.lower()
+        if low in risks:
+            cats.add("risk")
+        elif low and (low in objective or low in GENERIC_PHYSIOLOGIC_SEVERITY_WORDS):
+            cats.add("objective")
+        else:
+            cats.add("symptom")
+    return cats
+
+
+def _apply_converging_evidence_priority(kept: list, state: PatientState) -> list:
+    """Round P: an open-world ontology candidate whose ONLY support is one or two subjective symptoms
+    ("palpitations", "shortness of breath on exertion") must not outrank a DANGEROUS knowledge-base diagnosis backed
+    by converging evidence of several independent kinds (bedside vital-sign findings AND risk context, >= 4 items,
+    no contradiction) -- the typical-feature weighting of the vital signs is deliberately small (they are shared
+    severity markers), which let thin generic matches win on raw score. Re-ordering only."""
+    order = list(kept)
+    for j in range(1, len(order)):
+        lower = order[j]
+        entry, support, contra = lower[2], lower[3], lower[4]
+        if (str(entry.get("id", "")).startswith("onto::") or not entry.get("dangerous") or contra
+                or len(support) < _CONVERGING_MIN_SUPPORT):
+            continue
+        cats = _evidence_categories(entry, support, state)
+        if not {"objective", "risk"} <= cats:
+            continue
+        for i in range(j):
+            upper = order[i]
+            if (str(upper[2].get("id", "")).startswith("onto::") and len(upper[3]) <= _THIN_ONTOLOGY_MAX_SUPPORT
+                    and _evidence_categories(upper[2], upper[3], state) <= {"symptom"}):
+                order.insert(i, order.pop(j))
+                break
+    return order
+
+
+def _documented_ids(state: PatientState) -> List[str]:
+    from nova_agent.documented_diagnosis import documented_diagnosis_ids
+    texts = [state.chief_complaint, *state.associated_symptoms, *state.pertinent_positives, *state.past_medical_history]
+    return documented_diagnosis_ids([t for t in texts if t])
+
+
+def _entry_for_candidate_id(candidate_id: str) -> Optional[dict]:
+    from nova_agent.knowledge.retrieval import disease_by_id
+    entry = disease_by_id(candidate_id)
+    if entry is not None or not candidate_id.startswith("onto::"):
+        return entry
+    try:
+        from nova_agent.ontology.registry import get_default_catalog
+        from nova_agent.candidate_generator import _concept_to_kb_entry
+        concept = get_default_catalog().get_condition(candidate_id[len("onto::"):])
+        return _concept_to_kb_entry(concept) if concept is not None else None
+    except Exception:
+        return None
 
 
 def has_positive_diagnostic_support(item: DifferentialItem) -> bool:
@@ -288,6 +367,11 @@ def _score_lab_aware_phrase(phrase: str, weight: float, objective_findings: Dict
 
 # Labs whose NORMAL result excludes the diagnosis that requires them to be positive.
 RULE_OUT_WHEN_NORMAL = frozenset({"lab.beta_hcg"})
+
+
+def _evidence_v3_enabled() -> bool:
+    from nova_agent.config import get_config
+    return get_config().evidence_v3_enabled
 
 
 def _evidence_v2_enabled() -> bool:
@@ -400,6 +484,23 @@ def _score_glucose(entry_id: str, glucose_mg_dl: Optional[float],
     return 0.0
 
 
+def _subsumed_typical_features(entry: dict, objective_pool) -> set:
+    """Typical features represented by a more specific confirmatory finding present in the objective record."""
+    if not get_config().ranking_v3_enabled:
+        return set()
+    typical = set(entry.get("typical_features", []))
+    out: set = set()
+    current = None
+    for specific, generals in SPECIFIC_SUBSUMES.items():
+        if specific not in entry.get("confirmatory_findings", []) or not typical.intersection(generals):
+            continue
+        if current is None:
+            current = _current_result_texts(list(objective_pool))
+        if _present_with_aliases(specific, current):
+            out.update(typical.intersection(generals))
+    return out
+
+
 def _score_disease(entry: dict, state: PatientState,
                     objective_findings: Optional[Dict[str, ObjectiveFinding]] = None) -> tuple[float, float, List[str], List[str], List[str]]:
     if objective_findings is None:
@@ -425,7 +526,10 @@ def _score_disease(entry: dict, state: PatientState,
     # only the numeric ranking contribution saturates, clinician-facing evidence text does not.
     typical_feature_score = 0.0
     typical_penalty = 0.0
+    subsumed = _subsumed_typical_features(entry, confirmatory_evidence_pool)
     for feature in entry.get("typical_features", []):
+        if feature in subsumed:
+            continue  # Round P: same observation as a present, more specific confirmatory finding -- credited there once
         weight = FEATURE_WEIGHT * _specificity_multiplier(feature)
         max_possible += weight
         delta = _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)
@@ -449,6 +553,11 @@ def _score_disease(entry: dict, state: PatientState,
     # historical or hypothetical report is not a current observation either.
     objective_text = _current_result_texts(list(confirmatory_evidence_pool))
     counted_labs = set()
+    lab_directions: Dict[str, set] = {}
+    for _phrase in entry.get("confirmatory_findings", []):
+        _mapped = CONFIRMATORY_PHRASE_TO_LAB.get(_phrase.lower())
+        if _mapped is not None:
+            lab_directions.setdefault(_mapped[0], set()).add(_mapped[1])
     for finding in entry.get("confirmatory_findings", []):
         # Several knowledge-base phrasings can name the SAME lab reading ("elevated troponin" /
         # "troponin elevated", "positive nitrites" / "positive leukocyte esterase" / "pyuria"); one
@@ -456,9 +565,21 @@ def _score_disease(entry: dict, state: PatientState,
         # troponin by matching both phrasings).
         lab_key = CONFIRMATORY_PHRASE_TO_LAB.get(finding.lower())
         if lab_key is not None:
-            if lab_key in counted_labs:
+            bidirectional = len(lab_directions.get(lab_key[0], ())) == 2 and _evidence_v3_enabled()
+            count_key = lab_key[0] if bidirectional else lab_key  # one result, one piece of evidence
+            if count_key in counted_labs:
                 continue
-            counted_labs.add(lab_key)
+            counted_labs.add(count_key)
+            if bidirectional:
+                # Round P: this disease is confirmed by EITHER direction of this lab (sodium 118 and sodium 160 are
+                # both severe electrolyte disorders): score the phrase whose direction the result actually shows,
+                # never the opposite-direction phrase as a contradiction.
+                observed = objective_findings.get(lab_key[0])
+                interp = getattr(observed, "interpretation", "unknown")
+                wanted = "high" if interp in ("high", "critical_high") else "low" if interp in ("low", "critical_low") else None
+                if wanted is not None:
+                    finding = next(p for p in entry.get("confirmatory_findings", [])
+                                   if CONFIRMATORY_PHRASE_TO_LAB.get(p.lower()) == (lab_key[0], wanted))
         max_possible += CONFIRMATORY_WEIGHT
         lab_aware_delta = _score_lab_aware_phrase(finding, CONFIRMATORY_WEIGHT, objective_findings,
                                                    supporting, contradictory, missing)
@@ -513,6 +634,11 @@ def _score_disease(entry: dict, state: PatientState,
             contradictory.append(reassuring)
             score -= CONTRADICTION_PENALTY
 
+    if entry.get("id") in _documented_ids(state):
+        # Round P: a clinician-documented diagnosis the patient reports (nova_agent/documented_diagnosis.py).
+        supporting.append("documented diagnosis")
+        score += FEATURE_WEIGHT
+        max_possible += FEATURE_WEIGHT
     return score, max(max_possible, 1.0), supporting, contradictory, missing
 
 
@@ -577,6 +703,15 @@ class DifferentialEngine:
         )
         candidates = [c.entry for c in candidate_records]
         sources_by_id = {c.id: c.sources for c in candidate_records}
+        documented = _documented_ids(state)
+        for did in documented:
+            if did not in sources_by_id:
+                entry = _entry_for_candidate_id(did)
+                if entry is not None:
+                    candidates.append(entry)
+                    sources_by_id[did] = ["documented_diagnosis"]
+            else:
+                sources_by_id[did] = list(sources_by_id[did]) + ["documented_diagnosis"]
 
         # UNKNOWN_PRESENTATION / zero-evidence detection (spec: the file-order fallback-ranking
         # bug's real fix). candidate_generator.py's whole-catalog fallback (fired only when
@@ -689,6 +824,8 @@ class DifferentialEngine:
 
         if _cfg.escalation_priority_enabled:
             kept = _apply_red_flag_escalation(kept, state)
+        if _cfg.ranking_v3_enabled:
+            kept = _apply_converging_evidence_priority(kept, state)
 
         items: List[DifferentialItem] = []
         for rank, (score, score_ratio, entry, supporting, contradictory, missing, band) in enumerate(kept, start=1):

@@ -230,6 +230,20 @@ _DIRECT_LOCALIZED_EVIDENCE.update({
 })
 
 
+# Round P (NOVA_EVIDENCE_V3): petechiae, drowsiness, diuretics, generalised weakness, cramps. Same discipline.
+_DIRECT_LOCALIZED_EVIDENCE_V3: Dict[str, str] = {
+    "점상 출혈": "petechial rash rash", "점상출혈": "petechial rash rash", "자반": "petechial rash rash",
+    "보라색 반점": "petechial rash rash", "보라색 점": "petechial rash rash",
+    "졸려": "altered mental status", "기면": "altered mental status", "의식 저하": "altered mental status",
+    "의식이 흐": "altered mental status", "혼미": "altered mental status", "지남력 저하": "altered mental status confusion",
+    "헛소리": "confusion",
+    "이뇨제": "diuretic use", "소변 나오는 약": "diuretic use",
+    "기운이 없": "generalized weakness", "온몸에 힘이 없": "generalized weakness",
+    "쥐가 나": "muscle cramps", "근육 경련": "muscle cramps",
+    "맥이 불규칙": "irregular heartbeat", "불규칙하게 뛰": "irregular heartbeat", "불규칙한 리듬": "irregular heartbeat",
+}
+
+
 def _present_not_negated(phrase: str, text: str) -> bool:
     start = text.find(phrase)
     while start != -1:
@@ -260,4 +274,9 @@ def english_evidence_for(text: str) -> List[str]:
     for phrase, english in _DIRECT_LOCALIZED_EVIDENCE.items():
         if english not in found and phrase in text and _present_not_negated(phrase, text):
             found.append(english)
+    from nova_agent.config import get_config
+    if get_config().evidence_v3_enabled:
+        for phrase, english in _DIRECT_LOCALIZED_EVIDENCE_V3.items():
+            if english not in found and phrase in text and _present_not_negated(phrase, text):
+                found.append(english)
     return found

@@ -3,11 +3,11 @@
   "source_hashes": {
     "nova_agent/knowledge/diseases/abdominal_gi.json": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "nova_agent/knowledge/diseases/cardiac.json": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
-    "nova_agent/knowledge/diseases/endocrine_metabolic.json": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "nova_agent/knowledge/diseases/endocrine_metabolic.json": "138e51a42b7846cd3201e02ef92adf808782974e7dede48c81d565d8ff26ab1c",
     "nova_agent/knowledge/diseases/genitourinary.json": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
     "nova_agent/knowledge/diseases/infectious.json": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
     "nova_agent/knowledge/diseases/neuro.json": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
-    "nova_agent/knowledge/diseases/pulmonary.json": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "nova_agent/knowledge/diseases/pulmonary.json": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "nova_agent/knowledge/tier2_catalog.json": "56e6f197eafeef1533ac733c330099f82da453f8e0e0e571550a5f2416081fc6",
     "nova_agent/knowledge/tier2_enrichment.json": "a127120bc1b5c73a40a57b6441aecda54b43c9e2ecc4ab1ac7a96e458c1adc74",
     "nova_agent/knowledge/diagnostic_tests/notes.json": "6cc5f51ac1c69c2a17354e5606e83749cb39ab19a313d0719afb1fe4ebadf161",
@@ -5539,6 +5539,16 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/typical_features/5",
+      "value": "muscle cramps",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
       "pointer": "/1/risk_factors/0",
       "value": "chronic kidney disease",
       "original_source_status": "UNRESOLVED",
@@ -5751,6 +5761,36 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/confirmatory_findings/6",
+      "value": "hypokalemia",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/confirmatory_findings/7",
+      "value": "low potassium",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/confirmatory_findings/8",
+      "value": "prominent u waves",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
       "pointer": "/1/minimum_workup/0",
       "value": "bmp",
       "original_source_status": "UNRESOLVED",
@@ -5763,6 +5803,16 @@
       "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
       "pointer": "/1/evidence_level",
       "value": "internally_authored_heuristic",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/round_p_provenance",
+      "value": "Round P: hypokalemia / low potassium / prominent U waves added as confirmatory findings and muscle cramps as a typical feature -- the entry already covered both directions of sodium but only the high direction of potassium, so a severely LOW potassium was scored as evidence AGAINST the disorder. Agent-authored from widely taught physiology; not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -11093,6 +11143,26 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "pointer": "/0/typical_features/6",
+      "value": "tachypnea",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "pointer": "/0/typical_features/7",
+      "value": "hypoxia",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
       "pointer": "/0/risk_factors/0",
       "value": "recent surgery",
       "original_source_status": "UNRESOLVED",
@@ -11377,6 +11447,16 @@
       "path": "nova_agent/knowledge/diseases/pulmonary.json",
       "pointer": "/0/evidence_level",
       "value": "internally_authored_heuristic",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "pointer": "/0/round_p_provenance",
+      "value": "Round P: tachypnea and hypoxia added as typical features (classic bedside signs, and the only objective PE signs a test-free encounter can obtain). Agent-authored; not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -190576,13 +190656,41 @@
           "eases when i rest",
           "goes away with rest",
           "on walking uphill"
+        ],
+        "vomiting or diarrhea": [
+          "vomiting",
+          "vomited",
+          "throwing up",
+          "threw up",
+          "diarrhea",
+          "diarrhoea",
+          "loose stools"
+        ],
+        "prior stroke or tia": [
+          "previous stroke",
+          "had a stroke before",
+          "mini-stroke",
+          "transient ischaemic attack",
+          "transient ischemic attack"
+        ],
+        "prior dvt or pe": [
+          "previous blood clot",
+          "clot in my leg before",
+          "clot in my lung before",
+          "previous dvt"
+        ],
+        "muscle cramps": [
+          "cramps in my legs",
+          "leg cramps",
+          "muscle cramps",
+          "cramping muscles"
         ]
       },
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 272,
+      "line": 278,
       "names": [
         "_TIER2_LAY"
       ],
@@ -191330,6 +191438,37 @@
         "경련": "seizure",
         "けいれん": "seizure",
         "痙攣": "seizure"
+      },
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/multilingual_concepts.py",
+      "line": 234,
+      "names": [
+        "_DIRECT_LOCALIZED_EVIDENCE_V3"
+      ],
+      "value": {
+        "점상 출혈": "petechial rash rash",
+        "점상출혈": "petechial rash rash",
+        "자반": "petechial rash rash",
+        "보라색 반점": "petechial rash rash",
+        "보라색 점": "petechial rash rash",
+        "졸려": "altered mental status",
+        "기면": "altered mental status",
+        "의식 저하": "altered mental status",
+        "의식이 흐": "altered mental status",
+        "혼미": "altered mental status",
+        "지남력 저하": "altered mental status confusion",
+        "헛소리": "confusion",
+        "이뇨제": "diuretic use",
+        "소변 나오는 약": "diuretic use",
+        "기운이 없": "generalized weakness",
+        "온몸에 힘이 없": "generalized weakness",
+        "쥐가 나": "muscle cramps",
+        "근육 경련": "muscle cramps",
+        "맥이 불규칙": "irregular heartbeat",
+        "불규칙하게 뛰": "irregular heartbeat",
+        "불규칙한 리듬": "irregular heartbeat"
       },
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
@@ -192315,7 +192454,25 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 528,
+      "line": 483,
+      "names": [
+        "_PATTERN_QUALIFIERS"
+      ],
+      "value": [
+        "chronic",
+        "constant",
+        "episod",
+        "intermitt",
+        "paroxysm",
+        "persist",
+        "recurr",
+        "sudden"
+      ],
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/matching.py",
+      "line": 568,
       "names": [
         "FEATURE_ALIASES"
       ],
@@ -192493,7 +192650,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 573,
+      "line": 613,
       "names": [
         "_LAY_VARIANTS"
       ],
@@ -192578,6 +192735,14 @@
           "lab.sodium",
           "low"
         ],
+        "hypokalemia": [
+          "lab.potassium",
+          "low"
+        ],
+        "low potassium": [
+          "lab.potassium",
+          "low"
+        ],
         "elevated white blood cell count": [
           "lab.wbc",
           "high"
@@ -192623,7 +192788,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 55,
+      "line": 56,
       "names": [
         "FEATURE_WEIGHT"
       ],
@@ -192632,7 +192797,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 56,
+      "line": 57,
       "names": [
         "RISK_FACTOR_WEIGHT"
       ],
@@ -192641,7 +192806,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 57,
+      "line": 58,
       "names": [
         "CONTRADICTION_PENALTY"
       ],
@@ -192650,7 +192815,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 61,
+      "line": 62,
       "names": [
         "CONFIRMATORY_WEIGHT"
       ],
@@ -192659,7 +192824,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 82,
+      "line": 83,
       "names": [
         "_NEGATIVE_FEATURE_PREFIXES"
       ],
@@ -192673,7 +192838,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 91,
+      "line": 92,
       "names": [
         "_SPECIFICITY_STEP"
       ],
@@ -192682,7 +192847,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 92,
+      "line": 93,
       "names": [
         "_SPECIFICITY_CAP"
       ],
@@ -192691,11 +192856,38 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 100,
+      "line": 101,
       "names": [
         "_GENERIC_SEVERITY_MULTIPLIER"
       ],
       "value": 0.3,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/differential.py",
+      "line": 170,
+      "names": [
+        "_ESCALATION_MIN_SUPPORT"
+      ],
+      "value": 3,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/differential.py",
+      "line": 230,
+      "names": [
+        "_CONVERGING_MIN_SUPPORT"
+      ],
+      "value": 4,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/differential.py",
+      "line": 231,
+      "names": [
+        "_THIN_ONTOLOGY_MAX_SUPPORT"
+      ],
+      "value": 2,
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
@@ -192936,7 +193128,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 304,
+      "line": 333,
       "names": [
         "_config"
       ],

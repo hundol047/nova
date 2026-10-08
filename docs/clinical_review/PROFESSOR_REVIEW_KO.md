@@ -243,7 +243,7 @@
 파일: `nova_agent/knowledge/diseases/pulmonary.json`
 현재 코드 분류: urgency=CRITICAL, dangerous=True (미검토)
 
-- 증상 특징: ["sudden onset dyspnea", "pleuritic chest pain", "tachycardia", "hemoptysis", "calf swelling", "unilateral leg pain"]
+- 증상 특징: ["sudden onset dyspnea", "pleuritic chest pain", "tachycardia", "hemoptysis", "calf swelling", "unilateral leg pain", "tachypnea", "hypoxia"]
 - 현재 확진 관련 소견: ["filling defect in the pulmonary artery", "elevated D-dimer"]
 - 위험 인자: ["recent surgery", "immobilization", "long travel", "malignancy", "oral contraceptive use", "prior DVT or PE", "pregnancy"]
 - 최소 검사: ["d_dimer", "ct_chest_angio"]
@@ -286,8 +286,8 @@
 파일: `nova_agent/knowledge/diseases/endocrine_metabolic.json`
 현재 코드 분류: urgency=CRITICAL, dangerous=True (미검토)
 
-- 증상 특징: ["muscle weakness", "palpitations", "confusion", "arrhythmia", "seizure"]
-- 현재 확진 관련 소견: ["peaked t waves", "hyperkalemia", "elevated potassium", "hyponatremia", "low sodium", "widened qrs"]
+- 증상 특징: ["muscle weakness", "palpitations", "confusion", "arrhythmia", "seizure", "muscle cramps"]
+- 현재 확진 관련 소견: ["peaked t waves", "hyperkalemia", "elevated potassium", "hyponatremia", "low sodium", "widened qrs", "hypokalemia", "low potassium", "prominent u waves"]
 - 위험 인자: ["chronic kidney disease", "diuretic use", "vomiting or diarrhea", "renin-angiotensin system inhibitor use"]
 - 최소 검사: ["bmp"]
 - 위험 신호: ["arrhythmia", "muscle weakness with renal disease", "confusion with renal disease"]

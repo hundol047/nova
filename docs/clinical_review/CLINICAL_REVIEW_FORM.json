@@ -619,7 +619,7 @@
     "disease_id": "diabetic_ketoacidosis",
     "name": "Diabetic Ketoacidosis",
     "source_path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
-    "source_sha256": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "source_sha256": "138e51a42b7846cd3201e02ef92adf808782974e7dede48c81d565d8ff26ab1c",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1031,7 +1031,7 @@
     "disease_id": "pulmonary_embolism",
     "name": "Pulmonary Embolism",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "source_sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1060,7 +1060,9 @@
         "tachycardia",
         "hemoptysis",
         "calf swelling",
-        "unilateral leg pain"
+        "unilateral leg pain",
+        "tachypnea",
+        "hypoxia"
       ],
       "risk_factors": [
         "recent surgery",
@@ -1104,7 +1106,8 @@
         "d_dimer",
         "ct_chest_angio"
       ],
-      "evidence_level": "internally_authored_heuristic"
+      "evidence_level": "internally_authored_heuristic",
+      "round_p_provenance": "Round P: tachypnea and hypoxia added as typical features (classic bedside signs, and the only objective PE signs a test-free encounter can obtain). Agent-authored; not clinician-reviewed."
     },
     "source_leads": [
       {
@@ -1250,7 +1253,7 @@
     "disease_id": "severe_electrolyte_disorder",
     "name": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
     "source_path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
-    "source_sha256": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "source_sha256": "138e51a42b7846cd3201e02ef92adf808782974e7dede48c81d565d8ff26ab1c",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1278,7 +1281,8 @@
         "palpitations",
         "confusion",
         "arrhythmia",
-        "seizure"
+        "seizure",
+        "muscle cramps"
       ],
       "risk_factors": [
         "chronic kidney disease",
@@ -1311,12 +1315,16 @@
         "elevated potassium",
         "hyponatremia",
         "low sodium",
-        "widened qrs"
+        "widened qrs",
+        "hypokalemia",
+        "low potassium",
+        "prominent u waves"
       ],
       "minimum_workup": [
         "bmp"
       ],
-      "evidence_level": "internally_authored_heuristic"
+      "evidence_level": "internally_authored_heuristic",
+      "round_p_provenance": "Round P: hypokalemia / low potassium / prominent U waves added as confirmatory findings and muscle cramps as a typical feature -- the entry already covered both directions of sodium but only the high direction of potassium, so a severely LOW potassium was scored as evidence AGAINST the disorder. Agent-authored from widely taught physiology; not clinician-reviewed."
     },
     "source_leads": [
       {
@@ -1453,7 +1461,7 @@
     "disease_id": "tension_pneumothorax",
     "name": "Tension Pneumothorax",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "source_sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1632,7 +1640,7 @@
     "disease_id": "acute_bronchitis",
     "name": "Acute Bronchitis",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "source_sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -1991,7 +1999,7 @@
     "disease_id": "asthma_copd_exacerbation",
     "name": "Asthma / COPD Exacerbation",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "source_sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -2144,7 +2152,7 @@
     "disease_id": "pneumonia",
     "name": "Community-Acquired Pneumonia",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "source_sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -2331,7 +2339,7 @@
     "disease_id": "hypoglycemia",
     "name": "Hypoglycemia",
     "source_path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
-    "source_sha256": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "source_sha256": "138e51a42b7846cd3201e02ef92adf808782974e7dede48c81d565d8ff26ab1c",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {

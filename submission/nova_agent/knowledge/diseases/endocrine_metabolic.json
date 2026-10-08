@@ -91,7 +91,8 @@
       "palpitations",
       "confusion",
       "arrhythmia",
-      "seizure"
+      "seizure",
+      "muscle cramps"
     ],
     "risk_factors": [
       "chronic kidney disease",
@@ -124,12 +125,16 @@
       "elevated potassium",
       "hyponatremia",
       "low sodium",
-      "widened qrs"
+      "widened qrs",
+      "hypokalemia",
+      "low potassium",
+      "prominent u waves"
     ],
     "minimum_workup": [
       "bmp"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "round_p_provenance": "Round P: hypokalemia / low potassium / prominent U waves added as confirmatory findings and muscle cramps as a typical feature -- the entry already covered both directions of sodium but only the high direction of potassium, so a severely LOW potassium was scored as evidence AGAINST the disorder. Agent-authored from widely taught physiology; not clinician-reviewed."
   },
   {
     "id": "hypoglycemia",

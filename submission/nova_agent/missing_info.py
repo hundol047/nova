@@ -207,6 +207,10 @@ class MissingInformationAnalyzer:
                 key = f"ask:{discriminator}"
                 if state.question_asked(discriminator) or _already_answered(state, category):
                     continue
+                if ":" in discriminator and cfg.action_v3_enabled:
+                    from nova_agent.clinical_concepts import is_objective_only_feature
+                    if is_objective_only_feature(discriminator.split(":", 1)[1]):
+                        continue  # Round P: never ask the patient about an exam sign or a lab value
                 spec = disease_specific_question(diagnosis_id, discriminator)
                 cand = ask_candidates.setdefault(key, CandidateInfo(
                     action_type="ASK", key=discriminator, content_en=spec["text_en"], content_ko=spec["text_ko"],

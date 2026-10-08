@@ -262,7 +262,7 @@
     {
       "asset_id": "nova_agent/candidate_generator.py",
       "path": "nova_agent/candidate_generator.py",
-      "sha256": "b280bbeb9fd4f691809a4c5f88fc0706b7fd445eeb17974a3498a907564b00c5",
+      "sha256": "688aa74b9606293bf5f2da3467f705950d003b98e4b0d2f7413d7ae511f6a81b",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -422,7 +422,7 @@
     {
       "asset_id": "nova_agent/clinical_concepts.py",
       "path": "nova_agent/clinical_concepts.py",
-      "sha256": "f3245a116fce177b97461c3f3f35da7348d203542350a18f51df7d86a90454a7",
+      "sha256": "2807d2fe676dac09f1cd427d8870ae41a04071db3463e5127eb241a0c5247d9d",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",
@@ -471,7 +471,7 @@
     {
       "asset_id": "nova_agent/clinical_presentation.py",
       "path": "nova_agent/clinical_presentation.py",
-      "sha256": "cfc2e56f23cee68589e47e169e25401af8d4fc9e4c91ab4cebc22ea4cdf8c7ed",
+      "sha256": "bf2dd8b60325a1bb374c272b6653f5133eabbbf06fbf10672d4e9f433a74e032",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -577,7 +577,7 @@
     {
       "asset_id": "nova_agent/config.py",
       "path": "nova_agent/config.py",
-      "sha256": "05fd06c6d6cb66310ecf06eadbafac70616cc75c9ab97a35a3e2e11f019d192a",
+      "sha256": "b3b9ef487d5bb9fb2228281437422ba3929724b24f91b4c893dcab0c962e6846",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -736,7 +736,7 @@
     {
       "asset_id": "nova_agent/differential.py",
       "path": "nova_agent/differential.py",
-      "sha256": "af96b127c22b80c23efc351d7ee66e87e8bcb5c6e64222d37cbcc09f33877c92",
+      "sha256": "368761ad53ddf14b8d0e4babb0cf39e49b4ce67d1cd1158fa63632b0613c8f8c",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -766,6 +766,55 @@
         "f315fbf27bafaaeecb43344428ac61d7fe1a7a05|2026-10-03T22:43:51+09:00|fix: repair candidate evidence and discriminative action selection [skip ci]",
         "d6e2b84aa2bb90c198fae39dade3870d6575c6f4|2026-10-03T19:37:06+09:00|fix: validate competition readiness and evidence negation [skip ci]"
       ],
+      "history_caveat": "Commit author/time are not original clinical author/generation time",
+      "authorship_status": "UNRESOLVED",
+      "medical_validation_status": "NOT independently clinically validated",
+      "rights_status": "UNRESOLVED",
+      "replacement_plan": {
+        "decision": "E",
+        "next_actions": [
+          "A: recover original source/generation records",
+          "B: obtain substantiated team authorship/rights authorization if appropriate",
+          "C: if unavailable, stage separately documented deterministic replacement and validate before promotion"
+        ],
+        "exclude_now": false,
+        "reason": "No evidence supports safe loss of coverage; no source or permission inferred",
+        "promotion_requirements": [
+          "source bytes/hash/version and permission evidence",
+          "reproducible transformation or exact model/prompt records",
+          "review of content and rights",
+          "unchanged coverage and same-set accuracy/safety/efficiency regression"
+        ],
+        "status": "BLOCKED"
+      }
+    },
+    {
+      "asset_id": "nova_agent/documented_diagnosis.py",
+      "path": "nova_agent/documented_diagnosis.py",
+      "sha256": "2127067f2a129cb1354d8f0f2c6ff2f0d3d1ffd04a2a99e7b022f4108e080867",
+      "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
+      "original_author": "UNRESOLVED",
+      "original_source": "Engineering-agent authored in this repository's history; not independently established",
+      "source_reference": [
+        "nova_agent/knowledge/PROVENANCE.md",
+        "artifacts/round_m/source_inventory.json"
+      ],
+      "source_version": "UNRESOLVED",
+      "license": "UNRESOLVED",
+      "research_publication_permission": "UNRESOLVED",
+      "redistribution_permission": "UNRESOLVED",
+      "modification_permission": "UNRESOLVED",
+      "generation_method": "UNRESOLVED",
+      "generating_model": "UNRESOLVED",
+      "model_version": "UNRESOLVED",
+      "generation_prompt": "UNRESOLVED",
+      "generation_code": "UNRESOLVED",
+      "generation_date": "UNRESOLVED",
+      "manual_review": "Engineering tests do not establish original authorship or medical correctness",
+      "clinician_review": "No documented clinician signoff",
+      "submission_included": true,
+      "status": "UNRESOLVED",
+      "history_evidence": [],
       "history_caveat": "Commit author/time are not original clinical author/generation time",
       "authorship_status": "UNRESOLVED",
       "medical_validation_status": "NOT independently clinically validated",
@@ -1256,7 +1305,7 @@
     {
       "asset_id": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
       "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
-      "sha256": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+      "sha256": "138e51a42b7846cd3201e02ef92adf808782974e7dede48c81d565d8ff26ab1c",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -1475,7 +1524,7 @@
     {
       "asset_id": "nova_agent/knowledge/diseases/pulmonary.json",
       "path": "nova_agent/knowledge/diseases/pulmonary.json",
-      "sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+      "sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -2019,7 +2068,7 @@
     {
       "asset_id": "nova_agent/lay_language.py",
       "path": "nova_agent/lay_language.py",
-      "sha256": "342321cd4cbbbcd9eaa535ac5e8144d880b78cde7dc881250ffe5027a0a78764",
+      "sha256": "242fe836336bca2dca63efdeef4588f796f275ad40dbb75177c78333ebd2c7bd",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -2287,7 +2336,7 @@
     {
       "asset_id": "nova_agent/matching.py",
       "path": "nova_agent/matching.py",
-      "sha256": "04cce8bdd3197480cdf9e89ab1cdd3246728f3dfa7d6993e3dc7a5a419cb4de4",
+      "sha256": "8cf7cf9e422cd57c6f4692b9bb2821f58272a8ce3244557cdb67d9dd96e255a9",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -2343,7 +2392,7 @@
     {
       "asset_id": "nova_agent/missing_info.py",
       "path": "nova_agent/missing_info.py",
-      "sha256": "23a36c82768aae4e96f9191c0705120dee266a1bfdf19c10d55b3b60d9a6eebd",
+      "sha256": "f7fcc342a461e383666abb082089c09d4ac938bda67dd59bd44816713305d024",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -2450,7 +2499,7 @@
     {
       "asset_id": "nova_agent/multilingual_concepts.py",
       "path": "nova_agent/multilingual_concepts.py",
-      "sha256": "5738bcacd015299aeb4af88685146d27cdc64a75ccc6f48ac268bd5fd16d2c8a",
+      "sha256": "70672b8a4065dbd2a95b0652771347c287327f1c629929bbcebc8381b6bc4863",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -2506,7 +2555,7 @@
     {
       "asset_id": "nova_agent/objective_evidence.py",
       "path": "nova_agent/objective_evidence.py",
-      "sha256": "f830c42aeb7c0aa72b3eb077d3f4c797c98e31d8991bd4fd5d5917dcd80aa50d",
+      "sha256": "f498463d75acac057f0acc366cd008ecdd3ac668be4a28af5c80dce03d40f398",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -4139,7 +4188,7 @@
     {
       "asset_id": "nova_agent/stop_policy.py",
       "path": "nova_agent/stop_policy.py",
-      "sha256": "7510cf1b4d54c12ae1b382410dfff0e2a4936e76f5cc9690b6635c0e16d030ee",
+      "sha256": "b999b772cb5ebea19dd0fbbeda94309a6ee1dad1f17775c2cd3636a820c8cc14",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
