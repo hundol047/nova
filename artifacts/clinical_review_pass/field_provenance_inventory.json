@@ -2,8 +2,8 @@
   "scope": "Every JSON leaf in legacy diseases/catalog/enrichment/tests/guidelines/red-flags; selected module-level literal constants",
   "source_hashes": {
     "nova_agent/knowledge/diseases/abdominal_gi.json": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
-    "nova_agent/knowledge/diseases/cardiac.json": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
-    "nova_agent/knowledge/diseases/endocrine_metabolic.json": "138e51a42b7846cd3201e02ef92adf808782974e7dede48c81d565d8ff26ab1c",
+    "nova_agent/knowledge/diseases/cardiac.json": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
+    "nova_agent/knowledge/diseases/endocrine_metabolic.json": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
     "nova_agent/knowledge/diseases/genitourinary.json": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
     "nova_agent/knowledge/diseases/infectious.json": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
     "nova_agent/knowledge/diseases/neuro.json": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
@@ -4367,6 +4367,26 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "pointer": "/5/typical_features/5",
+      "value": "pulse rate below 50",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "pointer": "/5/typical_features/6",
+      "value": "pulse rate of 150 or more",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
       "pointer": "/5/risk_factors/0",
       "value": "hypertension",
       "original_source_status": "UNRESOLVED",
@@ -4591,6 +4611,16 @@
       "path": "nova_agent/knowledge/diseases/cardiac.json",
       "pointer": "/5/evidence_level",
       "value": "internally_authored_heuristic",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "pointer": "/5/round_q_provenance",
+      "value": "typical_features 'pulse rate below 50' / 'pulse rate of 150 or more' added in Round Q: a measured CURRENT rate at the thresholds the AHA adult bradycardia/tachycardia algorithms use to suggest a rhythm cause (Panchal AR et al., 2020 AHA Guidelines for CPR and ECC Part 3, Circulation 2020;142:S366-S468). Weighted like a generic physiological sign (the reduced multiplier differential.py gives tachycardia/hypotension); not a confirmatory finding and never a subtype. Agent-authored, not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -5591,6 +5621,16 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/risk_factors/4",
+      "value": "missed dialysis session",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
       "pointer": "/1/discriminating_questions/0",
       "value": "past_medical_history",
       "original_source_status": "UNRESOLVED",
@@ -5803,6 +5843,16 @@
       "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
       "pointer": "/1/evidence_level",
       "value": "internally_authored_heuristic",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/round_q_provenance",
+      "value": "Round Q: risk factor 'missed dialysis session' -- missed or inadequate dialysis is a recognised cause of hyperkalaemia in people on dialysis (UK Kidney Association, Clinical Practice Guidelines: Treatment of Acute Hyperkalaemia in Adults, 2020/2023 update, causes section). Risk-factor weight only; it never establishes a potassium value or direction. Agent-authored, not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -190684,13 +190734,105 @@
           "leg cramps",
           "muscle cramps",
           "cramping muscles"
+        ],
+        "muscle weakness": [
+          "reduced power",
+          "power is reduced",
+          "decreased power",
+          "reduced strength",
+          "decreased strength",
+          "weak in both legs",
+          "weak in both arms"
+        ],
+        "associated lightheadedness": [
+          "lightheaded",
+          "light-headed",
+          "lightheadedness",
+          "light headed"
+        ],
+        "seizure": [
+          "convulsive fit",
+          "convulsing",
+          "convulsions",
+          "fitting and shaking"
+        ],
+        "sudden onset palpitations": [
+          "heart suddenly took off",
+          "heart took off",
+          "heart suddenly accelerated",
+          "heart suddenly started racing",
+          "heart suddenly raced"
+        ],
+        "racing heart": [
+          "heart took off",
+          "heart accelerated",
+          "heart sped up"
+        ],
+        "chronic kidney disease": [
+          "on dialysis",
+          "ongoing dialysis",
+          "regular dialysis",
+          "haemodialysis",
+          "hemodialysis",
+          "peritoneal dialysis",
+          "dialysis three times a week"
+        ],
+        "pain eased by leaning forward": [
+          "leaning forward helps",
+          "relieved by leaning forward",
+          "better leaning forward",
+          "better when i lean forward",
+          "eases when i lean forward",
+          "sitting forward helps"
+        ],
+        "bilateral band-like pressure": [
+          "pressing on both sides",
+          "pressure on both sides",
+          "squeezing on both sides"
+        ],
+        "prolonged screen time": [
+          "staring at screens",
+          "screens all day",
+          "on the computer all day",
+          "looking at a screen all day"
+        ],
+        "heat intolerance": [
+          "can't stand the heat",
+          "can not stand the heat",
+          "can't tolerate the heat"
+        ],
+        "fear of dying or losing control": [
+          "something terrible will happen",
+          "sense of doom",
+          "feel i'm going to die",
+          "feel like i'm dying"
+        ],
+        "tingling around the mouth or fingers": [
+          "tingling fingers",
+          "fingers tingle",
+          "my fingers tingle"
+        ],
+        "structural heart disease": [
+          "heart failure",
+          "cardiomyopathy",
+          "previous heart attack",
+          "had a heart attack",
+          "weak heart muscle"
+        ],
+        "missed dialysis session": [
+          "missed dialysis",
+          "missed my dialysis",
+          "skipped dialysis",
+          "missed two dialysis sessions",
+          "missed a dialysis session",
+          "missed scheduled dialysis"
         ]
       },
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 278,
+      "line": 310,
       "names": [
         "_TIER2_LAY"
       ],
@@ -192454,7 +192596,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 483,
+      "line": 522,
       "names": [
         "_PATTERN_QUALIFIERS"
       ],
@@ -192472,7 +192614,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 568,
+      "line": 607,
       "names": [
         "FEATURE_ALIASES"
       ],
@@ -192650,7 +192792,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 613,
+      "line": 652,
       "names": [
         "_LAY_VARIANTS"
       ],
@@ -192788,7 +192930,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 56,
+      "line": 58,
       "names": [
         "FEATURE_WEIGHT"
       ],
@@ -192797,7 +192939,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 57,
+      "line": 59,
       "names": [
         "RISK_FACTOR_WEIGHT"
       ],
@@ -192806,7 +192948,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 58,
+      "line": 60,
       "names": [
         "CONTRADICTION_PENALTY"
       ],
@@ -192815,7 +192957,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 62,
+      "line": 64,
       "names": [
         "CONFIRMATORY_WEIGHT"
       ],
@@ -192824,7 +192966,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 83,
+      "line": 85,
       "names": [
         "_NEGATIVE_FEATURE_PREFIXES"
       ],
@@ -192838,7 +192980,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 92,
+      "line": 94,
       "names": [
         "_SPECIFICITY_STEP"
       ],
@@ -192847,7 +192989,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 93,
+      "line": 95,
       "names": [
         "_SPECIFICITY_CAP"
       ],
@@ -192856,7 +192998,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 101,
+      "line": 103,
       "names": [
         "_GENERIC_SEVERITY_MULTIPLIER"
       ],
@@ -192865,7 +193007,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 170,
+      "line": 176,
       "names": [
         "_ESCALATION_MIN_SUPPORT"
       ],
@@ -192874,7 +193016,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 231,
+      "line": 237,
       "names": [
         "_CONVERGING_MIN_SUPPORT"
       ],
@@ -192883,7 +193025,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 232,
+      "line": 238,
       "names": [
         "_THIN_ONTOLOGY_MAX_SUPPORT"
       ],
@@ -193128,7 +193270,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 333,
+      "line": 338,
       "names": [
         "_config"
       ],

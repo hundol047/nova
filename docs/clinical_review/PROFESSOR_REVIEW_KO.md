@@ -136,7 +136,7 @@
 파일: `nova_agent/knowledge/diseases/cardiac.json`
 현재 코드 분류: urgency=MEDIUM, dangerous=True (미검토)
 
-- 증상 특징: ["sudden onset palpitations", "irregular heartbeat", "racing heart", "associated lightheadedness", "known history of arrhythmia"]
+- 증상 특징: ["sudden onset palpitations", "irregular heartbeat", "racing heart", "associated lightheadedness", "known history of arrhythmia", "pulse rate below 50", "pulse rate of 150 or more"]
 - 현재 확진 관련 소견: ["irregularly irregular rhythm", "narrow complex tachycardia", "atrial fibrillation on ecg", "high-grade AV block", "second-degree AV block", "bradycardia with dropped beats"]
 - 위험 인자: ["hypertension", "structural heart disease", "hyperthyroidism", "excessive caffeine or stimulant use", "advanced age"]
 - 최소 검사: []
@@ -288,7 +288,7 @@
 
 - 증상 특징: ["muscle weakness", "palpitations", "confusion", "arrhythmia", "seizure", "muscle cramps"]
 - 현재 확진 관련 소견: ["peaked t waves", "hyperkalemia", "elevated potassium", "hyponatremia", "low sodium", "widened qrs", "hypokalemia", "low potassium", "prominent u waves"]
-- 위험 인자: ["chronic kidney disease", "diuretic use", "vomiting or diarrhea", "renin-angiotensin system inhibitor use"]
+- 위험 인자: ["chronic kidney disease", "diuretic use", "vomiting or diarrhea", "renin-angiotensin system inhibitor use", "missed dialysis session"]
 - 최소 검사: ["bmp"]
 - 위험 신호: ["arrhythmia", "muscle weakness with renal disease", "confusion with renal disease"]
 - 구별용 검사: ["bmp", "ecg"]

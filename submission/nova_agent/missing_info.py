@@ -205,7 +205,7 @@ class MissingInformationAnalyzer:
                     if feature and feature in supported_features:
                         continue
                 key = f"ask:{discriminator}"
-                if state.question_asked(discriminator) or _already_answered(state, category):
+                if state.question_attempted(discriminator) or _already_answered(state, category):
                     continue
                 if ":" in discriminator and cfg.action_v3_enabled:
                     from nova_agent.clinical_concepts import is_objective_only_feature

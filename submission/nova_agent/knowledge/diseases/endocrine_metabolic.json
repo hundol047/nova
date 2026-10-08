@@ -98,7 +98,8 @@
       "chronic kidney disease",
       "diuretic use",
       "vomiting or diarrhea",
-      "renin-angiotensin system inhibitor use"
+      "renin-angiotensin system inhibitor use",
+      "missed dialysis session"
     ],
     "discriminating_questions": [
       "past_medical_history",
@@ -134,6 +135,7 @@
       "bmp"
     ],
     "evidence_level": "internally_authored_heuristic",
+    "round_q_provenance": "Round Q: risk factor 'missed dialysis session' -- missed or inadequate dialysis is a recognised cause of hyperkalaemia in people on dialysis (UK Kidney Association, Clinical Practice Guidelines: Treatment of Acute Hyperkalaemia in Adults, 2020/2023 update, causes section). Risk-factor weight only; it never establishes a potassium value or direction. Agent-authored, not clinician-reviewed.",
     "round_p_provenance": "Round P: hypokalemia / low potassium / prominent U waves added as confirmatory findings and muscle cramps as a typical feature -- the entry already covered both directions of sodium but only the high direction of potassium, so a severely LOW potassium was scored as evidence AGAINST the disorder. Agent-authored from widely taught physiology; not clinician-reviewed."
   },
   {

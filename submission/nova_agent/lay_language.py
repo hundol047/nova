@@ -266,6 +266,38 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
                             "transient ischemic attack"],
     "prior dvt or pe": ["previous blood clot", "clot in my leg before", "clot in my lung before", "previous dvt"],
     "muscle cramps": ["cramps in my legs", "leg cramps", "muscle cramps", "cramping muscles"],
+    # --- Round Q: observed wording for existing KB features (feature-local; no global word substitution).
+    # Reduced power/strength IS weakness; its location stays in the original text and nothing is inferred about a cause.
+    "muscle weakness": ["reduced power", "power is reduced", "decreased power", "reduced strength", "decreased strength",
+                        "weak in both legs", "weak in both arms"],
+    # The KB phrase carries a redundant "associated"; the observation itself is lightheadedness (not fainting).
+    "associated lightheadedness": ["lightheaded", "light-headed", "lightheadedness", "light headed"],
+    # A convulsive fit is a seizure; a bare "fit" is NOT mapped (fit/fits well/keep fit).
+    "seizure": ["convulsive fit", "convulsing", "convulsions", "fitting and shaking"],
+    # Sudden acceleration of the heartbeat described in lay words.
+    "sudden onset palpitations": ["heart suddenly took off", "heart took off", "heart suddenly accelerated",
+                                  "heart suddenly started racing", "heart suddenly raced"],
+    "racing heart": ["heart took off", "heart accelerated", "heart sped up"],
+    # Kidney failure treated with dialysis is CKD category G5D (KDIGO 2012 CKD guideline, Kidney Int Suppl 2013;3:1-150).
+    # A plain "kidney problem" is NOT mapped: chronicity is not assumed.
+    "chronic kidney disease": ["on dialysis", "ongoing dialysis", "regular dialysis", "haemodialysis", "hemodialysis",
+                               "peritoneal dialysis", "dialysis three times a week"],
+    # Relief by sitting forward stated in the patient's words (pericarditis-type relief); feature-local.
+    "pain eased by leaning forward": ["leaning forward helps", "relieved by leaning forward", "better leaning forward",
+                                      "better when i lean forward", "eases when i lean forward", "sitting forward helps"],
+    # Lay wording found on the Round Q contrast development set (development use, disclosed in the report).
+    "bilateral band-like pressure": ["pressing on both sides", "pressure on both sides", "squeezing on both sides"],
+    "prolonged screen time": ["staring at screens", "screens all day", "on the computer all day", "looking at a screen all day"],
+    "heat intolerance": ["can't stand the heat", "can not stand the heat", "can't tolerate the heat"],
+    "fear of dying or losing control": ["something terrible will happen", "sense of doom", "feel i'm going to die",
+                                        "feel like i'm dying"],
+    "tingling around the mouth or fingers": ["tingling fingers", "fingers tingle", "my fingers tingle"],
+    # Heart failure, cardiomyopathy and previous myocardial infarction are structural heart disease, a high-risk
+    # feature for arrhythmic syncope (Brignole M et al., 2018 ESC Guidelines for syncope, Eur Heart J 2018;39:1883, Table 5).
+    "structural heart disease": ["heart failure", "cardiomyopathy", "previous heart attack", "had a heart attack",
+                                 "weak heart muscle"],
+    "missed dialysis session": ["missed dialysis", "missed my dialysis", "skipped dialysis", "missed two dialysis sessions",
+                                "missed a dialysis session", "missed scheduled dialysis"],
 }
 for _phrase, _variants in _ADDITIONAL_LAY_ALIASES.items():
     _bucket = LAY_FEATURE_ALIASES.setdefault(_phrase, [])

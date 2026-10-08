@@ -127,6 +127,12 @@ _CONCEPTS_V3: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
                      r"\bheart(?:beat)? (?:is |was |keeps )?(?:racing|pounding|beating (?:fast|quickly)|going (?:fast|quickly))\b"),
     ("irregularly irregular rhythm", r"\birregularly irregular\b"),
     ("fatigue", r"\b(?:washed out|wiped out|worn out|exhausted|drained of energy|no energy)\b"),
+    # Round Q: an instantaneous onset described in lay words IS the KB phrase "sudden onset severe headache"
+    # ("came on in a second", "like being hit with a bat"). The headache word must be in the same clause.
+    ("sudden onset severe headache",
+     r"\b(?:headache|head pain|head ache)\b[^.;]{0,60}\b(?:in a second|in seconds|within seconds|instantly|all at once|"
+     r"like (?:being )?hit|thunderclap)\b|\b(?:in a second|within seconds|instantly|all at once|like (?:being )?hit|"
+     r"thunderclap)\b[^.;]{0,60}\b(?:headache|head pain|head ache)\b"),
 )]
 _DRUG_CONCEPTS = {"diuretic use"}
 

@@ -29,6 +29,7 @@ from nova_agent.glucose_evidence import (
     extract_glucose_mg_dl,
 )
 from nova_agent.matching import (
+    or_branches,
     FEATURE_ALIASES,
     content_word_count,
     content_words,
@@ -50,6 +51,7 @@ from nova_agent.severity_evidence import (
     extract_lactate_mmol_l,
 )
 from nova_agent.state import DifferentialSnapshot, PatientState
+from nova_agent.vitals_parser import FAST_PULSE_FINDING, SLOW_PULSE_FINDING
 
 ConfidenceBand = Literal["LOW", "MEDIUM", "HIGH"]
 
@@ -123,6 +125,10 @@ def _specificity_multiplier(phrase: str) -> float:
     decide the ranking -- see tests/test_severity_not_diagnostic_identity.py)."""
     content = content_words(phrase)
     if content and content.issubset(GENERIC_PHYSIOLOGIC_SEVERITY_WORDS):
+        return _GENERIC_SEVERITY_MULTIPLIER
+    if phrase.lower() in (SLOW_PULSE_FINDING, FAST_PULSE_FINDING):
+        # Round Q: a measured slow/fast rate is a physiological sign like "tachycardia" -- it prompts review of
+        # rhythm causes but must not outweigh a diagnosis with its own evidence (hyperkalaemia also slows the pulse).
         return _GENERIC_SEVERITY_MULTIPLIER
     word_count = max(1, content_word_count(phrase))
     return min(_SPECIFICITY_CAP, 1.0 + _SPECIFICITY_STEP * (word_count - 1))
@@ -275,7 +281,10 @@ def _apply_converging_evidence_priority(kept: list, state: PatientState) -> list
 
 def _documented_ids(state: PatientState) -> List[str]:
     from nova_agent.documented_diagnosis import documented_diagnosis_ids
-    texts = [state.chief_complaint, *state.associated_symptoms, *state.pertinent_positives, *state.past_medical_history]
+    # Round Q: whole answers as the patient gave them -- the stored positive/negative fragments have already been
+    # split at negations, which destroys the clause that decides each diagnosis mention's own scope.
+    answers = [t.result for t in state.conversation_history if t.action_type == "ASK" and t.result]
+    texts = [state.chief_complaint, *answers, *state.past_medical_history]
     return documented_diagnosis_ids([t for t in texts if t])
 
 
@@ -423,7 +432,10 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
     if feature_denied(phrase, negatives) or explicitly_denied_in_findings(phrase, findings):
         contradictory.append(phrase)
         return -(CONFIRMATORY_WEIGHT if objective else CONTRADICTION_PENALTY)
-    if _present_with_aliases(phrase, findings, strict=strict, ignore_words=_MODALITY_WORDS if objective else frozenset()):
+    ignore = _MODALITY_WORDS if objective else frozenset()
+    if _present_with_aliases(phrase, findings, strict=strict, ignore_words=ignore) or (
+            _evidence_v3_enabled() and any(_present_with_aliases(branch, findings, strict=strict, ignore_words=ignore)
+                                           for branch in or_branches(phrase))):
         supporting.append(phrase)
         return weight
     missing.append(phrase)
@@ -546,7 +558,8 @@ def _score_disease(entry: dict, state: PatientState,
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
-        if _present_with_aliases(risk_factor, findings):
+        if _present_with_aliases(risk_factor, findings) or (
+                _evidence_v3_enabled() and any(_present_with_aliases(b, findings) for b in or_branches(risk_factor))):
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT
 
