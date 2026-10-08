@@ -266,6 +266,24 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
                             "transient ischemic attack"],
     "prior dvt or pe": ["previous blood clot", "clot in my leg before", "clot in my lung before", "previous dvt"],
     "muscle cramps": ["cramps in my legs", "leg cramps", "muscle cramps", "cramping muscles"],
+    # --- Round Q: observed wording for existing KB features (feature-local; no global word substitution).
+    # Reduced power/strength IS weakness; its location stays in the original text and nothing is inferred about a cause.
+    "muscle weakness": ["reduced power", "power is reduced", "decreased power", "reduced strength", "decreased strength",
+                        "weak in both legs", "weak in both arms"],
+    # The KB phrase carries a redundant "associated"; the observation itself is lightheadedness (not fainting).
+    "associated lightheadedness": ["lightheaded", "light-headed", "lightheadedness", "light headed"],
+    # A convulsive fit is a seizure; a bare "fit" is NOT mapped (fit/fits well/keep fit).
+    "seizure": ["convulsive fit", "convulsing", "convulsions", "fitting and shaking"],
+    # Sudden acceleration of the heartbeat described in lay words.
+    "sudden onset palpitations": ["heart suddenly took off", "heart took off", "heart suddenly accelerated",
+                                  "heart suddenly started racing", "heart suddenly raced"],
+    "racing heart": ["heart took off", "heart accelerated", "heart sped up"],
+    # Kidney failure treated with dialysis is CKD category G5D (KDIGO 2012 CKD guideline, Kidney Int Suppl 2013;3:1-150).
+    # A plain "kidney problem" is NOT mapped: chronicity is not assumed.
+    "chronic kidney disease": ["on dialysis", "ongoing dialysis", "regular dialysis", "haemodialysis", "hemodialysis",
+                               "peritoneal dialysis", "dialysis three times a week"],
+    "missed dialysis session": ["missed dialysis", "missed my dialysis", "skipped dialysis", "missed two dialysis sessions",
+                                "missed a dialysis session", "missed scheduled dialysis"],
 }
 for _phrase, _variants in _ADDITIONAL_LAY_ALIASES.items():
     _bucket = LAY_FEATURE_ALIASES.setdefault(_phrase, [])

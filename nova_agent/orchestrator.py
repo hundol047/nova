@@ -284,7 +284,11 @@ class DoctorAgent:
         is an optional rationale string rather than an environment observation."""
         try:
             if action.action_type == "ASK":
-                state.record_ask(action.key, action.content, result)
+                faithful = True
+                if state.preliminary_rules:
+                    from nova_agent.preliminary import question_is_faithful
+                    faithful = question_is_faithful(action.key, state.locale or "en")
+                state.record_ask(action.key, action.content, result, faithful=faithful)
             elif action.action_type == "EXAM":
                 if action.key not in EXAM_CATALOG:
                     raise ValueError(f"Unknown EXAM key: {action.key!r}")

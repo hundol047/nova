@@ -391,6 +391,40 @@ def _assertion_clauses(finding: str) -> tuple:
     return _scoped("clauses", finding, lambda: tuple(_ASSERTION_SPLIT.split(finding.lower())))
 
 
+# Round Q: a qualifier that IS the clinical meaning of a feature. Stemming folds "irregularly" into "irregular", so
+# a plain "irregular rhythm" would otherwise satisfy the specific AF finding "irregularly irregular rhythm". A feature
+# carrying a protected qualifier is met only by a clause that states that qualifier explicitly; the general wording
+# is handled by the general feature ("irregular heartbeat") instead. Stemming itself is unchanged everywhere else.
+_PROTECTED_QUALIFIERS = (
+    ("irregularly irregular", re.compile(r"\birregularly[\s-]+irregular\b")),
+)
+
+
+def _protected_qualifier(feature_lower: str):
+    return next((pattern for phrase, pattern in _PROTECTED_QUALIFIERS if phrase in feature_lower), None)
+
+
+_OR_PREFIX = re.compile(r"^(?:family history of|history of|known|prior|previous|recent)\s+")
+
+
+def or_branches(feature: str) -> tuple:
+    """Round Q: the explicit alternatives of ONE "A or B" feature, each a complete phrase, or () when the feature is
+    not such a disjunction. A shared leading context ("history of heart attack or cardiomyopathy") is carried to the
+    second branch. Branches of one content word are not split off ("calf pain or tenderness" stays whole), so a
+    lone generic word never stands in for the feature. Used for PRESENCE only: denying one branch never denies the
+    disjunction (callers keep checking the whole phrase for contradiction)."""
+    low = feature.lower().strip()
+    if low.count(" or ") != 1:
+        return ()
+    left, right = (part.strip() for part in low.split(" or "))
+    prefix = _OR_PREFIX.match(left)
+    if prefix and not _OR_PREFIX.match(right):
+        right = prefix.group(0) + right
+    if len(_content_words(left)) < 2 or len(_content_words(right)) < 2:
+        return ()
+    return (left, right)
+
+
 def _feature_present_uncached(feature: str, findings_text: List[str], scrub_negated_spans: bool = False,
                               strict: bool = False, ignore_words: frozenset = frozenset()) -> bool:
     """`scrub_negated_spans=True` is for checking against a general finding bag (e.g.
@@ -410,6 +444,11 @@ def _feature_present_uncached(feature: str, findings_text: List[str], scrub_nega
     for finding_lower in clauses:
         if scrub_negated_spans:
             finding_lower = _strip_negated_spans(finding_lower)
+        protected = _scoped("protected", feature_lower, lambda: _protected_qualifier(feature_lower))
+        if protected is not None:
+            if protected.search(finding_lower):
+                return True
+            continue
         # Pain is excluded from specificity scoring, but it remains a required assertion.
         # A BP report mentioning the left arm must not become 'left arm pain'; a description of the sensation
         # itself ("pressure radiating to my left arm", "crushing", "sharp") IS a pain assertion.

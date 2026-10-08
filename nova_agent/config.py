@@ -219,6 +219,11 @@ class NovaConfig:
     # NOVA_DOCUMENTED_DX: a diagnosis the patient reports as clinician-documented ("my referral mentions X") brings X
     # into the pool with one feature's worth of support (nova_agent/documented_diagnosis.py).
     documented_dx_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_DOCUMENTED_DX", True))
+    # Round Q switches (both ON by default; OFF restores the Round P behaviour for ablation):
+    # a bare yes/no/don't-know is grounded to the single feature the actual question asked (nova_agent/state.py);
+    answer_grounding_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ANSWER_GROUNDING", True))
+    # one final decision decides whether a specific diagnosis may be named (nova_agent/final_decision.py).
+    final_decision_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_FINAL_DECISION", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"

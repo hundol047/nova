@@ -219,6 +219,16 @@ def _faithful_feature_question(feature: str, lang: str) -> Optional[str]:
     return None
 
 
+def question_is_faithful(key: str, lang: str = "en") -> bool:
+    """Round Q: True when the SAY actually sent for ``key`` asks about the key's own feature. A detailed key whose
+    feature does not fit the length limit goes out as the generic follow-up instead -- its answer then says nothing
+    about that feature."""
+    category, _, detail = key.partition(":")
+    if not detail:
+        return True
+    return _faithful_feature_question(detail.replace("_", " ").strip(), lang) is not None
+
+
 def _say_core(key: str, lang: str, fallback: str) -> str:
     category, _, detail = key.partition(":")
     if detail:
@@ -242,6 +252,23 @@ def exam_request_text(exam_id: str, lang: str = "en", fallback: str = "") -> str
     if table is not None:
         return _pick(table, lang)
     return fallback or exam_id.replace("_", " ")
+
+
+_UNCERTAIN_EXPLAIN = {"ko": "아직 진단이 불확실해요.", "en": "The cause is not yet clear.",
+                      "ja": "原因はまだ不明です。", "zh": "原因尚不明确。"}
+
+
+def uncertain_explanation_text(lang: str = "en") -> str:
+    """Round Q: the closing SAY when no specific diagnosis is supported -- names nothing, claims nothing."""
+    return fit_say(_UNCERTAIN_EXPLAIN.get(lang, _UNCERTAIN_EXPLAIN["en"]))
+
+
+def same_scope_names(label: str) -> list:
+    """Round Q: names that keep the diagnosis at the SAME scope: the label and the label without its
+    parenthetical examples ("Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)" -> "Cardiac Arrhythmia"). Aliases
+    are not used: some are narrower or graver ("atrial fibrillation" for arrhythmia, "septic shock" for sepsis)."""
+    stripped = re.sub(r"\s*\(.*?\)", "", label or "").strip()
+    return [n for n in dict.fromkeys([label, stripped]) if n]
 
 
 def explanation_text(diagnosis_label: str, lang: str = "en", alternatives=()) -> str:
