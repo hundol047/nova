@@ -1,8 +1,9 @@
 # N.O.V.A. 2026 — current competition status
 
 **Status: PRE-GUIDE CANDIDATE — NOT OFFICIALLY READY.** This is the maintained status page. Older reports are
-historical evidence for the commit they name. Runtime commit: named by `artifacts/verification/CURRENT_RELEASE.json` (v21) on branch `claude/determined-brahmagupta-wrfveb` --
-Round P preliminary-rules algorithm work (`docs/competition/ROUND_P_ALGORITHM_REPORT.md`, runtime `3831555`) on top of
+historical evidence for the commit they name. Runtime commit: named by `artifacts/verification/CURRENT_RELEASE.json` (v22, runtime `8257ba6`) on branch `claude/determined-brahmagupta-wrfveb` --
+Round Q repair of the technical review's reproduced defects (`docs/competition/ROUND_Q_REPAIR_REPORT.md`) on top of
+Round P preliminary-rules algorithm work (`docs/competition/ROUND_P_ALGORITHM_REPORT.md`, runtime `3831555`) and
 Round O (`f86bfcc`, `docs/competition/ROUND_O_ALGORITHM_REPORT.md`) and Round N (`ab623ae`,
 `docs/competition/ROUND_N_ALGORITHM_REPORT.md`) and `8efd5d3`; mock provider only. `8efd5d3` was the integration of `integration/nova-preliminary-readiness` @ 60e034d and `offline/nova-competition-agent-optimization` @ 8d37c73.
 Release pointer: `artifacts/verification/CURRENT_RELEASE.json`.
@@ -42,7 +43,17 @@ development suite is unchanged case by case. The threshold, case count and concu
 
 ## 2. Preliminary diagnostic performance — LOCAL DEVELOPMENT / PRELIMINARY SIMULATION (mock, not an official score)
 
-**Current (Round P, runtime `3831555`, competition retrieval, mock, all 230 cases; `artifacts/round_p/final/prelim.json`).**
+**Current (Round Q, runtime `8257ba6`, competition retrieval, mock, all 230 cases, FROZEN simulator; `artifacts/round_q/final/`).**
+Top-1 **202/222**, critical **85/85**, avg / max interactions 19.65 / 35, unnecessary exams 297, semantic duplicate questions 11, 0 rule
+violations, 0 unsupported SOAP lines. Versus `ead1595` (215/222, 84/85): 1 better (RoundJ_25), 14 worse (non-critical). 12 of the 14 come
+from grounding bare answers while the frozen simulator answers every unscripted question "No" (all 12 are correct again with the separate
+`--unscripted-unknown` evaluation-tool variant, where the run scores 213/222, 84/85); RoundM_024 was previously right only through the false
+"irregularly irregular" match; RoundM_095 now ends undifferentiated. Unscored sparse cases: dangerous diagnosis named 7 -> 0. TEST-enabled
+competition regressions and legacy suites: no case worse. Same legacy suites in competition mode WITH TEST: 2 critical regressions
+(RoundM_096, ValO_11) from the same simulator-default cause -- unresolved, see the Round Q report. Round P set (now development data):
+24/32 -> 28/32, critical 9/13 -> 11/13. All development/regression numbers, not official or clinical performance.
+
+**Previous (Round P, runtime `3831555`, competition retrieval, mock, all 230 cases; `artifacts/round_p/final/prelim.json`).**
 Baseline `10e7de7` reproduced first (204/222, critical 80/85). Details, causes, ablations and the frozen Round P validation set are in
 `docs/competition/ROUND_P_ALGORITHM_REPORT.md`.
 
@@ -190,7 +201,7 @@ This pass's own edits are logged in `docs/compliance/LLM_GENERATION_LOG.md`.
 
 ## 5. Verification of this commit
 
-The test counts, ZIP hash and clean-room result are recorded in the v21 record named by `CURRENT_RELEASE.json`. Commands:
+The test counts, ZIP hash and clean-room result are recorded in the v22 record named by `CURRENT_RELEASE.json`. Commands:
 `pytest tests`, `pytest backend/tests`, `scripts/load_smoke_backend.py`, `scripts/evaluate_preliminary_benchmark.py --gate`,
 `scripts/validate_runtime_provenance.py`, `scripts/refresh_runtime_inventory.py --check`, `scripts/check_eval_leakage.py`,
 `scripts/build_nova_submission.py`, `scripts/validate_submission_zip.py`, `scripts/smoke_fresh_package.py`.
