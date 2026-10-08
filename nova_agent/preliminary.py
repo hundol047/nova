@@ -268,7 +268,13 @@ def same_scope_names(label: str) -> list:
     parenthetical examples ("Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)" -> "Cardiac Arrhythmia"). Aliases
     are not used: some are narrower or graver ("atrial fibrillation" for arrhythmia, "septic shock" for sepsis)."""
     stripped = re.sub(r"\s*\(.*?\)", "", label or "").strip()
-    return [n for n in dict.fromkeys([label, stripped]) if n]
+    # Dropping a leading severity/acuity/site qualifier keeps the same or a BROADER scope ("Severe Electrolyte
+    # Disorder" -> "electrolyte disorder", "Cardiac Arrhythmia" -> "arrhythmia"), never a narrower one.
+    broader = re.sub(r"^(?:(?:severe|acute|uncomplicated|community-acquired|benign|cardiac|ventricular)\s+)+", "",
+                     stripped, flags=re.I).strip()
+    if len(broader.split()) == 0 or broader.lower() in {"disorder", "disease", "syndrome"}:
+        broader = stripped
+    return [n for n in dict.fromkeys([label, stripped, broader]) if n]
 
 
 def explanation_text(diagnosis_label: str, lang: str = "en", alternatives=()) -> str:

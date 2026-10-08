@@ -244,6 +244,17 @@ _DIRECT_LOCALIZED_EVIDENCE_V3: Dict[str, str] = {
 }
 
 
+# Round Q (NOVA_EVIDENCE_V3): Korean wording whose word order a fixed substring cannot cover. Each pattern is one
+# observation; the bare chest word followed by a heartbeat verb describes the HEARTBEAT, not chest pain.
+_KO_HEARTBEAT = re.compile(r"(?:가슴|심장)(?:이|은)?\s*(?:갑자기\s*)?(?:너무\s*|막\s*)?(?:빨리|빠르게|두근|쿵쾅|벌렁)\s*(?:두근\s*)?(?:뛰|거려|거리)")
+_KO_CHEST_PAIN_WORD = re.compile(r"가슴[^.。]{0,6}(?:아파|아프|통증|답답|쥐어|조이|짓누르|뻐근|찌르)")
+_KO_PATTERNS_V3 = (
+    (re.compile(r"소변[^.。]{0,8}(?:따갑|따가|화끈|쓰라|아파|아프)|배뇨통"), "dysuria"),
+    (re.compile(r"(?:소변[^.。]{0,6}자주|자주\s*마려|자꾸\s*마려|빈뇨)"), "urinary frequency"),
+    (re.compile(r"(?:급하게\s*마려|참기\s*(?:어려|힘들))"), "urinary urgency"),
+)
+
+
 def _present_not_negated(phrase: str, text: str) -> bool:
     start = text.find(phrase)
     while start != -1:
@@ -278,5 +289,17 @@ def english_evidence_for(text: str) -> List[str]:
     if get_config().evidence_v3_enabled:
         for phrase, english in _DIRECT_LOCALIZED_EVIDENCE_V3.items():
             if english not in found and phrase in text and _present_not_negated(phrase, text):
+                found.append(english)
+        heartbeat = _KO_HEARTBEAT.search(text)
+        if heartbeat and _present_not_negated(heartbeat.group(0), text):
+            if "chest pain" in found and not _KO_CHEST_PAIN_WORD.search(text):
+                found.remove("chest pain")
+            for english in ("racing heart", "palpitations"):
+                if english not in found:
+                    found.append(english)
+        for pattern, english in _KO_PATTERNS_V3:
+            match = pattern.search(text)
+            if (match and english not in found and _present_not_negated(match.group(0), text)
+                    and not re.search(r"(?:^|\s)(?:안|못)\s", match.group(0))):   # "소변 볼 때 안 따가워요"
                 found.append(english)
     return found

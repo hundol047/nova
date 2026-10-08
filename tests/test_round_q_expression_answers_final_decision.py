@@ -280,7 +280,9 @@ def test_dangerous_tie_on_nonspecific_support_is_not_decided_by_order():
 
 def test_closing_names_stay_at_the_same_scope():
     names = same_scope_names("Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)")
-    assert names == ["Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)", "Cardiac Arrhythmia"]
+    assert names == ["Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)", "Cardiac Arrhythmia", "Arrhythmia"]
+    assert not any("fibrillation" in n.lower() for n in names[1:])
+    assert explanation_text("severe electrolyte disorder", "en", ["electrolyte disorder"]) == "Possibly electrolyte disorder."
     text = explanation_text("sepsis", "en", same_scope_names("Sepsis"))
     assert "shock" not in text.lower()
 
@@ -363,3 +365,16 @@ def test_unexamined_dangerous_alternative_with_support_is_examined_before_closin
     s.record_exam(exam.key, "normal")
     assert ActionSelector._pending_dangerous_bedside_exam(s, DifferentialEngine().update(s), []) is None or \
         ActionSelector._pending_dangerous_bedside_exam(s, DifferentialEngine().update(s), []).key != exam.key
+
+
+@pytest.mark.parametrize("text,present,absent", [
+    ("소변 볼 때 따갑고 자주 마려워요", {"dysuria", "urinary frequency"}, set()),
+    ("소변 볼 때 안 따가워요", set(), {"dysuria"}),
+    ("가슴이 갑자기 빨리 뛰고 어지러워요", {"racing heart", "palpitations"}, {"chest pain"}),
+    ("가슴이 아프고 두근거려요", {"chest pain"}, set()),
+    ("가슴이 답답해요", {"chest pain"}, {"racing heart"}),
+])
+def test_korean_heartbeat_and_urinary_wording(text, present, absent):
+    from nova_agent.multilingual_concepts import english_evidence_for
+    found = set(english_evidence_for(text))
+    assert present <= found and not (absent & found)
