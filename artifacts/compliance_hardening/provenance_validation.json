@@ -20,6 +20,7 @@
     "nova_agent/differential.py",
     "nova_agent/documented_diagnosis.py",
     "nova_agent/evidence_grounding.py",
+    "nova_agent/final_decision.py",
     "nova_agent/glucose_evidence.py",
     "nova_agent/i18n/__init__.py",
     "nova_agent/i18n/diagnosis_display.py",

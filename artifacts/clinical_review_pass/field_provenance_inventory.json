@@ -190760,7 +190760,6 @@
           "heart suddenly took off",
           "heart took off",
           "heart suddenly accelerated",
-          "heart suddenly started racing",
           "heart suddenly raced"
         ],
         "racing heart": [
@@ -190781,8 +190780,6 @@
           "leaning forward helps",
           "relieved by leaning forward",
           "better leaning forward",
-          "better when i lean forward",
-          "eases when i lean forward",
           "sitting forward helps"
         ],
         "bilateral band-like pressure": [
@@ -190832,7 +190829,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 310,
+      "line": 311,
       "names": [
         "_TIER2_LAY"
       ],

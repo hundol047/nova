@@ -2117,7 +2117,7 @@
     {
       "asset_id": "nova_agent/lay_language.py",
       "path": "nova_agent/lay_language.py",
-      "sha256": "451d46432f46b17e13a567148c3c15e9c074b333fbae488e6289fb27b81bb339",
+      "sha256": "40ada08b52dd58a6d4a9bd51bf354112410270f90f3ec10a2668abce7a5afb2f",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",

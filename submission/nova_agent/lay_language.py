@@ -276,15 +276,16 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     "seizure": ["convulsive fit", "convulsing", "convulsions", "fitting and shaking"],
     # Sudden acceleration of the heartbeat described in lay words.
     "sudden onset palpitations": ["heart suddenly took off", "heart took off", "heart suddenly accelerated",
-                                  "heart suddenly started racing", "heart suddenly raced"],
+                                  "heart suddenly raced"],
     "racing heart": ["heart took off", "heart accelerated", "heart sped up"],
     # Kidney failure treated with dialysis is CKD category G5D (KDIGO 2012 CKD guideline, Kidney Int Suppl 2013;3:1-150).
     # A plain "kidney problem" is NOT mapped: chronicity is not assumed.
     "chronic kidney disease": ["on dialysis", "ongoing dialysis", "regular dialysis", "haemodialysis", "hemodialysis",
                                "peritoneal dialysis", "dialysis three times a week"],
     # Relief by sitting forward stated in the patient's words (pericarditis-type relief); feature-local.
+    # (Variants that coincide with reference-blind wording are deliberately absent: scripts/check_eval_leakage.py.)
     "pain eased by leaning forward": ["leaning forward helps", "relieved by leaning forward", "better leaning forward",
-                                      "better when i lean forward", "eases when i lean forward", "sitting forward helps"],
+                                      "sitting forward helps"],
     # Lay wording found on the Round Q contrast development set (development use, disclosed in the report).
     "bilateral band-like pressure": ["pressing on both sides", "pressure on both sides", "squeezing on both sides"],
     "prolonged screen time": ["staring at screens", "screens all day", "on the computer all day", "looking at a screen all day"],
