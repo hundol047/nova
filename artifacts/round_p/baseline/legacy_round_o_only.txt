@@ -1,0 +1,9 @@
+tuning               acc=1.000 crit=6/6 turns=19.2 tests=8.0 unnec=0.25 dup=0 malformed=0
+held_out             acc=0.944 crit=13/13 turns=17.4 tests=6.4 unnec=0.06 dup=0 malformed=0
+generalization_v2    acc=1.000 crit=5/5 turns=13.4 tests=5.0 unnec=0.22 dup=0 malformed=0
+stress               acc=1.000 crit=5/5 turns=13.2 tests=4.2 unnec=0.38 dup=0 malformed=0
+blind_v5_dev         acc=0.977 crit=20/20 turns=17.0 tests=5.9 unnec=0.50 dup=0 malformed=0
+round_j_dev          acc=0.889 crit=20/20 turns=14.1 tests=4.7 unnec=0.56 dup=0 malformed=0
+round_m_dev          acc=0.756 crit=42/43 turns=16.9 tests=5.9 unnec=1.07 dup=0 malformed=0
+validation_round_n   acc=0.976 crit=20/20 turns=16.5 tests=5.7 unnec=0.52 dup=0 malformed=0
+validation_round_o   acc=0.943 crit=15/16 turns=18.5 tests=6.6 unnec=0.57 dup=0 malformed=0
