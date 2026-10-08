@@ -1,0 +1,10 @@
+{
+ "file": "evaluation/validation_cases_round_o.py",
+ "sha256": "20e0e04448017cb00b06f980539a9bd4829b06ed75cc9a111f97cb4dcc7fafef",
+ "cases": 37,
+ "scored": 35,
+ "critical": 17,
+ "frozen_at_commit_parent": "ef042655349f19c66658a8951d408ce233011cee",
+ "authoring": "engineering agent, single author, labels fixed from the vignette before any run; not clinician-adjudicated; categories chosen from the Round N report's open weaknesses",
+ "policy": "run at Round O baseline and at the end of Round O only; not used for tuning"
+}

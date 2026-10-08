@@ -93,6 +93,10 @@ def parse_vital_signs(text: str) -> Optional[VitalSigns]:
         return None
 
 
+SLOW_PULSE_FINDING = "pulse rate below 50"
+FAST_PULSE_FINDING = "pulse rate of 150 or more"
+
+
 def describe_vital_sign_abnormalities(vitals: VitalSigns) -> List[str]:
     """Turns structured vital-sign values into short descriptive clinical findings (e.g. "Marked
     tachycardia", "Hypotension / shock") using the SAME threshold table safety.py's
@@ -112,4 +116,21 @@ def describe_vital_sign_abnormalities(vitals: VitalSigns) -> List[str]:
             continue
         if _OPS[rule["op"]](value, rule["value"]):
             findings.append(rule["reason"])
+    # Standard adult descriptive definitions (not red flags): the red-flag table above only fires on MARKED
+    # derangement (HR >= 120, T >= 39.0), so an ordinary tachycardia (HR 118) or fever (T 38.4) previously
+    # never reached the evidence corpus at all. Each is added only when the stricter red flag did not fire.
+    hr, temp = values.get("heart_rate"), values.get("temperature_c")
+    if hr is not None and 100 < hr < 120:
+        findings.append("Tachycardia")
+    # Round Q: the heart rate itself, kept separate from any rhythm statement ("HR 37 regular" is still a slow rate).
+    # Thresholds are the ones the AHA adult bradycardia / tachycardia algorithms use to suggest a RHYTHM cause
+    # ("typically <50/min if bradyarrhythmia", "typically >=150/min if tachyarrhythmia"; Panchal AR et al., 2020
+    # AHA Guidelines for CPR and ECC, Part 3, Circulation 2020;142:S366). They prompt review of rhythm causes; they
+    # never name a subtype (AF, VT, AV block) and do not remove fever/pain/volume/drug explanations.
+    if hr is not None and hr < 50:
+        findings.append(SLOW_PULSE_FINDING)
+    if hr is not None and hr >= 150:
+        findings.append(FAST_PULSE_FINDING)
+    if temp is not None and 38.0 <= temp < 39.0:
+        findings.append("Fever")
     return findings

@@ -1,0 +1,32 @@
+A OK  The referral letter says atrial fibrillation was excluded -> [] expected []
+A OK  진단서에 atrial fibrillation 아니라고 적혀 있습니다 -> [] expected []
+A OK  The referral letter says atrial fibrillation was ruled out -> [] expected []
+A OK  The letter says pulmonary embolism cannot be excluded -> [] expected []
+A OK  The letter confirms atrial fibrillation but excludes pulmonary embolism -> ['cardiac_arrhythmia'] expected ['cardiac_arrhythmia']
+A OK  The letter confirms atrial fibrillation; the patient has no fever -> ['cardiac_arrhythmia'] expected ['cardiac_arrhythmia']
+A OK  The letter says atrial fibrillation but pulmonary embolism was excluded -> ['cardiac_arrhythmia'] expected ['cardiac_arrhythmia']
+A OK  The letter says atrial fibrillation and I have no nausea -> ['cardiac_arrhythmia'] expected ['cardiac_arrhythmia']
+A OK  My mother was diagnosed with atrial fibrillation yesterday -> [] expected []
+A OK  The specialist letter states atrial fibrillation was present in 2016 -> [] expected []
+A OK  진단서에 atrial fibrillation 의심된다고 적혀 있습니다 -> [] expected []
+A OK  진단서에 atrial fibrillation 배제할 수 없다고 적혀 있습니다 -> [] expected []
+A total 12 / 12
+A engine excluded-AF: (0.0, [], ['zero_evidence_fallback'])
+B irregular->irregularly irregular: False
+B explicit: True
+B BP 106/68, HR 37 regular, Temp 36.7 | vital findings ['pulse rate below 50'] | arrhythmia (0.3, ['pulse rate below 50'])
+B BP 120/80, HR 172 regular, Temp 36.8 | vital findings ['Marked tachycardia', 'pulse rate of 150 or more'] | arrhythmia (0.3, ['pulse rate of 150 or more'])
+B BP 120/80, HR 68 regular, Temp 36.8 | vital findings [] | arrhythmia (0.0, [])
+B engine general irregular: (1.25, ['irregular heartbeat'])
+C 'Yes.' pos ['palpitations'] neg [] | arr (0.0, [], [])
+C 'No.' pos [] neg ['no palpitations'] | arr (0.0, [], [])
+C "I don't know." pos [] neg [] | arr (0.0, [], [])
+C 'No palpitations.' pos [] neg ['No palpitations'] | arr (0.0, [], [])
+C '아니요, 없어요.' pos [] neg ['no palpitations'] | arr (0.0, [], [])
+C meds []
+D ValP_33 primary Undifferentiated presentation | key unknown | completion UNDIFFERENTIATED_INSUFFICIENT_INFORMATION INSUFFICIENT_INFORMATION | closing ['The cause is not yet clear.', 'Return at once if it worsens.'] | A: Primary diagnosis: Undifferentiated presentation | Supporting findings: no specific supporting finding | Status: no specific diagnosis is supported by the informati
+D ValP_34 primary 미분화 증상 (진단 미확정) | key unknown | completion UNDIFFERENTIATED_INSUFFICIENT_INFORMATION INSUFFICIENT_INFORMATION | closing ['아직 진단이 불확실해요.', '지금 바로 응급 검사가 필요해요.'] | A: 주진단: 미분화 증상 (진단 미확정) | 근거: 특이 근거 부족 | 상태: 얻은 정보로는 특정 진단을 뒷받침할 수 없음. 아래 감별진단은 배제되지 않았으며 추가 평가가 필요함. | 상충 소견: 없음 | 확인되지 않은 감별 소견: 없음 | 감별진단: | - 자궁외임신: dizziness | - 미주신경성 실신: 
+D ValP_17 primary Undifferentiated presentation | key unknown | completion UNDIFFERENTIATED_INSUFFICIENT_INFORMATION INSUFFICIENT_INFORMATION | closing ['The cause is not yet clear.', 'You need urgent tests now.'] | A: Primary diagnosis: Undifferentiated presentation | Supporting findings: no specific supporting finding | Status: no specific diagnosis is supported by the informati
+D ValP_11 primary Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia) | key severe_electrolyte_disorder | completion FORCED_FINAL_DIAGNOSIS INSUFFICIENT_INFORMATION | closing ['I will explain next.', 'You need urgent tests now.'] | A: Primary diagnosis: Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia) | Supporting findings: muscle weakness; muscle cramps; diuretic use | Contradictory 
+D ValP_13 primary Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia) | key severe_electrolyte_disorder | completion FORCED_FINAL_DIAGNOSIS INSUFFICIENT_INFORMATION | closing ['I will explain next.', 'You need urgent tests now.'] | A: Primary diagnosis: Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia) | Supporting findings: muscle weakness; palpitations; chronic kidney disease; miss
+D ValP_16 primary Ventricular Tachycardia | key onto::tier2:ventricular_tachycardia | completion FORCED_FINAL_DIAGNOSIS INSUFFICIENT_INFORMATION | closing ['I will explain next.', 'You need urgent tests now.'] | A: Primary diagnosis: Ventricular Tachycardia | Supporting findings: syncope; chest pain; history of heart attack or cardiomyopathy | Contradictory findings: palpitati

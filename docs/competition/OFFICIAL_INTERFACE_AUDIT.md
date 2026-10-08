@@ -9,6 +9,12 @@ participant mail contains no additional material; no such material was supplied 
 
 Each row has exactly one status. An official action name does not establish its JSON encoding.
 
+> **Reading CONFIRMED_BRIEFING.** Rows below marked `CONFIRMED_BRIEFING` rest on the 2026-10-06 preliminary-round
+> briefing as **transcribed by the team from slide photos**. It is not a published organizer document and it
+> conflicts with the public web page in places (e.g. 50 vs 60 turns). Treat each such row as an *assumption
+> to re-confirm against the participant guide*, not as settled. The assumptions are enumerated in code in
+> `evaluation/preliminary_driver.py::ORGANIZER_ASSUMPTIONS` and in `nova_agent/config.py` (`PRELIMINARY_*`).
+
 | Element | Status | Evidence or current boundary |
 | --- | --- | --- |
 | ASK / EXAM / TEST / DIAGNOSE names | CONFIRMED_OFFICIAL | Evaluation: 진행 방식 |
@@ -69,7 +75,7 @@ global change, so the development benchmarks keep their behaviour.
 | SAY: one question, at most 30 characters | CONFIRMED_BRIEFING | `fit_say` guarantees the limit in every language; templates exist for ko/en/ja/zh, other scripts fall back to English |
 | EXAM: one maneuver per request | CONFIRMED_BRIEFING | single-maneuver exam text |
 | SOAP note on DIAGNOSE with turn numbers; only asked/examined content counts | CONFIRMED_BRIEFING | `nova_agent/soap.py` rebuilt from the turn log; field names PLACEHOLDER |
-| At most 8 model calls per case (first, final, every 4th turn) | CONFIRMED_BRIEFING | `PRELIMINARY_MAX_LLM_CALLS_PER_CASE`; verified only against the mock model |
+| At most 8 model calls per case (first, final, every 4th turn) | INTERNAL_ENGINEERING_BUDGET | **Not an organizer requirement.** Team sizing in `PRELIMINARY_MAX_LLM_CALLS_PER_CASE` against the briefing's per-session caps; verified only against the mock model |
 | Closing dialogue (core history, diagnosis SAY, next-step SAY) | CONFIRMED_BRIEFING | adapter `_closing_action` |
 | Rejected examination requests | NOT_AVAILABLE | rejection wording unpublished; detected by a documented heuristic (below) |
 

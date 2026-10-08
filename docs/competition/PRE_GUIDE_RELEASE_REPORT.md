@@ -1,5 +1,7 @@
 # N.O.V.A. 2026 PRE-GUIDE RELEASE REPORT
 
+> **Historical report** for the runtime it names (v16-era). Its test counts, benchmark values and SHAs describe that commit only. Current status: [`../CURRENT_STATUS.md`](../CURRENT_STATUS.md).
+
 REMOTE HEAD audited: `7c2c59773cdff71a8fde33e61dfa346f3110e076`
 CURRENT RUNTIME SHA: `920eb608337fd035746be17cd87f12eb93bbe604`
 

@@ -27,11 +27,6 @@ from nova_agent.assertion_status import is_uncertain
 from nova_agent.state import PatientState
 from nova_agent.taxonomy import EXAM_CATALOG, TEST_CATALOG
 
-_NEGATIVE_ANSWER = re.compile(
-    r"^\s*(no\b|none\b|denies|denied|nope|not\b|no,|아니|없|부인|ない|ありません|没有|无)|don't have|do not have|doesn't have",
-    re.IGNORECASE,
-)
-
 _LABELS = {
     "ko": {
         "S": "S (주관적 정보)", "O": "O (객관적 정보)", "A": "A (평가)", "P": "P (계획)",
@@ -40,7 +35,7 @@ _LABELS = {
         "denied": "없음", "unclear": "불명확(확인 필요)", "initial": "초진 시", "vitals": "활력징후", "no_exam": "시행한 진찰 없음",
         "rejected": "요청 거절됨(결과 없음)", "tests_none": "검사 결과 없음(예선에서 검사 불가)",
         "dx": "주진단", "basis": "근거", "ddx": "감별진단", "no_basis": "특이 근거 부족",
-        "against": "반대/부족 소견", "tests": "추가 검사", "tx": "치료·처치 결정", "fu": "추적",
+        "against": "반대/부족 소견", "contra": "상충 소견", "missing": "확인되지 않은 감별 소견", "tests": "추가 검사", "tx": "치료·처치 결정", "fu": "추적",
         "edu": "환자 교육", "none": "없음",
         "tx_urgent": "응급 상황 가능성: 즉시 응급실 평가와 모니터링, 필요 시 즉각적인 처치",
         "tx_routine": "원인 질환 평가 후 증상 완화 중심의 보존적 관리, 위험 징후 시 상향 조정",
@@ -57,7 +52,7 @@ _LABELS = {
         "vitals": "Vital signs", "no_exam": "no examination performed", "rejected": "request rejected (no result)",
         "tests_none": "no test results (tests are unavailable in the preliminary round)",
         "dx": "Primary diagnosis", "basis": "Supporting findings", "ddx": "Differential diagnosis",
-        "no_basis": "no specific supporting finding", "against": "against/lacking", "tests": "Further tests",
+        "no_basis": "no specific supporting finding", "against": "against/lacking", "contra": "Contradictory findings", "missing": "Missing discriminating evidence", "tests": "Further tests",
         "tx": "Treatment / disposition decision", "fu": "Follow-up", "edu": "Patient education", "none": "none",
         "tx_urgent": "Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated",
         "tx_routine": "Evaluate the cause, then conservative symptom-directed care; escalate if warning signs appear",
@@ -95,12 +90,77 @@ def _is_unclear(answer: str) -> bool:
     return is_uncertain(answer) or bool(_PATIENT_UNSURE.search(answer or ""))
 
 
-def _is_denial(answer: str) -> bool:
-    """A short answer that only denies ("No, I don't have that.") -- never one that also affirms."""
+# --- answer classification -------------------------------------------------------------------------
+# An answer is rewritten to "denied" ONLY when every clause of it is an unambiguous denial. A leading
+# "No"/"아니요" never turns the whole answer negative when a later clause states a positive fact
+# ("No insulin. I take metformin." / "아니요, 아스피린 알레르기가 있어요."): anything mixed, positive,
+# uncertain or unparseable is kept verbatim, because lossy normalisation here deletes real patient
+# information from the SOAP note.
+_CLAUSE_SPLIT = re.compile(
+    r"[.;,!?:/\n。、，；！？]+"
+    r"|\s+(?:but|however|except|although|though|yet|and|or|also|while|whereas)\s+"
+    r"|(?<=[가-힣])\s*(?:하지만|그러나|그런데|근데|그리고|다만|이지만|지만)\s*"
+    r"|(?<=[가-힣])(?:고|는데|으나|며|면서)\s+"
+    r"|(?:けど|けれど|でも|しかし|が、)"
+    r"|(?:但是|但|而且|不过|可是|除了)",
+    re.IGNORECASE,
+)
+_NEGATION = re.compile(
+    r"^\s*(?:no|none|nope|nah|nothing|never|not|neither|denies|denied|n/a|negative)\b"
+    r"|\b(?:don'?t|do not|doesn'?t|does not|didn'?t|did not|haven'?t|have not|hasn'?t|has not|"
+    r"never (?:take|took|use|used|had|have|been)|not (?:taking|on|using|allergic|aware)|no known)\b"
+    r"|아니|없|않|못\s|안\s|부인|아닙니다"
+    r"|ありません|いません|ない|ません|なし"
+    r"|没有|没|无|不(?:吃|服|用|曾|是|会|对|痛|疼|发)",
+    re.IGNORECASE,
+)
+_UNCERTAIN = re.compile(
+    r"\b(?:not sure|unsure|don'?t know|do not know|dunno|maybe|perhaps|i guess|not certain|can'?t remember|"
+    r"cannot remember|don'?t remember)\b|모르|기억.{0,3}(?:안|않|못)|잘 모|확실하지|아마|わかりません|分かりません|不知道|不确定|不清楚",
+    re.IGNORECASE,
+)
+# A clause that names something the patient DOES (or "only"/"just"/"except") is positive content even
+# when it contains a negation word ("only aspirin, no other drugs").
+_AFFIRM_GUARD = re.compile(r"\b(?:only|just|except|besides|other than|aside from)\b|만\s|말고|빼고|제외|だけ|のみ|只|仅|除", re.IGNORECASE)
+
+
+def _clauses(answer: str) -> List[str]:
+    return [c.strip() for c in _CLAUSE_SPLIT.split(answer or "") if c and c.strip()]
+
+
+def classify_answer(answer: str) -> str:
+    """'empty' | 'denied' | 'uncertain' | 'affirmed' | 'mixed'.
+
+    'denied' means the ENTIRE answer is a clear denial. 'mixed' means at least one denial clause and
+    at least one non-denial clause. The SOAP writer shows the patient's own words for everything
+    except 'denied'."""
     text = (answer or "").strip()
-    if len(text) > 60 or re.search(r"\b(but|however|except)\b|하지만|그러나|でも|しかし", text, re.IGNORECASE):
-        return False
-    return bool(_NEGATIVE_ANSWER.search(text))
+    if not text or not re.search(r"\w", text):
+        return "empty"
+    if _UNCERTAIN.search(text):
+        return "uncertain"
+    clauses = _clauses(text)
+    if not clauses:
+        return "empty"
+    negative = [bool(_NEGATION.search(c)) and not _AFFIRM_GUARD.search(c) for c in clauses]
+    if all(negative):
+        return "denied"
+    return "mixed" if any(negative) else "affirmed"
+
+
+def label_alternatives(entry: Optional[dict], lang: str) -> List[str]:
+    """Other names of a knowledge-base entry (aliases/abbreviations), same script as ``lang`` first, so a
+    spoken explanation can use a short name when the formal one is too long for a 30-character SAY."""
+    if not entry:
+        return []
+    aliases = [a for a in entry.get("aliases", []) if isinstance(a, str)]
+    hangul = [a for a in aliases if re.search(r"[가-힣]", a)]
+    other = [a for a in aliases if not re.search(r"[가-힣]", a)]
+    return (hangul + other) if lang == "ko" else other
+
+
+def _is_denial(answer: str) -> bool:
+    return classify_answer(answer) == "denied"
 
 
 _CATEGORY_SECTION = {
@@ -195,24 +255,44 @@ def _education_line(state: PatientState, L: Dict[str, str], flags: List[str]) ->
     return f"{L['edu']}: {L['edu_done']} -- " + "; ".join(parts) + tail
 
 
-def build_soap(state: PatientState, differential: list, lang: str = "en") -> Dict[str, object]:
+_UNDIFF_NOTE = {
+    "en": "Status: no specific diagnosis is supported by the information obtained; the candidates below are not "
+          "excluded and need further evaluation.",
+    "ko": "상태: 얻은 정보로는 특정 진단을 뒷받침할 수 없음. 아래 감별진단은 배제되지 않았으며 추가 평가가 필요함.",
+}
+
+
+def build_soap(state: PatientState, differential: list, lang: str = "en", final=None) -> Dict[str, object]:
     """Returns {'S','O','A','P' (text blocks), 'primary_diagnosis', 'text'} for the final DIAGNOSE.
 
     ``differential`` is the validated differential the agent just decided on (DifferentialItem
-    objects, rank order); the primary diagnosis is its first element."""
+    objects, rank order). Round Q: ``final`` (nova_agent/final_decision.FinalDecision) decides the primary; without
+    it the first element is used (legacy callers). An undifferentiated decision states so in A and keeps every
+    candidate as an alternative that is not excluded."""
     L = _labels(lang)
-    top = differential[0] if differential else None
+    undifferentiated = final is not None and final.item is None
+    if final is not None:
+        top = final.item
+        others = [d for d in differential if top is None or d.diagnosis_id != top.diagnosis_id]
+    else:
+        top = differential[0] if differential else None
+        others = list(differential[1:])
     top_entry = _entry_for(top.diagnosis_id) if top else None
-    primary = localized_name(top_entry, top.diagnosis if top else (state.chief_complaint or L["none"]), lang)
-    if top is not None and primary != top.diagnosis and lang == "ko":
-        primary = f"{primary} ({top.diagnosis})"
+    if undifferentiated:
+        primary = final.label(lang)
+    else:
+        primary = localized_name(top_entry, top.diagnosis if top else (state.chief_complaint or L["none"]), lang)
+        if top is not None and primary != top.diagnosis and lang == "ko":
+            primary = f"{primary} ({top.diagnosis})"
 
     basis = list(top.supporting_evidence) if top else []
     a_lines = [f"{L['dx']}: {primary}",
                f"{L['basis']}: " + ("; ".join(basis[:8]) if basis else L["no_basis"])]
+    if undifferentiated:
+        a_lines.append(_UNDIFF_NOTE["ko" if lang == "ko" else "en"])
     ddx_lines = []
     dangerous_entries: List[dict] = []
-    for item in differential[1:5]:
+    for item in others[:5 if undifferentiated else 4]:
         entry = _entry_for(item.diagnosis_id)
         name = localized_name(entry, item.diagnosis, lang)
         reason = "; ".join(item.supporting_evidence[:3]) or L["no_basis"]
@@ -220,10 +300,17 @@ def build_soap(state: PatientState, differential: list, lang: str = "en") -> Dic
         ddx_lines.append(f"- {name}: {reason}" + (f" ({L['against']}: {against})" if against else ""))
         if item.dangerous_if_missed and entry and item.supporting_evidence and len(dangerous_entries) < 1:
             dangerous_entries.append(entry)
+    contra = list(top.contradictory_evidence) if top else []
+    missing = list(top.missing_discriminative_evidence) if top else []
+    a_lines.append(f"{L['contra']}: " + ("; ".join(contra[:4]) if contra else L["none"]))
+    a_lines.append(f"{L['missing']}: " + ("; ".join(missing[:4]) if missing else L["none"]))
     a_lines.append(f"{L['ddx']}:")
     a_lines.extend(ddx_lines or [f"- {L['none']}"])
 
-    urgent = bool(top and (top.dangerous_if_missed or top.urgency in ("CRITICAL", "HIGH")))
+    urgent = bool(top and (top.dangerous_if_missed or top.urgency in ("CRITICAL", "HIGH"))) or (
+        undifferentiated and any(d.dangerous_if_missed and d.supporting_evidence and d.score > 0 for d in differential[:3]))
+    if undifferentiated and differential:
+        top_entry = _entry_for(differential[0].diagnosis_id)  # tests that would evaluate the leading possibility
     tests = _plan_tests(top_entry, dangerous_entries, lang)
     flags = list((top_entry or {}).get("red_flag_keywords") or [])[:6]
     p_lines = [f"{L['tests']}: " + (", ".join(tests) if tests else L["none"]),

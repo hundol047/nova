@@ -1,0 +1,11 @@
+{
+ "file": "evaluation/dev_cases_round_q.py",
+ "sha256": "bbc03df68d0b2fc942dca6d4a712709de1bc15420e886a9c1b0db5df00f64d90",
+ "cases": 48,
+ "scored": 36,
+ "unscored_behaviour_cases": 12,
+ "frozen_at_commit_parent": "f4cc800753295ab4e6603ddd2d878bcd126378d3",
+ "status": "DEVELOPMENT set, not an evaluation: written by the same engineering agent AFTER the Round Q fixes were designed; single author; not clinician-adjudicated; not independent; not blind",
+ "rules": "preliminary (SAY/EXAM/DIAGNOSE, no TEST), competition retrieval, mock LLM, frozen simulator defaults",
+ "policy": "labels and expectations fixed before the first run; not edited after any run"
+}

@@ -98,6 +98,9 @@ async def lifespan(app):
     app.state.lab_order_repo=LabOrderRepository(app.state.adapter)
     app.state.idempotency=IdempotencyStore()
     app.state.nova_service=NovaService()
+    # Warm the immutable N.O.V.A. knowledge/catalog/index caches before serving (startup cost is reported
+    # separately from steady-state request latency; NOVA_SKIP_WARMUP=1 disables it, e.g. for fast unit tests).
+    app.state.nova_warmup_seconds=None if os.getenv('NOVA_SKIP_WARMUP')=='1' else app.state.nova_service.warm_up()
     if isinstance(app.state.adapter,DemoAdapter):
         # Seed each bundled demo patient with one past Encounter+Vitals+Diagnosis+signed Note --
         # see services/demo_seed.py. Runs through the same repository methods a real API call

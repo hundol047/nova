@@ -498,6 +498,8 @@ CONFIRMATORY_PHRASE_TO_LAB: Dict[str, tuple] = {
     "elevated potassium": ("lab.potassium", "high"),
     "hyponatremia": ("lab.sodium", "low"),
     "low sodium": ("lab.sodium", "low"),
+    "hypokalemia": ("lab.potassium", "low"),
+    "low potassium": ("lab.potassium", "low"),
     "elevated white blood cell count": ("lab.wbc", "high"),
     "low hemoglobin": ("lab.hemoglobin", "low"),
     "hemoglobin drop": ("lab.hemoglobin", "low"),

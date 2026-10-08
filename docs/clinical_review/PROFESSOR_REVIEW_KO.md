@@ -136,7 +136,7 @@
 파일: `nova_agent/knowledge/diseases/cardiac.json`
 현재 코드 분류: urgency=MEDIUM, dangerous=True (미검토)
 
-- 증상 특징: ["sudden onset palpitations", "irregular heartbeat", "racing heart", "associated lightheadedness", "known history of arrhythmia"]
+- 증상 특징: ["sudden onset palpitations", "irregular heartbeat", "racing heart", "associated lightheadedness", "known history of arrhythmia", "pulse rate below 50", "pulse rate of 150 or more"]
 - 현재 확진 관련 소견: ["irregularly irregular rhythm", "narrow complex tachycardia", "atrial fibrillation on ecg", "high-grade AV block", "second-degree AV block", "bradycardia with dropped beats"]
 - 위험 인자: ["hypertension", "structural heart disease", "hyperthyroidism", "excessive caffeine or stimulant use", "advanced age"]
 - 최소 검사: []
@@ -243,7 +243,7 @@
 파일: `nova_agent/knowledge/diseases/pulmonary.json`
 현재 코드 분류: urgency=CRITICAL, dangerous=True (미검토)
 
-- 증상 특징: ["sudden onset dyspnea", "pleuritic chest pain", "tachycardia", "hemoptysis", "calf swelling", "unilateral leg pain"]
+- 증상 특징: ["sudden onset dyspnea", "pleuritic chest pain", "tachycardia", "hemoptysis", "calf swelling", "unilateral leg pain", "tachypnea", "hypoxia"]
 - 현재 확진 관련 소견: ["filling defect in the pulmonary artery", "elevated D-dimer"]
 - 위험 인자: ["recent surgery", "immobilization", "long travel", "malignancy", "oral contraceptive use", "prior DVT or PE", "pregnancy"]
 - 최소 검사: ["d_dimer", "ct_chest_angio"]
@@ -286,9 +286,9 @@
 파일: `nova_agent/knowledge/diseases/endocrine_metabolic.json`
 현재 코드 분류: urgency=CRITICAL, dangerous=True (미검토)
 
-- 증상 특징: ["muscle weakness", "palpitations", "confusion", "arrhythmia", "seizure"]
-- 현재 확진 관련 소견: ["peaked t waves", "hyperkalemia", "elevated potassium", "hyponatremia", "low sodium", "widened qrs"]
-- 위험 인자: ["chronic kidney disease", "diuretic use", "vomiting or diarrhea", "renin-angiotensin system inhibitor use"]
+- 증상 특징: ["muscle weakness", "palpitations", "confusion", "arrhythmia", "seizure", "muscle cramps"]
+- 현재 확진 관련 소견: ["peaked t waves", "hyperkalemia", "elevated potassium", "hyponatremia", "low sodium", "widened qrs", "hypokalemia", "low potassium", "prominent u waves"]
+- 위험 인자: ["chronic kidney disease", "diuretic use", "vomiting or diarrhea", "renin-angiotensin system inhibitor use", "missed dialysis session"]
 - 최소 검사: ["bmp"]
 - 위험 신호: ["arrhythmia", "muscle weakness with renal disease", "confusion with renal disease"]
 - 구별용 검사: ["bmp", "ecg"]
@@ -351,7 +351,7 @@
 현재 코드 분류: urgency=MEDIUM, dangerous=False (미검토)
 
 - 증상 특징: ["periumbilical pain migrating to right lower quadrant", "anorexia", "low grade fever", "nausea"]
-- 현재 확진 관련 소견: ["inflamed appendix", "appendiceal wall thickening", "dilated appendix", "periappendiceal fat stranding", "appendicolith", "appendiceal inflammation", "McBurney's point tenderness", "right lower quadrant tenderness", "rebound tenderness"]
+- 현재 확진 관련 소견: ["inflamed appendix", "appendiceal wall thickening", "dilated appendix", "periappendiceal fat stranding", "appendicolith", "appendiceal inflammation", "McBurney's point tenderness", "right lower quadrant tenderness", "right lower quadrant rebound tenderness"]
 - 위험 인자: ["young age"]
 - 최소 검사: []
 - 위험 신호: ["rebound tenderness", "guarding"]

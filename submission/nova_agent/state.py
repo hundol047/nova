@@ -123,6 +123,81 @@ class Demographics(BaseModel):
     pregnant: Optional[bool] = None
 
 
+_MODIFIER_LEAD = re.compile(r"^\s*(?:worse|better|relieved|eased|eases|helps|helped|aggravated|brought on|triggered|"
+                            r"makes? it|nothing|none|no\b|not\b)", re.IGNORECASE)
+
+
+def _contextualise_modifier(category: str, segment: str) -> str:
+    """'twisting and pressing on it' answered to an AGGRAVATING question -> 'worse with twisting and pressing on it';
+    to a RELIEVING question -> 'relieved by ...'. Empty when off, not a modifier question, or already explicit."""
+    from nova_agent.config import get_config
+    if category not in ("aggravating", "relieving") or not get_config().concepts_v2_enabled:
+        return ""
+    if not segment or _MODIFIER_LEAD.search(segment):
+        return ""
+    return ("worse with " if category == "aggravating" else "relieved by ") + segment.strip()
+
+
+def _with_canonical_concepts(texts: List[str]) -> List[str]:
+    """Append canonical knowledge-base phrases for clinical wording found in ``texts`` (see
+    nova_agent/clinical_concepts.py); the original texts are kept unchanged."""
+    from nova_agent.config import get_config
+    if not get_config().concept_normalization_enabled:
+        return texts
+    from nova_agent.clinical_concepts import canonical_findings_for
+    out = list(texts)
+    for text in texts:
+        out += [c for c in canonical_findings_for(text) if c not in out]
+    return out
+
+
+# --- Round Q: what a bare answer means depends on the question actually asked ---------------------------------------
+# A reply that is ONLY yes / no / don't-know carries no content of its own. It is attached to the single feature the
+# actual question asked about (when the question asked about one), and otherwise is not stored as a finding at all.
+_ANSWER_UNKNOWN = re.compile(
+    r"\b(?:don'?t know|do not know|not sure|unsure|no idea|can'?t remember|cannot remember|can'?t recall|"
+    r"don'?t remember|do not remember|can'?t say)\b|모르겠|몰라|기억(?:이)? ?안|잘 모르", re.IGNORECASE)
+_ANSWER_BARE_NO = re.compile(
+    r"^(?:no|nope|nah|none|not really|never|no,? never|no,? not (?:really|at all)|"
+    r"(?:no,? )?i (?:don'?t|do not)(?: have (?:that|any|it|them))?|"
+    r"아니요|아뇨|아니오|아니|없어요|없습니다|없어|아니요,? ?(?:그런 ?(?:건|것은?) ?)?없(?:어요|습니다))$", re.IGNORECASE)
+_ANSWER_BARE_YES = re.compile(
+    r"^(?:yes|yeah|yep|yup|i do|i have|i did|yes,? i (?:do|have|did)(?: (?:that|it))?|"
+    r"네|예|있어요|있습니다|네,? ?있어요|맞아요)$", re.IGNORECASE)
+
+
+def answer_kind(answer: str) -> Optional[str]:
+    """'unknown' | 'no' | 'yes' for a reply that carries nothing but that; None for a reply with content."""
+    text = re.sub(r"\s+", " ", (answer or "").strip()).rstrip(" .!?~")
+    if not text:
+        return "unknown"
+    if _ANSWER_UNKNOWN.search(text):
+        return "unknown"
+    if _ANSWER_BARE_NO.match(text):
+        return "no"
+    if _ANSWER_BARE_YES.match(text):
+        return "yes"
+    return None
+
+
+_EXAM_RESULT_UNKNOWN = re.compile(
+    r"\b(?:result unknown|unknown|not (?:done|performed|available|assessed|possible)|unavailable|unable to (?:assess|examine|perform)|"
+    r"could not be (?:assessed|examined|performed)|pending)\b|확인 불가|알 수 없", re.IGNORECASE)
+
+
+class ActionOutcome(BaseModel):
+    """Round Q: what an ASK / EXAM actually produced. ``faithful`` is False when the question that was actually put
+    to the patient was a generic fallback rather than the detailed discriminator the selector intended."""
+    model_config = ConfigDict(extra="forbid")
+
+    action_type: Literal["ASK", "EXAM"]
+    key: str
+    status: Literal["OBSERVED", "UNKNOWN", "REJECTED", "UNAVAILABLE"]
+    targets: List[str] = Field(default_factory=list)
+    faithful: bool = True
+    raw: str = ""
+
+
 class ConversationTurn(BaseModel):
     turn: int
     action_type: ActionType
@@ -198,6 +273,16 @@ class PatientState(BaseModel):
 
     initial_vitals_text: Optional[str] = None
     rejected_exams: List[str] = Field(default_factory=list)
+    # Round Q: per-action outcomes, features answered "don't know", and detailed questions that went out only as a
+    # generic fallback (never re-sent, never counted as having asked the detailed discriminator).
+    action_outcomes: List[ActionOutcome] = Field(default_factory=list)
+    unknown_findings: List[str] = Field(default_factory=list)
+    unfaithful_questions: List[str] = Field(default_factory=list)
+    # Round Q: features denied ONLY by a bare "No" (retracted into a conflict if the patient later reports them).
+    bare_denials: List[str] = Field(default_factory=list)
+    # Round Q: why the encounter is ending ("supported" | "information_exhausted" | "budget"), set by the selector
+    # whenever it returns DIAGNOSE. Completion is not support: see nova_agent/final_decision.py.
+    completion_reason: Optional[str] = None
     performed_actions: List[ConversationTurn] = Field(default_factory=list)
     asked_questions: List[str] = Field(default_factory=list)
     completed_examinations: List[str] = Field(default_factory=list)
@@ -329,6 +414,16 @@ class PatientState(BaseModel):
     def question_asked(self, discriminator: str) -> bool:
         return f"ask:{discriminator}" in self.asked_questions
 
+    def question_attempted(self, discriminator: str) -> bool:
+        """Asked faithfully OR already sent as a generic fallback: either way, not to be sent again."""
+        return self.question_asked(discriminator) or discriminator in self.unfaithful_questions
+
+    def exam_observed(self, exam_id: str) -> bool:
+        """An examination that actually produced a result (not rejected, not 'result unknown')."""
+        if exam_id not in self.completed_examinations or exam_id in self.rejected_exams:
+            return False
+        return not any(o.action_type == "EXAM" and o.key == exam_id and o.status != "OBSERVED" for o in self.action_outcomes)
+
     def exam_done(self, exam_id: str) -> bool:
         return exam_id in self.completed_examinations
 
@@ -337,7 +432,7 @@ class PatientState(BaseModel):
 
     def is_duplicate(self, action_type: ActionType, key: str) -> bool:
         if action_type == "ASK":
-            return self.question_asked(key)
+            return self.question_attempted(key)
         if action_type == "EXAM":
             return self.exam_done(key)
         if action_type == "TEST":
@@ -346,15 +441,29 @@ class PatientState(BaseModel):
 
     # --- record-keeping --------------------------------------------------------------------------
 
-    def record_ask(self, discriminator: str, question_text: str, answer: str) -> None:
+    def record_ask(self, discriminator: str, question_text: str, answer: str, faithful: bool = True) -> None:
+        """``faithful=False``: the question actually put to the patient was a generic fallback, not the detailed
+        discriminator -- the generic category is recorded as asked, the detailed one only as attempted."""
         self.turn_count += 1
-        key = f"ask:{discriminator}"
+        category, _, detail = discriminator.partition(":")
+        if faithful or not detail:
+            key = f"ask:{discriminator}"
+        else:
+            key = f"ask:{category}"
+            if discriminator not in self.unfaithful_questions:
+                self.unfaithful_questions.append(discriminator)
         if key not in self.asked_questions:
             self.asked_questions.append(key)
         turn = ConversationTurn(turn=self.turn_count, action_type="ASK", content=question_text, result=answer, key=discriminator)
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
-        self._absorb_answer(discriminator, answer)
+        target = detail.replace("_", " ").strip() if (detail and faithful) else None
+        from nova_agent.config import get_config
+        kind = answer_kind(answer) if get_config().answer_grounding_enabled else None
+        self.action_outcomes.append(ActionOutcome(
+            action_type="ASK", key=discriminator, status="UNKNOWN" if kind == "unknown" else "OBSERVED",
+            targets=[target] if target else [], faithful=faithful or not detail, raw=answer or ""))
+        self._absorb_answer(discriminator, answer, target=target, kind=kind)
 
     def record_exam(self, exam_id: str, result: str) -> None:
         self.turn_count += 1
@@ -366,6 +475,9 @@ class PatientState(BaseModel):
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
         self.physical_examinations[exam_id] = result
+        unknown = bool(_EXAM_RESULT_UNKNOWN.search(result or "")) or not (result or "").strip()
+        self.action_outcomes.append(ActionOutcome(action_type="EXAM", key=exam_id, status="UNKNOWN" if unknown else "OBSERVED",
+                                                  raw=result or ""))
         if exam_id == "vital_signs":
             parsed = parse_vital_signs(result)
             if parsed is not None:
@@ -398,6 +510,7 @@ class PatientState(BaseModel):
         if exam_id not in self.completed_examinations:
             self.completed_examinations.append(exam_id)
         self.rejected_exams.append(exam_id)
+        self.action_outcomes.append(ActionOutcome(action_type="EXAM", key=exam_id, status="REJECTED"))
 
     def record_say(self, content: str, reply: str = "", key: str = "") -> None:
         """A conversational turn (explanation/empathy) that gathers no new history: costs one turn,
@@ -438,7 +551,8 @@ class PatientState(BaseModel):
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
 
-    def _absorb_answer(self, discriminator: str, answer: str) -> None:
+    def _absorb_answer(self, discriminator: str, answer: str, target: Optional[str] = None,
+                       kind: Optional[str] = None) -> None:
         """Very small deterministic extraction: route a free-text answer into the right
         PatientState bucket based on which question category was asked. Kept intentionally simple
         (no NLP) -- the structured discriminator already tells us what was asked, so we do not need
@@ -452,6 +566,42 @@ class PatientState(BaseModel):
         segments and each segment is classified independently.
         """
         category = discriminator.split(":", 1)[0]
+        if kind is not None:
+            # Round Q: a bare yes / no / don't-know. Grounded to the ONE feature the question really asked about;
+            # otherwise it is no finding at all ("No" is not a symptom, "I don't know" is not a drug name).
+            if target and kind == "yes":
+                if target not in self.pertinent_positives:
+                    self.pertinent_positives.append(target)
+                if category == "associated_symptoms" and target not in self.associated_symptoms:
+                    self.associated_symptoms.append(target)
+            elif target and kind == "no":
+                if self._already_reported(target):
+                    # A bare "No" that contradicts what the patient already described is not a clean denial: keep
+                    # the earlier observation and record the conflict instead of erasing either.
+                    label = f"conflicting answer: {target}"
+                    if label not in self.unknown_findings:
+                        self.unknown_findings.append(label)
+                else:
+                    denial = f"no {target}"
+                    if denial not in self.pertinent_negatives:
+                        self.pertinent_negatives.append(denial)
+                    if target not in self.bare_denials:
+                        self.bare_denials.append(target)
+            elif kind == "unknown":
+                label = target or category
+                if label not in self.unknown_findings:
+                    self.unknown_findings.append(label)
+            if category in ("onset", "duration", "severity") and kind != "unknown":
+                setattr(self, {"onset": "symptom_onset", "duration": "duration", "severity": "severity"}[category],
+                        answer)
+            if answer and answer not in self.raw_history_facts:
+                self.raw_history_facts.append(f"[{category}] {answer}")
+            if category == "medication" and answer and answer not in self.medication_text:
+                self.medication_text.append(answer)
+            if category == "allergy" and answer and answer not in self.allergy_text:
+                self.allergy_text.append(answer)
+            self._retract_contradicted_bare_denials()
+            return
         segments = _split_answer_segments(answer)
         positive_segments = [s for s in segments if not _segment_is_negated(s)]
         negative_segments = [s for s in segments if _segment_is_negated(s)]
@@ -479,6 +629,11 @@ class PatientState(BaseModel):
             if answer and answer not in self.medication_text:
                 self.medication_text.append(answer)
             for seg in positive_segments:
+                if _ANSWER_UNKNOWN.search(seg):
+                    # "I cannot remember their names": the raw text is kept above; no drug of that name exists.
+                    if "medication names" not in self.unknown_findings:
+                        self.unknown_findings.append("medication names")
+                    continue
                 self.add_medication(Medication(name=seg, status="active", note=answer))
         elif category == "allergy":
             if answer and answer not in self.allergy_text:
@@ -489,6 +644,11 @@ class PatientState(BaseModel):
             for seg in positive_segments:
                 if seg not in self.pertinent_positives:
                     self.pertinent_positives.append(seg)
+                contextual = _contextualise_modifier(category, seg)
+                if contextual and contextual not in self.pertinent_positives:
+                    # Round O: the question gives the answer its meaning ("twisting" asked as an aggravating factor
+                    # means "worse with twisting"); the bare answer is kept too.
+                    self.pertinent_positives.append(contextual)
                 if category == "associated_symptoms" and seg not in self.associated_symptoms:
                     self.associated_symptoms.append(seg)
             for seg in negative_segments:
@@ -497,6 +657,29 @@ class PatientState(BaseModel):
 
         if answer and answer not in self.raw_history_facts:
             self.raw_history_facts.append(f"[{category}] {answer}")
+        self._retract_contradicted_bare_denials()
+
+    def _retract_contradicted_bare_denials(self) -> None:
+        """A feature denied only by an earlier bare "No" and now reported in the patient's own words is a conflict,
+        not a denial: the denial is withdrawn and the conflict recorded (an explicit denial is never withdrawn)."""
+        for target in list(self.bare_denials):
+            if self._already_reported(target, include_last=True):
+                self.bare_denials.remove(target)
+                denial = f"no {target}"
+                if denial in self.pertinent_negatives:
+                    self.pertinent_negatives.remove(denial)
+                label = f"conflicting answer: {target}"
+                if label not in self.unknown_findings:
+                    self.unknown_findings.append(label)
+
+    def _already_reported(self, feature: str, include_last: bool = False) -> bool:
+        """The feature (or its canonical concept) is in what the patient has already said positively."""
+        from nova_agent.matching import feature_present_with_aliases
+        history = self.conversation_history if include_last else self.conversation_history[:-1]
+        said = [self.chief_complaint, *self.symptoms, *self.associated_symptoms, *self.pertinent_positives,
+                *[t.result for t in history if t.action_type == "ASK" and t.result and answer_kind(t.result) is None]]
+        said = _with_canonical_concepts([t for t in said if t])
+        return feature_present_with_aliases(feature, said, scrub_negated_spans=True)
 
     def add_medication(self, medication: Medication) -> None:
         self.medications.append(medication)
@@ -530,7 +713,7 @@ class PatientState(BaseModel):
         from nova_agent.multilingual_concepts import english_evidence_for
         for t in list(out):
             out += [e for e in english_evidence_for(t) if e not in out]
-        return out
+        return _with_canonical_concepts(out)
 
     def objective_findings_text(self) -> List[str]:
         """Narrower than all_findings_text(): only text that came from an EXAM/TEST actually
@@ -546,4 +729,4 @@ class PatientState(BaseModel):
         out = list(self.physical_examinations.values()) + list(self.imaging.values())
         out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
-        return [t for t in out if t]
+        return _with_canonical_concepts([t for t in out if t])

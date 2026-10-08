@@ -309,6 +309,18 @@ class NovaService:
             cooldown_seconds=_float_env("NOVA_CB_COOLDOWN_SECONDS", 30.0),
         )
 
+    def warm_up(self) -> float:
+        """Load the immutable knowledge base, catalog and retrieval index once at startup, so the first
+        real requests do not each pay that cost while holding the GIL. Runs ONE decision on a synthetic,
+        patient-free placeholder state with the offline mock model and discards it: nothing is stored in the
+        repository, no case id is created and no patient-derived value is cached (the only process-wide
+        caches are zero-argument static loaders -- tests/test_case_isolation.py). Returns seconds spent."""
+        started = time.perf_counter()
+        agent = DoctorAgent(llm_client=MockLLMClient())
+        state = agent.new_case("__warmup__", "warm-up placeholder (synthetic, no patient)", {}, None)
+        agent.decide(state)
+        return time.perf_counter() - started
+
     def _new_llm_client(self, *, force_mock: bool) -> BaseLLMClient:
         if force_mock:
             return MockLLMClient()

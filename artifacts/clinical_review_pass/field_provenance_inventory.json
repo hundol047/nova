@@ -1,13 +1,13 @@
 {
   "scope": "Every JSON leaf in legacy diseases/catalog/enrichment/tests/guidelines/red-flags; selected module-level literal constants",
   "source_hashes": {
-    "nova_agent/knowledge/diseases/abdominal_gi.json": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
-    "nova_agent/knowledge/diseases/cardiac.json": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
-    "nova_agent/knowledge/diseases/endocrine_metabolic.json": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "nova_agent/knowledge/diseases/abdominal_gi.json": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
+    "nova_agent/knowledge/diseases/cardiac.json": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
+    "nova_agent/knowledge/diseases/endocrine_metabolic.json": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
     "nova_agent/knowledge/diseases/genitourinary.json": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
     "nova_agent/knowledge/diseases/infectious.json": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
     "nova_agent/knowledge/diseases/neuro.json": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
-    "nova_agent/knowledge/diseases/pulmonary.json": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "nova_agent/knowledge/diseases/pulmonary.json": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "nova_agent/knowledge/tier2_catalog.json": "56e6f197eafeef1533ac733c330099f82da453f8e0e0e571550a5f2416081fc6",
     "nova_agent/knowledge/tier2_enrichment.json": "a127120bc1b5c73a40a57b6441aecda54b43c9e2ecc4ab1ac7a96e458c1adc74",
     "nova_agent/knowledge/diagnostic_tests/notes.json": "6cc5f51ac1c69c2a17354e5606e83749cb39ab19a313d0719afb1fe4ebadf161",
@@ -1898,7 +1898,7 @@
     {
       "path": "nova_agent/knowledge/diseases/abdominal_gi.json",
       "pointer": "/4/confirmatory_findings/8",
-      "value": "rebound tenderness",
+      "value": "right lower quadrant rebound tenderness",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -1908,7 +1908,7 @@
     {
       "path": "nova_agent/knowledge/diseases/abdominal_gi.json",
       "pointer": "/4/confirmatory_findings_provenance",
-      "value": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset",
+      "value": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset. Round N: unlocalised 'rebound tenderness' (a generalised peritoneal sign, already a typical feature of acute_abdomen) narrowed to its right-lower-quadrant form so diffuse peritonitis is not credited as appendicitis-confirmatory.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -4367,6 +4367,26 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "pointer": "/5/typical_features/5",
+      "value": "pulse rate below 50",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "pointer": "/5/typical_features/6",
+      "value": "pulse rate of 150 or more",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
       "pointer": "/5/risk_factors/0",
       "value": "hypertension",
       "original_source_status": "UNRESOLVED",
@@ -4591,6 +4611,16 @@
       "path": "nova_agent/knowledge/diseases/cardiac.json",
       "pointer": "/5/evidence_level",
       "value": "internally_authored_heuristic",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "pointer": "/5/round_q_provenance",
+      "value": "typical_features 'pulse rate below 50' / 'pulse rate of 150 or more' added in Round Q: a measured CURRENT rate at the thresholds the AHA adult bradycardia/tachycardia algorithms use to suggest a rhythm cause (Panchal AR et al., 2020 AHA Guidelines for CPR and ECC Part 3, Circulation 2020;142:S366-S468). Weighted like a generic physiological sign (the reduced multiplier differential.py gives tachycardia/hypotension); not a confirmatory finding and never a subtype. Agent-authored, not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -5539,6 +5569,16 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/typical_features/5",
+      "value": "muscle cramps",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
       "pointer": "/1/risk_factors/0",
       "value": "chronic kidney disease",
       "original_source_status": "UNRESOLVED",
@@ -5573,6 +5613,16 @@
       "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
       "pointer": "/1/risk_factors/3",
       "value": "renin-angiotensin system inhibitor use",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/risk_factors/4",
+      "value": "missed dialysis session",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -5751,6 +5801,36 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/confirmatory_findings/6",
+      "value": "hypokalemia",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/confirmatory_findings/7",
+      "value": "low potassium",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/confirmatory_findings/8",
+      "value": "prominent u waves",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
       "pointer": "/1/minimum_workup/0",
       "value": "bmp",
       "original_source_status": "UNRESOLVED",
@@ -5763,6 +5843,26 @@
       "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
       "pointer": "/1/evidence_level",
       "value": "internally_authored_heuristic",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/round_q_provenance",
+      "value": "Round Q: risk factor 'missed dialysis session' -- missed or inadequate dialysis is a recognised cause of hyperkalaemia in people on dialysis (UK Kidney Association, Clinical Practice Guidelines: Treatment of Acute Hyperkalaemia in Adults, 2020/2023 update, causes section). Risk-factor weight only; it never establishes a potassium value or direction. Agent-authored, not clinician-reviewed.",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "pointer": "/1/round_p_provenance",
+      "value": "Round P: hypokalemia / low potassium / prominent U waves added as confirmatory findings and muscle cramps as a typical feature -- the entry already covered both directions of sodium but only the high direction of potassium, so a severely LOW potassium was scored as evidence AGAINST the disorder. Agent-authored from widely taught physiology; not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -11093,6 +11193,26 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "pointer": "/0/typical_features/6",
+      "value": "tachypnea",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "pointer": "/0/typical_features/7",
+      "value": "hypoxia",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
       "pointer": "/0/risk_factors/0",
       "value": "recent surgery",
       "original_source_status": "UNRESOLVED",
@@ -11377,6 +11497,16 @@
       "path": "nova_agent/knowledge/diseases/pulmonary.json",
       "pointer": "/0/evidence_level",
       "value": "internally_authored_heuristic",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "pointer": "/0/round_p_provenance",
+      "value": "Round P: tachypnea and hypoxia added as typical features (classic bedside signs, and the only objective PE signs a test-free encounter can obtain). Agent-authored; not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -190483,13 +190613,18 @@
         "muddled",
         "disoriented",
         "not making sense",
-        "drowsy and confused"
+        "drowsy and confused",
+        "confusion",
+        "unusual sleepiness",
+        "unusually sleepy",
+        "lethargic",
+        "hard to wake"
       ],
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 26,
+      "line": 27,
       "names": [
         "_BREATHLESS"
       ],
@@ -190504,7 +190639,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 27,
+      "line": 28,
       "names": [
         "_DYSURIA"
       ],
@@ -190519,6 +190654,8 @@
         "burns when i wee",
         "pain passing urine",
         "pain when urinating",
+        "pain on urinating",
+        "pain on urination",
         "stings when i pee",
         "hurts when i pee",
         "urinating hurts",
@@ -190529,7 +190666,170 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 246,
+      "line": 251,
+      "names": [
+        "_ADDITIONAL_LAY_ALIASES"
+      ],
+      "value": {
+        "right lower quadrant rebound tenderness": [
+          "rlq rebound",
+          "rebound in the right lower quadrant",
+          "right lower quadrant tenderness with rebound",
+          "rebound tenderness in the rlq",
+          "rebound tenderness in the right lower quadrant"
+        ],
+        "polydipsia": [
+          "thirsty",
+          "excessive thirst"
+        ],
+        "recent surgery": [
+          "after my operation",
+          "hip operation",
+          "knee operation",
+          "hip replacement",
+          "knee replacement",
+          "operation last week",
+          "recent operation",
+          "post-op",
+          "after surgery"
+        ],
+        "immobilization": [
+          "mostly in bed",
+          "stuck in bed",
+          "bedbound",
+          "bed-bound",
+          "confined to bed"
+        ],
+        "exertional chest pain": [
+          "comes on walking",
+          "comes on when i walk",
+          "eases when i rest",
+          "goes away with rest",
+          "on walking uphill"
+        ],
+        "vomiting or diarrhea": [
+          "vomiting",
+          "vomited",
+          "throwing up",
+          "threw up",
+          "diarrhea",
+          "diarrhoea",
+          "loose stools"
+        ],
+        "prior stroke or tia": [
+          "previous stroke",
+          "had a stroke before",
+          "mini-stroke",
+          "transient ischaemic attack",
+          "transient ischemic attack"
+        ],
+        "prior dvt or pe": [
+          "previous blood clot",
+          "clot in my leg before",
+          "clot in my lung before",
+          "previous dvt"
+        ],
+        "muscle cramps": [
+          "cramps in my legs",
+          "leg cramps",
+          "muscle cramps",
+          "cramping muscles"
+        ],
+        "muscle weakness": [
+          "reduced power",
+          "power is reduced",
+          "decreased power",
+          "reduced strength",
+          "decreased strength",
+          "weak in both legs",
+          "weak in both arms"
+        ],
+        "associated lightheadedness": [
+          "lightheaded",
+          "light-headed",
+          "lightheadedness",
+          "light headed"
+        ],
+        "seizure": [
+          "convulsive fit",
+          "convulsing",
+          "convulsions",
+          "fitting and shaking"
+        ],
+        "sudden onset palpitations": [
+          "heart suddenly took off",
+          "heart took off",
+          "heart suddenly accelerated",
+          "heart suddenly raced"
+        ],
+        "racing heart": [
+          "heart took off",
+          "heart accelerated",
+          "heart sped up"
+        ],
+        "chronic kidney disease": [
+          "on dialysis",
+          "ongoing dialysis",
+          "regular dialysis",
+          "haemodialysis",
+          "hemodialysis",
+          "peritoneal dialysis",
+          "dialysis three times a week"
+        ],
+        "pain eased by leaning forward": [
+          "leaning forward helps",
+          "relieved by leaning forward",
+          "better leaning forward",
+          "sitting forward helps"
+        ],
+        "bilateral band-like pressure": [
+          "pressing on both sides",
+          "pressure on both sides",
+          "squeezing on both sides"
+        ],
+        "prolonged screen time": [
+          "staring at screens",
+          "screens all day",
+          "on the computer all day",
+          "looking at a screen all day"
+        ],
+        "heat intolerance": [
+          "can't stand the heat",
+          "can not stand the heat",
+          "can't tolerate the heat"
+        ],
+        "fear of dying or losing control": [
+          "something terrible will happen",
+          "sense of doom",
+          "feel i'm going to die",
+          "feel like i'm dying"
+        ],
+        "tingling around the mouth or fingers": [
+          "tingling fingers",
+          "fingers tingle",
+          "my fingers tingle"
+        ],
+        "structural heart disease": [
+          "heart failure",
+          "cardiomyopathy",
+          "previous heart attack",
+          "had a heart attack",
+          "weak heart muscle"
+        ],
+        "missed dialysis session": [
+          "missed dialysis",
+          "missed my dialysis",
+          "skipped dialysis",
+          "missed two dialysis sessions",
+          "missed a dialysis session",
+          "missed scheduled dialysis"
+        ]
+      },
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/lay_language.py",
+      "line": 311,
       "names": [
         "_TIER2_LAY"
       ],
@@ -191059,6 +191359,11 @@
         "dyspnea": [
           "숨쉬기가 힘들어요",
           "숨이 차요",
+          "숨이 차고",
+          "숨이 안 쉬어",
+          "숨을 쉴 수 없",
+          "숨이 가빠",
+          "숨이 가쁘",
           "息が苦しいです",
           "呼吸が苦しいです"
         ],
@@ -191092,9 +191397,20 @@
           "めまいがします",
           "頭がふらふらします"
         ],
+        "allergic": [
+          "온몸이 가려",
+          "전신이 가려",
+          "알레르기 반응",
+          "입술이 붓",
+          "얼굴이 붓",
+          "두드러기가 났"
+        ],
         "syncope": [
           "정신을 잃었어요",
           "기절했어요",
+          "쓰러졌어요",
+          "쓰러졌습니다",
+          "쓰러졌다",
           "気を失いました",
           "意識を失いました"
         ]
@@ -191103,7 +191419,7 @@
     },
     {
       "path": "nova_agent/multilingual_concepts.py",
-      "line": 131,
+      "line": 134,
       "names": [
         "_BARE_CLINICAL_NOUNS"
       ],
@@ -191167,7 +191483,7 @@
     },
     {
       "path": "nova_agent/multilingual_concepts.py",
-      "line": 142,
+      "line": 145,
       "names": [
         "_NEGATION_MARKERS"
       ],
@@ -191186,7 +191502,7 @@
     },
     {
       "path": "nova_agent/multilingual_concepts.py",
-      "line": 151,
+      "line": 154,
       "names": [
         "_CANONICAL_ENGLISH_EVIDENCE"
       ],
@@ -191208,7 +191524,7 @@
     },
     {
       "path": "nova_agent/multilingual_concepts.py",
-      "line": 164,
+      "line": 167,
       "names": [
         "_DIRECT_LOCALIZED_EVIDENCE"
       ],
@@ -191261,6 +191577,37 @@
         "경련": "seizure",
         "けいれん": "seizure",
         "痙攣": "seizure"
+      },
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/multilingual_concepts.py",
+      "line": 234,
+      "names": [
+        "_DIRECT_LOCALIZED_EVIDENCE_V3"
+      ],
+      "value": {
+        "점상 출혈": "petechial rash rash",
+        "점상출혈": "petechial rash rash",
+        "자반": "petechial rash rash",
+        "보라색 반점": "petechial rash rash",
+        "보라색 점": "petechial rash rash",
+        "졸려": "altered mental status",
+        "기면": "altered mental status",
+        "의식 저하": "altered mental status",
+        "의식이 흐": "altered mental status",
+        "혼미": "altered mental status",
+        "지남력 저하": "altered mental status confusion",
+        "헛소리": "confusion",
+        "이뇨제": "diuretic use",
+        "소변 나오는 약": "diuretic use",
+        "기운이 없": "generalized weakness",
+        "온몸에 힘이 없": "generalized weakness",
+        "쥐가 나": "muscle cramps",
+        "근육 경련": "muscle cramps",
+        "맥이 불규칙": "irregular heartbeat",
+        "불규칙하게 뛰": "irregular heartbeat",
+        "불규칙한 리듬": "irregular heartbeat"
       },
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
@@ -192022,7 +192369,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 30,
+      "line": 66,
       "names": [
         "_STOPWORDS"
       ],
@@ -192059,7 +192406,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 34,
+      "line": 70,
       "names": [
         "_GENERIC_MEDICAL_WORDS"
       ],
@@ -192077,7 +192424,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 36,
+      "line": 72,
       "names": [
         "_OVERLAP_RATIO_THRESHOLD"
       ],
@@ -192086,7 +192433,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 51,
+      "line": 87,
       "names": [
         "_RELATIONAL_WORDS"
       ],
@@ -192108,7 +192455,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 125,
+      "line": 163,
       "names": [
         "_SUFFIX_RULES"
       ],
@@ -192150,7 +192497,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 128,
+      "line": 166,
       "names": [
         "_MIN_STEM_LENGTH"
       ],
@@ -192159,7 +192506,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 143,
+      "line": 181,
       "names": [
         "_IRREGULAR_STEM_OVERRIDES"
       ],
@@ -192169,6 +192516,7 @@
         "breathes": "breath",
         "breathing": "breath",
         "breaths": "breath",
+        "irregularly": "irregular",
         "testicular": "testicle",
         "testis": "testicle",
         "testes": "testicle",
@@ -192191,7 +192539,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 225,
+      "line": 269,
       "names": [
         "_LAY_ANATOMY"
       ],
@@ -192203,7 +192551,16 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 287,
+      "line": 298,
+      "names": [
+        "_ABSENT_SIGN"
+      ],
+      "value": "(?:breath|bowel|heart|lung|air entry|tendon|deep tendon|corneal|gag|femoral|radial|pedal|distal|peripheral|carotid|pulses?|reflexes?|bruits?)\\b",
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/matching.py",
+      "line": 365,
       "names": [
         "_POLARITY_UP"
       ],
@@ -192220,7 +192577,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 288,
+      "line": 366,
       "names": [
         "_POLARITY_DOWN"
       ],
@@ -192236,7 +192593,25 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 424,
+      "line": 522,
+      "names": [
+        "_PATTERN_QUALIFIERS"
+      ],
+      "value": [
+        "chronic",
+        "constant",
+        "episod",
+        "intermitt",
+        "paroxysm",
+        "persist",
+        "recurr",
+        "sudden"
+      ],
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/matching.py",
+      "line": 607,
       "names": [
         "FEATURE_ALIASES"
       ],
@@ -192414,7 +192789,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 469,
+      "line": 652,
       "names": [
         "_LAY_VARIANTS"
       ],
@@ -192499,6 +192874,14 @@
           "lab.sodium",
           "low"
         ],
+        "hypokalemia": [
+          "lab.potassium",
+          "low"
+        ],
+        "low potassium": [
+          "lab.potassium",
+          "low"
+        ],
         "elevated white blood cell count": [
           "lab.wbc",
           "high"
@@ -192544,7 +192927,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 55,
+      "line": 58,
       "names": [
         "FEATURE_WEIGHT"
       ],
@@ -192553,7 +192936,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 56,
+      "line": 59,
       "names": [
         "RISK_FACTOR_WEIGHT"
       ],
@@ -192562,7 +192945,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 57,
+      "line": 60,
       "names": [
         "CONTRADICTION_PENALTY"
       ],
@@ -192571,7 +192954,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 61,
+      "line": 64,
       "names": [
         "CONFIRMATORY_WEIGHT"
       ],
@@ -192580,7 +192963,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 82,
+      "line": 85,
       "names": [
         "_NEGATIVE_FEATURE_PREFIXES"
       ],
@@ -192594,7 +192977,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 91,
+      "line": 94,
       "names": [
         "_SPECIFICITY_STEP"
       ],
@@ -192603,7 +192986,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 92,
+      "line": 95,
       "names": [
         "_SPECIFICITY_CAP"
       ],
@@ -192612,11 +192995,38 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 100,
+      "line": 103,
       "names": [
         "_GENERIC_SEVERITY_MULTIPLIER"
       ],
       "value": 0.3,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/differential.py",
+      "line": 176,
+      "names": [
+        "_ESCALATION_MIN_SUPPORT"
+      ],
+      "value": 3,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/differential.py",
+      "line": 237,
+      "names": [
+        "_CONVERGING_MIN_SUPPORT"
+      ],
+      "value": 4,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/differential.py",
+      "line": 238,
+      "names": [
+        "_THIN_ONTOLOGY_MAX_SUPPORT"
+      ],
+      "value": 2,
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
@@ -192753,6 +193163,28 @@
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
+      "path": "nova_agent/action_selector.py",
+      "line": 58,
+      "names": [
+        "BLOCKING_WORKUP_BONUS"
+      ],
+      "value": 0.5,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/action_selector.py",
+      "line": 59,
+      "names": [
+        "_CORE_HISTORY"
+      ],
+      "value": [
+        "onset",
+        "associated_symptoms",
+        "past_medical_history"
+      ],
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
       "path": "nova_agent/config.py",
       "line": 13,
       "names": [
@@ -192808,7 +193240,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 37,
+      "line": 39,
       "names": [
         "PRELIMINARY_MAX_LLM_CALLS_PER_CASE"
       ],
@@ -192817,7 +193249,25 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 288,
+      "line": 43,
+      "names": [
+        "PRELIMINARY_CASE_INPUT_TOKENS"
+      ],
+      "value": 50000,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/config.py",
+      "line": 44,
+      "names": [
+        "PRELIMINARY_CASE_OUTPUT_TOKENS"
+      ],
+      "value": 10000,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/config.py",
+      "line": 338,
       "names": [
         "_config"
       ],

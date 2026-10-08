@@ -152,13 +152,13 @@ PR15_FEATURE_ALIASES: dict = {
         "喉咙发紧",
     ],
     "recent allergen exposure": [
-        "after eating",
+        # Round N: "after eating" / "食後" removed here -- they denote meal TIMING (already an alias of "worse after
+        # meals") and credited allergen exposure to every post-prandial complaint (heartburn -> anaphylaxis).
         "after taking a new medication",
         "after a new drug",
         "after an antibiotic",
         "new medication",
         "new antibiotic",
-        "食後",
         "新しい薬の後",
         "薬を飲んだ後",
         "새 약을 먹은 후",

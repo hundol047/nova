@@ -17,7 +17,7 @@ from evaluation.blind_cases_v5 import BLIND_CASES_V5
 
 if __name__ == "__main__":
     results = run_all(BLIND_CASES_V5)
-    print("=== Blind v5 set (evaluation/blind_cases_v5.py -- the untouched final generalization "
-          "check for this round's routing/severity/safety_priority rewrite, never tuned against) ===")
+    print("=== Blind v5 set (evaluation/blind_cases_v5.py -- originally a blind check; since Round N its "
+          "failures were inspected during development, so it is now a DEVELOPMENT regression set, not blind) ===")
     print_case_table(results)
     print_summary("Blind v5 summary", results)

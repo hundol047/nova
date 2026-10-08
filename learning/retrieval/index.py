@@ -58,7 +58,14 @@ class DiseaseIndex:
 
     def search(self, query_vec: Sequence[float], top_k: int = 200) -> List[Tuple[IndexedDisease, float]]:
         """Return the top_k (IndexedDisease, cosine) by similarity. Single linear scan."""
-        scored = [(it, cosine(query_vec, it.vector)) for it in self._items]
+        # Query vectors are sparse (a handful of hashed features); summing only the query's non-zero
+        # coordinates, in index order, is numerically identical to the dense dot product (zero terms add
+        # nothing) and ~dim/nnz times cheaper.
+        nonzero = [(i, v) for i, v in enumerate(query_vec) if v]
+        if len(nonzero) * 4 < len(query_vec):
+            scored = [(it, sum(v * it.vector[i] for i, v in nonzero if i < len(it.vector))) for it in self._items]
+        else:
+            scored = [(it, cosine(query_vec, it.vector)) for it in self._items]
         scored.sort(key=lambda t: -t[1])
         return scored[:top_k]
 

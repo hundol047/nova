@@ -3,7 +3,7 @@
     "disease_id": "acute_abdomen",
     "name": "Acute Abdomen (Surgical Abdomen)",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -95,7 +95,7 @@
     "disease_id": "acute_coronary_syndrome",
     "name": "Acute Coronary Syndrome",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
+    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -300,7 +300,7 @@
     "disease_id": "aortic_dissection",
     "name": "Aortic Dissection",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
+    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -512,7 +512,7 @@
     "disease_id": "cardiac_arrhythmia",
     "name": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
+    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
     "dangerous": true,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -540,7 +540,9 @@
         "irregular heartbeat",
         "racing heart",
         "associated lightheadedness",
-        "known history of arrhythmia"
+        "known history of arrhythmia",
+        "pulse rate below 50",
+        "pulse rate of 150 or more"
       ],
       "risk_factors": [
         "hypertension",
@@ -576,7 +578,8 @@
         "syncope with palpitations",
         "chest pain with palpitations"
       ],
-      "evidence_level": "internally_authored_heuristic"
+      "evidence_level": "internally_authored_heuristic",
+      "round_q_provenance": "typical_features 'pulse rate below 50' / 'pulse rate of 150 or more' added in Round Q: a measured CURRENT rate at the thresholds the AHA adult bradycardia/tachycardia algorithms use to suggest a rhythm cause (Panchal AR et al., 2020 AHA Guidelines for CPR and ECC Part 3, Circulation 2020;142:S366-S468). Weighted like a generic physiological sign (the reduced multiplier differential.py gives tachycardia/hypotension); not a confirmatory finding and never a subtype. Agent-authored, not clinician-reviewed."
     },
     "source_leads": [
       {
@@ -619,7 +622,7 @@
     "disease_id": "diabetic_ketoacidosis",
     "name": "Diabetic Ketoacidosis",
     "source_path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
-    "source_sha256": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "source_sha256": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -709,7 +712,7 @@
     "disease_id": "ectopic_pregnancy",
     "name": "Ectopic Pregnancy",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -806,7 +809,7 @@
     "disease_id": "gi_bleeding",
     "name": "Gastrointestinal Bleeding",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1031,7 +1034,7 @@
     "disease_id": "pulmonary_embolism",
     "name": "Pulmonary Embolism",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "source_sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1060,7 +1063,9 @@
         "tachycardia",
         "hemoptysis",
         "calf swelling",
-        "unilateral leg pain"
+        "unilateral leg pain",
+        "tachypnea",
+        "hypoxia"
       ],
       "risk_factors": [
         "recent surgery",
@@ -1104,7 +1109,8 @@
         "d_dimer",
         "ct_chest_angio"
       ],
-      "evidence_level": "internally_authored_heuristic"
+      "evidence_level": "internally_authored_heuristic",
+      "round_p_provenance": "Round P: tachypnea and hypoxia added as typical features (classic bedside signs, and the only objective PE signs a test-free encounter can obtain). Agent-authored; not clinician-reviewed."
     },
     "source_leads": [
       {
@@ -1250,7 +1256,7 @@
     "disease_id": "severe_electrolyte_disorder",
     "name": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
     "source_path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
-    "source_sha256": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "source_sha256": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1278,13 +1284,15 @@
         "palpitations",
         "confusion",
         "arrhythmia",
-        "seizure"
+        "seizure",
+        "muscle cramps"
       ],
       "risk_factors": [
         "chronic kidney disease",
         "diuretic use",
         "vomiting or diarrhea",
-        "renin-angiotensin system inhibitor use"
+        "renin-angiotensin system inhibitor use",
+        "missed dialysis session"
       ],
       "discriminating_questions": [
         "past_medical_history",
@@ -1311,12 +1319,17 @@
         "elevated potassium",
         "hyponatremia",
         "low sodium",
-        "widened qrs"
+        "widened qrs",
+        "hypokalemia",
+        "low potassium",
+        "prominent u waves"
       ],
       "minimum_workup": [
         "bmp"
       ],
-      "evidence_level": "internally_authored_heuristic"
+      "evidence_level": "internally_authored_heuristic",
+      "round_q_provenance": "Round Q: risk factor 'missed dialysis session' -- missed or inadequate dialysis is a recognised cause of hyperkalaemia in people on dialysis (UK Kidney Association, Clinical Practice Guidelines: Treatment of Acute Hyperkalaemia in Adults, 2020/2023 update, causes section). Risk-factor weight only; it never establishes a potassium value or direction. Agent-authored, not clinician-reviewed.",
+      "round_p_provenance": "Round P: hypokalemia / low potassium / prominent U waves added as confirmatory findings and muscle cramps as a typical feature -- the entry already covered both directions of sodium but only the high direction of potassium, so a severely LOW potassium was scored as evidence AGAINST the disorder. Agent-authored from widely taught physiology; not clinician-reviewed."
     },
     "source_leads": [
       {
@@ -1453,7 +1466,7 @@
     "disease_id": "tension_pneumothorax",
     "name": "Tension Pneumothorax",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "source_sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1535,7 +1548,7 @@
     "disease_id": "appendicitis",
     "name": "Acute Appendicitis",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -1587,9 +1600,9 @@
         "appendiceal inflammation",
         "McBurney's point tenderness",
         "right lower quadrant tenderness",
-        "rebound tenderness"
+        "right lower quadrant rebound tenderness"
       ],
-      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset",
+      "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset. Round N: unlocalised 'rebound tenderness' (a generalised peritoneal sign, already a typical feature of acute_abdomen) narrowed to its right-lower-quadrant form so diffuse peritonitis is not credited as appendicitis-confirmatory.",
       "evidence_references": [
         {
           "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/appendicitis/diagnosis",
@@ -1632,7 +1645,7 @@
     "disease_id": "acute_bronchitis",
     "name": "Acute Bronchitis",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "source_sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -1717,7 +1730,7 @@
     "disease_id": "gastroenteritis",
     "name": "Acute Gastroenteritis",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -1794,7 +1807,7 @@
     "disease_id": "acute_pancreatitis",
     "name": "Acute Pancreatitis",
     "source_path": "nova_agent/knowledge/diseases/abdominal_gi.json",
-    "source_sha256": "91351c10860bd96a449aa1820f9def7382e651dc51b0cbe76468ff0ce8a24bf0",
+    "source_sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -1991,7 +2004,7 @@
     "disease_id": "asthma_copd_exacerbation",
     "name": "Asthma / COPD Exacerbation",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "source_sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -2144,7 +2157,7 @@
     "disease_id": "pneumonia",
     "name": "Community-Acquired Pneumonia",
     "source_path": "nova_agent/knowledge/diseases/pulmonary.json",
-    "source_sha256": "205f99dbc1a2471b63f68693fccf82bb40abc9c9ffe86d7d2172aaf856d81ac3",
+    "source_sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -2238,7 +2251,7 @@
     "disease_id": "gerd",
     "name": "Gastroesophageal Reflux Disease",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
+    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2331,7 +2344,7 @@
     "disease_id": "hypoglycemia",
     "name": "Hypoglycemia",
     "source_path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
-    "source_sha256": "5d4fd26d46678a70e55428d0a7fd361572739307b6e36aa988f94b0177e03143",
+    "source_sha256": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
     "dangerous": false,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -2487,7 +2500,7 @@
     "disease_id": "musculoskeletal_chest_pain",
     "name": "Musculoskeletal Chest Pain (Costochondritis)",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
+    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2741,7 +2754,7 @@
     "disease_id": "panic_attack",
     "name": "Panic Attack",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
+    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2975,7 +2988,7 @@
     "disease_id": "vasovagal_syncope",
     "name": "Vasovagal (Reflex) Syncope",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "2357782cca0ba035a0cc6fe23dd24afa33a2643989fa0b5ddf2cd2d29a89e3d4",
+    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {

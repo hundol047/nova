@@ -1,0 +1,131 @@
+{
+ "command": "python scripts/load_smoke_backend.py --cases 100 --concurrency 10 --max-p95-ms 3000 (unchanged CI step; threshold, cases and concurrency NOT modified)",
+ "machine_note": "Local container (4 vCPU, shared). The same baseline commit measured ~1.6x slower here than on the GitHub runner (8d37c73: CI p95 4,680 ms vs local 7,590 ms).",
+ "before": [
+  {
+   "label": "CI run 37564554756, commit 8d37c73 (GitHub runner)",
+   "succeeded": 100,
+   "failed": 0,
+   "error_rate": 0.0,
+   "latency_ms": {
+    "mean": 4324.84,
+    "p50": 4431.28,
+    "p95": 4680.06,
+    "p99": 4686.92
+   },
+   "throughput_cases_per_sec": 2.2,
+   "verdict": "FAIL"
+  },
+  {
+   "label": "local, commit 8d37c73",
+   "p50": 6901.97,
+   "p95": 7589.89,
+   "throughput_cases_per_sec": 1.4,
+   "verdict": "FAIL"
+  },
+  {
+   "label": "local, merged integration line before optimisation (same tree as 8efd5d3 minus the load fixes)",
+   "succeeded": 100,
+   "failed": 0,
+   "error_rate": 0.0,
+   "latency_ms": {
+    "mean": 15840.5,
+    "p50": 15764.18,
+    "p95": 17845.78,
+    "p99": 17903.33
+   },
+   "throughput_cases_per_sec": 0.62,
+   "memory_growth_kb": 152644,
+   "verdict": "FAIL"
+  }
+ ],
+ "after": [
+  {
+   "label": "local, commit 8efd5d3, run 1",
+   "num_cases": 100,
+   "concurrency": 10,
+   "succeeded": 100,
+   "failed": 0,
+   "error_rate": 0.0,
+   "wall_seconds": 21.519,
+   "startup_seconds": 0.465,
+   "startup_warmup_seconds": 0.357,
+   "throughput_cases_per_sec": 4.65,
+   "latency_ms": {
+    "mean": 1977.96,
+    "p50": 2041.91,
+    "p95": 2325.78,
+    "p99": 2336.99
+   },
+   "memory_rss_kb": {
+    "before": 117644,
+    "after": 141080,
+    "growth": 23436
+   },
+   "errors_sample": [],
+   "verdict": "PASS"
+  },
+  {
+   "label": "local, commit 8efd5d3, run 2",
+   "num_cases": 100,
+   "concurrency": 10,
+   "succeeded": 100,
+   "failed": 0,
+   "error_rate": 0.0,
+   "wall_seconds": 22.577,
+   "startup_seconds": 0.296,
+   "startup_warmup_seconds": 0.246,
+   "throughput_cases_per_sec": 4.43,
+   "latency_ms": {
+    "mean": 2016.51,
+    "p50": 2094.41,
+    "p95": 2498.48,
+    "p99": 2636.77
+   },
+   "memory_rss_kb": {
+    "before": 118908,
+    "after": 140468,
+    "growth": 21560
+   },
+   "errors_sample": [],
+   "verdict": "PASS"
+  },
+  {
+   "label": "local, commit 8efd5d3, run 3",
+   "num_cases": 100,
+   "concurrency": 10,
+   "succeeded": 100,
+   "failed": 0,
+   "error_rate": 0.0,
+   "wall_seconds": 21.268,
+   "startup_seconds": 0.365,
+   "startup_warmup_seconds": 0.313,
+   "throughput_cases_per_sec": 4.7,
+   "latency_ms": {
+    "mean": 1894.78,
+    "p50": 1945.56,
+    "p95": 2323.86,
+    "p99": 2341.55
+   },
+   "memory_rss_kb": {
+    "before": 118832,
+    "after": 140308,
+    "growth": 21476
+   },
+   "errors_sample": [],
+   "verdict": "PASS"
+  }
+ ],
+ "startup_vs_steady_state": "startup_seconds / startup_warmup_seconds are measured before the timed requests (TestClient lifespan); latency_ms is steady-state request latency.",
+ "bottleneck_profile": {
+  "before": "cProfile, 6 cases sequential: 26.2 s total; 21.3 s in differential._score_disease -> matching.feature_present_with_aliases (9,564 strict-alias calls, 227k _content_words, 254k _strip_negated_spans, 1.53M _stem, 1.67M re._compile)",
+  "after": "7.9 s for 10 cases incl. profiler overhead; remaining time spread over feature matching, learning/ catalog retrieval (sparse dot product) and ontology fuzzy search"
+ },
+ "changes": [
+  "nova_agent.matching.evaluation_scope: decision-scoped ContextVar memo for pure normalisations (discarded after each decision; thread-private; no patient data retained across cases)",
+  "regex-free word-boundary and literal non-Latin phrase scans (property-tested equal to the original regexes)",
+  "learning/retrieval/index.py: sparse query dot product (scores identical to dense cosine)",
+  "backend startup warm-up of immutable knowledge/catalog/index caches with one synthetic, patient-free decision (NOVA_SKIP_WARMUP=1 disables)"
+ ],
+ "equivalence_evidence": "tests/test_matching_performance_equivalence.py; preliminary + TEST-enabled development suites and Round M unchanged case-by-case"
+}

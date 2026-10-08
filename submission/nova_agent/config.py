@@ -29,11 +29,13 @@ PRELIMINARY_TIME_SAFETY_FRACTION = 0.85
 # SAY, DIAGNOSE) would no longer fit; PRELIMINARY_CLOSING_TURNS turns at 1.5x the average, inside 97%.
 PRELIMINARY_CLOSING_TURNS = 4
 PRELIMINARY_TIME_HARD_FRACTION = 0.97
-# Real-model calls per case in the preliminary round. The fixed model is limited to 200 calls and
-# 500k input / 100k output tokens per session, and the efficiency score counts model usage; at least
-# one call per case is REQUIRED (a case with no model call scores 0). Sized so that a session of 10
-# cases stays inside every cap: 10 x 8 = 80 calls, ~8k characters (~3-4k tokens) of prompt per call
-# (~320k input) and max_tokens=1024 per call (~82k output), leaving headroom for retries.
+# Real-model calls per case in the preliminary round: an INTERNAL ENGINEERING BUDGET, NOT an organizer
+# requirement. The briefing (as transcribed by the team) says the fixed model is limited to 200 calls and
+# 500k input / 100k output tokens per session, that efficiency counts model usage, and that a case with no
+# model call scores 0 -- so at least one successful case-relevant call per case is needed. This cap of 8 is the
+# team's own sizing so that a session of 10 cases stays inside every transcribed cap: 10 x 8 = 80 calls,
+# ~8k characters (~3-4k tokens) of prompt per call (~320k input) and max_tokens=1024 per call (~82k output),
+# leaving headroom for retries. Re-derive it when the participant guide states the real session size/limits.
 PRELIMINARY_MAX_LLM_CALLS_PER_CASE = 8
 # INTERNAL operating policy, not an organizer limit: the cap above counts HTTP REQUESTS (retries included,
 # state.llm_http_attempts), because the session caps count requests. Per-case token ceilings are the
@@ -179,6 +181,49 @@ class NovaConfig:
     # integrated release keeps them opt-in (NOVA_OPEN_SYNONYMS=1) rather than silently active.
     open_synonyms_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_OPEN_SYNONYMS", False))
     mondo_synonyms_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_MONDO_SYNONYMS", False))
+    # Round N switches (ablation): clinical concept normalisation (nova_agent/clinical_concepts.py) feeding
+    # the evidence bag and routing. Default ON; NOVA_CONCEPT_NORMALIZATION=0 reproduces the previous behaviour.
+    concept_normalization_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_CONCEPT_NORMALIZATION", True))
+    # Round N evidence-interpretation switch: proximity-bounded alias matching, negative beta-hCG as evidence
+    # against its pregnancy finding, lying/standing blood-pressure interpretation. NOVA_EVIDENCE_V2=0 disables.
+    evidence_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_EVIDENCE_V2", True))
+    # Round N action switch: once core history is taken, prefer the outstanding minimum workup of a dangerous
+    # diagnosis that is actively blocking the stop (resolves the danger sooner). NOVA_ACTION_V2=0 disables.
+    action_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ACTION_V2", True))
+    # Round O switches (ablation). NOVA_ROUTING_V2: fuzzy chief-complaint routing ignores connectives and knows
+    # chest-anatomy words; NOVA_CONCEPTS_V2: additional everyday-wording concepts (chest wall, reflux, sepsis).
+    routing_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ROUTING_V2", True))
+    concepts_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_CONCEPTS_V2", True))
+    # NOVA_LABS_V2: a lab result's bare value with an explicit unit is read as that lab (e.g. "4.6 mmol/L" under
+    # the lactate test).
+    labs_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_LABS_V2", True))
+    # NOVA_STOP_V2: the decisive-lead / mature-low-value stop (with its unchanged dangerous-alternative guards),
+    # previously reachable only in competition retrieval mode, also applies in legacy retrieval mode.
+    stop_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_STOP_V2", True))
+    # NOVA_ESCALATION_PRIORITY: a localized diagnosis's own KB red flag (e.g. hypotension in pyelonephritis), when
+    # present and supporting a dangerous systemic diagnosis that lists it (sepsis), ranks that diagnosis above it.
+    escalation_priority_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ESCALATION_PRIORITY", True))
+    # Round P switches (ablation). NOVA_EVIDENCE_V3: direction words required in partial feature matches,
+    # medication-class / generalised-weakness / rhythm concepts, Korean petechiae / drowsiness / diuretic wording,
+    # direction-aware scoring of a lab both directions of which confirm the same disease.
+    evidence_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_EVIDENCE_V3", True))
+    # NOVA_RANKING_V3: an ontology (Tier-2) candidate supported only by generic features cannot outrank a dangerous
+    # knowledge-base diagnosis with converging specific support.
+    ranking_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RANKING_V3", True))
+    # NOVA_ACTION_V3: never ASK the patient about an exam/lab-only finding (murmur, sodium level, rebound...).
+    action_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ACTION_V3", True))
+    # NOVA_STOP_V3: under the PRELIMINARY rules (no TEST) a dangerous leader may take the decisive-lead stop once the
+    # strongest evidence obtainable at the bedside is in -- its discriminating exams done (or rejected), its
+    # discriminating questions asked, and an objective bedside finding supporting it. Alternative guards unchanged.
+    stop_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_STOP_V3", True))
+    # NOVA_DOCUMENTED_DX: a diagnosis the patient reports as clinician-documented ("my referral mentions X") brings X
+    # into the pool with one feature's worth of support (nova_agent/documented_diagnosis.py).
+    documented_dx_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_DOCUMENTED_DX", True))
+    # Round Q switches (both ON by default; OFF restores the Round P behaviour for ablation):
+    # a bare yes/no/don't-know is grounded to the single feature the actual question asked (nova_agent/state.py);
+    answer_grounding_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ANSWER_GROUNDING", True))
+    # one final decision decides whether a specific diagnosis may be named (nova_agent/final_decision.py).
+    final_decision_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_FINAL_DECISION", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"

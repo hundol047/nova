@@ -71,18 +71,38 @@ def _substantively_supported(item: DifferentialItem, severity_ok: bool = True) -
     return not generic_only or severity_ok or len(support) >= 3
 
 
+def _bedside_workup_complete(top: DifferentialItem, entry: dict, state: PatientState) -> bool:
+    """Preliminary rules only: every bedside discriminator of the leader has been used -- its discriminating /
+    minimum-workup EXAMs performed or rejected, its discriminating questions asked -- and at least one supporting
+    item is an objective bedside finding (an exam or vital-sign result actually recorded). A rejected exam yields no
+    finding and is never counted as support."""
+    from nova_agent.taxonomy import EXAM_CATALOG
+    exams = {k for k in list(entry.get("discriminating_exams", [])) + list(entry.get("minimum_workup") or [])
+             if k in EXAM_CATALOG}
+    if not exams <= set(state.completed_examinations):
+        return False
+    if not all(state.question_asked(q) for q in entry.get("discriminating_questions", [])):
+        return False
+    objective = " ".join(state.objective_findings_text()).lower()
+    from nova_agent.matching import feature_present_with_aliases
+    return any(feature_present_with_aliases(p, [objective]) for p in top.supporting_evidence)
+
+
 class StopDecision(BaseModel):
     should_diagnose: bool
     forced: bool
     reason: str
     readiness_score: float
+    # Development trace only (never read by the decision): which conditions held the encounter open.
+    blockers: List[str] = []
 
 
 class StopPolicy:
     def evaluate(self, state: PatientState, differential: List[DifferentialItem],
                  safety_findings: List[SafetyFinding], best_info_gain: Optional[float] = None,
                  best_decision_value: Optional[float] = None) -> StopDecision:
-        cfg = get_config().stop_policy
+        cfg_all = get_config()
+        cfg = cfg_all.stop_policy
 
         # Preliminary round: a case ends at 50 turns OR 20 minutes, and a case that never submits
         # scores 0, so the wall clock forces the diagnosis too (with headroom for the closing
@@ -203,9 +223,32 @@ class StopPolicy:
                              and len(top.supporting_evidence) >= _DECISIVE_LEAD_MIN_SUPPORT
                              and raw_gap >= _DECISIVE_LEAD_MIN_GAP
                              and not top.contradictory_evidence)
+            if (decisive_lead and cfg_all.stop_v2_enabled and top.dangerous_if_missed and not objective_confirmed
+                    and cfg_all.stop_v3_enabled and getattr(state, "preliminary_rules", False)
+                    and _bedside_workup_complete(top, entry, state)):
+                pass  # Round P: the strongest evidence a test-free encounter can obtain is in hand
+            elif decisive_lead and cfg_all.stop_v2_enabled and top.dangerous_if_missed and not objective_confirmed:
+                # Round O: a DANGEROUS leader is never closed on history alone, nor after its defining test came back
+                # without the confirming finding -- only an objective confirmatory finding lets it take this
+                # shortcut (otherwise the ordinary readiness path, with its own guards, still applies). A benign
+                # leader is unaffected (its dangerous alternatives are guarded separately just below).
+                decisive_lead = False
             should_diagnose = ((should_diagnose or mature_low_value) and not (
                 dangerous_alternative_exists or pending_critical)) or (
                 decisive_lead and not (dangerous_alternative_exists or pending_critical_alternative))
+
+        blockers: List[str] = []
+        if not should_diagnose:
+            blockers += [f"unresolved_dangerous:{d.diagnosis_id}" for d in unresolved_dangerous]
+            blockers += [f"safety_flag:{f.diagnosis_id}" for f in active_safety_flags]
+            if not enough_turns_gathered:
+                blockers.append("min_turns")
+            if readiness_score < cfg.diagnose_threshold:
+                blockers.append("readiness")
+            if gap_ratio < cfg.min_gap_rank1_rank2:
+                blockers.append("gap")
+            if best_decision_value is not None and pending_critical:
+                blockers.append("pending_critical")
 
         if should_diagnose:
             reason = ("Top diagnosis is well-supported, clearly separated from the next candidate, "
@@ -215,4 +258,4 @@ class StopPolicy:
             reason = "Insufficient confidence, unresolved dangerous alternative, or differential too close to call."
 
         return StopDecision(should_diagnose=should_diagnose, forced=False, reason=reason,
-                             readiness_score=round(readiness_score, 3))
+                             readiness_score=round(readiness_score, 3), blockers=blockers)

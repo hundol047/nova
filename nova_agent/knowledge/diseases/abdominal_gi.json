@@ -289,9 +289,9 @@
       "appendiceal inflammation",
       "McBurney's point tenderness",
       "right lower quadrant tenderness",
-      "rebound tenderness"
+      "right lower quadrant rebound tenderness"
     ],
-    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset",
+    "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset. Round N: unlocalised 'rebound tenderness' (a generalised peritoneal sign, already a typical feature of acute_abdomen) narrowed to its right-lower-quadrant form so diffuse peritonitis is not credited as appendicitis-confirmatory.",
     "evidence_references": [
       {
         "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/appendicitis/diagnosis",

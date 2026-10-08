@@ -51,12 +51,56 @@ class AgentAction(BaseModel):
 
 # Small tie-break (utility points; typical utilities are ~3) -- see generate_and_select().
 LEADER_CONFIRMATORY_BONUS = 0.05
+# Round N: priority for the outstanding minimum workup of a dangerous diagnosis that is currently BLOCKING the
+# stop (an active safety flag, or a substantively supported unresolved dangerous alternative). Same order of
+# magnitude as the measured gap between the chosen action and the best resolving action (median 0.19, p75 0.45
+# utility on the development suites). Only after core history is taken, so history is never skipped for tests.
+BLOCKING_WORKUP_BONUS = 0.5
+_CORE_HISTORY = ("onset", "associated_symptoms", "past_medical_history")
 
 
 class ActionSelector:
     def __init__(self) -> None:
         self.missing_info = MissingInformationAnalyzer()
         self.stop_policy = StopPolicy()
+
+    @staticmethod
+    def _faithful_asks(state, scored):
+        """Round Q: a detailed question that can only be SENT as the generic follow-up IS the generic question --
+        it is emitted under the generic key (so its answer is recorded as what was really asked), and it is dropped
+        when that generic question was already asked. Keeps the best-utility instance of each resulting key."""
+        from nova_agent.preliminary import question_is_faithful
+        lang = state.locale or "en"
+        out, seen = [], set()
+        for cand in scored:
+            if cand.action_type == "ASK" and ":" in cand.key and not question_is_faithful(cand.key, lang):
+                category = cand.key.split(":", 1)[0]
+                if state.question_attempted(category):
+                    continue
+                cand = cand.model_copy(update={"key": category})
+            if (cand.action_type, cand.key) in seen:
+                continue
+            seen.add((cand.action_type, cand.key))
+            out.append(cand)
+        return out
+
+    @staticmethod
+    def _pending_dangerous_bedside_exam(state, differential, scored):
+        from nova_agent.differential import _entry_for_candidate_id, _strip_negative_prefix
+        from nova_agent.taxonomy import EXAM_CATALOG
+        for item in differential[:5]:
+            if not (item.dangerous_if_missed and item.score > 0):
+                continue
+            entry = _entry_for_candidate_id(item.diagnosis_id) or {}
+            risk = {str(r).lower() for r in entry.get("risk_factors", [])}
+            if not any(e.lower() not in risk and _strip_negative_prefix(e) is None for e in item.supporting_evidence):
+                continue
+            for exam_id in list(entry.get("minimum_workup") or []) + list(entry.get("discriminating_exams", [])):
+                if exam_id in EXAM_CATALOG and not state.exam_done(exam_id):
+                    spec = EXAM_CATALOG[exam_id]
+                    return ScoredCandidate(action_type="EXAM", key=exam_id, content=spec["name_en"], utility=0.0,
+                                           components={"dangerous_alternative_bedside_exam": 1.0})
+        return None
 
     def _decisively_supported_dangerous_ids(self, differential: List[DifferentialItem]) -> dict:
         """Dangerous diagnoses that are ALREADY the clear, well-separated leading diagnosis with no
@@ -137,6 +181,33 @@ class ActionSelector:
         }
         return utility, components
 
+    @staticmethod
+    def _blocking_workup(state: PatientState, differential: List[DifferentialItem],
+                         safety_findings: List[SafetyFinding]) -> set:
+        """Outstanding minimum-workup actions of dangerous diagnoses that currently keep the encounter open."""
+        if not get_config().action_v2_enabled or not differential:
+            return set()
+        if not all(state.question_asked(k) for k in _CORE_HISTORY):
+            return set()
+        from nova_agent.missing_info import _resolve_entry
+        from nova_agent.resolution import is_resolved
+        from nova_agent.stop_policy import _substantively_supported
+        leader = differential[0].diagnosis_id
+        by_id = {d.diagnosis_id: d for d in differential}
+        blocking = {f.diagnosis_id for f in safety_findings if f.diagnosis_id != leader}
+        blocking |= {d.diagnosis_id for d in differential[1:5] if d.dangerous_if_missed and _substantively_supported(d)}
+        done = set(state.completed_tests) | set(state.completed_examinations)
+        out = set()
+        for did in blocking:
+            item = by_id.get(did)
+            if is_resolved(did, list(item.contradictory_evidence) if item else [], state):
+                continue
+            entry = _resolve_entry(did) or {}
+            workup = entry.get("minimum_workup") or (list(entry.get("discriminating_exams", []))
+                                                      + list(entry.get("discriminating_tests", [])))
+            out |= set(workup) - done
+        return out
+
     def generate_and_select(self, state: PatientState, differential: List[DifferentialItem],
                              safety_findings: List[SafetyFinding], lang: str = "en"
                              ) -> tuple[AgentAction, List[ScoredCandidate], StopDecision]:
@@ -154,6 +225,7 @@ class ActionSelector:
             from nova_agent.missing_info import _resolve_entry
             leader_workup = set((_resolve_entry(leader.diagnosis_id) or {}).get("minimum_workup") or ())
         decisively_supported = self._decisively_supported_dangerous_ids(differential)
+        blocking_workup = self._blocking_workup(state, differential, safety_findings)
         raw_candidates = self.missing_info.analyze(state, differential, safety_findings)
         if state.preliminary_rules:
             # Preliminary round: there is no TEST action. Tests the diagnosis would need are
@@ -182,6 +254,9 @@ class ActionSelector:
             # differential (e.g. ACS in a crushing-chest-pain presentation) its own confirmatory test must
             # keep outranking generic early actions (tests/test_discriminator_priority.py). In the
             # preliminary round vitals arrive with the first patient statement, so this is already satisfied.
+            if cand.action_type in {"TEST", "EXAM"} and cand.key in blocking_workup:
+                utility += BLOCKING_WORKUP_BONUS
+                components["blocking_danger_workup"] = BLOCKING_WORKUP_BONUS
             if (safety_only_ids and cand.action_type == "EXAM" and cand.key == "vital_signs"
                     and not state.exam_done("vital_signs")):
                 gate_bonus = get_config().weights.safety_weight + get_config().weights.time_critical_weight
@@ -192,6 +267,8 @@ class ActionSelector:
             scored.append(ScoredCandidate(action_type=cand.action_type, key=cand.key, content=content,
                                            utility=round(utility, 3), components=components))
         scored.sort(key=lambda c: c.utility, reverse=True)
+        if state.preliminary_rules:
+            scored = self._faithful_asks(state, scored)
 
         # UNKNOWN_PRESENTATION (spec: zero-evidence file-order bug fix, see differential.py's
         # `is_zero_evidence_presentation`/stop_policy.py's matching gate): with literally nothing
@@ -217,7 +294,7 @@ class ActionSelector:
 
         stop_decision = self.stop_policy.evaluate(state, differential, safety_findings, best_info_gain,
             best_decision_value=max((c.decision_changing_value for c in raw_candidates), default=0.0)
-                if get_config().competition_retrieval_enabled else None)
+                if (get_config().competition_retrieval_enabled or get_config().stop_v2_enabled) else None)
 
         top_diagnosis_name = differential[0].diagnosis if differential else "Undifferentiated presentation"
         diagnose_candidate = ScoredCandidate(
@@ -227,7 +304,22 @@ class ActionSelector:
         )
         all_candidates = scored + [diagnose_candidate]
 
+        if (stop_decision.should_diagnose and not stop_decision.forced and state.preliminary_rules
+                and get_config().final_decision_enabled):
+            pending = self._pending_dangerous_bedside_exam(state, differential, scored)
+            if pending is not None:
+                # Round Q: before closing, one remaining bedside EXAM of a dangerous candidate that has real positive
+                # support (the neuro exam for a stroke with aphasia) is done first -- an executable, discriminating
+                # action is preferred to closing on what is still unexamined. Rejected/done exams are never retried.
+                return (AgentAction(action_type="EXAM", key=pending.key, content=pending.content,
+                                    rationale="Examine a still-unexamined dangerous alternative before closing."),
+                        scored + [diagnose_candidate], stop_decision)
+
         if stop_decision.should_diagnose or not scored:
+            # Round Q: record WHY the encounter ends. Exhausting the actions permits completion only; whether a
+            # specific diagnosis may be named is decided separately (nova_agent/final_decision.py).
+            state.completion_reason = ("budget" if stop_decision.forced else
+                                       "supported" if stop_decision.should_diagnose else "information_exhausted")
             action = AgentAction(action_type="DIAGNOSE", key=diagnose_candidate.key,
                                   content=top_diagnosis_name, rationale=stop_decision.reason)
             return action, all_candidates, stop_decision

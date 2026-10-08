@@ -1,0 +1,997 @@
+{
+ "PrelimKo_ChestPain_ACS": [],
+ "PrelimKo_ChestPain_GERD": [
+  [
+   "acute_abdomen",
+   0.0,
+   0
+  ],
+  [
+   "gi_bleeding",
+   0.0,
+   0
+  ],
+  [
+   "ectopic_pregnancy",
+   0.0,
+   0
+  ]
+ ],
+ "PrelimKo_Dyspnea_PE": [],
+ "PrelimKo_Dyspnea_Asthma": [],
+ "PrelimKo_Abd_Appendicitis": [],
+ "PrelimKo_Abd_Pancreatitis": [],
+ "PrelimKo_Headache_SAH": [],
+ "PrelimKo_Headache_Migraine": [
+  [
+   "onto::tier2:siadh",
+   2.0,
+   2
+  ]
+ ],
+ "PrelimKo_Fever_Meningitis": [],
+ "PrelimKo_Fever_URI": [
+  [
+   "onto::tier2:sym_hemoptysis",
+   1.0,
+   1
+  ],
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ],
+  [
+   "tension_pneumothorax",
+   0.0,
+   0
+  ]
+ ],
+ "PrelimKo_Syncope_Vasovagal": [],
+ "PrelimKo_Neuro_Stroke": [],
+ "PrelimKo_Allergy_Anaphylaxis": [],
+ "PrelimKo_Gluc_Hypoglycemia": [],
+ "PrelimKo_Uro_Cystitis": [],
+ "PrelimKo_Gyn_Ectopic": [],
+ "PrelimKo_Dizzy_BPPV": [
+  [
+   "cardiac_arrhythmia",
+   0.0,
+   0
+  ]
+ ],
+ "PrelimKo_Noisy_Typo_Chest": [],
+ "PrelimKo_Mixed_Term_Pneumonia": [],
+ "PrelimKo_Abd_Gastroenteritis": [],
+ "RoundM_001": [],
+ "RoundM_002": [],
+ "RoundM_003": [
+  [
+   "onto::tier2:pericarditis",
+   1.25,
+   1
+  ],
+  [
+   "onto::tier2:ventricular_tachycardia",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:hypertensive_emergency",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_004": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ],
+  [
+   "aortic_dissection",
+   0.0,
+   0
+  ],
+  [
+   "cardiac_arrhythmia",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_005": [],
+ "RoundM_006": [],
+ "RoundM_007": [],
+ "RoundM_008": [],
+ "RoundM_009": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ],
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ],
+  [
+   "aortic_dissection",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_010": [
+  [
+   "ischemic_stroke",
+   0.0,
+   0
+  ],
+  [
+   "sepsis",
+   0.0,
+   0
+  ],
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_011": [
+  [
+   "onto::tier2:cir_carotid_dissection",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_012": [
+  [
+   "sepsis",
+   0.0,
+   0
+  ],
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ],
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ],
+  [
+   "ischemic_stroke",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_013": [],
+ "RoundM_014": [
+  [
+   "onto::tier2:mesenteric_ischemia",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_015": [
+  [
+   "onto::tier2:deep_vein_thrombosis",
+   1.5,
+   1
+  ]
+ ],
+ "RoundM_016": [],
+ "RoundM_017": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_018": [],
+ "RoundM_019": [
+  [
+   "onto::tier2:ruptured_ovarian_cyst",
+   2.0,
+   1
+  ]
+ ],
+ "RoundM_020": [
+  [
+   "onto::tier2:cardiac_tamponade",
+   1.25,
+   1
+  ],
+  [
+   "onto::tier2:hypertensive_emergency",
+   1.25,
+   1
+  ]
+ ],
+ "RoundM_021": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ],
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_022": [
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_023": [],
+ "RoundM_024": [],
+ "RoundM_025": [],
+ "RoundM_026": [],
+ "RoundM_027": [],
+ "RoundM_028": [],
+ "RoundM_029": [
+  [
+   "onto::tier2:epistaxis",
+   1.5,
+   1
+  ]
+ ],
+ "RoundM_030": [],
+ "RoundM_031": [
+  [
+   "onto::tier2:urinary_retention",
+   1.5,
+   1
+  ]
+ ],
+ "RoundM_032": [
+  [
+   "onto::tier2:siadh",
+   1.0,
+   1
+  ],
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_033": [
+  [
+   "onto::tier2:gi_liver_abscess",
+   1.5,
+   1
+  ]
+ ],
+ "RoundM_034": [
+  [
+   "onto::tier2:siadh",
+   2.0,
+   2
+  ]
+ ],
+ "RoundM_035": [
+  [
+   "onto::tier2:mesenteric_ischemia",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:pituitary_apoplexy",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_036": [],
+ "RoundM_037": [],
+ "RoundM_038": [],
+ "RoundM_039": [
+  [
+   "onto::tier2:supraventricular_tachycardia",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_040": [],
+ "RoundM_041": [
+  [
+   "onto::tier2:siadh",
+   2.43,
+   3
+  ]
+ ],
+ "RoundM_042": [],
+ "RoundM_043": [],
+ "RoundM_044": [],
+ "RoundM_045": [
+  [
+   "onto::tier2:biliary_colic",
+   1.75,
+   1
+  ],
+  [
+   "onto::tier2:cholecystitis",
+   1.5,
+   1
+  ]
+ ],
+ "RoundM_046": [],
+ "RoundM_047": [],
+ "RoundM_048": [
+  [
+   "onto::tier2:ulcerative_colitis",
+   1.5,
+   1
+  ],
+  [
+   "onto::tier2:large_bowel_obstruction",
+   1.5,
+   1
+  ]
+ ],
+ "RoundM_049": [],
+ "RoundM_050": [],
+ "RoundM_051": [],
+ "RoundM_052": [],
+ "RoundM_053": [],
+ "RoundM_054": [],
+ "RoundM_055": [
+  [
+   "onto::tier2:ventricular_tachycardia",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_056": [],
+ "RoundM_057": [],
+ "RoundM_058": [],
+ "RoundM_059": [],
+ "RoundM_060": [
+  [
+   "onto::tier2:mesenteric_ischemia",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_061": [],
+ "RoundM_062": [
+  [
+   "onto::tier2:aortic_stenosis",
+   1.25,
+   1
+  ]
+ ],
+ "RoundM_063": [],
+ "RoundM_064": [
+  [
+   "onto::tier2:ventricular_tachycardia",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_065": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_066": [],
+ "RoundM_067": [],
+ "RoundM_068": [],
+ "RoundM_069": [],
+ "RoundM_070": [
+  [
+   "onto::tier2:optic_neuritis",
+   1.5,
+   1
+  ]
+ ],
+ "RoundM_071": [],
+ "RoundM_072": [],
+ "RoundM_073": [],
+ "RoundM_074": [
+  [
+   "gi_bleeding",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_075": [],
+ "RoundM_076": [
+  [
+   "onto::tier2:ventricular_tachycardia",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:hypertensive_emergency",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:supraventricular_tachycardia",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:sym_hemoptysis",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_077": [],
+ "RoundM_078": [
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_079": [
+  [
+   "acute_abdomen",
+   0.3,
+   1
+  ]
+ ],
+ "RoundM_080": [],
+ "RoundM_081": [],
+ "RoundM_082": [],
+ "RoundM_083": [
+  [
+   "onto::tier2:hypercalcemia",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_084": [
+  [
+   "onto::tier2:deep_vein_thrombosis",
+   1.5,
+   1
+  ]
+ ],
+ "RoundM_085": [],
+ "RoundM_086": [
+  [
+   "onto::tier2:cir_carotid_dissection",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_087": [
+  [
+   "onto::tier2:siadh",
+   2.0,
+   2
+  ]
+ ],
+ "RoundM_088": [],
+ "RoundM_089": [
+  [
+   "sepsis",
+   0.3,
+   1
+  ],
+  [
+   "meningitis",
+   0.3,
+   1
+  ],
+  [
+   "acute_abdomen",
+   0.3,
+   1
+  ]
+ ],
+ "RoundM_090": [
+  [
+   "gi_bleeding",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_091": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ],
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ]
+ ],
+ "RoundM_092": [],
+ "RoundM_093": [],
+ "RoundM_094": [
+  [
+   "onto::tier2:mesenteric_ischemia",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_095": [],
+ "RoundM_096": [],
+ "RoundM_097": [],
+ "RoundM_098": [],
+ "RoundM_099": [],
+ "RoundM_100": [
+  [
+   "onto::tier2:hypertensive_emergency",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:ventricular_tachycardia",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:sym_hemoptysis",
+   1.0,
+   1
+  ]
+ ],
+ "RoundM_101": [],
+ "RoundM_102": [
+  [
+   "onto::tier2:guillain_barre",
+   1.25,
+   1
+  ]
+ ],
+ "RoundM_103": [],
+ "RoundM_104": [],
+ "RoundM_105": [
+  [
+   "onto::tier2:ruptured_ovarian_cyst",
+   2.0,
+   1
+  ]
+ ],
+ "RoundM_106": [],
+ "RoundM_107": [
+  [
+   "onto::tier2:siadh",
+   2.0,
+   2
+  ]
+ ],
+ "RoundM_108": [],
+ "RoundM_109": [],
+ "RoundM_110": [],
+ "RoundM_111": [
+  [
+   "onto::tier2:guillain_barre",
+   1.25,
+   1
+  ]
+ ],
+ "RoundM_112": [],
+ "RoundM_113": [],
+ "RoundM_114": [],
+ "RoundM_115": [],
+ "RoundM_116": [],
+ "RoundM_117": [],
+ "RoundM_118": [],
+ "RoundM_119": [],
+ "RoundM_120": [],
+ "RoundM_121": [],
+ "RoundM_122": [],
+ "RoundM_123": [],
+ "RoundM_124": [],
+ "RoundM_125": [],
+ "RoundM_126": [],
+ "RoundM_127": [],
+ "RoundM_128": [],
+ "RoundJ_01": [],
+ "RoundJ_02": [
+  [
+   "onto::tier2:hypertensive_emergency",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:ventricular_tachycardia",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:sym_hemoptysis",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:myocarditis",
+   1.0,
+   1
+  ]
+ ],
+ "RoundJ_03": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ]
+ ],
+ "RoundJ_04": [],
+ "RoundJ_05": [],
+ "RoundJ_06": [],
+ "RoundJ_07": [],
+ "RoundJ_08": [],
+ "RoundJ_09": [
+  [
+   "cardiac_arrhythmia",
+   0.0,
+   0
+  ]
+ ],
+ "RoundJ_10": [],
+ "RoundJ_11": [
+  [
+   "onto::tier2:siadh",
+   1.0,
+   1
+  ]
+ ],
+ "RoundJ_12": [
+  [
+   "subarachnoid_hemorrhage",
+   0.0,
+   0
+  ]
+ ],
+ "RoundJ_13": [
+  [
+   "onto::tier2:siadh",
+   1.0,
+   1
+  ]
+ ],
+ "RoundJ_14": [],
+ "RoundJ_15": [],
+ "RoundJ_16": [],
+ "RoundJ_17": [],
+ "RoundJ_18": [],
+ "RoundJ_19": [],
+ "RoundJ_20": [],
+ "RoundJ_21": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ]
+ ],
+ "RoundJ_22": [],
+ "RoundJ_23": [],
+ "RoundJ_24": [],
+ "RoundJ_25": [],
+ "RoundJ_26": [],
+ "RoundJ_27": [],
+ "RoundJ_28": [],
+ "RoundJ_29": [],
+ "RoundJ_30": [
+  [
+   "onto::tier2:gi_peritonitis_gi",
+   1.5,
+   1
+  ]
+ ],
+ "RoundJ_31": [
+  [
+   "aortic_dissection",
+   0.0,
+   0
+  ],
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ]
+ ],
+ "RoundJ_32": [
+  [
+   "sepsis",
+   0.3,
+   1
+  ],
+  [
+   "meningitis",
+   0.3,
+   1
+  ],
+  [
+   "acute_abdomen",
+   0.3,
+   1
+  ]
+ ],
+ "RoundJ_33": [
+  [
+   "aortic_dissection",
+   0.0,
+   0
+  ]
+ ],
+ "RoundJ_34": [],
+ "RoundJ_35": [],
+ "RoundJ_36": [],
+ "RoundJ_37": [],
+ "RoundJ_38": [
+  [
+   "onto::tier2:hypertensive_emergency",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:ventricular_tachycardia",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:sym_hemoptysis",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:myocarditis",
+   1.0,
+   1
+  ]
+ ],
+ "RoundJ_39": [
+  [
+   "cardiac_arrhythmia",
+   0.0,
+   0
+  ]
+ ],
+ "RoundJ_40": [],
+ "RoundJ_41": [],
+ "RoundJ_42": [],
+ "RoundJ_43": [
+  [
+   "onto::tier2:deep_vein_thrombosis",
+   2.39,
+   2
+  ]
+ ],
+ "RoundJ_44": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ],
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ]
+ ],
+ "RoundJ_45": [],
+ "RoundJ_46": [
+  [
+   "onto::tier2:hypertensive_emergency",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:ventricular_tachycardia",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:sym_hemoptysis",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:myocarditis",
+   1.0,
+   1
+  ]
+ ],
+ "RoundJ_47": [],
+ "RoundJ_48": [
+  [
+   "onto::tier2:hypertensive_emergency",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:ventricular_tachycardia",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:sym_hemoptysis",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:myocarditis",
+   1.0,
+   1
+  ]
+ ],
+ "RoundJ_49": [
+  [
+   "acute_abdomen",
+   0.0,
+   0
+  ],
+  [
+   "gi_bleeding",
+   0.0,
+   0
+  ],
+  [
+   "ectopic_pregnancy",
+   0.0,
+   0
+  ]
+ ],
+ "RoundJ_50": [
+  [
+   "acute_abdomen",
+   0.0,
+   0
+  ],
+  [
+   "gi_bleeding",
+   0.0,
+   0
+  ],
+  [
+   "ectopic_pregnancy",
+   0.0,
+   0
+  ]
+ ],
+ "RoundJ_51": [],
+ "RoundJ_52": [],
+ "RoundJ_53": [],
+ "RoundJ_54": [],
+ "RoundI_ion_rhythm": [],
+ "RoundI_sodium": [
+  [
+   "onto::tier2:siadh",
+   2.0,
+   2
+  ]
+ ],
+ "RoundI_primary_rhythm": [],
+ "RoundI_lung_source": [
+  [
+   "onto::tier2:sym_hemoptysis",
+   1.0,
+   1
+  ]
+ ],
+ "RoundI_urinary_systemic": [],
+ "RoundI_urinary_source": [
+  [
+   "sepsis",
+   0.3,
+   1
+  ],
+  [
+   "meningitis",
+   0.3,
+   1
+  ],
+  [
+   "acute_abdomen",
+   0.3,
+   1
+  ]
+ ],
+ "RoundI_enzyme_first": [],
+ "RoundI_enzyme_sparse": [],
+ "RoundI_multimorbid_ischemia": [],
+ "RoundI_drug_glucose": [],
+ "RoundI_severity_specific": [
+  [
+   "pulmonary_embolism",
+   0.6,
+   2
+  ]
+ ],
+ "RoundI_benign_positional": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ],
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ]
+ ],
+ "RoundI_dangerous_balance": [],
+ "RoundI_negative_cardiac": [
+  [
+   "onto::tier2:hypertensive_emergency",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:ventricular_tachycardia",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:sym_hemoptysis",
+   1.0,
+   1
+  ],
+  [
+   "onto::tier2:myocarditis",
+   1.0,
+   1
+  ]
+ ],
+ "RoundI_late_reversal": [
+  [
+   "onto::tier2:deep_vein_thrombosis",
+   1.5,
+   1
+  ]
+ ],
+ "RoundI_pleural": [],
+ "RoundI_ko_urinary": [
+  [
+   "sepsis",
+   0.0,
+   0
+  ],
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ]
+ ],
+ "RoundI_ja_gut": [],
+ "RoundI_long_tail": [],
+ "RoundI_unsupported": [],
+ "ChestPain01": [],
+ "AbdominalPain01": [],
+ "Headache01": [],
+ "Fever01": [],
+ "Dyspnea01": [
+  [
+   "onto::tier2:deep_vein_thrombosis",
+   2.39,
+   2
+  ]
+ ],
+ "Dizziness01": [],
+ "AlteredMentalStatus01": [
+  [
+   "onto::tier2:siadh",
+   2.0,
+   2
+  ]
+ ],
+ "UrinarySymptoms01": [
+  [
+   "acute_coronary_syndrome",
+   0.0,
+   0
+  ],
+  [
+   "pulmonary_embolism",
+   0.0,
+   0
+  ]
+ ]
+}

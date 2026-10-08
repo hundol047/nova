@@ -1,0 +1,61 @@
+=== Blind v5 set (evaluation/blind_cases_v5.py -- the untouched final generalization check for this round's routing/severity/safety_priority rewrite, never tuned against) ===
+Case                            Category              Correct   Turns   Duplicate  Critical Miss  
+--------------------------------------------------------------------------------------------------
+Blind5_01_OfficeWorkerCongestioncommon                YES       3       0          NO             
+Blind5_02_WeekendCookoutIllness common                YES       29      0          NO             
+Blind5_03_DeadlineStressHeadachecommon                YES       19      0          NO             
+Blind5_04_WeekLongCoughAfterColdSubsidescommon                NO        19      0          NO             
+Blind5_05_ShovelingSnowChestPressurecritical              YES       24      0          NO             
+Blind5_06_LongBusRideCalfPainBreathlesscritical              YES       13      0          NO             
+Blind5_07_GardeningWordFindingDifficultycritical              YES       29      0          NO             
+Blind5_08_NursingHomeCatheterFeverConfusioncritical              YES       24      0          NO             
+Blind5_09_InterscapularTearingPainHighBPcritical              YES       16      0          NO             
+Blind5_10_ThunderclapHeadacheDuringSexcritical              YES       8       0          NO             
+Blind5_11_DormOutbreakStiffNeckLightSensitivitycritical              NO        26      0          YES            
+Blind5_12_TeenagerFruityBreathRapidBreathingcritical              YES       30      0          NO             
+Blind5_13_BeeStingSwellingWheezecritical              YES       35      0          NO             
+Blind5_14_MotorcycleCrashChestNoBreathSoundscritical              YES       32      0          NO             
+Blind5_15_PeriumbilicalPainMigratingRightdangerous_mimic       YES       18      0          NO             
+Blind5_16_LatePeriodOneSidedPelvicPaindangerous             NO        24      0          YES            
+Blind5_17_SuddenColickyFlankPainRadiatingGroinbenign_mimic          YES       24      0          NO             
+Blind5_18_DiabeticFlankPainShiveringElderlyelderly               YES       31      0          NO             
+Blind5_19_NewlywedBladderIrritationcommon                NO        24      0          NO             
+Blind5_20_MaroonStoolsFatigueOnBloodThinnerdangerous             NO        26      0          YES            
+Blind5_21_BeerFestivalEpigastricPainToBackdangerous             YES       25      0          NO             
+Blind5_22_RigidAbdomenElderlyDiverticulitisHistorydangerous_elderly     NO        28      0          YES            
+Blind5_23_LateNightSnackHeartburnbenign_mimic          NO        22      0          NO             
+Blind5_24_MovingBoxesChestWallSorenessbenign_mimic          YES       18      0          NO             
+Blind5_25_JobInterviewChestTightnessTinglingconflicting_findings  YES       31      0          NO             
+Blind5_26_ChurchServiceStandingFaintbenign                NO        23      0          NO             
+Blind5_27_TurningHeadInBedBriefVertigobenign                YES       24      0          NO             
+Blind5_28_NewBPMedDizzyOnStandingelderly_polypharmacy  NO        28      0          NO             
+Blind5_29_ThyroidHistoryFlutteryHeartelderly               YES       22      0          NO             
+Blind5_30_DialysisNoShowGeneralizedWeaknesselderly_multimorbidityYES       6       0          NO             
+Blind5_31_AssistedLivingProductiveCoughFeverelderly               YES       11      0          NO             
+Blind5_32_FlashingLightsThenOneSidedHeadacheconflicting_findings  YES       23      0          NO             
+Blind5_33_HomeboundElderlySkippedInsulinConfusionvague_language        YES       3       0          NO             
+Blind5_34_ColdAirRunNormalOxygenWheezenegative_finding_centricYES       24      0          NO             
+Blind5_35_PolypharmacyFallHeadStrikeOnBloodThinnerpolypharmacy          YES       26      0          NO             
+Blind5_36_MultimorbidDiabeticHeartFailureShortnessOfBreathmultimorbidity        YES       30      0          NO             
+Blind5_37_ConflictingReassuringExamSevereAbdominalPainconflicting_findings  YES       27      0          NO             
+Blind5_38_SparseInformationVagueDizzinesssparse_information    NO        19      0          NO             
+Blind5_39_ObjectiveLabConfirmedSilentDKAobjective_lab_confirmedYES       16      0          NO             
+Blind5_40_NegativeFindingCentricReassuringChestPainnegative_finding_centricYES       21      0          NO             
+Blind5_41_PolypharmacyAnticoagulantNosebleedWeaknesspolypharmacy          YES       27      0          NO             
+Blind5_42_MultimorbidElderlyVagueWeaknessSepsismultimorbidity        YES       24      0          NO             
+Blind5_43_ConflictingFindingsNormalCTEarlyStrokeconflicting_findings  YES       27      0          NO             
+Blind5_44_SparseInformationElderlyFeverNoHistorysparse_information    YES       23      0          NO             
+
+Blind v5 summary (44 cases, 44 scored, 20 critical)
+  Scored Diagnostic Accuracy:   77.3%  (excludes: none)
+  All-Case Diagnostic Accuracy: 77.3%  (every case, no exclusions)
+  Critical Diagnosis Recall:    80.0%
+  Critical Miss Rate:           20.0%
+  Average / Median Turns:       22.3 / 24.0
+  Duplicate Action Rate:        0.00 per case
+  Unnecessary Test Rate:        0.77 per case
+  Malformed Output Rate:        0.00 per case
+  Real-LLM Fallback Rate:       NOT MEANINGFUL (0 real LLM calls -- mock provider)
+  Failed Diagnosis Rate:        0.0%
+  Avg ASK / EXAM / TEST:        7.6 / 5.7 / 8.0
+  Utility Score Proxy:          0.465  (informal local metric, evaluation/scoring.py -- not an official competition score)

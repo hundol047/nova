@@ -1,0 +1,14 @@
+tuning               acc 1.000->1.000 crit 6->6/6 turns 31.5->27.8 tests 11.9->10.8 unnec 2.25->1.88
+held_out             acc 0.944->0.944 crit 13->13/13 turns 28.8->26.8 tests 9.8->9.4 unnec 1.78->1.50
+generalization_v2    acc 1.000->1.000 crit 5->5/5 turns 22.9->21.8 tests 8.9->8.7 unnec 1.72->1.56
+stress               acc 1.000->1.000 crit 5->5/5 turns 22.8->22.4 tests 9.1->9.2 unnec 1.25->1.25
+blind_v5_dev         acc 0.955->0.932 crit 19->19/20 turns 25.4->23.8 tests 9.5->9.2 unnec 1.73->1.57
+   WORSE: [('Blind5_26_ChurchServiceStandingFaint', 'Vasovagal (Reflex) Syncope', 'Acute Coronary Syndrome')]
+round_j_dev          acc 0.944->0.944 crit 20->20/20 turns 19.5->18.7 tests 6.9->6.8 unnec 1.93->1.83
+round_m_dev          acc 0.976->0.878 crit 42->42/43 turns 26.5->25.0 tests 10.2->9.9 unnec 5.23->4.55
+   better: ['RoundM_087']
+   WORSE: [('RoundM_096', 'Subarachnoid Hemorrhage', 'Bacterial Meningitis'), ('RoundM_098', 'Acute Cholecystitis', 'Acute Pancreatitis'), ('RoundM_099', 'Small Bowel Obstruction', 'Acute Gastroenteritis'), ('RoundM_101', 'Deep Vein Thrombosis', 'Pulmonary Embolism'), ('RoundM_103', 'Acute Diverticulitis', 'Acute Appendicitis'), ('RoundM_104', 'Testicular Torsion', 'Acute Pancreatitis'), ('RoundM_109', 'Cellulitis', 'Acute Pyelonephritis'), ('RoundM_110', 'Acute Gout Flare', 'Uncomplicated Cystitis (Lower UTI)'), ('RoundM_112', 'Epididymitis', 'Uncomplicated Cystitis (Lower UTI)'), ('RoundM_114', 'Hyperthyroidism', 'Hypoglycemia'), ('RoundM_115', 'Giant Cell (Temporal) Arteritis', 'Migraine'), ('RoundM_117', 'Acute Mesenteric Ischemia', 'Gastroesophageal Reflux Disease'), ('RoundM_119', 'Spontaneous Pneumothorax (Non-tension)', 'Tension Pneumothorax')]
+validation_round_n   acc 0.976->0.952 crit 20->20/20 turns 24.7->23.2 tests 9.0->8.8 unnec 1.98->2.02
+   WORSE: [('ValN_26', 'Vasovagal (Reflex) Syncope', 'Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)')]
+validation_round_o   acc 1.000->0.971 crit 16->15/16 turns 28.2->25.3 tests 10.6->10.1 unnec 2.97->2.70
+   WORSE: [('ValO_11', 'Pulmonary Embolism', 'Community-Acquired Pneumonia')]

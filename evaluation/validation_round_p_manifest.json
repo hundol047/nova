@@ -1,0 +1,12 @@
+{
+ "file": "evaluation/validation_cases_round_p.py",
+ "sha256": "82f82ffc4b6759179d039f566aadeed29cbae1365e9955c85210bd004118cda6",
+ "cases": 34,
+ "scored": 32,
+ "critical": 13,
+ "frozen_at_commit_parent": "10e7de76f96eb42dc6ac8443fc1bc91077712dd2",
+ "rules": "preliminary (SAY/EXAM/DIAGNOSE, no TEST), competition retrieval, mock LLM",
+ "authoring": "engineering agent, single author (no independent author available), labels fixed from the vignette before any run; not clinician-adjudicated; not independent validation",
+ "label_note": "labels use the existing same_diagnosis() matcher unchanged; e.g. 'heart_failure' does not match 'Congestive Heart Failure' under that matcher",
+ "policy": "run at Round P baseline and at the end of Round P only (plus once under the EXAM-rejection scenario)"
+}
