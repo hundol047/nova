@@ -151,7 +151,8 @@ def test_ranking_switch_off(switch):
 @pytest.mark.parametrize("feature,objective", [("ejection systolic murmur", True), ("low sodium", True),
                                                ("rebound tenderness", True), ("elevated jvp", True),
                                                ("chest pain on exertion", False), ("leg swelling", False),
-                                               ("seizure", False), ("family history of sudden death", False)])
+                                               ("seizure", False), ("family history of sudden death", False),
+                                               ("calf pain or tenderness", False), ("pelvic tenderness", True)])
 def test_objective_only_features(feature, objective):
     assert is_objective_only_feature(feature) is objective
 
@@ -318,3 +319,35 @@ def test_sepsis_with_its_own_lactate_still_escalates_above_a_richly_supported_pn
     ranked = _ranked(s)
     assert ranked.index("sepsis") < ranked.index("pneumonia")
     assert ranked.index("pneumonia") < ranked.index("pulmonary_embolism")
+
+
+
+def _siadh_state(asked):
+    s = PatientState(case_id="si", chief_complaint="I just feel unwell", demographics={"age": 60, "sex": "female"})
+    s.preliminary_rules = True
+    s.asked_questions.extend("ask:" + q for q in asked)
+    return s
+
+
+_SIADH_ASKABLE = ["associated_symptoms:confusion", "associated_symptoms:headache", "associated_symptoms:nausea"]
+
+
+def test_ontology_candidate_is_addressed_once_every_askable_discriminator_is_asked(monkeypatch):
+    # "low sodium" cannot be asked of a patient and no TEST exists in the preliminary round: it must not hold the
+    # candidate unaddressed forever -- the same policy the knowledge-base workup already applies to its TEST items.
+    monkeypatch.setenv("NOVA_COMPETITION_RETRIEVAL", "1")
+    get_config(reload=True)
+    from nova_agent.resolution import is_resolved
+    try:
+        assert not is_resolved("onto::tier2:siadh", [], _siadh_state(_SIADH_ASKABLE[:2]))
+        assert is_resolved("onto::tier2:siadh", [], _siadh_state(_SIADH_ASKABLE))
+    finally:
+        monkeypatch.delenv("NOVA_COMPETITION_RETRIEVAL")
+        get_config(reload=True)
+
+
+def test_objective_discriminator_coverage_switch_off(monkeypatch, switch):
+    monkeypatch.setenv("NOVA_COMPETITION_RETRIEVAL", "1")
+    switch("NOVA_ACTION_V3", "0")
+    from nova_agent.resolution import is_resolved
+    assert not is_resolved("onto::tier2:siadh", [], _siadh_state(_SIADH_ASKABLE))

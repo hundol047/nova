@@ -122,11 +122,20 @@ def _ontology_workup_addressed(diagnosis_id: str, state: PatientState) -> bool:
     from nova_agent.ontology.normalizer import normalize
     _, _, support, _, _ = _score_disease(entry, state)
     supported = {normalize(s) for s in support}
+    from nova_agent.config import get_config
+    from nova_agent.clinical_concepts import is_objective_only_feature
     def covered(question):
         if state.question_asked(question):
             return True
         if ":" not in question:
             return False
+        if (getattr(state, "preliminary_rules", False) and get_config().action_v3_enabled
+                and is_objective_only_feature(question.split(":", 1)[1])):
+            # Round P: an exam sign or lab value is not the patient's to report and is never asked (missing_info).
+            # In a test-free encounter it cannot be obtained at all, so -- like the TEST items of a knowledge-base
+            # workup above -- it does not hold the candidate "unaddressed" forever. It is NOT negative evidence:
+            # addressed never means excluded, and the candidate keeps its score and stays in the differential.
+            return True
         feature = normalize(question.split(":", 1)[1])
         return bool(feature and feature in supported)
     return all(covered(q) for q in entry.get("discriminating_questions", []))

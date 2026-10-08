@@ -207,5 +207,10 @@ _OBJECTIVE_ONLY_FEATURE = re.compile(
 
 
 def is_objective_only_feature(feature: str) -> bool:
-    """True for a finding the patient cannot report from experience (exam signs, lab values, imaging)."""
-    return bool(feature) and bool(_OBJECTIVE_ONLY_FEATURE.search(feature.lower()))
+    """True for a finding the patient cannot report from experience (exam signs, lab values, imaging).
+
+    A disjunction is askable when any part is ("calf pain or tenderness": the pain is the patient's to report)."""
+    if not feature:
+        return False
+    parts = [p for p in re.split(r"\s+or\s+", feature.lower()) if p.strip()]
+    return bool(parts) and all(_OBJECTIVE_ONLY_FEATURE.search(p) for p in parts)
