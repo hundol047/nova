@@ -1,8 +1,9 @@
 # N.O.V.A. 2026 — current competition status
 
 **Status: PRE-GUIDE CANDIDATE — NOT OFFICIALLY READY.** This is the maintained status page. Older reports are
-historical evidence for the commit they name. Runtime commit: named by `artifacts/verification/CURRENT_RELEASE.json` (v20) on branch `claude/determined-brahmagupta-wrfveb` --
-Round O offline algorithm work (`docs/competition/ROUND_O_ALGORITHM_REPORT.md`) on top of Round N (`ab623ae`,
+historical evidence for the commit they name. Runtime commit: named by `artifacts/verification/CURRENT_RELEASE.json` (v21) on branch `claude/determined-brahmagupta-wrfveb` --
+Round P preliminary-rules algorithm work (`docs/competition/ROUND_P_ALGORITHM_REPORT.md`, runtime `3831555`) on top of
+Round O (`f86bfcc`, `docs/competition/ROUND_O_ALGORITHM_REPORT.md`) and Round N (`ab623ae`,
 `docs/competition/ROUND_N_ALGORITHM_REPORT.md`) and `8efd5d3`; mock provider only. `8efd5d3` was the integration of `integration/nova-preliminary-readiness` @ 60e034d and `offline/nova-competition-agent-optimization` @ 8d37c73.
 Release pointer: `artifacts/verification/CURRENT_RELEASE.json`.
 
@@ -40,6 +41,25 @@ Decisions are unchanged: `tests/test_matching_performance_equivalence.py` compar
 development suite is unchanged case by case. The threshold, case count and concurrency were **not** changed.
 
 ## 2. Preliminary diagnostic performance — LOCAL DEVELOPMENT / PRELIMINARY SIMULATION (mock, not an official score)
+
+**Current (Round P, runtime `3831555`, competition retrieval, mock, all 230 cases; `artifacts/round_p/final/prelim.json`).**
+Baseline `10e7de7` reproduced first (204/222, critical 80/85). Details, causes, ablations and the frozen Round P validation set are in
+`docs/competition/ROUND_P_ALGORITHM_REPORT.md`.
+
+| Suite | Cases (scored) | Top-1 | Critical Top-1 | Avg interactions |
+|---|---|---|---|---|
+| NEW Korean set | 20 (20) | 20/20 | 8/8 | 19.7 |
+| Round M dev | 128 (123) | 120/123 | 43/43 | 21.7 |
+| Round J dev | 54 (52) | 49/52 | 19/20 | 19.7 |
+| Round I dev | 20 (19) | 18/19 | 8/8 | 21.0 |
+| Original tuning set | 8 (8) | 8/8 | 6/6 | 25.8 |
+| **All** | 230 (222) | **215/222 (96.8%)** | **84/85** | 21.1 (max 40) |
+
+0 rule violations, 0 TEST, 0 malformed outputs, 0 unsupported SOAP lines, 100% information retention. Versus baseline: 11 cases
+better, 0 worse. Frozen Round P validation set (34 synthetic cases, single author, not independent): Top-1 23/32 → 24/32,
+critical 8/13 → 9/13. All of these are development/regression numbers, not unseen-blind or official performance.
+
+**Historical table below (integration pass at `8efd5d3`); kept as evidence for that commit only.**
 
 **Metric definitions.**
 - **Top-1** is final *primary-diagnosis* accuracy: the submitted primary diagnosis, or its internal key, matches the case label via `same_diagnosis()`.
@@ -170,7 +190,7 @@ This pass's own edits are logged in `docs/compliance/LLM_GENERATION_LOG.md`.
 
 ## 5. Verification of this commit
 
-The test counts, ZIP hash and clean-room result are recorded in the v20 record named by `CURRENT_RELEASE.json`. Commands:
+The test counts, ZIP hash and clean-room result are recorded in the v21 record named by `CURRENT_RELEASE.json`. Commands:
 `pytest tests`, `pytest backend/tests`, `scripts/load_smoke_backend.py`, `scripts/evaluate_preliminary_benchmark.py --gate`,
 `scripts/validate_runtime_provenance.py`, `scripts/refresh_runtime_inventory.py --check`, `scripts/check_eval_leakage.py`,
 `scripts/build_nova_submission.py`, `scripts/validate_submission_zip.py`, `scripts/smoke_fresh_package.py`.
