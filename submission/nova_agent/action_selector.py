@@ -65,6 +65,26 @@ class ActionSelector:
         self.stop_policy = StopPolicy()
 
     @staticmethod
+    def _faithful_asks(state, scored):
+        """Round Q: a detailed question that can only be SENT as the generic follow-up IS the generic question --
+        it is emitted under the generic key (so its answer is recorded as what was really asked), and it is dropped
+        when that generic question was already asked. Keeps the best-utility instance of each resulting key."""
+        from nova_agent.preliminary import question_is_faithful
+        lang = state.locale or "en"
+        out, seen = [], set()
+        for cand in scored:
+            if cand.action_type == "ASK" and ":" in cand.key and not question_is_faithful(cand.key, lang):
+                category = cand.key.split(":", 1)[0]
+                if state.question_attempted(category):
+                    continue
+                cand = cand.model_copy(update={"key": category})
+            if (cand.action_type, cand.key) in seen:
+                continue
+            seen.add((cand.action_type, cand.key))
+            out.append(cand)
+        return out
+
+    @staticmethod
     def _pending_dangerous_bedside_exam(state, differential, scored):
         from nova_agent.differential import _entry_for_candidate_id, _strip_negative_prefix
         from nova_agent.taxonomy import EXAM_CATALOG
@@ -247,6 +267,8 @@ class ActionSelector:
             scored.append(ScoredCandidate(action_type=cand.action_type, key=cand.key, content=content,
                                            utility=round(utility, 3), components=components))
         scored.sort(key=lambda c: c.utility, reverse=True)
+        if state.preliminary_rules:
+            scored = self._faithful_asks(state, scored)
 
         # UNKNOWN_PRESENTATION (spec: zero-evidence file-order bug fix, see differential.py's
         # `is_zero_evidence_presentation`/stop_policy.py's matching gate): with literally nothing
