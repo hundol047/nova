@@ -22,7 +22,8 @@ from nova_agent.action_selector import AgentAction
 from nova_agent.config import get_config
 from nova_agent.orchestrator import DoctorAgent
 from nova_agent.preliminary import (detect_language, exam_request_text, explanation_text, rejection_signal,
-                                    parse_first_statement, plan_say_text, say_text)
+                                    parse_first_statement, plan_say_text, same_scope_names, say_text,
+                                    uncertain_explanation_text)
 from nova_agent.soap import build_soap, label_alternatives, localized_name
 from nova_agent.state import PatientState
 
@@ -91,7 +92,22 @@ def observation_to_state(obs: CompetitionObservation, agent: DoctorAgent,
     return existing_state
 
 
-def preliminary_wire_action(case_id: str, action: AgentAction, state: PatientState, differential: list) -> CompetitionAction:
+def _exhausted(state: PatientState):
+    state.completion_reason = "information_exhausted"
+    return None
+
+
+def _urgent(final, differential: list) -> bool:
+    """Urgent advice when the named diagnosis is grave, or -- with nothing named -- when a dangerous candidate with
+    real support is still in the top three (it is not excluded, so the next step must be urgent)."""
+    top = final.item
+    if top is not None:
+        return bool(top.dangerous_if_missed or top.urgency in ("CRITICAL", "HIGH"))
+    return any(d.dangerous_if_missed and d.supporting_evidence and d.score > 0 for d in differential[:3])
+
+
+def preliminary_wire_action(case_id: str, action: AgentAction, state: PatientState, differential: list,
+                            final=None) -> CompetitionAction:
     """Preliminary-round wire form of an internal action: ASK -> SAY (<= 30 characters, one
     question), EXAM -> one-maneuver request sentence, DIAGNOSE -> SOAP note + one primary diagnosis.
     Pure translation: the internal action (and so the diagnosis) is unchanged."""
@@ -107,7 +123,7 @@ def preliminary_wire_action(case_id: str, action: AgentAction, state: PatientSta
     if action.action_type == "EXAM":
         return CompetitionAction(case_id=case_id, action_type="EXAM",
                                  content=exam_request_text(action.key, lang, action.content), metadata=metadata)
-    note = build_soap(state, differential, lang)
+    note = build_soap(state, differential, lang, final=final)
     return CompetitionAction(case_id=case_id, action_type="DIAGNOSE", content=str(note["text"]), metadata=metadata,
                              soap={k: str(note[k]) for k in ("S", "O", "A", "P")},
                              primary_diagnosis=str(note["primary_diagnosis"]))
@@ -169,6 +185,7 @@ class NovaCompetitionAgent:
         self._pending_actions: Dict[str, AgentAction] = {}
         self._emitted_actions: Dict[str, int] = {}
         self._closing_done: Dict[str, set] = {}
+        self._final: Dict[str, object] = {}
 
     def act(self, observation: dict) -> dict:
         case_id = observation.get("case_id") if isinstance(observation, dict) else None
@@ -203,23 +220,38 @@ class NovaCompetitionAgent:
                     from nova_agent.taxonomy import QUESTION_CATALOG
                     return AgentAction(action_type="ASK", key=category, content=QUESTION_CATALOG[category]["text_en"],
                                        rationale="Standard safety history before the diagnosis.")
-        top = differential[0] if differential else None
+        final = self._final_decision(case_id, state, differential)
+        top = final.item
         lang = state.locale or "en"
         if "dx" not in done and remaining >= 3:
             done.add("dx")
-            entry = None
-            if top is not None:
-                from nova_agent.soap import _entry_for
-                entry = _entry_for(top.diagnosis_id)
-            label = localized_name(entry, top.diagnosis if top else "", lang)
-            return AgentAction(action_type="SAY", key="explanation", content=explanation_text(label, lang, label_alternatives(entry, lang)),
+            # Round Q: the explanation commits to the SAME final decision the SOAP and primary will use.
+            self._final[case_id] = final
+            if top is None:
+                return AgentAction(action_type="SAY", key="explanation", content=uncertain_explanation_text(lang),
+                                   rationale="No specific diagnosis is supported yet; say so plainly.")
+            from nova_agent.soap import _entry_for
+            entry = _entry_for(top.diagnosis_id)
+            label = localized_name(entry, top.diagnosis, lang)
+            names = same_scope_names(label) + (same_scope_names(top.diagnosis) if lang != "ko" else [])
+            if lang == "en":
+                names = [n.lower() for n in names]
+            return AgentAction(action_type="SAY", key="explanation", content=explanation_text(names[0], lang, names[1:]),
                                rationale="Explain the working diagnosis to the patient before submitting the note.")
         if "plan" not in done and remaining >= 2:
             done.add("plan")
-            urgent = bool(top and (top.dangerous_if_missed or top.urgency in ("CRITICAL", "HIGH")))
+            urgent = _urgent(final, differential)
             return AgentAction(action_type="SAY", key="plan_explanation", content=plan_say_text(urgent, lang),
                                rationale="Tell the patient the next step and when to return.")
         return None
+
+    def _final_decision(self, case_id: str, state: PatientState, differential: list):
+        """The committed decision once the explanation was given; otherwise decided now from this differential."""
+        from nova_agent.final_decision import decide_final
+        cached = self._final.get(case_id)
+        if cached is not None:
+            return cached
+        return decide_final(state, differential, state.completion_reason or "supported")
 
     @staticmethod
     def _time_nearly_up(state: PatientState) -> bool:
@@ -231,6 +263,7 @@ class NovaCompetitionAgent:
         self._pending_actions.pop(case_id, None)
         self._emitted_actions.pop(case_id, None)
         self._closing_done.pop(case_id, None)
+        self._final.pop(case_id, None)
 
     def _act(self, observation: dict) -> dict:
         obs = CompetitionObservation.model_validate(observation)
@@ -258,7 +291,7 @@ class NovaCompetitionAgent:
             action = (AgentAction(action_type="ASK", key=fallback_key, content=fallback_key,
                                   rationale="TEST unavailable in the preliminary round")
                       if fallback_key else
-                      AgentAction(action_type="DIAGNOSE", key=getattr(action, "key", "unknown"),
+                      _exhausted(state) or AgentAction(action_type="DIAGNOSE", key=getattr(action, "key", "unknown"),
                                   content=_differential[0].diagnosis if _differential else "Undifferentiated presentation",
                                   rationale="TEST unavailable; diagnosing on the available evidence"))
 
@@ -295,6 +328,13 @@ class NovaCompetitionAgent:
                 self._emitted_actions[obs.case_id] = self._emitted_actions.get(obs.case_id, 0) + 1
                 return preliminary_wire_action(obs.case_id, closing, state, _differential or []).model_dump()
 
+        final = None
+        if state.preliminary_rules and action.action_type == "DIAGNOSE":
+            # Round Q: one final decision drives the primary, the SOAP note, the explanation and the metadata.
+            final = self._final_decision(obs.case_id, state, _differential or [])
+            action = AgentAction(action_type="DIAGNOSE", key=final.primary_id, content=final.label(state.locale or "en"),
+                                 rationale=action.rationale)
+
         self._pending_actions[obs.case_id] = action
         real_llm_verified: Optional[bool] = None
         if action.action_type == "DIAGNOSE":
@@ -323,8 +363,12 @@ class NovaCompetitionAgent:
                                     diagnosis_quality=diagnosis_quality,
                                     evidence_assessment=state.evidence_assessment)
         if state.preliminary_rules:
-            prelim = preliminary_wire_action(obs.case_id, action, state, _differential or [])
+            prelim = preliminary_wire_action(obs.case_id, action, state, _differential or [], final=final)
             prelim.metadata.update(wire.metadata)
+            if final is not None:
+                prelim.metadata["final_decision"] = final.as_metadata()
+                if final.undifferentiated:
+                    prelim.metadata["completion_type"] = "UNDIFFERENTIATED_INSUFFICIENT_INFORMATION"
             wire = prelim
         result = wire.model_dump()
         if action.action_type == "DIAGNOSE":

@@ -255,24 +255,44 @@ def _education_line(state: PatientState, L: Dict[str, str], flags: List[str]) ->
     return f"{L['edu']}: {L['edu_done']} -- " + "; ".join(parts) + tail
 
 
-def build_soap(state: PatientState, differential: list, lang: str = "en") -> Dict[str, object]:
+_UNDIFF_NOTE = {
+    "en": "Status: no specific diagnosis is supported by the information obtained; the candidates below are not "
+          "excluded and need further evaluation.",
+    "ko": "상태: 얻은 정보로는 특정 진단을 뒷받침할 수 없음. 아래 감별진단은 배제되지 않았으며 추가 평가가 필요함.",
+}
+
+
+def build_soap(state: PatientState, differential: list, lang: str = "en", final=None) -> Dict[str, object]:
     """Returns {'S','O','A','P' (text blocks), 'primary_diagnosis', 'text'} for the final DIAGNOSE.
 
     ``differential`` is the validated differential the agent just decided on (DifferentialItem
-    objects, rank order); the primary diagnosis is its first element."""
+    objects, rank order). Round Q: ``final`` (nova_agent/final_decision.FinalDecision) decides the primary; without
+    it the first element is used (legacy callers). An undifferentiated decision states so in A and keeps every
+    candidate as an alternative that is not excluded."""
     L = _labels(lang)
-    top = differential[0] if differential else None
+    undifferentiated = final is not None and final.item is None
+    if final is not None:
+        top = final.item
+        others = [d for d in differential if top is None or d.diagnosis_id != top.diagnosis_id]
+    else:
+        top = differential[0] if differential else None
+        others = list(differential[1:])
     top_entry = _entry_for(top.diagnosis_id) if top else None
-    primary = localized_name(top_entry, top.diagnosis if top else (state.chief_complaint or L["none"]), lang)
-    if top is not None and primary != top.diagnosis and lang == "ko":
-        primary = f"{primary} ({top.diagnosis})"
+    if undifferentiated:
+        primary = final.label(lang)
+    else:
+        primary = localized_name(top_entry, top.diagnosis if top else (state.chief_complaint or L["none"]), lang)
+        if top is not None and primary != top.diagnosis and lang == "ko":
+            primary = f"{primary} ({top.diagnosis})"
 
     basis = list(top.supporting_evidence) if top else []
     a_lines = [f"{L['dx']}: {primary}",
                f"{L['basis']}: " + ("; ".join(basis[:8]) if basis else L["no_basis"])]
+    if undifferentiated:
+        a_lines.append(_UNDIFF_NOTE["ko" if lang == "ko" else "en"])
     ddx_lines = []
     dangerous_entries: List[dict] = []
-    for item in differential[1:5]:
+    for item in others[:5 if undifferentiated else 4]:
         entry = _entry_for(item.diagnosis_id)
         name = localized_name(entry, item.diagnosis, lang)
         reason = "; ".join(item.supporting_evidence[:3]) or L["no_basis"]
@@ -287,7 +307,10 @@ def build_soap(state: PatientState, differential: list, lang: str = "en") -> Dic
     a_lines.append(f"{L['ddx']}:")
     a_lines.extend(ddx_lines or [f"- {L['none']}"])
 
-    urgent = bool(top and (top.dangerous_if_missed or top.urgency in ("CRITICAL", "HIGH")))
+    urgent = bool(top and (top.dangerous_if_missed or top.urgency in ("CRITICAL", "HIGH"))) or (
+        undifferentiated and any(d.dangerous_if_missed and d.supporting_evidence and d.score > 0 for d in differential[:3]))
+    if undifferentiated and differential:
+        top_entry = _entry_for(differential[0].diagnosis_id)  # tests that would evaluate the leading possibility
     tests = _plan_tests(top_entry, dangerous_entries, lang)
     flags = list((top_entry or {}).get("red_flag_keywords") or [])[:6]
     p_lines = [f"{L['tests']}: " + (", ".join(tests) if tests else L["none"]),

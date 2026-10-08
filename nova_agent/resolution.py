@@ -79,7 +79,9 @@ def _competition_resolved(diagnosis_id, contradictory_evidence, state):
         from nova_agent.taxonomy import TEST_CATALOG
         exams = [k for k in required if k not in TEST_CATALOG]
         asked_all = all(state.question_asked(q) for q in entry.get("discriminating_questions", []))
-        return all(k in set(state.completed_examinations) for k in exams) and asked_all
+        # Round Q: an EXAM counts only when it produced an observation -- a rejected request or a "result unknown"
+        # stays a blocked item (not re-sent, not evidence, and not a completed workup).
+        return all(state.exam_observed(k) for k in exams) and asked_all
     results = {**state.physical_examinations, **state.imaging, **state.laboratory_tests}
     unavailable = re.compile(r"\b(pending|unavailable|unknown|not (?:done|performed|available)|insufficient sample|awaiting)\b", re.I)
     completed = set(state.completed_examinations) | set(state.completed_tests)

@@ -265,6 +265,10 @@ class ActionSelector:
         all_candidates = scored + [diagnose_candidate]
 
         if stop_decision.should_diagnose or not scored:
+            # Round Q: record WHY the encounter ends. Exhausting the actions permits completion only; whether a
+            # specific diagnosis may be named is decided separately (nova_agent/final_decision.py).
+            state.completion_reason = ("budget" if stop_decision.forced else
+                                       "supported" if stop_decision.should_diagnose else "information_exhausted")
             action = AgentAction(action_type="DIAGNOSE", key=diagnose_candidate.key,
                                   content=top_diagnosis_name, rationale=stop_decision.reason)
             return action, all_candidates, stop_decision
