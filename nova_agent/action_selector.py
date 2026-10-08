@@ -64,6 +64,24 @@ class ActionSelector:
         self.missing_info = MissingInformationAnalyzer()
         self.stop_policy = StopPolicy()
 
+    @staticmethod
+    def _pending_dangerous_bedside_exam(state, differential, scored):
+        from nova_agent.differential import _entry_for_candidate_id, _strip_negative_prefix
+        from nova_agent.taxonomy import EXAM_CATALOG
+        for item in differential[:5]:
+            if not (item.dangerous_if_missed and item.score > 0):
+                continue
+            entry = _entry_for_candidate_id(item.diagnosis_id) or {}
+            risk = {str(r).lower() for r in entry.get("risk_factors", [])}
+            if not any(e.lower() not in risk and _strip_negative_prefix(e) is None for e in item.supporting_evidence):
+                continue
+            for exam_id in list(entry.get("minimum_workup") or []) + list(entry.get("discriminating_exams", [])):
+                if exam_id in EXAM_CATALOG and not state.exam_done(exam_id):
+                    spec = EXAM_CATALOG[exam_id]
+                    return ScoredCandidate(action_type="EXAM", key=exam_id, content=spec["name_en"], utility=0.0,
+                                           components={"dangerous_alternative_bedside_exam": 1.0})
+        return None
+
     def _decisively_supported_dangerous_ids(self, differential: List[DifferentialItem]) -> dict:
         """Dangerous diagnoses that are ALREADY the clear, well-separated leading diagnosis with no
         competing unresolved dangerous alternative -- i.e. the case is essentially ready to
@@ -263,6 +281,17 @@ class ActionSelector:
             components={"readiness_score": stop_decision.readiness_score},
         )
         all_candidates = scored + [diagnose_candidate]
+
+        if (stop_decision.should_diagnose and not stop_decision.forced and state.preliminary_rules
+                and get_config().final_decision_enabled):
+            pending = self._pending_dangerous_bedside_exam(state, differential, scored)
+            if pending is not None:
+                # Round Q: before closing, one remaining bedside EXAM of a dangerous candidate that has real positive
+                # support (the neuro exam for a stroke with aphasia) is done first -- an executable, discriminating
+                # action is preferred to closing on what is still unexamined. Rejected/done exams are never retried.
+                return (AgentAction(action_type="EXAM", key=pending.key, content=pending.content,
+                                    rationale="Examine a still-unexamined dangerous alternative before closing."),
+                        scored + [diagnose_candidate], stop_decision)
 
         if stop_decision.should_diagnose or not scored:
             # Round Q: record WHY the encounter ends. Exhausting the actions permits completion only; whether a

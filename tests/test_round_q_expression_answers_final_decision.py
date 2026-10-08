@@ -320,3 +320,46 @@ def test_sparse_encounter_completes_undifferentiated_with_one_consistent_decisio
         assert final["primary_diagnosis"].split(" (")[0] in final["soap"]["A"]
     assert len([w for w in ep.wire if w["action_type"] != "DIAGNOSE"]) <= 50
     assert all(len(w["content"]) <= 30 for w in ep.wire if w["action_type"] == "SAY")
+
+
+# --- found while measuring: bare "No" against what the patient already said; closing before a dangerous exam -------
+
+def test_instant_onset_wording_is_a_sudden_onset_headache():
+    from nova_agent.clinical_concepts import canonical_findings_for
+    assert "sudden onset severe headache" in canonical_findings_for("the worst headache ever came on in a second")
+    assert "sudden onset severe headache" not in canonical_findings_for("my headache built up slowly over the day")
+
+
+def test_bare_no_contradicting_an_earlier_report_is_a_conflict_not_a_denial():
+    s = _state("The worst headache of my life came on in a second")
+    s.record_ask("associated_symptoms:sudden severe headache", "Any sudden severe headache?", "No.")
+    assert "no sudden severe headache" not in s.pertinent_negatives
+    assert "conflicting answer: sudden severe headache" in s.unknown_findings
+
+
+def test_later_report_withdraws_an_earlier_bare_no():
+    s = _state("sharp chest pain")
+    s.record_ask("associated_symptoms:pain eased by leaning forward", "Any pain eased by leaning forward?", "No.")
+    assert "no pain eased by leaning forward" in s.pertinent_negatives
+    s.record_ask("relieving", "What makes it better?", "leaning forward helps a lot")
+    assert "no pain eased by leaning forward" not in s.pertinent_negatives
+    assert "conflicting answer: pain eased by leaning forward" in s.unknown_findings
+
+
+def test_explicit_denial_is_never_withdrawn():
+    s = _state("my heart flutters")
+    s.record_ask("associated_symptoms:palpitations", "Any palpitations?", "No palpitations at all.")
+    s.record_ask("associated_symptoms", "Any other symptoms?", "a bit of palpitations last week")
+    assert any(n.lower().startswith("no palpitations") for n in s.pertinent_negatives)
+
+
+def test_unexamined_dangerous_alternative_with_support_is_examined_before_closing():
+    from nova_agent.action_selector import ActionSelector
+    s = _state("my words are coming out wrong and my heart feels irregular", age=74, sex="female")
+    s.record_ask("past_medical_history", "Any past illnesses?", "irregular heartbeat")
+    differential = DifferentialEngine().update(s)
+    exam = ActionSelector._pending_dangerous_bedside_exam(s, differential, [])
+    assert exam is not None and exam.action_type == "EXAM"
+    s.record_exam(exam.key, "normal")
+    assert ActionSelector._pending_dangerous_bedside_exam(s, DifferentialEngine().update(s), []) is None or \
+        ActionSelector._pending_dangerous_bedside_exam(s, DifferentialEngine().update(s), []).key != exam.key

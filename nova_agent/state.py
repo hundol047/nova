@@ -278,6 +278,8 @@ class PatientState(BaseModel):
     action_outcomes: List[ActionOutcome] = Field(default_factory=list)
     unknown_findings: List[str] = Field(default_factory=list)
     unfaithful_questions: List[str] = Field(default_factory=list)
+    # Round Q: features denied ONLY by a bare "No" (retracted into a conflict if the patient later reports them).
+    bare_denials: List[str] = Field(default_factory=list)
     # Round Q: why the encounter is ending ("supported" | "information_exhausted" | "budget"), set by the selector
     # whenever it returns DIAGNOSE. Completion is not support: see nova_agent/final_decision.py.
     completion_reason: Optional[str] = None
@@ -573,9 +575,18 @@ class PatientState(BaseModel):
                 if category == "associated_symptoms" and target not in self.associated_symptoms:
                     self.associated_symptoms.append(target)
             elif target and kind == "no":
-                denial = f"no {target}"
-                if denial not in self.pertinent_negatives:
-                    self.pertinent_negatives.append(denial)
+                if self._already_reported(target):
+                    # A bare "No" that contradicts what the patient already described is not a clean denial: keep
+                    # the earlier observation and record the conflict instead of erasing either.
+                    label = f"conflicting answer: {target}"
+                    if label not in self.unknown_findings:
+                        self.unknown_findings.append(label)
+                else:
+                    denial = f"no {target}"
+                    if denial not in self.pertinent_negatives:
+                        self.pertinent_negatives.append(denial)
+                    if target not in self.bare_denials:
+                        self.bare_denials.append(target)
             elif kind == "unknown":
                 label = target or category
                 if label not in self.unknown_findings:
@@ -589,6 +600,7 @@ class PatientState(BaseModel):
                 self.medication_text.append(answer)
             if category == "allergy" and answer and answer not in self.allergy_text:
                 self.allergy_text.append(answer)
+            self._retract_contradicted_bare_denials()
             return
         segments = _split_answer_segments(answer)
         positive_segments = [s for s in segments if not _segment_is_negated(s)]
@@ -645,6 +657,29 @@ class PatientState(BaseModel):
 
         if answer and answer not in self.raw_history_facts:
             self.raw_history_facts.append(f"[{category}] {answer}")
+        self._retract_contradicted_bare_denials()
+
+    def _retract_contradicted_bare_denials(self) -> None:
+        """A feature denied only by an earlier bare "No" and now reported in the patient's own words is a conflict,
+        not a denial: the denial is withdrawn and the conflict recorded (an explicit denial is never withdrawn)."""
+        for target in list(self.bare_denials):
+            if self._already_reported(target, include_last=True):
+                self.bare_denials.remove(target)
+                denial = f"no {target}"
+                if denial in self.pertinent_negatives:
+                    self.pertinent_negatives.remove(denial)
+                label = f"conflicting answer: {target}"
+                if label not in self.unknown_findings:
+                    self.unknown_findings.append(label)
+
+    def _already_reported(self, feature: str, include_last: bool = False) -> bool:
+        """The feature (or its canonical concept) is in what the patient has already said positively."""
+        from nova_agent.matching import feature_present_with_aliases
+        history = self.conversation_history if include_last else self.conversation_history[:-1]
+        said = [self.chief_complaint, *self.symptoms, *self.associated_symptoms, *self.pertinent_positives,
+                *[t.result for t in history if t.action_type == "ASK" and t.result and answer_kind(t.result) is None]]
+        said = _with_canonical_concepts([t for t in said if t])
+        return feature_present_with_aliases(feature, said, scrub_negated_spans=True)
 
     def add_medication(self, medication: Medication) -> None:
         self.medications.append(medication)

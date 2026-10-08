@@ -282,6 +282,9 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     # A plain "kidney problem" is NOT mapped: chronicity is not assumed.
     "chronic kidney disease": ["on dialysis", "ongoing dialysis", "regular dialysis", "haemodialysis", "hemodialysis",
                                "peritoneal dialysis", "dialysis three times a week"],
+    # Relief by sitting forward stated in the patient's words (pericarditis-type relief); feature-local.
+    "pain eased by leaning forward": ["leaning forward helps", "relieved by leaning forward", "better leaning forward",
+                                      "better when i lean forward", "eases when i lean forward", "sitting forward helps"],
     "missed dialysis session": ["missed dialysis", "missed my dialysis", "skipped dialysis", "missed two dialysis sessions",
                                 "missed a dialysis session", "missed scheduled dialysis"],
 }

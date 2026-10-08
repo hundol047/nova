@@ -79,8 +79,8 @@ if __name__ == "__main__":
     p.add_argument("--unscripted-unknown", action="store_true")
     p.add_argument("--output")
     args = p.parse_args()
-    env = Environment(unsupported_exams=ASSUMED_UNSUPPORTED if args.exam_rejection else frozenset(),
-                      unscripted_unknown=args.unscripted_unknown)
+    kwargs = {"unscripted_unknown": True} if args.unscripted_unknown else {}  # older drivers lack the option
+    env = Environment(unsupported_exams=ASSUMED_UNSUPPORTED if args.exam_rejection else frozenset(), **kwargs)
     rows = run(env)
     print(LABEL)
     print("Round Q contrast DEVELOPMENT set" + (" (EXAM-rejection)" if args.exam_rejection else "")
