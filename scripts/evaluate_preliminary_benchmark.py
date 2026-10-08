@@ -71,9 +71,10 @@ def _load(suite: str):
 
 
 def _one(args):
-    suite, index, rejection = args
+    suite, index, rejection, unscripted_unknown = args
     case = _load(suite)[index]
-    env = Environment(unsupported_exams=ASSUMED_UNSUPPORTED if rejection else frozenset())
+    env = Environment(unsupported_exams=ASSUMED_UNSUPPORTED if rejection else frozenset(),
+                      unscripted_unknown=unscripted_unknown)
     return suite, run_episode(case, env=env).result
 
 
@@ -82,11 +83,14 @@ def main() -> None:
     p.add_argument("--suites", default=",".join(SUITES))
     p.add_argument("--exam-rejection", action="store_true", help="simulate rejection of an ASSUMED unsupported-exam set")
     p.add_argument("--gate", action="store_true", help="exit 1 when a rule/safety gate or accuracy floor is violated")
+    p.add_argument("--unscripted-unknown", action="store_true",
+                   help="evaluation-tool variant: unscripted questions are answered 'not sure' instead of the case "
+                        "default 'No' (never used for the frozen/default results)")
     p.add_argument("--workers", type=int, default=4)
     p.add_argument("--output")
     args = p.parse_args()
     names = [s for s in args.suites.split(",") if s]
-    jobs = [(s, i, args.exam_rejection) for s in names for i in range(len(_load(s)))]
+    jobs = [(s, i, args.exam_rejection, args.unscripted_unknown) for s in names for i in range(len(_load(s)))]
     by_suite = {s: [] for s in names}
     with ProcessPoolExecutor(max_workers=max(1, args.workers)) as pool:
         for suite, row in pool.map(_one, jobs, chunksize=2):
@@ -101,6 +105,7 @@ def main() -> None:
                "critical_recall": "top1 over scored cases whose label is a critical condition"},
            "organizer_assumptions": {k: {"value": v[0], "status": v[1]} for k, v in ORGANIZER_ASSUMPTIONS.items()},
            "exam_rejection_scenario": bool(args.exam_rejection),
+           "unscripted_unknown_variant": bool(args.unscripted_unknown),
            "assumed_unsupported_exams": sorted(ASSUMED_UNSUPPORTED) if args.exam_rejection else [],
            "summaries": summaries}
     print(LABEL)

@@ -47,6 +47,10 @@ class Environment:
     request-scoped wording and no finding)."""
     unsupported_exams: frozenset = frozenset()
     rejection_text: str = "Request not supported."
+    # Round Q (separate evaluation-tool option, OFF by default -- the frozen results never use it): answer a question
+    # the case did not script with "not sure" instead of the case's default "No", so an unscripted feature is not
+    # reported as denied. Scripted answers, exam results, labels and scoring are unchanged.
+    unscripted_unknown: bool = False
 
 
 @dataclass
@@ -135,7 +139,10 @@ def _episode(case: SyntheticCase, agent: NovaCompetitionAgent, env: Environment,
                 base = pending.key.split(":")[0]
                 sem_dup += bool(cat and cat == base and base in say_cats)
                 say_cats.append(base)
-                reply = case.answers.get(pending.key, case.default_answer)
+                default = case.default_answer
+                if env.unscripted_unknown:
+                    default = "잘 모르겠어요." if re.search(r"[가-힣]", case.default_answer or "") else "I'm not sure."
+                reply = case.answers.get(pending.key, default)
             obs = {"case_id": case.case_id, "observation_type": "say_response", "content": reply}
         else:
             exam_n += 1
