@@ -1,0 +1,9 @@
+tuning               acc 1.000->1.000 crit 6->6/6 turns 19.2->19.2 tests 8.0->8.0 unnec 0.25->0.25
+held_out             acc 0.944->0.944 crit 13->13/13 turns 17.4->17.4 tests 6.4->6.4 unnec 0.06->0.06
+generalization_v2    acc 1.000->1.000 crit 5->5/5 turns 14.9->14.5 tests 5.7->5.4 unnec 0.28->0.33
+stress               acc 1.000->1.000 crit 5->5/5 turns 14.8->14.8 tests 5.2->5.2 unnec 0.38->0.38
+blind_v5_dev         acc 0.977->0.977 crit 20->20/20 turns 17.2->17.3 tests 6.0->6.0 unnec 0.45->0.41
+round_j_dev          acc 0.889->0.889 crit 20->20/20 turns 13.1->13.3 tests 4.4->4.4 unnec 0.43->0.43
+round_m_dev          acc 0.772->0.772 crit 43->43/43 turns 16.9->16.9 tests 5.9->5.9 unnec 1.04->1.04
+validation_round_n   acc 0.976->0.976 crit 20->20/20 turns 16.6->16.5 tests 5.8->5.8 unnec 0.52->0.52
+validation_round_o   acc 1.000->1.000 crit 16->16/16 turns 18.1->18.1 tests 6.6->6.6 unnec 0.57->0.57
