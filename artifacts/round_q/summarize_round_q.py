@@ -65,5 +65,25 @@ if __name__ == "__main__":
         "baseline_validation_round_p_exam_rejection": summary(B + "validation_round_p_exam_rejection.json"),
         "final_validation_round_p_exam_rejection": summary(F + "validation_round_p_exam_rejection.json", B + "validation_round_p_exam_rejection.json"),
     }
+    for tag, path in (("baseline_dev_round_q", "artifacts/round_q/baseline/base_dev.json"),
+                      ("baseline_dev_round_q_unscripted_unknown", "artifacts/round_q/baseline/base_dev_unk.json"),
+                      ("final_dev_round_q", F + "dev_round_q.json"),
+                      ("final_dev_round_q_exam_rejection", F + "dev_round_q_exam_rejection.json"),
+                      ("final_dev_round_q_unscripted_unknown", F + "dev_round_q_unscripted_unknown.json")):
+        data = json.loads((ROOT / path).read_text())
+        report[tag] = dict(data["summary"], misses=sorted(r["case_id"] + "->" + r["primary_key"] for r in data["cases"]
+                                                          if r["scored"] and not r["top1"]),
+                           unmet_expectations=sorted(r["case_id"] + "->" + r["primary_key"] for r in data["cases"]
+                                                     if not all(r["expectations"].values())))
+    reg_b = json.loads((ROOT / B / "test_enabled_regressions.json").read_text())["suites"]
+    reg_f = json.loads((ROOT / F / "test_enabled_regressions.json").read_text())["suites"]
+    report["test_enabled_regressions"] = {
+        name: {"baseline": {k: reg_b[name]["summary"][k] for k in ("scored_diagnostic_accuracy", "critical_diagnosis_recall", "average_turns", "n_scored_cases")},
+               "final": {k: reg_f[name]["summary"][k] for k in ("scored_diagnostic_accuracy", "critical_diagnosis_recall", "average_turns", "n_scored_cases")},
+               "newly_wrong": sorted(c["case_id"] for c in reg_f[name]["cases"]
+                                     if not c["correct"] and next(x for x in reg_b[name]["cases"] if x["case_id"] == c["case_id"])["correct"]),
+               "newly_correct": sorted(c["case_id"] for c in reg_f[name]["cases"]
+                                       if c["correct"] and not next(x for x in reg_b[name]["cases"] if x["case_id"] == c["case_id"])["correct"])}
+        for name in reg_f}
     (ROOT / F / "summary.json").write_text(json.dumps(report, ensure_ascii=False, indent=1) + "\n")
     print(json.dumps(report, ensure_ascii=False, indent=1))

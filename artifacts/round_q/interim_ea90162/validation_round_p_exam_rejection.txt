@@ -1,0 +1,67 @@
+LOCAL DEVELOPMENT / PRELIMINARY SIMULATION -- mock LLM, synthetic cases, NOT AN OFFICIAL SCORE
+Round P frozen validation set (EXAM-rejection scenario)
+ValP_01  round_p;meningitis_paraphrase          truth=meningitis                   top1=YES interactions=22 critical_miss=NO
+ValP_02  round_p;korean                         truth=meningitis                   top1=YES interactions=22 critical_miss=NO
+ValP_03  round_p;sah_mimic_of_meningitis        truth=subarachnoid_hemorrhage      top1=YES interactions=23 critical_miss=NO
+ValP_04  round_p;benign_mimic_meningitis        truth=viral_uri                    top1=YES interactions=11 critical_miss=NO
+ValP_05  round_p;benign_mimic_sah               truth=migraine                     top1=YES interactions=17 critical_miss=NO
+ValP_06  round_p;pe_paraphrase                  truth=pulmonary_embolism           top1=YES interactions=25 critical_miss=NO
+ValP_07  round_p;korean_pe                      truth=pulmonary_embolism           top1=NO  interactions=24 critical_miss=YES
+ValP_08  round_p;cardiac_mimic_of_pe            truth=heart_failure                top1=NO  interactions=29 critical_miss=NO
+ValP_09  round_p;pleuritic_benign_mimic         truth=pericarditis                 top1=YES interactions=26 critical_miss=NO
+ValP_10  round_p;pleuritic_benign_mimic         truth=musculoskeletal_chest_pain   top1=NO  interactions=26 critical_miss=NO
+ValP_11  round_p;electrolyte_hypokalemia        truth=severe_electrolyte_disorder  top1=YES interactions=14 critical_miss=NO
+ValP_12  round_p;electrolyte_hyponatremia       truth=severe_electrolyte_disorder  top1=NO  interactions=22 critical_miss=YES
+ValP_13  round_p;electrolyte_hyperkalemia       truth=severe_electrolyte_disorder  top1=YES interactions=23 critical_miss=NO
+ValP_14  round_p;endocrine_mimic                truth=hypoglycemia                 top1=YES interactions=24 critical_miss=NO
+ValP_15  round_p;endocrine_mimic                truth=hyperthyroidism              top1=YES interactions=16 critical_miss=NO
+ValP_16  round_p;arrhythmia_vt_like             truth=cardiac_arrhythmia           top1=YES interactions=30 critical_miss=NO
+ValP_17  round_p;arrhythmia_syncope             truth=cardiac_arrhythmia           top1=YES interactions=26 critical_miss=NO
+ValP_18  round_p;benign_mimic_arrhythmia        truth=vasovagal_syncope            top1=YES interactions=10 critical_miss=NO
+ValP_19  round_p;benign_mimic_arrhythmia        truth=panic_attack                 top1=YES interactions=17 critical_miss=NO
+ValP_20  round_p;korean_arrhythmia              truth=cardiac_arrhythmia           top1=YES interactions=22 critical_miss=NO
+ValP_21  round_p;surgical_abdomen               truth=acute_abdomen                top1=NO  interactions=23 critical_miss=YES
+ValP_22  round_p;specific_abdomen               truth=appendicitis                 top1=YES interactions=11 critical_miss=NO
+ValP_23  round_p;benign_mimic_abdomen           truth=gastroenteritis              top1=YES interactions=15 critical_miss=NO
+ValP_24  round_p;specific_abdomen               truth=acute_pancreatitis           top1=YES interactions=16 critical_miss=NO
+ValP_25  round_p;sepsis                         truth=sepsis                       top1=YES interactions=21 critical_miss=NO
+ValP_26  round_p;benign_mimic_sepsis            truth=pyelonephritis               top1=YES interactions=26 critical_miss=NO
+ValP_27  round_p;stroke                         truth=ischemic_stroke              top1=YES interactions=19 critical_miss=NO
+ValP_28  round_p;benign_mimic_stroke            truth=bppv                         top1=YES interactions=10 critical_miss=NO
+ValP_29  round_p;negation_history               truth=gerd                         top1=YES interactions=11 critical_miss=NO
+ValP_30  round_p;negation_history               truth=tension_headache             top1=YES interactions=11 critical_miss=NO
+ValP_31  round_p;multi_symptom                  truth=diabetic_ketoacidosis        top1=YES interactions=24 critical_miss=NO
+ValP_32  round_p;multi_symptom                  truth=anaphylaxis                  top1=YES interactions=20 critical_miss=NO
+ValP_33  round_p;sparse                         truth=unknown                      top1=YES interactions=22 critical_miss=NO
+ValP_34  round_p;sparse_korean                  truth=unknown                      top1=YES interactions=21 critical_miss=NO
+{
+ "label": "LOCAL DEVELOPMENT / PRELIMINARY SIMULATION -- mock LLM, synthetic cases, NOT AN OFFICIAL SCORE",
+ "cases": 34,
+ "scored": 32,
+ "top1": 0.84375,
+ "top3": 0.90625,
+ "top5": 0.96875,
+ "critical_cases": 13,
+ "critical_recall": 0.7692307692307693,
+ "critical_miss_rate": 0.23076923076923078,
+ "avg_interactions": 19.970588235294116,
+ "median_interactions": 22.0,
+ "max_interactions": 30,
+ "say_count": 492,
+ "exam_count": 187,
+ "rejected_exam_count": 34,
+ "unnecessary_exam_share": 0.2727272727272727,
+ "duplicate_action_rate": 0.0,
+ "semantic_duplicate_question_rate": 0.0020325203252032522,
+ "premature_diagnosis_rate": 0.0,
+ "unresolved_critical_alternative_rate": 0.29411764705882354,
+ "soap_completeness": 1.0,
+ "soap_information_retention": 1.0,
+ "soap_unsupported_info_rate": 0.0,
+ "soap_unsupported_lines": 0,
+ "explained_before_diagnose_rate": 1.0,
+ "rule_violations": 0,
+ "malformed_output_rate": 0.0,
+ "llm_fallback_turns": 0,
+ "cases_over_cap": 0
+}
