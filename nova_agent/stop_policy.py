@@ -71,6 +71,23 @@ def _substantively_supported(item: DifferentialItem, severity_ok: bool = True) -
     return not generic_only or severity_ok or len(support) >= 3
 
 
+def _bedside_workup_complete(top: DifferentialItem, entry: dict, state: PatientState) -> bool:
+    """Preliminary rules only: every bedside discriminator of the leader has been used -- its discriminating /
+    minimum-workup EXAMs performed or rejected, its discriminating questions asked -- and at least one supporting
+    item is an objective bedside finding (an exam or vital-sign result actually recorded). A rejected exam yields no
+    finding and is never counted as support."""
+    from nova_agent.taxonomy import EXAM_CATALOG
+    exams = {k for k in list(entry.get("discriminating_exams", [])) + list(entry.get("minimum_workup") or [])
+             if k in EXAM_CATALOG}
+    if not exams <= set(state.completed_examinations):
+        return False
+    if not all(state.question_asked(q) for q in entry.get("discriminating_questions", [])):
+        return False
+    objective = " ".join(state.objective_findings_text()).lower()
+    from nova_agent.matching import feature_present_with_aliases
+    return any(feature_present_with_aliases(p, [objective]) for p in top.supporting_evidence)
+
+
 class StopDecision(BaseModel):
     should_diagnose: bool
     forced: bool
@@ -206,7 +223,11 @@ class StopPolicy:
                              and len(top.supporting_evidence) >= _DECISIVE_LEAD_MIN_SUPPORT
                              and raw_gap >= _DECISIVE_LEAD_MIN_GAP
                              and not top.contradictory_evidence)
-            if decisive_lead and cfg_all.stop_v2_enabled and top.dangerous_if_missed and not objective_confirmed:
+            if (decisive_lead and cfg_all.stop_v2_enabled and top.dangerous_if_missed and not objective_confirmed
+                    and cfg_all.stop_v3_enabled and getattr(state, "preliminary_rules", False)
+                    and _bedside_workup_complete(top, entry, state)):
+                pass  # Round P: the strongest evidence a test-free encounter can obtain is in hand
+            elif decisive_lead and cfg_all.stop_v2_enabled and top.dangerous_if_missed and not objective_confirmed:
                 # Round O: a DANGEROUS leader is never closed on history alone, nor after its defining test came back
                 # without the confirming finding -- only an objective confirmatory finding lets it take this
                 # shortcut (otherwise the ordinary readiness path, with its own guards, still applies). A benign

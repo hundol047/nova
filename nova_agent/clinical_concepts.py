@@ -121,9 +121,12 @@ _CONCEPTS_V3: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
      r"\b(?:generally|all over|whole body|everywhere)\b[^.;]{0,10}\bweak\w*|\bweak(?:ness)? (?:all over|everywhere)\b|"
      r"\b(?:feel|feels|felt|feeling)(?: so| very| really)? weak\b|\bno strength\b"),
     ("irregular heartbeat",
-     r"\b(?:hr|pulse|heart rate|rhythm|heartbeat)\b[^.;]{0,15}\birregular\w*|\birregular(?:ly irregular)? "
-     r"(?:rhythm|pulse|heartbeat|heart rate|beat)\b|\bdropped beats\b"),
-    ("racing heart", r"\b(?:racing|pounding) heartbeat\b|\bheartbeat (?:is )?racing\b"),
+     r"\b(?:hr|pulse|heart rate|rhythm|heartbeat)\b[^.;]{0,15}\birregular\w*|\birregularly irregular\b|\birregular "
+     r"(?:rhythm|pulse|heartbeat|heart ?beat|heart rate|beats?)\b|\bdropped beats\b|\bheart\b[^.;]{0,25}\bskipping\b|\bskipped (?:a )?beats?\b"),
+    ("racing heart", r"\b(?:racing|pounding|fast(?:er)?|rapid|quick(?:er)?) heart ?beats?\b|"
+                     r"\bheart(?:beat)? (?:is |was |keeps )?(?:racing|pounding|beating (?:fast|quickly)|going (?:fast|quickly))\b"),
+    ("irregularly irregular rhythm", r"\birregularly irregular\b"),
+    ("fatigue", r"\b(?:washed out|wiped out|worn out|exhausted|drained of energy|no energy)\b"),
 )]
 _DRUG_CONCEPTS = {"diuretic use"}
 

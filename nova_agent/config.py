@@ -212,6 +212,10 @@ class NovaConfig:
     ranking_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RANKING_V3", True))
     # NOVA_ACTION_V3: never ASK the patient about an exam/lab-only finding (murmur, sodium level, rebound...).
     action_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ACTION_V3", True))
+    # NOVA_STOP_V3: under the PRELIMINARY rules (no TEST) a dangerous leader may take the decisive-lead stop once the
+    # strongest evidence obtainable at the bedside is in -- its discriminating exams done (or rejected), its
+    # discriminating questions asked, and an objective bedside finding supporting it. Alternative guards unchanged.
+    stop_v3_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_STOP_V3", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"
