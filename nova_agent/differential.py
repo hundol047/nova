@@ -210,13 +210,14 @@ def _apply_red_flag_escalation(kept: list, state: PatientState) -> list:
                     continue
                 typical = {f.lower() for f in low_entry.get("typical_features", [])}
                 shared = {p.lower() for p in low_support} & flags & typical & _ORGAN_DYSFUNCTION_FLAGS
-                if shared and _evidence_v3_enabled() and (not _has_specific_support(low_support)
-                                                          or len(low_support) < len(upper[3])):
-                    # Round P: a dangerous candidate backed ONLY by shared physiologic severity signs (tachycardia,
-                    # tachypnea, hypoxia) is not an escalation of the local disease -- sepsis carries its own
-                    # specific evidence (an infection source, an elevated lactate); a PE with nothing but the
-                    # pneumonia's own hypoxia does not. Nor does a candidate with LESS converging support than the
-                    # local diagnosis it would displace (a 4-item PE over a 7-item consolidated pneumonia).
+                upper_support = {p.lower() for p in upper[3]}
+                own_support = [p for p in low_support if p.lower() not in upper_support]
+                if shared and _evidence_v3_enabled() and not _has_specific_support(own_support):
+                    # Round P: a dangerous candidate backed ONLY by physiologic severity signs (tachycardia,
+                    # tachypnea, hypoxia) and by findings the local diagnosis already explains is not an escalation
+                    # of the local disease. Sepsis carries specific evidence of its own (an elevated lactate); a PE
+                    # whose only specific item is the pneumonia's own pleuritic pain does not -- one observation is
+                    # credited once, to the diagnosis that already holds it.
                     shared = set()
                 if shared:
                     order.insert(i, order.pop(j))

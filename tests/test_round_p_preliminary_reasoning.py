@@ -304,3 +304,17 @@ def test_rhythm_subsumption_switch_off_restores_previous_scoring(switch):
 def test_rhythm_symptom_still_counts_without_an_objective_rhythm_finding():
     s = PatientState(case_id="af2", chief_complaint="my heartbeat feels irregular", demographics={"age": 70, "sex": "male"})
     assert "irregular heartbeat" in _arrhythmia(s).supporting_evidence
+
+
+def test_sepsis_with_its_own_lactate_still_escalates_above_a_richly_supported_pneumonia():
+    # Round O escalation must survive the Round P guard: sepsis has specific evidence the pneumonia does not hold.
+    s = PatientState(case_id="sx", chief_complaint="coughing up rusty phlegm, burning up, feel like I'm going to pass out",
+                     demographics={"age": 67, "sex": "female"})
+    s.record_ask("associated_symptoms", "q", "sharp pain on the right when I breathe in")
+    s.record_exam("vital_signs", "BP 86/52, HR 128, RR 30, Temp 39.6, SpO2 88%")
+    s.record_exam("lung_auscultation", "right lower crackles and bronchial breathing")
+    s.record_test("lactate", "5.3 mmol/L")
+    s.record_test("cxr", "right lower lobe consolidation")
+    ranked = _ranked(s)
+    assert ranked.index("sepsis") < ranked.index("pneumonia")
+    assert ranked.index("pneumonia") < ranked.index("pulmonary_embolism")
