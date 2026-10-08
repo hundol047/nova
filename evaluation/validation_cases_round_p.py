@@ -1,0 +1,213 @@
+"""Round P VALIDATION set (preliminary rules: SAY / EXAM / DIAGNOSE only, no TEST) -- frozen BEFORE any Round P
+algorithm change (hash in evaluation/validation_round_p_manifest.json).
+
+Hand-authored synthetic vignettes by the engineering agent (single author, no clinician adjudication, not real
+patients). There is no independent author available in this environment, so this is NOT an independent validation
+set. Labels were fixed from each vignette's clinical picture before the agent was run on it. Wording is new: no
+sentence is copied or paraphrased from another case file.
+
+Every case is answerable from history and bedside examination only -- exactly what a preliminary encounter can
+obtain. Emphasis, chosen from the categories named for Round P before any failure was traced in detail:
+meningitis vs. subarachnoid haemorrhage vs. benign headache, pulmonary embolism vs. cardiac/other chest causes,
+severe electrolyte disturbance vs. endocrine look-alikes, arrhythmia vs. benign palpitations/syncope, acute surgical
+abdomen vs. benign abdominal pain, plus negation / past history, multi-symptom, Korean wording and sparse
+information. Benign look-alikes are included on purpose (over-calling a dangerous diagnosis is an error too).
+
+Simulator caveat: any question/exam not scripted returns the generic negative/normal default.
+Use: run at the Round P baseline and at the end only (and once under the EXAM-rejection scenario). A case looked at
+while changing code must be reported as development use.
+"""
+from evaluation.cases import SyntheticCase
+
+_NOTE = "Round P frozen validation; preliminary rules; synthetic; single author; not clinician-adjudicated."
+
+
+def _c(cid, cc, age, sex, truth, a=None, e=None, cat="", neg="No.", normal="Unremarkable.", scored=True):
+    return SyntheticCase(case_id=f"ValP_{cid}", chief_complaint=cc, demographics={"age": age, "sex": sex},
+                         ground_truth_diagnosis=truth, answers=a or {}, exam_results=e or {}, default_answer=neg,
+                         default_exam_result=normal, category=f"round_p;{cat}", notes=_NOTE, scoring_expected=scored)
+
+
+_KO_NEG, _KO_NORMAL = "아니요, 없어요.", "특이 소견 없음."
+
+VALIDATION_CASES_ROUND_P = [
+    # --- headache with fever / neck signs: infection vs bleed vs benign -------------------------------------
+    _c("01", "High temperature since last night and now my head is pounding and I can't look at the lamp", 19, "male",
+       "meningitis",
+       a={"onset": "fever started yesterday evening, the headache built up over the morning",
+          "associated_symptoms": "threw up twice, neck feels stiff and sore to bend",
+          "social_history": "I share a flat with five other students"},
+       e={"vital_signs": "BP 112/68, HR 116, RR 20, Temp 39.3, SpO2 98%", "meningeal_signs": "neck stiffness, Kernig positive",
+          "skin_exam": "a few purple spots on both ankles that do not fade when pressed",
+          "mental_status_exam": "drowsy but answers questions"}, cat="meningitis_paraphrase"),
+    _c("02", "열이 나고 머리가 깨질 듯 아프고 목이 뻣뻣해요", 26, "female", "meningitis", neg=_KO_NEG, normal=_KO_NORMAL,
+       a={"onset": "이틀 전부터 열이 났고 오늘 두통이 심해졌어요", "associated_symptoms": "토했고 불빛이 눈부셔요",
+          "past_medical_history": "특별한 병은 없어요"},
+       e={"vital_signs": "BP 108/70, HR 112, RR 20, Temp 38.9, SpO2 98%", "meningeal_signs": "경부 강직 있음, 브루진스키 징후 양성"},
+       cat="korean"),
+    _c("03", "The worst headache of my life came on in a second while I was straining on the toilet", 52, "female",
+       "subarachnoid_hemorrhage",
+       a={"onset": "instantly, like being hit with a bat, about two hours ago", "associated_symptoms": "vomited once, neck is stiff",
+          "past_medical_history": "high blood pressure, I don't take the tablets", "character": "worst ever, at the back of my head"},
+       e={"vital_signs": "BP 186/102, HR 88, RR 18, Temp 36.8, SpO2 98%", "meningeal_signs": "neck stiffness present",
+          "neuro_exam": "no focal deficit"}, cat="sah_mimic_of_meningitis"),
+    _c("04", "Fever and a headache with a runny nose and sore throat", 31, "female", "viral_uri",
+       a={"onset": "two days", "associated_symptoms": "blocked nose, sneezing, mild sore throat; neck is fine, light does not bother me",
+          "past_medical_history": "none"},
+       e={"vital_signs": "BP 118/74, HR 92, RR 16, Temp 38.1, SpO2 99%", "meningeal_signs": "no neck stiffness",
+          "mental_status_exam": "alert and oriented"}, cat="benign_mimic_meningitis"),
+    _c("05", "Throbbing one-sided headache with flashing zigzags before it, like my usual ones", 28, "female", "migraine",
+       a={"onset": "this morning, built up over an hour", "associated_symptoms": "nausea, light hurts; no fever, no neck stiffness",
+          "past_medical_history": "migraines since I was a teenager"},
+       e={"vital_signs": "BP 122/76, HR 74, RR 14, Temp 36.6", "neuro_exam": "normal", "meningeal_signs": "no neck stiffness"},
+       cat="benign_mimic_sah"),
+    # --- breathlessness / chest pain: PE vs cardiac vs benign ------------------------------------------------
+    _c("06", "I got breathless out of nowhere and nearly blacked out on the stairs", 61, "female", "pulmonary_embolism",
+       a={"onset": "suddenly this morning", "past_medical_history": "hip replacement three weeks ago, mostly in bed since",
+          "associated_symptoms": "sharp pain on the left when I breathe in, my left calf is sore",
+          "medication": "nothing regular"},
+       e={"vital_signs": "BP 98/64, HR 122, RR 28, Temp 37.2, SpO2 88%", "extremity_exam": "left calf swollen and tender",
+          "lung_auscultation": "clear"}, cat="pe_paraphrase"),
+    _c("07", "숨이 갑자기 차고 기침할 때 피가 조금 나왔어요", 45, "female", "pulmonary_embolism", neg=_KO_NEG, normal=_KO_NORMAL,
+       a={"onset": "오늘 아침 갑자기요", "medication": "피임약을 먹고 있어요", "past_medical_history": "얼마 전 장거리 비행을 했어요",
+          "associated_symptoms": "숨 쉴 때 오른쪽 가슴이 찔리듯 아파요"},
+       e={"vital_signs": "BP 116/70, HR 118, RR 26, Temp 37.3, SpO2 90%", "extremity_exam": "오른쪽 종아리 부종"},
+       cat="korean_pe"),
+    _c("08", "Short of breath on exertion and my ankles swell by the evening", 74, "male", "heart_failure",
+       a={"onset": "getting worse over three weeks", "associated_symptoms": "I need three pillows to sleep, wake up gasping at night",
+          "past_medical_history": "two heart attacks"},
+       e={"vital_signs": "BP 142/88, HR 96, RR 22, Temp 36.7, SpO2 93%", "lung_auscultation": "crackles at both bases",
+          "extremity_exam": "pitting oedema to the knees", "cardiac_auscultation": "third heart sound"},
+       cat="cardiac_mimic_of_pe"),
+    _c("09", "Sharp chest pain that's worse lying down and better sitting forward", 33, "male", "pericarditis",
+       a={"onset": "two days, after a cold last week", "aggravating": "lying flat and breathing in deeply",
+          "relieving": "leaning forward"},
+       e={"vital_signs": "BP 124/78, HR 98, RR 18, Temp 37.8, SpO2 98%", "cardiac_auscultation": "scratchy rub at the left sternal edge"},
+       cat="pleuritic_benign_mimic"),
+    _c("10", "Pain in my side when I breathe in since I fell off my bike", 25, "male", "musculoskeletal_chest_pain",
+       a={"onset": "yesterday after the fall", "aggravating": "twisting, coughing, pressing on the ribs",
+          "associated_symptoms": "no breathlessness at rest, no leg swelling"},
+       e={"vital_signs": "BP 126/80, HR 76, RR 15, Temp 36.6, SpO2 99%", "lung_auscultation": "clear, equal air entry",
+          "extremity_exam": "normal calves"}, cat="pleuritic_benign_mimic"),
+    # --- electrolyte disturbance vs endocrine look-alikes ---------------------------------------------------
+    _c("11", "My legs have gone so weak I can hardly climb the stairs and my heart keeps skipping", 69, "female",
+       "severe_electrolyte_disorder",
+       a={"medication": "a water tablet that the GP doubled last month", "onset": "getting worse over a week",
+          "associated_symptoms": "muscle cramps, constipation, very tired"},
+       e={"vital_signs": "BP 118/72, HR 58 irregular, RR 16, Temp 36.6", "neuro_exam": "reduced power in the legs, reflexes reduced",
+          "cardiac_auscultation": "irregular rhythm with dropped beats"}, cat="electrolyte_hypokalemia"),
+    _c("12", "Mum has been muddled and unsteady since she started a new antidepressant", 81, "female",
+       "severe_electrolyte_disorder",
+       a={"medication": "started on an SSRI two weeks ago, also takes a water pill", "onset": "over the past few days",
+          "associated_symptoms": "headache, nausea, one short fit this morning"},
+       e={"vital_signs": "BP 126/74, HR 80, RR 16, Temp 36.5", "mental_status_exam": "confused, slow to answer",
+          "neuro_exam": "unsteady gait, no focal weakness"}, cat="electrolyte_hyponatremia"),
+    _c("13", "Weak all over, tingling round my mouth and my heart feels odd after missing dialysis", 57, "male",
+       "severe_electrolyte_disorder",
+       a={"past_medical_history": "kidney failure on dialysis three times a week", "onset": "missed two sessions this week",
+          "associated_symptoms": "muscle weakness, palpitations"},
+       e={"vital_signs": "BP 150/90, HR 48 irregular, RR 18, Temp 36.6", "neuro_exam": "generalised weakness",
+          "cardiac_auscultation": "slow irregular rhythm"}, cat="electrolyte_hyperkalemia"),
+    _c("14", "Shaky, sweaty and confused before lunch after taking my diabetes tablet", 72, "male", "hypoglycemia",
+       a={"medication": "gliclazide, skipped breakfast", "onset": "half an hour ago",
+          "associated_symptoms": "hungry, heart racing, feels better after a sugary drink last time"},
+       e={"vital_signs": "BP 134/82, HR 102, RR 16, Temp 36.6", "mental_status_exam": "confused, sweating",
+          "neuro_exam": "no focal deficit"}, cat="endocrine_mimic"),
+    _c("15", "I've lost weight, my hands shake and my heart races even at rest", 34, "female", "hyperthyroidism",
+       a={"onset": "three months", "associated_symptoms": "always hot, loose stools, can't sleep, eyes look prominent",
+          "past_medical_history": "none"},
+       e={"vital_signs": "BP 132/70, HR 112 regular, RR 16, Temp 37.3", "general_appearance": "thin, restless, fine tremor",
+          "skin_exam": "warm moist skin"}, cat="endocrine_mimic"),
+    # --- arrhythmia vs benign palpitations / syncope -------------------------------------------------------
+    _c("16", "My heart suddenly took off and I felt faint, I've had a heart attack before", 66, "male", "cardiac_arrhythmia",
+       a={"onset": "an hour ago, came on in a second", "past_medical_history": "heart attack five years ago, weak heart",
+          "associated_symptoms": "lightheaded, short of breath, chest tightness"},
+       e={"vital_signs": "BP 92/58, HR 176 regular, RR 22, Temp 36.6, SpO2 95%", "cardiac_auscultation": "very fast regular rhythm",
+          "general_appearance": "pale and clammy"}, cat="arrhythmia_vt_like"),
+    _c("17", "I passed out without any warning while sitting watching TV", 71, "male", "cardiac_arrhythmia",
+       a={"onset": "this evening, no warning at all", "associated_symptoms": "came round after a minute, a bit confused briefly",
+          "past_medical_history": "heart failure", "medication": "several heart tablets"},
+       e={"vital_signs": "BP 110/70, HR 38, RR 16, Temp 36.6", "cardiac_auscultation": "slow regular rhythm",
+          "neuro_exam": "normal"}, cat="arrhythmia_syncope"),
+    _c("18", "I fainted in a hot crowded church after standing for an hour", 23, "female", "vasovagal_syncope",
+       a={"onset": "felt hot, sick and grey first, then went down", "associated_symptoms": "came round straight away, no chest pain, no palpitations",
+          "past_medical_history": "fainted once before when I had a blood test"},
+       e={"vital_signs": "BP 112/70, HR 66, RR 14, Temp 36.6", "cardiac_auscultation": "normal", "neuro_exam": "normal"},
+       cat="benign_mimic_arrhythmia"),
+    _c("19", "Heart pounding with shaky hands and tingling lips before a job interview", 27, "female", "panic_attack",
+       a={"onset": "peaked within ten minutes then faded", "past_medical_history": "anxiety",
+          "associated_symptoms": "felt I might die, breathing fast; no chest pain now"},
+       e={"vital_signs": "BP 124/76, HR 92 regular, RR 18, Temp 36.6, SpO2 99%", "cardiac_auscultation": "normal"},
+       cat="benign_mimic_arrhythmia"),
+    _c("20", "가슴이 두근거리고 맥이 불규칙하게 뛰어요", 73, "female", "cardiac_arrhythmia", neg=_KO_NEG, normal=_KO_NORMAL,
+       a={"onset": "어제부터 계속이요", "past_medical_history": "고혈압이 있어요", "associated_symptoms": "조금 어지럽고 숨이 차요"},
+       e={"vital_signs": "BP 138/84, HR 128 불규칙, RR 18, SpO2 96%", "cardiac_auscultation": "불규칙하게 불규칙한 리듬"},
+       cat="korean_arrhythmia"),
+    # --- abdomen: surgical vs specific vs benign ------------------------------------------------------------
+    _c("21", "Sudden agonising belly pain and I can't move, it hurts to even breathe", 67, "male", "acute_abdomen",
+       a={"onset": "suddenly two hours ago", "past_medical_history": "takes ibuprofen most days for his knees",
+          "associated_symptoms": "vomited, feels faint"},
+       e={"vital_signs": "BP 96/60, HR 118, RR 24, Temp 37.9", "abdominal_exam": "rigid board-like abdomen with rebound everywhere",
+          "general_appearance": "lying very still, grey"}, cat="surgical_abdomen"),
+    _c("22", "Pain started round my belly button and moved to the lower right", 19, "female", "appendicitis",
+       a={"onset": "since last night", "associated_symptoms": "off my food, felt sick, mild temperature",
+          "past_medical_history": "none; my period finished last week"},
+       e={"vital_signs": "BP 118/72, HR 98, RR 16, Temp 37.8", "abdominal_exam": "tender in the right lower quadrant with guarding"},
+       cat="specific_abdomen"),
+    _c("23", "Crampy belly ache with diarrhoea after a takeaway, my partner has it too", 34, "male", "gastroenteritis",
+       a={"onset": "since this morning", "associated_symptoms": "watery diarrhoea, vomited twice, no blood",
+          "aggravating": "eating"},
+       e={"vital_signs": "BP 120/76, HR 92, RR 16, Temp 37.6", "abdominal_exam": "soft, mildly tender all over, no guarding"},
+       cat="benign_mimic_abdomen"),
+    _c("24", "Severe pain in my upper belly going through to my back after a heavy night drinking", 46, "male",
+       "acute_pancreatitis",
+       a={"onset": "since last night", "character": "constant, boring", "associated_symptoms": "vomiting repeatedly",
+          "relieving": "sitting forward a bit"},
+       e={"vital_signs": "BP 132/80, HR 108, RR 20, Temp 37.8", "abdominal_exam": "epigastric tenderness, no rigidity"},
+       cat="specific_abdomen"),
+    # --- infection: systemic vs local ---------------------------------------------------------------------
+    _c("25", "Grandma is burning up, breathing fast and doesn't know where she is", 86, "female", "sepsis",
+       a={"onset": "since this morning", "past_medical_history": "has a urinary catheter",
+          "associated_symptoms": "not eating, very sleepy"},
+       e={"vital_signs": "BP 82/48, HR 126, RR 28, Temp 39.2, SpO2 93%", "mental_status_exam": "confused, drowsy",
+          "skin_exam": "cool mottled knees"}, cat="sepsis"),
+    _c("26", "Burning when I pee and pain in my side with a temperature", 29, "female", "pyelonephritis",
+       a={"onset": "three days", "associated_symptoms": "shivers, nausea, peeing often"},
+       e={"vital_signs": "BP 120/76, HR 98, RR 16, Temp 38.6", "costovertebral_tenderness": "right flank tender to percussion"},
+       cat="benign_mimic_sepsis"),
+    # --- neuro ---------------------------------------------------------------------------------------------
+    _c("27", "My husband's words came out wrong and his right arm went heavy an hour ago", 74, "male", "ischemic_stroke",
+       a={"onset": "suddenly an hour ago", "past_medical_history": "irregular heartbeat, not on blood thinners"},
+       e={"vital_signs": "BP 172/96, HR 96 irregular, RR 16", "neuro_exam": "right arm drift, word-finding difficulty",
+          "mental_status_exam": "alert"}, cat="stroke"),
+    _c("28", "The room spins for a few seconds whenever I turn over in bed", 64, "female", "bppv",
+       a={"onset": "on and off for a week", "associated_symptoms": "no weakness, no slurred speech, no hearing loss, no headache"},
+       e={"vital_signs": "BP 132/80, HR 70, RR 14", "neuro_exam": "normal apart from brief positional nystagmus"},
+       cat="benign_mimic_stroke"),
+    # --- negation / past history ----------------------------------------------------------------------------
+    _c("29", "Chest discomfort again — I had a clot in my lung years ago but this feels like my usual heartburn", 50, "male",
+       "gerd",
+       a={"past_medical_history": "blood clot in the lung ten years ago, fully treated",
+          "associated_symptoms": "no breathlessness, no leg swelling, sour taste", "relieving": "antacids help",
+          "aggravating": "after big meals and lying down"},
+       e={"vital_signs": "BP 128/80, HR 74, RR 14, Temp 36.6, SpO2 99%", "extremity_exam": "no calf swelling"},
+       cat="negation_history"),
+    _c("30", "Bad headache but no fever, no stiff neck, came on slowly over the day", 36, "female", "tension_headache",
+       a={"character": "band-like pressure around my head", "aggravating": "stress at work, long screen time",
+          "associated_symptoms": "no vomiting, light does not bother me"},
+       e={"vital_signs": "BP 120/76, HR 72, RR 14, Temp 36.6", "neuro_exam": "normal", "meningeal_signs": "no neck stiffness"},
+       cat="negation_history"),
+    # --- multi-symptom --------------------------------------------------------------------------------------
+    _c("31", "Throwing up, really thirsty, peeing all the time and now breathing hard", 17, "male", "diabetic_ketoacidosis",
+       a={"past_medical_history": "type 1 diabetes", "medication": "ran out of insulin three days ago",
+          "associated_symptoms": "belly pain, very tired"},
+       e={"vital_signs": "BP 104/62, HR 122, RR 30, Temp 37.0", "general_appearance": "dry, deep sighing breaths"},
+       cat="multi_symptom"),
+    _c("32", "Hives everywhere, my lips swelled and I'm wheezy after a bee sting", 38, "male", "anaphylaxis",
+       a={"onset": "ten minutes after the sting", "associated_symptoms": "dizzy, throat feels tight"},
+       e={"vital_signs": "BP 82/48, HR 128, RR 26, SpO2 91%", "lung_auscultation": "widespread wheeze",
+          "skin_exam": "widespread urticaria, swollen lips"}, cat="multi_symptom"),
+    # --- sparse information -----------------------------------------------------------------------------------
+    _c("33", "I just feel a bit off today", 40, "male", "unknown", cat="sparse", scored=False),
+    _c("34", "어지러워요", 55, "female", "unknown", neg=_KO_NEG, normal=_KO_NORMAL, cat="sparse_korean", scored=False),
+]
