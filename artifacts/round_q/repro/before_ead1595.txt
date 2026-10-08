@@ -1,0 +1,32 @@
+A BAD The referral letter says atrial fibrillation was excluded -> ['cardiac_arrhythmia'] expected []
+A BAD 진단서에 atrial fibrillation 아니라고 적혀 있습니다 -> ['cardiac_arrhythmia'] expected []
+A OK  The referral letter says atrial fibrillation was ruled out -> [] expected []
+A BAD The letter says pulmonary embolism cannot be excluded -> ['pulmonary_embolism'] expected []
+A BAD The letter confirms atrial fibrillation but excludes pulmonary embolism -> [] expected ['cardiac_arrhythmia']
+A BAD The letter confirms atrial fibrillation; the patient has no fever -> [] expected ['cardiac_arrhythmia']
+A BAD The letter says atrial fibrillation but pulmonary embolism was excluded -> ['cardiac_arrhythmia', 'pulmonary_embolism'] expected ['cardiac_arrhythmia']
+A BAD The letter says atrial fibrillation and I have no nausea -> [] expected ['cardiac_arrhythmia']
+A BAD My mother was diagnosed with atrial fibrillation yesterday -> ['cardiac_arrhythmia'] expected []
+A BAD The specialist letter states atrial fibrillation was present in 2016 -> ['cardiac_arrhythmia'] expected []
+A BAD 진단서에 atrial fibrillation 의심된다고 적혀 있습니다 -> ['cardiac_arrhythmia'] expected []
+A BAD 진단서에 atrial fibrillation 배제할 수 없다고 적혀 있습니다 -> ['cardiac_arrhythmia'] expected []
+A total 1 / 12
+A engine excluded-AF: (1.0, ['documented diagnosis'], ['zero_evidence_fallback', 'documented_diagnosis'])
+B irregular->irregularly irregular: True
+B explicit: False
+B BP 106/68, HR 37 regular, Temp 36.7 | vital findings [] | arrhythmia (0.0, [])
+B BP 120/80, HR 172 regular, Temp 36.8 | vital findings ['Marked tachycardia'] | arrhythmia (0.0, [])
+B BP 120/80, HR 68 regular, Temp 36.8 | vital findings [] | arrhythmia (0.0, [])
+B engine general irregular: (2.5, ['irregularly irregular rhythm'])
+C 'Yes.' pos ['Yes'] neg [] | arr (0.0, [], [])
+C 'No.' pos ['No'] neg [] | arr (0.0, [], [])
+C "I don't know." pos ["I don't know"] neg [] | arr (0.0, [], [])
+C 'No palpitations.' pos [] neg ['No palpitations'] | arr (0.0, [], [])
+C '아니요, 없어요.' pos [] neg ['아니요, 없어요'] | arr (0.0, [], [])
+C meds [('I cannot remember their names', 'active')]
+D ValP_33 primary Acute Abdomen (Surgical Abdomen) | key acute_abdomen | completion FORCED_FINAL_DIAGNOSIS INSUFFICIENT_INFORMATION | closing ['This may be surgical abdomen.', 'You need urgent tests now.'] | A: Primary diagnosis: Acute Abdomen (Surgical Abdomen) | Supporting findings: no specific supporting finding | Contradictory findings: none | Missing discriminating evid
+D ValP_34 primary 자궁외임신 (Ectopic Pregnancy) | key ectopic_pregnancy | completion FORCED_FINAL_DIAGNOSIS INSUFFICIENT_INFORMATION | closing ['ectopic pregnancy 가능성이 있어요.', '지금 바로 응급 검사가 필요해요.'] | A: 주진단: 자궁외임신 (Ectopic Pregnancy) | 근거: dizziness | 상충 소견: 없음 | 확인되지 않은 감별 소견: lower abdominal pain; vaginal bleeding; missed period; unilateral pelvic pain | 감별진단: | - 미주신경
+D ValP_17 primary Sepsis | key sepsis | completion FORCED_FINAL_DIAGNOSIS INSUFFICIENT_INFORMATION | closing ['This may be septic shock.', 'You need urgent tests now.'] | A: Primary diagnosis: Sepsis | Supporting findings: altered mental status | Contradictory findings: none | Missing discriminating evidence: fever; tachycardia; hypotensi
+D ValP_11 primary Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT) | key cardiac_arrhythmia | completion FORCED_FINAL_DIAGNOSIS INSUFFICIENT_INFORMATION | closing ['I suspect atrial fibrillation.', 'You need urgent tests now.'] | A: Primary diagnosis: Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT) | Supporting findings: irregularly irregular rhythm | Contradictory findings: none | Missing dis
+D ValP_13 primary Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT) | key cardiac_arrhythmia | completion FORCED_FINAL_DIAGNOSIS INSUFFICIENT_INFORMATION | closing ['I suspect atrial fibrillation.', 'You need urgent tests now.'] | A: Primary diagnosis: Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT) | Supporting findings: irregularly irregular rhythm | Contradictory findings: none | Missing dis
+D ValP_16 primary Hypertensive Emergency | key onto::tier2:hypertensive_emergency | completion FORCED_FINAL_DIAGNOSIS INSUFFICIENT_INFORMATION | closing ['I suspect hypertensive crisis.', 'You need urgent tests now.'] | A: Primary diagnosis: Hypertensive Emergency | Supporting findings: chest pain; shortness of breath | Contradictory findings: none | Missing discriminating evidence: sev

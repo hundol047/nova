@@ -275,7 +275,10 @@ def _apply_converging_evidence_priority(kept: list, state: PatientState) -> list
 
 def _documented_ids(state: PatientState) -> List[str]:
     from nova_agent.documented_diagnosis import documented_diagnosis_ids
-    texts = [state.chief_complaint, *state.associated_symptoms, *state.pertinent_positives, *state.past_medical_history]
+    # Round Q: whole answers as the patient gave them -- the stored positive/negative fragments have already been
+    # split at negations, which destroys the clause that decides each diagnosis mention's own scope.
+    answers = [t.result for t in state.conversation_history if t.action_type == "ASK" and t.result]
+    texts = [state.chief_complaint, *answers, *state.past_medical_history]
     return documented_diagnosis_ids([t for t in texts if t])
 
 
