@@ -187,6 +187,14 @@ def canonical_findings_for(text: str) -> List[str]:
     return found
 
 
+# Round P (NOVA_RANKING_V3): a specific objective rhythm/finding phrase already represents the general symptom phrase
+# for the same physiology. When a disease lists both and the specific one is present in the objective record, the
+# general one is the same observation and must not earn a second piece of credit.
+SPECIFIC_SUBSUMES = {
+    "irregularly irregular rhythm": ("irregular heartbeat",),
+}
+
+
 # Round P (NOVA_ACTION_V3): findings only an examiner or a laboratory can establish. Asking the patient "Any ejection
 # systolic murmur?" or "Any low sodium?" wastes a turn and invites a guessed answer; these features are reached by
 # EXAM (when the bedside can show them) or not at all in a test-free encounter.

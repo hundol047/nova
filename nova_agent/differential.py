@@ -20,6 +20,7 @@ from pydantic import BaseModel
 
 from nova_agent.candidate_generator import generate_candidates
 from nova_agent.chief_complaint import CROSS_CUTTING_DANGEROUS_DIAGNOSES
+from nova_agent.clinical_concepts import SPECIFIC_SUBSUMES
 from nova_agent.clinical_presentation import build_clinical_presentation
 from nova_agent.config import get_config
 from nova_agent.glucose_evidence import (
@@ -483,6 +484,23 @@ def _score_glucose(entry_id: str, glucose_mg_dl: Optional[float],
     return 0.0
 
 
+def _subsumed_typical_features(entry: dict, objective_pool) -> set:
+    """Typical features represented by a more specific confirmatory finding present in the objective record."""
+    if not get_config().ranking_v3_enabled:
+        return set()
+    typical = set(entry.get("typical_features", []))
+    out: set = set()
+    current = None
+    for specific, generals in SPECIFIC_SUBSUMES.items():
+        if specific not in entry.get("confirmatory_findings", []) or not typical.intersection(generals):
+            continue
+        if current is None:
+            current = _current_result_texts(list(objective_pool))
+        if _present_with_aliases(specific, current):
+            out.update(typical.intersection(generals))
+    return out
+
+
 def _score_disease(entry: dict, state: PatientState,
                     objective_findings: Optional[Dict[str, ObjectiveFinding]] = None) -> tuple[float, float, List[str], List[str], List[str]]:
     if objective_findings is None:
@@ -508,7 +526,10 @@ def _score_disease(entry: dict, state: PatientState,
     # only the numeric ranking contribution saturates, clinician-facing evidence text does not.
     typical_feature_score = 0.0
     typical_penalty = 0.0
+    subsumed = _subsumed_typical_features(entry, confirmatory_evidence_pool)
     for feature in entry.get("typical_features", []):
+        if feature in subsumed:
+            continue  # Round P: same observation as a present, more specific confirmatory finding -- credited there once
         weight = FEATURE_WEIGHT * _specificity_multiplier(feature)
         max_possible += weight
         delta = _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)

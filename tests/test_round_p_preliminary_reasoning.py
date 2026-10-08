@@ -276,3 +276,31 @@ def test_well_supported_pneumonia_is_not_displaced_by_a_thinner_pe():
     s.record_test("cxr", "left lower lobe consolidation")
     ranked = _ranked(s)
     assert ranked.index("pneumonia") < ranked.index("pulmonary_embolism")
+
+
+def _arrhythmia(state):
+    return next(d for d in DifferentialEngine().update(state) if d.diagnosis_id == "cardiac_arrhythmia")
+
+
+def _palpitations_with_af_on_exam():
+    s = PatientState(case_id="af", chief_complaint="my heartbeat feels irregular", demographics={"age": 70, "sex": "male"})
+    s.record_exam("cardiac_auscultation", "irregularly irregular rhythm")
+    return s
+
+
+def test_general_rhythm_symptom_is_not_credited_again_beside_the_specific_rhythm_finding():
+    d = _arrhythmia(_palpitations_with_af_on_exam())
+    assert "irregularly irregular rhythm" in d.supporting_evidence
+    assert "irregular heartbeat" not in d.supporting_evidence
+    assert "irregular heartbeat" not in d.missing_discriminative_evidence
+
+
+def test_rhythm_subsumption_switch_off_restores_previous_scoring(switch):
+    switch("NOVA_RANKING_V3", "0")
+    d = _arrhythmia(_palpitations_with_af_on_exam())
+    assert {"irregularly irregular rhythm", "irregular heartbeat"} <= set(d.supporting_evidence)
+
+
+def test_rhythm_symptom_still_counts_without_an_objective_rhythm_finding():
+    s = PatientState(case_id="af2", chief_complaint="my heartbeat feels irregular", demographics={"age": 70, "sex": "male"})
+    assert "irregular heartbeat" in _arrhythmia(s).supporting_evidence
