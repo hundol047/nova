@@ -223,6 +223,9 @@ def question_is_faithful(key: str, lang: str = "en") -> bool:
     """Round Q: True when the SAY actually sent for ``key`` asks about the key's own feature. A detailed key whose
     feature does not fit the length limit goes out as the generic follow-up instead -- its answer then says nothing
     about that feature."""
+    from nova_agent.history_followup import SHORT_FOLLOWUPS
+    if key in SHORT_FOLLOWUPS:
+        return True
     category, _, detail = key.partition(":")
     if not detail:
         return True
@@ -230,6 +233,9 @@ def question_is_faithful(key: str, lang: str = "en") -> bool:
 
 
 def _say_core(key: str, lang: str, fallback: str) -> str:
+    from nova_agent.history_followup import SHORT_FOLLOWUPS
+    if key in SHORT_FOLLOWUPS:
+        return _pick(SHORT_FOLLOWUPS[key], lang)
     category, _, detail = key.partition(":")
     if detail:
         feature = detail.replace("_", " ").strip()

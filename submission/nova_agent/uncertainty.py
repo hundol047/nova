@@ -68,8 +68,8 @@ def assess_evidence(state: PatientState, differential: list[DifferentialItem],
     evidence = {e for e in evidence if not any(e < other for other in evidence)}
     sources = set(selected.candidate_sources if selected else [])
     margin = (top.score - differential[1].score if top and len(differential) > 1 else None)
-    objective = bool(state.physical_examinations or state.laboratory_tests or state.imaging
-                     or state.vital_signs or state.vital_sign_findings)
+    objective = bool(any(state.exam_observed(k) for k in state.physical_examinations)
+                     or state.laboratory_tests or state.imaging or state.vital_signs or state.vital_sign_findings)
     clinical = bool(concepts or state.symptoms or state.associated_symptoms
                     or state.pertinent_positives or objective or _PATIENT_SIGNAL.search(state.chief_complaint))
     clinical = clinical or bool(_EXPOSURE_RISK.search(state.chief_complaint))

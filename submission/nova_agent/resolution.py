@@ -78,7 +78,7 @@ def _competition_resolved(diagnosis_id, contradictory_evidence, state):
         # the SOAP plan. Addressed never means excluded: a decisive lead is still required to stop.
         from nova_agent.taxonomy import TEST_CATALOG
         exams = [k for k in required if k not in TEST_CATALOG]
-        asked_all = all(state.question_asked(q) for q in entry.get("discriminating_questions", []))
+        asked_all = all(state.question_observed(q) for q in entry.get("discriminating_questions", []))
         # Round Q: an EXAM counts only when it produced an observation -- a rejected request or a "result unknown"
         # stays a blocked item (not re-sent, not evidence, and not a completed workup).
         return all(state.exam_observed(k) for k in exams) and asked_all
@@ -125,19 +125,48 @@ def _ontology_workup_addressed(diagnosis_id: str, state: PatientState) -> bool:
     _, _, support, _, _ = _score_disease(entry, state)
     supported = {normalize(s) for s in support}
     from nova_agent.config import get_config
-    from nova_agent.clinical_concepts import is_objective_only_feature
+    from nova_agent.clinical_concepts import is_objective_only_feature, bedside_exam_for_feature
+    if not all(state.exam_observed(k) for k in entry.get("discriminating_exams", [])):
+        return False
     def covered(question):
-        if state.question_asked(question):
-            return True
+        if state.question_observed(question):
+            exam = bedside_exam_for_feature(question.split(":", 1)[1])
+            return state.exam_observed(exam) if exam else True
         if ":" not in question:
             return False
         if (getattr(state, "preliminary_rules", False) and get_config().action_v3_enabled
                 and is_objective_only_feature(question.split(":", 1)[1])):
             # Round P: an exam sign or lab value is not the patient's to report and is never asked (missing_info).
-            # In a test-free encounter it cannot be obtained at all, so -- like the TEST items of a knowledge-base
-            # workup above -- it does not hold the candidate "unaddressed" forever. It is NOT negative evidence:
-            # addressed never means excluded, and the candidate keeps its score and stays in the differential.
+            # Bedside-obtainable signs still require their EXAM. Only unavailable lab/imaging
+            # items are action-exhausted; neither path supplies negative evidence.
             return True
         feature = normalize(question.split(":", 1)[1])
         return bool(feature and feature in supported)
     return all(covered(q) for q in entry.get("discriminating_questions", []))
+
+
+def workup_coverage(diagnosis_id: str, state: PatientState) -> dict:
+    """Audit facts, not diagnostic exclusion. Separate exhausted actions from actual observations."""
+    from nova_agent.missing_info import _resolve_entry
+    from nova_agent.clinical_concepts import is_objective_only_feature, bedside_exam_for_feature
+    from nova_agent.taxonomy import TEST_CATALOG
+    entry = _resolve_entry(diagnosis_id) or {}
+    result = {k: [] for k in ("observed", "pending", "unknown", "rejected", "unavailable")}
+    for q in entry.get("discriminating_questions", []):
+        detail = q.partition(":")[2]
+        if detail and is_objective_only_feature(detail):
+            if not bedside_exam_for_feature(detail):
+                result["unavailable"].append(q)
+            continue
+        status = "observed" if state.question_observed(q) else "unknown" if state.question_attempted(q) else "pending"
+        result[status].append("ASK:" + q)
+    procedures = list(dict.fromkeys(entry.get("discriminating_exams", []) + (entry.get("minimum_workup") or [])))
+    for key in procedures:
+        if key in TEST_CATALOG:
+            status = "unavailable" if state.preliminary_rules else "observed" if state.test_done(key) else "pending"
+        else:
+            status = ("rejected" if key in state.rejected_exams else "observed" if state.exam_observed(key)
+                      else "unknown" if state.exam_done(key) else "pending")
+        result[status].append(key)
+    result["disease_excluded"] = False  # Coverage alone never establishes exclusion.
+    return result

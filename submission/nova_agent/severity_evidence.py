@@ -148,7 +148,7 @@ def systemic_severity_signals(state: PatientState) -> List[str]:
     if lactate is not None and lactate >= HIGH_LACTATE_MMOL_L:
         signals.append(f"high lactate ({lactate:.1f} mmol/L)")
 
-    findings = state.all_findings_text()
+    findings = state.all_findings_text(include_family=False)
     negatives = state.pertinent_negatives
     for phrase in _ALTERED_MENTAL_STATUS_PHRASES:
         if feature_denied(phrase, negatives):

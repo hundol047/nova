@@ -397,10 +397,19 @@ def _assertion_clauses(finding: str) -> tuple:
 # is handled by the general feature ("irregular heartbeat") instead. Stemming itself is unchanged everywhere else.
 _PROTECTED_QUALIFIERS = (
     ("irregularly irregular", re.compile(r"\birregularly[\s-]+irregular\b")),
+    # The pain must be linked to urination, not to another body site in the same clause.
+    ("pain on urinating", re.compile(r"\b(?:pain|painful|burning|burns|hurts?)\s+(?:(?:when|while|on|with|during)\s+)?(?:i\s+)?(?:urinating|urination|passing urine|pee(?:ing)?)\b")),
+    ("pain when urinating", re.compile(r"\b(?:pain|painful|burning|burns|hurts?)\s+(?:(?:when|while|on|with|during)\s+)?(?:i\s+)?(?:urinating|urination|passing urine|pee(?:ing)?)\b")),
 )
 
 
 def _protected_qualifier(feature_lower: str):
+    if (re.search(r"\b(?:urinating|urination|urine|pee|peeing|wee)\b", feature_lower)
+            and re.search(r"\b(?:pain|painful|burning|burns|hurt|hurts|stings)\b", feature_lower)):
+        return re.compile(
+            r"\b(?:pain|painful|burning|burns|hurts?|stings)\s+(?:(?:when|while|on|with|during|after)\s+)?"
+            r"(?:i\s+)?(?:urinating|urination|passing urine|pee(?:ing)?|wee)\b|"
+            r"\b(?:urinating|urination|passing urine|pee(?:ing)?|wee)\s+(?:is\s+)?(?:painful|hurts?|burns|stings)\b")
     return next((pattern for phrase, pattern in _PROTECTED_QUALIFIERS if phrase in feature_lower), None)
 
 
@@ -662,6 +671,8 @@ def _strict_alias_present_uncached(alias: str, findings: List[str], scrub_negate
     one of its content words present in one finding -- never the 60% partial overlap feature_present()
     allows for a curated knowledge-base phrase (a 3-word variant must not be satisfied by 2 words)."""
     alias_lower = alias.lower()
+    if _protected_qualifier(alias_lower) is not None:
+        return feature_present(alias, findings, scrub_negated_spans=scrub_negated_spans, strict=True)
     if _NON_LATIN_RE.search(alias_lower):
         # A CJK/Hangul (or mixed-script, e.g. "右腕 weakness") alias is matched as a LITERAL phrase only. Its
         # content words would otherwise collapse to the Latin remainder ("weakness"), letting a bare English
@@ -782,6 +793,11 @@ def _without_discontinued(findings: List[str]) -> List[str]:
 
 def feature_present_with_aliases(phrase: str, findings: List[str], scrub_negated_spans: bool = True,
                                  strict: bool = False, ignore_words: frozenset = frozenset()) -> bool:
+    if re.search(r"\bsyncope\b|loss of consciousness", phrase.lower()):
+        # The event did not happen in presyncope. Remove only the near-event span;
+        # an actual faint described elsewhere in the same finding still counts.
+        findings = [re.sub(r"\b(?:nearly|almost)\s+(?:fainted|passed out|lost consciousness)|\bnear[ -](?:fainting|syncope)\b",
+                           "lightheadedness", f, flags=re.I) for f in findings]
     if _USE_FEATURE.search(phrase.lower()) and any(_DISCONTINUED_SPAN.search(f) for f in findings):
         findings = _without_discontinued(findings)
     return _scoped("with_aliases", (phrase, tuple(findings), scrub_negated_spans, strict, frozenset(ignore_words)),

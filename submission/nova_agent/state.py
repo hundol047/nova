@@ -37,6 +37,8 @@ def normalize_key(text: str) -> str:
 # missed every one of these, silently losing or misclassifying half the answer.
 _CLAUSE_SPLIT_PATTERN = re.compile(
     r";|\n|(?<=\w)\.(?=\s+[a-z])|(?<=\w)\s+but\s+|(?<=\w)\s+however\s+|(?<=\w)\s+although\s+|(?<=\w)\s+except\s+(?:that\s+)?"
+    r"|,\s*(?=(?:but\s+)?(?:I\s+)?(?:don'?t know|do not know|cannot remember|can't remember|not sure))"
+    r"|\s+and\s+(?=(?:I\s+)?(?:don'?t know|do not know|cannot remember|can't remember))"
     r"|하지만|그러나|그런데|근데|でも|しかし|だが|但是|不过|但",
     re.IGNORECASE,
 )
@@ -76,7 +78,7 @@ def _split_answer_segments(answer: str) -> List[str]:
             # the whole list as negative; otherwise the positive lead-in can incorrectly
             # support a feature such as "no palpitations before the episode".
             pieces = re.split(
-                r",\s*(?=(?:denies\b|no\b|without\b|not\b|negative\s+for\b))",
+                r",\s*(?=(?:denies\b|no\b|without\b|not\b|negative\s+for\b))|(?<=\w)\s+(?=without\b)",
                 part, flags=re.IGNORECASE,
             )
             for piece in pieces:
@@ -171,7 +173,10 @@ def answer_kind(answer: str) -> Optional[str]:
     text = re.sub(r"\s+", " ", (answer or "").strip()).rstrip(" .!?~")
     if not text:
         return "unknown"
-    if _ANSWER_UNKNOWN.search(text):
+    # Unknown is a clause assertion, not a veto over everything else in the answer.
+    # Preserve "I take furosemide, but I cannot remember the dose" as content.
+    parts = _split_answer_segments(text)
+    if _ANSWER_UNKNOWN.search(text) and all(_ANSWER_UNKNOWN.search(p) for p in parts):
         return "unknown"
     if _ANSWER_BARE_NO.match(text):
         return "no"
@@ -245,6 +250,7 @@ class PatientState(BaseModel):
     associated_symptoms: List[str] = Field(default_factory=list)
     pertinent_positives: List[str] = Field(default_factory=list)
     pertinent_negatives: List[str] = Field(default_factory=list)
+    ambiguous_findings: List[str] = Field(default_factory=list)
 
     past_medical_history: List[str] = Field(default_factory=list)
     medications: List[Medication] = Field(default_factory=list)
@@ -418,11 +424,19 @@ class PatientState(BaseModel):
         """Asked faithfully OR already sent as a generic fallback: either way, not to be sent again."""
         return self.question_asked(discriminator) or discriminator in self.unfaithful_questions
 
+    def question_observed(self, discriminator: str) -> bool:
+        """A faithfully asked question with an interpretable answer, not merely an attempt."""
+        if not self.question_asked(discriminator):
+            return False
+        outcomes = [o for o in self.action_outcomes if o.action_type == "ASK" and o.key == discriminator]
+        return not outcomes or (outcomes[-1].status == "OBSERVED" and outcomes[-1].faithful)
+
     def exam_observed(self, exam_id: str) -> bool:
         """An examination that actually produced a result (not rejected, not 'result unknown')."""
         if exam_id not in self.completed_examinations or exam_id in self.rejected_exams:
             return False
-        return not any(o.action_type == "EXAM" and o.key == exam_id and o.status != "OBSERVED" for o in self.action_outcomes)
+        outcomes = [o for o in self.action_outcomes if o.action_type == "EXAM" and o.key == exam_id]
+        return not outcomes or outcomes[-1].status == "OBSERVED"
 
     def exam_done(self, exam_id: str) -> bool:
         return exam_id in self.completed_examinations
@@ -460,13 +474,16 @@ class PatientState(BaseModel):
         target = detail.replace("_", " ").strip() if (detail and faithful) else None
         from nova_agent.config import get_config
         kind = answer_kind(answer) if get_config().answer_grounding_enabled else None
+        ambiguous_yes = kind == "yes" and target and re.search(r"\bor\b|또는|혹은", target, re.I)
         self.action_outcomes.append(ActionOutcome(
-            action_type="ASK", key=discriminator, status="UNKNOWN" if kind == "unknown" else "OBSERVED",
+            action_type="ASK", key=discriminator, status="UNKNOWN" if kind == "unknown" or ambiguous_yes else "OBSERVED",
             targets=[target] if target else [], faithful=faithful or not detail, raw=answer or ""))
         self._absorb_answer(discriminator, answer, target=target, kind=kind)
 
     def record_exam(self, exam_id: str, result: str) -> None:
         self.turn_count += 1
+        if exam_id in self.rejected_exams:
+            self.rejected_exams.remove(exam_id)
         if exam_id not in self.completed_examinations:
             self.completed_examinations.append(exam_id)
         spec = EXAM_CATALOG.get(exam_id)
@@ -570,6 +587,9 @@ class PatientState(BaseModel):
             # Round Q: a bare yes / no / don't-know. Grounded to the ONE feature the question really asked about;
             # otherwise it is no finding at all ("No" is not a symptom, "I don't know" is not a drug name).
             if target and kind == "yes":
+                if re.search(r"\bor\b|또는|혹은", target, re.I) and target not in self.ambiguous_findings:
+                    # Preserve the literal response for SOAP, but neither branch is observed.
+                    self.ambiguous_findings.append(target)
                 if target not in self.pertinent_positives:
                     self.pertinent_positives.append(target)
                 if category == "associated_symptoms" and target not in self.associated_symptoms:
@@ -603,8 +623,12 @@ class PatientState(BaseModel):
             self._retract_contradicted_bare_denials()
             return
         segments = _split_answer_segments(answer)
-        positive_segments = [s for s in segments if not _segment_is_negated(s)]
-        negative_segments = [s for s in segments if _segment_is_negated(s)]
+        unknown_segments = [s for s in segments if answer_kind(s) == "unknown"]
+        for segment in unknown_segments:
+            if segment not in self.unknown_findings:
+                self.unknown_findings.append(segment)
+        positive_segments = [s for s in segments if s not in unknown_segments and not _segment_is_negated(s)]
+        negative_segments = [s for s in segments if s not in unknown_segments and _segment_is_negated(s)]
         combined_positive = "; ".join(positive_segments)
 
         if category == "onset":
@@ -694,12 +718,12 @@ class PatientState(BaseModel):
     def latest_vital_signs(self) -> Optional[VitalSigns]:
         return self.vital_signs[-1] if self.vital_signs else None
 
-    def all_findings_text(self, include_context: bool = True) -> List[str]:
+    def all_findings_text(self, include_context: bool = True, include_family: bool = True) -> List[str]:
         """Flat bag of every free-text clinical finding gathered so far, used by keyword-matching
         modules (differential.py, safety.py) as the evidence corpus."""
         out = list(self.symptoms) + list(self.associated_symptoms) + list(self.pertinent_positives)
         if include_context:
-            out += list(self.past_medical_history) + list(self.social_history) + list(self.family_history)
+            out += list(self.past_medical_history) + list(self.social_history)
         out += [self.chief_complaint, self.symptom_onset or "", self.severity or "", self.duration or ""]
         out += list(self.physical_examinations.values()) + list(self.imaging.values())
         out += list(self.vital_sign_findings)
@@ -707,13 +731,19 @@ class PatientState(BaseModel):
         if include_context:
             out += list(self.medication_text) + list(self.allergy_text)
             out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
-        out = [t for t in out if t]
+        from nova_agent.documented_diagnosis import diagnosis_evidence_text
+        out = [diagnosis_evidence_text(t) for t in out if t and t not in self.ambiguous_findings]
         # Localized (ko/ja) symptom phrases also count as their canonical English wording, so
         # scoring (which matches English KB features) treats them like the English patient.
         from nova_agent.multilingual_concepts import english_evidence_for
         for t in list(out):
             out += [e for e in english_evidence_for(t) if e not in out]
-        return _with_canonical_concepts(out)
+        out = _with_canonical_concepts(out)
+        # Public context view preserves family history; diagnostic/severity consumers
+        # explicitly exclude it. Never canonicalise a relative's illness as a patient symptom.
+        if include_context and include_family:
+            out += list(self.family_history)
+        return out
 
     def objective_findings_text(self) -> List[str]:
         """Narrower than all_findings_text(): only text that came from an EXAM/TEST actually
@@ -729,4 +759,6 @@ class PatientState(BaseModel):
         out = list(self.physical_examinations.values()) + list(self.imaging.values())
         out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
-        return _with_canonical_concepts([t for t in out if t])
+        from nova_agent.documented_diagnosis import diagnosis_evidence_text
+        out = [diagnosis_evidence_text(t, allow_historical=False) for t in out if t]
+        return _with_canonical_concepts(out)

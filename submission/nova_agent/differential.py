@@ -518,7 +518,7 @@ def _score_disease(entry: dict, state: PatientState,
                     objective_findings: Optional[Dict[str, ObjectiveFinding]] = None) -> tuple[float, float, List[str], List[str], List[str]]:
     if objective_findings is None:
         objective_findings = normalize_objective_evidence(state)
-    findings = state.all_findings_text()
+    findings = state.all_findings_text(include_family=False)
     confirmatory_evidence_pool = state.objective_findings_text()
     negatives = state.pertinent_negatives
 
@@ -558,7 +558,12 @@ def _score_disease(entry: dict, state: PatientState,
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
-        if _present_with_aliases(risk_factor, findings) or (
+        # Family observations are eligible only for explicitly family-scoped risks.
+        # They are never the patient's own symptoms or current comorbidities.
+        risk_findings = findings
+        if risk_factor.lower().startswith("family history"):
+            risk_findings = findings + ["family history of " + x for x in state.family_history]
+        if _present_with_aliases(risk_factor, risk_findings) or (
                 _evidence_v3_enabled() and any(_present_with_aliases(b, findings) for b in or_branches(risk_factor))):
             supporting.append(risk_factor)
             score += RISK_FACTOR_WEIGHT

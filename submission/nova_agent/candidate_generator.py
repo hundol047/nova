@@ -92,8 +92,8 @@ def _add(pool: dict, entry: dict, source: CandidateSource) -> None:
 def _concept_to_kb_entry(concept) -> dict:
     """Adapt an ontology ClinicalConcept into the minimal KB-shaped dict downstream scoring expects.
     Core catalog hits preserve the complete authoritative KB profile. Tier-2/3 adapters remain
-    deliberately shallow: those concepts carry no discriminating exams/tests or confirmatory findings, so
-    those keys stay EMPTY — the concept enters the pool as a low-evidence, named possibility, never
+    deliberately shallow: only existing feature metadata and catalogued bedside maneuvers are
+    reused; no diagnostic tests or clinical facts are fabricated. The concept enters as a named possibility, never
     as if it had deep curated evidence. `id` is namespaced so it can never collide with a real
     34-KB diagnosis id.
 
@@ -116,6 +116,9 @@ def _concept_to_kb_entry(concept) -> dict:
          for feature in list(concept.typical_features)[:MAX_TIER2_DISCRIMINATING_FEATURES]]
         if is_tier2_structured else []
     )
+    from nova_agent.clinical_concepts import bedside_exam_for_feature
+    bedside = list(dict.fromkeys(exam for f in concept.typical_features
+                                if (exam := bedside_exam_for_feature(f)))) if is_tier2_structured else []
     return {
         "id": f"onto::{concept.concept_id}",
         "name": concept.canonical_name,
@@ -127,7 +130,7 @@ def _concept_to_kb_entry(concept) -> dict:
         "typical_features": list(concept.typical_features),
         "risk_factors": [],
         "discriminating_questions": discriminating_questions,
-        "discriminating_exams": [],
+        "discriminating_exams": bedside,
         "discriminating_tests": [],
         "confirmatory_findings": list(getattr(concept, "confirmatory_findings", ()) or ()),
         "red_flag_keywords": [],

@@ -130,7 +130,15 @@ def _base_name(name: str) -> str:
 
 
 def _generic_symptom(phrase: str) -> bool:
-    return phrase.strip().lower() in _GENERIC_SYMPTOMS
+    # Grammatical qualifiers are not new discriminating evidence.
+    return re.sub(r"^(?:associated|reported|persistent)\s+", "", phrase.strip().lower()) in _GENERIC_SYMPTOMS
+
+
+def _risk_context(phrase: str) -> bool:
+    """Some shallow ontology profiles store risk context under typical_features.
+    Preserve ranking inputs, but a past illness/age cannot establish a current illness."""
+    return bool(re.search(r"^(?:(?:known |family )?history of |prior |previous |older age$|advanced age$|young age$)",
+                          phrase.lower())) or phrase.lower() == "atrial fibrillation or vascular disease"
 
 
 def support_problems(item, state, differential: list) -> List[str]:
@@ -139,6 +147,7 @@ def support_problems(item, state, differential: list) -> List[str]:
     entry = _entry(item.diagnosis_id)
     problems: List[str] = []
     risk_only = {str(x).lower() for x in entry.get("risk_factors", [])}
+    risk_only.update(e.lower() for e in item.supporting_evidence if _risk_context(e))
     positive = [e for e in item.supporting_evidence
                 if e.lower() not in risk_only and _strip_negative_prefix(e) is None and e != "documented diagnosis"]
     documented = "documented diagnosis" in item.supporting_evidence
@@ -153,6 +162,8 @@ def support_problems(item, state, differential: list) -> List[str]:
         problems.append("single_nonspecific_support")
     index = next((i for i, d in enumerate(differential) if d.diagnosis_id == item.diagnosis_id), None)
     generic_only = all(e.lower() in risk_only or _generic_symptom(e) for e in observations)
+    if item.dangerous_if_missed and generic_only and not specific and not documented:
+        problems.append("only_nonspecific_support")
     if index is not None and item.dangerous_if_missed and not specific and not documented and generic_only:
         # A tie on generic evidence alone would be decided by insertion order. A neighbour that is the same disease
         # under another catalog name ("Septic Arthritis" / "Septic Arthritis (Joint)") is not a competitor.
@@ -165,6 +176,20 @@ def support_problems(item, state, differential: list) -> List[str]:
         description, check = _REQUIRED_CONTEXT[profile]
         if not check(state, item):
             problems.append(f"required_context_missing:{description}")
+    # ESC 2022 ventricular-arrhythmia guideline, doi:10.1093/eurheartj/ehac262,
+    # section 5.1.3: rhythm subtype requires recorded electrical evidence. A rate alone
+    # does not identify ventricular origin. Current clinician documentation is separate.
+    if item.diagnosis_id == "onto::tier2:ventricular_tachycardia" and not documented:
+        from nova_agent.matching import feature_present_with_aliases
+        if not feature_present_with_aliases("ventricular tachycardia", state.objective_findings_text(),
+                                            scrub_negated_spans=True, strict=True):
+            problems.append("rhythm_subtype_not_observed")
+    # NICE CG109 1.1.4.3: uncomplicated faint requires no features suggesting an
+    # alternative. Reuse the existing measured-rate thresholds; do not infer an ECG.
+    if item.diagnosis_id == "vasovagal_syncope":
+        rate = state.latest_vital_signs()
+        if rate and rate.heart_rate is not None and (rate.heart_rate < 50 or rate.heart_rate >= 150):
+            problems.append("marked_pulse_rate_requires_explanation")
     return problems
 
 
@@ -185,7 +210,8 @@ def decide_final(state, differential: list, completion_reason: str = "supported"
         if support_problems(alt, state, differential):
             continue
         entry = _entry(alt.diagnosis_id)
-        if _specific_support(alt, entry) or _distinct(alt.supporting_evidence) >= 2:
+        if ("documented diagnosis" in alt.supporting_evidence or _specific_support(alt, entry)
+                or _distinct(alt.supporting_evidence) >= 2):
             return FinalDecision(alt.diagnosis_id, alt, "SUPPORTED", completion_reason,
                                  reasons + (f"named:{alt.diagnosis_id}",))
     return FinalDecision(UNDIFFERENTIATED_ID, None, "UNDIFFERENTIATED", completion_reason, reasons)
