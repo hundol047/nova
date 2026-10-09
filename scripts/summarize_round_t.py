@@ -23,7 +23,8 @@ def main():
   if ar and 'named_dangerous' in ar[0]:
    # A proxy only, never equated with clinician-adjudicated overdiagnosis.
    result[name]['dangerous_name_proxy']={label:sum(bool(r.get('named_dangerous')) and (not r['scored'] or not r['top1']) for r in rows(d)) for label,d in [('before',b),('after',a)]}
- before=read(old+'regressions.json')['suites'];after=read(new+'regressions.json')['suites']
+ before=read(old+'regressions.json')['suites'];final_reg=read(new+'regressions.json');after=final_reg['suites']
+ assert final_reg['runtime_unchanged_during_execution'] and set(before)==set(after), 'Incomplete final regression evidence'
  result['test_enabled']={}
  for name,d in after.items():
   b={r['case_id']:r for r in before[name]['cases']}

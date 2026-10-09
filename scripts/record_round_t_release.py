@@ -66,7 +66,7 @@ def main():
               'promoted_to_development':'evaluation/frozen_validation_round_t_usage.json',
               'second_rejected_candidate':'82f26cd18875a9eeea321b62400c4b4c1bbb1063',
               'second_rejection':'P27 caregiver report lost neurological workup',
-              'prior_confirmation_now_development':12,'final_probe_now_development':8,'additional_unused_confirmation_cases':12,'earlier_probes_followed_by_repair':True,'final_runtime_changed_after_postfreeze_confirmation':False,'third_rejected_runtime':'9842f8d18a3527ca30748a9d7c300436009bfac8','third_rejection':'new caregiver stroke miss; unrelated blood-token evidence; final probe promoted to development'},
+              'prior_confirmation_now_development':12,'final_probe_now_development':8,'additional_unused_confirmation_cases':12,'earlier_probes_followed_by_repair':True,'final_runtime_changed_after_postfreeze_confirmation':False,'third_rejected_runtime':'9842f8d18a3527ca30748a9d7c300436009bfac8','third_rejection':'new caregiver stroke miss; unrelated blood-token evidence; final probe promoted to development','fourth_rejected_runtime':'08d9e622c3f7537ebbb68383f02e28ab13329859','fourth_rejection':'positive respiratory blood relation regression found before postfreeze execution','postfreeze_fixture_authored_at':'08d9e622c3f7537ebbb68383f02e28ab13329859'},
           'official_api_status':'NOT VERIFIED','real_model_status':'NOT VERIFIED','schema_status':'PLACEHOLDER',
           'official_submission_allowed':False,'new_blind_runs':0,'fresh_final_blind':'NOT YET AUTHORED',
           'tests':tests,'source_submission_sync':True,

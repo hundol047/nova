@@ -1,51 +1,35 @@
 # N.O.V.A. 2026 — current competition status
 
-**ROUND S: PARTIAL REPAIR — COMPLETE ACCEPTANCE FAIL — NOT OFFICIALLY READY.**
+**PRE-GUIDE CANDIDATE — ROUND T: PARTIAL REPAIR — COMPLETE ACCEPTANCE FAIL — NOT OFFICIALLY READY.**
 
-Executed runtime: `95d465b0f01023148d60ff02667596bf22c19b4a`.
-Public byte-equivalent source runtime: `ed5a5e4131a04e37ca15559334794f5f817c2b35` on
-`codex/nova-round-s-source-review-20261009`. Full Git trees differ because detailed release artifacts are withheld.
-The original `claude/determined-brahmagupta-wrfveb` and main were not moved by this pass.
+Executed runtime: `761fcda7f4f5b6c58b0e0b6e8b77047b37301782`.
+The original Claude branch, main and user checkout were preserved.
 
-Current report: [ROUND_S_REPAIR_REPORT_KO.md](competition/ROUND_S_REPAIR_REPORT_KO.md).
-Implemented prompt: [ROUND_S_IMPLEMENTATION_PROMPT_KO.md](competition/ROUND_S_IMPLEMENTATION_PROMPT_KO.md).
-Remaining work: [ROUND_S_FOLLOWUP_KO.md](competition/ROUND_S_FOLLOWUP_KO.md).
+Current report: [ROUND_T_REPAIR_REPORT_KO.md](competition/ROUND_T_REPAIR_REPORT_KO.md).
+Implemented prompt: [ROUND_T_IMPLEMENTATION_PROMPT_KO.md](competition/ROUND_T_IMPLEMENTATION_PROMPT_KO.md).
+Remaining work: [ROUND_T_FOLLOWUP_KO.md](competition/ROUND_T_FOLLOWUP_KO.md).
 
-## Current Round S evidence
+All current results are **offline mock / synthetic — LOCAL DEVELOPMENT / PRELIMINARY SIMULATION**, not official or clinical scores.
+Configured model identity remains `openai/gpt-oss-20b`, revision `4d7ae4984b7db7de8f8457170b3f1a419ee76d52`; actual model and official interface **NOT VERIFIED**.
 
-All numbers below are **offline mock / synthetic cases**, not official scores or clinical validation.
+Round T improves family/history evidence scope, capability and respiratory-material relations, bounded observed-concept retrieval,
+and separates rate-only observation from naming a cause. Unsafe zero-support bedside-EXAM pruning was withdrawn.
+No new clinical disease profiles were added. Catalog: 34 Tier-1, 1,246 Tier-2, 1,280 total; ontology names are not validated clinical depth.
+83 Tier-2 IDs have an enrichment-file entry; 1,163 do not. Neither number certifies clinical completeness.
 
-| Check | Result |
-|---|---|
-| Full tests | **2,208 passed, 0 failed, 1 skipped, 0 deselected**; skip: torch training roundtrip unavailable |
-| Preliminary development | **203/222 → 211/222 (95.0%)**, critical **85/85**, new scored wrong 0 |
-| Existing P / Q / R development | **28/32 / 36/36 / 12/12**; critical **11/13 / 11/11 / 4/4** |
-| Prior acceptance development | **16/18**, critical **4/5**; not improved |
-| Newly frozen S | 24 total, 14 scored: **12/14 → 13/14**, critical **4/4**, behavior **81/87 → 86/87** |
-| TEST-enabled M | **108/123 → 114/123**, critical **42/43 → 43/43**, new wrong 0 |
-| Local v24 package | byte sync, audit, ZIP validation and isolated mock **PASS** |
-| Actual fixed model / official API | **NOT VERIFIED / NOT VERIFIED**; run.py remains fail-closed |
-| Independent clinical validation | **NONE**; synthetic author saw implementation/prior failures |
-| Asset rights | **85 unresolved submitted assets**; hash coverage PASS is not permission |
+Confirmed final new postfreeze12: 6/6 scored, critical3/3, behavior31/35→33/35; two information-poor overnaming failures remain.
+Existing P development:28/32→26/32, critical11/13. Do not claim overall regression PASS or a perfect score.
+Initial T32, confirmation12 and final-probe8 were promoted to development after their failures informed repairs.
+Final postfreeze12 was first executed on the frozen runtime; same implementation-aware author, no independent clinical adjudication.
 
-New S exposes two remaining false-evidence mechanisms: a father's old irregular heartbeat becomes the patient's
-current arrhythmia; painful/small-volume urination matches inability to pass urine. Full acceptance and new-case
-clinical safety are **FAIL**, even with green unit tests. NewS_15 also changes from undifferentiated to a broad
-arrhythmia working label with measured bradycardia; causal certainty remains limited.
+Full local tests: **2,287 passed, 0 failed, 1 skipped, 0 deselected**. Preliminary: **209/222**, critical **85/85**. Local v25 package integrity/mock PASS; overall regression acceptance FAIL. Public byte-equivalent source runtime: `0b9cd87c7509e2703b877939cb3fc89c70e0741d` on `codex/nova-round-t-source-review-20261009`. Source parity covers97 runtime files plus launcher/requirements, not the full Git tree.
 
-Efficiency is not uniformly better: preliminary unresolved-critical cases 74→96/230; new S average interactions
-20.42→24.46 and unnecessary EXAMs 44→106. M long-tail Top1 improves 12→17/26, but overall terminal retrieval @150
-falls 112→111/123 and strict rerank Top25 96→95/123. Chief-complaint-only retrieval proxy stays 61.4%.
-No runtime tuning after reading final S validation. These S cases are now development data for any next repair.
-
-**Publication scope:** this review branch publishes source, prompts and reports. The complete v24 ZIP/detailed
-traces/XML are locally verified and not newly published under the earlier approval restriction. Therefore the
-public `CURRENT_RELEASE.json` can still point to a prior release and must not be treated as validating this source
-branch. Local complete evidence uses `local-release-95d465b-v24.json`. The report records the ZIP SHA-256 and exact
-runtime binding. This is not a complete public v24 release or official submission.
+**Publication scope:** source-review branch only. Detailed runtime traces/XML and local v25 ZIP are not part of this publication.
+The public CURRENT_RELEASE.json remains historical and does not validate the current source branch; release-binding checks require
+the local complete evidence. Source/runtime byte parity, local package integrity and official readiness are distinct claims.
 
 No model download/replacement/training, external LLM call, blind v18/v19 run, or new blind creation in this pass.
-The older Round P score 215/222=96.8% has not been restored. Historical evidence follows for context only.
+Historical evidence below is for its named runtime only; see the current report for the final Round T comparison.
 
 ## 1. Backend load check (production-backend CI step) — fixed
 
