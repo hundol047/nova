@@ -53,7 +53,7 @@ def find_case(case_id, extra_json=()):
     raise KeyError(case_id)
 
 
-def trace(case_id, extra_json=()):
+def trace(case_id, extra_json=(), unscripted_unknown=False):
     from nova_agent.config import get_config
     get_config(reload=True)
     from competition.adapter import NovaCompetitionAgent
@@ -116,7 +116,7 @@ def trace(case_id, extra_json=()):
         return action, scored, diff
 
     with patch.object(agent.agent, 'decide', traced):
-        ep = run_episode(case, agent=agent, env=Environment(unsupported_exams=frozenset(reject)))
+        ep = run_episode(case, agent=agent, env=Environment(unsupported_exams=frozenset(reject), unscripted_unknown=unscripted_unknown))
     final = ep.wire[-1]
     md = final.get('metadata') or {}
     state = agent.agent.state if hasattr(agent.agent, 'state') else None
@@ -139,8 +139,9 @@ def main():
     p.add_argument('--cases', required=True)
     p.add_argument('--extra-json', action='append', default=[])
     p.add_argument('--output', required=True)
+    p.add_argument('--unscripted-unknown', action='store_true')
     a = p.parse_args()
-    out = [trace(c, a.extra_json) for c in a.cases.split(',')]
+    out = [trace(c, a.extra_json, a.unscripted_unknown) for c in a.cases.split(',')]
     Path(a.output).parent.mkdir(parents=True, exist_ok=True)
     Path(a.output).write_text(json.dumps(out, ensure_ascii=False, indent=1, default=str) + '\n')
     for r in out:

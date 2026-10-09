@@ -31,8 +31,10 @@
       "aphasia",
       "unilateral numbness",
       "sudden vision loss",
-      "ataxia"
+      "ataxia",
+      "focal neurological deficit on examination"
     ],
+    "round_u_followup_provenance": "typical_feature 'focal neurological deficit on examination' added in the Round U follow-up: stroke is an episode of acute neurological dysfunction caused by focal cerebral infarction (Sacco RL et al., An Updated Definition of Stroke, Stroke 2013;44:2064-2089), presenting with a sudden focal neurological deficit (Powers WJ et al., 2019 AHA/ASA acute ischemic stroke guideline, Stroke 2019;50:e344). It is an examination finding (objective-only); it is not imaging confirmation and danger adds no score. Agent-authored, not clinician-reviewed.",
     "risk_factors": [
       "atrial fibrillation",
       "hypertension",

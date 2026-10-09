@@ -1714,7 +1714,7 @@
     {
       "asset_id": "nova_agent/knowledge/diseases/neuro.json",
       "path": "nova_agent/knowledge/diseases/neuro.json",
-      "sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
+      "sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -2581,7 +2581,7 @@
     {
       "asset_id": "nova_agent/matching.py",
       "path": "nova_agent/matching.py",
-      "sha256": "29bdd82ff2678a34edbcd2deb882ad8e3c819fbc6feab11f88e100d67c1231fa",
+      "sha256": "b00ae595eb157084fe012b58a69b842ca58ace57a5b85b715949aee6f1b49252",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",

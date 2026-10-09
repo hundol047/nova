@@ -221,7 +221,7 @@
 파일: `nova_agent/knowledge/diseases/neuro.json`
 현재 코드 분류: urgency=CRITICAL, dangerous=True (미검토)
 
-- 증상 특징: ["sudden onset focal weakness", "facial droop", "slurred speech", "aphasia", "unilateral numbness", "sudden vision loss", "ataxia"]
+- 증상 특징: ["sudden onset focal weakness", "facial droop", "slurred speech", "aphasia", "unilateral numbness", "sudden vision loss", "ataxia", "focal neurological deficit on examination"]
 - 현재 확진 관련 소견: ["acute infarct", "diffusion restriction"]
 - 위험 인자: ["atrial fibrillation", "hypertension", "diabetes", "smoking", "prior stroke or TIA", "advanced age"]
 - 최소 검사: ["ct_head", "glucose_point_of_care"]

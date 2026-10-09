@@ -400,7 +400,7 @@
     "disease_id": "meningitis",
     "name": "Bacterial Meningitis",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
+    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -913,7 +913,7 @@
     "disease_id": "ischemic_stroke",
     "name": "Ischemic Stroke",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
+    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -948,8 +948,10 @@
         "aphasia",
         "unilateral numbness",
         "sudden vision loss",
-        "ataxia"
+        "ataxia",
+        "focal neurological deficit on examination"
       ],
+      "round_u_followup_provenance": "typical_feature 'focal neurological deficit on examination' added in the Round U follow-up: stroke is an episode of acute neurological dysfunction caused by focal cerebral infarction (Sacco RL et al., An Updated Definition of Stroke, Stroke 2013;44:2064-2089), presenting with a sudden focal neurological deficit (Powers WJ et al., 2019 AHA/ASA acute ischemic stroke guideline, Stroke 2019;50:e344). It is an examination finding (objective-only); it is not imaging confirmation and danger adds no score. Agent-authored, not clinician-reviewed.",
       "risk_factors": [
         "atrial fibrillation",
         "hypertension",
@@ -1375,7 +1377,7 @@
     "disease_id": "subarachnoid_hemorrhage",
     "name": "Subarachnoid Hemorrhage",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
+    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -2092,7 +2094,7 @@
     "disease_id": "bppv",
     "name": "Benign Paroxysmal Positional Vertigo",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
+    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2425,7 +2427,7 @@
     "disease_id": "migraine",
     "name": "Migraine",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
+    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2666,7 +2668,7 @@
     "disease_id": "orthostatic_hypotension",
     "name": "Orthostatic Hypotension",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
+    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2826,7 +2828,7 @@
     "disease_id": "tension_headache",
     "name": "Tension-Type Headache",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
+    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {

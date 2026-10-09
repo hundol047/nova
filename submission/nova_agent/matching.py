@@ -769,7 +769,9 @@ FEATURE_ALIASES: dict[str, list[str]] = {
     "syncope": ["passed out", "fainted"],
     "palpitations": ["racing heartbeat", "heart racing"],
     # Medication-class normalization (spec section 4).
-    "sulfonylurea use": ["glipizide", "glyburide", "glimepiride", "sulfonylurea"],
+    "sulfonylurea use": ["glipizide", "glyburide", "glimepiride", "sulfonylurea",
+                         # Round U follow-up: further sulfonylureas by BNF name (glibenclamide = glyburide).
+                         "glibenclamide", "gliclazide", "tolbutamide"],
     "insulin use": ["insulin", "lantus", "humalog", "novolog", "glargine"],
     "known diabetes on insulin": ["insulin", "lantus", "humalog", "novolog", "glargine"],
     "anticoagulant use": ["warfarin", "apixaban", "rivaroxaban", "dabigatran", "heparin", "coumadin"],

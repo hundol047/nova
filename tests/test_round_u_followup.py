@@ -160,3 +160,19 @@ def test_retrieval_vocabulary_maps_observed_wording_to_existing_phrases(text, ex
 def test_retrieval_vocabulary_ignores_negated_family_and_past_wording(text):
     from nova_agent.retrieval_vocabulary import observed_vocabulary_terms
     assert observed_vocabulary_terms(text) == ()
+
+
+def test_examined_focal_deficit_supports_stroke_and_negation_does_not():
+    s = PatientState(chief_complaint='Sudden dizziness and double vision.', preliminary_rules=True)
+    s.record_exam('neuro_exam', 'Focal neurological deficit.')
+    stroke = next(d for d in _diff(s) if d.diagnosis_id == 'ischemic_stroke')
+    assert 'focal neurological deficit on examination' in stroke.supporting_evidence
+    s2 = PatientState(chief_complaint='Sudden dizziness.', preliminary_rules=True)
+    s2.record_exam('neuro_exam', 'No focal neurological deficit.')
+    stroke2 = next((d for d in _diff(s2) if d.diagnosis_id == 'ischemic_stroke'), None)
+    assert stroke2 is None or 'focal neurological deficit on examination' not in stroke2.supporting_evidence
+
+
+def test_sulfonylurea_class_includes_bnf_names():
+    assert feature_present_with_aliases('sulfonylurea use', ['glibenclamide, took two by mistake'])
+    assert feature_present_with_aliases('sulfonylurea use', ['I take gliclazide'])
