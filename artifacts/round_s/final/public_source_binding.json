@@ -1,0 +1,9 @@
+{
+  "executed_local_runtime_sha": "95d465b0f01023148d60ff02667596bf22c19b4a",
+  "public_source_review_runtime_sha": "ed5a5e4131a04e37ca15559334794f5f817c2b35",
+  "public_branch": "codex/nova-round-s-source-review-20261009",
+  "runtime_file_count": 96,
+  "runtime_byte_identical": true,
+  "full_git_tree_identical": false,
+  "note": "Source review excludes withheld detailed artifacts and release pointer; local complete verification is separate."
+}

@@ -1,21 +1,51 @@
 # N.O.V.A. 2026 — current competition status
 
-**Status: PRE-GUIDE CANDIDATE — NOT OFFICIALLY READY.** This is the maintained status page. Older reports are
-historical evidence for the commit they name. Runtime commit: named by `artifacts/verification/CURRENT_RELEASE.json` (v22, runtime `8257ba6`) on branch `claude/determined-brahmagupta-wrfveb` --
-Round Q repair of the technical review's reproduced defects (`docs/competition/ROUND_Q_REPAIR_REPORT.md`) on top of
-Round P preliminary-rules algorithm work (`docs/competition/ROUND_P_ALGORITHM_REPORT.md`, runtime `3831555`) and
-Round O (`f86bfcc`, `docs/competition/ROUND_O_ALGORITHM_REPORT.md`) and Round N (`ab623ae`,
-`docs/competition/ROUND_N_ALGORITHM_REPORT.md`) and `8efd5d3`; mock provider only. `8efd5d3` was the integration of `integration/nova-preliminary-readiness` @ 60e034d and `offline/nova-competition-agent-optimization` @ 8d37c73.
-Release pointer: `artifacts/verification/CURRENT_RELEASE.json`.
+**ROUND S: PARTIAL REPAIR — COMPLETE ACCEPTANCE FAIL — NOT OFFICIALLY READY.**
 
-| Question | Answer |
-| --- | --- |
-| Fixed preliminary model | `openai/gpt-oss-20b`, revision `4d7ae4984b7db7de8f8457170b3f1a419ee76d52`. Never fine-tuned, adapted, replaced or bundled. |
-| Real fixed-model call ever observed | **NO — NOT VERIFIED.** Every number on this page uses the deterministic **mock** model. |
-| Official API / schema / `run.py` contract | **NOT AVAILABLE.** No participant guide, example or connection settings exist in the repository, the environment or reachable public pages (nova.snubhai.org is blocked from this environment). `submission/run.py` stays fail-closed (`EXTERNAL_OFFICIAL_INTERFACE_BLOCKED`). |
-| Clinical review | **None.** |
-| Runtime asset rights | **80 UNRESOLVED**, 3 VERIFIED, 3 not shipped — see `docs/compliance/PROVENANCE_STATUS.md`. Hash coverage PASS is not a usage right. |
-| Independent evaluation | **None.** All cases are same-author synthetic development cases. |
+Executed runtime: `95d465b0f01023148d60ff02667596bf22c19b4a`.
+Public byte-equivalent source runtime: `ed5a5e4131a04e37ca15559334794f5f817c2b35` on
+`codex/nova-round-s-source-review-20261009`. Full Git trees differ because detailed release artifacts are withheld.
+The original `claude/determined-brahmagupta-wrfveb` and main were not moved by this pass.
+
+Current report: [ROUND_S_REPAIR_REPORT_KO.md](competition/ROUND_S_REPAIR_REPORT_KO.md).
+Implemented prompt: [ROUND_S_IMPLEMENTATION_PROMPT_KO.md](competition/ROUND_S_IMPLEMENTATION_PROMPT_KO.md).
+Remaining work: [ROUND_S_FOLLOWUP_KO.md](competition/ROUND_S_FOLLOWUP_KO.md).
+
+## Current Round S evidence
+
+All numbers below are **offline mock / synthetic cases**, not official scores or clinical validation.
+
+| Check | Result |
+|---|---|
+| Full tests | **2,208 passed, 0 failed, 1 skipped, 0 deselected**; skip: torch training roundtrip unavailable |
+| Preliminary development | **203/222 → 211/222 (95.0%)**, critical **85/85**, new scored wrong 0 |
+| Existing P / Q / R development | **28/32 / 36/36 / 12/12**; critical **11/13 / 11/11 / 4/4** |
+| Prior acceptance development | **16/18**, critical **4/5**; not improved |
+| Newly frozen S | 24 total, 14 scored: **12/14 → 13/14**, critical **4/4**, behavior **81/87 → 86/87** |
+| TEST-enabled M | **108/123 → 114/123**, critical **42/43 → 43/43**, new wrong 0 |
+| Local v24 package | byte sync, audit, ZIP validation and isolated mock **PASS** |
+| Actual fixed model / official API | **NOT VERIFIED / NOT VERIFIED**; run.py remains fail-closed |
+| Independent clinical validation | **NONE**; synthetic author saw implementation/prior failures |
+| Asset rights | **85 unresolved submitted assets**; hash coverage PASS is not permission |
+
+New S exposes two remaining false-evidence mechanisms: a father's old irregular heartbeat becomes the patient's
+current arrhythmia; painful/small-volume urination matches inability to pass urine. Full acceptance and new-case
+clinical safety are **FAIL**, even with green unit tests. NewS_15 also changes from undifferentiated to a broad
+arrhythmia working label with measured bradycardia; causal certainty remains limited.
+
+Efficiency is not uniformly better: preliminary unresolved-critical cases 74→96/230; new S average interactions
+20.42→24.46 and unnecessary EXAMs 44→106. M long-tail Top1 improves 12→17/26, but overall terminal retrieval @150
+falls 112→111/123 and strict rerank Top25 96→95/123. Chief-complaint-only retrieval proxy stays 61.4%.
+No runtime tuning after reading final S validation. These S cases are now development data for any next repair.
+
+**Publication scope:** this review branch publishes source, prompts and reports. The complete v24 ZIP/detailed
+traces/XML are locally verified and not newly published under the earlier approval restriction. Therefore the
+public `CURRENT_RELEASE.json` can still point to a prior release and must not be treated as validating this source
+branch. Local complete evidence uses `local-release-95d465b-v24.json`. The report records the ZIP SHA-256 and exact
+runtime binding. This is not a complete public v24 release or official submission.
+
+No model download/replacement/training, external LLM call, blind v18/v19 run, or new blind creation in this pass.
+The older Round P score 215/222=96.8% has not been restored. Historical evidence follows for context only.
 
 ## 1. Backend load check (production-backend CI step) — fixed
 
@@ -43,7 +73,7 @@ development suite is unchanged case by case. The threshold, case count and concu
 
 ## 2. Preliminary diagnostic performance — LOCAL DEVELOPMENT / PRELIMINARY SIMULATION (mock, not an official score)
 
-**Current (Round Q, runtime `8257ba6`, competition retrieval, mock, all 230 cases, FROZEN simulator; `artifacts/round_q/final/`).**
+**Previous (Round Q, runtime `8257ba6`, competition retrieval, mock, all 230 cases, FROZEN simulator; `artifacts/round_q/final/`).**
 Top-1 **202/222**, critical **85/85**, avg / max interactions 19.65 / 35, unnecessary exams 297, semantic duplicate questions 11, 0 rule
 violations, 0 unsupported SOAP lines. Versus `ead1595` (215/222, 84/85): 1 better (RoundJ_25), 14 worse (non-critical). 12 of the 14 come
 from grounding bare answers while the frozen simulator answers every unscripted question "No" (all 12 are correct again with the separate
