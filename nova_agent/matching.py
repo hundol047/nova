@@ -23,7 +23,6 @@ finding regardless of relevance, and would otherwise register as a match. So:
 
 from __future__ import annotations
 
-import functools
 import re
 from contextlib import contextmanager
 from contextvars import ContextVar
@@ -393,11 +392,15 @@ _US_SPELLING = tuple((re.compile(p, re.IGNORECASE), r) for p, r in (
 ))
 
 
-@functools.lru_cache(maxsize=65536)
 def us_spelling(text: str) -> str:
     lowered = text.lower() if text else ""
     if not lowered or not ("oe" in lowered or "ae" in lowered or "our" in lowered):
         return text
+    # Decision-scoped memo only (never a process-wide cache of patient text: tests/test_case_isolation.py).
+    return _scoped("us_spelling", text, lambda: _us_spelling_uncached(text))
+
+
+def _us_spelling_uncached(text: str) -> str:
     for pattern, repl in _US_SPELLING:
         text = pattern.sub(repl, text)
     return text

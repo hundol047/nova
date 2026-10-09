@@ -190871,6 +190871,10 @@
           "light headed"
         ],
         "seizure": [
+          "convulsive fit",
+          "convulsing",
+          "convulsions",
+          "fitting and shaking",
           "short fit",
           "brief fit",
           "a fit this morning",
@@ -192682,7 +192686,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 67,
+      "line": 66,
       "names": [
         "_STOPWORDS"
       ],
@@ -192719,7 +192723,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 71,
+      "line": 70,
       "names": [
         "_GENERIC_MEDICAL_WORDS"
       ],
@@ -192737,7 +192741,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 73,
+      "line": 72,
       "names": [
         "_OVERLAP_RATIO_THRESHOLD"
       ],
@@ -192746,7 +192750,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 88,
+      "line": 87,
       "names": [
         "_RELATIONAL_WORDS"
       ],
@@ -192768,7 +192772,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 164,
+      "line": 163,
       "names": [
         "_SUFFIX_RULES"
       ],
@@ -192810,7 +192814,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 167,
+      "line": 166,
       "names": [
         "_MIN_STEM_LENGTH"
       ],
@@ -192819,7 +192823,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 182,
+      "line": 181,
       "names": [
         "_IRREGULAR_STEM_OVERRIDES"
       ],
@@ -192852,7 +192856,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 270,
+      "line": 269,
       "names": [
         "_LAY_ANATOMY"
       ],
@@ -192864,7 +192868,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 299,
+      "line": 298,
       "names": [
         "_ABSENT_SIGN"
       ],
@@ -192873,7 +192877,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 370,
+      "line": 369,
       "names": [
         "_POLARITY_UP"
       ],
@@ -192890,7 +192894,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 371,
+      "line": 370,
       "names": [
         "_POLARITY_DOWN"
       ],
@@ -192906,7 +192910,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 646,
+      "line": 649,
       "names": [
         "_PATTERN_QUALIFIERS"
       ],
@@ -192924,7 +192928,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 751,
+      "line": 754,
       "names": [
         "FEATURE_ALIASES"
       ],
@@ -193102,7 +193106,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 796,
+      "line": 799,
       "names": [
         "_LAY_VARIANTS"
       ],

@@ -274,7 +274,10 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     # The KB phrase carries a redundant "associated"; the observation itself is lightheadedness (not fainting).
     "associated lightheadedness": ["lightheaded", "light-headed", "lightheadedness", "light headed"],
     # A convulsive fit is a seizure; a bare "fit" is NOT mapped (fit/fits well/keep fit).
-    "seizure": ["convulsive fit", "convulsing", "convulsions", "fitting and shaking"],
+    "seizure": ["convulsive fit", "convulsing", "convulsions", "fitting and shaking",
+                # Round U follow-up (NHS "Epilepsy": seizures are also called fits): EVENT phrasings only.
+                "short fit", "brief fit", "a fit this morning", "a fit last night", "a fit today", "had a fit and",
+                "one fit", "fit this morning"],
     # Sudden acceleration of the heartbeat described in lay words.
     "sudden onset palpitations": ["heart suddenly took off", "heart took off", "heart suddenly accelerated",
                                   "heart suddenly raced"],
@@ -316,9 +319,6 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     # Kussmaul respiration is deep, laboured breathing (StatPearls, "Kussmaul Respirations", NBK470309).
     "kussmaul breathing": ["deep laboured breathing", "deep labored breathing", "deep sighing respirations",
                            "deep sighing breathing", "deep and laboured breathing", "deep and labored breathing"],
-    # NHS "Epilepsy": seizures are also called fits. Only an EVENT phrasing is listed (never bare "fit").
-    "seizure": ["short fit", "brief fit", "a fit this morning", "a fit last night", "a fit today", "had a fit and",
-                "one fit", "fit this morning"],
     "recent similar illness contact": ["several people at dinner got", "everyone who ate", "others who ate",
                                        "people who ate there", "who ate there has it", "has the same bug",
                                        "had the same bug", "has the same illness", "same illness", "family are ill too"],

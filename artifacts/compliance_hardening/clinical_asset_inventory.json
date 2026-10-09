@@ -2313,7 +2313,7 @@
     {
       "asset_id": "nova_agent/lay_language.py",
       "path": "nova_agent/lay_language.py",
-      "sha256": "40f14dbb1a1a751b2c005fce21f6419a962fb5cc8b7232ca58be7a7c3eb115c2",
+      "sha256": "6b1e3f743b38a759769982f37434281a8f478a1a3e7c368594e93e74713258ab",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -2581,7 +2581,7 @@
     {
       "asset_id": "nova_agent/matching.py",
       "path": "nova_agent/matching.py",
-      "sha256": "deb849389e1abbc755596500ad03a416f31f60827613d0a03f871c6a7df0669e",
+      "sha256": "29bdd82ff2678a34edbcd2deb882ad8e3c819fbc6feab11f88e100d67c1231fa",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -4113,7 +4113,7 @@
     {
       "asset_id": "nova_agent/retrieval_vocabulary.py",
       "path": "nova_agent/retrieval_vocabulary.py",
-      "sha256": "30df49abd156583d50bcd3e43b838a31bdf31f39209ec3981d9ae81b76884763",
+      "sha256": "d363a3a3ff7d742411fba927109f8f0c7232b5ead93b6ff54d84fa25b4b901ff",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",

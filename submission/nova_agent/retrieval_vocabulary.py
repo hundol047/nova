@@ -37,11 +37,16 @@ def _alias_index() -> Dict[str, Tuple[Tuple[str, str, frozenset], ...]]:
     return {k: tuple(v) for k, v in index.items()}
 
 
-@functools.lru_cache(maxsize=4096)
 def observed_vocabulary_terms(text: str) -> Tuple[str, ...]:
-    """Existing KB phrases whose lay alias / localized wording is actually present (not negated) in ``text``."""
+    """Existing KB phrases whose lay alias / localized wording is actually present (not negated) in ``text``.
+    Memoised only within one decision (matching._scoped); no process-wide cache ever holds patient text."""
     if not text or len(text.strip()) < 3:
         return ()
+    from nova_agent.matching import _scoped
+    return _scoped("vocabulary_terms", text, lambda: _observed_vocabulary_terms(text))
+
+
+def _observed_vocabulary_terms(text: str) -> Tuple[str, ...]:
     from nova_agent.matching import _content_words, _strict_alias_present
     from nova_agent.multilingual_concepts import english_evidence_for
     from nova_agent.evidence_scope import patient_evidence_text
