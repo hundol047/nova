@@ -498,6 +498,31 @@ def or_branches(feature: str) -> tuple:
     if prefix and not _OR_PREFIX.match(right):
         right = prefix.group(0) + right
     if len(_content_words(left)) < 2 or len(_content_words(right)) < 2:
+        # Round U follow-up: two participles sharing the SAME head and complement ("pain relieved or worsened by
+        # eating") are distributed to two complete phrases; anything else stays whole.
+        m = re.fullmatch(r"(.+?)\s+(\w+ed)", left)
+        n = re.fullmatch(r"(\w+ed)\s+((?:by|with|after|on|when)\b.+)", right)
+        if m and n:
+            return (f"{m.group(1)} {m.group(2)} {n.group(2)}", f"{m.group(1)} {n.group(1)} {n.group(2)}")
+        return ()
+    return (left, right)
+
+
+def and_branches(feature: str) -> tuple:
+    """Round U follow-up: the two members of ONE short list feature ("nausea and vomiting", "polyuria and polydipsia",
+    "fever and malaise"), or () otherwise. The feature is present only when BOTH members are observed -- possibly
+    in different statements ("nausea" in the complaint, "vomiting" in a later answer). Used for PRESENCE only; a
+    denial of one member never denies the pair, and a pair still counts as ONE piece of evidence."""
+    low = feature.lower().strip()
+    from nova_agent.feature_relations import RELATION_PATTERNS
+    if low in RELATION_PATTERNS or low.count(" and ") != 1 or " or " in low:
+        return ()
+    left, right = (part.strip() for part in low.split(" and "))
+    if re.search(r"\b(?:with|without|after|before|on|when|while|history|known|prior|previous)\b", low):
+        return ()
+    if not (1 <= len(left.split()) <= 3 and 1 <= len(right.split()) <= 3):
+        return ()
+    if not _content_words(left) or not _content_words(right):
         return ()
     return (left, right)
 

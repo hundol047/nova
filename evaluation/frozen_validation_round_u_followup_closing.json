@@ -1,0 +1,358 @@
+[
+ {
+  "case_id": "CloseUF_01",
+  "chief_complaint": "Since lunch yesterday I have had the runs and have been sick twice. My wife ate the same chicken and is unwell too.",
+  "demographics": {
+   "age": 44,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "gastroenteritis",
+  "answers": {
+   "associated_symptoms": "Crampy belly all over, no blood.",
+   "onset": "About four hours after lunch."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/74, HR 90, RR 16, Temp 37.5, SpO2 99%",
+   "abdominal_exam": "Soft, mildly tender everywhere."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;gi_common",
+  "scoring_expected": true,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseUF_02",
+  "chief_complaint": "I'm a type 2 diabetic and stopped my insulin a week ago because I couldn't afford it. Now I can't stop drinking water and I'm throwing up.",
+  "demographics": {
+   "age": 39,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "diabetic_ketoacidosis",
+  "answers": {
+   "associated_symptoms": "Tummy ache and I feel breathless.",
+   "past_medical_history": "Type 2 diabetes on insulin."
+  },
+  "exam_results": {
+   "vital_signs": "BP 100/62, HR 118, RR 30, Temp 37.0, SpO2 98%",
+   "general_appearance": "Deep, rapid breathing; fruity smell on the breath."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;dka",
+  "scoring_expected": true,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "forbidden": [
+    "acute_pancreatitis",
+    "gastroenteritis"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseUF_03",
+  "chief_complaint": "I collapsed suddenly in my armchair without any dizziness first.",
+  "demographics": {
+   "age": 80,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "cardiac_arrhythmia",
+  "answers": {
+   "past_medical_history": "Had a heart attack five years ago.",
+   "associated_symptoms": "No chest pain, no jerking."
+  },
+  "exam_results": {
+   "vital_signs": "BP 102/64, HR 34, RR 16, Temp 36.5, SpO2 96%",
+   "cardiac_auscultation": "Very slow regular beat."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;brady_syncope",
+  "scoring_expected": true,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "forbidden": [
+    "vasovagal_syncope",
+    "orthostatic_hypotension"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseUF_04",
+  "chief_complaint": "I fell down the stairs and banged my chest. It only hurts when I press on the spot or turn.",
+  "demographics": {
+   "age": 52,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+  "answers": {
+   "associated_symptoms": "Breathing is fine, no coughing up blood.",
+   "onset": "Yesterday evening."
+  },
+  "exam_results": {
+   "vital_signs": "BP 126/80, HR 78, RR 14, Temp 36.6, SpO2 99%",
+   "lung_auscultation": "Normal breath sounds on both sides."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;trauma_benign",
+  "scoring_expected": true,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "forbidden": [
+    "tension_pneumothorax"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseUF_05",
+  "chief_complaint": "새벽부터 배 전체가 살살 아프고 설사를 여러 번 했어요. 어제 같이 식사한 친구도 설사를 해요.",
+  "demographics": {
+   "age": 26,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "gastroenteritis",
+  "answers": {
+   "associated_symptoms": "토하기도 했어요. 피는 없어요.",
+   "onset": "어제 저녁 먹고 몇 시간 뒤부터요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 116/72, HR 88, RR 16, Temp 37.4, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "아니요, 없어요.",
+  "default_exam_result": "특이 소견 없음.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;korean_gi",
+  "scoring_expected": true,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseUF_06",
+  "chief_complaint": "My mother had a stroke last year. I feel fine and just want a check.",
+  "demographics": {
+   "age": 50,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 120/78, HR 76, RR 15, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot say.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;family_only",
+  "scoring_expected": false,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "undifferentiated": true
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "forbidden_support": [
+    "documented diagnosis"
+   ]
+  }
+ },
+ {
+  "case_id": "CloseUF_07",
+  "chief_complaint": "The discharge letter says a heart attack could not be confirmed. I feel slightly tired today.",
+  "demographics": {
+   "age": 61,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 120/78, HR 76, RR 15, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot say.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;uncertain_doc",
+  "scoring_expected": false,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "undifferentiated": true
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "forbidden_support": [
+    "documented diagnosis"
+   ]
+  }
+ },
+ {
+  "case_id": "CloseUF_08",
+  "chief_complaint": "Something is not right but I cannot explain what.",
+  "demographics": {
+   "age": 45,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 120/78, HR 76, RR 15, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot say.",
+  "default_exam_result": "Not assessed.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;insufficient",
+  "scoring_expected": false,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "undifferentiated": true
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "CloseUF_09",
+  "chief_complaint": "My ankles are puffy and I get breathless walking to the shop; at night I have to sit up to breathe.",
+  "demographics": {
+   "age": 74,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "past_medical_history": "Previous heart attack.",
+   "onset": "Gradually over a month."
+  },
+  "exam_results": {
+   "vital_signs": "BP 148/90, HR 96, RR 22, Temp 36.7, SpO2 94%",
+   "lung_auscultation": "Fine crackles at both bases.",
+   "extremity_exam": "Pitting oedema to the shins."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;hf_vs_pneumonia",
+  "scoring_expected": false,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "forbidden": [
+    "pneumonia"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "CloseUF_10",
+  "chief_complaint": "Worst headache of my life came on instantly while lifting weights, and I've vomited.",
+  "demographics": {
+   "age": 46,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "subarachnoid_hemorrhage",
+  "answers": {
+   "associated_symptoms": "Neck feels stiff, light hurts my eyes.",
+   "onset": "Peaked within seconds, an hour ago."
+  },
+  "exam_results": {
+   "vital_signs": "BP 168/96, HR 88, RR 18, Temp 37.0, SpO2 98%",
+   "neuro_exam": "No focal deficit."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;critical_headache",
+  "scoring_expected": true,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseUF_11",
+  "chief_complaint": "My knee has been hot, swollen and too painful to bend since yesterday and I have a fever.",
+  "demographics": {
+   "age": 67,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "Septic Arthritis",
+  "answers": {
+   "past_medical_history": "Rheumatoid arthritis on methotrexate.",
+   "associated_symptoms": "Shivers, no injury."
+  },
+  "exam_results": {
+   "vital_signs": "BP 112/70, HR 108, RR 18, Temp 38.9, SpO2 97%",
+   "extremity_exam": "Hot, swollen, tender right knee with very limited movement."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;long_tail",
+  "scoring_expected": true,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseUF_12",
+  "chief_complaint": "I have had watery stools today. I cannot tell you anything about contacts, food or other symptoms.",
+  "demographics": {
+   "age": 38,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 120/78, HR 76, RR 15, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot provide that information.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup_closing;single_diarrhoea_unknown",
+  "scoring_expected": false,
+  "notes": "Round U follow-up CLOSING control. Implementation-aware engineering author; frozen before the final runtime and run only on baseline and final (never used to change source). Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "undifferentiated": true
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ }
+]

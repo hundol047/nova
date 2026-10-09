@@ -1,0 +1,10 @@
+{
+  "sha256": "e5ed6d765532a015c6567a5a51dffd96c898b712fe61446e6ca0b20250f38b7c",
+  "cases": 12,
+  "scored": 7,
+  "created_utc": "2026-10-09T12:28:29.944905+00:00",
+  "runtime_before_authoring": "2f5e154f2fe0a6944dc49a907318cbdf5dc3dae1",
+  "policy": "Frozen before the final runtime. Run only on baseline c01a8b7 and on the final runtime; never used to change source.",
+  "author_exposure": "Implementation-aware engineering author (saw Round U follow-up development failures).",
+  "independent_clinical_validation": false
+}

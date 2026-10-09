@@ -25,6 +25,7 @@ def analyze(paths, limit):
     catalog = get_default_catalog()
     counts = defaultdict(lambda: {k:set() for k in ('retrieved','top150','top25','active')})
     observed = {}
+    truth_outcome = {}
     for path in paths:
         if any(x in str(path).lower() for x in ('blind','frozen','new_validation')):
             raise ValueError('Only already-used development traces are permitted')
@@ -35,6 +36,12 @@ def analyze(paths, limit):
                 data = archive.extractfile(member).read()
                 if member.name.endswith('.gz'): data = gzip.decompress(data)
                 case = json.loads(data);case_id = case.get('summary',{}).get('case_id',member.name)
+                summary = case.get('summary',{})
+                truth_ids = {c['id'] for t in case.get('turns',[])[-1:] for c in t.get('candidates',[])
+                             if c['id'].startswith('onto::tier2:') and c.get('name') and summary.get('truth')
+                             and c['name'].strip().lower() == str(summary.get('truth')).strip().lower()}
+                if summary.get('scored', True) and truth_ids:
+                    truth_outcome[case_id] = (truth_ids, bool(summary.get('correct')))
                 for turn in case.get('turns',[]):
                     for candidate in turn.get('candidates',[]):
                         cid = candidate['id']
@@ -46,6 +53,20 @@ def analyze(paths, limit):
                             if rank <= 150: counts[cid]['top150'].add(case_id)
                         if (candidate.get('rerank_rank') or 100000) <= 25: counts[cid]['top25'].add(case_id)
                         if candidate.get('active'): counts[cid]['active'].add(case_id)
+    # Development long-tail failures: a Tier-2 concept that was the labelled diagnosis of a case answered wrongly.
+    failed_truth = defaultdict(set)
+    for case_id, (truth_ids, correct) in truth_outcome.items():
+        if not correct:
+            for tid in truth_ids:
+                failed_truth[tid].add(case_id)
+    provenance = {}
+    try:
+        enrichment = json.loads((ROOT/'nova_agent/knowledge/tier2_enrichment.json').read_text())
+        for e in enrichment.get('entries', []):
+            provenance[e['id']] = ('FIELD_LEVEL: ' + '; '.join(sorted(e['provenance']))) if isinstance(e.get('provenance'), dict) \
+                else 'GENERAL ONLY (unreviewed_general_knowledge, no field-level source)'
+    except (OSError, ValueError, KeyError):
+        pass
     cores = []
     for concept in catalog.all_concepts():
         if concept.concept_id.startswith('core:'):
@@ -63,18 +84,23 @@ def analyze(paths, limit):
                        key=lambda r:(-len(r['shared_features']),r['id']))[:5]
         c={k:len(v) for k,v in counts[cid].items()}
         loss=max(0,c['top150']-c['top25'])
-        score=round(c['retrieved'] + 2*loss + c['active'] + 5*bool(candidate.get('dangerous'))
+        failures=len(failed_truth.get(cid, ()))
+        # Round U follow-up: danger is reported (safety tracking) but is NOT a priority term, so a dangerous
+        # concept is not prioritised -- or later ranked -- merely for being dangerous.
+        score=round(c['retrieved'] + 2*loss + c['active'] + 4*failures
                     + 2*bool(similar) + max(0,4-meaningful)*3,2)
         rows.append({'concept_id':cid[6:],'display_name':candidate['name'],
                      'retrieval_frequency_development':c['retrieved'],'top150_frequency':c['top150'],
                      'top25_frequency':c['top25'],'active_set_frequency':c['active'],
-                     'dangerous':candidate.get('dangerous',False),'similar_tier1_by_existing_feature_overlap':similar,
+                     'long_tail_development_failures':sorted(failed_truth.get(cid, ())),
+                     'dangerous_safety_tracking_only':candidate.get('dangerous',False),'similar_tier1_by_existing_feature_overlap':similar,
                      'clinical_metadata_completeness':coverage,'discrimination_dimensions_present':meaningful,
-                     'enriched_status':'NOT_ADJUDICATED','priority_score':score})
+                     'enriched_status':'NOT_ADJUDICATED','provenance_status':provenance.get(cid[6+len('tier2:'):], 'UNRESOLVED (no field-level source)'),
+                     'priority_score':score})
     rows.sort(key=lambda r:(-r['priority_score'],r['concept_id']))
     return {'scope':'DEVELOPMENT ONLY; source-derived prioritization, not clinical evidence or diagnosis ranking',
             'counted_concepts':len(rows),'selected_count':min(limit,len(rows)),'selected':rows[:limit],
-            'all_priorities':rows,'formula':'retrieved + 2*(top150-top25) + active + 5*dangerous + 2*similar + 3*max(0,4-depth_dimensions)',
+            'all_priorities':rows,'formula':'retrieved + 2*(top150-top25) + active + 4*long_tail_failures + 2*similar + 3*max(0,4-depth_dimensions); dangerous is reported for safety tracking only (no weight)',
             'limitations':'Only concepts observed in supplied traces. Depth counts cannot establish clinical quality/provenance; no concept is declared enriched automatically.'}
 
 

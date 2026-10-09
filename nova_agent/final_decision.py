@@ -274,8 +274,12 @@ def decide_final(state, differential: list, completion_reason: str = "supported"
         if support_problems(alt, state, differential):
             continue
         entry = _entry(alt.diagnosis_id)
+        # Round U follow-up: replacing the ranked leader needs more than two symptoms that most presentations share
+        # ("nausea" + "vomiting" do not name pancreatitis over a blocked leader). At least one supporting
+        # observation must be non-generic; two generic ones are not two independent specific findings.
+        nongeneric = [e for e in _positive_support(alt) if not _generic_symptom(e) and not _nonspecific_measurement(e)]
         if ("documented diagnosis" in alt.supporting_evidence or _specific_support(alt, entry)
-                or _distinct(alt.supporting_evidence) >= 2):
+                or (nongeneric and _distinct(alt.supporting_evidence) >= 2)):
             return FinalDecision(alt.diagnosis_id, alt, "SUPPORTED", completion_reason,
                                  reasons + (f"named:{alt.diagnosis_id}",))
     return FinalDecision(UNDIFFERENTIATED_ID, None, "UNDIFFERENTIATED", completion_reason, reasons)

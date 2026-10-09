@@ -30,6 +30,7 @@ from nova_agent.glucose_evidence import (
 )
 from nova_agent.matching import (
     or_branches,
+    and_branches,
     FEATURE_ALIASES,
     content_word_count,
     content_words,
@@ -509,9 +510,11 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         contradictory.append(phrase)
         return -(CONFIRMATORY_WEIGHT if objective else CONTRADICTION_PENALTY)
     ignore = _MODALITY_WORDS if objective else frozenset()
+    pair = () if objective else and_branches(phrase)
     if _present_with_aliases(phrase, findings, strict=strict, ignore_words=ignore) or (
             _evidence_v3_enabled() and any(_present_with_aliases(branch, findings, strict=strict, ignore_words=ignore)
-                                           for branch in or_branches(phrase))):
+                                           for branch in or_branches(phrase))) or (
+            _evidence_v3_enabled() and pair and all(_present_with_aliases(b, findings) for b in pair)):
         supporting.append(phrase)
         return weight
     missing.append(phrase)
