@@ -1,5 +1,28 @@
 # N.O.V.A. 2026 — current competition status
 
+**PRE-GUIDE CANDIDATE — ROUND U FOLLOW-UP — SAME-CONDITION REGRESSION PASS, 90-POINT TARGET FAIL (Round M 117/123 < 118) — NOT OFFICIALLY READY.**
+
+Final runtime: `e207801ce16faf38591fc0bed2dd2d238c1c1d7a` on branch `claude/nova-round-u-followup-20261009`.
+Baseline: `c01a8b754360131bfaef17a8b29e71ab61a72330` (public Round U source review). main, the codex review branch and the original Claude branch are unchanged.
+Report: [ROUND_U_FOLLOWUP_REPAIR_REPORT_KO.md](competition/ROUND_U_FOLLOWUP_REPAIR_REPORT_KO.md); evidence: [ROUND_U_FOLLOWUP_VERIFICATION_SUMMARY.json](competition/ROUND_U_FOLLOWUP_VERIFICATION_SUMMARY.json); provenance: [ROUND_U_FOLLOWUP_PROVENANCE.md](competition/ROUND_U_FOLLOWUP_PROVENANCE.md).
+
+| Same-condition (mock, competition retrieval) | Baseline → final | Critical |
+|---|---:|---:|
+| Preliminary 230/222 | 209 → 218/222 | 85/85 → 85/85 |
+| Round P 34/32 | 27 → 31/32 | 11/13 → 13/13 |
+| Round M with TEST 128/123 | 115 → 117/123 | 43/43 |
+| Round M long-tail Top1/Top5/Top10 | 18/21/23 → 20/23/25 of 26 | — |
+| Chief-only retrieval proxy Top150 / Top25 (164 dev cases) | 118/117 → 155/155 | — |
+| Preliminary avg interactions / unnecessary EXAM | 20.33/371 → 19.92/238 | — |
+
+New wrong answers: 0 and new critical misses: 0 across all 27 compared suites. Tests 2462 passed / 0 failed / 1 skipped (torch) with local v27 evidence;
+on the public tree without the unpublished ZIP the one release-binding test fails exactly as on baseline. Package audit PASS, ZIP `e4944175…f7e1e8` (local only).
+Official API, real GPT-OSS and independent clinical validation: NOT VERIFIED. All numbers are offline synthetic development evidence.
+
+---
+
+## Previous status (Round U, preserved)
+
 **PRE-GUIDE CANDIDATE — ROUND U: TARGETED REPAIR — STRICT REGRESSION FAIL — NOT OFFICIALLY READY.**
 
 Executed local runtime: `da7cfca7eb80f09af82019326f9964a285946f1d`.

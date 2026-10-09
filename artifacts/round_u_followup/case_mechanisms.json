@@ -4426,6 +4426,1086 @@
     "soap_assessment": "Primary diagnosis: Acute Gastroenteritis\nSupporting findings: diffuse crampy abdominal pain; diarrhea; vomiting; recent similar illness contact; food exposure\nContradictory findings: none\nMissing discriminating evidence: none\nDifferential diagnosis:\n- Acute Pancreatitis: nausea; vomiting\n- Diabetic Ketoacidosis: nausea and vomiting\n- Thyroid Storm: vomiting and diarrhea\n- Acute Cholecystitis: nausea and vomiting",
     "soap_plan": "Further tests: Complete blood count, Point-of-care glucose, Serum/urine ketones, Arterial blood gas, Basic metabolic panel (electrolytes/renal function)\nTreatment / disposition decision: Evaluate the cause, then conservative symptom-directed care; escalate if warning signs appear\nFollow-up: Outpatient re-evaluation as symptoms evolve; reassess early if worse or persistent\nPatient education: delivered to the patient during the visit -- [T30] working diagnosis explained; [T31] next step and warning signs explained"
    }
+  },
+  "NewT_12": {
+   "truth": "pneumonia",
+   "chief_complaint": "For four days I have been coughing up yellow sputum and having shaking chills. Breathing deeply hurts the lower right chest.",
+   "scripted_answers": {
+    "associated_symptoms": "Productive cough and fever."
+   },
+   "scripted_exams": {
+    "respiratory_exam": "Focal crackles over the right lower lung.",
+    "vital_signs": "BP 120/74, HR 102, RR 24, Temp 38.8, SpO2 93%"
+   },
+   "baseline": {
+    "final": "pneumonia",
+    "correct": true,
+    "interactions": 27,
+    "final_decision": {
+     "primary_id": "pneumonia",
+     "support": "SUPPORTED",
+     "completion_reason": "information_exhausted",
+     "reasons": [
+      "leader:only_nonspecific_support",
+      "leader:required_context_missing:blood actually coughed up",
+      "named:pneumonia"
+     ],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 11,
+    "chief_turn_rerank25_rank": 4,
+    "chief_turn_active_rank": 7,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 7,
+    "final_rerank25_rank": 2,
+    "final_active_rank": 2,
+    "truth_support_final": [
+     "productive cough",
+     "fever"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "onto::tier2:sym_hemoptysis",
+      "score": 2.0,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "cough",
+       "chest pain"
+      ],
+      "against": [],
+      "missing": [
+       "coughing up blood",
+       "shortness of breath",
+       "weight loss",
+       "smoking history"
+      ],
+      "naming_problems": [
+       "only_nonspecific_support",
+       "required_context_missing:blood actually coughed up"
+      ]
+     },
+     {
+      "id": "pneumonia",
+      "score": 1.55,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "productive cough",
+       "fever"
+      ],
+      "against": [],
+      "missing": [
+       "pleuritic chest pain",
+       "crackles on auscultation",
+       "dyspnea",
+       "consolidation",
+       "infiltrate",
+       "focal consolidation"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "acute_bronchitis",
+      "score": 1.25,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "productive cough"
+      ],
+      "against": [],
+      "missing": [
+       "mild fever",
+       "no focal consolidation",
+       "recent viral illness",
+       "chest wall soreness from coughing"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cxr",
+      "priority": 0,
+      "discriminates": [
+       "pneumonia",
+       "acute_bronchitis",
+       "asthma_copd_exacerbation",
+       "tension_pneumothorax",
+       "acute_coronary_syndrome",
+       "aortic_dissection"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "pneumonia",
+       "sepsis",
+       "pyelonephritis",
+       "meningitis",
+       "acute_abdomen",
+       "gi_bleeding"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "glucose_point_of_care",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ketones",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "abg",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis",
+       "asthma_copd_exacerbation"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "bmp",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis",
+       "sepsis",
+       "pyelonephritis",
+       "cardiac_arrhythmia"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lactate",
+      "priority": 0,
+      "discriminates": [
+       "sepsis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:coughing up blood"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:shortness of breath"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "allergy"
+     ],
+     [
+      "EXAM",
+      "meningeal_signs"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Community-Acquired Pneumonia\nSupporting findings: productive cough; fever\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: pleuritic chest pain; crackles on auscultation; dyspnea; consolidation\nDifferential diagnosis:\n- Hemoptysis: cough; chest pain\n- Acute Bronchitis: productive cough\n- Diabetic Ketoacidosis: kussmaul breathing\n- Viral Upper Respiratory Infection: cough",
+    "soap_plan": "Further tests: Chest X-ray, Complete blood count\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T26] working diagnosis explained; [T27] next step and warning signs explained (Warning signs: hypoxia, confusion, hypotension)\nObserved concerns informing disposition: respiratory_rate=24; kussmaul breathing"
+   },
+   "final": {
+    "final": "pneumonia",
+    "correct": true,
+    "interactions": 27,
+    "final_decision": {
+     "primary_id": "pneumonia",
+     "support": "SUPPORTED",
+     "completion_reason": "information_exhausted",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 12,
+    "chief_turn_rerank25_rank": 4,
+    "chief_turn_active_rank": 3,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 8,
+    "final_rerank25_rank": 3,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "productive cough",
+     "fever",
+     "pleuritic chest pain"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "pneumonia",
+      "score": 2.399,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "productive cough",
+       "fever",
+       "pleuritic chest pain"
+      ],
+      "against": [],
+      "missing": [
+       "crackles on auscultation",
+       "dyspnea",
+       "consolidation",
+       "infiltrate",
+       "focal consolidation"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "onto::tier2:sym_hemoptysis",
+      "score": 2.0,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "cough",
+       "chest pain"
+      ],
+      "against": [],
+      "missing": [
+       "coughing up blood",
+       "shortness of breath",
+       "weight loss",
+       "smoking history"
+      ],
+      "naming_problems": [
+       "only_nonspecific_support",
+       "required_context_missing:blood actually coughed up"
+      ]
+     },
+     {
+      "id": "pulmonary_embolism",
+      "score": 1.85,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "pleuritic chest pain",
+       "tachycardia",
+       "tachypnea"
+      ],
+      "against": [],
+      "missing": [
+       "sudden onset dyspnea",
+       "hemoptysis",
+       "calf swelling",
+       "unilateral leg pain",
+       "hypoxia",
+       "filling defect in the pulmonary artery"
+      ],
+      "naming_problems": []
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cxr",
+      "priority": 0,
+      "discriminates": [
+       "pneumonia",
+       "acute_bronchitis",
+       "asthma_copd_exacerbation",
+       "tension_pneumothorax",
+       "acute_coronary_syndrome",
+       "aortic_dissection"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "pneumonia",
+       "sepsis",
+       "pyelonephritis",
+       "meningitis",
+       "acute_abdomen",
+       "gi_bleeding"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "d_dimer",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ct_chest_angio",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism",
+       "acute_coronary_syndrome",
+       "aortic_dissection",
+       "gerd",
+       "musculoskeletal_chest_pain",
+       "cardiac_arrhythmia"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "abg",
+      "priority": 0,
+      "discriminates": [
+       "asthma_copd_exacerbation",
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lactate",
+      "priority": 0,
+      "discriminates": [
+       "sepsis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:coughing up blood"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:shortness of breath"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "allergy"
+     ],
+     [
+      "EXAM",
+      "meningeal_signs"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Community-Acquired Pneumonia\nSupporting findings: productive cough; fever; pleuritic chest pain\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: crackles on auscultation; dyspnea; consolidation; infiltrate\nDifferential diagnosis:\n- Hemoptysis: cough; chest pain\n- Pulmonary Embolism: pleuritic chest pain; tachycardia; tachypnea\n- Acute Bronchitis: productive cough\n- Viral Upper Respiratory Infection: cough",
+    "soap_plan": "Further tests: Chest X-ray, Complete blood count\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T26] working diagnosis explained; [T27] next step and warning signs explained (Warning signs: hypoxia, confusion, hypotension)\nObserved concerns informing disposition: respiratory_rate=24; pleuritic chest pain; tachycardia; tachypnea"
+   }
+  },
+  "RoundM_047": {
+   "truth": "ectopic_pregnancy",
+   "chief_complaint": "Low one-sided belly ache and I nearly fainted at work.",
+   "scripted_answers": {
+    "social_history": "my period is six weeks late",
+    "associated_symptoms": "light spotting and pain at the tip of my shoulder"
+   },
+   "scripted_exams": {
+    "abdominal_exam": "tender low on the right",
+    "vital_signs": "BP 90/56, HR 118"
+   },
+   "baseline": {
+    "final": "ectopic_pregnancy",
+    "correct": true,
+    "interactions": 27,
+    "final_decision": {
+     "primary_id": "ectopic_pregnancy",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": false,
+    "chief_turn_top150_rank": null,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": 1,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 8,
+    "final_rerank25_rank": 2,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "lower abdominal pain",
+     "vaginal bleeding",
+     "dizziness"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "ectopic_pregnancy",
+      "score": 2.475,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "lower abdominal pain",
+       "vaginal bleeding",
+       "dizziness"
+      ],
+      "against": [],
+      "missing": [
+       "missed period",
+       "unilateral pelvic pain",
+       "positive beta-hCG",
+       "no intrauterine pregnancy",
+       "adnexal mass"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "diabetic_ketoacidosis",
+      "score": 1.0,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "abdominal pain"
+      ],
+      "against": [],
+      "missing": [
+       "polyuria",
+       "polydipsia",
+       "nausea and vomiting",
+       "fruity breath odor",
+       "kussmaul breathing",
+       "confusion"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support",
+       "only_nonspecific_support"
+      ]
+     },
+     {
+      "id": "sepsis",
+      "score": 0.6,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "tachycardia",
+       "hypotension"
+      ],
+      "against": [],
+      "missing": [
+       "fever",
+       "altered mental status",
+       "tachypnea",
+       "suspected infection source",
+       "positive blood culture",
+       "gram-negative rods"
+      ],
+      "naming_problems": [
+       "only_hemodynamic_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "TEST",
+      "key": "beta_hcg",
+      "priority": 0,
+      "discriminates": [
+       "ectopic_pregnancy"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "pelvic_ultrasound",
+      "priority": 0,
+      "discriminates": [
+       "ectopic_pregnancy"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "aortic_dissection",
+       "pulmonary_embolism"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "troponin",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cxr",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "aortic_dissection",
+       "tension_pneumothorax"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ct_aorta",
+      "priority": 0,
+      "discriminates": [
+       "aortic_dissection"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "gi_bleeding"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "fecal_occult_blood",
+      "priority": 0,
+      "discriminates": [
+       "gi_bleeding"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:abnormal vaginal discharge"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:excessive thirst"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Ectopic Pregnancy\nSupporting findings: lower abdominal pain; vaginal bleeding; dizziness\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: missed period; unilateral pelvic pain; positive beta-hCG; no intrauterine pregnancy\nDifferential diagnosis:\n- Diabetic Ketoacidosis: abdominal pain\n- Sepsis: tachycardia; hypotension\n- Gastrointestinal Bleeding: tachycardia\n- Pulmonary Embolism: tachycardia",
+    "soap_plan": "Further tests: Serum/urine beta-hCG, Pelvic ultrasound, Point-of-care glucose, Serum/urine ketones, Arterial blood gas, Basic metabolic panel (electrolytes/renal function)\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T26] working diagnosis explained; [T27] next step and warning signs explained (Warning signs: vaginal bleeding, missed period, unilateral pelvic pain, hypotension, syncope)\nObserved concerns informing disposition: sbp=90; lower abdominal pain; vaginal bleeding; dizziness"
+   },
+   "final": {
+    "final": "ectopic_pregnancy",
+    "correct": true,
+    "interactions": 25,
+    "final_decision": {
+     "primary_id": "ectopic_pregnancy",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 26,
+    "chief_turn_rerank25_rank": 6,
+    "chief_turn_active_rank": 1,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 31,
+    "final_rerank25_rank": 2,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "lower abdominal pain",
+     "vaginal bleeding",
+     "dizziness"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "ectopic_pregnancy",
+      "score": 2.475,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "lower abdominal pain",
+       "vaginal bleeding",
+       "dizziness"
+      ],
+      "against": [],
+      "missing": [
+       "missed period",
+       "unilateral pelvic pain",
+       "positive beta-hCG",
+       "no intrauterine pregnancy",
+       "adnexal mass"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "diabetic_ketoacidosis",
+      "score": 1.0,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "abdominal pain"
+      ],
+      "against": [],
+      "missing": [
+       "polyuria",
+       "polydipsia",
+       "nausea and vomiting",
+       "fruity breath odor",
+       "kussmaul breathing",
+       "confusion"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support",
+       "only_nonspecific_support"
+      ]
+     },
+     {
+      "id": "sepsis",
+      "score": 0.6,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "tachycardia",
+       "hypotension"
+      ],
+      "against": [],
+      "missing": [
+       "fever",
+       "altered mental status",
+       "tachypnea",
+       "suspected infection source",
+       "positive blood culture",
+       "gram-negative rods"
+      ],
+      "naming_problems": [
+       "only_hemodynamic_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "neuro_exam",
+      "priority": 0,
+      "discriminates": [
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "beta_hcg",
+      "priority": 0,
+      "discriminates": [
+       "ectopic_pregnancy"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "pelvic_ultrasound",
+      "priority": 0,
+      "discriminates": [
+       "ectopic_pregnancy"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "urinalysis",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ct_abdomen",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "aortic_dissection",
+       "pulmonary_embolism"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "troponin",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:abnormal vaginal discharge"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:excessive thirst"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Ectopic Pregnancy\nSupporting findings: lower abdominal pain; vaginal bleeding; dizziness\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: missed period; unilateral pelvic pain; positive beta-hCG; no intrauterine pregnancy\nDifferential diagnosis:\n- Diabetic Ketoacidosis: abdominal pain\n- Sepsis: tachycardia; hypotension\n- Gastrointestinal Bleeding: tachycardia\n- Pulmonary Embolism: tachycardia",
+    "soap_plan": "Further tests: Serum/urine beta-hCG, Pelvic ultrasound, Point-of-care glucose, Serum/urine ketones, Arterial blood gas, Basic metabolic panel (electrolytes/renal function)\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T24] working diagnosis explained; [T25] next step and warning signs explained (Warning signs: vaginal bleeding, missed period, unilateral pelvic pain, hypotension, syncope)\nObserved concerns informing disposition: sbp=90; lower abdominal pain; vaginal bleeding; dizziness"
+   }
   }
  }
 }

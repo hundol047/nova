@@ -1,0 +1,1837 @@
+{
+  "before_head": "c01a8b754360131bfaef17a8b29e71ab61a72330",
+  "after_head": "e207801ce16faf38591fc0bed2dd2d238c1c1d7a",
+  "prelim": {
+    "before": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 209,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 20.330434782608695,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 18,
+      "unresolved_critical_cases": 90,
+      "unnecessary_exams": 371,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 218,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 19.917391304347827,
+      "max_interactions": 35,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 20,
+      "unresolved_critical_cases": 100,
+      "unnecessary_exams": 238,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "PrelimKo_Abd_Pancreatitis",
+        "scored": true,
+        "critical": false,
+        "before": "미분화 증상 (진단 미확정)",
+        "after": "급성췌장염 (Acute Pancreatitis)",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_024",
+        "scored": true,
+        "critical": false,
+        "before": "Vasovagal (Reflex) Syncope",
+        "after": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_066",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Acute Gastroenteritis",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_095",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Benign Paroxysmal Positional Vertigo",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_098",
+        "scored": true,
+        "critical": false,
+        "before": "Acute Pancreatitis",
+        "after": "Acute Cholecystitis",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_105",
+        "scored": true,
+        "critical": false,
+        "before": "Ectopic Pregnancy",
+        "after": "Ovarian Torsion",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_110",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Acute Gout Flare",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_115",
+        "scored": true,
+        "critical": false,
+        "before": "Migraine",
+        "after": "Giant Cell (Temporal) Arteritis",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundI_long_tail",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Sjogren Syndrome",
+        "before_correct": false,
+        "after_correct": true
+      }
+    ],
+    "new_correct": [
+      "PrelimKo_Abd_Pancreatitis",
+      "RoundM_024",
+      "RoundM_066",
+      "RoundM_095",
+      "RoundM_098",
+      "RoundM_105",
+      "RoundM_110",
+      "RoundM_115",
+      "RoundI_long_tail"
+    ],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "RoundM_069",
+      "RoundM_108",
+      "RoundM_112",
+      "RoundJ_52"
+    ]
+  },
+  "prelim_exam_rejection": {
+    "before": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 207,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 20.508695652173913,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 18,
+      "unresolved_critical_cases": 87,
+      "unnecessary_exams": 379,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 216,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 20.02173913043478,
+      "max_interactions": 35,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 20,
+      "unresolved_critical_cases": 97,
+      "unnecessary_exams": 237,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "PrelimKo_Abd_Pancreatitis",
+        "scored": true,
+        "critical": false,
+        "before": "미분화 증상 (진단 미확정)",
+        "after": "급성췌장염 (Acute Pancreatitis)",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_024",
+        "scored": true,
+        "critical": false,
+        "before": "Vasovagal (Reflex) Syncope",
+        "after": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_066",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Acute Gastroenteritis",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_095",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Benign Paroxysmal Positional Vertigo",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_098",
+        "scored": true,
+        "critical": false,
+        "before": "Acute Pancreatitis",
+        "after": "Acute Cholecystitis",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_105",
+        "scored": true,
+        "critical": false,
+        "before": "Ectopic Pregnancy",
+        "after": "Ovarian Torsion",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_110",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Acute Gout Flare",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_115",
+        "scored": true,
+        "critical": false,
+        "before": "Migraine",
+        "after": "Giant Cell (Temporal) Arteritis",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundI_long_tail",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Sjogren Syndrome",
+        "before_correct": false,
+        "after_correct": true
+      }
+    ],
+    "new_correct": [
+      "PrelimKo_Abd_Pancreatitis",
+      "RoundM_024",
+      "RoundM_066",
+      "RoundM_095",
+      "RoundM_098",
+      "RoundM_105",
+      "RoundM_110",
+      "RoundM_115",
+      "RoundI_long_tail"
+    ],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "RoundM_030",
+      "RoundM_038",
+      "RoundM_069",
+      "RoundM_108",
+      "RoundM_112",
+      "RoundJ_52"
+    ]
+  },
+  "prelim_unscripted_unknown": {
+    "before": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 212,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 26.02173913043478,
+      "max_interactions": 41,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 20,
+      "unresolved_critical_cases": 223,
+      "unnecessary_exams": 1009,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 217,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 26.22608695652174,
+      "max_interactions": 41,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 22,
+      "unresolved_critical_cases": 226,
+      "unnecessary_exams": 970,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "PrelimKo_Abd_Pancreatitis",
+        "scored": true,
+        "critical": false,
+        "before": "미분화 증상 (진단 미확정)",
+        "after": "급성췌장염 (Acute Pancreatitis)",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_024",
+        "scored": true,
+        "critical": false,
+        "before": "Vasovagal (Reflex) Syncope",
+        "after": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_095",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Benign Paroxysmal Positional Vertigo",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundM_105",
+        "scored": true,
+        "critical": false,
+        "before": "Ectopic Pregnancy",
+        "after": "Ovarian Torsion",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "RoundI_long_tail",
+        "scored": true,
+        "critical": false,
+        "before": "Stevens-Johnson Syndrome",
+        "after": "Sjogren Syndrome",
+        "before_correct": false,
+        "after_correct": true
+      }
+    ],
+    "new_correct": [
+      "PrelimKo_Abd_Pancreatitis",
+      "RoundM_024",
+      "RoundM_095",
+      "RoundM_105",
+      "RoundI_long_tail"
+    ],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "RoundM_066",
+      "RoundM_069",
+      "RoundM_089",
+      "RoundM_108",
+      "RoundJ_52"
+    ]
+  },
+  "round_p": {
+    "before": {
+      "cases": 34,
+      "scored": 32,
+      "correct": 27,
+      "critical_cases": 13,
+      "critical_correct": 11,
+      "avg_interactions": 21.852941176470587,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 3,
+      "unresolved_critical_cases": 9,
+      "unnecessary_exams": 74,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 34,
+      "scored": 32,
+      "correct": 31,
+      "critical_cases": 13,
+      "critical_correct": 13,
+      "avg_interactions": 20.794117647058822,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 3,
+      "unresolved_critical_cases": 12,
+      "unnecessary_exams": 49,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "ValP_10",
+        "scored": true,
+        "critical": false,
+        "before": "Tension Pneumothorax",
+        "after": "Musculoskeletal Chest Pain (Costochondritis)",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "ValP_12",
+        "scored": true,
+        "critical": true,
+        "before": "Undifferentiated presentation",
+        "after": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "ValP_17",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "ValP_21",
+        "scored": true,
+        "critical": true,
+        "before": "Perforated Viscus",
+        "after": "Acute Abdomen (Surgical Abdomen)",
+        "before_correct": false,
+        "after_correct": true
+      }
+    ],
+    "new_correct": [
+      "ValP_10",
+      "ValP_12",
+      "ValP_17",
+      "ValP_21"
+    ],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "ValP_08"
+    ]
+  },
+  "round_q": {
+    "before": {
+      "cases": 48,
+      "scored": 36,
+      "correct": 35,
+      "critical_cases": 11,
+      "critical_correct": 11,
+      "avg_interactions": 20.833333333333332,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 18,
+      "unnecessary_exams": 97,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 48,
+      "scored": 36,
+      "correct": 35,
+      "critical_cases": 11,
+      "critical_correct": 11,
+      "avg_interactions": 20.229166666666668,
+      "max_interactions": 36,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 16,
+      "unnecessary_exams": 59,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "DevQ_28"
+    ],
+    "unscored_dangerous_named": {
+      "before": 2,
+      "after": 2
+    }
+  },
+  "round_r": {
+    "before": {
+      "cases": 24,
+      "scored": 12,
+      "correct": 12,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 26.833333333333332,
+      "max_interactions": 36,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 3,
+      "unresolved_critical_cases": 24,
+      "unnecessary_exams": 124,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 24,
+      "scored": 12,
+      "correct": 12,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 26.541666666666668,
+      "max_interactions": 36,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 3,
+      "unresolved_critical_cases": 24,
+      "unnecessary_exams": 117,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 19,
+        "total": 19
+      },
+      "after": {
+        "passed": 19,
+        "total": 19
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 4,
+      "after": 4
+    }
+  },
+  "acceptance_regression": {
+    "before": {
+      "cases": 32,
+      "scored": 18,
+      "correct": 16,
+      "critical_cases": 5,
+      "critical_correct": 4,
+      "avg_interactions": 26.84375,
+      "max_interactions": 36,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 32,
+      "unnecessary_exams": 177,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 32,
+      "scored": 18,
+      "correct": 18,
+      "critical_cases": 5,
+      "critical_correct": 5,
+      "avg_interactions": 27.21875,
+      "max_interactions": 36,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 32,
+      "unnecessary_exams": 164,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "Fresh05",
+        "scored": true,
+        "critical": true,
+        "before": "Acute Pancreatitis",
+        "after": "Diabetic Ketoacidosis",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "Fresh16",
+        "scored": true,
+        "critical": false,
+        "before": "Acute Pancreatitis",
+        "after": "Acute Gastroenteritis",
+        "before_correct": false,
+        "after_correct": true
+      }
+    ],
+    "new_correct": [
+      "Fresh05",
+      "Fresh16"
+    ],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 14,
+        "total": 14
+      },
+      "after": {
+        "passed": 14,
+        "total": 14
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 4,
+      "after": 4
+    }
+  },
+  "round_s": {
+    "before": {
+      "cases": 24,
+      "scored": 14,
+      "correct": 14,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 26.458333333333332,
+      "max_interactions": 40,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 24,
+      "unnecessary_exams": 125,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 24,
+      "scored": 14,
+      "correct": 14,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 25.958333333333332,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 24,
+      "unnecessary_exams": 120,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 87,
+        "total": 87
+      },
+      "after": {
+        "passed": 87,
+        "total": 87
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 2,
+      "after": 2
+    }
+  },
+  "round_t_development": {
+    "before": {
+      "cases": 32,
+      "scored": 18,
+      "correct": 15,
+      "critical_cases": 3,
+      "critical_correct": 3,
+      "avg_interactions": 25.15625,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 32,
+      "unnecessary_exams": 157,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 32,
+      "scored": 18,
+      "correct": 15,
+      "critical_cases": 3,
+      "critical_correct": 3,
+      "avg_interactions": 24.5625,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 32,
+      "unnecessary_exams": 147,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "NewT_11",
+      "NewT_15",
+      "NewT_18"
+    ],
+    "behavior": {
+      "before": {
+        "passed": 89,
+        "total": 89
+      },
+      "after": {
+        "passed": 89,
+        "total": 89
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "t_confirmation": {
+    "before": {
+      "cases": 12,
+      "scored": 8,
+      "correct": 8,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 22.833333333333332,
+      "max_interactions": 29,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 12,
+      "unnecessary_exams": 56,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 12,
+      "scored": 8,
+      "correct": 8,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 22.5,
+      "max_interactions": 29,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 12,
+      "unnecessary_exams": 53,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 31,
+        "total": 31
+      },
+      "after": {
+        "passed": 31,
+        "total": 31
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "t_probe": {
+    "before": {
+      "cases": 8,
+      "scored": 4,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 25.875,
+      "max_interactions": 37,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 8,
+      "unnecessary_exams": 41,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 8,
+      "scored": 4,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 25.375,
+      "max_interactions": 37,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 8,
+      "unnecessary_exams": 40,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 23,
+        "total": 23
+      },
+      "after": {
+        "passed": 23,
+        "total": 23
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "t_postfreeze": {
+    "before": {
+      "cases": 12,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 3,
+      "critical_correct": 3,
+      "avg_interactions": 24.25,
+      "max_interactions": 32,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 12,
+      "unnecessary_exams": 64,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 12,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 3,
+      "critical_correct": 3,
+      "avg_interactions": 24.083333333333332,
+      "max_interactions": 32,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 12,
+      "unnecessary_exams": 61,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 35,
+        "total": 35
+      },
+      "after": {
+        "passed": 35,
+        "total": 35
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "u20": {
+    "before": {
+      "cases": 20,
+      "scored": 12,
+      "correct": 12,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 23.75,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 20,
+      "unnecessary_exams": 72,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 20,
+      "scored": 12,
+      "correct": 12,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 23.75,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 20,
+      "unnecessary_exams": 63,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 59,
+        "total": 59
+      },
+      "after": {
+        "passed": 59,
+        "total": 59
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "u12": {
+    "before": {
+      "cases": 12,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 18.916666666666668,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 4,
+      "unnecessary_exams": 28,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 12,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 18.833333333333332,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 5,
+      "unnecessary_exams": 24,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 38,
+        "total": 38
+      },
+      "after": {
+        "passed": 38,
+        "total": 38
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "u10": {
+    "before": {
+      "cases": 10,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 18.4,
+      "max_interactions": 29,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 5,
+      "unnecessary_exams": 22,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 10,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 17.4,
+      "max_interactions": 25,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 5,
+      "unnecessary_exams": 22,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 30,
+        "total": 30
+      },
+      "after": {
+        "passed": 30,
+        "total": 30
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "closing_u8": {
+    "before": {
+      "cases": 8,
+      "scored": 4,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 21.25,
+      "max_interactions": 29,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 4,
+      "unnecessary_exams": 22,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 8,
+      "scored": 4,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 19.375,
+      "max_interactions": 25,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 4,
+      "unnecessary_exams": 13,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 26,
+        "total": 26
+      },
+      "after": {
+        "passed": 26,
+        "total": 26
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 1,
+      "after": 1
+    }
+  },
+  "followup_new": {
+    "before": {
+      "cases": 24,
+      "scored": 16,
+      "correct": 9,
+      "critical_cases": 4,
+      "critical_correct": 3,
+      "avg_interactions": 21.083333333333332,
+      "max_interactions": 31,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 14,
+      "unnecessary_exams": 69,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 24,
+      "scored": 16,
+      "correct": 12,
+      "critical_cases": 4,
+      "critical_correct": 3,
+      "avg_interactions": 19.625,
+      "max_interactions": 31,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 16,
+      "unnecessary_exams": 51,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "FollowU_01",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Acute Gastroenteritis",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "FollowU_20",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Acute Gout Flare",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "FollowU_24",
+        "scored": true,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Acute Gastroenteritis",
+        "before_correct": false,
+        "after_correct": true
+      }
+    ],
+    "new_correct": [
+      "FollowU_01",
+      "FollowU_20",
+      "FollowU_24"
+    ],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "FollowU_04",
+      "FollowU_05",
+      "FollowU_10",
+      "FollowU_21"
+    ],
+    "behavior": {
+      "before": {
+        "passed": 78,
+        "total": 82
+      },
+      "after": {
+        "passed": 78,
+        "total": 82
+      }
+    },
+    "behavior_failures": {
+      "before": [
+        "FollowU_07:disposition_urgent",
+        "FollowU_19:disposition_urgent",
+        "FollowU_21:disposition_urgent",
+        "FollowU_23:not:pneumonia"
+      ],
+      "after": [
+        "FollowU_19:disposition_urgent",
+        "FollowU_20:disposition_urgent",
+        "FollowU_21:disposition_urgent",
+        "FollowU_23:not:pneumonia"
+      ]
+    },
+    "unscored_dangerous_named": {
+      "before": 1,
+      "after": 1
+    }
+  },
+  "followup_closing": {
+    "before": {
+      "cases": 12,
+      "scored": 7,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 23.666666666666668,
+      "max_interactions": 32,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 8,
+      "unnecessary_exams": 43,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 12,
+      "scored": 7,
+      "correct": 5,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 22.75,
+      "max_interactions": 30,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 8,
+      "unnecessary_exams": 30,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "CloseUF_05",
+        "scored": true,
+        "critical": false,
+        "before": "미분화 증상 (진단 미확정)",
+        "after": "급성위장염 (Acute Gastroenteritis)",
+        "before_correct": false,
+        "after_correct": true
+      }
+    ],
+    "new_correct": [
+      "CloseUF_05"
+    ],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "CloseUF_03",
+      "CloseUF_11"
+    ],
+    "behavior": {
+      "before": {
+        "passed": 41,
+        "total": 43
+      },
+      "after": {
+        "passed": 40,
+        "total": 43
+      }
+    },
+    "behavior_failures": {
+      "before": [
+        "CloseUF_03:disposition_urgent",
+        "CloseUF_09:not:pneumonia"
+      ],
+      "after": [
+        "CloseUF_03:disposition_urgent",
+        "CloseUF_04:disposition_urgent",
+        "CloseUF_09:not:pneumonia"
+      ]
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "test_enabled": {
+    "held_out": {
+      "before": {
+        "scored_diagnostic_accuracy": 0.9444444444444444,
+        "all_case_diagnostic_accuracy": 0.9444444444444444,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 26.333333333333332,
+        "median_turns": 29.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.8333333333333334,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 10.055555555555555,
+        "average_exam_count": 6.555555555555555,
+        "average_test_count": 8.722222222222221,
+        "utility_score_proxy": 0.6394444444444444,
+        "n_cases": 18,
+        "n_scored_cases": 18,
+        "n_critical_cases": 13
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 0.9444444444444444,
+        "all_case_diagnostic_accuracy": 0.9444444444444444,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 25.27777777777778,
+        "median_turns": 25.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.8333333333333334,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 9.88888888888889,
+        "average_exam_count": 6.166666666666667,
+        "average_test_count": 8.222222222222221,
+        "utility_score_proxy": 0.65,
+        "n_cases": 18,
+        "n_scored_cases": 18,
+        "n_critical_cases": 13
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "generalization_v2": {
+      "before": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 19,
+        "median_turns": 15.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.4444444444444444,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 6.944444444444445,
+        "average_exam_count": 4.388888888888889,
+        "average_test_count": 6.666666666666667,
+        "utility_score_proxy": 0.7877777777777777,
+        "n_cases": 18,
+        "n_scored_cases": 18,
+        "n_critical_cases": 5
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 20.11111111111111,
+        "median_turns": 15.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.6111111111111112,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 7.277777777777778,
+        "average_exam_count": 4.888888888888889,
+        "average_test_count": 6.944444444444445,
+        "utility_score_proxy": 0.7683333333333333,
+        "n_cases": 18,
+        "n_scored_cases": 18,
+        "n_critical_cases": 5
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "stress": {
+      "before": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 20.5,
+        "median_turns": 19.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.5,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 6.875,
+        "average_exam_count": 5.75,
+        "average_test_count": 6.875,
+        "utility_score_proxy": 0.77,
+        "n_cases": 8,
+        "n_scored_cases": 8,
+        "n_critical_cases": 5
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 20.125,
+        "median_turns": 18.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.5,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 6.75,
+        "average_exam_count": 5.625,
+        "average_test_count": 6.75,
+        "utility_score_proxy": 0.7737499999999999,
+        "n_cases": 8,
+        "n_scored_cases": 8,
+        "n_critical_cases": 5
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "round_d": {
+      "before": {
+        "scored_diagnostic_accuracy": 0.8571428571428571,
+        "all_case_diagnostic_accuracy": 0.8571428571428571,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 23.142857142857142,
+        "median_turns": 25,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.0,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 8.285714285714286,
+        "average_exam_count": 7.428571428571429,
+        "average_test_count": 6.428571428571429,
+        "utility_score_proxy": 0.5757142857142857,
+        "n_cases": 7,
+        "n_scored_cases": 7,
+        "n_critical_cases": 3
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 0.8571428571428571,
+        "all_case_diagnostic_accuracy": 0.8571428571428571,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 24.428571428571427,
+        "median_turns": 25,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.2857142857142858,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 8.285714285714286,
+        "average_exam_count": 7.714285714285714,
+        "average_test_count": 7.428571428571429,
+        "utility_score_proxy": 0.5485714285714286,
+        "n_cases": 7,
+        "n_scored_cases": 7,
+        "n_critical_cases": 3
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "round_e": {
+      "before": {
+        "scored_diagnostic_accuracy": 0.8571428571428571,
+        "all_case_diagnostic_accuracy": 0.8571428571428571,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 29.857142857142858,
+        "median_turns": 38,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.5714285714285714,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 12.142857142857142,
+        "average_exam_count": 8.142857142857142,
+        "average_test_count": 8.571428571428571,
+        "utility_score_proxy": 0.48000000000000004,
+        "n_cases": 7,
+        "n_scored_cases": 7,
+        "n_critical_cases": 5
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 0.8571428571428571,
+        "all_case_diagnostic_accuracy": 0.8571428571428571,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 29.142857142857142,
+        "median_turns": 38,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.5714285714285714,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 11.428571428571429,
+        "average_exam_count": 8.142857142857142,
+        "average_test_count": 8.571428571428571,
+        "utility_score_proxy": 0.48714285714285716,
+        "n_cases": 7,
+        "n_scored_cases": 7,
+        "n_critical_cases": 5
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "round_g": {
+      "before": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 21.583333333333332,
+        "median_turns": 18.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.75,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 8.416666666666666,
+        "average_exam_count": 5.416666666666667,
+        "average_test_count": 6.75,
+        "utility_score_proxy": 0.7466666666666667,
+        "n_cases": 12,
+        "n_scored_cases": 12,
+        "n_critical_cases": 4
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 18.416666666666668,
+        "median_turns": 18.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.5,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 7.666666666666667,
+        "average_exam_count": 3.9166666666666665,
+        "average_test_count": 5.833333333333333,
+        "utility_score_proxy": 0.7908333333333334,
+        "n_cases": 12,
+        "n_scored_cases": 12,
+        "n_critical_cases": 4
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "round_i": {
+      "before": {
+        "scored_diagnostic_accuracy": 0.9,
+        "all_case_diagnostic_accuracy": 0.9,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 14.45,
+        "median_turns": 12.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.25,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 5.75,
+        "average_exam_count": 3.75,
+        "average_test_count": 3.95,
+        "utility_score_proxy": 0.743,
+        "n_cases": 20,
+        "n_scored_cases": 20,
+        "n_critical_cases": 8
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 0.95,
+        "all_case_diagnostic_accuracy": 0.95,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 13.75,
+        "median_turns": 12.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.2,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 5.5,
+        "average_exam_count": 3.3,
+        "average_test_count": 3.95,
+        "utility_score_proxy": 0.8025,
+        "n_cases": 20,
+        "n_scored_cases": 20,
+        "n_critical_cases": 8
+      },
+      "new_wrong": [],
+      "new_correct": [
+        "RoundI_long_tail"
+      ],
+      "new_critical_miss": []
+    },
+    "round_j": {
+      "before": {
+        "scored_diagnostic_accuracy": 0.9444444444444444,
+        "all_case_diagnostic_accuracy": 0.9444444444444444,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 16.333333333333332,
+        "median_turns": 13.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.7037037037037037,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 6.12962962962963,
+        "average_exam_count": 4.37037037037037,
+        "average_test_count": 4.833333333333333,
+        "utility_score_proxy": 0.7459259259259259,
+        "n_cases": 54,
+        "n_scored_cases": 54,
+        "n_critical_cases": 20
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 0.9444444444444444,
+        "all_case_diagnostic_accuracy": 0.9444444444444444,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 16.37037037037037,
+        "median_turns": 13.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.6851851851851852,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 6.148148148148148,
+        "average_exam_count": 4.407407407407407,
+        "average_test_count": 4.814814814814815,
+        "utility_score_proxy": 0.7464814814814815,
+        "n_cases": 54,
+        "n_scored_cases": 54,
+        "n_critical_cases": 20
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    }
+  },
+  "round_m_test_enabled": {
+    "before": {
+      "top1": null,
+      "critical_recall": 1.0,
+      "retrieval_at150": 0.9512195121951219,
+      "rerank_at25": 0.926829268292683,
+      "active_truth_retention": 1.0
+    },
+    "after": {
+      "top1": null,
+      "critical_recall": 1.0,
+      "retrieval_at150": 0.991869918699187,
+      "rerank_at25": 0.991869918699187,
+      "active_truth_retention": 1.0
+    },
+    "correct": {
+      "before": 115,
+      "after": 117,
+      "scored": 123
+    },
+    "critical": {
+      "before": 43,
+      "after": 43,
+      "n": 43
+    },
+    "final_top150": {
+      "before": 117,
+      "after": 122
+    },
+    "final_top25": {
+      "before": 114,
+      "after": 122
+    },
+    "active": {
+      "before": 123,
+      "after": 123
+    },
+    "long_tail": {
+      "Top1": {
+        "before": 18,
+        "after": 20
+      },
+      "Top5": {
+        "before": 21,
+        "after": 23
+      },
+      "Top10": {
+        "before": 23,
+        "after": 25
+      }
+    },
+    "long_tail_n": 26,
+    "avg_turns": {
+      "before": 22.9140625,
+      "after": 22.9765625
+    },
+    "new_correct": [
+      "RoundM_098",
+      "RoundM_115"
+    ],
+    "new_wrong": [],
+    "new_critical_misses": []
+  },
+  "retrieval_proxy": {
+    "before": {
+      "chief_only": {
+        "n": 164,
+        "retrieved": 118,
+        "retained25": 117,
+        "before_safety25": 117,
+        "retained_safety_overflow": 118
+      },
+      "all_scripted_history_upper_bound": {
+        "n": 164,
+        "retrieved": 152,
+        "retained25": 151,
+        "before_safety25": 151,
+        "retained_safety_overflow": 151
+      }
+    },
+    "after": {
+      "chief_only": {
+        "n": 164,
+        "retrieved": 155,
+        "retained25": 155,
+        "before_safety25": 155,
+        "retained_safety_overflow": 155
+      },
+      "all_scripted_history_upper_bound": {
+        "n": 164,
+        "retrieved": 164,
+        "retained25": 164,
+        "before_safety25": 164,
+        "retained_safety_overflow": 164
+      }
+    }
+  },
+  "assertion_contrasts": {
+    "before": "10/10",
+    "after": "10/10"
+  },
+  "limitation": "Offline mock-LLM, synthetic development evidence. Not independent clinical validation, not real-model or official-API evidence. Development sets were used to change source (see report)."
+}
