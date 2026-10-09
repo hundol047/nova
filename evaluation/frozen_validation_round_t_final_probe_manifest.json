@@ -1,0 +1,9 @@
+{
+  "sha256": "87e0d8f278e4b2dc547d74b173a8e439b82f6646ad8217780e8e31d3cc13f317",
+  "frozen_utc": "2026-10-09T08:16:44.781476+00:00",
+  "runtime_before_execution": "9842f8d18a3527ca30748a9d7c300436009bfac8",
+  "cases": 8,
+  "scored": 4,
+  "author_exposure": "Implementation and all earlier T/confirmation results read. Same engineering author; synthetic and not independent clinical validation. No final-probe execution before this freeze.",
+  "policy": "Existing scorer, labels, denominators, critical property, response scripts and behavior evaluator unchanged. No result-driven code or label changes after this final probe."
+}

@@ -73,7 +73,7 @@ _CONCEPTS: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
                                    r"immediately|quickly)\b|\b(?:woke|wake|waking) up\b[^.;]{0,15}\b(?:right away|immediately|"
                                    r"straight away|within seconds|quickly)\b|\brecovered (?:quickly|fully within)\b"),
     # urinary wording
-    ("dysuria", r"\b(?:pee|peeing|urinat\w*|wee|weeing|bathroom|toilet)\b[^.;]{0,25}\b(?:stings?|stinging|burns?|burning|hurts?)\b|"
+    ("dysuria", r"\b(?:pee|peeing|urinat\w*|passing urine|wee|weeing|bathroom|toilet)\b[^.;]{0,25}\b(?:stings?|stinging|burns?|burning|hurts?)\b|"
                 r"\b(?:stings?|stinging|burns?|burning|hurts?)\b[^.;]{0,15}\b(?:to|when (?:i|you)|while (?:i|you)) "
                 r"(?:pee|wee|urinate)\b"),
     ("urinary frequency", r"\b(?:going to the (?:bathroom|toilet|loo)|peeing|urinating|weeing|need(?:ing)? to (?:pee|go))\b"
@@ -179,6 +179,11 @@ def canonical_findings_for(text: str) -> List[str]:
     """Canonical KB phrases asserted (current, not negated) by ``text``; empty when nothing matches."""
     if not text or len(text) < 4:
         return []
+    from nova_agent.evidence_scope import patient_evidence_text
+    # This public vocabulary utility also normalizes third-person examination
+    # wording. State/presentation project the actual source before calling it;
+    # vocabulary normalization alone does not assign an experiencer.
+    text = patient_evidence_text(text, allow_historical=False, allow_unattributed_pronoun=True)
     found: List[str] = []
     from nova_agent.config import get_config
     if get_config().evidence_v2_enabled and orthostatic_drop(text):

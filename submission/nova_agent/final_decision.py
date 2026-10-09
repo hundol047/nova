@@ -49,10 +49,7 @@ class FinalDecision:
 
 
 def _current_texts(state) -> List[str]:
-    texts = [state.chief_complaint, *state.symptoms, *state.associated_symptoms, *state.pertinent_positives,
-             *state.physical_examinations.values(), *state.imaging.values(), *state.laboratory_tests.values()]
-    return [clause for text in texts if text for clause in re.split(r"[;\n]", text)
-            if not re.search(r"\b(?:previously|history of|last (?:year|month)|years ago)\b", clause, re.I)]
+    return state.all_findings_text(include_context=False, include_family=False)
 
 
 def _any_phrase(phrases: Tuple[str, ...]) -> Callable:
@@ -106,8 +103,14 @@ def _specific_support(item, entry: dict) -> List[str]:
     """Supporting items that are objective/confirmatory (not a symptom any condition could share)."""
     from nova_agent.clinical_concepts import is_objective_only_feature
     confirm = {str(c).lower() for c in entry.get("confirmatory_findings", [])}
-    return [e for e in item.supporting_evidence
-            if e.lower() in confirm or e.lower().startswith("elevated lactate") or is_objective_only_feature(e)]
+    # Measured is not synonymous with disease-specific. A pulse threshold is
+    # a real observation and safety concern, not the rhythm's cause/subtype.
+    return [e for e in item.supporting_evidence if not _nonspecific_measurement(e)
+            and (e.lower() in confirm or e.lower().startswith("elevated lactate") or is_objective_only_feature(e))]
+
+
+def _nonspecific_measurement(phrase: str) -> bool:
+    return phrase.lower() in {"pulse rate below 50", "pulse rate of 150 or more", "tachycardia", "bradycardia"}
 
 
 def _distinct(evidence: List[str]) -> int:
@@ -117,12 +120,12 @@ def _distinct(evidence: List[str]) -> int:
     return len({normalize(e) or e.lower() for e in evidence})
 
 
-# Symptoms too common across presentations to name a DANGEROUS diagnosis on their own. Engineering-authored list.
+# Symptoms too common across presentations to name a cause on their own. Engineering-authored list.
 _GENERIC_SYMPTOMS = frozenset({
     "dizziness", "dizzy", "lightheadedness", "lightheaded", "nausea", "vomiting", "fatigue", "tiredness", "weakness",
     "generalized weakness", "generalised weakness", "malaise", "headache", "confusion", "fever", "cough", "chest pain",
     "abdominal pain", "shortness of breath", "dyspnea", "breathlessness", "palpitations", "feeling unwell", "syncope",
-    "altered mental status", "anxiety", "sweating", "back pain",
+    "altered mental status", "anxiety", "sweating", "back pain", "productive cough",
 })
 
 
@@ -138,7 +141,7 @@ def _generic_symptom(phrase: str) -> bool:
 def _risk_context(phrase: str) -> bool:
     """Some shallow ontology profiles store risk context under typical_features.
     Preserve ranking inputs, but a past illness/age cannot establish a current illness."""
-    return bool(re.search(r"^(?:(?:known |family )?history of |prior |previous |older age$|advanced age$|young age$)",
+    return bool(re.search(r"^(?:(?:known |family )?history of |known .+ on |prior |previous |older age$|advanced age$|young age$)",
                           phrase.lower())) or phrase.lower() == "atrial fibrillation or vascular disease"
 
 
@@ -156,13 +159,13 @@ def support_problems(item, state, differential: list) -> List[str]:
         return ["no_positive_support"]
     specific = _specific_support(item, entry)
     observations = [e for e in item.supporting_evidence if _strip_negative_prefix(e) is None]
-    if (item.dangerous_if_missed and not specific and not documented and _distinct(observations) <= 1
-            and all(e.lower() in risk_only or _generic_symptom(e) for e in observations)):
+    if (not specific and not documented and _distinct(observations) <= 1
+            and all(e.lower() in risk_only or _generic_symptom(e) or _nonspecific_measurement(e) for e in observations)):
         # ONE observation in total, and it is a symptom shared by most presentations or a lone risk factor
         # ("dizziness" -> ectopic pregnancy). A single SPECIFIC sign (facial droop) is not caught here.
         problems.append("single_nonspecific_support")
     index = next((i for i, d in enumerate(differential) if d.diagnosis_id == item.diagnosis_id), None)
-    generic_only = all(e.lower() in risk_only or _generic_symptom(e) for e in observations)
+    generic_only = all(e.lower() in risk_only or _generic_symptom(e) or _nonspecific_measurement(e) for e in observations)
     if item.dangerous_if_missed and generic_only and not specific and not documented:
         problems.append("only_nonspecific_support")
     if index is not None and item.dangerous_if_missed and not specific and not documented and generic_only:

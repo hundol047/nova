@@ -1,0 +1,322 @@
+[
+  {
+    "case_id": "PostT_01",
+    "chief_complaint": "My partner was helping in the kitchen when his right foot started dragging and he could no longer name the utensils. He says his head does not hurt.",
+    "demographics": {
+      "age": 65,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "ischemic_stroke",
+    "answers": {
+      "onset": "Abrupt onset less than an hour ago.",
+      "past_medical_history": "Hypertension."
+    },
+    "exam_results": {
+      "neuro_exam": "Right-sided weakness and expressive aphasia.",
+      "vital_signs": "BP 174/96, HR 80, RR 18, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": true,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "PostT_02",
+    "chief_complaint": "A weight beneath my breastbone started as I walked home. Rest did not lift it and I felt clammy and sick; this is different from my occasional acid taste.",
+    "demographics": {
+      "age": 62,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "associated_symptoms": "Pressure radiating to left arm with diaphoresis and nausea.",
+      "past_medical_history": "Diabetes and hypertension."
+    },
+    "exam_results": {
+      "vital_signs": "BP 136/82, HR 98, RR 22, Temp 36.7, SpO2 96%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": true,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "PostT_03",
+    "chief_complaint": "A week after knee surgery I became breathless while sitting. Breathing in sharply hurts my right chest and my left calf has become swollen.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pulmonary_embolism",
+    "answers": {
+      "past_medical_history": "Recent surgery and immobilization.",
+      "associated_symptoms": "Pleuritic chest pain with sudden dyspnea; no cough or fever."
+    },
+    "exam_results": {
+      "leg_exam": "Unilateral calf swelling and tenderness.",
+      "vital_signs": "BP 116/72, HR 112, RR 25, Temp 36.8, SpO2 91%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": true,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "PostT_04",
+    "chief_complaint": "화장실에 다녀와도 또 소변이 마렵고 볼 때 따끔해요. 아버지는 소변이 안 나온다지만 저는 나오고 열은 없어요.",
+    "demographics": {
+      "age": 29,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "uncomplicated_cystitis",
+    "answers": {
+      "associated_symptoms": "Dysuria and urgency without fever or flank pain."
+    },
+    "exam_results": {
+      "vital_signs": "BP 124/78, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": true,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "PostT_05",
+    "chief_complaint": "A glittering crescent obscured my vision before pain began over one temple. Sound and light bother me, and the attacks last hours with complete relief between them.",
+    "demographics": {
+      "age": 34,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "migraine",
+    "answers": {
+      "associated_symptoms": "Visual aura, unilateral pulsating headache, photophobia and nausea.",
+      "past_medical_history": "Recurrent similar episodes."
+    },
+    "exam_results": {
+      "neuro_exam": "No focal neurological deficit.",
+      "vital_signs": "BP 124/78, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": true,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "PostT_06",
+    "chief_complaint": "After babysitting two children with colds, my nose became blocked and runny and my throat feels raw. Breathing is comfortable.",
+    "demographics": {
+      "age": 25,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "viral_uri",
+    "answers": {
+      "associated_symptoms": "Rhinorrhea, sneezing and sore throat. No shortness of breath."
+    },
+    "exam_results": {
+      "respiratory_exam": "Clear lungs.",
+      "vital_signs": "BP 124/78, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": true,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "PostT_07",
+    "chief_complaint": "I feel vague fluttering but cannot say when it happens or give more details. A wrist device once showed 47.",
+    "demographics": {
+      "age": 50,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 48, RR 16, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": false,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "PostT_08",
+    "chief_complaint": "I have been taking a water tablet and have felt drained after poor meals. I cannot describe any other symptom or recall the tablet name.",
+    "demographics": {
+      "age": 50,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": false,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "PostT_09",
+    "chief_complaint": "My daughter has seizures. I am here to ask about a healed scar, and I have never had a seizure myself.",
+    "demographics": {
+      "age": 50,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": false,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "seizure",
+        "seizures"
+      ]
+    }
+  },
+  {
+    "case_id": "PostT_10",
+    "chief_complaint": "I could not pass urine after an operation years ago. Today I pass urine normally and have no symptoms; I only want a copy of that record.",
+    "demographics": {
+      "age": 50,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": false,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "unable to pass urine",
+        "inability to pass urine"
+      ]
+    }
+  },
+  {
+    "case_id": "PostT_11",
+    "chief_complaint": "An unsigned note says pulmonary embolism is not ruled out. I cannot tell who wrote it or provide any symptom, examination or test result.",
+    "demographics": {
+      "age": 50,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": false,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis"
+      ]
+    }
+  },
+  {
+    "case_id": "PostT_12",
+    "chief_complaint": "몸이 이상한 느낌만 있어요. 자세히 설명하기 어렵고 오늘 진찰은 모두 거절합니다.",
+    "demographics": {
+      "age": 50,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_postfreeze_synthetic",
+    "scoring_expected": false,
+    "notes": "Authored after 08d9e62 freeze by implementation-aware engineer. Working-diagnosis synthetic labels, no independent clinician adjudication. Clinical concepts taken from existing sourced KB. Unscripted observations remain unknown.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [
+      "vital_signs",
+      "general_appearance",
+      "neuro_exam",
+      "mental_status_exam",
+      "cardiac_exam",
+      "respiratory_exam",
+      "abdominal_exam"
+    ],
+    "round_s_expect": {}
+  }
+]

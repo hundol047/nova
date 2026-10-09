@@ -1,0 +1,17 @@
+{
+  "sha256": "d811f0cbd48742d4c7fcf4b7cd48e283a42b5cdf8899642e13549fd9a7d0d357",
+  "frozen_utc": "2026-10-09T07:43:39.221092+00:00",
+  "author_exposure": "Implementation and prior failures read; not independent clinical validation. No Round T case execution before this freeze.",
+  "runtime_before_execution": "b8fe0c691837f8cab4f3ffe9b0a3ff0aa14ff6b0",
+  "baseline_runtime": "95d465b0f01023148d60ff02667596bf22c19b4a",
+  "cases": 32,
+  "scored": 18,
+  "policy": "Existing SyntheticCase, same_diagnosis, critical property and preliminary_driver unchanged. Existing evaluate_round_s behavior contracts. No post-result label/denominator/runtime edits. 14 ambiguous presentations scored only on prespecified behavior.",
+  "policy_hashes": {
+    "evaluation/cases.py": "70a98fdccb8e8e022aee02e22fa1afbb9d5fbcedd91f3394f27f90adc94bae83",
+    "evaluation/preliminary_driver.py": "ee91da106c7e2f471a3356c926a6dd97d588d40e008065323e5e9be3b0f6aa50",
+    "nova_agent/diagnosis_normalizer.py": "040295a1b332c1c7aa36798ee662f371762d65bf52c412e1142a30f6cd4db056",
+    "scripts/evaluate_round_s.py": "2bb6ecd44271627908ce7df1c0e7cfa3ee84e528c92a2d9b3db7b1fb0bf1b8a6",
+    "scripts/evaluate_round_r.py": "beaa9f69be4995506e3fabbf21e6d1d35af3a08a524bcfb4663b4a5815ed0c64"
+  }
+}

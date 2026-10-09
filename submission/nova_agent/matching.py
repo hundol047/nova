@@ -422,6 +422,18 @@ POSTURAL_LIGHTHEADEDNESS = re.compile(
 
 
 def _protected_qualifier(feature_lower: str):
+    if (re.search(r"\b(?:blood|bloody)\b", feature_lower)
+            and re.search(r"\b(?:cough\w*|spit\w*|sputum|expectorat\w*)\b", feature_lower)):
+        # Blood must be the expelled material or modify the sputum, not be
+        # borrowed from a separate blood test/pressure mention in the clause.
+        return re.compile(
+            r"\b(?:cough\w*|spit\w*|expectorat\w*)\s+(?:up\s+|out\s+)?"
+            r"(?:(?:some|fresh|a little|small amounts? of)\s+)?(?:blood|bloody sputum)\b|"
+            r"\b(?:bloody|blood[- ](?:streaked|tinged|stained))\s+(?:sputum|phlegm|mucus)\b|"
+            r"\b(?:sputum|phlegm|mucus)\s+(?:contains?|containing|with|mixed with|streaked with)\s+blood\b|"
+            r"\bblood\s+in\s+(?:(?:my|the|his|her)\s+)?(?:sputum|phlegm|mucus)\b|"
+            r"\b(?:sputum|phlegm|mucus)\s+(?:is|was)\s+(?:bloody|blood[- ](?:streaked|tinged|stained))\b|"
+            r"\bblood\s+(?:(?:was|is|has been)\s+)?(?:coughed|spat|expectorated)\b")
     if feature_lower == "lightheadedness on standing up":
         return POSTURAL_LIGHTHEADEDNESS
     if feature_lower == "pain spreading across abdomen":
@@ -471,11 +483,27 @@ def _feature_present_uncached(feature: str, findings_text: List[str], scrub_nega
     # sentences ("left arm BP ... abdominal pain") invent "left arm pain". Negation
     # scrubbing also inserts semicolons for commas, so split ORIGINAL assertions first.
     # Comma-linked qualifiers ("cannot walk, started yesterday") stay together.
-    clauses = (clause for finding in findings_text for clause in _assertion_clauses(finding))
+    from nova_agent.evidence_scope import patient_evidence_text
+    scoped_findings = [patient_evidence_text(t) for t in findings_text] if (
+        scrub_negated_spans and not feature_lower.startswith("family history")) else findings_text
+    clauses = (clause for finding in scoped_findings for clause in _assertion_clauses(finding))
     feature_is_pain = _scoped("is_pain", feature_lower, lambda: bool(_PAIN_FEATURE.search(feature_lower)))
     for finding_lower in clauses:
+        # A Korean case/topic particle attached to an English clinical phrase
+        # is a grammatical boundary, not part of that English word.
+        finding_lower = re.sub(r"(?<=[a-z])(?:은|는|이|가|을|를)(?=\s)", " ", finding_lower)
         if scrub_negated_spans:
             finding_lower = _strip_negated_spans(finding_lower)
+        capability = re.search(r"\b(?:unable to|inability to|cannot|can't)\s+(.+)", feature_lower)
+        if capability:
+            predicate = re.split(r"\b(?:came|started|began|suddenly|after|since)\b", capability.group(1))[0]
+            target = _content_words(predicate)
+            def action_head(value):
+                return next((_stem(t) for t in re.findall(r"[a-z]+", value) if t not in _IGNORED), None)
+            scopes = re.finditer(r"\b(?:unable to|inability to|cannot|can't)\s+([^,;.]+)", finding_lower)
+            if not any(action_head(m.group(1)) == action_head(capability.group(1)) and
+                       target <= _content_words(re.split(r"\b(?:and|but)\b", m.group(1))[0]) for m in scopes):
+                continue
         protected = _scoped("protected", feature_lower, lambda: _protected_qualifier(feature_lower))
         if protected is not None:
             if protected.search(finding_lower):
@@ -512,6 +540,12 @@ def _feature_present_uncached(feature: str, findings_text: List[str], scrub_nega
         if not feature_content:
             continue
         finding_content = _content_words(finding_lower)
+        # A material qualifier cannot disappear in the partial-token fallback:
+        # coughing UP sputum is not coughing UP BLOOD. Complete clinical/lay
+        # aliases still take their own path, so this asserts no new finding.
+        blood = {"blood", "bloody"}
+        if feature_content & blood and not finding_content & blood:
+            continue
         if _opposite_polarity(feature_content, finding_content):
             continue
         # Round E gate (feature-match specificity hardening): a phrase's distinguishing tokens
@@ -834,6 +868,9 @@ def _without_discontinued(findings: List[str]) -> List[str]:
 
 def feature_present_with_aliases(phrase: str, findings: List[str], scrub_negated_spans: bool = True,
                                  strict: bool = False, ignore_words: frozenset = frozenset()) -> bool:
+    if scrub_negated_spans and not phrase.lower().startswith("family history"):
+        from nova_agent.evidence_scope import patient_evidence_text
+        findings = [patient_evidence_text(t) for t in findings]
     if re.search(r"\bsyncope\b|loss of consciousness", phrase.lower()):
         # The event did not happen in presyncope. Remove only the near-event span;
         # an actual faint described elsewhere in the same finding still counts.

@@ -1,0 +1,24 @@
+{
+  "fixture": "evaluation/frozen_validation_round_t.json",
+  "status": "DEVELOPMENT AFTER FIRST EXECUTION",
+  "first_runtime": "b8fe0c691837f8cab4f3ffe9b0a3ff0aa14ff6b0",
+  "unchanged_labels_scorer_and_fixture": true,
+  "observed_before_repairs": [
+    "NewT_03 initial symptom-match candidate lost neuro exam despite no scoring phrase",
+    "NewT_12 partial-token match fabricated blood from coughing up sputum"
+  ],
+  "superseded_evidence": "artifacts/round_t/candidate_b8fe0c6",
+  "additional_confirmation": "evaluation/frozen_validation_round_t_confirmation.json",
+  "policy": "Further repairs use NewT as development; only additional confirmation is unused at final freeze. No independent clinical claim.",
+  "second_candidate_runtime": "82f26cd18875a9eeea321b62400c4b4c1bbb1063",
+  "second_candidate_rejection": "Existing P27 critical regression: caregiver report was masked; addressed minimum workup removed unperformed neurological exam.",
+  "confirmation12_status": "Pre-final confirmation at 82f26cd; now development after outputs were inspected. No label edits.",
+  "final_unused_probe": "evaluation/frozen_validation_round_t_final_probe.json",
+  "final_probe_promoted_to_development": {
+    "fixture": "evaluation/frozen_validation_round_t_final_probe.json",
+    "rejected_runtime": "9842f8d18a3527ca30748a9d7c300436009bfac8",
+    "reason": "new caregiver stroke miss and unrelated blood-token false evidence",
+    "cases": 8,
+    "subsequent_evaluation_role": "development regression, not unused validation"
+  }
+}

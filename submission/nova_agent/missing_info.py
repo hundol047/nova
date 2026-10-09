@@ -160,17 +160,27 @@ class MissingInformationAnalyzer:
         from nova_agent.config import get_config
         from nova_agent.resolution import is_resolved
         cfg = get_config()
+        from nova_agent.clinical_presentation import build_clinical_presentation
+        unattributed_tags = set(build_clinical_presentation(state).unattributed_symptoms)
+        def pending_proxy_exam(item):
+            entry = _resolve_entry(item.diagnosis_id) or {}
+            return (bool(unattributed_tags & set(entry.get('chief_complaint_tags', [])))
+                    and any(k in EXAM_CATALOG and not state.exam_done(k)
+                            for k in entry.get('discriminating_exams', [])))
         if cfg.competition_retrieval_enabled and cfg.focus_resolved_actions and differential:
             # Action focus only: safety/stop/ranking continue to see the full differential.
             # Never spend another discriminator on an addressed non-leading alternative.
             top_k = [d for i, d in enumerate(differential)
-                     if i == 0 or not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)]
+                     if i == 0 or pending_proxy_exam(d)
+                     or not is_resolved(d.diagnosis_id, d.contradictory_evidence, state)]
         top_k_count = len(top_k) or 1
         safety = SafetyLayer()
 
         ask_candidates: dict[str, CandidateInfo] = {}
         exam_candidates: dict[str, CandidateInfo] = {}
         test_candidates: dict[str, CandidateInfo] = {}
+        flagged_ids = {f.diagnosis_id for f in safety_findings}
+        unattributed_ids = set()
 
         def add_entry(diagnosis_id: str, entry: dict, item: Optional[DifferentialItem] = None) -> None:
             """Add actions for one diagnosis, including a safety-only diagnosis.
@@ -196,6 +206,16 @@ class MissingInformationAnalyzer:
                 from nova_agent.history_followup import followup_questions
                 questions = list(entry.get("discriminating_questions", [])) + followup_questions(state, item)
             supported_features = {normalize_feature(s) for s in item.supporting_evidence} if item is not None else set()
+            # Routing already supplies a real clinical reason to investigate,
+            # even before an exact scoring phrase is understood. A zero score
+            # must not erase a complaint-relevant neurological/other examination.
+            clinically_sourced = item is not None and bool(set(item.candidate_sources) & {
+                "symptom_match", "risk_match", "objective_finding", "medication_risk",
+            })
+            proxy_relevant = bool(unattributed_tags & set(entry.get('chief_complaint_tags', [])))
+            if proxy_relevant:
+                unattributed_ids.add(diagnosis_id)
+            clinically_sourced = clinically_sourced or proxy_relevant
             for discriminator in questions:
                 category = discriminator.split(":", 1)[0]
                 if cfg.competition_retrieval_enabled and ":" in discriminator:
@@ -224,6 +244,10 @@ class MissingInformationAnalyzer:
                 cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
 
             for exam_id in entry.get("discriminating_exams", []):
+                # An unmatched description is not negative evidence. Keep bedside
+                # examinations available: routing and exact phrase matching can
+                # both miss a new patient/caregiver expression. Rank their value
+                # downstream rather than deleting the means of observing it.
                 if state.exam_done(exam_id):
                     continue
                 spec = EXAM_CATALOG.get(exam_id)
@@ -240,6 +264,9 @@ class MissingInformationAnalyzer:
                 cand.safety_relevance = max(cand.safety_relevance, safety.safety_gain(diagnosis_id, safety_findings))
 
             for test_id in entry.get("discriminating_tests", []):
+                if (cfg.competition_retrieval_enabled and item is not None
+                        and not item.supporting_evidence and not clinically_sourced and diagnosis_id not in flagged_ids):
+                    continue
                 if state.test_done(test_id):
                     continue
                 spec = TEST_CATALOG.get(test_id)
@@ -296,7 +323,8 @@ class MissingInformationAnalyzer:
                 touched_leader = any(d.diagnosis_id in affected_ids for d in leaders)
                 # Inverse metadata coverage is a transparent specificity proxy, not an outcome
                 # likelihood. It prevents "relevant to everyone" from meaning "separates everyone".
-                cand.specificity_gain = (1.0 / len(affected_ids) if affected_ids and touched_leader
+                touched_proxy = cand.action_type == 'EXAM' and bool(affected_ids & unattributed_ids)
+                cand.specificity_gain = (1.0 / len(affected_ids) if affected_ids and (touched_leader or touched_proxy)
                                          and cand.action_type in {"EXAM", "TEST"} else 0.0)
                 unresolved = [d for d in top_k[:5] if d.diagnosis_id in affected_ids
                               and d.dangerous_if_missed and d.supporting_evidence

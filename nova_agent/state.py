@@ -634,7 +634,14 @@ class PatientState(BaseModel):
                 self.allergy_text.append(answer)
             self._retract_contradicted_bare_denials()
             return
-        segments = _split_answer_segments(answer)
+        from nova_agent.evidence_scope import evidence_clauses, patient_evidence_text
+        # Preserve relatives' statements even when volunteered to a symptom
+        # question. Project before splitting: list continuations share subject.
+        for clause in evidence_clauses(answer, source=category):
+            if clause.experiencer == "FAMILY" and clause.text.strip() not in self.family_history:
+                self.family_history.append(clause.text.strip())
+        patient_answer = patient_evidence_text(answer)
+        segments = _split_answer_segments(answer if category == "family_history" else patient_answer)
         unknown_segments = [s for s in segments if answer_kind(s) == "unknown"]
         for segment in unknown_segments:
             if segment not in self.unknown_findings:
@@ -715,7 +722,8 @@ class PatientState(BaseModel):
         said = [self.chief_complaint, *self.symptoms, *self.associated_symptoms, *self.pertinent_positives,
                 *self.objective_findings_text(),
                 *[t.result for t in history if t.action_type == "ASK" and t.result and answer_kind(t.result) is None]]
-        said = _with_canonical_concepts([t for t in said if t])
+        from nova_agent.documented_diagnosis import diagnosis_evidence_text
+        said = _with_canonical_concepts([diagnosis_evidence_text(t, allow_historical=False) for t in said if t])
         # A bare No to an OR question conflicts when either branch is already
         # observed (including measured fever). Do not erase an objective finding.
         branches = re.split(r"\bor\b|또는|혹은", feature)
@@ -751,7 +759,9 @@ class PatientState(BaseModel):
             out += list(self.medication_text) + list(self.allergy_text)
             out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
         from nova_agent.documented_diagnosis import diagnosis_evidence_text
-        out = [diagnosis_evidence_text(t) for t in out
+        objective = set(self.physical_examinations.values()) | set(self.imaging.values()) | set(self.laboratory_tests.values())
+        out = [diagnosis_evidence_text(t, allow_historical=include_context,
+                                      source="patient_observation" if t in objective else "narrative") for t in out
                if t and t not in self.ambiguous_findings and answer_kind(t) != "unknown"]
         # Localized (ko/ja) symptom phrases also count as their canonical English wording, so
         # scoring (which matches English KB features) treats them like the English patient.
@@ -782,5 +792,5 @@ class PatientState(BaseModel):
         from nova_agent.clinical_concepts import procedure_context_findings
         out += [f for key, value in self.imaging.items() for f in procedure_context_findings(key, value)]
         from nova_agent.documented_diagnosis import diagnosis_evidence_text
-        out = [diagnosis_evidence_text(t, allow_historical=False) for t in out if t]
+        out = [diagnosis_evidence_text(t, allow_historical=False, source="patient_observation") for t in out if t]
         return _with_canonical_concepts(out)

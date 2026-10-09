@@ -1,0 +1,854 @@
+[
+  {
+    "case_id": "NewT_01",
+    "chief_complaint": "An hour after waking I developed a heavy weight across my chest with pain into both arms. I feel sick and clammy even while sitting still.",
+    "demographics": {
+      "age": 68,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "past_medical_history": "Hypertension and coronary artery disease.",
+      "associated_symptoms": "Persistent chest pressure and diaphoresis."
+    },
+    "exam_results": {
+      "vital_signs": "BP 146/88, HR 88, RR 20, Temp 36.6, SpO2 97%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;critical",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewT_02",
+    "chief_complaint": "I had a knee operation last week. This afternoon I became short of breath; deep breaths hurt, and the operated calf is much larger than the other.",
+    "demographics": {
+      "age": 59,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pulmonary_embolism",
+    "answers": {
+      "associated_symptoms": "Sudden breathlessness with pleuritic chest pain.",
+      "past_medical_history": "Recent surgery and bed rest."
+    },
+    "exam_results": {
+      "vital_signs": "BP 106/68, HR 120, RR 27, Temp 36.8, SpO2 89%",
+      "extremity_exam": "Unilateral calf swelling and tenderness."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;critical",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewT_03",
+    "chief_complaint": "Caregiver reports that she suddenly stopped speaking clearly during lunch and dropped a cup from her right hand.",
+    "demographics": {
+      "age": 76,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "ischemic_stroke",
+    "answers": {
+      "onset": "Abrupt onset 30 minutes ago.",
+      "associated_symptoms": "No headache or loss of consciousness."
+    },
+    "exam_results": {
+      "neuro_exam": "Her speech is slurred. There is right arm weakness and facial droop.",
+      "vital_signs": "BP 178/96, HR 82, RR 17, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;critical;third_person",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_04",
+    "chief_complaint": "I injected my usual insulin, then could not get lunch at work. I began shaking, sweating and feeling intensely hungry; juice made the symptoms ease.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "hypoglycemia",
+    "answers": {
+      "medication": "Insulin use.",
+      "associated_symptoms": "Tremor, sweating and hunger after a missed meal; symptoms improve after sugary food."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;critical;metabolic",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_05",
+    "chief_complaint": "My heartbeat jumps unpredictably and I feel briefly lightheaded while seated. The clinic letter says atrial fibrillation is not ruled out.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "associated_symptoms": "Abrupt palpitations with an irregular heartbeat. No fever."
+    },
+    "exam_results": {
+      "cardiac_exam": "The pulse is irregularly irregular.",
+      "vital_signs": "BP 114/76, HR 104, RR 16, Temp 36.5, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;critical;uncertain_document",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_06",
+    "chief_complaint": "My throat is scratchy and my nose keeps dripping; my daughter has been coughing at nursery.",
+    "demographics": {
+      "age": 31,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "viral_uri",
+    "answers": {
+      "associated_symptoms": "Runny nose, sore throat and sneezing. No shortness of breath."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%",
+      "respiratory_exam": "Clear breath sounds without crackles."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;family_switch",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_07",
+    "chief_complaint": "어제 모임 뒤로 배가 꼬이고 물 같은 설사를 여러 번 했어요. 남편도 비슷하게 아파요.",
+    "demographics": {
+      "age": 35,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "gastroenteritis",
+    "answers": {
+      "associated_symptoms": "Watery diarrhea, abdominal cramps and vomiting. Others who ate the same meal are ill."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%",
+      "abdominal_exam": "Mild diffuse tenderness without guarding or rebound."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;korean;family_switch",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_08",
+    "chief_complaint": "I have to leave my desk to pee again and again, and each time it burns. I can empty my bladder.",
+    "demographics": {
+      "age": 27,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cystitis",
+    "answers": {
+      "associated_symptoms": "Dysuria and urinary urgency, without flank pain or fever."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%",
+      "costovertebral_tenderness": "No costovertebral tenderness."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;capability",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_09",
+    "chief_complaint": "The right side of my head is pulsing. Light and the office noise make it worse and I feel nauseated. This resembles my previous attacks.",
+    "demographics": {
+      "age": 29,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "migraine",
+    "answers": {
+      "associated_symptoms": "Photophobia and nausea. No fever or neck stiffness.",
+      "past_medical_history": "Similar recurrent headaches."
+    },
+    "exam_results": {
+      "neuro_exam": "No focal deficit.",
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;common",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_10",
+    "chief_complaint": "Looking up at a shelf starts a brief spinning spell. If I keep my head still it settles within a minute.",
+    "demographics": {
+      "age": 57,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "bppv",
+    "answers": {
+      "aggravating": "Turning my head in bed triggers the spinning.",
+      "associated_symptoms": "Brief positional vertigo without hearing loss or focal weakness."
+    },
+    "exam_results": {
+      "dix_hallpike": "Positive Dix-Hallpike with positional nystagmus.",
+      "neuro_exam": "No focal deficit.",
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;common",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_11",
+    "chief_complaint": "My scalp feels squeezed by a band after several long shifts. It is on both sides; ordinary walking does not worsen it.",
+    "demographics": {
+      "age": 42,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "tension_headache",
+    "answers": {
+      "associated_symptoms": "No vomiting, photophobia, fever or neck stiffness."
+    },
+    "exam_results": {
+      "neuro_exam": "No focal deficit.",
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;common",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_12",
+    "chief_complaint": "For four days I have been coughing up yellow sputum and having shaking chills. Breathing deeply hurts the lower right chest.",
+    "demographics": {
+      "age": 63,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pneumonia",
+    "answers": {
+      "associated_symptoms": "Productive cough and fever."
+    },
+    "exam_results": {
+      "respiratory_exam": "Focal crackles over the right lower lung.",
+      "vital_signs": "BP 120/74, HR 102, RR 24, Temp 38.8, SpO2 93%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;common",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_13",
+    "chief_complaint": "One side of my waist tingled for two days before tiny painful blisters appeared in a strip. The skin hurts when my shirt touches it.",
+    "demographics": {
+      "age": 71,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "onto::tier2:herpes_zoster",
+    "answers": {
+      "associated_symptoms": "Burning pain on one side of body and a band-like blistering rash."
+    },
+    "exam_results": {
+      "general_appearance": "Grouped vesicles in a dermatomal distribution on examination.",
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;long_tail",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_14",
+    "chief_complaint": "A scratch on my lower leg has become a hot red tender patch that has slowly spread over two days.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "onto::tier2:cellulitis",
+    "answers": {
+      "associated_symptoms": "Localized warmth, redness, swelling and tenderness."
+    },
+    "exam_results": {
+      "extremity_exam": "Warm erythematous tender skin; no fluctuant collection.",
+      "vital_signs": "BP 124/76, HR 82, RR 16, Temp 37.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;long_tail",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_15",
+    "chief_complaint": "After fried food I get a steady ache beneath the right ribs. It lasts about an hour then disappears completely; I feel well between episodes.",
+    "demographics": {
+      "age": 51,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "onto::tier2:biliary_colic",
+    "answers": {
+      "associated_symptoms": "Right upper quadrant pain after fatty meals, without fever or jaundice."
+    },
+    "exam_results": {
+      "abdominal_exam": "Soft abdomen without guarding or rebound.",
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;long_tail",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_16",
+    "chief_complaint": "After a respiratory illness I developed sharp chest pain. Lying flat makes it worse, and leaning forward eases it.",
+    "demographics": {
+      "age": 34,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "onto::tier2:pericarditis",
+    "answers": {
+      "associated_symptoms": "Pleuritic pain relieved by sitting forward."
+    },
+    "exam_results": {
+      "cardiac_exam": "A pericardial friction rub is heard.",
+      "vital_signs": "BP 116/72, HR 96, RR 19, Temp 37.5, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;long_tail",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_17",
+    "chief_complaint": "I need to urinate urgently but have passed nothing since last night. The lower middle part of my abdomen feels painfully full.",
+    "demographics": {
+      "age": 73,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "onto::tier2:urinary_retention",
+    "answers": {
+      "associated_symptoms": "Unable to pass urine with suprapubic pain.",
+      "past_medical_history": "Enlarged prostate."
+    },
+    "exam_results": {
+      "abdominal_exam": "Palpable distended bladder with suprapubic tenderness.",
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;long_tail;capability",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_18",
+    "chief_complaint": "After several days mostly confined to bed, the left calf became swollen and sore. The right leg looks normal and breathing is comfortable.",
+    "demographics": {
+      "age": 62,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "onto::tier2:deep_vein_thrombosis",
+    "answers": {
+      "associated_symptoms": "Unilateral leg swelling and calf pain. No chest pain or shortness of breath.",
+      "past_medical_history": "Recent immobilization."
+    },
+    "exam_results": {
+      "extremity_exam": "Unilateral calf swelling and tenderness.",
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_frozen_engineering_validation;long_tail",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_19",
+    "chief_complaint": "My sister has an irregular pulse and faints. I am here to ask about an old scar on my hand.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;family;insufficient",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "irregular heartbeat",
+        "syncope"
+      ]
+    }
+  },
+  {
+    "case_id": "NewT_20",
+    "chief_complaint": "어머니는 irregular heartbeat가 있어요. 저는 지금 특별히 아픈 곳이 없고 건강 기록을 정리하러 왔어요.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;korean;family",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "irregular heartbeat"
+      ]
+    }
+  },
+  {
+    "case_id": "NewT_21",
+    "chief_complaint": "Years ago I had palpitations and sweating during an illness. Today I only want a copy of my records.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;history;insufficient",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_22",
+    "chief_complaint": "I use insulin for diabetes. I have no new symptom and have eaten normally today.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;risk_only",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "hypoglycemia"
+      ]
+    }
+  },
+  {
+    "case_id": "NewT_23",
+    "chief_complaint": "The consultant letter states pulmonary embolism was excluded and atrial fibrillation remains only a possibility.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;document_mixed",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis"
+      ]
+    }
+  },
+  {
+    "case_id": "NewT_24",
+    "chief_complaint": "진료 기록에는 심방세동이 아니며 폐색전증은 배제할 수 없다고 적혀 있어요. 다른 정보는 모르겠어요.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;korean;document_mixed",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis"
+      ]
+    }
+  },
+  {
+    "case_id": "NewT_25",
+    "chief_complaint": "I have felt drained since yesterday. I take a water tablet and have eaten less, but I cannot describe anything else.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "medication": "A diuretic, name and dose unknown."
+    },
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;metabolic;insufficient",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_26",
+    "chief_complaint": "My kidneys do not work well and I feel generally weak. I do not know what my blood levels are.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "past_medical_history": "Chronic kidney disease.",
+      "medication": "I cannot tell you that."
+    },
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;metabolic;insufficient",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_27",
+    "chief_complaint": "I feel unwell but cannot explain it. I do not consent to a physical examination.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;exam_refusal;insufficient",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [
+      "vital_signs",
+      "general_appearance",
+      "neuro_exam",
+      "cardiac_exam",
+      "respiratory_exam",
+      "abdominal_exam"
+    ],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_28",
+    "chief_complaint": "I cannot say whether I can pass urine. That information is unavailable.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;unknown_capability",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true,
+      "forbidden": [
+        "onto::tier2:urinary_retention"
+      ]
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_29",
+    "chief_complaint": "I briefly lost consciousness while seated, with no warning. Nobody recorded a heart rhythm.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 94/62, HR 39, RR 16, Temp 36.4, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;symptomatic_rate;insufficient",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "forbidden": [
+        "onto::tier2:ventricular_tachycardia",
+        "vasovagal_syncope"
+      ]
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewT_30",
+    "chief_complaint": "I have a cold sweat and severe weakness, but cannot provide more history.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 78/44, HR 132, RR 25, Temp 37.2, SpO2 94%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;undifferentiated_instability",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewT_31",
+    "chief_complaint": "My father has diabetes and takes insulin. I sometimes worry that I will develop it too, but have no new symptoms.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;family_medication",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewT_32",
+    "chief_complaint": "My pulse sometimes feels fast after strong coffee. It settles when I sit quietly; I have never fainted.",
+    "demographics": {
+      "age": 46,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "associated_symptoms": "No chest pain or breathlessness.",
+      "medication": "No medicines."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%",
+      "cardiac_exam": "Regular pulse with normal heart sounds."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_frozen_engineering_validation;benign_mimic",
+    "notes": "Synthetic working diagnosis or prespecified uncertainty behavior. Author read implementation and prior failures; no independent clinical adjudication. No diagnostic laboratory result is available.",
+    "audit_expect": {
+      "no_dangerous_named": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  }
+]

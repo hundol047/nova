@@ -16,7 +16,7 @@ Three explicit, separately-sized stages, matching the competition architecture s
         |
         v  Stage 2: RERANK  (rerank_top_k, recommended 20-30)
     lightweight_rerank() -- a transparent, deterministic, non-ML scorer (retrieval match strength +
-    match-kind confidence + curation depth + a small dangerous/urgency nudge). Explicitly NOT deep
+    match-kind confidence + curation depth + fused-rank prior). Explicitly NOT deep
     learning; the module and its output type are named accordingly.
         |
         v  Stage 3: SAFETY REINJECTION
@@ -49,7 +49,6 @@ _MATCH_KIND_WEIGHT = {
     "exact": 1.0, "code": 0.95, "alias": 0.9, "hierarchy": 0.55, "token": 0.6, "fuzzy": 0.4,
 }
 _CURATION_BONUS = {"DEEP": 0.15, "STRUCTURED": 0.05, "NOT_CURATED": 0.0}
-_DANGEROUS_BONUS = 0.12
 # Fused-retrieval-rank prior (Round M). Stage 1 returns candidates already ordered by weighted RRF,
 # but the match-strength/curation/danger terms below ignored that order, so a concept retrieved 1st-5th
 # (several independent signals agreeing) could be reranked below dangerous or deeply-curated concepts
@@ -59,7 +58,6 @@ _DANGEROUS_BONUS = 0.12
 _FUSED_RANK_BONUS_MAX = 0.35
 _FUSED_RANK_HALF_LIFE = 5.0
 _PROTECTED_FUSED_TOP = 8
-_CRITICAL_URGENCY_BONUS = 0.08
 
 # Stage 1 multi-query fusion. All weights/constants live here, not scattered as magic numbers.
 # SIGNAL_WEIGHTS: how much each independently-retrieved signal type counts in the fused ranking.
@@ -172,8 +170,14 @@ def retrieve_high_recall(retriever: OpenWorldRetriever, *, chief_complaint: str 
     if retrieval_top_k <= 0:
         return []
 
+    # Only existing, observed canonical concepts; never infer a diagnosis or
+    # generate free-form text. Bound expansion separately from the Top150 pool.
+    from nova_agent.clinical_concepts import canonical_findings_for
+    expanded = list(dict.fromkeys(c for text in (chief_complaint, *history, *medications)
+                                 for c in canonical_findings_for(text)))[:12]
+    symptom_terms = list(dict.fromkeys([*symptoms, *expanded]))
     signal_queries = build_signal_queries(
-        chief_complaint=chief_complaint, symptoms=symptoms,
+        chief_complaint=chief_complaint, symptoms=symptom_terms,
         objective_finding_phrases=objective_finding_phrases, history_risk=history,
         medications=medications, imaging_concepts=imaging_concepts,
     )
@@ -224,10 +228,8 @@ def _rerank_score(candidate: RetrievedCandidate, fused_rank: int = 0) -> float:
     if fused_rank > 0:
         score += _FUSED_RANK_BONUS_MAX / (1.0 + (fused_rank - 1) / _FUSED_RANK_HALF_LIFE)
     score += _CURATION_BONUS.get(concept.curation_status, 0.0)
-    if concept.dangerous is True:
-        score += _DANGEROUS_BONUS
-    if concept.urgency == "CRITICAL":
-        score += _CRITICAL_URGENCY_BONUS
+    # Dangerousness governs the separately tagged safety-retention step below.
+    # It is not evidence for a diagnostic rank.
     return score
 
 

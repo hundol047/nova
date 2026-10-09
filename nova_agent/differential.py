@@ -533,6 +533,7 @@ def _score_disease(entry: dict, state: PatientState,
     if objective_findings is None:
         objective_findings = normalize_objective_evidence(state)
     findings = state.all_findings_text(include_family=False)
+    current_findings = state.all_findings_text(include_context=False, include_family=False)
     confirmatory_evidence_pool = state.objective_findings_text()
     negatives = state.pertinent_negatives
 
@@ -564,10 +565,12 @@ def _score_disease(entry: dict, state: PatientState,
             continue  # Round P: same observation as a present, more specific confirmatory finding -- credited there once
         weight = FEATURE_WEIGHT * _specificity_multiplier(feature)
         max_possible += weight
-        delta = _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)
+        from nova_agent.final_decision import _risk_context
+        feature_findings = findings if _risk_context(feature) else current_findings
+        delta = _score_phrase(feature, weight, feature_findings, negatives, supporting, contradictory, missing)
         typical_feature_score += max(delta, 0.0)
         if (_generic_symptom(feature) and not is_objective_only_feature(feature)
-                and not _present_with_aliases(feature, findings)):
+                and not _present_with_aliases(feature, feature_findings)):
             # An optional symptom never observed is different from a direct
             # contradiction of an already positive observation. The latter
             # keeps its full penalty even when the symptom class is saturated.
@@ -596,7 +599,8 @@ def _score_disease(entry: dict, state: PatientState,
                 # only when this condition is actually reported in a relative.
                 names = [entry.get("name", ""), *entry.get("aliases", [])]
                 family = [x for x in family if any(n and feature_present_with_aliases(
-                    n, [x], scrub_negated_spans=True, strict=True) for n in names)]
+                    "family history of " + n, ["family history of " + x],
+                    scrub_negated_spans=True, strict=True) for n in names)]
                 risk_findings = ["family history of " + x for x in family]
             else:
                 risk_findings = findings + ["family history of " + x for x in family]

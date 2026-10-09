@@ -238,11 +238,14 @@ def documented_diagnosis_mentions(texts: List[str]) -> List[DiagnosisMention]:
     return list(_scoped('diagnosis_mentions',tuple(texts),lambda:tuple(_parse_mentions(texts,True))))
 
 
-def diagnosis_evidence_text(text: str, allow_historical: bool = True) -> str:
+def diagnosis_evidence_text(text: str, allow_historical: bool = True, *, source: str = "narrative") -> str:
     """A scoring view, never a mutation of the patient's words. Nonpositive/other-person diagnosis spans
     cannot become another disease's risk/feature. Patient history is retained as HISTORY when allowed.
     No result (including a negative test) is invented from a reported exclusion.
     """
+    from nova_agent.evidence_scope import patient_evidence_text
+    text = patient_evidence_text(text or '', allow_historical=allow_historical, source=source,
+                                 allow_unattributed_pronoun=source == "patient_observation")
     if not text or not (NEGATION_CUE.search(text) or UNCERTAIN_CUE.search(text) or FAMILY_CUE.search(text)
                         or OTHER_PERSON_CUE.search(text) or HISTORICAL_CUE.search(text) or SPECULATION_CUE.search(text)):
         return text

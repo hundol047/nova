@@ -27,7 +27,7 @@ def symptomatic_rate_concern(state) -> list[str]:
     if not vitals or vitals.heart_rate is None or not (vitals.heart_rate < 50 or vitals.heart_rate >= 150):
         return []
     texts = state.all_findings_text(include_context=False, include_family=False)
-    symptoms = [p for p in ("syncope", "loss of consciousness", "blacked out", "blackout", "presyncope",
+    symptoms = [p for p in ("syncope", "loss of consciousness", "lost consciousness", "blacked out", "blackout", "presyncope",
                             "lightheadedness", "dizziness", "nearly fainted", "almost passed out",
                             "의식을 잃", "실신", "쓰러졌", "어지러움")
                 if feature_present_with_aliases(p, texts, scrub_negated_spans=True)]

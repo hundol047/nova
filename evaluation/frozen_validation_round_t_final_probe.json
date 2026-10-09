@@ -1,0 +1,216 @@
+[
+  {
+    "case_id": "FinalT_01",
+    "chief_complaint": "My mother cannot fasten her buttons with the left hand and keeps substituting the wrong words. She has diabetes and has been eating poorly.",
+    "demographics": {
+      "age": 58,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "ischemic_stroke",
+    "answers": {
+      "onset": "The change appeared abruptly while she was talking.",
+      "medication": "Metformin, no insulin."
+    },
+    "exam_results": {
+      "neuro_exam": "Left arm drift, facial droop and expressive aphasia.",
+      "vital_signs": "BP 164/92, HR 82, RR 17, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_final_probe",
+    "notes": "Small synthetic probe after final proxy-workup correction. Same engineering author saw all prior implementation and failures. Not independent clinical validation.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "FinalT_02",
+    "chief_complaint": "I was resting after an argument when pressure began deep in my chest and spread into my jaw. My father has reflux, but this pressure has persisted and I am sweating.",
+    "demographics": {
+      "age": 58,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "associated_symptoms": "Crushing chest discomfort, nausea and diaphoresis.",
+      "past_medical_history": "Hypertension and diabetes."
+    },
+    "exam_results": {
+      "vital_signs": "BP 142/84, HR 92, RR 20, Temp 36.6, SpO2 97%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_final_probe",
+    "notes": "Small synthetic probe after final proxy-workup correction. Same engineering author saw all prior implementation and failures. Not independent clinical validation.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "FinalT_03",
+    "chief_complaint": "소변 볼 때 화끈거리고 갑자기 마려워요. 양은 적어도 소변은 나오고 옆구리는 아프지 않아요.",
+    "demographics": {
+      "age": 58,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "uncomplicated_cystitis",
+    "answers": {
+      "associated_symptoms": "Dysuria and frequency, no fever or flank pain."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 78, RR 16, Temp 36.7, SpO2 98%",
+      "costovertebral_tenderness": "No costovertebral tenderness."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_final_probe",
+    "notes": "Small synthetic probe after final proxy-workup correction. Same engineering author saw all prior implementation and failures. Not independent clinical validation.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "FinalT_04",
+    "chief_complaint": "I saw a shimmering zigzag, then developed a throbbing pain on one side of my head. This has happened several times and bright light makes me feel sick.",
+    "demographics": {
+      "age": 58,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "migraine",
+    "answers": {
+      "associated_symptoms": "Photophobia, nausea and a visual aura before the headache; no fever.",
+      "past_medical_history": "Recurrent similar attacks."
+    },
+    "exam_results": {
+      "neuro_exam": "No focal neurological deficit.",
+      "vital_signs": "BP 124/76, HR 72, RR 16, Temp 36.5, SpO2 99%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_t_final_probe",
+    "notes": "Small synthetic probe after final proxy-workup correction. Same engineering author saw all prior implementation and failures. Not independent clinical validation.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "FinalT_05",
+    "chief_complaint": "My mother suddenly has difficulty speaking. I cannot provide anything else and a physical examination is declined.",
+    "demographics": {
+      "age": 58,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_final_probe",
+    "notes": "Small synthetic probe after final proxy-workup correction. Same engineering author saw all prior implementation and failures. Not independent clinical validation.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [
+      "neuro_exam",
+      "mental_status_exam",
+      "vital_signs",
+      "general_appearance"
+    ],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "FinalT_06",
+    "chief_complaint": "My grandfather has hand weakness, but I am asking about a bruise that healed last month. I have no current symptoms.",
+    "demographics": {
+      "age": 58,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_final_probe",
+    "notes": "Small synthetic probe after final proxy-workup correction. Same engineering author saw all prior implementation and failures. Not independent clinical validation.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "unilateral weakness",
+        "focal weakness"
+      ]
+    }
+  },
+  {
+    "case_id": "FinalT_07",
+    "chief_complaint": "A blood test was taken yesterday because I have been coughing up mucus. I do not know the result.",
+    "demographics": {
+      "age": 58,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_final_probe",
+    "notes": "Small synthetic probe after final proxy-workup correction. Same engineering author saw all prior implementation and failures. Not independent clinical validation.",
+    "audit_expect": {
+      "forbidden": [
+        "onto::tier2:sym_hemoptysis"
+      ]
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "coughing up blood"
+      ]
+    }
+  },
+  {
+    "case_id": "FinalT_08",
+    "chief_complaint": "I found an old packet of water tablets at home and feel a little tired. I cannot tell you whether I have taken any recently.",
+    "demographics": {
+      "age": 58,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_t_final_probe",
+    "notes": "Small synthetic probe after final proxy-workup correction. Same engineering author saw all prior implementation and failures. Not independent clinical validation.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  }
+]

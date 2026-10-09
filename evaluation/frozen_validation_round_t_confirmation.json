@@ -1,0 +1,324 @@
+[
+  {
+    "case_id": "ConfirmT_01",
+    "chief_complaint": "Carrying a suitcase up stairs brought tightness across my upper chest and left shoulder. It has not eased after twenty minutes sitting and I am drenched in sweat.",
+    "demographics": {
+      "age": 64,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "associated_symptoms": "Crushing chest pressure with diaphoresis and nausea.",
+      "past_medical_history": "Diabetes and previous coronary stent."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 80, RR 16, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "ConfirmT_02",
+    "chief_complaint": "A man who normally reads aloud now cannot get the words out and his left hand will not hold the newspaper. This started during breakfast.",
+    "demographics": {
+      "age": 69,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "ischemic_stroke",
+    "answers": {
+      "onset": "Sudden onset this morning."
+    },
+    "exam_results": {
+      "neuro_exam": "Left arm weakness with facial droop and dysarthria.",
+      "vital_signs": "BP 170/94, HR 84, RR 18, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "ConfirmT_03",
+    "chief_complaint": "There is fever and a rapidly worsening headache. The neck hurts when bent and bright light is unbearable; this is unlike previous mild headaches.",
+    "demographics": {
+      "age": 22,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "meningitis",
+    "answers": {
+      "associated_symptoms": "Photophobia and stiff neck with fever."
+    },
+    "exam_results": {
+      "meningeal_signs": "Neck stiffness and positive meningeal signs.",
+      "vital_signs": "BP 110/72, HR 111, RR 22, Temp 39.1, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "ConfirmT_04",
+    "chief_complaint": "My stools became black and sticky this morning and I nearly fainted walking to the bathroom. I take anti-inflammatory tablets for knee pain.",
+    "demographics": {
+      "age": 67,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "gi_bleeding",
+    "answers": {
+      "medication": "Regular ibuprofen use.",
+      "associated_symptoms": "Melena with lightheadedness; no fresh red rectal bleeding."
+    },
+    "exam_results": {
+      "general_appearance": "Pallor.",
+      "vital_signs": "BP 92/60, HR 116, RR 20, Temp 36.5, SpO2 97%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "ConfirmT_05",
+    "chief_complaint": "Yesterday there was pain around the navel. It is now concentrated low on the right and jolts when I walk. My brother has a cough, but I do not.",
+    "demographics": {
+      "age": 24,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "acute_appendicitis",
+    "answers": {
+      "associated_symptoms": "Loss of appetite and nausea."
+    },
+    "exam_results": {
+      "abdominal_exam": "Right lower quadrant tenderness with guarding.",
+      "vital_signs": "BP 118/72, HR 101, RR 18, Temp 38.1, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "ConfirmT_06",
+    "chief_complaint": "I started wheezing while cleaning a dusty store room. My usual inhaler is empty; there is chest tightness without fever or leg swelling.",
+    "demographics": {
+      "age": 33,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "asthma_copd_exacerbation",
+    "answers": {
+      "past_medical_history": "Asthma since childhood.",
+      "medication": "Ran out of my reliever inhaler."
+    },
+    "exam_results": {
+      "respiratory_exam": "Diffuse expiratory wheeze with prolonged expiration.",
+      "vital_signs": "BP 126/78, HR 106, RR 24, Temp 36.6, SpO2 94%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "ConfirmT_07",
+    "chief_complaint": "I rolled over to switch off the alarm and the room spun for half a minute. It happens again when I turn that way, with no symptoms while still.",
+    "demographics": {
+      "age": 56,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "bppv",
+    "answers": {
+      "associated_symptoms": "No hearing loss, headache or focal weakness.",
+      "family_history": "Father had a stroke; no personal history of stroke."
+    },
+    "exam_results": {
+      "dix_hallpike": "Positive Dix-Hallpike test with positional nystagmus.",
+      "neuro_exam": "No focal deficit.",
+      "vital_signs": "BP 122/76, HR 80, RR 16, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "ConfirmT_08",
+    "chief_complaint": "제 코에서 맑은 콧물이 흐르고 목이 따끔거려요. 반 학생들이 감기에 걸렸고 저는 숨이 차지는 않아요.",
+    "demographics": {
+      "age": 26,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "viral_uri",
+    "answers": {
+      "associated_symptoms": "Sneezing, runny nose and sore throat without dyspnea."
+    },
+    "exam_results": {
+      "respiratory_exam": "Clear lung sounds.",
+      "vital_signs": "BP 122/76, HR 80, RR 16, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "ConfirmT_09",
+    "chief_complaint": "I cough up grey mucus occasionally. I have never seen blood in it and cannot add anything else.",
+    "demographics": {
+      "age": 50,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": false,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {
+      "forbidden": [
+        "onto::tier2:sym_hemoptysis"
+      ]
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "coughing up blood",
+        "coughed up blood"
+      ]
+    }
+  },
+  {
+    "case_id": "ConfirmT_10",
+    "chief_complaint": "I am tired and have kidney disease. I know I take several tablets but cannot name them or provide any blood result.",
+    "demographics": {
+      "age": 50,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": false,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "ConfirmT_11",
+    "chief_complaint": "My uncle had a racing irregular heartbeat years ago. My own reason for visiting is a painless old mark on the elbow.",
+    "demographics": {
+      "age": 50,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": false,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "irregular heartbeat"
+      ]
+    }
+  },
+  {
+    "case_id": "ConfirmT_12",
+    "chief_complaint": "검진을 예약하러 왔어요. 지금 증상은 없고 오늘은 진찰을 받지 않겠습니다.",
+    "demographics": {
+      "age": 50,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_t_confirmation_synthetic",
+    "scoring_expected": false,
+    "notes": "Additional unused synthetic confirmation after NewT became development. Same implementation-aware engineering author; no clinician adjudication.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [
+      "vital_signs",
+      "general_appearance",
+      "neuro_exam",
+      "cardiac_exam",
+      "respiratory_exam",
+      "abdominal_exam"
+    ],
+    "round_s_expect": {}
+  }
+]

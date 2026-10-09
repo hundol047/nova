@@ -1,0 +1,9 @@
+{
+  "sha256": "d19419c25cf942b78e7a61ecb04c573367f2ba7a6638b24bb87fe23e3814fd7e",
+  "frozen_utc": "2026-10-09T07:52:25.679408+00:00",
+  "runtime_before_execution": "82f26cd18875a9eeea321b62400c4b4c1bbb1063",
+  "cases": 12,
+  "scored": 8,
+  "author_exposure": "Same engineering author saw implementation, S and T failures. Synthetic, not independent clinical validation. No confirmation outputs inspected before freezing.",
+  "policy": "Same unchanged labels/scorer/critical property and behavior runner; no runtime or label changes after confirmation execution. NewT32 are now development."
+}

@@ -1,0 +1,10 @@
+{
+  "sha256": "83f77e3cccbd9ff2ba98594d2bd041bdfc70e6b823a31d95ffa899a8da0a91aa",
+  "cases": 12,
+  "scored": 6,
+  "runtime_frozen_before_authoring": "08d9e622c3f7537ebbb68383f02e28ab13329859",
+  "created_utc": "2026-10-09T08:28:35.392582+00:00",
+  "policy": "Same existing preliminary matcher/critical labels/scorer; no TEST; unknown default. Labels and audit expectations frozen before either runtime execution. No code changes based on these results in this round.",
+  "independent_clinical_validation": false,
+  "author_exposure": "Same engineer saw implementation and previous failures."
+}

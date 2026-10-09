@@ -219,6 +219,8 @@ def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
     remains the safe fallback, a broad-retrieval outage never crashes or blocks a case."""
     if retrieval_top_k <= 0 or rerank_top_k <= 0:
         return
+    from nova_agent.documented_diagnosis import diagnosis_evidence_text
+    chief_complaint_text = diagnosis_evidence_text(str(chief_complaint_text or ''), allow_historical=False)
     try:
         from nova_agent.open_world import OpenWorldRetriever
         from nova_agent.ontology.registry import get_default_catalog

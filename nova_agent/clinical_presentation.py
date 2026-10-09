@@ -91,6 +91,7 @@ class ClinicalPresentation:
     medication_context: List[str] = field(default_factory=list)
     demographic_context: Dict[str, object] = field(default_factory=dict)
     confidence: Dict[str, float] = field(default_factory=dict)    # per-concept score
+    unattributed_symptoms: List[str] = field(default_factory=list)  # possible proxy report: investigate, never score as patient evidence
 
 
 def extract_presentation(raw_text: str, *, past_medical_history: Optional[List[str]] = None,
@@ -99,6 +100,8 @@ def extract_presentation(raw_text: str, *, past_medical_history: Optional[List[s
     """Pulls every plausible clinical concept out of `raw_text` at once, plus lightweight
     temporality/severity extraction -- deliberately conservative regex-based extraction (no
     guessed values), consistent with the rest of this codebase's determinism requirements."""
+    from nova_agent.documented_diagnosis import diagnosis_evidence_text
+    raw_text = diagnosis_evidence_text(raw_text or '', allow_historical=False)
     scored = _scores(raw_text)
     symptoms = [tag for tag, score, _mt in scored if score >= _MULTI_CONCEPT_INCLUSION_THRESHOLD]
     confidence = {tag: round(score, 3) for tag, score, _mt in scored}
@@ -173,6 +176,8 @@ def build_clinical_presentation(state: "PatientState") -> ClinicalPresentation:
         *state.associated_symptoms,
         *state.pertinent_positives,
     ]
+    from nova_agent.documented_diagnosis import diagnosis_evidence_text
+    positive_sources = [diagnosis_evidence_text(t, allow_historical=False) for t in positive_sources if t]
     from nova_agent.config import get_config
     if get_config().concept_normalization_enabled:
         from nova_agent.clinical_concepts import canonical_findings_for
@@ -181,6 +186,7 @@ def build_clinical_presentation(state: "PatientState") -> ClinicalPresentation:
     demographics = (state.demographics.model_dump()
                     if hasattr(state.demographics, "model_dump") else dict(state.demographics or {}))
     medications = list(state.medication_text) + [m.name for m in state.medications]
+    medications = [diagnosis_evidence_text(t) for t in medications if t]
     history = list(state.past_medical_history) + list(state.social_history)
     if get_config().evidence_v3_enabled:
         # Round P: "a thiazide water tablet" is diuretic use; a symptom that is itself a KB risk factor
@@ -188,9 +194,27 @@ def build_clinical_presentation(state: "PatientState") -> ClinicalPresentation:
         from nova_agent.clinical_concepts import canonical_findings_for
         medications += [c for m in list(medications) if m for c in canonical_findings_for(m)]
         history += [s for s in (*state.associated_symptoms, *state.pertinent_positives) if s]
-    return extract_presentation(
+    history = [diagnosis_evidence_text(t) for t in history if t]
+    medications = [diagnosis_evidence_text(t) for t in medications if t]
+    presentation = extract_presentation(
         combined_text,
         past_medical_history=history,
         medications=medications,
         demographics=demographics,
     )
+    # The chief complaint may be spoken by a caregiver. A relative-only
+    # current narrative is ambiguous about the speaker, not proof that there
+    # is no patient symptom to investigate. Preserve routing separately while
+    # evidence_text and all scoring views remain patient-scoped. A statement
+    # about a relative alongside an explicit patient complaint is NOT a proxy.
+    from nova_agent.evidence_scope import evidence_clauses
+    from nova_agent.matching import content_words, _strip_negated_spans
+    clauses = evidence_clauses(state.chief_complaint)
+    own = any(c.experiencer == 'PATIENT' and content_words(c.text) for c in clauses)
+    proxy = [c.text for c in clauses if c.experiencer in {'FAMILY', 'OTHER'}
+             and c.temporality != 'HISTORICAL'] if not own else []
+    if proxy:
+        tags = [tag for tag, score, _ in _scores(_strip_negated_spans(' '.join(proxy)))
+                if score >= _MULTI_CONCEPT_INCLUSION_THRESHOLD]
+        presentation.unattributed_symptoms = tags
+    return presentation
