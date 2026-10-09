@@ -1,0 +1,726 @@
+[
+ {
+  "case_id": "FollowU_01",
+  "chief_complaint": "Watery diarrhoea started last night after a barbecue. My brother who ate there has it too.",
+  "demographics": {
+   "age": 29,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "gastroenteritis",
+  "answers": {
+   "associated_symptoms": "Cramping across my belly and I was sick once. No blood in the stool.",
+   "onset": "Last night, a few hours after eating."
+  },
+  "exam_results": {
+   "vital_signs": "BP 120/76, HR 92, RR 16, Temp 37.6, SpO2 99%",
+   "abdominal_exam": "Soft, mild diffuse tenderness, no guarding."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;single_diarrhoea_discriminated",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "FollowU_02",
+  "chief_complaint": "I have loose stools. I cannot tell you when they began or anything else about them.",
+  "demographics": {
+   "age": 47,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 122/76, HR 78, RR 16, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot say.",
+  "default_exam_result": "Not assessed.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;single_diarrhoea_insufficient",
+  "scoring_expected": false,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "undifferentiated": true
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "FollowU_03",
+  "chief_complaint": "I am type 1 diabetic and my insulin pen broke two days ago. I keep vomiting, I am desperately thirsty and peeing all the time.",
+  "demographics": {
+   "age": 22,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "diabetic_ketoacidosis",
+  "answers": {
+   "associated_symptoms": "Belly ache and I feel breathless.",
+   "past_medical_history": "Type 1 diabetes since childhood."
+  },
+  "exam_results": {
+   "vital_signs": "BP 98/60, HR 124, RR 28, Temp 36.9, SpO2 99%",
+   "general_appearance": "Deep sighing respirations, breath smells of acetone, dry mouth."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;dka_vs_pancreatitis",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "forbidden": [
+    "acute_pancreatitis",
+    "gastroenteritis"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "FollowU_04",
+  "chief_complaint": "Severe pain in the upper middle of my belly going straight through to my back since a heavy drinking weekend.",
+  "demographics": {
+   "age": 48,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "acute_pancreatitis",
+  "answers": {
+   "associated_symptoms": "Vomiting repeatedly, no diarrhoea.",
+   "social_history": "I drink about a bottle of whisky over a weekend.",
+   "aggravating": "Lying flat makes it worse; sitting forward helps a little.",
+   "past_medical_history": "No diabetes."
+  },
+  "exam_results": {
+   "vital_signs": "BP 132/84, HR 108, RR 20, Temp 37.8, SpO2 97%",
+   "abdominal_exam": "Marked epigastric tenderness with guarding, no rigidity."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;dka_vs_pancreatitis",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "forbidden": [
+    "diabetic_ketoacidosis"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "FollowU_05",
+  "chief_complaint": "I blacked out with no warning while lying in bed reading.",
+  "demographics": {
+   "age": 76,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "cardiac_arrhythmia",
+  "answers": {
+   "past_medical_history": "Previous heart attack and heart failure.",
+   "onset": "Tonight, came round within a minute.",
+   "associated_symptoms": "No chest pain, no fit, no tongue biting."
+  },
+  "exam_results": {
+   "vital_signs": "BP 104/66, HR 36, RR 16, Temp 36.6, SpO2 97%",
+   "cardiac_auscultation": "Slow regular rhythm, no murmur.",
+   "neuro_exam": "No focal deficit."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;hr38_syncope",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "forbidden": [
+    "vasovagal_syncope",
+    "orthostatic_hypotension",
+    "onto::tier2:ventricular_tachycardia"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "FollowU_06",
+  "chief_complaint": "A pharmacist machine said my pulse was 46. I feel completely well and I run marathons.",
+  "demographics": {
+   "age": 34,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "No dizziness, no fainting, no breathlessness, no chest pain."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/70, HR 46, RR 12, Temp 36.5, SpO2 99%",
+   "cardiac_auscultation": "Regular rhythm, no murmur."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;rate_only_ambiguity",
+  "scoring_expected": false,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "forbidden": [
+    "onto::tier2:ventricular_tachycardia",
+    "cardiac_arrhythmia"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "FollowU_07",
+  "chief_complaint": "I slipped on ice and landed on my side. Now my ribs hurt when I twist or press on them.",
+  "demographics": {
+   "age": 41,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+  "answers": {
+   "onset": "This morning after the fall.",
+   "associated_symptoms": "Not short of breath, no coughing up blood.",
+   "aggravating": "Pressing on the sore spot and twisting."
+  },
+  "exam_results": {
+   "vital_signs": "BP 124/78, HR 80, RR 15, Temp 36.6, SpO2 99%",
+   "lung_auscultation": "Clear with equal air entry both sides.",
+   "chest_wall_exam": "Point tenderness over the left lower ribs reproducing the pain."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;trauma_chest_benign",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "forbidden": [
+    "tension_pneumothorax"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "FollowU_08",
+  "chief_complaint": "I was thrown off my motorbike and now I cannot get my breath and my chest hurts on the right.",
+  "demographics": {
+   "age": 27,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "tension_pneumothorax",
+  "answers": {
+   "onset": "Within minutes of the crash, getting worse quickly.",
+   "associated_symptoms": "Very breathless even sitting still."
+  },
+  "exam_results": {
+   "vital_signs": "BP 84/50, HR 132, RR 34, Temp 36.4, SpO2 84%",
+   "lung_auscultation": "Absent breath sounds on the right.",
+   "general_appearance": "Distressed, trachea pushed to the left, neck veins distended."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;trauma_chest_pneumothorax",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "FollowU_09",
+  "chief_complaint": "My whole belly hurts terribly and I can barely move.",
+  "demographics": {
+   "age": 68,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "onset": "It has built up over today.",
+   "associated_symptoms": "Feverish and sick."
+  },
+  "exam_results": {
+   "vital_signs": "BP 100/62, HR 116, RR 22, Temp 38.4, SpO2 96%",
+   "abdominal_exam": "Generalised guarding and rebound tenderness, rigid."
+  },
+  "test_results": {},
+  "default_answer": "I cannot say.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;acute_abdomen_parent",
+  "scoring_expected": false,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "FollowU_10",
+  "chief_complaint": "어제 저녁 같이 회를 먹은 가족들이 모두 토하고 설사를 해요. 저도 똑같아요.",
+  "demographics": {
+   "age": 39,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "gastroenteritis",
+  "answers": {
+   "associated_symptoms": "배 전체가 살살 아프고 열은 조금 있어요. 피는 안 나와요.",
+   "onset": "어제 밤부터요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/72, HR 94, RR 16, Temp 37.7, SpO2 98%",
+   "abdominal_exam": "Soft, mild diffuse tenderness."
+  },
+  "test_results": {},
+  "default_answer": "아니요, 없어요.",
+  "default_exam_result": "특이 소견 없음.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;korean_gi",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "FollowU_11",
+  "chief_complaint": "My father has heart failure and atrial fibrillation. I have no symptoms and just want advice.",
+  "demographics": {
+   "age": 45,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 122/76, HR 78, RR 16, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot say.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;family_history",
+  "scoring_expected": false,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "undifferentiated": true
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "forbidden_support": [
+    "documented diagnosis",
+    "irregular heartbeat"
+   ]
+  }
+ },
+ {
+  "case_id": "FollowU_12",
+  "chief_complaint": "I had pneumonia two years ago. Now just a sore throat and a runny nose for two days.",
+  "demographics": {
+   "age": 31,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "viral_uri",
+  "answers": {
+   "associated_symptoms": "Sneezing, no fever, no breathlessness, no chest pain.",
+   "onset": "Two days ago."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/74, HR 72, RR 14, Temp 36.9, SpO2 99%",
+   "lung_auscultation": "Clear."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;past_history",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "forbidden": [
+    "pneumonia"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "FollowU_13",
+  "chief_complaint": "The cardiology letter confirms I have atrial fibrillation now, and since this morning my heart has been racing and irregular.",
+  "demographics": {
+   "age": 70,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "cardiac_arrhythmia",
+  "answers": {
+   "associated_symptoms": "A bit lightheaded, no chest pain."
+  },
+  "exam_results": {
+   "vital_signs": "BP 128/80, HR 132, RR 18, Temp 36.7, SpO2 97%",
+   "cardiac_auscultation": "Irregularly irregular rhythm."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;documented_current",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "FollowU_14",
+  "chief_complaint": "I have a high fever, a pounding headache and I cannot bend my neck. The light hurts my eyes.",
+  "demographics": {
+   "age": 20,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "meningitis",
+  "answers": {
+   "onset": "Since yesterday evening, getting worse.",
+   "associated_symptoms": "Vomited twice, feel drowsy."
+  },
+  "exam_results": {
+   "vital_signs": "BP 108/64, HR 118, RR 22, Temp 39.4, SpO2 97%",
+   "meningeal_signs": "Marked neck stiffness."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;exam_refusal",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {},
+  "audit_rejected_exams": [
+   "meningeal_signs"
+  ],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "FollowU_15",
+  "chief_complaint": "Belly ache since this morning and I feel off my food.",
+  "demographics": {
+   "age": 19,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "appendicitis",
+  "answers": {
+   "location": "It started around my belly button.",
+   "associated_symptoms": "Nauseated."
+  },
+  "exam_results": {
+   "vital_signs": "BP 124/76, HR 98, RR 16, Temp 37.9, SpO2 99%",
+   "abdominal_exam": "Tender in the right lower quadrant at McBurney point with rebound tenderness."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;exam_only_objective",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "FollowU_16",
+  "chief_complaint": "The clinic letter says pneumonia cannot be confirmed yet. I feel a bit tired.",
+  "demographics": {
+   "age": 52,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 122/76, HR 78, RR 16, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot say.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;uncertain_documentation",
+  "scoring_expected": false,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "undifferentiated": true
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "forbidden_support": [
+    "documented diagnosis"
+   ]
+  }
+ },
+ {
+  "case_id": "FollowU_17",
+  "chief_complaint": "I just feel off. I cannot describe it any better.",
+  "demographics": {
+   "age": 58,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 122/76, HR 78, RR 16, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot say.",
+  "default_exam_result": "Not assessed.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;insufficient",
+  "scoring_expected": false,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "undifferentiated": true
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "FollowU_18",
+  "chief_complaint": "Bad cough for four days. No fever, no breathlessness and no chest pain.",
+  "demographics": {
+   "age": 36,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "acute_bronchitis",
+  "answers": {
+   "associated_symptoms": "Coughing up clear phlegm after a cold.",
+   "onset": "Four days ago after a cold."
+  },
+  "exam_results": {
+   "vital_signs": "BP 116/72, HR 78, RR 15, Temp 37.0, SpO2 98%",
+   "lung_auscultation": "Clear, no crackles."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;negative_evidence",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "forbidden": [
+    "pneumonia",
+    "pulmonary_embolism"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "FollowU_19",
+  "chief_complaint": "It burns when I pee and I keep needing to go.",
+  "demographics": {
+   "age": 27,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "uncomplicated_cystitis",
+  "answers": {
+   "onset": "Two days ago.",
+   "associated_symptoms": "No fever, no back pain, no vaginal discharge."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/72, HR 76, RR 14, Temp 36.8, SpO2 99%",
+   "costovertebral_tenderness": "No tenderness."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;common_control",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "FollowU_20",
+  "chief_complaint": "My big toe joint went red, hot and swollen overnight after a feast with lots of beer.",
+  "demographics": {
+   "age": 55,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Acute Gout Flare",
+  "answers": {
+   "onset": "Woke at 3am with it.",
+   "associated_symptoms": "Can't bear the bedsheet touching it, no injury.",
+   "past_medical_history": "Previous similar attack in the same toe."
+  },
+  "exam_results": {
+   "vital_signs": "BP 142/88, HR 84, RR 14, Temp 37.4, SpO2 98%",
+   "extremity_exam": "Red, hot, swollen first metatarsophalangeal joint, exquisitely tender."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;long_tail_tier2",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "FollowU_21",
+  "chief_complaint": "Dad has become confused and wobbly since his new antidepressant, and he had a fit this morning.",
+  "demographics": {
+   "age": 81,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "severe_electrolyte_disorder",
+  "answers": {
+   "medication": "Sertraline started three weeks ago and a water tablet for blood pressure.",
+   "associated_symptoms": "Headache and nausea, no fever.",
+   "onset": "Gradually over five days."
+  },
+  "exam_results": {
+   "vital_signs": "BP 134/78, HR 78, RR 16, Temp 36.6, SpO2 97%",
+   "mental_status_exam": "Disoriented to time.",
+   "neuro_exam": "No focal weakness, no neck stiffness."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;electrolyte_multi_cue",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "forbidden": [
+    "meningitis"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "FollowU_22",
+  "chief_complaint": "I take a water tablet and today I feel a little tired. I cannot say anything else.",
+  "demographics": {
+   "age": 63,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 122/76, HR 78, RR 16, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot say.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;electrolyte_single_cue",
+  "scoring_expected": false,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "forbidden": [
+    "severe_electrolyte_disorder"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "FollowU_23",
+  "chief_complaint": "숨이 차서 베개를 세 개 베고 자요. 저녁이면 발목이 부어요.",
+  "demographics": {
+   "age": 77,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "past_medical_history": "심근경색 두 번.",
+   "onset": "3주 동안 점점 심해졌어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 146/86, HR 98, RR 22, Temp 36.7, SpO2 93%",
+   "lung_auscultation": "Fine crackles at both bases.",
+   "extremity_exam": "Pitting oedema to mid-shin."
+  },
+  "test_results": {},
+  "default_answer": "아니요, 없어요.",
+  "default_exam_result": "특이 소견 없음.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;hf_vs_pneumonia",
+  "scoring_expected": false,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {
+   "forbidden": [
+    "pneumonia"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "FollowU_24",
+  "chief_complaint": "My tummy has been upset with runny stools since yesterday.",
+  "demographics": {
+   "age": 33,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "gastroenteritis",
+  "answers": {
+   "associated_symptoms": "Some cramps across my tummy, no blood, no fever.",
+   "social_history": "My flatmate had the same bug last week."
+  },
+  "exam_results": {
+   "vital_signs": "BP 120/76, HR 86, RR 15, Temp 37.2, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_u_followup;sparse_common",
+  "scoring_expected": true,
+  "notes": "Round U follow-up synthetic mechanism control. Implementation-aware engineering author who has seen the Round U failures and code; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels, not confirmed etiologies.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ }
+]

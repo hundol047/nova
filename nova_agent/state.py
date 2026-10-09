@@ -508,6 +508,9 @@ class PatientState(BaseModel):
                 for finding in describe_vital_sign_abnormalities(parsed):
                     if finding not in self.vital_sign_findings:
                         self.vital_sign_findings.append(finding)
+        # Round U follow-up: an examination that OBSERVES a feature earlier denied only by a bare "No" turns that
+        # denial into a recorded conflict (the observation is kept), exactly as a later patient statement does.
+        self._retract_contradicted_bare_denials()
 
     def record_initial_vitals(self, text: str) -> None:
         """Vital signs handed over WITH the first patient statement (preliminary-round rules): real

@@ -79,10 +79,12 @@ _REQUIRED_CONTEXT: Dict[str, Tuple[str, Callable]] = {
     "siadh": ("documented low sodium", _any_phrase(("low sodium", "hyponatremia", "hyponatraemia", "저나트륨"))),
     # Ectopic pregnancy presents with pregnancy-related features: missed period, abdominal/pelvic pain, vaginal
     # bleeding, positive pregnancy test (NICE NG126, Ectopic pregnancy and miscarriage, section 1.2/1.3).
+    # Round U follow-up: pain is the SHARED presenting symptom (torsion, appendicitis, ...), so it no longer
+    # satisfies the PREGNANCY context by itself; a period/pregnancy/bleeding observation is required. Unchanged:
+    # this never removes the candidate, lowers its score or changes the urgent plan.
     "ectopic_pregnancy": ("a pregnancy-related feature", _any_phrase((
         "missed period", "late period", "period is late", "positive pregnancy test", "pregnant", "vaginal bleeding",
-        "pelvic pain", "lower abdominal pain", "unilateral pelvic pain",
-        "생리가 늦", "생리를 안", "생리가 없", "임신", "질 출혈", "하혈", "아랫배", "하복부", "골반 통증"))),
+        "생리가 늦", "생리를 안", "생리가 없", "임신", "질 출혈", "하혈"))),
 }
 
 
@@ -163,6 +165,43 @@ def _risk_context(phrase: str) -> bool:
                           phrase.lower())) or phrase.lower() == "atrial fibrillation or vascular disease"
 
 
+def _positive_support(item) -> List[str]:
+    from nova_agent.differential import _strip_negative_prefix
+    entry = _entry(item.diagnosis_id)
+    risk_only = {str(x).lower() for x in entry.get("risk_factors", [])}
+    return [e for e in item.supporting_evidence if e.lower() not in risk_only and not _risk_context(e)
+            and _strip_negative_prefix(e) is None and e != "documented diagnosis"]
+
+
+def discriminated_by_answers(item, state, differential: list) -> bool:
+    """Round U follow-up: may ONE generic observation support a NON-dangerous working diagnosis?
+
+    Only after the encounter has actually discriminated it: the patient gave explicit (not unknown / declined)
+    answers to targeted questions, every other candidate that shares the observation has been contradicted by
+    those answers, no other candidate scores as high, and no dangerous candidate has any positive (non-risk)
+    support. A dangerous diagnosis is never named this way, and nothing here changes a score. A bare "No" is taken
+    at face value: the runtime cannot tell a real denial from a simulator default (reported separately)."""
+    if item.dangerous_if_missed or "documented diagnosis" in item.supporting_evidence:
+        return False
+    asks = [o for o in getattr(state, "action_outcomes", []) if o.action_type == "ASK"]
+    observed = [o for o in asks if o.status == "OBSERVED"]
+    targeted = [o for o in observed if o.targets and o.faithful]
+    unknown = [o for o in asks if o.status == "UNKNOWN"]
+    if not targeted or len(unknown) >= len(observed) or not state.pertinent_negatives:
+        return False
+    shared = {e.lower() for e in _positive_support(item)}
+    for other in differential:
+        if other.diagnosis_id == item.diagnosis_id or getattr(other, "fallback_candidate", False):
+            continue
+        if other.score > 0 and other.score >= item.score - 1e-6:
+            return False
+        if other.dangerous_if_missed and _positive_support(other):
+            return False
+        if shared & {e.lower() for e in other.supporting_evidence} and not other.contradictory_evidence:
+            return False
+    return True
+
+
 def support_problems(item, state, differential: list) -> List[str]:
     """Why ``item`` may not be NAMED as the primary (empty list: it may)."""
     from nova_agent.differential import _strip_negative_prefix
@@ -183,7 +222,8 @@ def support_problems(item, state, differential: list) -> List[str]:
             and all(e.lower() in risk_only or _generic_symptom(e) or _nonspecific_measurement(e) for e in observations)):
         # ONE observation in total, and it is a symptom shared by most presentations or a lone risk factor
         # ("dizziness" -> ectopic pregnancy). A single SPECIFIC sign (facial droop) is not caught here.
-        problems.append("single_nonspecific_support")
+        if not discriminated_by_answers(item, state, differential):
+            problems.append("single_nonspecific_support")
     index = next((i for i, d in enumerate(differential) if d.diagnosis_id == item.diagnosis_id), None)
     generic_only = all(e.lower() in risk_only or _generic_symptom(e) or _nonspecific_measurement(e) for e in observations)
     if item.dangerous_if_missed and generic_only and not specific and not documented:

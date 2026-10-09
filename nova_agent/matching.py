@@ -23,6 +23,7 @@ finding regardless of relevance, and would otherwise register as a match. So:
 
 from __future__ import annotations
 
+import functools
 import re
 from contextlib import contextmanager
 from contextvars import ContextVar
@@ -378,8 +379,34 @@ def _opposite_polarity(feature_content: Set[str], finding_content: Set[str]) -> 
     return (f_up and n_down and not n_up) or (f_down and n_up and not n_down)
 
 
+# Round U follow-up: British and American spellings of the SAME medical word ("diarrhoea"/"diarrhea",
+# "oedema"/"edema", "haemoptysis"/"hemoptysis", "hyponatraemia"/"hyponatremia") are one word. Both the KB phrase and
+# the finding are normalised to the US form, so this only ever equates identical words; it adds no synonym.
+_US_SPELLING = tuple((re.compile(p, re.IGNORECASE), r) for p, r in (
+    (r"\boe(?=dem|sophag|strog)", "e"),     # oedema, oesophagus, oestrogen
+    (r"(?<=[hn])oea\b", "ea"),              # diarrhoea, amenorrhoea, dyspnoea, orthopnoea, apnoea
+    (r"\bhaem", "hem"),                     # haemoptysis, haemorrhage, haematuria
+    (r"(?<=[a-z])aem(?=[a-z])", "em"),       # anaemia, ischaemia, hyperkalaemia, septicaemia, hypoxaemia
+    (r"\bpaed", "ped"),
+    (r"\bfoet", "fet"),
+    (r"\b(tum|col|behavi)our", r"\1or"),
+))
+
+
+@functools.lru_cache(maxsize=65536)
+def us_spelling(text: str) -> str:
+    lowered = text.lower() if text else ""
+    if not lowered or not ("oe" in lowered or "ae" in lowered or "our" in lowered):
+        return text
+    for pattern, repl in _US_SPELLING:
+        text = pattern.sub(repl, text)
+    return text
+
+
 def feature_present(feature: str, findings_text: List[str], scrub_negated_spans: bool = False, strict: bool = False,
                     ignore_words: frozenset = frozenset()) -> bool:
+    feature = us_spelling(feature)
+    findings_text = [us_spelling(t) for t in findings_text]
     return _scoped("feature", (feature, tuple(findings_text), scrub_negated_spans, strict, frozenset(ignore_words)),
                    lambda: _feature_present_uncached(feature, findings_text, scrub_negated_spans, strict, ignore_words))
 
@@ -642,6 +669,8 @@ def _narrower_than_feature(feature_words: Set[str], negative: str) -> bool:
 
 
 def feature_denied(feature: str, negatives: List[str]) -> bool:
+    feature = us_spelling(feature)
+    negatives = [us_spelling(n) for n in negatives]
     feature_words = _content_words(feature)
     targets = []
     for negative in negatives:
@@ -743,6 +772,8 @@ _LAY_VARIANTS: Set[tuple] = set()
 
 
 def _strict_alias_present(alias: str, findings: List[str], scrub_negated_spans: bool) -> bool:
+    alias = us_spelling(alias)
+    findings = [us_spelling(f) for f in findings]
     return _scoped("strict_alias", (alias, tuple(findings), scrub_negated_spans),
                    lambda: _strict_alias_present_uncached(alias, findings, scrub_negated_spans))
 
@@ -760,6 +791,19 @@ def _strict_alias_present_uncached(alias: str, findings: List[str], scrub_negate
         # word satisfy a focal-weakness feature.
         return any(_non_latin_phrase_present(alias_lower, _strip_negated_spans(f.lower()) if scrub_negated_spans else f.lower())
                    for f in findings)
+    internal = re.search(r"(?<=\w)\s+(?:without|with no|no)\b", alias_lower)
+    if internal and scrub_negated_spans:
+        # Round U follow-up: a paraphrase whose meaning CONTAINS a negation ("passed out without any warning") is
+        # erased by negation scrubbing. Match it literally on the raw text, and require that the event before the
+        # negation word ("passed out") itself survives scrubbing -- "I never passed out without warning" does not match.
+        head = alias_lower[:internal.start()].strip()
+        for finding in findings:
+            raw = finding.lower()
+            at = raw.find(alias_lower)
+            if at >= 0 and _exact_phrase_present(alias_lower, raw) and _exact_phrase_present(head, _strip_negated_spans(raw)) \
+                    and not re.search(r"\b(?:never|not|n't|no)\b\W*(?:\w+\W+){0,2}$", raw[:at]):
+                return True
+        return False
     alias_words = _content_words(alias_lower)
     # Generic symptom nouns (pain, ache...) are stripped from content words, so "pain after meals" would
     # otherwise reduce to {after, meal} and match any "after a meal" text. They must still be present.

@@ -1,0 +1,10 @@
+{
+  "sha256": "b1ebe504c64c15020e1e3022a0afa2e17351c4dc03d6f802b7085cb711f75f17",
+  "cases": 24,
+  "scored": 16,
+  "created_utc": "2026-10-09T11:47:45.456231+00:00",
+  "runtime_before_authoring": "c01a8b754360131bfaef17a8b29e71ab61a72330",
+  "policy": "Fixed before ANY Round U follow-up runtime change and before first execution. Runs unchanged on baseline c01a8b7 and the final runtime with scripts/evaluate_round_s.py. Existing scorer/simulator/labels unmodified. If results are used to change source it is reported as development.",
+  "author_exposure": "Implementation-aware engineering author who saw the Round U failures (Fresh05, ValP_10/12/17/21/08, RoundM_066).",
+  "independent_clinical_validation": false
+}

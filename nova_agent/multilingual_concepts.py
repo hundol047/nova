@@ -252,6 +252,11 @@ _KO_PATTERNS_V3 = (
     (re.compile(r"소변[^.。]{0,8}(?:따갑|따가|화끈|쓰라|아파|아프)|배뇨통"), "dysuria"),
     (re.compile(r"(?:소변[^.。]{0,6}자주|자주\s*마려|자꾸\s*마려|빈뇨)"), "urinary frequency"),
     (re.compile(r"(?:급하게\s*마려|참기\s*(?:어려|힘들))"), "urinary urgency"),
+    # Round U follow-up: upper-central abdominal pain spreading to the back is the existing pancreatitis phrase.
+    (re.compile(r"(?:윗배|명치|상복부)[^.。]{0,14}(?:등|허리)\s*(?:까지|으로|쪽으로)?\s*(?:뻗|퍼지|퍼져|방사|울려)"),
+     "epigastric pain radiating to back"),
+    # Heavy drinking stated in Korean is the existing "alcohol use" risk phrase (no amount inferred).
+    (re.compile(r"과음|폭음|술을\s*(?:많이|매일|자주)\s*마"), "alcohol use"),
 )
 
 
