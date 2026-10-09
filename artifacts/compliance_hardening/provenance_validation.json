@@ -22,6 +22,7 @@
     "nova_agent/documented_diagnosis.py",
     "nova_agent/evidence_grounding.py",
     "nova_agent/evidence_scope.py",
+    "nova_agent/feature_relations.py",
     "nova_agent/final_decision.py",
     "nova_agent/glucose_evidence.py",
     "nova_agent/history_followup.py",

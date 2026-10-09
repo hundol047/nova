@@ -28,6 +28,9 @@ _CLAUSE = re.compile(r"[;\n]|(?<=[a-z])\.(?=\s|$)|\bbut\b|\bhowever\b", re.IGNOR
 
 # (canonical KB phrase, pattern). Patterns are matched on lower-cased, negation-scrubbed clause text.
 _CONCEPTS: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
+    # Korean predicate forms for the existing vomiting concept; no inference
+    # from nausea or an unrelated word beginning with the syllable "토".
+    ("vomiting", r"(?<![가-힣])토(?:하고|했어요|했습니다|했다|해요|하는|합니다)(?![가-힣])"),
     # meningeal irritation
     ("neck stiffness", r"\bnuchal rigidity\b|\bmeningism(?:us)?\b|\bbrudzinski\b|\bkernig\b|"
                        r"\bneck (?:feels? |is |has gone )?(?:locked(?: up)?|rigid|stiff)\b|"
@@ -191,6 +194,10 @@ def canonical_findings_for(text: str) -> List[str]:
     patterns = (_CONCEPTS + (_CONCEPTS_V2 if get_config().concepts_v2_enabled else [])
                 + (_CONCEPTS_V3 if get_config().evidence_v3_enabled else []))
     for clause in _current_positive_clauses(text):
+        from nova_agent.feature_relations import observed_rotation_features, observed_pressure_features
+        for feature in observed_rotation_features(clause) + observed_pressure_features(clause):
+            if feature not in found:
+                found.append(feature)
         for canonical, pattern in patterns:
             if canonical == "filling defect in the pulmonary artery" and re.search(
                     r"\b(?:artifact|artefact|mixing|motion|equivocal|indeterminate|limited|poor|aort\w*|vein|venous|bronch\w*)\b", clause):

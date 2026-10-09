@@ -1,0 +1,10 @@
+{
+  "sha256": "1438f57ebd963f89cec5c50689172ce9cabe50b0de81ea1151083c5347cf3345",
+  "cases": 12,
+  "scored": 6,
+  "created_utc": "2026-10-09T10:04:38.113861+00:00",
+  "runtime_before_authoring": "de076f35acb548390296f4daad14aef6058c609f",
+  "policy": "Fixtures, labels, denominators and behavior checks fixed before execution on either runtime. No score-policy changes. Round U20 is now development after the single-diarrhea naming failure.",
+  "author_exposure": "Author saw implementation, U20 results and one-symbol generic-evidence repair; no independent clinical adjudication.",
+  "independent_clinical_validation": false
+}

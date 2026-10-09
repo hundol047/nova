@@ -422,6 +422,9 @@ POSTURAL_LIGHTHEADEDNESS = re.compile(
 
 
 def _protected_qualifier(feature_lower: str):
+    from nova_agent.feature_relations import RELATION_PATTERNS
+    if feature_lower in RELATION_PATTERNS:
+        return RELATION_PATTERNS[feature_lower]
     if (re.search(r"\b(?:blood|bloody)\b", feature_lower)
             and re.search(r"\b(?:cough\w*|spit\w*|sputum|expectorat\w*)\b", feature_lower)):
         # Blood must be the expelled material or modify the sputum, not be
@@ -458,6 +461,9 @@ def or_branches(feature: str) -> tuple:
     lone generic word never stands in for the feature. Used for PRESENCE only: denying one branch never denies the
     disjunction (callers keep checking the whole phrase for contradiction)."""
     low = feature.lower().strip()
+    from nova_agent.feature_relations import RELATION_PATTERNS
+    if low in RELATION_PATTERNS:
+        return ()  # shared predicate cannot be lost from the second branch
     if low.count(" or ") != 1:
         return ()
     left, right = (part.strip() for part in low.split(" or "))
@@ -890,6 +896,9 @@ def _feature_present_with_aliases(phrase: str, findings: List[str], scrub_negate
     candidate_generator.py's pool-membership checks call this rather than plain feature_present()
     directly, so a diagnosis reachable only through an aliased phrase behaves identically at both
     stages."""
+    from nova_agent.feature_relations import RELATION_PATTERNS
+    if phrase.lower() in RELATION_PATTERNS:
+        return feature_present(phrase, findings, scrub_negated_spans=scrub_negated_spans, strict=strict, ignore_words=ignore_words)
     if feature_present(phrase, findings, scrub_negated_spans=scrub_negated_spans, strict=strict, ignore_words=ignore_words):
         return True
     for alias in FEATURE_ALIASES.get(phrase.lower(), ()):

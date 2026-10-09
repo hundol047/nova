@@ -92,6 +92,8 @@ class ClinicalPresentation:
     demographic_context: Dict[str, object] = field(default_factory=dict)
     confidence: Dict[str, float] = field(default_factory=dict)    # per-concept score
     unattributed_symptoms: List[str] = field(default_factory=list)  # possible proxy report: investigate, never score as patient evidence
+    retrieval_safety_watch: List[str] = field(default_factory=list)  # bounded retrieval IDs, not patient evidence
+    observed_exam_text: List[str] = field(default_factory=list)  # actually obtained bedside observations only
 
 
 def extract_presentation(raw_text: str, *, past_medical_history: Optional[List[str]] = None,
@@ -217,4 +219,9 @@ def build_clinical_presentation(state: "PatientState") -> ClinicalPresentation:
         tags = [tag for tag, score, _ in _scores(_strip_negated_spans(' '.join(proxy)))
                 if score >= _MULTI_CONCEPT_INCLUSION_THRESHOLD]
         presentation.unattributed_symptoms = tags
+    presentation.observed_exam_text = [
+        diagnosis_evidence_text(value, allow_historical=False, source="patient_observation")
+        for key, value in state.physical_examinations.items() if state.exam_observed(key)
+    ]
+    presentation.evidence_text.extend(presentation.observed_exam_text)
     return presentation

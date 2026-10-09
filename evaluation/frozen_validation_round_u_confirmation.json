@@ -1,0 +1,346 @@
+[
+  {
+    "case_id": "ConfirmU_01",
+    "chief_complaint": "Since yesterday I have been vomiting and passing watery stools, with cramps across my belly. Others who shared my lunch are also ill.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "gastroenteritis",
+    "answers": {
+      "associated_symptoms": "Vomiting, diarrhea and abdominal cramps.",
+      "onset": "Yesterday after a shared lunch."
+    },
+    "exam_results": {
+      "vital_signs": "BP 124/76, HR 78, RR 16, Temp 36.8, SpO2 98%",
+      "abdominal_exam": "Mild diffuse tenderness without guarding or rebound."
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {},
+    "round_s_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "ConfirmU_02",
+    "chief_complaint": "The discharge summary confirms current atrial fibrillation and says a pulmonary embolism was excluded. I notice a racing, uneven beat, but my father is the one who had a heart attack.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "character": "Palpitations.",
+      "past_medical_history": "No additional details available."
+    },
+    "exam_results": {
+      "vital_signs": "BP 124/76, HR 78, RR 16, Temp 36.8, SpO2 98%",
+      "cardiac_auscultation": "Irregular pulse."
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {},
+    "round_s_expect": {
+      "forbidden_support": []
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "ConfirmU_03",
+    "chief_complaint": "When I tilt my head back to rinse my hair the bathroom seems to revolve for a few seconds. It settles completely if I keep still, and I have no difficulty speaking.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "bppv",
+    "answers": {
+      "character": "Brief episodic vertigo.",
+      "aggravating": "Head position change.",
+      "duration": "Less than half a minute."
+    },
+    "exam_results": {
+      "vital_signs": "BP 124/76, HR 78, RR 16, Temp 36.8, SpO2 98%",
+      "neuro_exam": "No focal neurological deficits."
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {},
+    "round_s_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "ConfirmU_04",
+    "chief_complaint": "A heavy squeeze in the middle of my chest began while carrying groceries and now travels into my jaw. I am drenched in sweat although the room is cool.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "character": "Substernal pressure radiating to jaw.",
+      "onset": "Twenty minutes ago, still present.",
+      "associated_symptoms": "Diaphoresis and nausea."
+    },
+    "exam_results": {
+      "vital_signs": "BP 142/86, HR 104, RR 20, Temp 36.6, SpO2 97%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {},
+    "round_s_expect": {
+      "urgent": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "ConfirmU_05",
+    "chief_complaint": "Shortly after a wasp sting, itchy raised patches appeared over my body. My lips are swollen and air whistles through my throat when I breathe.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "anaphylaxis",
+    "answers": {
+      "onset": "Within minutes of the sting.",
+      "associated_symptoms": "Throat tightness, wheeze and urticaria."
+    },
+    "exam_results": {
+      "vital_signs": "BP 88/54, HR 120, RR 28, Temp 36.6, SpO2 92%",
+      "skin_exam": "Urticaria and lip swelling.",
+      "lung_auscultation": "Wheeze."
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {},
+    "round_s_expect": {
+      "urgent": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "ConfirmU_06",
+    "chief_complaint": "For two days it stings when I pass urine, and I keep needing to go even when there is very little. There is pressure just above the pubic bone but no back pain or chills.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "urinary_tract_infection",
+    "answers": {
+      "associated_symptoms": "Dysuria, frequency and urgency. No fever or flank pain."
+    },
+    "exam_results": {
+      "vital_signs": "BP 124/76, HR 78, RR 16, Temp 36.8, SpO2 98%",
+      "costovertebral_tenderness": "No costovertebral tenderness."
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": true,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {},
+    "round_s_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "ConfirmU_07",
+    "chief_complaint": "My stools have been loose today, after a change in my regular tablets. I cannot tell you anything about pain, contacts, fever or other symptoms.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 124/76, HR 78, RR 16, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": false,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "round_s_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "ConfirmU_08",
+    "chief_complaint": "The report states that sepsis cannot yet be confirmed. I am tired but do not know anything else about the report or why it was written.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 124/76, HR 78, RR 16, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": false,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis"
+      ]
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "ConfirmU_09",
+    "chief_complaint": "My grandmother was told her pulse was irregular. My own eyelid twitches occasionally, but I have not noticed a heartbeat problem.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 124/76, HR 78, RR 16, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": false,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "round_s_expect": {
+      "forbidden_support": [
+        "irregular heartbeat",
+        "documented diagnosis"
+      ]
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "ConfirmU_10",
+    "chief_complaint": "진료 기록에는 pulmonary embolism 의심된다고 쓰여 있어요. 저는 조금 피곤하지만 다른 증상은 설명할 수 없어요.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 124/76, HR 78, RR 16, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": false,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis"
+      ]
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "ConfirmU_11",
+    "chief_complaint": "I feel a little lightheaded and decline any examination. I cannot tell whether movement or meals change it.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": false,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "round_s_expect": {},
+    "audit_rejected_exams": [
+      "vital_signs",
+      "cardiac_auscultation",
+      "neuro_exam",
+      "lung_auscultation",
+      "skin_exam",
+      "extremity_exam",
+      "mental_status_exam"
+    ]
+  },
+  {
+    "case_id": "ConfirmU_12",
+    "chief_complaint": "I feel tired. The clinician wrote that a pericardial friction rub could not be confirmed; no definite diagnosis was given.",
+    "demographics": {
+      "age": 53,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 124/76, HR 78, RR 16, Temp 36.8, SpO2 98%",
+      "cardiac_auscultation": "A pericardial friction rub cannot be confirmed."
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_confirmation_synthetic",
+    "scoring_expected": false,
+    "notes": "Implementation-aware engineering author. Fixed before first execution; not independent clinical validation. Existing catalog concepts; scored labels are working diagnoses, not confirmed etiologies.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "round_s_expect": {
+      "forbidden_support": [
+        "pericardial friction rub",
+        "documented diagnosis"
+      ]
+    },
+    "audit_rejected_exams": []
+  }
+]

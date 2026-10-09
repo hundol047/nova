@@ -1,0 +1,451 @@
+{
+  "runtime_sha": "da7cfca7eb80f09af82019326f9964a285946f1d",
+  "baseline_runtime_sha": "761fcda7f4f5b6c58b0e0b6e8b77047b37301782",
+  "strict_regression": "FAIL",
+  "new_wrong": {
+    "preliminary": [
+      "RoundM_066"
+    ]
+  },
+  "new_critical_miss": {},
+  "tests": {
+    "passed": 2425,
+    "failed": 0,
+    "skipped": 1,
+    "skip_reasons": [
+      {
+        "test": "tests.test_learning_training.test_torch_training_and_checkpoint_roundtrip",
+        "reason": "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"
+      }
+    ],
+    "deselected": 0,
+    "not_executed": [],
+    "scope": "Complete unique tests/: runtime, NCIt research, release binding; one initial package skip completed separately.",
+    "completed_initial_skips": [
+      {
+        "test": "tests.test_no_evaluation_time_learning.test_submission_zip_contains_no_learning_training_or_private_artifacts",
+        "original_reason": "submission not built",
+        "completion_junit": "artifacts/round_u/final/pytest_package_completion.xml",
+        "result": "PASS"
+      }
+    ],
+    "junit_sha256": {
+      "artifacts/round_u/final/pytest_runtime.xml": "a6f91f422ce14f938a50ca811f65cdff7b15fe94d99afc0cd04122fe1c7bb04a",
+      "artifacts/round_u/final/pytest_research.xml": "9fa303e20f43598fe9ace98548ba04edba77f933aad02ccc09b268a02af9dc31",
+      "artifacts/round_u/final/pytest_release.xml": "fe57e4e7d2c36fdae946ece4874f333129284d2dff7bf104135b3081817e36df",
+      "artifacts/round_u/final/pytest_package_completion.xml": "0f24536d1937e74f45d084712fce8f8e481f869f80888aa920ee8b9faa79741f"
+    }
+  },
+  "preliminary": {
+    "before": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 209,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 19.94782608695652,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 18,
+      "unresolved_critical_cases": 91,
+      "unnecessary_exams": 319,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 209,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 20.330434782608695,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 18,
+      "unresolved_critical_cases": 90,
+      "unnecessary_exams": 371,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "RoundM_066",
+        "scored": true,
+        "critical": false,
+        "before": "Acute Gastroenteritis",
+        "after": "Undifferentiated presentation",
+        "before_correct": true,
+        "after_correct": false
+      },
+      {
+        "case_id": "RoundI_enzyme_sparse",
+        "scored": true,
+        "critical": false,
+        "before": "Aortic Dissection",
+        "after": "Acute Pancreatitis",
+        "before_correct": false,
+        "after_correct": true
+      }
+    ],
+    "new_correct": [
+      "RoundI_enzyme_sparse"
+    ],
+    "new_wrong": [
+      "RoundM_066"
+    ],
+    "new_critical_misses": [],
+    "behavior": {
+      "before": null,
+      "after": null
+    }
+  },
+  "round_p": {
+    "before": {
+      "cases": 34,
+      "scored": 32,
+      "correct": 26,
+      "critical_cases": 13,
+      "critical_correct": 11,
+      "avg_interactions": 21.294117647058822,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 3,
+      "unresolved_critical_cases": 12,
+      "unnecessary_exams": 59,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 34,
+      "scored": 32,
+      "correct": 27,
+      "critical_cases": 13,
+      "critical_correct": 11,
+      "avg_interactions": 21.852941176470587,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 3,
+      "unresolved_critical_cases": 9,
+      "unnecessary_exams": 74,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "ValP_29",
+        "scored": true,
+        "critical": false,
+        "before": "Orthostatic Hypotension",
+        "after": "Gastroesophageal Reflux Disease",
+        "before_correct": false,
+        "after_correct": true
+      }
+    ],
+    "new_correct": [
+      "ValP_29"
+    ],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "behavior": {
+      "before": null,
+      "after": null
+    }
+  },
+  "round_q": {
+    "before": {
+      "cases": 48,
+      "scored": 36,
+      "correct": 35,
+      "critical_cases": 11,
+      "critical_correct": 11,
+      "avg_interactions": 20.645833333333332,
+      "max_interactions": 36,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 14,
+      "unnecessary_exams": 79,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 48,
+      "scored": 36,
+      "correct": 35,
+      "critical_cases": 11,
+      "critical_correct": 11,
+      "avg_interactions": 20.833333333333332,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 18,
+      "unnecessary_exams": 97,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "behavior": {
+      "before": null,
+      "after": null
+    },
+    "unscored_dangerous_names": {
+      "before": 2,
+      "after": 2
+    }
+  },
+  "closing": {
+    "before": {
+      "cases": 8,
+      "scored": 4,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 22.75,
+      "max_interactions": 32,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 3,
+      "unnecessary_exams": 22,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 8,
+      "scored": 4,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 21.25,
+      "max_interactions": 29,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 4,
+      "unnecessary_exams": 22,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "behavior": {
+      "before": {
+        "passed": 25,
+        "total": 26
+      },
+      "after": {
+        "passed": 26,
+        "total": 26
+      }
+    },
+    "unscored_dangerous_names": {
+      "before": 1,
+      "after": 1
+    }
+  },
+  "retrieval_proxy": {
+    "before": {
+      "chief_only": {
+        "n": 164,
+        "retrieved": 117,
+        "retained25": 103,
+        "before_safety25": 116,
+        "retained_safety_overflow": 103
+      },
+      "all_scripted_history_upper_bound": {
+        "n": 164,
+        "retrieved": 152,
+        "retained25": 128,
+        "before_safety25": 152,
+        "retained_safety_overflow": 128
+      }
+    },
+    "after": {
+      "chief_only": {
+        "n": 164,
+        "retrieved": 118,
+        "retained25": 117,
+        "before_safety25": 117,
+        "retained_safety_overflow": 118
+      },
+      "all_scripted_history_upper_bound": {
+        "n": 164,
+        "retrieved": 152,
+        "retained25": 151,
+        "before_safety25": 151,
+        "retained_safety_overflow": 151
+      }
+    }
+  },
+  "round_m": {
+    "before": {
+      "Top1": 0.926829268292683,
+      "Top3": 0.959349593495935,
+      "Top5": 0.959349593495935,
+      "Top10": 0.975609756097561,
+      "critical_Top1": 1.0,
+      "critical_Top3": 1.0,
+      "critical_Top5": 1.0,
+      "scored_cases": 123,
+      "critical_count": 43,
+      "accuracy": 0.926829268292683,
+      "critical_recall": 1.0,
+      "critical_miss": 0.0,
+      "MRR": 0.9429559825901289,
+      "median_true_rank": 1,
+      "missing_rank_count": 0,
+      "median_definition": "active ranks only; missing rank count reported separately",
+      "retrieval_truth_retention": 0.943089430894309,
+      "rerank_truth_retention": 0.8211382113821138,
+      "active_truth_retention": 1.0,
+      "average_turns": 22.5546875,
+      "average_tests": 6.96875,
+      "average_diagnostic_delay": 0,
+      "diagnostic_delay_observed_count": 117,
+      "diagnostic_delay_definition": "policy-eligible non-forced stop, not clinical safety certification; null != zero",
+      "critical_candidate_retention": 1.0,
+      "failure_counts": {
+        "FINAL_RANKING_ERROR": 8,
+        "STOP_POLICY_ERROR": 1
+      },
+      "action_selection_error_rate": 0.0,
+      "final_ranking_error_rate": 0.06504065040650407,
+      "long_tail": {
+        "count": 26,
+        "retrieved": 1.0,
+        "rerank_top25": 0.9615384615384616,
+        "active": 1.0,
+        "Top5": 0.8076923076923077,
+        "Top1": 0.6538461538461539,
+        "interpretation": "Round M category-defined symptom-only development probes, no independent medical adjudication",
+        "Top10": 0.8846153846153846,
+        "retrieval_at150": 1.0,
+        "rerank_at25": 0.9615384615384616
+      },
+      "cases": 128,
+      "median_turns": 20.5,
+      "average_ask": 8.4140625,
+      "average_exam": 6.171875,
+      "retrieval_at150": 0.943089430894309,
+      "rerank_at25": 0.8130081300813008,
+      "redundant_tests": 0,
+      "average_unresolved_critical_alternatives": 12.9921875,
+      "languages": {
+        "EN": {
+          "count": 113,
+          "correct": 104,
+          "accuracy": 0.9203539823008849
+        },
+        "KO": {
+          "count": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "JA": {
+          "count": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        },
+        "Mixed": {
+          "count": 7,
+          "correct": 7,
+          "accuracy": 1.0
+        }
+      }
+    },
+    "after": {
+      "Top1": 0.9349593495934959,
+      "Top3": 0.959349593495935,
+      "Top5": 0.959349593495935,
+      "Top10": 0.975609756097561,
+      "critical_Top1": 1.0,
+      "critical_Top3": 1.0,
+      "critical_Top5": 1.0,
+      "scored_cases": 123,
+      "critical_count": 43,
+      "accuracy": 0.9349593495934959,
+      "critical_recall": 1.0,
+      "critical_miss": 0.0,
+      "MRR": 0.9473360044605231,
+      "median_true_rank": 1,
+      "missing_rank_count": 0,
+      "median_definition": "active ranks only; missing rank count reported separately",
+      "retrieval_truth_retention": 0.9512195121951219,
+      "rerank_truth_retention": 0.926829268292683,
+      "active_truth_retention": 1.0,
+      "average_turns": 22.9140625,
+      "average_tests": 7.0234375,
+      "average_diagnostic_delay": 0,
+      "diagnostic_delay_observed_count": 117,
+      "diagnostic_delay_definition": "policy-eligible non-forced stop, not clinical safety certification; null != zero",
+      "critical_candidate_retention": 1.0,
+      "failure_counts": {
+        "FINAL_RANKING_ERROR": 7,
+        "STOP_POLICY_ERROR": 1
+      },
+      "action_selection_error_rate": 0.0,
+      "final_ranking_error_rate": 0.056910569105691054,
+      "long_tail": {
+        "count": 26,
+        "retrieved": 1.0,
+        "rerank_top25": 0.9230769230769231,
+        "active": 1.0,
+        "Top5": 0.8076923076923077,
+        "Top1": 0.6923076923076923,
+        "interpretation": "Round M category-defined symptom-only development probes, no independent medical adjudication",
+        "Top10": 0.8846153846153846,
+        "retrieval_at150": 1.0,
+        "rerank_at25": 0.9230769230769231
+      },
+      "cases": 128,
+      "median_turns": 22.5,
+      "average_ask": 8.640625,
+      "average_exam": 6.25,
+      "retrieval_at150": 0.9512195121951219,
+      "rerank_at25": 0.926829268292683,
+      "redundant_tests": 0,
+      "average_unresolved_critical_alternatives": 11.203125,
+      "languages": {
+        "EN": {
+          "count": 113,
+          "correct": 105,
+          "accuracy": 0.9292035398230089
+        },
+        "KO": {
+          "count": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "JA": {
+          "count": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        },
+        "Mixed": {
+          "count": 7,
+          "correct": 7,
+          "accuracy": 1.0
+        }
+      }
+    },
+    "new_wrong": []
+  },
+  "zip_sha256": "b5c2c704c9463b9f12d941cf97e1997986faf245daa7d604ff2ddc1fffb39369",
+  "source_submission_byte_equivalence": true,
+  "real_model": "NOT VERIFIED",
+  "official_api": "NOT VERIFIED",
+  "clinical_validation": "NOT VERIFIED",
+  "new_profiles": 0,
+  "tier2_without_enrichment_entry": 1163,
+  "limitation": "Mock, implementation-aware synthetic engineering controls; not independent clinical or official performance."
+}

@@ -1,4 +1,9 @@
-"""High-recall competition retrieval -> lightweight deterministic rerank -> safety reinjection.
+"""High-recall competition retrieval -> diagnostic Top25 plus a separate safety watch.
+
+Production retrieve_and_rerank() selects safety_policy="separate": never swaps
+diagnostic survivors. lightweight_rerank() retains legacy swaps only for direct
+compatibility callers. The historical three-stage description below describes
+that legacy policy; scores and Stage-1 retrieval are shared by both policies.
 
 Three explicit, separately-sized stages, matching the competition architecture spec:
 
@@ -94,6 +99,18 @@ class RerankedCandidate:
     rerank_score: float
     match_kind: str
     reasons: List[str] = field(default_factory=list)
+
+
+class DiagnosticRerank(list):
+    """Diagnostic TopK plus a separate bounded watch of retrieved dangers.
+
+    List iteration is ONLY diagnostic evidence order. Watch membership is not
+    a rank, a positive observation, or evidence that a diagnosis was excluded.
+    Total diagnostic + watch entries never exceeds the retrieved pool.
+    """
+    def __init__(self, diagnostic=(), safety_watch=()):
+        super().__init__(diagnostic)
+        self.safety_watch = tuple(safety_watch)
 
 
 def build_signal_queries(*, chief_complaint: str = "", symptoms: Sequence[str] = (),
@@ -234,12 +251,14 @@ def _rerank_score(candidate: RetrievedCandidate, fused_rank: int = 0) -> float:
 
 
 def lightweight_rerank(retrieved: List[RetrievedCandidate], *,
-                        rerank_top_k: int = 25) -> List[RerankedCandidate]:
+                        rerank_top_k: int = 25, safety_policy: str = "legacy") -> List[RerankedCandidate]:
     """Stage 2 + Stage 3. Deterministic, non-ML: see module docstring for the scoring terms. Never
     silently drops a `dangerous: true` Stage-1 candidate -- Stage 3 (safety reinjection) puts it
     back in place of the weakest non-dangerous survivor. Explicitly bounded at `rerank_top_k` in the
     common case; only exceeds it when dangerous drops outnumber non-dangerous survivors to swap
     (documented, extremely rare in practice for a real catalog -- most retrieval hits are routine)."""
+    if safety_policy not in {"legacy", "separate"}:
+        raise ValueError("unknown safety policy")
     if rerank_top_k <= 0 or not retrieved:
         return []
 
@@ -257,6 +276,10 @@ def lightweight_rerank(retrieved: List[RetrievedCandidate], *,
         rc for rc in scored[rerank_top_k:]
         if rc.concept.dangerous is True and rc.concept.concept_id not in kept_ids
     ]
+    if safety_policy == "separate":
+        for candidate in dangerous_missing:
+            candidate.reasons.append("safety_watch_not_diagnostic_rank")
+        return DiagnosticRerank(kept, dangerous_missing)
     if dangerous_missing:
         # Round M: the best-retrieved few are never evicted to make room (reinjection is about
         # SAFETY retention; it must not be able to erase the candidates several independent
@@ -285,12 +308,15 @@ def retrieve_and_rerank(retriever: OpenWorldRetriever, *, chief_complaint: str =
                          objective_finding_phrases: Sequence[str] = (),
                          medications: Sequence[str] = (),
                          retrieval_top_k: int = 150, rerank_top_k: int = 25) -> List[RerankedCandidate]:
-    """The full 3-stage pipeline as one call -- what candidate_generator.py's competition-retrieval
-    step actually invokes each turn."""
+    """Production pipeline: evidence-ranked TopK with a separate safety_watch.
+    Candidate generation may reconsider a watched concept only through its own
+    observed features. The watch alone supplies no clinical evidence or rank."""
     retrieved = retrieve_high_recall(
         retriever, chief_complaint=chief_complaint, symptoms=symptoms, history=history,
         imaging_concepts=imaging_concepts, codes=codes,
         objective_finding_phrases=objective_finding_phrases, medications=medications,
         retrieval_top_k=retrieval_top_k,
     )
-    return lightweight_rerank(retrieved, rerank_top_k=rerank_top_k)
+    # Production contract: preserve all evidence Top25 slots. Legacy callers of
+    # lightweight_rerank retain their explicit old swap behavior and tests.
+    return lightweight_rerank(retrieved, rerank_top_k=rerank_top_k, safety_policy="separate")

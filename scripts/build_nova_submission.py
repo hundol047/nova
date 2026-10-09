@@ -32,7 +32,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SUBMISSION = ROOT / "submission"
 # Operator-installed reference databases are not competition/runtime assets.
-IGNORE = shutil.ignore_patterns("__pycache__", "*.pyc", ".pytest_cache", "*.sqlite", "*.sqlite-*")
+IGNORE = shutil.ignore_patterns("__pycache__", "*.pyc", ".pytest_cache", "*.sqlite", "*.sqlite-*", ".rsync-tmp")
 
 # Same shape/spirit as scripts/preflight_competition.py's secret_scan, applied here to the exact
 # files about to be shipped rather than the whole repo. Covers known credential-shaped prefixes

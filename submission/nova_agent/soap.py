@@ -225,8 +225,9 @@ def _entry_for(diagnosis_id: str) -> Optional[dict]:
         return None
 
 
-def _plan_tests(top_entry: Optional[dict], dangerous_entries: List[dict], lang: str) -> List[str]:
-    wanted: List[str] = []
+def _plan_tests(top_entry: Optional[dict], dangerous_entries: List[dict], lang: str,
+                observed_concern_tests=()) -> List[str]:
+    wanted: List[str] = [t for t in observed_concern_tests if t in TEST_CATALOG]
     for entry in [top_entry] + dangerous_entries:
         if not entry:
             continue
@@ -325,7 +326,11 @@ def build_soap(state: PatientState, differential: list, lang: str = "en", final=
     urgent = disposition.urgent
     if undifferentiated and differential:
         top_entry = _entry_for(differential[0].diagnosis_id)  # tests that would evaluate the leading possibility
-    tests = _plan_tests(top_entry, dangerous_entries, lang)
+    from nova_agent.disposition import symptomatic_rate_concern
+    # Existing syncope/rhythm workup (NICE CG109, recorded in disposition.py).
+    # A recommendation is not an observed result and never enters scoring.
+    concern_tests = ("ecg",) if symptomatic_rate_concern(state) else ()
+    tests = _plan_tests(top_entry, dangerous_entries, lang, concern_tests)
     flags = list((top_entry or {}).get("red_flag_keywords") or [])[:6]
     p_lines = [f"{L['tests']}: " + (", ".join(tests) if tests else L["none"]),
                f"{L['tx']}: " + (L["tx_urgent"] if urgent else L["tx_routine"]),

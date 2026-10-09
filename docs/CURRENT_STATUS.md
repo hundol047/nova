@@ -1,35 +1,52 @@
 # N.O.V.A. 2026 — current competition status
 
-**PRE-GUIDE CANDIDATE — ROUND T: PARTIAL REPAIR — COMPLETE ACCEPTANCE FAIL — NOT OFFICIALLY READY.**
+**PRE-GUIDE CANDIDATE — ROUND U: TARGETED REPAIR — STRICT REGRESSION FAIL — NOT OFFICIALLY READY.**
 
-Executed runtime: `761fcda7f4f5b6c58b0e0b6e8b77047b37301782`.
-The original Claude branch, main and user checkout were preserved.
+Executed local runtime: `da7cfca7eb80f09af82019326f9964a285946f1d`.
+Execution baseline: `761fcda7f4f5b6c58b0e0b6e8b77047b37301782` (Round T).
+Original Claude branch, main and original user checkout were preserved.
 
-Current report: [ROUND_T_REPAIR_REPORT_KO.md](competition/ROUND_T_REPAIR_REPORT_KO.md).
-Implemented prompt: [ROUND_T_IMPLEMENTATION_PROMPT_KO.md](competition/ROUND_T_IMPLEMENTATION_PROMPT_KO.md).
-Remaining work: [ROUND_T_FOLLOWUP_KO.md](competition/ROUND_T_FOLLOWUP_KO.md).
+- Implemented prompt: [ROUND_U_IMPLEMENTATION_PROMPT_KO.md](competition/ROUND_U_IMPLEMENTATION_PROMPT_KO.md).
+- Results and limitations: [ROUND_U_REPAIR_REPORT_KO.md](competition/ROUND_U_REPAIR_REPORT_KO.md).
+- Remaining work: [ROUND_U_FOLLOWUP_KO.md](competition/ROUND_U_FOLLOWUP_KO.md).
+- Public/source evidence scope: [ROUND_U_SOURCE_REVIEW_NOTICE.md](competition/ROUND_U_SOURCE_REVIEW_NOTICE.md).
 
-All current results are **offline mock / synthetic — LOCAL DEVELOPMENT / PRELIMINARY SIMULATION**, not official or clinical scores.
+All performance figures are **offline mock / implementation-aware synthetic engineering evidence**, not official, real-model or independent clinical scores.
 Configured model identity remains `openai/gpt-oss-20b`, revision `4d7ae4984b7db7de8f8457170b3f1a419ee76d52`; actual model and official interface **NOT VERIFIED**.
 
-Round T improves family/history evidence scope, capability and respiratory-material relations, bounded observed-concept retrieval,
-and separates rate-only observation from naming a cause. Unsafe zero-support bedside-EXAM pruning was withdrawn.
-No new clinical disease profiles were added. Catalog: 34 Tier-1, 1,246 Tier-2, 1,280 total; ontology names are not validated clinical depth.
-83 Tier-2 IDs have an enrichment-file entry; 1,163 do not. Neither number certifies clinical completeness.
+Round U repairs relation qualifiers, subjective vs objective rhythm wording, unconfirmed assertions, compositional observation normalization,
+EXAM-driven candidate re-entry, diagnostic Top25 vs separate safety watch, and thin-evidence naming/disposition paths.
+Full local tests: **2,425 passed / 0 failed / 1 skipped / 0 deselected**. One initial package skip was completed separately after the audited ZIP was available; it is not double-counted. Torch training remains unexecuted; no model download or training was performed.
 
-Confirmed final new postfreeze12: 6/6 scored, critical3/3, behavior31/35→33/35; two information-poor overnaming failures remain.
-Existing P development:28/32→26/32, critical11/13. Do not claim overall regression PASS or a perfect score.
-Initial T32, confirmation12 and final-probe8 were promoted to development after their failures informed repairs.
-Final postfreeze12 was first executed on the frozen runtime; same implementation-aware author, no independent clinical adjudication.
+| Same-condition evaluation | Round T → U | Critical after |
+|---|---:|---:|
+| Preliminary development (230 total / 222 scored) | 209→209/222 | 85/85 |
+| Round P development | 26→27/32 | 11/13 |
+| Round M with TEST | 114→115/123 | 43/43 |
+| Round M long-tail | Top1 17→18/26; Top5 21→21/26 | Existing flags unchanged |
+| Round J with TEST | 51→51/54 | 20/20 |
+| Last fresh Closing U8 (8 total / 4 scored) | 4→4/4; behavior 25→26/26 | 2/2 |
 
-Full local tests: **2,287 passed, 0 failed, 1 skipped, 0 deselected**. Preliminary: **209/222**, critical **85/85**. Local v25 package integrity/mock PASS; overall regression acceptance FAIL. Public byte-equivalent source runtime: `0b9cd87c7509e2703b877939cb3fc89c70e0741d` on `codex/nova-round-t-source-review-20261009`. Source parity covers97 runtime files plus launcher/requirements, not the full Git tree.
+Preliminary new correct: RoundI_enzyme_sparse. New wrong: RoundM_066 (single diarrhea observation → undifferentiated, scored as wrong).
+No new critical diagnostic miss in the completed paired suites, but existing critical misses/overnaming remain; overall acceptance is not PASS.
+Preliminary average interactions 19.95→20.33 and unnecessary exams 319→371: efficiency worsened.
+Chief-only proxy Top150 117→118/164 and diagnostic Top25 103→117/164. Initial retrieval remains weak.
+M terminal Top150 116→117/123, diagnostic Top25 100→114/123, active 123/123. Long-tail-only terminal Top25 falls 25→24/26; RoundM_106 stays active/correct.
 
-**Publication scope:** source-review branch only. Detailed runtime traces/XML and local v25 ZIP are not part of this publication.
-The public CURRENT_RELEASE.json remains historical and does not validate the current source branch; release-binding checks require
-the local complete evidence. Source/runtime byte parity, local package integrity and official readiness are distinct claims.
+T postfreeze, U20, U12 and U10 are development after result-informed repairs. Closing U8 was frozen before first execution on the final runtime;
+no runtime changes followed. Its author saw implementation/failures. This small control set is not broad generalization or independent clinical validation.
 
-No model download/replacement/training, external LLM call, blind v18/v19 run, or new blind creation in this pass.
-Historical evidence below is for its named runtime only; see the current report for the final Round T comparison.
+No new clinical profiles were added. Catalog remains 34 Tier-1 + 1,246 Tier-2 = 1,280. Existing enrichment entries: 83; Tier-2 without an entry: 1,163.
+Neither the entry count nor ontology coverage certifies clinical depth. Provenance coverage PASS; permission status remains BLOCKED.
+
+Local v26 ZIP integrity, 100-file runtime/launcher/requirements byte binding and isolated mock PASS.
+ZIP SHA256: `b5c2c704c9463b9f12d941cf97e1997986faf245daa7d604ff2ddc1fffb39369` (830,977 bytes).
+Source review branch: `codex/nova-round-u-source-review-20261009`; exact public commit parity is recorded in the linked notice.
+Detailed local traces/XML and the local ZIP are not part of the source-only publication. The public CURRENT_RELEASE.json remains historical;
+it does not certify the current source branch. Local executed SHA, public byte-equivalent source and official readiness are distinct claims.
+
+No external LLM call, API-key request, model download/replacement/training, blind v18/v19 run/tuning or new blind creation.
+Historical sections below describe only their named runtimes. The previous Round T report remains preserved.
 
 ## 1. Backend load check (production-backend CI step) — fixed
 

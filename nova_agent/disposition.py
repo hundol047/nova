@@ -62,6 +62,35 @@ def disposition_for(state, final, differential) -> Disposition:
         if item is selected or not item.dangerous_if_missed:
             continue
         if item.score > 0 and not support_problems(item, state, differential):
+            if not _alternative_corroborated(item, state):
+                continue
             reasons.append("supported_dangerous_alternative:" + item.diagnosis_id)
             evidence.extend(item.supporting_evidence)
     return Disposition(bool(reasons), tuple(dict.fromkeys(reasons)), tuple(dict.fromkeys(evidence)))
+
+
+def _alternative_corroborated(item, state=None) -> bool:
+    """A shallow ontology alternative needs more than one shared symptom.
+
+    This affects disposition only: the candidate remains in the differential
+    and is never marked excluded. Selected urgent working diagnoses and actual
+    vital/rate concerns are handled independently above. A current documented
+    diagnosis, objective finding or explicit profile discriminator is retained.
+    Engineering guard for thin metadata, not a calibrated clinical triage rule.
+    """
+    if not item.diagnosis_id.startswith('onto::'):
+        return True
+    from nova_agent.differential import _strip_negative_prefix, _entry_for_candidate_id
+    from nova_agent.final_decision import _risk_context
+    from nova_agent.matching import feature_present
+    entry = _entry_for_candidate_id(item.diagnosis_id) or {}
+    risks = {str(x).lower() for x in entry.get('risk_factors', [])}
+    positive = {p for p in item.supporting_evidence
+                if _strip_negative_prefix(p) is None and p.lower() not in risks and not _risk_context(p)}
+    if 'documented diagnosis' in positive or len(positive) >= 2:
+        return True
+    discriminators = {str(x).lower() for field in ('confirmatory_findings','specific_features','red_flag_keywords')
+                      for x in entry.get(field, [])}
+    objective = state.objective_findings_text() if state is not None else []
+    return any(p.lower() in discriminators or
+               feature_present(p, objective, scrub_negated_spans=True, strict=True) for p in positive)

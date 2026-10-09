@@ -185,6 +185,68 @@ def _has_specific_support(support: List[str]) -> bool:
     return any(content_words(p) and not content_words(p).issubset(GENERIC_PHYSIOLOGIC_SEVERITY_WORDS) for p in support)
 
 
+def _apply_observed_detail_priority(kept: list, state: PatientState) -> list:
+    """Do not prefer a strict fragment of an observed symptom over its full pattern
+    solely because an optional generic accompaniment was denied.
+
+    No scores or negative observations are erased. This narrow ordering rule
+    needs ONE positive typical feature on each side, a strict content subset,
+    no risk/objective/documented support, and only never-observed generic
+    symptom denials on the more detailed candidate. A direct conflict or any
+    independently supported competing feature prevents the comparison.
+    """
+    from nova_agent.final_decision import _generic_symptom, _risk_context
+    from nova_agent.clinical_concepts import is_objective_only_feature
+    texts = state.all_findings_text(include_context=False, include_family=False)
+    def feature(row):
+        support = row[3]
+        if row[0] <= 0 or len(support) != 1:
+            return None
+        phrase = support[0]
+        if (phrase not in row[2].get("typical_features", []) or _generic_symptom(phrase)
+                or _risk_context(phrase) or is_objective_only_feature(phrase)
+                or _strip_negative_prefix(phrase) is not None):
+            return None
+        return content_words(phrase)
+    order = list(kept)
+    for _ in range(len(order)):
+        moved = False
+        for i, upper in enumerate(order):
+            upper_words = feature(upper)
+            if not upper_words:
+                continue
+            for j in range(i + 1, len(order)):
+                lower = order[j]
+                lower_words = feature(lower)
+                if (not lower_words or not upper_words < lower_words or not lower[4]
+                        or any(not _generic_symptom(p) or _present_with_aliases(p, texts) for p in lower[4])):
+                    continue
+                order.insert(i, order.pop(j))
+                moved = True
+                break
+            if moved:
+                break
+        if not moved:
+            break
+    return order
+
+
+def _apply_positive_observation_priority(kept: list) -> list:
+    """Reassurance or risk alone cannot outrank an observed current presentation.
+
+    Keep every candidate, raw score and contradiction. Stable ordering within
+    each group preserves existing diagnostic comparisons. Only a positive net
+    score with at least one current, non-risk, non-absent observation qualifies.
+    """
+    from nova_agent.final_decision import _risk_context
+    def supported(row):
+        risks = {str(p).lower() for p in row[2].get('risk_factors', [])}
+        return row[0] > 0 and any(
+            _strip_negative_prefix(p) is None and p.lower() not in risks and not _risk_context(p)
+            for p in row[3])
+    return [r for r in kept if supported(r)] + [r for r in kept if not supported(r)]
+
+
 def _apply_red_flag_escalation(kept: list, state: PatientState) -> list:
     """Round O: a localized diagnosis's own knowledge-base ``red_flag_keywords`` name the findings that mean it
     has escalated (pyelonephritis/pneumonia: "hypotension", "confusion"). When such a finding is present AND is
@@ -762,6 +824,7 @@ class DifferentialEngine:
             pool_target_size=_cfg.reasoning_top_k if _cfg.competition_retrieval_enabled else None,
         )
         candidates = [c.entry for c in candidate_records]
+        state.retrieval_safety_watch = list(presentation.retrieval_safety_watch)
         sources_by_id = {c.id: c.sources for c in candidate_records}
         documented = _documented_ids(state)
         for did in documented:
@@ -886,6 +949,8 @@ class DifferentialEngine:
             kept = _apply_red_flag_escalation(kept, state)
         if _cfg.ranking_v3_enabled:
             kept = _apply_converging_evidence_priority(kept, state)
+            kept = _apply_observed_detail_priority(kept, state)
+            kept = _apply_positive_observation_priority(kept)
 
         items: List[DifferentialItem] = []
         for rank, (score, score_ratio, entry, supporting, contradictory, missing, band) in enumerate(kept, start=1):

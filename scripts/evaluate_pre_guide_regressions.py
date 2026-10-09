@@ -11,9 +11,8 @@ def evaluate(item):
  results=run_all(cases)
  return name,{'summary':compute_summary(results),'cases':[r.model_dump() for r in results]}
 def runtime_hashes():
- return {str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()
-         for directory in ('nova_agent','competition') for p in sorted((ROOT/directory).rglob('*'))
-         if p.is_file() and '__pycache__' not in p.parts and p.suffix in {'.py','.json','.md'}}
+ from scripts.runtime_identity import tracked_runtime_hashes
+ return tracked_runtime_hashes(ROOT)
 def main():
  hashes=runtime_hashes()
  result={'runtime_sha':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'runtime_sha256':hashes,'mode':'competition retrieval / mock LLM','suites':{},'runtime_unchanged_during_execution':False}

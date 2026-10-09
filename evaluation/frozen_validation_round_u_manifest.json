@@ -1,0 +1,10 @@
+{
+  "sha256": "94efd98a063f7e9043afbf8c16a06ba2ff760610c873dba85544212e3315cc63",
+  "cases": 20,
+  "scored": 12,
+  "created_utc": "2026-10-09T09:35:29.668567+00:00",
+  "runtime_before_authoring": "966e9925a4468e7242678b01f8d879ee4e38bb12",
+  "policy": "Labels, denominator and behavior contracts frozen before execution on either runtime. Same existing preliminary scorer and driver. Any result-informed runtime repair promotes this fixture to development.",
+  "author_exposure": "Same implementation-aware engineering author; no independent clinician adjudication.",
+  "independent_clinical_validation": false
+}

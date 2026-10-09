@@ -113,6 +113,17 @@ def _nonspecific_measurement(phrase: str) -> bool:
     return phrase.lower() in {"pulse rate below 50", "pulse rate of 150 or more", "tachycardia", "bradycardia"}
 
 
+def _hemodynamic_only(phrase: str) -> bool:
+    """Rate/perfusion observations cannot identify an underlying cause alone.
+
+    A broader gate treating *every* abnormal observation as interchangeable was
+    rejected: it erased converging fever/mental-state and hypoxic presentations.
+    Keep those distinctions; do not claim to have proved an etiology from vitals.
+    """
+    return _nonspecific_measurement(phrase) or phrase.lower() in {
+        "hypotension", "tachypnea", "shock", "low blood pressure"}
+
+
 def _distinct(evidence: List[str]) -> int:
     """Distinct supporting observations: the same canonical phrase counts once. (Several features stated in one
     sentence -- "crushing chest pain to my left arm with sweating" -- are several observations.)"""
@@ -125,7 +136,7 @@ _GENERIC_SYMPTOMS = frozenset({
     "dizziness", "dizzy", "lightheadedness", "lightheaded", "nausea", "vomiting", "fatigue", "tiredness", "weakness",
     "generalized weakness", "generalised weakness", "malaise", "headache", "confusion", "fever", "cough", "chest pain",
     "abdominal pain", "shortness of breath", "dyspnea", "breathlessness", "palpitations", "feeling unwell", "syncope",
-    "altered mental status", "anxiety", "sweating", "back pain", "productive cough",
+    "altered mental status", "anxiety", "sweating", "diaphoresis", "back pain", "productive cough", "diarrhea",
 })
 
 
@@ -135,7 +146,14 @@ def _base_name(name: str) -> str:
 
 def _generic_symptom(phrase: str) -> bool:
     # Grammatical qualifiers are not new discriminating evidence.
-    return re.sub(r"^(?:associated|reported|persistent)\s+", "", phrase.strip().lower()) in _GENERIC_SYMPTOMS
+    plain = re.sub(r"^(?:(?:associated|reported|persistent|severe|marked|profound)\s+)+", "", phrase.strip().lower())
+    if plain in _GENERIC_SYMPTOMS:
+        return True
+    # A conjunction stored as ONE catalog feature does not become specific merely
+    # because its components were joined. Anatomical/trigger qualifiers and any
+    # non-generic component keep their existing discriminating interpretation.
+    parts = re.split(r"\s+(?:and|or|with)\s+", plain)
+    return len(parts) > 1 and all(p in _GENERIC_SYMPTOMS for p in parts)
 
 
 def _risk_context(phrase: str) -> bool:
@@ -159,6 +177,8 @@ def support_problems(item, state, differential: list) -> List[str]:
         return ["no_positive_support"]
     specific = _specific_support(item, entry)
     observations = [e for e in item.supporting_evidence if _strip_negative_prefix(e) is None]
+    if positive and all(_hemodynamic_only(e) for e in positive) and not documented:
+        problems.append("only_hemodynamic_support")
     if (not specific and not documented and _distinct(observations) <= 1
             and all(e.lower() in risk_only or _generic_symptom(e) or _nonspecific_measurement(e) for e in observations)):
         # ONE observation in total, and it is a symptom shared by most presentations or a lone risk factor

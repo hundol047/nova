@@ -1,0 +1,10 @@
+{
+  "sha256": "47a0be58b0754a70f04a6289dfb763bda4640c751221c0da9f00a98e04583752",
+  "cases": 8,
+  "scored": 4,
+  "created_utc": "2026-10-09T10:47:21.976737+00:00",
+  "runtime_before_authoring": "a84e07f11d8f567075710b7331100ad2ca99bcbc",
+  "policy": "Fixed before either runtime execution. U20/U12/U10 are development. ClosingU_05 deliberately has no unique cause label and requires urgent disposition, not abstention; the other unscored cases require undifferentiated naming. Existing scorer/simulator unmodified.",
+  "author_exposure": "Same implementation-aware engineering author. Focused controls, not independent clinical or broad unseen-performance evidence.",
+  "independent_clinical_validation": false
+}

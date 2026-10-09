@@ -49,7 +49,8 @@ def main():
     assert (cfg.retrieval_top_k,cfg.rerank_top_k,cfg.reasoning_top_k)==(150,25,25)
     OUT.mkdir(parents=True,exist_ok=True)
     sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
-    runtime={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for base in ('nova_agent','competition') for p in (ROOT/base).rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+    from scripts.runtime_identity import tracked_runtime_hashes
+    runtime=tracked_runtime_hashes(ROOT)
     rows=[]
     with concurrent.futures.ProcessPoolExecutor(max_workers=4) as pool:
         for row in pool.map(worker,ROUND_M_CASES):

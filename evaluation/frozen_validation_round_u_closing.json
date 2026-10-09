@@ -1,0 +1,230 @@
+[
+  {
+    "case_id": "ClosingU_01",
+    "chief_complaint": "After a shared takeaway I began throwing up and passing watery stools, with mild cramps throughout my belly. My partner has the same illness and I can still drink small amounts.",
+    "demographics": {
+      "age": 56,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "gastroenteritis",
+    "answers": {
+      "character": "Mild diffuse crampy abdominal pain.",
+      "associated_symptoms": "Vomiting and diarrhea, without blood in the stool.",
+      "onset": "Since yesterday."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 80, RR 16, Temp 36.8, SpO2 98%",
+      "abdominal_exam": "Soft abdomen with mild diffuse tenderness, no guarding or rebound."
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide more information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_closing_controls",
+    "scoring_expected": true,
+    "notes": "Focused synthetic mechanism controls; implementation-aware author saw all earlier U outcomes. Not independent clinical or broad generalization validation. Labels and behavior contracts fixed before execution.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": false
+    }
+  },
+  {
+    "case_id": "ClosingU_02",
+    "chief_complaint": "A vice-like pressure beneath my breastbone began on a short walk and has continued at rest. An ache travels into my right jaw and I feel clammy.",
+    "demographics": {
+      "age": 56,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "character": "Persistent chest pressure.",
+      "associated_symptoms": "Nausea and diaphoresis.",
+      "past_medical_history": "Diabetes and a previous coronary stent."
+    },
+    "exam_results": {
+      "vital_signs": "BP 136/82, HR 96, RR 19, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide more information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_closing_controls",
+    "scoring_expected": true,
+    "notes": "Focused synthetic mechanism controls; implementation-aware author saw all earlier U outcomes. Not independent clinical or broad generalization validation. Labels and behavior contracts fixed before execution.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "ClosingU_03",
+    "chief_complaint": "A pounding headache came with fever, and bending my neck forward is now painful and difficult. The overhead lights hurt my eyes.",
+    "demographics": {
+      "age": 56,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "meningitis",
+    "answers": {
+      "associated_symptoms": "Fever, headache and photophobia.",
+      "onset": "Worsening over one day."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/72, HR 106, RR 21, Temp 39.0, SpO2 98%",
+      "meningeal_signs": "Neck stiffness."
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide more information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_closing_controls",
+    "scoring_expected": true,
+    "notes": "Focused synthetic mechanism controls; implementation-aware author saw all earlier U outcomes. Not independent clinical or broad generalization validation. Labels and behavior contracts fixed before execution.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "ClosingU_04",
+    "chief_complaint": "The cardiology letter confirms atrial fibrillation as my current diagnosis; pulmonary embolism was excluded. It separately records my father's old heart failure. My pulse still feels uneven.",
+    "demographics": {
+      "age": 56,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "associated_symptoms": "Palpitations."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 80, RR 16, Temp 36.8, SpO2 98%",
+      "cardiac_auscultation": "Irregularly irregular rhythm."
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide more information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_closing_controls",
+    "scoring_expected": true,
+    "notes": "Focused synthetic mechanism controls; implementation-aware author saw all earlier U outcomes. Not independent clinical or broad generalization validation. Labels and behavior contracts fixed before execution.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "ClosingU_05",
+    "chief_complaint": "Severe pain has spread across my entire abdomen, and movement makes it worse. I cannot give you the cause.",
+    "demographics": {
+      "age": 56,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 122/78, HR 96, RR 20, Temp 37.6, SpO2 97%",
+      "abdominal_exam": "Diffuse guarding and rebound tenderness; abdomen rigid."
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide more information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_closing_controls",
+    "scoring_expected": false,
+    "notes": "Focused synthetic mechanism controls; implementation-aware author saw all earlier U outcomes. Not independent clinical or broad generalization validation. Labels and behavior contracts fixed before execution.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "ClosingU_06",
+    "chief_complaint": "For a moment I lost consciousness while sitting and then woke up. I cannot say what led to it.",
+    "demographics": {
+      "age": 56,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 114/70, HR 38, RR 16, Temp 36.5, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide more information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_closing_controls",
+    "scoring_expected": false,
+    "notes": "Focused synthetic mechanism controls; implementation-aware author saw all earlier U outcomes. Not independent clinical or broad generalization validation. Labels and behavior contracts fixed before execution.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "ClosingU_07",
+    "chief_complaint": "의사 기록에는 pulmonary embolism 의심된다고 되어 있어요. 아버지는 atrial fibrillation 진단을 받았지만 저는 그냥 피곤해요.",
+    "demographics": {
+      "age": 56,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 80, RR 16, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot provide more information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_closing_controls",
+    "scoring_expected": false,
+    "notes": "Focused synthetic mechanism controls; implementation-aware author saw all earlier U outcomes. Not independent clinical or broad generalization validation. Labels and behavior contracts fixed before execution.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis",
+        "irregular heartbeat"
+      ]
+    }
+  },
+  {
+    "case_id": "ClosingU_08",
+    "chief_complaint": "I feel vaguely drained and cannot describe another symptom. I decline physical examinations today.",
+    "demographics": {
+      "age": 56,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I cannot provide more information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_closing_controls",
+    "scoring_expected": false,
+    "notes": "Focused synthetic mechanism controls; implementation-aware author saw all earlier U outcomes. Not independent clinical or broad generalization validation. Labels and behavior contracts fixed before execution.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [
+      "vital_signs",
+      "neuro_exam",
+      "cardiac_auscultation",
+      "lung_auscultation",
+      "skin_exam",
+      "extremity_exam",
+      "mental_status_exam"
+    ],
+    "round_s_expect": {}
+  }
+]

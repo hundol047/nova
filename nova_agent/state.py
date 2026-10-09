@@ -342,6 +342,8 @@ class PatientState(BaseModel):
     pending_diagnosis_quality: Optional[Dict[str, bool]] = None
     # JSON-safe internal epistemic result; no protocol labels or patient transcript copies.
     evidence_assessment: Optional[dict] = None
+    # Retrieval provenance only. Not observations, exclusions, or diagnostic scores.
+    retrieval_safety_watch: List[str] = Field(default_factory=list)
 
     # Wall-clock case start (spec: graceful degradation as a per-case time budget runs out).
     # time.time()-based (not perf_counter) since it must be meaningful even if PatientState is

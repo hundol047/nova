@@ -1,0 +1,568 @@
+[
+  {
+    "case_id": "NewU_01",
+    "chief_complaint": "Over the last month burning behind my breastbone comes back after supper, and an acid taste wakes me when I lie flat. My pulse feels regular.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "gerd",
+    "answers": {
+      "aggravating": "after a large meal and lying down",
+      "relieving": "Antacids settle the burning.",
+      "associated_symptoms": "Sour taste without sweating."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/74, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_02",
+    "chief_complaint": "For three mornings the surroundings whirl when I turn my head toward the alarm clock, then stop within twenty seconds. Between spells I can walk normally.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "bppv",
+    "answers": {
+      "character": "The room spins briefly.",
+      "duration": "A few seconds each time.",
+      "aggravating": "turning my head",
+      "associated_symptoms": "Hearing is normal. No limb weakness."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/74, HR 76, RR 16, Temp 36.7, SpO2 98%",
+      "neuro_exam": "No focal neurological deficit."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_03",
+    "chief_complaint": "I brought a signed cardiology note: the current diagnosis is atrial fibrillation; pulmonary embolism was excluded. Today my pulse still feels uneven.",
+    "demographics": {
+      "age": 73,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "past_medical_history": "The current cardiologist report confirms atrial fibrillation."
+    },
+    "exam_results": {
+      "cardiac_auscultation": "Irregularly irregular rhythm.",
+      "vital_signs": "BP 124/78, HR 104, RR 16, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_04",
+    "chief_complaint": "I keep returning to the bathroom for tiny amounts, and passing urine burns. I have no pain in my back and have not felt hot.",
+    "demographics": {
+      "age": 31,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "uncomplicated_cystitis",
+    "answers": {
+      "associated_symptoms": "Urinary frequency and urgency, no fever or flank pain."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/74, HR 76, RR 16, Temp 36.7, SpO2 98%",
+      "abdominal_exam": "Mild suprapubic tenderness.",
+      "costovertebral_tenderness": "No costovertebral angle tenderness."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_05",
+    "chief_complaint": "The right half of my head pulses and both light and noise hurt. This is like the attacks I had in university, but my mother recently had a stroke.",
+    "demographics": {
+      "age": 35,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "migraine",
+    "answers": {
+      "past_medical_history": "Known migraine history.",
+      "associated_symptoms": "Nausea and light sensitivity. No weakness."
+    },
+    "exam_results": {
+      "neuro_exam": "No focal neurological deficit.",
+      "vital_signs": "BP 122/74, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_06",
+    "chief_complaint": "Since shifting boxes I can reproduce the pain at one small spot beside my ribs by pressing it. Twisting the trunk also hurts; resting does not cause pressure.",
+    "demographics": {
+      "age": 29,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+    "answers": {
+      "aggravating": "Twisting and pressing on the sore spot.",
+      "associated_symptoms": "No shortness of breath or sweating."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/74, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_07",
+    "chief_complaint": "Carrying a basket upstairs brought pressure behind the breastbone that travelled into my jaw, with cold sweat. It is still there after sitting for fifteen minutes.",
+    "demographics": {
+      "age": 67,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "character": "Substernal pressure radiates to the jaw.",
+      "past_medical_history": "Diabetes.",
+      "associated_symptoms": "Diaphoresis and nausea."
+    },
+    "exam_results": {
+      "vital_signs": "BP 146/88, HR 98, RR 20, Temp 36.7, SpO2 97%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewU_08",
+    "chief_complaint": "At breakfast I dropped my spoon and could not move the left side of my face normally. My speech suddenly became garbled; my sister says she gets migraines.",
+    "demographics": {
+      "age": 71,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "ischemic_stroke",
+    "answers": {
+      "onset": "Sudden onset 40 minutes ago.",
+      "past_medical_history": "Hypertension."
+    },
+    "exam_results": {
+      "neuro_exam": "Left facial droop, left arm weakness and dysarthria.",
+      "vital_signs": "BP 168/94, HR 80, RR 18, Temp 36.8, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewU_09",
+    "chief_complaint": "After the first dose of a new antibiotic my lips puffed up, itchy welts spread over me and my throat began to close. There is a whistle when I breathe.",
+    "demographics": {
+      "age": 42,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "anaphylaxis",
+    "answers": {
+      "onset": "Started within minutes of the medication.",
+      "allergy": "No known previous allergy."
+    },
+    "exam_results": {
+      "vital_signs": "BP 84/50, HR 125, RR 28, Temp 36.7, SpO2 92%",
+      "skin_exam": "Urticaria and facial swelling.",
+      "lung_auscultation": "Wheeze."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewU_10",
+    "chief_complaint": "Burning urine was followed by chills and a deep ache on the right side of my back. I can still pass urine normally, but I feel feverish.",
+    "demographics": {
+      "age": 54,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pyelonephritis",
+    "answers": {
+      "associated_symptoms": "Flank pain and dysuria.",
+      "onset": "Over the past two days."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 100, RR 18, Temp 38.7, SpO2 98%",
+      "costovertebral_tenderness": "Right costovertebral angle tenderness."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_11",
+    "chief_complaint": "The wound on my calf has been draining pus; today I feel hot and cannot keep track of the conversation. This is unlike the ordinary tiredness I had yesterday.",
+    "demographics": {
+      "age": 66,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "sepsis",
+    "answers": {
+      "associated_symptoms": "Fever and confusion.",
+      "past_medical_history": "Diabetes and a recent infected wound."
+    },
+    "exam_results": {
+      "vital_signs": "BP 86/48, HR 124, RR 27, Temp 39.4, SpO2 95%",
+      "mental_status_exam": "Confused and drowsy.",
+      "skin_exam": "Infected wound on calf."
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewU_12",
+    "chief_complaint": "I become lightheaded when I stand up from the sofa, and it passes when I sit back down. The room does not spin; there is no chest discomfort.",
+    "demographics": {
+      "age": 70,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "orthostatic_hypotension",
+    "answers": {
+      "aggravating": "standing up",
+      "relieving": "sitting back down",
+      "medication": "Blood pressure tablets."
+    },
+    "exam_results": {
+      "vital_signs": "Supine BP 124/78, standing BP 92/58. HR 82, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": true,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_13",
+    "chief_complaint": "I take a water pill and have had several loose stools. Now I am tired, but cannot describe a particular symptom or the name of the tablet.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "medication": "I do not know the name.",
+      "associated_symptoms": "I cannot say anything more."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/74, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": false,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_14",
+    "chief_complaint": "I have chronic kidney disease and have not eaten well for two days. There is a vague odd feeling somewhere in my chest, but I cannot say what it feels like.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "past_medical_history": "Chronic kidney disease.",
+      "character": "I do not know."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/74, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": false,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_15",
+    "chief_complaint": "I suddenly feel profoundly weak and sweaty. I cannot provide any further history.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 76/44, HR 136, RR 25, Temp 36.6, SpO2 97%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": false,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewU_16",
+    "chief_complaint": "My brother has an irregular heartbeat. My own discharge note says pulmonary embolism was excluded last year. I feel vaguely tired today, with no chest pain.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 122/74, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": false,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "irregular heartbeat",
+        "documented diagnosis"
+      ]
+    }
+  },
+  {
+    "case_id": "NewU_17",
+    "chief_complaint": "의사 기록에 atrial fibrillation 배제할 수 없다고 되어 있어요. 그냥 조금 피곤할 뿐이고 자세한 증상은 모르겠어요.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 122/74, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": false,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis"
+      ]
+    }
+  },
+  {
+    "case_id": "NewU_18",
+    "chief_complaint": "I feel vaguely dizzy but cannot tell you when it starts or what changes it. I do not agree to an examination today.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": false,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [
+      "vital_signs",
+      "neuro_exam",
+      "cardiac_auscultation",
+      "mental_status_exam",
+      "skin_exam",
+      "extremity_exam",
+      "lung_auscultation"
+    ],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewU_19",
+    "chief_complaint": "The prescription says to take my tablets after lunch. I have been a little tired since missing several meals, but I cannot describe any pain or burning.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 122/74, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": false,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "worse after meals",
+        "worse lying down"
+      ]
+    }
+  },
+  {
+    "case_id": "NewU_20",
+    "chief_complaint": "My eyelid keeps fluttering when I am reading. I cannot say whether there is anything else wrong; a watch once showed a low pulse.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 120/74, HR 49, RR 16, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_frozen_synthetic",
+    "scoring_expected": false,
+    "notes": "Engineering-authored after runtime 966e992; author saw implementation and development failures. Existing KB concepts, not independent clinical validation. Labels are working-diagnosis hypotheses; unidentifiable etiologies are unscored with fixed uncertainty contracts.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "irregular heartbeat"
+      ]
+    }
+  }
+]

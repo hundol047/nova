@@ -188,6 +188,24 @@ def _broaden_with_ontology(pool: dict, presentation: ClinicalPresentation, max_a
             added += 1
 
 
+def _catalogued_exam_features(catalog, observed: List[str]) -> List[str]:
+    """At most 12 existing multi-word catalog findings, explicitly observed.
+
+    No generated query text, diagnosis labels, inferred result or guessed exam.
+    Exact phrase containment follows assertion/subject/time projection; this is
+    deliberately narrower than the scorer's partial and alias matching.
+    """
+    if not observed:
+        return []
+    from nova_agent.matching import _exact_phrase_present, _strip_negated_spans
+    clauses = [_strip_negated_spans(text.lower()) for text in observed]
+    features = {p.lower() for c in catalog.all_concepts()
+                for p in (*c.typical_features, *c.confirmatory_findings) if len(p.split()) >= 2}
+    # More specific complete phrases first, with deterministic ties.
+    return [p for p in sorted(features, key=lambda p: (-len(p.split()), p))
+            if any(_exact_phrase_present(p, text) for text in clauses)][:12]
+
+
 def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
                              imaging_text: Optional[List[str]], chief_complaint_text: Optional[str],
                              retrieval_top_k: int, rerank_top_k: int,
@@ -229,7 +247,8 @@ def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
         return
 
     try:
-        retriever = OpenWorldRetriever(get_default_catalog())
+        catalog = get_default_catalog()
+        retriever = OpenWorldRetriever(catalog)
     except Exception:
         return
 
@@ -243,6 +262,10 @@ def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
         finding.evidence_label for finding in (objective_findings or {}).values()
         if finding.interpretation not in ("normal", "unknown")
     ]
+    objective_finding_phrases = list(dict.fromkeys([
+        *objective_finding_phrases,
+        *_catalogued_exam_features(catalog, presentation.observed_exam_text),
+    ]))
     try:
         reranked = retrieve_and_rerank(
             retriever,
@@ -258,8 +281,14 @@ def _broaden_with_open_world(pool: dict, presentation: ClinicalPresentation,
     except Exception:
         return
 
+    watch = getattr(reranked, "safety_watch", ())
+    presentation.retrieval_safety_watch = [c.concept.concept_id for c in watch]
+    # A watched name alone never gets a diagnostic slot. Its own newly observed
+    # features can admit it again using the existing ontology evidence rule.
+    newly_evidenced = [c for c in watch if _ontology_evidence_weight(
+        _concept_to_kb_entry(c.concept), presentation.evidence_text) >= MIN_EVIDENCED_ONTOLOGY_WEIGHT]
     seen_names = {c.entry.get("name", "").strip().lower() for c in pool.values()}
-    for candidate in reranked:
+    for candidate in [*reranked, *newly_evidenced]:
         concept = candidate.concept
         onto_id = f"onto::{concept.concept_id}"
         if onto_id in pool or concept.canonical_name.strip().lower() in seen_names:

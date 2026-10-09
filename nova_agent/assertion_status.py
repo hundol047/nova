@@ -8,6 +8,9 @@ _UNCERTAIN = re.compile(
     r"\b(?:possible|possibly|suspected|suspicious for|question of|uncertain|"
     r"cannot (?:exclude|rule out)|can't (?:exclude|rule out)|"
     r"(?:cannot|can't) be (?:excluded|ruled out)|not (?:excluded|ruled out)|"
+    r"(?:cannot|can't|could not) (?:yet )?(?:confirm|verify|establish)|"
+    r"(?:cannot|can't|could not) (?:yet )?be (?:confirmed|verified|established)|"
+    r"not (?:yet )?(?:confirmed|verified|established)|"
     r"rule out|may (?:be|represent|indicate)|might (?:be|represent|indicate))\b",
     re.I,
 )

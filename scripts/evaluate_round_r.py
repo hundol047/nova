@@ -5,6 +5,7 @@ Runtime cannot access expected checks or truth labels. No blind imports.
 import argparse, concurrent.futures, hashlib, json, os, sys, subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
 
 def run_one(job):
     checkout,raw=job
@@ -44,9 +45,8 @@ def run_one(job):
     return row,{'case':raw,'wire':ep.wire,'trace':trace,'final_state':final_state,'result':row}
 
 def hashes(checkout):
-    root=Path(checkout)
-    return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for d in ('nova_agent','competition')
-            for p in sorted((root/d).rglob('*')) if p.is_file() and p.suffix in {'.py','.json','.md'}}
+    from scripts.runtime_identity import tracked_runtime_hashes
+    return tracked_runtime_hashes(checkout)
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--checkout',default=str(ROOT));p.add_argument('--cases',required=True)

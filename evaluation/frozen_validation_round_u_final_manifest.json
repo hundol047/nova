@@ -1,0 +1,10 @@
+{
+  "sha256": "be932dbd637d6b7eb3fd53ba32a7d7de9985ce38d5bc725fa9ff310c01441e54",
+  "cases": 10,
+  "scored": 6,
+  "created_utc": "2026-10-09T10:25:51.334453+00:00",
+  "runtime_before_authoring": "8ba4792034975eb3891db1ebb623feedfe0050ec",
+  "policy": "Fixed before first execution on either runtime. U20 and U12 confirmation are now development. This final fixture does not change the scorer, labels, exclusions or simulator defaults.",
+  "author_exposure": "Same implementation-aware author, exposed to U20/U12 and NewS01 regression. These focused mechanism controls are not independent clinical or broad unseen-performance evidence.",
+  "independent_clinical_validation": false
+}

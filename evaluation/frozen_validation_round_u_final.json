@@ -1,0 +1,292 @@
+[
+  {
+    "case_id": "FinalU_01",
+    "chief_complaint": "For half an hour I have felt tightness beneath my sternum. It started on the way to work, reaches my jaw, and did not ease when I stopped. I am clammy and nauseated.",
+    "demographics": {
+      "age": 69,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "character": "Pressure under my breastbone, moving toward my jaw.",
+      "past_medical_history": "Prior coronary disease.",
+      "associated_symptoms": "Cold sweat and nausea."
+    },
+    "exam_results": {
+      "vital_signs": "BP 116/72, HR 74, RR 15, Temp 36.6, SpO2 98%",
+      "general_appearance": "Clammy and pale."
+    },
+    "test_results": {},
+    "default_answer": "I do not have that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_final_confirmation",
+    "scoring_expected": true,
+    "notes": "Engineering-authored with full implementation and prior evaluation exposure. Not independent clinical validation. Labels are working hypotheses; no clinical confirmation claim.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "FinalU_02",
+    "chief_complaint": "Vomiting, loose watery stools and crampy pain across my abdomen began after a family meal. Several relatives developed the same illness. I have been keeping small drinks down.",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "gastroenteritis",
+    "answers": {
+      "character": "Diffuse crampy abdominal pain.",
+      "associated_symptoms": "Diarrhea and vomiting.",
+      "onset": "Yesterday."
+    },
+    "exam_results": {
+      "vital_signs": "BP 116/72, HR 74, RR 15, Temp 36.6, SpO2 98%",
+      "abdominal_exam": "Mild diffuse tenderness without guarding."
+    },
+    "test_results": {},
+    "default_answer": "I do not have that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_final_confirmation",
+    "scoring_expected": true,
+    "notes": "Engineering-authored with full implementation and prior evaluation exposure. Not independent clinical validation. Labels are working hypotheses; no clinical confirmation claim.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": false
+    }
+  },
+  {
+    "case_id": "FinalU_03",
+    "chief_complaint": "I have a draining infected sore on my forearm. Today I am shivering and my partner says I keep answering the wrong question. I am much weaker than yesterday.",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "sepsis",
+    "answers": {
+      "associated_symptoms": "Fever and confusion.",
+      "past_medical_history": "Diabetes."
+    },
+    "exam_results": {
+      "vital_signs": "BP 82/46, HR 128, RR 29, Temp 39.3, SpO2 94%",
+      "mental_status_exam": "Altered mental status.",
+      "skin_exam": "Purulent forearm wound."
+    },
+    "test_results": {},
+    "default_answer": "I do not have that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_final_confirmation",
+    "scoring_expected": true,
+    "notes": "Engineering-authored with full implementation and prior evaluation exposure. Not independent clinical validation. Labels are working hypotheses; no clinical confirmation claim.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "FinalU_04",
+    "chief_complaint": "A spinning sensation comes for several seconds whenever I roll toward the edge of the bed. Once my head is still, everything settles; I am not about to lose consciousness.",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "bppv",
+    "answers": {
+      "character": "Brief episodic vertigo.",
+      "duration": "Seconds.",
+      "aggravating": "Head position change.",
+      "associated_symptoms": "No hearing loss or limb weakness."
+    },
+    "exam_results": {
+      "vital_signs": "BP 116/72, HR 74, RR 15, Temp 36.6, SpO2 98%",
+      "neuro_exam": "No focal neurological deficit."
+    },
+    "test_results": {},
+    "default_answer": "I do not have that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_final_confirmation",
+    "scoring_expected": true,
+    "notes": "Engineering-authored with full implementation and prior evaluation exposure. Not independent clinical validation. Labels are working hypotheses; no clinical confirmation claim.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "FinalU_05",
+    "chief_complaint": "My signed discharge report confirms present atrial fibrillation, while noting that pulmonary embolism was excluded. An old episode of gastroenteritis is also mentioned in the history.",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "associated_symptoms": "Palpitations but no syncope."
+    },
+    "exam_results": {
+      "vital_signs": "BP 116/72, HR 74, RR 15, Temp 36.6, SpO2 98%",
+      "cardiac_auscultation": "Irregularly irregular rhythm."
+    },
+    "test_results": {},
+    "default_answer": "I do not have that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_final_confirmation",
+    "scoring_expected": true,
+    "notes": "Engineering-authored with full implementation and prior evaluation exposure. Not independent clinical validation. Labels are working hypotheses; no clinical confirmation claim.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "FinalU_06",
+    "chief_complaint": "Passing urine has become painful, with frequent small amounts and pressure over the bladder. I have no fever, vomiting or pain near my kidneys.",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "uncomplicated_cystitis",
+    "answers": {
+      "associated_symptoms": "Dysuria, urinary frequency and urgency.",
+      "onset": "Two days."
+    },
+    "exam_results": {
+      "vital_signs": "BP 116/72, HR 74, RR 15, Temp 36.6, SpO2 98%",
+      "costovertebral_tenderness": "No costovertebral angle tenderness."
+    },
+    "test_results": {},
+    "default_answer": "I do not have that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_final_confirmation",
+    "scoring_expected": true,
+    "notes": "Engineering-authored with full implementation and prior evaluation exposure. Not independent clinical validation. Labels are working hypotheses; no clinical confirmation claim.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "FinalU_07",
+    "chief_complaint": "The consultant report says a pulmonary embolism could not be established. I only feel vaguely tired and cannot describe another symptom.",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 116/72, HR 74, RR 15, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not have that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_final_confirmation",
+    "scoring_expected": false,
+    "notes": "Engineering-authored with full implementation and prior evaluation exposure. Not independent clinical validation. Labels are working hypotheses; no clinical confirmation claim.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis"
+      ]
+    }
+  },
+  {
+    "case_id": "FinalU_08",
+    "chief_complaint": "My daughter gets palpitations. I occasionally notice a flutter in an eyelid, but I cannot describe any other symptom today.",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 116/72, HR 74, RR 15, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not have that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_final_confirmation",
+    "scoring_expected": false,
+    "notes": "Engineering-authored with full implementation and prior evaluation exposure. Not independent clinical validation. Labels are working hypotheses; no clinical confirmation claim.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "irregular heartbeat"
+      ]
+    }
+  },
+  {
+    "case_id": "FinalU_09",
+    "chief_complaint": "기록에는 atrial fibrillation 확진이 아니라고 쓰여 있습니다. 저는 막연하게 피곤하고 더 자세한 정보는 없어요.",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 116/72, HR 74, RR 15, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I do not have that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_final_confirmation",
+    "scoring_expected": false,
+    "notes": "Engineering-authored with full implementation and prior evaluation exposure. Not independent clinical validation. Labels are working hypotheses; no clinical confirmation claim.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis"
+      ]
+    }
+  },
+  {
+    "case_id": "FinalU_10",
+    "chief_complaint": "I have a vague unsettled feeling, but cannot locate it or explain when it occurs. I do not consent to physical examination today.",
+    "demographics": {
+      "age": 58,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "test_results": {},
+    "default_answer": "I do not have that information.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "category": "round_u_final_confirmation",
+    "scoring_expected": false,
+    "notes": "Engineering-authored with full implementation and prior evaluation exposure. Not independent clinical validation. Labels are working hypotheses; no clinical confirmation claim.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [
+      "vital_signs",
+      "neuro_exam",
+      "cardiac_auscultation",
+      "lung_auscultation",
+      "skin_exam",
+      "extremity_exam",
+      "mental_status_exam"
+    ],
+    "round_s_expect": {}
+  }
+]
