@@ -372,6 +372,9 @@ for _phrase, _variants in _ADDITIONAL_LAY_ALIASES.items():
 # Same provenance and discipline as above: agent-authored patient-wording variants for ONE exact
 # enriched feature phrase each; multi-word, no bare generic words.
 _TIER2_LAY: Dict[str, List[str]] = {
+    # Round U follow-up (Sjogren entry, see its field provenance): chronic dryness stated with its duration.
+    "persistent dry eyes": ["dry eyes for months", "eyes have been dry for months", "eyes stay dry"],
+    "persistent dry mouth": ["dry mouth for months", "mouth stays dry", "mouth has been dry for months"],
     "band-like blistering rash": ["stripe of blisters", "line of blisters", "clusters of blisters", "blisters in a band", "band of blisters"],
     "burning pain on one side of body": ["burning stripe on one side", "burning on one side of my chest", "burning pain on one side", "burning band on one side"],
     "painful blistering rash": ["painful blisters", "blisters that hurt", "blistering rash"],

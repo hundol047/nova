@@ -979,6 +979,22 @@
     "purulent joint fluid",
     "high synovial fluid white cell count"
    ]
+  },
+  {
+   "id": "sjogren_syndrome",
+   "typical_features": [
+    "persistent dry eyes",
+    "persistent dry mouth",
+    "sandy or gritty feeling in the eyes",
+    "drinking liquids to swallow dry food",
+    "recurrent salivary gland swelling"
+   ],
+   "confirmatory_findings": [],
+   "provenance": {
+    "typical_features": "Ocular/oral dryness screening items of the 2002 American-European Consensus Group criteria (Vitali C et al., Ann Rheum Dis 2002;61:554-558, Table 1 items I-II), used as the entry criterion of the 2016 ACR/EULAR classification criteria for primary Sjogren's syndrome (Shiboski CH et al., Arthritis Rheumatol 2017;69:35-45). Symptom wording paraphrased; no threshold or test result is asserted.",
+    "confirmatory_findings": "UNRESOLVED: no objective item added (labial biopsy/anti-SSA/Schirmer are tests, not available in the preliminary round).",
+    "selection": "Round U follow-up Tier-2 priority subset (long-tail development failure RoundI_long_tail). Agent-authored, not clinician-reviewed."
+   }
   }
  ]
 }

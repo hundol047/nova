@@ -224,6 +224,8 @@ class NovaConfig:
     answer_grounding_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ANSWER_GROUNDING", True))
     # one final decision decides whether a specific diagnosis may be named (nova_agent/final_decision.py).
     final_decision_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_FINAL_DECISION", True))
+    # Round U follow-up (preliminary rules only): skip targeted sweeps about candidates with no observed support.
+    action_focus_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ACTION_FOCUS", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"
