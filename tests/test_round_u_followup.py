@@ -176,3 +176,12 @@ def test_examined_focal_deficit_supports_stroke_and_negation_does_not():
 def test_sulfonylurea_class_includes_bnf_names():
     assert feature_present_with_aliases('sulfonylurea use', ['glibenclamide, took two by mistake'])
     assert feature_present_with_aliases('sulfonylurea use', ['I take gliclazide'])
+
+
+def test_pleuritic_wording_is_not_kussmaul_and_nausea_is_not_vomiting():
+    assert not feature_present_with_aliases('kussmaul breathing', ['Breathing deeply hurts the lower right chest.'])
+    assert feature_present_with_aliases('pleuritic chest pain', ['Breathing deeply hurts the lower right chest.'])
+    from nova_agent.multilingual_concepts import english_evidence_for
+    assert 'vomiting' not in english_evidence_for('右下腹部が痛くて吐き気があります')
+    assert 'nausea' in english_evidence_for('右下腹部が痛くて吐き気があります')
+    assert 'vomiting' in english_evidence_for('嘔吐しました')

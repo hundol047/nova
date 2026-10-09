@@ -280,6 +280,9 @@ def _present_not_negated(phrase: str, text: str, protected: tuple = ()) -> bool:
     return False
 
 
+_ROUTING_ONLY = frozenset({("vomiting", "吐き気")})
+
+
 def english_evidence_for(text: str) -> List[str]:
     """Canonical English symptom phrases for every localized (non-ASCII) clinical phrase present in
     `text`. Only phrases containing a non-ASCII character can fire, so plain English never changes."""
@@ -291,6 +294,9 @@ def english_evidence_for(text: str) -> List[str]:
     muscle_spans = tuple((m.start(), m.end()) for m in re.finditer(r"근육\s*경련", text))
     for concept, phrases in MULTILINGUAL_CONCEPT_ALIASES.items():
         english = _CANONICAL_ENGLISH_EVIDENCE.get(concept)
+        # Round U follow-up: a ROUTING alias is not always the same observation -- 吐き気 (nausea) routes with the
+        # vomiting complaint but is evidence of nausea only (see _DIRECT_LOCALIZED_EVIDENCE), never of vomiting.
+        phrases = [p for p in phrases if (concept, p) not in _ROUTING_ONLY]
         if english and english not in found and any((not p.isascii()) and _present_not_negated(p, text) for p in phrases):
             found.append(english)
     for phrase, english in _DIRECT_LOCALIZED_EVIDENCE.items():

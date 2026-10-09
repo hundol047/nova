@@ -44,7 +44,7 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
     "mild fever": ["low fever", "slight fever", "a little feverish", "mild temperature"],
     "recent viral illness": ["after a cold", "following a cold", "after the flu", "after a chest cold", "after a head cold"],
     "chest wall soreness from coughing": ["sore chest muscles from coughing", "chest aches from coughing"],
-    "pleuritic chest pain": ["stitch in my side when i breathe", "stabbing pain when i breathe in", "sharp pain on breathing in",
+    "pleuritic chest pain": ["breathing deeply hurts", "hurts to breathe deeply", "stitch in my side when i breathe", "stabbing pain when i breathe in", "sharp pain on breathing in",
                               "hurts when i breathe in", "stabs when i breathe in", "pain when i breathe in deeply"],
     "crackles on auscultation": ["crackles", "rattly chest"],
     "dyspnea": _BREATHLESS,
@@ -129,7 +129,9 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
     "fruity breath odor": ["breath smells like nail polish", "pear drops", "sweet smelling breath", "fruity smell on my breath", "breath smells of acetone",
                             "smells like nail polish"],
     "kussmaul breathing": ["deep fast breathing", "rapid deep breathing", "breathing deeply and fast", "deep heavy breathing", "breathing fast and deep",
-                            "breathing is deeper", "breathing deeply"],
+                            # Round U follow-up: bare "breathing deeply" removed -- "it hurts when breathing deeply" is
+                            # pleuritic pain, not Kussmaul respiration (NewT_12 development regression).
+                            "breathing is deeper"],
     "confusion": _CONFUSED,
     "altered mental status": _CONFUSED,
     "tremor": ["shaky", "trembling", "shaking hands", "tremulous"],
@@ -359,6 +361,8 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     # Orthopnoea quantified by pillows (NICE CKS "Heart failure - chronic": orthopnoea).
     "unable to lie flat": ["three pillows to sleep", "need three pillows", "need extra pillows to sleep",
                            "sleep propped up", "cannot lie flat", "can't lie flat"],
+    # Examination tenderness located in the lower right abdomen IS right-lower-quadrant tenderness (no cause implied).
+    "right lower quadrant tenderness": ["tender low on the right", "tender in the lower right", "tender in the right lower abdomen"],
     # --- peritonism wording on examination
     "rebound tenderness": ["with rebound", "rebound everywhere", "rebound tenderness everywhere"],
     "lying still": ["lying very still", "lying completely still", "keeps very still"],
