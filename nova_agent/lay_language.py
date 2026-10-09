@@ -361,8 +361,6 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     # Orthopnoea quantified by pillows (NICE CKS "Heart failure - chronic": orthopnoea).
     "unable to lie flat": ["three pillows to sleep", "need three pillows", "need extra pillows to sleep",
                            "sleep propped up", "cannot lie flat", "can't lie flat"],
-    # Examination tenderness located in the lower right abdomen IS right-lower-quadrant tenderness (no cause implied).
-    "right lower quadrant tenderness": ["tender low on the right", "tender in the lower right", "tender in the right lower abdomen"],
     # --- peritonism wording on examination
     "rebound tenderness": ["with rebound", "rebound everywhere", "rebound tenderness everywhere"],
     "lying still": ["lying very still", "lying completely still", "keeps very still"],
