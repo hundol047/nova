@@ -79,6 +79,8 @@ def assess_evidence(state: PatientState, differential: list[DifferentialItem],
     medication_info = bool(_MEDICATION_INFORMATION.search(state.chief_complaint) and _MEDICATION_NOUN.search(state.chief_complaint))
     contradictions = len(set(selected.contradictory_evidence)) if selected else 0
     signals = {
+        "selected_id": selected.diagnosis_id if selected else selected_id,
+        "assessment_scope": "evidence_sufficiency_not_working_label_permission",
         "meaningful_evidence_items": len(evidence), "contradiction_count": contradictions,
         "rank1_rank2_score_gap": margin, "known_presentation_concepts": len(concepts),
         "selected_matches_rank1": bool(selected and top and selected.diagnosis_id == top.diagnosis_id),

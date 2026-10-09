@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import re
 from typing import List, Tuple
+from nova_agent.matching import POSTURAL_LIGHTHEADEDNESS
 
 _HISTORY = re.compile(r"\b(?:history of|h/o|years? ago|used to|last year|previously|in the past|as a child|childhood)\b",
                       re.IGNORECASE)
@@ -64,10 +65,7 @@ _CONCEPTS: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
     ("facial droop", r"\b(?:face|mouth|smile)\b[^.;]{0,25}\b(?:droop\w*|lopsided|crooked|uneven|sagging)\b|"
                      r"\b(?:droop\w*|lopsided|crooked)\b[^.;]{0,10}\b(?:face|mouth|smile)\b|\bfacial (?:droop|weakness|palsy)\b"),
     # syncope / orthostasis wording
-    ("lightheadedness on standing up", r"\b(?:stand(?:ing)?(?: up)?|get(?:ting)? up|rising|sit(?:ting)? up)\b[^.;]{0,40}"
-                                       r"\b(?:dizzy|lightheaded|light-headed|faint|pass(?:ing)? out|black(?:ing)? out|woozy)\b|"
-                                       r"\b(?:dizzy|lightheaded|light-headed|faint|woozy)\b[^.;]{0,20}\b(?:on|when|upon|after|every time|whenever) "
-                                       r"(?:standing|i stand|getting up|i get up|rising)\b"),
+    ("lightheadedness on standing up", POSTURAL_LIGHTHEADEDNESS.pattern),
     ("prodrome of lightheadedness", r"\b(?:everything|vision|eyes?|world)\b[^.;]{0,15}\b(?:went|going|turned|goes) "
                                     r"(?:gr[ae]y|dark|black|white|fuzzy|dim)\b|\btunnel vision\b|\bgr[ae]ying out\b|"
                                     r"\bfelt (?:faint|lightheaded|light-headed|woozy|clammy)\b[^.;]{0,25}\b(?:before|first|then)\b"),
@@ -103,7 +101,7 @@ _CONCEPTS_V2: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
      r"\b(?:breathing in|deep breaths?|inhaling)\b[^.;]{0,15}\b(?:hurts?|is painful|makes it worse|stabs?)\b"),
     ("filling defect in the pulmonary artery",
      r"\bpulmonary (?:arter(?:y|ies) )?(?:embol\w*|thromb\w*|clots?)\b|\bsaddle embol\w*|"
-     r"\bembol\w*\b[^.;]{0,30}\bpulmonary arter(?:y|ies)\b|\bfilling defects?\b[^.;]{0,40}\b(?:pulmonary|lobar|segmental)\b"),
+     r"\bembol\w*\b[^.;]{0,30}\bpulmonary arter(?:y|ies)\b|\bfilling defects?\b[^.;]{0,40}\bpulmonary arter(?:y|ies)\b"),
     ("worse with movement",
      r"\b(?:worse|hurts?|sore|sharper|aggravated|pain\w*)\b[^.;]{0,20}\b(?:with|when(?: i| you)?|on|if i) " + _ACTION + r"|"
      r"\b" + _ACTION + r"\b[^.;]{0,20}\b(?:makes? it worse|brings? it on|hurts?|sets? it off)\b|"
@@ -114,6 +112,11 @@ _CONCEPTS_V2: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
 # Round P (NOVA_EVIDENCE_V3): medication class, generalised weakness and rhythm wording.
 _STOPPED_DRUG = re.compile(r"\b(?:stopped|ran out|run out|quit|no longer|discontinued|came off|come off|off (?:my|the|his|her))\b")
 _CONCEPTS_V3: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
+    # NICE CG150 table 1: bilateral + pressing/tightening. Require both
+    # descriptors and a head site in one asserted clause; headache alone is not it.
+    ("bilateral band-like pressure",
+     r"(?=.*\b(?:headache|head|temples?)\b)(?=.*\b(?:bilateral|both (?:sides|temples))\b)"
+     r"(?=.*\b(?:pressing|pressure|tight(?:ening)?|band[- ]like)\b).+"),
     ("diuretic use",
      r"\b(?:diuretics?|water (?:tablets?|pills?)|thiazides?|furosemide|frusemide|bumetanide|torsemide|bendroflumethiazide|"
      r"hydrochlorothiazide|indapamide|chlortalidone|chlorthalidone|spironolactone|lasix)\b"),
@@ -156,7 +159,7 @@ _POSTURE = {"lying": r"(?:lying(?: down)?|supine|recumbent)", "standing": r"(?:s
 def _posture_bp(text: str, posture: str):
     """(systolic, diastolic) labelled with a posture; "<posture> ... 120/80" is preferred over "120/80 <posture>"."""
     word = _POSTURE[posture]
-    for pattern in (r"\b" + word + r"\b[^.;\d]{0,15}" + _BP, _BP + r"[^.;\d]{0,6}\b" + word + r"\b"):
+    for pattern in (r"\b" + word + r"\b[^.;,\d]{0,15}" + _BP, _BP + r"[^.;,\d]{0,6}\b" + word + r"\b"):
         match = re.search(pattern, text, re.IGNORECASE)
         if match:
             return int(match.group(1)), int(match.group(2))
@@ -184,6 +187,9 @@ def canonical_findings_for(text: str) -> List[str]:
                 + (_CONCEPTS_V3 if get_config().evidence_v3_enabled else []))
     for clause in _current_positive_clauses(text):
         for canonical, pattern in patterns:
+            if canonical == "filling defect in the pulmonary artery" and re.search(
+                    r"\b(?:artifact|artefact|mixing|motion|equivocal|indeterminate|limited|poor|aort\w*|vein|venous|bronch\w*)\b", clause):
+                continue
             if canonical in _DRUG_CONCEPTS and _STOPPED_DRUG.search(clause):
                 continue  # a drug the patient stopped is not current use
             if canonical == "irregular heartbeat" and "irregularly irregular" in clause:
@@ -191,6 +197,25 @@ def canonical_findings_for(text: str) -> List[str]:
             if canonical not in found and pattern.search(clause):
                 found.append(canonical)
     return found
+
+
+def procedure_context_findings(procedure: str, result: str) -> List[str]:
+    """Use an actually observed study's compartment, never a planned study.
+
+    ESC/ERS 2019 PE guideline and 2025 CTA consensus (Round S provenance).
+    A definite lobar/segmental filling defect on pulmonary CTA can omit the
+    repeated words 'pulmonary artery'. Other compartments and technical or
+    uncertain findings must not supply that omitted anatomical context.
+    """
+    if procedure != "ct_chest_angio":
+        return []
+    for clause in _current_positive_clauses(result):
+        if re.search(r"\b(?:artifact|artefact|mixing|motion|equivocal|indeterminate|limited|poor|aort\w*|vein|venous|bronch\w*)\b", clause):
+            continue
+        if (re.search(r"\bfilling defects?\b", clause)
+                and re.search(r"\b(?:segmental|lobar|main pulmonary|pulmonary arter\w*)\b", clause)):
+            return ["filling defect in the pulmonary artery"]
+    return []
 
 
 # Round P (NOVA_RANKING_V3): a specific objective rhythm/finding phrase already represents the general symptom phrase

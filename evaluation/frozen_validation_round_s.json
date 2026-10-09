@@ -1,0 +1,706 @@
+[
+  {
+    "case_id": "NewS_01",
+    "chief_complaint": "While carrying groceries I developed squeezing behind the breastbone, an aching jaw, and a cold sweat. The discomfort remains at rest.",
+    "demographics": {
+      "age": 72,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "associated_symptoms": "Nausea with pressure spreading to the left shoulder.",
+      "past_medical_history": "Prior coronary disease and hypertension."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%",
+      "general_appearance": "Pale and diaphoretic."
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewS_02",
+    "chief_complaint": "After a twelve-hour bus journey I have become breathless, and an ache in my chest catches with each breath. My right calf has swollen.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pulmonary_embolism",
+    "answers": {
+      "associated_symptoms": "New dyspnea with pleuritic chest pain. No productive cough or fever."
+    },
+    "exam_results": {
+      "vital_signs": "BP 111/70, HR 124, RR 28, Temp 36.8, SpO2 90%",
+      "extremity_exam": "Swollen tender right calf."
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewS_03",
+    "chief_complaint": "I have diabetes, have missed my insulin for three days, and cannot stop drinking water or passing urine. Now I am vomiting and breathing very deeply.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "diabetic_ketoacidosis",
+    "answers": {
+      "medication": "Missed insulin doses.",
+      "associated_symptoms": "Thirst, polyuria and abdominal pain."
+    },
+    "exam_results": {
+      "vital_signs": "BP 101/65, HR 121, RR 28, Temp 36.5, SpO2 98%",
+      "general_appearance": "Dehydrated with deep laboured breathing."
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewS_04",
+    "chief_complaint": "A familiar throbbing pain covers the right side of my head. Light and noise are unpleasant, and I feel sick.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "migraine",
+    "answers": {
+      "past_medical_history": "Recurrent similar migraine headaches since college.",
+      "associated_symptoms": "Photophobia and nausea, without neck stiffness."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewS_05",
+    "chief_complaint": "For two days, passing urine stings, and I return to the toilet every half hour for small amounts.",
+    "demographics": {
+      "age": 29,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "uncomplicated_cystitis",
+    "answers": {
+      "associated_symptoms": "No fever, flank pain, vaginal discharge or vomiting.",
+      "onset": "Two days ago."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewS_06",
+    "chief_complaint": "Sour liquid reaches my mouth and there is burning behind my breastbone after a late dinner.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "gerd",
+    "answers": {
+      "aggravating": "Worse after large meals and when lying flat.",
+      "relieving": "Antacid relieves it.",
+      "associated_symptoms": "No breathlessness or sweating."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewS_07",
+    "chief_complaint": "One tender spot over my ribs hurts after lifting cartons. Twisting or pressing that same spot reproduces the ache.",
+    "demographics": {
+      "age": 48,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+    "answers": {
+      "associated_symptoms": "No fever, breathlessness or sweating.",
+      "aggravating": "Worse with movement and palpation."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%",
+      "lung_auscultation": "Clear breath sounds bilaterally."
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewS_08",
+    "chief_complaint": "A pressing band covers both sides of my head after a long day. It is dull and mild, with no nausea or vomiting.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "tension_headache",
+    "answers": {
+      "character": "Bilateral tightening head pain.",
+      "associated_symptoms": "No light sensitivity, visual symptoms or neck stiffness."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": false
+    }
+  },
+  {
+    "case_id": "NewS_09",
+    "chief_complaint": "The bedroom spins for about twenty seconds whenever I roll toward my right ear. Between attacks I feel normal.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "bppv",
+    "answers": {
+      "character": "Brief rotational vertigo triggered by turning the head.",
+      "associated_symptoms": "No fainting, hearing loss or weakness."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%",
+      "neuro_exam": "Positional nystagmus; strength and gait otherwise normal."
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewS_10",
+    "chief_complaint": "At a crowded ceremony I stood for an hour, became warm and nauseated, and fainted briefly. I recovered at once after lying down.",
+    "demographics": {
+      "age": 23,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "vasovagal_syncope",
+    "answers": {
+      "associated_symptoms": "Lightheadedness before the episode, no palpitations or chest pain.",
+      "relieving": "Lying down prevented another spell."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%",
+      "cardiac_auscultation": "Regular rhythm, no murmur."
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": false
+    }
+  },
+  {
+    "case_id": "NewS_11",
+    "chief_complaint": "I get lightheaded when I stand up from bed; lying down settles it. This began after my blood-pressure tablets changed.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "orthostatic_hypotension",
+    "answers": {
+      "medication": "Recent increase in blood pressure medicine.",
+      "associated_symptoms": "No blackout or palpitations."
+    },
+    "exam_results": {
+      "vital_signs": "Lying BP 132/80, HR 70; standing BP 106/68, HR 83, RR 16, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewS_12",
+    "chief_complaint": "My pulse feels uneven and I become lightheaded during bouts of heart pounding. There is no warning or emotional trigger.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "associated_symptoms": "Sudden palpitations with associated lightheadedness.",
+      "past_medical_history": "No known heart disease."
+    },
+    "exam_results": {
+      "vital_signs": "BP 110/70, HR 136, RR 19, Temp 36.7, SpO2 97%",
+      "cardiac_auscultation": "Irregularly irregular rhythm."
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewS_13",
+    "chief_complaint": "An increase in my water tablets was followed by painful muscle cramps and weakness in both legs. I have vomited repeatedly.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "severe_electrolyte_disorder",
+    "answers": {
+      "medication": "Indapamide dose increased recently.",
+      "associated_symptoms": "Generalized muscle weakness and cramps after vomiting.",
+      "social_history": "Eating and drinking very little."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {},
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewS_14",
+    "chief_complaint": "The discharge note confirms current atrial fibrillation; pulmonary embolism was excluded. I still feel my heart skipping.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "associated_symptoms": "No fever or cough."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%",
+      "cardiac_auscultation": "Irregular pulse."
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "forbidden": [
+        "pulmonary_embolism"
+      ]
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewS_15",
+    "chief_complaint": "While seated at breakfast I suddenly lost consciousness. I was neither upset nor changing posture.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 110/66, HR 41, RR 17, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "forbidden": [
+        "orthostatic_hypotension",
+        "vasovagal_syncope",
+        "onto::tier2:ventricular_tachycardia"
+      ]
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true,
+      "forbidden_support": [
+        "lightheadedness on standing up"
+      ]
+    }
+  },
+  {
+    "case_id": "NewS_16",
+    "chief_complaint": "I feel faint and my heart is pounding very rapidly, but I have remained conscious.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 103/69, HR 168, RR 20, Temp 36.6, SpO2 97%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "forbidden": [
+        "vasovagal_syncope",
+        "onto::tier2:ventricular_tachycardia"
+      ]
+    },
+    "audit_rejected_exams": [
+      "cardiac_auscultation",
+      "neuro_exam"
+    ],
+    "round_s_expect": {
+      "urgent": true
+    }
+  },
+  {
+    "case_id": "NewS_17",
+    "chief_complaint": "의자에 앉아 있다가 잠깐 의식을 잃었어요. 일어설 때 어지럽지는 않아요.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 112/68, HR 42, RR 16, Temp 36.6, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "forbidden": [
+        "orthostatic_hypotension",
+        "vasovagal_syncope",
+        "onto::tier2:ventricular_tachycardia"
+      ]
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "urgent": true,
+      "forbidden_support": [
+        "lightheadedness on standing up"
+      ]
+    }
+  },
+  {
+    "case_id": "NewS_18",
+    "chief_complaint": "The old hospital letter records atrial fibrillation in my mother. I have no palpitations, dizziness, or blackouts.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "no_unknown_as_content": true,
+      "forbidden_support": [
+        "documented diagnosis"
+      ]
+    }
+  },
+  {
+    "case_id": "NewS_19",
+    "chief_complaint": "A note says pulmonary embolism has not been ruled out. I cannot describe what prompted the referral.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis"
+      ],
+      "no_unknown_as_content": true
+    }
+  },
+  {
+    "case_id": "NewS_20",
+    "chief_complaint": "Something seems different, but I cannot identify a symptom.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [
+      "general_appearance",
+      "neuro_exam",
+      "cardiac_auscultation",
+      "lung_auscultation"
+    ],
+    "round_s_expect": {
+      "no_unknown_as_content": true
+    }
+  },
+  {
+    "case_id": "NewS_21",
+    "chief_complaint": "몸이 평소와 달라요. 어떻게 다른지는 모르겠어요.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "답변할 수 없어요.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "no_unknown_as_content": true
+    }
+  },
+  {
+    "case_id": "NewS_22",
+    "chief_complaint": "My hands tingle after breathing fast during an argument. I use a water tablet, but my strength is unchanged.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "associated_symptoms": "No muscle cramps or muscle weakness.",
+      "relieving": "It settles as I breathe slowly."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "forbidden": [
+        "severe_electrolyte_disorder",
+        "onto::tier2:ventricular_tachycardia"
+      ]
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {}
+  },
+  {
+    "case_id": "NewS_23",
+    "chief_complaint": "I have an itchy patch on my wrist. My father had an irregular heartbeat years ago.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "forbidden": [
+        "cardiac_arrhythmia",
+        "acute_coronary_syndrome"
+      ]
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "forbidden_support": [
+        "documented diagnosis"
+      ],
+      "no_unknown_as_content": true
+    }
+  },
+  {
+    "case_id": "NewS_24",
+    "chief_complaint": "I feel washed out and have chronic kidney disease. I also take insulin, and I have not been eating normally.",
+    "demographics": {
+      "age": 48,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {
+      "associated_symptoms": "No known glucose or electrolyte measurement is available."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 76, RR 16, Temp 36.7, SpO2 98%"
+    },
+    "test_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_s_frozen_engineering_validation",
+    "notes": "New synthetic combination authored after reading implementation and prior failures. Working-label scoring where specified; no clinician adjudication. Ambiguous cases use prespecified behavior only.",
+    "audit_expect": {
+      "forbidden": [
+        "onto::tier2:siadh",
+        "onto::tier2:ventricular_tachycardia"
+      ]
+    },
+    "audit_rejected_exams": [],
+    "round_s_expect": {
+      "no_unknown_as_content": true
+    }
+  }
+]

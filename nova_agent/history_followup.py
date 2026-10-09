@@ -16,7 +16,11 @@ SHORT_FOLLOWUPS = {
 def followup_questions(state, item):
     """Only contenders with multiple observed signals get these follow-ups.
     A drug name or weakness alone never activates an electrolyte workup."""
-    if not state.preliminary_rules or item is None or item.rank > 3 or len(item.supporting_evidence) < 2:
+    if not state.preliminary_rules or item is None:
+        return []
+    from nova_agent.disposition import symptomatic_rate_concern
+    observed_rate_cluster = (item.diagnosis_id == 'cardiac_arrhythmia' and bool(symptomatic_rate_concern(state)))
+    if not observed_rate_cluster and (item.rank > 3 or len(item.supporting_evidence) < 2):
         return []
     support = set(item.supporting_evidence)
     keys = []

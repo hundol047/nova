@@ -37,8 +37,8 @@ def normalize_key(text: str) -> str:
 # missed every one of these, silently losing or misclassifying half the answer.
 _CLAUSE_SPLIT_PATTERN = re.compile(
     r";|\n|(?<=\w)\.(?=\s+[a-z])|(?<=\w)\s+but\s+|(?<=\w)\s+however\s+|(?<=\w)\s+although\s+|(?<=\w)\s+except\s+(?:that\s+)?"
-    r"|,\s*(?=(?:but\s+)?(?:I\s+)?(?:don'?t know|do not know|cannot remember|can't remember|not sure))"
-    r"|\s+and\s+(?=(?:I\s+)?(?:don'?t know|do not know|cannot remember|can't remember))"
+    r"|,\s*(?=(?:but\s+)?(?:I\s+)?(?:don'?t know|do not know|cannot remember|can't remember|not sure|cannot tell|can't tell|cannot say))"
+    r"|\s+and\s+(?=(?:I\s+)?(?:don'?t know|do not know|cannot remember|can't remember|cannot tell|can't tell|cannot say))"
     r"|하지만|그러나|그런데|근데|でも|しかし|だが|但是|不过|但",
     re.IGNORECASE,
 )
@@ -158,7 +158,10 @@ def _with_canonical_concepts(texts: List[str]) -> List[str]:
 # actual question asked about (when the question asked about one), and otherwise is not stored as a finding at all.
 _ANSWER_UNKNOWN = re.compile(
     r"\b(?:don'?t know|do not know|not sure|unsure|no idea|can'?t remember|cannot remember|can'?t recall|"
-    r"don'?t remember|do not remember|can'?t say)\b|모르겠|몰라|기억(?:이)? ?안|잘 모르", re.IGNORECASE)
+    r"don'?t remember|do not remember|can'?t say|cannot say|cannot recall|"
+    r"(?:cannot|can'?t|unable to) tell (?:you|that|whether)|"
+    r"(?:prefer|would rather) not (?:to )?(?:answer|say)|decline to answer)\b|"
+    r"모르겠|몰라|기억(?:이)? ?안|잘 모르|알 수 없|답(?:변)?(?:을|은)?\s*(?:못|할 수 없|하기 싫)", re.IGNORECASE)
 _ANSWER_BARE_NO = re.compile(
     r"^(?:no|nope|nah|none|not really|never|no,? never|no,? not (?:really|at all)|"
     r"(?:no,? )?i (?:don'?t|do not)(?: have (?:that|any|it|them))?|"
@@ -475,8 +478,9 @@ class PatientState(BaseModel):
         from nova_agent.config import get_config
         kind = answer_kind(answer) if get_config().answer_grounding_enabled else None
         ambiguous_yes = kind == "yes" and target and re.search(r"\bor\b|또는|혹은", target, re.I)
+        ambiguous_no = kind == "no" and target and re.search(r"\band\b|그리고", target, re.I)
         self.action_outcomes.append(ActionOutcome(
-            action_type="ASK", key=discriminator, status="UNKNOWN" if kind == "unknown" or ambiguous_yes else "OBSERVED",
+            action_type="ASK", key=discriminator, status="UNKNOWN" if kind == "unknown" or ambiguous_yes or ambiguous_no else "OBSERVED",
             targets=[target] if target else [], faithful=faithful or not detail, raw=answer or ""))
         self._absorb_answer(discriminator, answer, target=target, kind=kind)
 
@@ -595,7 +599,15 @@ class PatientState(BaseModel):
                 if category == "associated_symptoms" and target not in self.associated_symptoms:
                     self.associated_symptoms.append(target)
             elif target and kind == "no":
-                if self._already_reported(target):
+                if re.search(r"\band\b|그리고", target, re.I):
+                    # No to "A AND B?" does not establish that BOTH are absent.
+                    # Keep the answer, but neither generate individual negatives
+                    # nor mark this compound discriminator observed.
+                    if target not in self.ambiguous_findings:
+                        self.ambiguous_findings.append(target)
+                    if target not in self.unknown_findings:
+                        self.unknown_findings.append(target)
+                elif self._already_reported(target):
                     # A bare "No" that contradicts what the patient already described is not a clean denial: keep
                     # the earlier observation and record the conflict instead of erasing either.
                     label = f"conflicting answer: {target}"
@@ -701,9 +713,14 @@ class PatientState(BaseModel):
         from nova_agent.matching import feature_present_with_aliases
         history = self.conversation_history if include_last else self.conversation_history[:-1]
         said = [self.chief_complaint, *self.symptoms, *self.associated_symptoms, *self.pertinent_positives,
+                *self.objective_findings_text(),
                 *[t.result for t in history if t.action_type == "ASK" and t.result and answer_kind(t.result) is None]]
         said = _with_canonical_concepts([t for t in said if t])
-        return feature_present_with_aliases(feature, said, scrub_negated_spans=True)
+        # A bare No to an OR question conflicts when either branch is already
+        # observed (including measured fever). Do not erase an objective finding.
+        branches = re.split(r"\bor\b|또는|혹은", feature)
+        return any(feature_present_with_aliases(part.strip(), said, scrub_negated_spans=True)
+                   for part in branches if part.strip())
 
     def add_medication(self, medication: Medication) -> None:
         self.medications.append(medication)
@@ -728,11 +745,14 @@ class PatientState(BaseModel):
         out += list(self.physical_examinations.values()) + list(self.imaging.values())
         out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
+        from nova_agent.clinical_concepts import procedure_context_findings
+        out += [f for key, value in self.imaging.items() for f in procedure_context_findings(key, value)]
         if include_context:
             out += list(self.medication_text) + list(self.allergy_text)
             out += [m.name for m in self.medications] + [a.substance for a in self.allergies]
         from nova_agent.documented_diagnosis import diagnosis_evidence_text
-        out = [diagnosis_evidence_text(t) for t in out if t and t not in self.ambiguous_findings]
+        out = [diagnosis_evidence_text(t) for t in out
+               if t and t not in self.ambiguous_findings and answer_kind(t) != "unknown"]
         # Localized (ko/ja) symptom phrases also count as their canonical English wording, so
         # scoring (which matches English KB features) treats them like the English patient.
         from nova_agent.multilingual_concepts import english_evidence_for
@@ -759,6 +779,8 @@ class PatientState(BaseModel):
         out = list(self.physical_examinations.values()) + list(self.imaging.values())
         out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
+        from nova_agent.clinical_concepts import procedure_context_findings
+        out += [f for key, value in self.imaging.items() for f in procedure_context_findings(key, value)]
         from nova_agent.documented_diagnosis import diagnosis_evidence_text
         out = [diagnosis_evidence_text(t, allow_historical=False) for t in out if t]
         return _with_canonical_concepts(out)

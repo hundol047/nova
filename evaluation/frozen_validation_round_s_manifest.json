@@ -1,0 +1,9 @@
+{
+  "sha256": "1e99c1ccb346d2b459103dcef5be217f5f32a83ce839e04bdabccc70cd3fc9a0",
+  "frozen_utc": "2026-10-09T05:52:27.940328+00:00",
+  "author_exposure": "Implementation and prior development failures read; not independent clinical validation.",
+  "runtime_before_execution": "eea5c53716fc79c1a25fe4c2943a17b455d5a7d8",
+  "cases": 24,
+  "scored": 14,
+  "policy": "Existing same_diagnosis and SyntheticCase critical flag unchanged. Additional behavior contract v1 in evaluate_round_s. No post-execution label changes or runtime tuning."
+}

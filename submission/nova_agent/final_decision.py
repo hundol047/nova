@@ -44,7 +44,8 @@ class FinalDecision:
 
     def as_metadata(self) -> dict:
         return {"primary_id": self.primary_id, "support": self.support,
-                "completion_reason": self.completion_reason, "reasons": list(self.reasons)}
+                "completion_reason": self.completion_reason, "reasons": list(self.reasons),
+                "support_scope": "working_diagnosis_not_confirmation"}
 
 
 def _current_texts(state) -> List[str]:
@@ -186,7 +187,7 @@ def support_problems(item, state, differential: list) -> List[str]:
             problems.append("rhythm_subtype_not_observed")
     # NICE CG109 1.1.4.3: uncomplicated faint requires no features suggesting an
     # alternative. Reuse the existing measured-rate thresholds; do not infer an ECG.
-    if item.diagnosis_id == "vasovagal_syncope":
+    if item.diagnosis_id in {"vasovagal_syncope", "orthostatic_hypotension", "onto::tier2:orthostatic_hypotension"}:
         rate = state.latest_vital_signs()
         if rate and rate.heart_rate is not None and (rate.heart_rate < 50 or rate.heart_rate >= 150):
             problems.append("marked_pulse_rate_requires_explanation")

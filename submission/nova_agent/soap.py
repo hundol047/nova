@@ -290,6 +290,13 @@ def build_soap(state: PatientState, differential: list, lang: str = "en", final=
                f"{L['basis']}: " + ("; ".join(basis[:8]) if basis else L["no_basis"])]
     if undifferentiated:
         a_lines.append(_UNDIFF_NOTE["ko" if lang == "ko" else "en"])
+    elif final is not None:
+        from nova_agent.uncertainty import assess_evidence
+        assessment = assess_evidence(state, differential, selected_id=final.primary_id)
+        if assessment.internal_result != "SUPPORTED_DIAGNOSIS":
+            a_lines.append("현재의 잠정 진단이며 확진은 아닙니다. 구별에 필요한 정보가 부족하거나 상충하며, 다른 원인은 배제되지 않았습니다."
+                           if lang == "ko" else "Working diagnosis, not confirmed. Discriminating information is incomplete "
+                           "or conflicting; alternatives have not been excluded.")
     ddx_lines = []
     dangerous_entries: List[dict] = []
     for item in others[:5 if undifferentiated else 4]:
@@ -302,13 +309,20 @@ def build_soap(state: PatientState, differential: list, lang: str = "en", final=
             dangerous_entries.append(entry)
     contra = list(top.contradictory_evidence) if top else []
     missing = list(top.missing_discriminative_evidence) if top else []
+    if undifferentiated:
+        # An absent primary is not evidence that no discriminator remains.
+        # Keep the alternatives' actual missing features, without inventing a result.
+        missing = list(dict.fromkeys(e for d in differential[:5]
+                                    for e in d.missing_discriminative_evidence))
     a_lines.append(f"{L['contra']}: " + ("; ".join(contra[:4]) if contra else L["none"]))
-    a_lines.append(f"{L['missing']}: " + ("; ".join(missing[:4]) if missing else L["none"]))
+    a_lines.append(f"{L['missing']}: " + ("; ".join(missing[:4]) if missing else
+                   L["unclear"] if undifferentiated else L["none"]))
     a_lines.append(f"{L['ddx']}:")
     a_lines.extend(ddx_lines or [f"- {L['none']}"])
 
-    urgent = bool(top and (top.dangerous_if_missed or top.urgency in ("CRITICAL", "HIGH"))) or (
-        undifferentiated and any(d.dangerous_if_missed and d.supporting_evidence and d.score > 0 for d in differential[:3]))
+    from nova_agent.disposition import disposition_for
+    disposition = disposition_for(state, final, differential)
+    urgent = disposition.urgent
     if undifferentiated and differential:
         top_entry = _entry_for(differential[0].diagnosis_id)  # tests that would evaluate the leading possibility
     tests = _plan_tests(top_entry, dangerous_entries, lang)
@@ -317,6 +331,9 @@ def build_soap(state: PatientState, differential: list, lang: str = "en", final=
                f"{L['tx']}: " + (L["tx_urgent"] if urgent else L["tx_routine"]),
                f"{L['fu']}: " + (L["fu_urgent"] if urgent else L["fu_routine"]),
                _education_line(state, L, flags)]
+    if disposition.evidence:
+        p_lines.append(("계획에 반영한 관찰: " if lang == "ko" else "Observed concerns informing disposition: ")
+                       + "; ".join(disposition.evidence[:8]))
 
     blocks = {"S": "\n".join(_subjective(state, L)), "O": "\n".join(_objective(state, L, lang)),
               "A": "\n".join(a_lines), "P": "\n".join(p_lines)}

@@ -97,13 +97,9 @@ def _exhausted(state: PatientState):
     return None
 
 
-def _urgent(final, differential: list) -> bool:
-    """Urgent advice when the named diagnosis is grave, or -- with nothing named -- when a dangerous candidate with
-    real support is still in the top three (it is not excluded, so the next step must be urgent)."""
-    top = final.item
-    if top is not None:
-        return bool(top.dangerous_if_missed or top.urgency in ("CRITICAL", "HIGH"))
-    return any(d.dangerous_if_missed and d.supporting_evidence and d.score > 0 for d in differential[:3])
+def _urgent(final, differential: list, state: PatientState) -> bool:
+    from nova_agent.disposition import disposition_for
+    return disposition_for(state, final, differential).urgent
 
 
 def preliminary_wire_action(case_id: str, action: AgentAction, state: PatientState, differential: list,
@@ -240,7 +236,7 @@ class NovaCompetitionAgent:
                                rationale="Explain the working diagnosis to the patient before submitting the note.")
         if "plan" not in done and remaining >= 2:
             done.add("plan")
-            urgent = _urgent(final, differential)
+            urgent = _urgent(final, differential, state)
             return AgentAction(action_type="SAY", key="plan_explanation", content=plan_say_text(urgent, lang),
                                rationale="Tell the patient the next step and when to return.")
         return None
@@ -334,6 +330,11 @@ class NovaCompetitionAgent:
             final = self._final_decision(obs.case_id, state, _differential or [])
             action = AgentAction(action_type="DIAGNOSE", key=final.primary_id, content=final.label(state.locale or "en"),
                                  rationale=action.rationale)
+            # Assess the actually submitted working diagnosis, not the rank-one
+            # proposal rejected by final_decision. The two axes have explicit names.
+            from nova_agent.uncertainty import assess_evidence
+            state.evidence_assessment = assess_evidence(state, _differential or [],
+                                                        selected_id=final.primary_id).model_dump()
 
         self._pending_actions[obs.case_id] = action
         real_llm_verified: Optional[bool] = None
@@ -367,6 +368,8 @@ class NovaCompetitionAgent:
             prelim.metadata.update(wire.metadata)
             if final is not None:
                 prelim.metadata["final_decision"] = final.as_metadata()
+                from nova_agent.disposition import disposition_for
+                prelim.metadata["disposition"] = disposition_for(state, final, _differential or []).as_metadata()
                 from nova_agent.resolution import workup_coverage
                 prelim.metadata["workup_coverage"] = {
                     d.diagnosis_id: workup_coverage(d.diagnosis_id, state)

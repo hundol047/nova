@@ -307,15 +307,19 @@ def _strip_negated_spans_uncached(text: str) -> str:
     # Negation ends at a clause boundary, not an arbitrary four-word window.
     # Keep affirmative clauses after "but"/"however" rather than erasing the entire report.
     # Sentence periods are boundaries too; decimal points are not.
-    clauses = re.split(r"[;,\n]|(?<=[a-z])\.(?=\s|$)|\b(?:but|however)\b", text, flags=re.I)
+    # A comma is not an assertion boundary: in "no A, B, or C" the denial
+    # governs all three. Only a new explicit predicate escapes the list.
+    clauses = re.split(r"[;\n]|(?<=[a-z])\.(?=\s|$)|\b(?:but|however)\b|"
+                       r",\s*(?=(?:(?:and\s+)?(?:i|he|she|the patient)\s+(?:have|has|feel|feels|report|reports|am|is)\b|"
+                       r"(?:has|have|reports?)\b|[^,;\n]{1,70}\b(?:is|are|was|were)\b))", text, flags=re.I)
     positive = []
     for clause in clauses:
         if is_uncertain(clause):
             continue
         # Reports often place the negation after the finding. Scrubbing only
         # from "not" onward would leave the denied finding looking positive.
-        if re.search(r"(?:\b(?:is|are|was|were)\s+|:\s*)(?:absent|negative|not (?:present|seen|detected))\b"
-                     r"|\b(?:absent|not present|not seen|not detected)\s*[.!]?\s*$", clause, re.I):
+        if re.search(r"(?:\b(?:is|are|was|were)\s+|:\s*)(?:absent|negative|not (?:present|seen|detected|found))\b"
+                     r"|\b(?:absent|not present|not seen|not detected|not found)\s*[.!]?\s*$", clause, re.I):
             continue
         positive.append(re.sub(r"\b(?:no|not|denies|denied|without|negative for|absent(?!\s+" + _ABSENT_SIGN + r"))\b.*$",
                                " ", clause, flags=re.I))
@@ -402,8 +406,27 @@ _PROTECTED_QUALIFIERS = (
     ("pain when urinating", re.compile(r"\b(?:pain|painful|burning|burns|hurts?)\s+(?:(?:when|while|on|with|during)\s+)?(?:i\s+)?(?:urinating|urination|passing urine|pee(?:ing)?)\b")),
 )
 
+# Require the symptom-to-posture relation, not a bag containing "standing".
+# NICE CG109 1.2.1.2 / CG109 postural-hypotension assessment; vocabulary
+# normalization only, never a diagnosis or an inferred lying/standing BP.
+POSTURAL_LIGHTHEADEDNESS = re.compile(
+    r"\b(?:lightheadedness|lightheaded|light-headed|dizziness|dizzy|woozy|faint(?:ness)?)\s+"
+    r"(?:(?:occurs?|happens?|starts?|begins?)\s+)?(?:on|upon|when|after|whenever|every time)\s+"
+    r"(?:i\s+)?(?:stand(?:ing)?(?: up)?|get(?:ting)? up|ris(?:e|ing))\b|"
+    r"\b(?:on|upon|when|after|whenever|every time)\s+(?:i\s+)?(?:stand(?:ing)?(?: up)?|get(?:ting)? up|ris(?:e|ing))"
+    r"\s*[,; ]\s*(?:i\s+)?(?:feel\s+|get\s+|become\s+|am\s+)?(?:dizzy|lightheaded|light-headed|woozy|faint)\b|"
+    r"\b(?:standing up|getting up|rising)\s+(?:makes? me|causes?|triggers?)\s+(?:feel\s+)?"
+    r"(?:dizzy|lightheaded|light-headed|woozy|faint|dizziness|lightheadedness)\b|"
+    r"(?:일어설|일어날|일어나면|기립할)\s*(?:때(?:마다)?|마다)?\s*(?:머리가\s*)?"
+    r"어지(?:럽|러|럼)(?![^.;,]{0,10}(?:않|없))", re.I)
+
 
 def _protected_qualifier(feature_lower: str):
+    if feature_lower == "lightheadedness on standing up":
+        return POSTURAL_LIGHTHEADEDNESS
+    if feature_lower == "pain spreading across abdomen":
+        return re.compile(r"\bspread(?:s|ing)?\b[^.;]{0,30}\b(?:abdomen|belly)\b|"
+                          r"\b(?:abdominal|belly) pain\b[^.;]{0,20}\bspread(?:s|ing)?\b")
     if (re.search(r"\b(?:urinating|urination|urine|pee|peeing|wee)\b", feature_lower)
             and re.search(r"\b(?:pain|painful|burning|burns|hurt|hurts|stings)\b", feature_lower)):
         return re.compile(
@@ -535,6 +558,13 @@ def _head_or_pattern_missing(feature_lower: str, finding_content: Set[str]) -> b
     from nova_agent.config import get_config
     if not get_config().evidence_v3_enabled:
         return False
+    if feature_lower.startswith("sudden onset "):
+        # Shared timing is not a shared symptom: sudden-onset headache must not
+        # generate sudden-onset dyspnea or palpitations. Existing complete aliases
+        # are matched separately; this guards only the partial-token fallback.
+        symptom = _content_words(feature_lower[len("sudden onset "):])
+        if not symptom <= finding_content:
+            return True
     base = _QUALIFIER_SPLIT.split(feature_lower, maxsplit=1)[0]  # "shortness of breath | on exertion"
     ordered = [_stem(t) for t in re.findall(r"[a-z0-9]+", base) if t not in _IGNORED]
     ordered = [t for t in ordered if t and t not in _RELATIONAL_STEMS]
@@ -573,14 +603,25 @@ def _narrower_than_feature(feature_words: Set[str], negative: str) -> bool:
 
 def feature_denied(feature: str, negatives: List[str]) -> bool:
     feature_words = _content_words(feature)
-    effective = [n for n in negatives if not _narrower_than_feature(feature_words, n)]
-    return feature_present(feature, effective)
+    targets = []
+    for negative in negatives:
+        if _LEADING_NEGATION.match(negative):
+            body = _LEADING_NEGATION.sub("", negative, count=1)
+            targets.extend("no " + p.strip() for p in re.split(r",|\b(?:and|or|nor)\b", body) if p.strip())
+        else:
+            targets.append(negative)
+    effective = [n for n in targets if not _narrower_than_feature(feature_words, n)]
+    # A denial needs the actual finding, not 60% of its qualifiers ("no sudden
+    # rapid palpitations" must not contradict sudden dyspnoea).
+    return feature_present(feature, effective, strict=True)
 
 
 # Locally negated span ("denies chest pain"): used ONLY by explicitly_denied_in_findings(); the
 # general negation scrubber _strip_negated_spans() is clause-based (see above).
 _NEGATED_SPAN_PATTERN = re.compile(
-    r"\b(?:no|not|denies|denied|without|absent|negative for)\s+(?:[a-z]+\s*){1,4}", re.IGNORECASE,
+    r"\b(?:no|not|denies|denied|without|absent(?!\s+" + _ABSENT_SIGN + r")|negative for)\s+"
+    r"(?:(?!\b(?:but|however)\b|,\s*(?:(?:i|he|she)\s+)?(?:has|have|reports?|feels?)\b)[^;.\n])*",
+    re.IGNORECASE,
 )
 
 
@@ -592,7 +633,7 @@ def explicitly_denied_in_findings(feature: str, findings: List[str]) -> bool:
     the existing negation parser. This is an English-text helper, not a full language model.
     """
     spans = [m.group(0) for finding in findings for m in _NEGATED_SPAN_PATTERN.finditer(finding)]
-    return feature_present(feature, spans)
+    return feature_denied(feature, spans)
 
 
 # Feature-local aliases (spec section 6, Option A): alternate phrasings tried ONLY when evaluating

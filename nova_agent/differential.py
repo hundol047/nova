@@ -411,7 +411,21 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         # The phrase itself describes an ABSENCE (e.g. "no chest pain", "absent breath sounds").
         # The patient/exam explicitly denying that underlying thing SUPPORTS this phrase; the
         # underlying thing being explicitly PRESENT instead CONTRADICTS it.
-        if feature_present(underlying, negatives) or explicitly_denied_in_findings(underlying, findings):
+        # Explicitly denying an absence refutes that absence. Conversely an
+        # actual "absent breath sounds" is a positive examination sign, not a
+        # negation cue governing subsequent signs in the same sentence.
+        if phrase.lower().startswith("absent ") and (
+                feature_denied(phrase, negatives) or explicitly_denied_in_findings(phrase, findings)):
+            contradictory.append(phrase)
+            return -CONTRADICTION_PENALTY
+        if phrase.lower().startswith("absent ") and feature_present(
+                phrase, findings, scrub_negated_spans=True, strict=True):
+            supporting.append(phrase)
+            return weight
+        # "denies absent breath sounds" denies the ABSENCE, not the sounds.
+        # Respect finding qualifiers and distributed lists instead of matching
+        # any substring of a negative report as a new positive absence sign.
+        if feature_denied(underlying, negatives) or explicitly_denied_in_findings(underlying, findings):
             supporting.append(phrase)
             return weight
         if feature_present(underlying, findings, scrub_negated_spans=True):
@@ -532,13 +546,18 @@ def _score_disease(entry: dict, state: PatientState,
     # must be handled without letting simple keyword counting -- many independently-matched but
     # individually low-value symptom words -- mathematically outweigh a single decisive
     # confirmatory/objective finding for a DIFFERENT, more dangerous candidate). Only the total
-    # POSITIVE contribution from this one evidence class is capped, at a small multiple of a single
-    # confirmatory finding's own weight; a genuine contradiction still applies its full penalty
-    # uncapped (this must never soften real evidence AGAINST a diagnosis), and every matched/missing
+    # contribution from this one evidence class is capped. Denial of a generic optional symptom
+    # belongs to that same symptom class: subtracting it AFTER saturating several positive
+    # observations made one absent symptom erase an otherwise specific clinical pattern.
+    # Specific contradictions and objective results still apply their full uncapped penalty.
+    # Every matched/missing
     # phrase is still recorded in full for supporting_evidence/missing_discriminative_evidence --
     # only the numeric ranking contribution saturates, clinician-facing evidence text does not.
     typical_feature_score = 0.0
     typical_penalty = 0.0
+    generic_symptom_penalty = 0.0
+    from nova_agent.final_decision import _generic_symptom
+    from nova_agent.clinical_concepts import is_objective_only_feature
     subsumed = _subsumed_typical_features(entry, confirmatory_evidence_pool)
     for feature in entry.get("typical_features", []):
         if feature in subsumed:
@@ -547,14 +566,21 @@ def _score_disease(entry: dict, state: PatientState,
         max_possible += weight
         delta = _score_phrase(feature, weight, findings, negatives, supporting, contradictory, missing)
         typical_feature_score += max(delta, 0.0)
-        typical_penalty += min(delta, 0.0)
+        if (_generic_symptom(feature) and not is_objective_only_feature(feature)
+                and not _present_with_aliases(feature, findings)):
+            # An optional symptom never observed is different from a direct
+            # contradiction of an already positive observation. The latter
+            # keeps its full penalty even when the symptom class is saturated.
+            generic_symptom_penalty += min(delta, 0.0)
+        else:
+            typical_penalty += min(delta, 0.0)
     # Soft saturation instead of a flat cap (Round M): with a hard min(), a candidate matching six
     # typical features and one matching two both sat at exactly the cap and TIED, so rank order fell
     # back to pool insertion order. Evidence up to the knee counts in full; beyond it the
     # contribution rises strictly monotonically but asymptotes to the cap, so more converging
     # evidence still orders above less while stacked weak clues can never reach (let alone exceed)
     # one confirmatory finding's worth.
-    score += _soft_saturate(typical_feature_score) + typical_penalty
+    score += _soft_saturate(typical_feature_score + generic_symptom_penalty) + typical_penalty
 
     for risk_factor in entry.get("risk_factors", []):
         max_possible += RISK_FACTOR_WEIGHT
@@ -562,7 +588,18 @@ def _score_disease(entry: dict, state: PatientState,
         # They are never the patient's own symptoms or current comorbidities.
         risk_findings = findings
         if risk_factor.lower().startswith("family history"):
-            risk_findings = findings + ["family history of " + x for x in state.family_history]
+            from nova_agent.state import answer_kind
+            family = [x for x in state.family_history if answer_kind(x) is None]
+            if risk_factor.lower() == "family history":
+                # The old wrapper created a risk from ANY family answer (even
+                # an unrelated rash). An underspecified KB risk is credited
+                # only when this condition is actually reported in a relative.
+                names = [entry.get("name", ""), *entry.get("aliases", [])]
+                family = [x for x in family if any(n and feature_present_with_aliases(
+                    n, [x], scrub_negated_spans=True, strict=True) for n in names)]
+                risk_findings = ["family history of " + x for x in family]
+            else:
+                risk_findings = findings + ["family history of " + x for x in family]
         if _present_with_aliases(risk_factor, risk_findings) or (
                 _evidence_v3_enabled() and any(_present_with_aliases(b, findings) for b in or_branches(risk_factor))):
             supporting.append(risk_factor)

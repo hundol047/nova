@@ -152,15 +152,19 @@ def workup_coverage(diagnosis_id: str, state: PatientState) -> dict:
     from nova_agent.taxonomy import TEST_CATALOG
     entry = _resolve_entry(diagnosis_id) or {}
     result = {k: [] for k in ("observed", "pending", "unknown", "rejected", "unavailable")}
+    mapped_exams = []
     for q in entry.get("discriminating_questions", []):
         detail = q.partition(":")[2]
         if detail and is_objective_only_feature(detail):
-            if not bedside_exam_for_feature(detail):
+            exam = bedside_exam_for_feature(detail)
+            if exam:
+                mapped_exams.append(exam)
+            else:
                 result["unavailable"].append(q)
             continue
         status = "observed" if state.question_observed(q) else "unknown" if state.question_attempted(q) else "pending"
         result[status].append("ASK:" + q)
-    procedures = list(dict.fromkeys(entry.get("discriminating_exams", []) + (entry.get("minimum_workup") or [])))
+    procedures = list(dict.fromkeys(entry.get("discriminating_exams", []) + mapped_exams + (entry.get("minimum_workup") or [])))
     for key in procedures:
         if key in TEST_CATALOG:
             status = "unavailable" if state.preliminary_rules else "observed" if state.test_done(key) else "pending"
