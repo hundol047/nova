@@ -339,7 +339,7 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
                           "basal crackles"],
     # Syncope with no prodrome (ESC 2018 syncope guideline Table 5); the KB phrase is on the arrhythmia CATEGORY.
     "syncope without warning": ["passed out without any warning", "passed out without warning", "out with no warning at all",
-                                "blacked out with no warning", "blacked out without warning", "collapsed without warning",
+                                "collapsed without warning",
                                 "fainted without warning", "fainted with no warning", "lost consciousness without warning"],
     # Pain under the right costal margin IS right-upper-quadrant pain (anatomical region, no cause implied).
     "right upper quadrant pain": ["under my right ribs", "below my right ribs", "under the right ribs",
