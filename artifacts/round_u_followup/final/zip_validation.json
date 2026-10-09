@@ -1,0 +1,39 @@
+{
+  "zip": "submission/submission.zip",
+  "bytes": 839230,
+  "sha256": "ab61a2c83b309cccd07538a33faef0731ef1ff71009364586b240e561700b26d",
+  "checks": {
+    "root_has_run_py_and_requirements": true,
+    "under_50MB": true,
+    "no_absolute_or_parent_paths": true,
+    "no_symlinks": true,
+    "all_members_utf8": true,
+    "no_forbidden_directories": true,
+    "no_forbidden_file_names_or_weights": true,
+    "no_forbidden_imports": true,
+    "requirements_only_declared_runtime_deps": true,
+    "offline_mock_encounter_runs": true,
+    "encounter_obeys_preliminary_actions": true,
+    "encounter_within_50_turns_and_30_char_say": true,
+    "encounter_ends_with_soap_and_one_diagnosis": true,
+    "run_py_fails_closed_until_official_interface": true
+  },
+  "requirements": [
+    "pydantic"
+  ],
+  "encounter": {
+    "kinds": [
+      "DIAGNOSE",
+      "EXAM",
+      "SAY"
+    ],
+    "turns": 13,
+    "final": "DIAGNOSE",
+    "say_max_chars": 30,
+    "has_soap": true,
+    "primary_diagnosis": "Acute Appendicitis"
+  },
+  "run_py_gate_message": "NOT READY: EXTERNAL_OFFICIAL_INTERFACE_BLOCKED; no organizer-approved transport integrated",
+  "all_pass": true,
+  "scope": "Package well-formedness and offline self-containment only. NOT evidence of official-interface compatibility, real gpt-oss-20b behaviour, accuracy, or source/licence clearance."
+}

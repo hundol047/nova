@@ -1,0 +1,4431 @@
+{
+ "scope": "Development mechanism records, baseline vs final, preliminary rules, mock LLM.",
+ "cases": {
+  "Fresh05": {
+   "truth": "diabetic_ketoacidosis",
+   "chief_complaint": "My insulin pump stopped yesterday. I am very thirsty, urinating repeatedly and now have nausea and stomach pain.",
+   "scripted_answers": {
+    "past_medical_history": "Type 1 diabetes.",
+    "medication": "No insulin delivered since the pump failed.",
+    "associated_symptoms": "Polyuria and polydipsia with vomiting."
+   },
+   "scripted_exams": {
+    "vital_signs": "BP 96/64, HR 122, RR 30, Temp 36.8, SpO2 99%",
+    "general_appearance": "Deep laboured breathing and dry mucous membranes.",
+    "abdominal_exam": "Diffuse mild tenderness without guarding."
+   },
+   "baseline": {
+    "final": "acute_pancreatitis",
+    "correct": false,
+    "interactions": 25,
+    "final_decision": {
+     "primary_id": "acute_pancreatitis",
+     "support": "SUPPORTED",
+     "completion_reason": "information_exhausted",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 5,
+    "chief_turn_rerank25_rank": 3,
+    "chief_turn_active_rank": 3,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 5,
+    "final_rerank25_rank": 1,
+    "final_active_rank": 2,
+    "truth_support_final": [
+     "polyuria",
+     "polydipsia"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "acute_pancreatitis",
+      "score": 2.0,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "nausea",
+       "vomiting"
+      ],
+      "against": [],
+      "missing": [
+       "epigastric pain radiating to back",
+       "worse after eating fatty food",
+       "elevated lipase",
+       "pancreatic inflammation on imaging",
+       "peripancreatic fat stranding"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "diabetic_ketoacidosis",
+      "score": 2.0,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "polyuria",
+       "polydipsia"
+      ],
+      "against": [],
+      "missing": [
+       "nausea and vomiting",
+       "abdominal pain",
+       "fruity breath odor",
+       "kussmaul breathing",
+       "confusion",
+       "large ketones"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "acute_coronary_syndrome",
+      "score": 1.4,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "nausea",
+       "diabetes"
+      ],
+      "against": [],
+      "missing": [
+       "exertional chest pain",
+       "substernal pressure",
+       "radiates to arm or jaw",
+       "diaphoresis",
+       "dyspnea on exertion",
+       "left arm pain"
+      ],
+      "naming_problems": [
+       "only_nonspecific_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd",
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lipase",
+      "priority": 0,
+      "discriminates": [
+       "acute_pancreatitis",
+       "acute_abdomen"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "abdominal_ultrasound",
+      "priority": 0,
+      "discriminates": [
+       "acute_pancreatitis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "glucose_point_of_care",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis",
+       "hypoglycemia",
+       "ischemic_stroke"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ketones",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "abg",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "bmp",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis",
+       "sepsis",
+       "pyelonephritis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "pulmonary_embolism",
+       "aortic_dissection",
+       "gerd"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "EXAM",
+      "meningeal_signs"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Acute Pancreatitis\nSupporting findings: nausea; vomiting\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: epigastric pain radiating to back; worse after eating fatty food; elevated lipase; pancreatic inflammation on imaging\nDifferential diagnosis:\n- Diabetic Ketoacidosis: polyuria; polydipsia\n- Acute Coronary Syndrome: nausea; diabetes\n- Acute Appendicitis: nausea\n- Acute Gastroenteritis: vomiting",
+    "soap_plan": "Further tests: Serum lipase, Abdominal ultrasound, Point-of-care glucose, Serum/urine ketones, Arterial blood gas, Basic metabolic panel (electrolytes/renal function)\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T24] working diagnosis explained; [T25] next step and warning signs explained\nObserved concerns informing disposition: heart_rate=122; respiratory_rate=30; polyuria; polydipsia"
+   },
+   "final": {
+    "final": "diabetic_ketoacidosis",
+    "correct": true,
+    "interactions": 29,
+    "final_decision": {
+     "primary_id": "diabetic_ketoacidosis",
+     "support": "SUPPORTED",
+     "completion_reason": "information_exhausted",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 2,
+    "chief_turn_rerank25_rank": 1,
+    "chief_turn_active_rank": 1,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 2,
+    "final_rerank25_rank": 1,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "polyuria",
+     "polydipsia",
+     "nausea and vomiting",
+     "abdominal pain",
+     "kussmaul breathing",
+     "known diabetes",
+     "missed insulin doses"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "diabetic_ketoacidosis",
+      "score": 5.8,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "polyuria",
+       "polydipsia",
+       "nausea and vomiting",
+       "abdominal pain",
+       "kussmaul breathing",
+       "known diabetes",
+       "missed insulin doses"
+      ],
+      "against": [],
+      "missing": [
+       "fruity breath odor",
+       "confusion",
+       "large ketones",
+       "metabolic acidosis",
+       "point-of-care glucose"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "acute_pancreatitis",
+      "score": 2.0,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "nausea",
+       "vomiting"
+      ],
+      "against": [],
+      "missing": [
+       "epigastric pain radiating to back",
+       "worse after eating fatty food",
+       "elevated lipase",
+       "pancreatic inflammation on imaging",
+       "peripancreatic fat stranding"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "pyelonephritis",
+      "score": 1.65,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "nausea and vomiting",
+       "diabetes"
+      ],
+      "against": [],
+      "missing": [
+       "flank pain",
+       "fever",
+       "costovertebral angle tenderness",
+       "dysuria",
+       "positive leukocyte esterase",
+       "positive nitrites"
+      ],
+      "naming_problems": []
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "associated_symptoms:long-term steroid use stopped suddenly",
+      "priority": 0,
+      "discriminates": [
+       "onto::tier2:adrenal_crisis"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd",
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "glucose_point_of_care",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis",
+       "hypoglycemia",
+       "ischemic_stroke"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ketones",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "abg",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "bmp",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis",
+       "pyelonephritis",
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lipase",
+      "priority": 0,
+      "discriminates": [
+       "acute_pancreatitis",
+       "acute_abdomen"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "abdominal_ultrasound",
+      "priority": 0,
+      "discriminates": [
+       "acute_pancreatitis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:severe weakness"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:low blood pressure"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:right upper quadrant pain"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:pain after fatty meals"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:fever"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Diabetic Ketoacidosis\nSupporting findings: polyuria; polydipsia; nausea and vomiting; abdominal pain; kussmaul breathing; known diabetes; missed insulin doses\nContradictory findings: none\nMissing discriminating evidence: fruity breath odor; confusion; large ketones; metabolic acidosis\nDifferential diagnosis:\n- Acute Pancreatitis: nausea; vomiting\n- Acute Pyelonephritis: nausea and vomiting; diabetes\n- Acute Coronary Syndrome: nausea; diabetes\n- Adrenal Crisis: vomiting and abdominal pain",
+    "soap_plan": "Further tests: Point-of-care glucose, Serum/urine ketones, Arterial blood gas, Basic metabolic panel (electrolytes/renal function), 12-lead ECG, Troponin\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T28] working diagnosis explained; [T29] next step and warning signs explained (Warning signs: kussmaul breathing, fruity breath, confusion with known diabetes, polyuria polydipsia)\nObserved concerns informing disposition: heart_rate=122; respiratory_rate=30; polyuria; polydipsia; nausea and vomiting; abdominal pain; kussmaul breathing; known diabetes"
+   }
+  },
+  "ValP_10": {
+   "truth": "musculoskeletal_chest_pain",
+   "chief_complaint": "Pain in my side when I breathe in since I fell off my bike",
+   "scripted_answers": {
+    "onset": "yesterday after the fall",
+    "aggravating": "twisting, coughing, pressing on the ribs",
+    "associated_symptoms": "no breathlessness at rest, no leg swelling"
+   },
+   "scripted_exams": {
+    "vital_signs": "BP 126/80, HR 76, RR 15, Temp 36.6, SpO2 99%",
+    "lung_auscultation": "clear, equal air entry",
+    "extremity_exam": "normal calves"
+   },
+   "baseline": {
+    "final": "tension_pneumothorax",
+    "correct": false,
+    "interactions": 27,
+    "final_decision": {
+     "primary_id": "tension_pneumothorax",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 22,
+    "chief_turn_rerank25_rank": 7,
+    "chief_turn_active_rank": 12,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 6,
+    "final_rerank25_rank": 5,
+    "final_active_rank": 4,
+    "truth_support_final": [
+     "worse with movement"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "tension_pneumothorax",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "chest pain after trauma"
+      ],
+      "against": [],
+      "missing": [
+       "sudden onset dyspnea",
+       "unilateral absent breath sounds",
+       "tracheal deviation",
+       "hypotension",
+       "absent breath sounds"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "pulmonary_embolism",
+      "score": 1.25,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "pleuritic chest pain"
+      ],
+      "against": [],
+      "missing": [
+       "sudden onset dyspnea",
+       "tachycardia",
+       "hemoptysis",
+       "calf swelling",
+       "unilateral leg pain",
+       "tachypnea"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "pneumonia",
+      "score": 1.25,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "pleuritic chest pain"
+      ],
+      "against": [],
+      "missing": [
+       "productive cough",
+       "fever",
+       "crackles on auscultation",
+       "dyspnea",
+       "consolidation",
+       "infiltrate"
+      ],
+      "naming_problems": []
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "EXAM",
+      "key": "neuro_exam",
+      "priority": 0,
+      "discriminates": [
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cxr",
+      "priority": 0,
+      "discriminates": [
+       "tension_pneumothorax"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "d_dimer",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ct_chest_angio",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:coughing up blood"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:severe headache"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:palpitations"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:severe bone pain crisis"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Tension Pneumothorax\nSupporting findings: chest pain after trauma\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: sudden onset dyspnea; unilateral absent breath sounds; tracheal deviation; hypotension\nDifferential diagnosis:\n- Pulmonary Embolism: pleuritic chest pain\n- Community-Acquired Pneumonia: pleuritic chest pain\n- Musculoskeletal Chest Pain (Costochondritis): worse with movement\n- Viral Upper Respiratory Infection: cough",
+    "soap_plan": "Further tests: Chest X-ray, D-dimer, CT chest angiography (PE protocol), 12-lead ECG\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T26] working diagnosis explained; [T27] next step and warning signs explained (Warning signs: absent breath sounds, tracheal deviation, hypotension, sudden onset dyspnea, distended neck veins)\nObserved concerns informing disposition: chest pain after trauma; pleuritic chest pain"
+   },
+   "final": {
+    "final": "musculoskeletal_chest_pain",
+    "correct": true,
+    "interactions": 18,
+    "final_decision": {
+     "primary_id": "musculoskeletal_chest_pain",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 43,
+    "chief_turn_rerank25_rank": 15,
+    "chief_turn_active_rank": 8,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 5,
+    "final_rerank25_rank": 6,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "reproducible with palpation",
+     "worse with movement",
+     "recent trauma"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "musculoskeletal_chest_pain",
+      "score": 2.716,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "reproducible with palpation",
+       "worse with movement",
+       "recent trauma"
+      ],
+      "against": [],
+      "missing": [
+       "localized tenderness",
+       "sharp pain",
+       "reproducible chest wall tenderness",
+       "pain reproduced on palpation"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "tension_pneumothorax",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "chest pain after trauma"
+      ],
+      "against": [],
+      "missing": [
+       "sudden onset dyspnea",
+       "unilateral absent breath sounds",
+       "tracheal deviation",
+       "hypotension",
+       "absent breath sounds"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "pulmonary_embolism",
+      "score": 1.25,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "pleuritic chest pain"
+      ],
+      "against": [],
+      "missing": [
+       "sudden onset dyspnea",
+       "tachycardia",
+       "hemoptysis",
+       "calf swelling",
+       "unilateral leg pain",
+       "tachypnea"
+      ],
+      "naming_problems": []
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "aggravating",
+      "priority": 0,
+      "discriminates": [
+       "musculoskeletal_chest_pain",
+       "acute_coronary_syndrome",
+       "gerd",
+       "orthostatic_hypotension",
+       "vasovagal_syncope"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "family_history",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd",
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "medication",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis",
+       "hypoglycemia",
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "severity",
+      "priority": 0,
+      "discriminates": [
+       "acute_abdomen"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "pyelonephritis",
+       "uncomplicated_cystitis"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "cardiac_auscultation",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "cardiac_arrhythmia",
+       "vasovagal_syncope"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "mental_status_exam",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis",
+       "hypoglycemia"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:shortness of breath"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:severe bone pain crisis"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Musculoskeletal Chest Pain (Costochondritis)\nSupporting findings: reproducible with palpation; worse with movement; recent trauma\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: localized tenderness; sharp pain; reproducible chest wall tenderness; pain reproduced on palpation\nDifferential diagnosis:\n- Tension Pneumothorax: chest pain after trauma\n- Pulmonary Embolism: pleuritic chest pain\n- Community-Acquired Pneumonia: pleuritic chest pain\n- Viral Upper Respiratory Infection: cough",
+    "soap_plan": "Further tests: 12-lead ECG, Chest X-ray\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T17] working diagnosis explained; [T18] next step and warning signs explained\nObserved concerns informing disposition: chest pain after trauma; pleuritic chest pain"
+   }
+  },
+  "ValP_12": {
+   "truth": "severe_electrolyte_disorder",
+   "chief_complaint": "Mum has been muddled and unsteady since she started a new antidepressant",
+   "scripted_answers": {
+    "medication": "started on an SSRI two weeks ago, also takes a water pill",
+    "onset": "over the past few days",
+    "associated_symptoms": "headache, nausea, one short fit this morning"
+   },
+   "scripted_exams": {
+    "vital_signs": "BP 126/74, HR 80, RR 16, Temp 36.5",
+    "mental_status_exam": "confused, slow to answer",
+    "neuro_exam": "unsteady gait, no focal weakness"
+   },
+   "baseline": {
+    "final": "unknown",
+    "correct": false,
+    "interactions": 23,
+    "final_decision": {
+     "primary_id": "unknown",
+     "support": "UNDIFFERENTIATED",
+     "completion_reason": "supported",
+     "reasons": [
+      "leader:only_nonspecific_support",
+      "leader:required_context_missing:documented low sodium"
+     ],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": false,
+    "chief_turn_top150_rank": null,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": null,
+    "ever_top150": false,
+    "ever_rerank25": false,
+    "final_top150_rank": null,
+    "final_rerank25_rank": null,
+    "final_active_rank": 4,
+    "truth_support_final": [
+     "confusion",
+     "diuretic use"
+    ],
+    "truth_naming_problems_final": [
+     "only_nonspecific_support"
+    ],
+    "top3_final": [
+     {
+      "id": "onto::tier2:siadh",
+      "score": 2.432,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "confusion",
+       "headache",
+       "nausea"
+      ],
+      "against": [],
+      "missing": [
+       "low sodium",
+       "seizure",
+       "concentrated urine"
+      ],
+      "naming_problems": [
+       "only_nonspecific_support",
+       "required_context_missing:documented low sodium"
+      ]
+     },
+     {
+      "id": "meningitis",
+      "score": 2.316,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "headache",
+       "altered mental status"
+      ],
+      "against": [],
+      "missing": [
+       "fever",
+       "neck stiffness",
+       "photophobia",
+       "rash",
+       "CSF pleocytosis",
+       "gram-negative diplococci"
+      ],
+      "naming_problems": [
+       "only_nonspecific_support"
+      ]
+     },
+     {
+      "id": "sepsis",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "altered mental status"
+      ],
+      "against": [],
+      "missing": [
+       "fever",
+       "tachycardia",
+       "hypotension",
+       "tachypnea",
+       "suspected infection source",
+       "positive blood culture"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support",
+       "only_nonspecific_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "pyelonephritis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lumbar_puncture",
+      "priority": 0,
+      "discriminates": [
+       "meningitis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "blood_culture",
+      "priority": 0,
+      "discriminates": [
+       "meningitis",
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "meningitis",
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lactate",
+      "priority": 0,
+      "discriminates": [
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "bmp",
+      "priority": 0,
+      "discriminates": [
+       "sepsis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "EXAM",
+      "meningeal_signs"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:severe eye pain"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Undifferentiated presentation\nSupporting findings: no specific supporting finding\nStatus: no specific diagnosis is supported by the information obtained; the candidates below are not excluded and need further evaluation.\nContradictory findings: none\nMissing discriminating evidence: low sodium; seizure; concentrated urine; fever\nDifferential diagnosis:\n- Syndrome of Inappropriate ADH: confusion; headache; nausea\n- Bacterial Meningitis: headache; altered mental status\n- Sepsis: altered mental status\n- Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia): confusion; diuretic use\n- Ischemic Stroke: ataxia",
+    "soap_plan": "Further tests: none\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T22] working diagnosis explained; [T23] next step and warning signs explained\nObserved concerns informing disposition: ataxia"
+   },
+   "final": {
+    "final": "severe_electrolyte_disorder",
+    "correct": true,
+    "interactions": 22,
+    "final_decision": {
+     "primary_id": "severe_electrolyte_disorder",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [
+      "leader:required_context_missing:documented low sodium",
+      "named:severe_electrolyte_disorder"
+     ],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": false,
+    "chief_turn_top150_rank": null,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": null,
+    "ever_top150": false,
+    "ever_rerank25": false,
+    "final_top150_rank": null,
+    "final_rerank25_rank": null,
+    "final_active_rank": 2,
+    "truth_support_final": [
+     "confusion",
+     "seizure",
+     "diuretic use"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "onto::tier2:siadh",
+      "score": 2.491,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "confusion",
+       "headache",
+       "nausea",
+       "seizure"
+      ],
+      "against": [],
+      "missing": [
+       "low sodium",
+       "concentrated urine"
+      ],
+      "naming_problems": [
+       "required_context_missing:documented low sodium"
+      ]
+     },
+     {
+      "id": "severe_electrolyte_disorder",
+      "score": 2.4,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "confusion",
+       "seizure",
+       "diuretic use"
+      ],
+      "against": [],
+      "missing": [
+       "muscle weakness",
+       "palpitations",
+       "arrhythmia",
+       "muscle cramps",
+       "peaked t waves",
+       "hyperkalemia"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "meningitis",
+      "score": 2.316,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "headache",
+       "altered mental status"
+      ],
+      "against": [],
+      "missing": [
+       "fever",
+       "neck stiffness",
+       "photophobia",
+       "rash",
+       "CSF pleocytosis",
+       "gram-negative diplococci"
+      ],
+      "naming_problems": [
+       "only_nonspecific_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "pyelonephritis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lumbar_puncture",
+      "priority": 0,
+      "discriminates": [
+       "meningitis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "blood_culture",
+      "priority": 0,
+      "discriminates": [
+       "meningitis",
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "meningitis",
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lactate",
+      "priority": 0,
+      "discriminates": [
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "bmp",
+      "priority": 0,
+      "discriminates": [
+       "sepsis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "EXAM",
+      "meningeal_signs"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:severe eye pain"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)\nSupporting findings: confusion; seizure; diuretic use\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: muscle weakness; palpitations; arrhythmia; muscle cramps\nDifferential diagnosis:\n- Syndrome of Inappropriate ADH: confusion; headache; nausea\n- Bacterial Meningitis: headache; altered mental status\n- Sepsis: altered mental status\n- Ischemic Stroke: ataxia",
+    "soap_plan": "Further tests: Basic metabolic panel (electrolytes/renal function), 12-lead ECG\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T21] working diagnosis explained; [T22] next step and warning signs explained (Warning signs: arrhythmia, muscle weakness with renal disease, confusion with renal disease)\nObserved concerns informing disposition: confusion; seizure; diuretic use; ataxia"
+   }
+  },
+  "ValP_17": {
+   "truth": "cardiac_arrhythmia",
+   "chief_complaint": "I passed out without any warning while sitting watching TV",
+   "scripted_answers": {
+    "onset": "this evening, no warning at all",
+    "associated_symptoms": "came round after a minute, a bit confused briefly",
+    "past_medical_history": "heart failure",
+    "medication": "several heart tablets"
+   },
+   "scripted_exams": {
+    "vital_signs": "BP 110/70, HR 38, RR 16, Temp 36.6",
+    "cardiac_auscultation": "slow regular rhythm",
+    "neuro_exam": "normal"
+   },
+   "baseline": {
+    "final": "unknown",
+    "correct": false,
+    "interactions": 23,
+    "final_decision": {
+     "primary_id": "unknown",
+     "support": "UNDIFFERENTIATED",
+     "completion_reason": "supported",
+     "reasons": [
+      "leader:single_nonspecific_support",
+      "leader:only_nonspecific_support",
+      "leader:tied_on_nonspecific_support"
+     ],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": false,
+    "chief_turn_top150_rank": null,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": 2,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 8,
+    "final_rerank25_rank": 3,
+    "final_active_rank": 5,
+    "truth_support_final": [
+     "pulse rate below 50",
+     "structural heart disease"
+    ],
+    "truth_naming_problems_final": [
+     "only_hemodynamic_support",
+     "only_nonspecific_support"
+    ],
+    "top3_final": [
+     {
+      "id": "sepsis",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "altered mental status"
+      ],
+      "against": [],
+      "missing": [
+       "fever",
+       "tachycardia",
+       "hypotension",
+       "tachypnea",
+       "suspected infection source",
+       "positive blood culture"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support",
+       "only_nonspecific_support",
+       "tied_on_nonspecific_support"
+      ]
+     },
+     {
+      "id": "meningitis",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "altered mental status"
+      ],
+      "against": [],
+      "missing": [
+       "fever",
+       "neck stiffness",
+       "photophobia",
+       "headache",
+       "rash",
+       "CSF pleocytosis"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support",
+       "only_nonspecific_support",
+       "tied_on_nonspecific_support"
+      ]
+     },
+     {
+      "id": "diabetic_ketoacidosis",
+      "score": 1.0,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "confusion"
+      ],
+      "against": [],
+      "missing": [
+       "polyuria",
+       "polydipsia",
+       "nausea and vomiting",
+       "abdominal pain",
+       "fruity breath odor",
+       "kussmaul breathing"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support",
+       "only_nonspecific_support",
+       "tied_on_nonspecific_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "EXAM",
+      "key": "neuro_exam",
+      "priority": 0,
+      "discriminates": [
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lactate",
+      "priority": 0,
+      "discriminates": [
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "blood_culture",
+      "priority": 0,
+      "discriminates": [
+       "sepsis",
+       "meningitis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "sepsis",
+       "meningitis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "bmp",
+      "priority": 0,
+      "discriminates": [
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lumbar_puncture",
+      "priority": 0,
+      "discriminates": [
+       "meningitis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "beta_hcg",
+      "priority": 0,
+      "discriminates": [
+       "ectopic_pregnancy"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "pelvic_ultrasound",
+      "priority": 0,
+      "discriminates": [
+       "ectopic_pregnancy"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "EXAM",
+      "meningeal_signs"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:palpitations"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Undifferentiated presentation\nSupporting findings: no specific supporting finding\nStatus: no specific diagnosis is supported by the information obtained; the candidates below are not excluded and need further evaluation.\nContradictory findings: none\nMissing discriminating evidence: fever; tachycardia; hypotension; tachypnea\nDifferential diagnosis:\n- Sepsis: altered mental status\n- Bacterial Meningitis: altered mental status\n- Diabetic Ketoacidosis: confusion\n- Hypoglycemia: confusion\n- Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT): pulse rate below 50; structural heart disease",
+    "soap_plan": "Further tests: 12-lead ECG, Serum lactate, Blood cultures, Complete blood count, Basic metabolic panel (electrolytes/renal function)\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T22] working diagnosis explained; [T23] next step and warning signs explained (Warning signs: hypotension, tachycardia, altered mental status, tachypnea, fever with confusion)\nObserved concerns informing disposition: heart_rate=38; syncope; almost passed out"
+   },
+   "final": {
+    "final": "cardiac_arrhythmia",
+    "correct": true,
+    "interactions": 24,
+    "final_decision": {
+     "primary_id": "cardiac_arrhythmia",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 1,
+    "chief_turn_rerank25_rank": 1,
+    "chief_turn_active_rank": 1,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 1,
+    "final_rerank25_rank": 1,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "pulse rate below 50",
+     "syncope without warning",
+     "structural heart disease"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "cardiac_arrhythmia",
+      "score": 2.2,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "pulse rate below 50",
+       "syncope without warning",
+       "structural heart disease"
+      ],
+      "against": [],
+      "missing": [
+       "sudden onset palpitations",
+       "irregular heartbeat",
+       "racing heart",
+       "associated lightheadedness",
+       "known history of arrhythmia",
+       "pulse rate of 150 or more"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "sepsis",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "altered mental status"
+      ],
+      "against": [],
+      "missing": [
+       "fever",
+       "tachycardia",
+       "hypotension",
+       "tachypnea",
+       "suspected infection source",
+       "positive blood culture"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support",
+       "only_nonspecific_support",
+       "tied_on_nonspecific_support"
+      ]
+     },
+     {
+      "id": "meningitis",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "altered mental status"
+      ],
+      "against": [],
+      "missing": [
+       "fever",
+       "neck stiffness",
+       "photophobia",
+       "headache",
+       "rash",
+       "CSF pleocytosis"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support",
+       "only_nonspecific_support",
+       "tied_on_nonspecific_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "orthostatic_hypotension",
+       "gerd"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "lung_auscultation",
+      "priority": 0,
+      "discriminates": [
+       "acute_bronchitis"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "uncomplicated_cystitis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "cardiac_arrhythmia"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "bmp",
+      "priority": 0,
+      "discriminates": [
+       "cardiac_arrhythmia",
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lumbar_puncture",
+      "priority": 0,
+      "discriminates": [
+       "meningitis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "blood_culture",
+      "priority": 0,
+      "discriminates": [
+       "meningitis",
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "meningitis",
+       "sepsis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "EXAM",
+      "meningeal_signs"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:loss of consciousness"
+     ],
+     [
+      "ASK",
+      "medication:recent medication changes"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)\nSupporting findings: pulse rate below 50; syncope without warning; structural heart disease\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: sudden onset palpitations; irregular heartbeat; racing heart; associated lightheadedness\nDifferential diagnosis:\n- Sepsis: altered mental status\n- Bacterial Meningitis: altered mental status\n- Diabetic Ketoacidosis: confusion\n- Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia): confusion",
+    "soap_plan": "Further tests: 12-lead ECG, Basic metabolic panel (electrolytes/renal function), Serum lactate, Blood cultures, Complete blood count\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T23] working diagnosis explained; [T24] next step and warning signs explained (Warning signs: hypotension, syncope with palpitations, chest pain with palpitations)\nObserved concerns informing disposition: heart_rate=38; syncope; almost passed out; pulse rate below 50; syncope without warning; structural heart disease"
+   }
+  },
+  "ValP_21": {
+   "truth": "acute_abdomen",
+   "chief_complaint": "Sudden agonising belly pain and I can't move, it hurts to even breathe",
+   "scripted_answers": {
+    "onset": "suddenly two hours ago",
+    "past_medical_history": "takes ibuprofen most days for his knees",
+    "associated_symptoms": "vomited, feels faint"
+   },
+   "scripted_exams": {
+    "vital_signs": "BP 96/60, HR 118, RR 24, Temp 37.9",
+    "abdominal_exam": "rigid board-like abdomen with rebound everywhere",
+    "general_appearance": "lying very still, grey"
+   },
+   "baseline": {
+    "final": "onto::tier2:perforated_viscus",
+    "correct": false,
+    "interactions": 26,
+    "final_decision": {
+     "primary_id": "onto::tier2:perforated_viscus",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [
+      "leader:only_nonspecific_support",
+      "named:onto::tier2:perforated_viscus"
+     ],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 75,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": 8,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 6,
+    "final_rerank25_rank": 3,
+    "final_active_rank": 3,
+    "truth_support_final": [
+     "rigid abdomen"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "gi_bleeding",
+      "score": 1.7,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "lightheadedness",
+       "tachycardia",
+       "NSAID use"
+      ],
+      "against": [],
+      "missing": [
+       "hematemesis",
+       "melena",
+       "hematochezia",
+       "pallor",
+       "positive fecal occult blood",
+       "hemoglobin drop"
+      ],
+      "naming_problems": [
+       "only_nonspecific_support"
+      ]
+     },
+     {
+      "id": "onto::tier2:perforated_viscus",
+      "score": 1.259,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "sudden severe abdominal pain",
+       "rigid board-like abdomen"
+      ],
+      "against": [
+       "lying still"
+      ],
+      "missing": [
+       "rebound tenderness",
+       "free air under diaphragm"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "acute_abdomen",
+      "score": 1.25,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "rigid abdomen"
+      ],
+      "against": [],
+      "missing": [
+       "severe abdominal pain",
+       "rebound tenderness",
+       "guarding",
+       "fever",
+       "free air",
+       "peritoneal signs on imaging"
+      ],
+      "naming_problems": []
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "gi_bleeding",
+       "acute_abdomen",
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "fecal_occult_blood",
+      "priority": 0,
+      "discriminates": [
+       "gi_bleeding"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "urinalysis",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ct_abdomen",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis",
+       "acute_abdomen"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lipase",
+      "priority": 0,
+      "discriminates": [
+       "acute_abdomen"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "glucose_point_of_care",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ketones",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:lying still"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:severe diffuse abdominal pain"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:pain spreading across abdomen"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Perforated Viscus\nSupporting findings: sudden severe abdominal pain; rigid board-like abdomen\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: lying still\nMissing discriminating evidence: rebound tenderness; free air under diaphragm\nDifferential diagnosis:\n- Gastrointestinal Bleeding: lightheadedness; tachycardia; NSAID use\n- Acute Abdomen (Surgical Abdomen): rigid abdomen\n- Musculoskeletal Chest Pain (Costochondritis): worse with movement\n- Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT): associated lightheadedness",
+    "soap_plan": "Further tests: Complete blood count, Fecal occult blood / rectal exam\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T25] working diagnosis explained; [T26] next step and warning signs explained\nObserved concerns informing disposition: respiratory_rate=24; sudden severe abdominal pain; rigid board-like abdomen; rigid abdomen"
+   },
+   "final": {
+    "final": "acute_abdomen",
+    "correct": true,
+    "interactions": 26,
+    "final_decision": {
+     "primary_id": "acute_abdomen",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [
+      "leader:only_nonspecific_support",
+      "named:acute_abdomen"
+     ],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 76,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": 8,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 6,
+    "final_rerank25_rank": 3,
+    "final_active_rank": 2,
+    "truth_support_final": [
+     "rebound tenderness",
+     "rigid abdomen"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "gi_bleeding",
+      "score": 1.7,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "lightheadedness",
+       "tachycardia",
+       "NSAID use"
+      ],
+      "against": [],
+      "missing": [
+       "hematemesis",
+       "melena",
+       "hematochezia",
+       "pallor",
+       "positive fecal occult blood",
+       "hemoglobin drop"
+      ],
+      "naming_problems": [
+       "only_nonspecific_support"
+      ]
+     },
+     {
+      "id": "acute_abdomen",
+      "score": 1.3,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "rebound tenderness",
+       "rigid abdomen"
+      ],
+      "against": [
+       "fever"
+      ],
+      "missing": [
+       "severe abdominal pain",
+       "guarding",
+       "free air",
+       "peritoneal signs on imaging",
+       "perforation"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "onto::tier2:perforated_viscus",
+      "score": 1.297,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "sudden severe abdominal pain",
+       "rigid board-like abdomen",
+       "rebound tenderness"
+      ],
+      "against": [
+       "lying still"
+      ],
+      "missing": [
+       "free air under diaphragm"
+      ],
+      "naming_problems": []
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd",
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "neuro_exam",
+      "priority": 0,
+      "discriminates": [
+       "tension_headache",
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "gi_bleeding",
+       "acute_abdomen",
+       "sepsis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "fecal_occult_blood",
+      "priority": 0,
+      "discriminates": [
+       "gi_bleeding"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "troponin",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "urinalysis",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:lying still"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:severe diffuse abdominal pain"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:pain spreading across abdomen"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:severe weakness"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:fever"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Acute Abdomen (Surgical Abdomen)\nSupporting findings: rebound tenderness; rigid abdomen\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: fever\nMissing discriminating evidence: severe abdominal pain; guarding; free air; peritoneal signs on imaging\nDifferential diagnosis:\n- Gastrointestinal Bleeding: lightheadedness; tachycardia; NSAID use\n- Perforated Viscus: sudden severe abdominal pain; rigid board-like abdomen; rebound tenderness (against/lacking: lying still)\n- Musculoskeletal Chest Pain (Costochondritis): worse with movement\n- Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT): associated lightheadedness",
+    "soap_plan": "Further tests: CT abdomen/pelvis with contrast, Complete blood count, Serum lipase, Fecal occult blood / rectal exam\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T25] working diagnosis explained; [T26] next step and warning signs explained (Warning signs: rebound tenderness, guarding, rigid abdomen, peritoneal signs)\nObserved concerns informing disposition: respiratory_rate=24; rebound tenderness; rigid abdomen; sudden severe abdominal pain; rigid board-like abdomen"
+   }
+  },
+  "ValP_08": {
+   "truth": "heart_failure",
+   "chief_complaint": "Short of breath on exertion and my ankles swell by the evening",
+   "scripted_answers": {
+    "onset": "getting worse over three weeks",
+    "associated_symptoms": "I need three pillows to sleep, wake up gasping at night",
+    "past_medical_history": "two heart attacks"
+   },
+   "scripted_exams": {
+    "vital_signs": "BP 142/88, HR 96, RR 22, Temp 36.7, SpO2 93%",
+    "lung_auscultation": "crackles at both bases",
+    "extremity_exam": "pitting oedema to the knees",
+    "cardiac_auscultation": "third heart sound"
+   },
+   "baseline": {
+    "final": "pneumonia",
+    "correct": false,
+    "interactions": 32,
+    "final_decision": {
+     "primary_id": "pneumonia",
+     "support": "SUPPORTED",
+     "completion_reason": "information_exhausted",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": false,
+    "chief_turn_top150_rank": null,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": null,
+    "ever_top150": false,
+    "ever_rerank25": false,
+    "final_top150_rank": null,
+    "final_rerank25_rank": null,
+    "final_active_rank": null,
+    "truth_support_final": null,
+    "truth_naming_problems_final": null,
+    "top3_final": [
+     {
+      "id": "pneumonia",
+      "score": 2.197,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "crackles on auscultation",
+       "dyspnea"
+      ],
+      "against": [],
+      "missing": [
+       "productive cough",
+       "fever",
+       "pleuritic chest pain",
+       "consolidation",
+       "infiltrate",
+       "focal consolidation"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "pulmonary_embolism",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "sudden onset dyspnea"
+      ],
+      "against": [],
+      "missing": [
+       "pleuritic chest pain",
+       "tachycardia",
+       "hemoptysis",
+       "calf swelling",
+       "unilateral leg pain",
+       "tachypnea"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "tension_pneumothorax",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "sudden onset dyspnea"
+      ],
+      "against": [],
+      "missing": [
+       "unilateral absent breath sounds",
+       "tracheal deviation",
+       "hypotension",
+       "chest pain after trauma",
+       "absent breath sounds"
+      ],
+      "naming_problems": []
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "associated_symptoms:reduced breath sounds on one side",
+      "priority": 0,
+      "discriminates": [
+       "onto::tier2:spontaneous_pneumothorax"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "neuro_exam",
+      "priority": 0,
+      "discriminates": [
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cxr",
+      "priority": 0,
+      "discriminates": [
+       "pneumonia",
+       "tension_pneumothorax"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "pneumonia"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "d_dimer",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ct_chest_angio",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:low blood pressure"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:exertional syncope"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:ankle swelling"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:unable to lie flat"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:coughing up blood"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:fatigue"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:distended neck veins"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:sudden one-sided chest pain"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:leg swelling"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:exertional chest pain"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:tall thin young man or smoker"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "allergy"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Community-Acquired Pneumonia\nSupporting findings: crackles on auscultation; dyspnea\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: productive cough; fever; pleuritic chest pain; consolidation\nDifferential diagnosis:\n- Pulmonary Embolism: sudden onset dyspnea\n- Tension Pneumothorax: sudden onset dyspnea\n- Asthma / COPD Exacerbation: dyspnea\n- Chronic Heart Failure: shortness of breath on exertion; needing extra pillows (against/lacking: ankle swelling; fatigue)",
+    "soap_plan": "Further tests: Chest X-ray, Complete blood count, D-dimer, CT chest angiography (PE protocol), 12-lead ECG\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T31] working diagnosis explained; [T32] next step and warning signs explained (Warning signs: hypoxia, confusion, hypotension)\nObserved concerns informing disposition: sudden onset dyspnea; shortness of breath on exertion; needing extra pillows"
+   },
+   "final": {
+    "final": "pneumonia",
+    "correct": false,
+    "interactions": 27,
+    "final_decision": {
+     "primary_id": "pneumonia",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": false,
+    "chief_turn_top150_rank": null,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": null,
+    "ever_top150": false,
+    "ever_rerank25": false,
+    "final_top150_rank": null,
+    "final_rerank25_rank": null,
+    "final_active_rank": null,
+    "truth_support_final": null,
+    "truth_naming_problems_final": null,
+    "top3_final": [
+     {
+      "id": "pneumonia",
+      "score": 2.197,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "crackles on auscultation",
+       "dyspnea"
+      ],
+      "against": [],
+      "missing": [
+       "productive cough",
+       "fever",
+       "pleuritic chest pain",
+       "consolidation",
+       "infiltrate",
+       "focal consolidation"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "pulmonary_embolism",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "sudden onset dyspnea"
+      ],
+      "against": [],
+      "missing": [
+       "pleuritic chest pain",
+       "tachycardia",
+       "hemoptysis",
+       "calf swelling",
+       "unilateral leg pain",
+       "tachypnea"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "tension_pneumothorax",
+      "score": 1.5,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "sudden onset dyspnea"
+      ],
+      "against": [],
+      "missing": [
+       "unilateral absent breath sounds",
+       "tracheal deviation",
+       "hypotension",
+       "chest pain after trauma",
+       "absent breath sounds"
+      ],
+      "naming_problems": []
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "orthostatic_hypotension"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "mental_status_exam",
+      "priority": 0,
+      "discriminates": [
+       "hypoglycemia"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "neuro_exam",
+      "priority": 0,
+      "discriminates": [
+       "orthostatic_hypotension",
+       "bppv"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cxr",
+      "priority": 0,
+      "discriminates": [
+       "pneumonia",
+       "tension_pneumothorax"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "pneumonia"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "d_dimer",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ct_chest_angio",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "pulmonary_embolism"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:fatigue"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:low blood pressure"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:weight gain"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:exertional syncope"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:coughing up blood"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:severe headache"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:sudden one-sided chest pain"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:distended neck veins"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "allergy"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Community-Acquired Pneumonia\nSupporting findings: crackles on auscultation; dyspnea\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: productive cough; fever; pleuritic chest pain; consolidation\nDifferential diagnosis:\n- Pulmonary Embolism: sudden onset dyspnea\n- Tension Pneumothorax: sudden onset dyspnea\n- Acute Decompensated Heart Failure: worsening shortness of breath; unable to lie flat; leg swelling (against/lacking: weight gain)\n- Chronic Heart Failure: shortness of breath on exertion; ankle swelling; needing extra pillows (against/lacking: fatigue; weight gain)",
+    "soap_plan": "Further tests: Chest X-ray, Complete blood count, D-dimer, CT chest angiography (PE protocol), 12-lead ECG\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T26] working diagnosis explained; [T27] next step and warning signs explained (Warning signs: hypoxia, confusion, hypotension)\nObserved concerns informing disposition: sudden onset dyspnea; worsening shortness of breath; unable to lie flat; leg swelling; waking breathless at night; crackles in lungs; shortness of breath on exertion; ankle swelling"
+   }
+  },
+  "RoundM_066": {
+   "truth": "gastroenteritis",
+   "chief_complaint": "Bad tummy since last night.",
+   "scripted_answers": {
+    "associated_symptoms": "diarrhea"
+   },
+   "scripted_exams": {},
+   "baseline": {
+    "final": "unknown",
+    "correct": false,
+    "interactions": 20,
+    "final_decision": {
+     "primary_id": "unknown",
+     "support": "UNDIFFERENTIATED",
+     "completion_reason": "supported",
+     "reasons": [
+      "leader:single_nonspecific_support"
+     ],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": false,
+    "chief_turn_top150_rank": null,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": 6,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 2,
+    "final_rerank25_rank": 1,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "diarrhea"
+    ],
+    "truth_naming_problems_final": [
+     "single_nonspecific_support"
+    ],
+    "top3_final": [
+     {
+      "id": "gastroenteritis",
+      "score": 1.0,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "diarrhea"
+      ],
+      "against": [],
+      "missing": [
+       "diffuse crampy abdominal pain",
+       "vomiting",
+       "recent similar illness contact"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support"
+      ]
+     },
+     {
+      "id": "acute_abdomen",
+      "score": 0.0,
+      "dangerous_safety_tracking": true,
+      "support": [],
+      "against": [],
+      "missing": [
+       "severe abdominal pain",
+       "rebound tenderness",
+       "guarding",
+       "rigid abdomen",
+       "fever",
+       "free air"
+      ],
+      "naming_problems": [
+       "no_positive_support"
+      ]
+     },
+     {
+      "id": "gi_bleeding",
+      "score": 0.0,
+      "dangerous_safety_tracking": true,
+      "support": [],
+      "against": [],
+      "missing": [
+       "hematemesis",
+       "melena",
+       "hematochezia",
+       "lightheadedness",
+       "pallor",
+       "tachycardia"
+      ],
+      "naming_problems": [
+       "no_positive_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "gastroenteritis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "urinalysis",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ct_abdomen",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "EXAM",
+      "vital_signs"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:palpitations"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Undifferentiated presentation\nSupporting findings: no specific supporting finding\nStatus: no specific diagnosis is supported by the information obtained; the candidates below are not excluded and need further evaluation.\nContradictory findings: none\nMissing discriminating evidence: diffuse crampy abdominal pain; vomiting; recent similar illness contact; severe abdominal pain\nDifferential diagnosis:\n- Acute Gastroenteritis: diarrhea\n- Acute Abdomen (Surgical Abdomen): no specific supporting finding\n- Gastrointestinal Bleeding: no specific supporting finding\n- Ectopic Pregnancy: no specific supporting finding\n- Acute Pancreatitis: no specific supporting finding",
+    "soap_plan": "Further tests: Complete blood count\nTreatment / disposition decision: Evaluate the cause, then conservative symptom-directed care; escalate if warning signs appear\nFollow-up: Outpatient re-evaluation as symptoms evolve; reassess early if worse or persistent\nPatient education: delivered to the patient during the visit -- [T19] working diagnosis explained; [T20] next step and warning signs explained"
+   },
+   "final": {
+    "final": "gastroenteritis",
+    "correct": true,
+    "interactions": 19,
+    "final_decision": {
+     "primary_id": "gastroenteritis",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": false,
+    "chief_turn_top150_rank": null,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": 6,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 2,
+    "final_rerank25_rank": 1,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "diarrhea"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "gastroenteritis",
+      "score": 1.0,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "diarrhea"
+      ],
+      "against": [],
+      "missing": [
+       "diffuse crampy abdominal pain",
+       "vomiting",
+       "recent similar illness contact"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "acute_abdomen",
+      "score": 0.0,
+      "dangerous_safety_tracking": true,
+      "support": [],
+      "against": [],
+      "missing": [
+       "severe abdominal pain",
+       "rebound tenderness",
+       "guarding",
+       "rigid abdomen",
+       "fever",
+       "free air"
+      ],
+      "naming_problems": [
+       "no_positive_support"
+      ]
+     },
+     {
+      "id": "gi_bleeding",
+      "score": 0.0,
+      "dangerous_safety_tracking": true,
+      "support": [],
+      "against": [],
+      "missing": [
+       "hematemesis",
+       "melena",
+       "hematochezia",
+       "lightheadedness",
+       "pallor",
+       "tachycardia"
+      ],
+      "naming_problems": [
+       "no_positive_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "gastroenteritis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "troponin",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "urinalysis",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ct_abdomen",
+      "priority": 0,
+      "discriminates": [
+       "nephrolithiasis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "EXAM",
+      "vital_signs"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:palpitations"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Acute Gastroenteritis\nSupporting findings: diarrhea\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: diffuse crampy abdominal pain; vomiting; recent similar illness contact\nDifferential diagnosis:\n- Acute Abdomen (Surgical Abdomen): no specific supporting finding\n- Gastrointestinal Bleeding: no specific supporting finding\n- Ectopic Pregnancy: no specific supporting finding\n- Acute Pancreatitis: no specific supporting finding",
+    "soap_plan": "Further tests: Complete blood count\nTreatment / disposition decision: Evaluate the cause, then conservative symptom-directed care; escalate if warning signs appear\nFollow-up: Outpatient re-evaluation as symptoms evolve; reassess early if worse or persistent\nPatient education: delivered to the patient during the visit -- [T18] working diagnosis explained; [T19] next step and warning signs explained"
+   }
+  },
+  "ValP_27": {
+   "truth": "ischemic_stroke",
+   "chief_complaint": "My husband's words came out wrong and his right arm went heavy an hour ago",
+   "scripted_answers": {
+    "onset": "suddenly an hour ago",
+    "past_medical_history": "irregular heartbeat, not on blood thinners"
+   },
+   "scripted_exams": {
+    "vital_signs": "BP 172/96, HR 96 irregular, RR 16",
+    "neuro_exam": "right arm drift, word-finding difficulty",
+    "mental_status_exam": "alert"
+   },
+   "baseline": {
+    "final": "ischemic_stroke",
+    "correct": true,
+    "interactions": 15,
+    "final_decision": {
+     "primary_id": "ischemic_stroke",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": false,
+    "chief_turn_top150_rank": null,
+    "chief_turn_rerank25_rank": null,
+    "chief_turn_active_rank": 23,
+    "ever_top150": false,
+    "ever_rerank25": false,
+    "final_top150_rank": null,
+    "final_rerank25_rank": null,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "sudden onset focal weakness",
+     "slurred speech",
+     "aphasia"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "ischemic_stroke",
+      "score": 2.491,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "sudden onset focal weakness",
+       "slurred speech",
+       "aphasia"
+      ],
+      "against": [],
+      "missing": [
+       "facial droop",
+       "unilateral numbness",
+       "sudden vision loss",
+       "ataxia",
+       "acute infarct",
+       "diffusion restriction"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "cardiac_arrhythmia",
+      "score": 1.25,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "irregular heartbeat"
+      ],
+      "against": [],
+      "missing": [
+       "sudden onset palpitations",
+       "racing heart",
+       "associated lightheadedness",
+       "known history of arrhythmia",
+       "pulse rate below 50",
+       "pulse rate of 150 or more"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "sepsis",
+      "score": 0.0,
+      "dangerous_safety_tracking": true,
+      "support": [],
+      "against": [],
+      "missing": [
+       "fever",
+       "tachycardia",
+       "hypotension",
+       "altered mental status",
+       "tachypnea",
+       "suspected infection source"
+      ],
+      "naming_problems": [
+       "no_positive_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "severity",
+      "priority": 0,
+      "discriminates": [
+       "acute_abdomen",
+       "subarachnoid_hemorrhage"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "social_history",
+      "priority": 0,
+      "discriminates": [
+       "gi_bleeding",
+       "acute_pancreatitis",
+       "gastroenteritis"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "family_history",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "allergy",
+      "priority": 0,
+      "discriminates": [
+       "anaphylaxis"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "general_appearance",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "panic_attack"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "lung_auscultation",
+      "priority": 0,
+      "discriminates": [
+       "musculoskeletal_chest_pain",
+       "anaphylaxis",
+       "viral_uri"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "uncomplicated_cystitis",
+       "pyelonephritis",
+       "nephrolithiasis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Ischemic Stroke\nSupporting findings: sudden onset focal weakness; slurred speech; aphasia\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: facial droop; unilateral numbness; sudden vision loss; ataxia\nDifferential diagnosis:\n- Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT): irregular heartbeat\n- Sepsis: no specific supporting finding\n- Acute Coronary Syndrome: no specific supporting finding\n- Pulmonary Embolism: no specific supporting finding",
+    "soap_plan": "Further tests: Non-contrast CT head, Point-of-care glucose, MRI brain with diffusion, 12-lead ECG, Basic metabolic panel (electrolytes/renal function)\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T14] working diagnosis explained; [T15] next step and warning signs explained (Warning signs: facial droop, slurred speech, unilateral weakness, sudden onset, focal deficit)\nObserved concerns informing disposition: sudden onset focal weakness; slurred speech; aphasia; irregular heartbeat"
+   },
+   "final": {
+    "final": "ischemic_stroke",
+    "correct": true,
+    "interactions": 15,
+    "final_decision": {
+     "primary_id": "ischemic_stroke",
+     "support": "SUPPORTED",
+     "completion_reason": "supported",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 26,
+    "chief_turn_rerank25_rank": 8,
+    "chief_turn_active_rank": 23,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 36,
+    "final_rerank25_rank": 16,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "sudden onset focal weakness",
+     "slurred speech",
+     "aphasia"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "ischemic_stroke",
+      "score": 2.491,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "sudden onset focal weakness",
+       "slurred speech",
+       "aphasia"
+      ],
+      "against": [],
+      "missing": [
+       "facial droop",
+       "unilateral numbness",
+       "sudden vision loss",
+       "ataxia",
+       "focal neurological deficit on examination",
+       "acute infarct"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "cardiac_arrhythmia",
+      "score": 1.25,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "irregular heartbeat"
+      ],
+      "against": [],
+      "missing": [
+       "sudden onset palpitations",
+       "racing heart",
+       "associated lightheadedness",
+       "known history of arrhythmia",
+       "pulse rate below 50",
+       "pulse rate of 150 or more"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "sepsis",
+      "score": 0.0,
+      "dangerous_safety_tracking": true,
+      "support": [],
+      "against": [],
+      "missing": [
+       "fever",
+       "tachycardia",
+       "hypotension",
+       "altered mental status",
+       "tachypnea",
+       "suspected infection source"
+      ],
+      "naming_problems": [
+       "no_positive_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "severity",
+      "priority": 0,
+      "discriminates": [
+       "acute_abdomen",
+       "subarachnoid_hemorrhage"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "social_history",
+      "priority": 0,
+      "discriminates": [
+       "gi_bleeding",
+       "acute_pancreatitis",
+       "gastroenteritis"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "family_history",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "nephrolithiasis"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "ASK",
+      "key": "allergy",
+      "priority": 0,
+      "discriminates": [
+       "anaphylaxis"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "general_appearance",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "panic_attack"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "lung_auscultation",
+      "priority": 0,
+      "discriminates": [
+       "musculoskeletal_chest_pain",
+       "anaphylaxis",
+       "viral_uri"
+      ]
+     },
+     {
+      "type": "EXAM",
+      "key": "costovertebral_tenderness",
+      "priority": 0,
+      "discriminates": [
+       "uncomplicated_cystitis",
+       "pyelonephritis",
+       "nephrolithiasis"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "duration"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Ischemic Stroke\nSupporting findings: sudden onset focal weakness; slurred speech; aphasia\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: facial droop; unilateral numbness; sudden vision loss; ataxia\nDifferential diagnosis:\n- Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT): irregular heartbeat\n- Sepsis: no specific supporting finding\n- Acute Coronary Syndrome: no specific supporting finding\n- Pulmonary Embolism: no specific supporting finding",
+    "soap_plan": "Further tests: Non-contrast CT head, Point-of-care glucose, MRI brain with diffusion, 12-lead ECG, Basic metabolic panel (electrolytes/renal function)\nTreatment / disposition decision: Possible emergency: immediate emergency-department evaluation and monitoring; urgent treatment as indicated\nFollow-up: Emergency evaluation, then decide on admission; reassess promptly with results\nPatient education: delivered to the patient during the visit -- [T14] working diagnosis explained; [T15] next step and warning signs explained (Warning signs: facial droop, slurred speech, unilateral weakness, sudden onset, focal deficit)\nObserved concerns informing disposition: sudden onset focal weakness; slurred speech; aphasia; irregular heartbeat"
+   }
+  },
+  "Fresh16": {
+   "truth": "gastroenteritis",
+   "chief_complaint": "Several people at dinner got watery diarrhea. I have cramps and nausea but no blood in my stools.",
+   "scripted_answers": {
+    "onset": "Six hours after the shared dinner.",
+    "associated_symptoms": "Watery diarrhea and vomiting; no focal right-sided pain.",
+    "location": "Cramping across the abdomen."
+   },
+   "scripted_exams": {
+    "vital_signs": "BP 116/74, HR 88, Temp 37.2",
+    "abdominal_exam": "Mild diffuse tenderness without rebound or rigidity."
+   },
+   "baseline": {
+    "final": "acute_pancreatitis",
+    "correct": false,
+    "interactions": 28,
+    "final_decision": {
+     "primary_id": "acute_pancreatitis",
+     "support": "SUPPORTED",
+     "completion_reason": "information_exhausted",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 4,
+    "chief_turn_rerank25_rank": 1,
+    "chief_turn_active_rank": 1,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 5,
+    "final_rerank25_rank": 2,
+    "final_active_rank": 2,
+    "truth_support_final": [
+     "diarrhea",
+     "vomiting"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "acute_pancreatitis",
+      "score": 2.0,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "nausea",
+       "vomiting"
+      ],
+      "against": [],
+      "missing": [
+       "epigastric pain radiating to back",
+       "worse after eating fatty food",
+       "elevated lipase",
+       "pancreatic inflammation on imaging",
+       "peripancreatic fat stranding"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "gastroenteritis",
+      "score": 2.0,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "diarrhea",
+       "vomiting"
+      ],
+      "against": [],
+      "missing": [
+       "diffuse crampy abdominal pain",
+       "recent similar illness contact"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "onto::tier2:thyroid_storm",
+      "score": 1.25,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "vomiting and diarrhea"
+      ],
+      "against": [],
+      "missing": [
+       "high fever",
+       "rapid heart rate",
+       "agitation or confusion",
+       "tremor",
+       "known hyperthyroidism"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support",
+       "only_nonspecific_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lipase",
+      "priority": 0,
+      "discriminates": [
+       "acute_pancreatitis",
+       "acute_abdomen"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "abdominal_ultrasound",
+      "priority": 0,
+      "discriminates": [
+       "acute_pancreatitis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "gastroenteritis",
+       "gi_bleeding",
+       "acute_abdomen"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ecg",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "severe_electrolyte_disorder",
+       "aortic_dissection",
+       "gerd"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "troponin",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "gerd"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cxr",
+      "priority": 0,
+      "discriminates": [
+       "acute_coronary_syndrome",
+       "aortic_dissection"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ct_head",
+      "priority": 0,
+      "discriminates": [
+       "migraine"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:high fever"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:rapid heart rate"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:agitation or confusion"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:tremor"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Acute Pancreatitis\nSupporting findings: nausea; vomiting\nWorking diagnosis, not confirmed. Discriminating information is incomplete or conflicting; alternatives have not been excluded.\nContradictory findings: none\nMissing discriminating evidence: epigastric pain radiating to back; worse after eating fatty food; elevated lipase; pancreatic inflammation on imaging\nDifferential diagnosis:\n- Acute Gastroenteritis: diarrhea; vomiting\n- Thyroid Storm: vomiting and diarrhea\n- Acute Coronary Syndrome: nausea\n- Migraine: nausea",
+    "soap_plan": "Further tests: Serum lipase, Abdominal ultrasound\nTreatment / disposition decision: Evaluate the cause, then conservative symptom-directed care; escalate if warning signs appear\nFollow-up: Outpatient re-evaluation as symptoms evolve; reassess early if worse or persistent\nPatient education: delivered to the patient during the visit -- [T27] working diagnosis explained; [T28] next step and warning signs explained"
+   },
+   "final": {
+    "final": "gastroenteritis",
+    "correct": true,
+    "interactions": 31,
+    "final_decision": {
+     "primary_id": "gastroenteritis",
+     "support": "SUPPORTED",
+     "completion_reason": "information_exhausted",
+     "reasons": [],
+     "support_scope": "working_diagnosis_not_confirmation"
+    },
+    "truth_in_initial_retrieval": true,
+    "chief_turn_top150_rank": 6,
+    "chief_turn_rerank25_rank": 1,
+    "chief_turn_active_rank": 1,
+    "ever_top150": true,
+    "ever_rerank25": true,
+    "final_top150_rank": 5,
+    "final_rerank25_rank": 1,
+    "final_active_rank": 1,
+    "truth_support_final": [
+     "diffuse crampy abdominal pain",
+     "diarrhea",
+     "vomiting",
+     "recent similar illness contact",
+     "food exposure"
+    ],
+    "truth_naming_problems_final": [],
+    "top3_final": [
+     {
+      "id": "gastroenteritis",
+      "score": 2.899,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "diffuse crampy abdominal pain",
+       "diarrhea",
+       "vomiting",
+       "recent similar illness contact",
+       "food exposure"
+      ],
+      "against": [],
+      "missing": [],
+      "naming_problems": []
+     },
+     {
+      "id": "acute_pancreatitis",
+      "score": 2.0,
+      "dangerous_safety_tracking": false,
+      "support": [
+       "nausea",
+       "vomiting"
+      ],
+      "against": [],
+      "missing": [
+       "epigastric pain radiating to back",
+       "worse after eating fatty food",
+       "elevated lipase",
+       "pancreatic inflammation on imaging",
+       "peripancreatic fat stranding"
+      ],
+      "naming_problems": []
+     },
+     {
+      "id": "diabetic_ketoacidosis",
+      "score": 1.25,
+      "dangerous_safety_tracking": true,
+      "support": [
+       "nausea and vomiting"
+      ],
+      "against": [],
+      "missing": [
+       "polyuria",
+       "polydipsia",
+       "abdominal pain",
+       "fruity breath odor",
+       "kussmaul breathing",
+       "confusion"
+      ],
+      "naming_problems": [
+       "single_nonspecific_support",
+       "only_nonspecific_support",
+       "tied_on_nonspecific_support"
+      ]
+     }
+    ],
+    "candidate_actions_last_open_turn": [
+     {
+      "type": "ASK",
+      "key": "relieving",
+      "priority": 0,
+      "discriminates": [
+       "gerd"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "cbc",
+      "priority": 0,
+      "discriminates": [
+       "gastroenteritis",
+       "pyelonephritis",
+       "gi_bleeding",
+       "acute_abdomen"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "lipase",
+      "priority": 0,
+      "discriminates": [
+       "acute_pancreatitis",
+       "acute_abdomen"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "abdominal_ultrasound",
+      "priority": 0,
+      "discriminates": [
+       "acute_pancreatitis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "glucose_point_of_care",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "ketones",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "abg",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis"
+      ]
+     },
+     {
+      "type": "TEST",
+      "key": "bmp",
+      "priority": 0,
+      "discriminates": [
+       "diabetic_ketoacidosis",
+       "pyelonephritis",
+       "severe_electrolyte_disorder"
+      ]
+     }
+    ],
+    "selected_actions": [
+     [
+      "ASK",
+      "associated_symptoms"
+     ],
+     [
+      "ASK",
+      "onset"
+     ],
+     [
+      "ASK",
+      "past_medical_history"
+     ],
+     [
+      "EXAM",
+      "mental_status_exam"
+     ],
+     [
+      "ASK",
+      "character"
+     ],
+     [
+      "ASK",
+      "social_history"
+     ],
+     [
+      "ASK",
+      "medication"
+     ],
+     [
+      "ASK",
+      "location"
+     ],
+     [
+      "EXAM",
+      "abdominal_exam"
+     ],
+     [
+      "EXAM",
+      "pelvic_exam"
+     ],
+     [
+      "ASK",
+      "aggravating"
+     ],
+     [
+      "ASK",
+      "family_history"
+     ],
+     [
+      "EXAM",
+      "neuro_exam"
+     ],
+     [
+      "EXAM",
+      "cardiac_auscultation"
+     ],
+     [
+      "EXAM",
+      "extremity_exam"
+     ],
+     [
+      "EXAM",
+      "general_appearance"
+     ],
+     [
+      "ASK",
+      "severity"
+     ],
+     [
+      "EXAM",
+      "skin_exam"
+     ],
+     [
+      "EXAM",
+      "lung_auscultation"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:high fever"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:rapid heart rate"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:agitation or confusion"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:tremor"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:right upper quadrant pain"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:pain after fatty meals"
+     ],
+     [
+      "ASK",
+      "associated_symptoms:fever"
+     ],
+     [
+      "EXAM",
+      "costovertebral_tenderness"
+     ],
+     [
+      "ASK",
+      "relieving"
+     ]
+    ],
+    "soap_assessment": "Primary diagnosis: Acute Gastroenteritis\nSupporting findings: diffuse crampy abdominal pain; diarrhea; vomiting; recent similar illness contact; food exposure\nContradictory findings: none\nMissing discriminating evidence: none\nDifferential diagnosis:\n- Acute Pancreatitis: nausea; vomiting\n- Diabetic Ketoacidosis: nausea and vomiting\n- Thyroid Storm: vomiting and diarrhea\n- Acute Cholecystitis: nausea and vomiting",
+    "soap_plan": "Further tests: Complete blood count, Point-of-care glucose, Serum/urine ketones, Arterial blood gas, Basic metabolic panel (electrolytes/renal function)\nTreatment / disposition decision: Evaluate the cause, then conservative symptom-directed care; escalate if warning signs appear\nFollow-up: Outpatient re-evaluation as symptoms evolve; reassess early if worse or persistent\nPatient education: delivered to the patient during the visit -- [T30] working diagnosis explained; [T31] next step and warning signs explained"
+   }
+  }
+ }
+}
