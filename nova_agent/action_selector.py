@@ -238,11 +238,16 @@ class ActionSelector:
                 # general appearance stay available; nothing is marked absent or excluded by skipping a sweep.
                 supported = {d.diagnosis_id for d in differential if d.score > 0 and d.supporting_evidence}
                 in_play = supported | {f.diagnosis_id for f in safety_findings}
+                # Safety tracking (never a score): a bedside EXAM bearing on a time-critical diagnosis is never
+                # skipped -- a deficit described in a carer's words may only become the patient's own observation
+                # through that examination.
+                time_critical = time_critical_ids
                 if supported:  # with nothing observed yet, every question may still be the discriminating one
                     raw_candidates = [c for c in raw_candidates
                                       if not c.disease_ids_discriminated or c.key in {"vital_signs", "general_appearance"}
                                       or (c.action_type == "ASK" and ":" not in c.key)
-                                      or set(c.disease_ids_discriminated) & in_play]
+                                      or set(c.disease_ids_discriminated) & in_play
+                                      or (c.action_type == "EXAM" and set(c.disease_ids_discriminated) & time_critical)]
 
         scored: List[ScoredCandidate] = []
         for cand in raw_candidates:
