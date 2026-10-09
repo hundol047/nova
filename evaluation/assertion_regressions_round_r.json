@@ -1,0 +1,385 @@
+{
+  "status": "DEVELOPMENT: read during Round R repair, not unseen",
+  "cases": [
+    {
+      "id": "prior_given_excluded",
+      "text": "The referral letter says atrial fibrillation was excluded",
+      "expected": []
+    },
+    {
+      "id": "prior_given_ko_negative",
+      "text": "진단서에 atrial fibrillation 아니라고 적혀 있습니다",
+      "expected": []
+    },
+    {
+      "id": "prior_given_ruled_out",
+      "text": "The referral letter says atrial fibrillation was ruled out",
+      "expected": []
+    },
+    {
+      "id": "prior_given_mixed",
+      "text": "The letter confirms atrial fibrillation but excludes pulmonary embolism",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_given_independent",
+      "text": "The letter confirms atrial fibrillation; the patient has no fever",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_given_possible",
+      "text": "The letter says pulmonary embolism cannot be excluded",
+      "expected": []
+    },
+    {
+      "id": "prior_a01",
+      "text": "The specialist letter states atrial fibrillation is confirmed today",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_a02",
+      "text": "The specialist letter states atrial fibrillation is excluded today",
+      "expected": []
+    },
+    {
+      "id": "prior_a03",
+      "text": "The specialist letter states atrial fibrillation is suspected today",
+      "expected": []
+    },
+    {
+      "id": "prior_a04",
+      "text": "The specialist letter states atrial fibrillation was present years ago",
+      "expected": []
+    },
+    {
+      "id": "prior_a05",
+      "text": "The specialist letter states atrial fibrillation was present in 2016",
+      "expected": []
+    },
+    {
+      "id": "prior_a06",
+      "text": "My mother was diagnosed with atrial fibrillation yesterday",
+      "expected": []
+    },
+    {
+      "id": "prior_a07",
+      "text": "I was diagnosed with atrial fibrillation yesterday",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_a08",
+      "text": "I think I was diagnosed with atrial fibrillation",
+      "expected": []
+    },
+    {
+      "id": "prior_a09",
+      "text": "I wonder whether the letter says atrial fibrillation",
+      "expected": []
+    },
+    {
+      "id": "prior_a10",
+      "text": "The letter says atrial fibrillation; I have no nausea",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_a11",
+      "text": "The letter says atrial fibrillation and I have no nausea",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_a12",
+      "text": "The letter says atrial fibrillation but pulmonary embolism was ruled out",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_a13",
+      "text": "The letter says atrial fibrillation but pulmonary embolism was excluded",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_a14",
+      "text": "The letter says atrial fibrillation and possible pulmonary embolism",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_a15",
+      "text": "The letter says pulmonary embolism is not ruled out",
+      "expected": []
+    },
+    {
+      "id": "prior_a16",
+      "text": "The letter says pulmonary embolism is ruled out",
+      "expected": []
+    },
+    {
+      "id": "prior_a17",
+      "text": "The letter says pulmonary embolism cannot be excluded",
+      "expected": []
+    },
+    {
+      "id": "prior_a18",
+      "text": "The letter says pulmonary embolism is absent",
+      "expected": []
+    },
+    {
+      "id": "prior_a19",
+      "text": "The letter says no pulmonary embolism but confirms atrial fibrillation",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_a20",
+      "text": "The letter says pulmonary embolism is present",
+      "expected": [
+        "pulmonary_embolism"
+      ]
+    },
+    {
+      "id": "prior_k01",
+      "text": "진단서에 atrial fibrillation 진단이 확정됐다고 적혀 있습니다",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_k02",
+      "text": "진단서에 atrial fibrillation 없다고 적혀 있습니다",
+      "expected": []
+    },
+    {
+      "id": "prior_k03",
+      "text": "진단서에 atrial fibrillation 배제됐다고 적혀 있습니다",
+      "expected": []
+    },
+    {
+      "id": "prior_k04",
+      "text": "진단서에 atrial fibrillation 의심된다고 적혀 있습니다",
+      "expected": []
+    },
+    {
+      "id": "prior_k05",
+      "text": "진단서에 atrial fibrillation 배제할 수 없다고 적혀 있습니다",
+      "expected": []
+    },
+    {
+      "id": "prior_k06",
+      "text": "진단서에 atrial fibrillation 과거력이 있다고 적혀 있습니다",
+      "expected": []
+    },
+    {
+      "id": "prior_k07",
+      "text": "어머니 진단서에 atrial fibrillation 확정이라고 적혀 있습니다",
+      "expected": []
+    },
+    {
+      "id": "prior_k08",
+      "text": "진단서에 atrial fibrillation 확정이고 발열은 없다고 적혀 있습니다",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_k09",
+      "text": "진단서에 atrial fibrillation 확정이고 pulmonary embolism 배제라고 적혀 있습니다",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "prior_k10",
+      "text": "제가 추측하기에 진단서에 atrial fibrillation 있을 것 같아요",
+      "expected": []
+    },
+    {
+      "id": "prior_a21",
+      "text": "A diagnosis of atrial fibrillation was considered but rejected",
+      "expected": []
+    },
+    {
+      "id": "prior_a22",
+      "text": "The letter says my father has atrial fibrillation but I have pulmonary embolism",
+      "expected": [
+        "pulmonary_embolism"
+      ]
+    },
+    {
+      "id": "prior_a23",
+      "text": "The referral letter says history of atrial fibrillation",
+      "expected": []
+    },
+    {
+      "id": "prior_a24",
+      "text": "I read online that my symptoms mean atrial fibrillation",
+      "expected": []
+    },
+    {
+      "id": "N01",
+      "text": "The consultant note documents atrial fibrillation today.",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "N02",
+      "text": "The consultant note documents that atrial fibrillation has been excluded.",
+      "expected": []
+    },
+    {
+      "id": "N03",
+      "text": "The consultant note says atrial fibrillation has not been ruled out.",
+      "expected": []
+    },
+    {
+      "id": "N04",
+      "text": "The consultant note says atrial fibrillation remains a possibility.",
+      "expected": []
+    },
+    {
+      "id": "N05",
+      "text": "The letter confirms pneumonia and notes that atrial fibrillation was excluded.",
+      "expected": [
+        "pneumonia"
+      ]
+    },
+    {
+      "id": "N06",
+      "text": "The letter confirms pneumonia and notes no abdominal pain.",
+      "expected": [
+        "pneumonia"
+      ]
+    },
+    {
+      "id": "N07",
+      "text": "The letter confirms atrial fibrillation and records a history of pneumonia in 2008.",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "N08",
+      "text": "The letter confirms atrial fibrillation, but I think I may also have pneumonia.",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "N09",
+      "text": "The letter confirms atrial fibrillation and says my mother has pulmonary embolism.",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "N10",
+      "text": "The letter says my mother has pulmonary embolism, but the patient has confirmed atrial fibrillation.",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "N11",
+      "text": "The letter confirms atrial fibrillation but it was later excluded.",
+      "expected": []
+    },
+    {
+      "id": "N12",
+      "text": "The letter says atrial fibrillation was excluded; a second note confirms atrial fibrillation.",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "N13",
+      "text": "The letter confirms atrial fibrillation and excludes atrial fibrillation after further review.",
+      "expected": []
+    },
+    {
+      "id": "N14",
+      "text": "The doctor says pulmonary embolism cannot yet be excluded.",
+      "expected": []
+    },
+    {
+      "id": "N15",
+      "text": "The doctor says there is no evidence of pulmonary embolism.",
+      "expected": []
+    },
+    {
+      "id": "N16",
+      "text": "The doctor says there is evidence of pulmonary embolism.",
+      "expected": [
+        "pulmonary_embolism"
+      ]
+    },
+    {
+      "id": "N17",
+      "text": "소견서에 atrial fibrillation은 확진이고 pulmonary embolism은 배제됐다고 적혀 있어요.",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "N18",
+      "text": "소견서에 atrial fibrillation은 확진이고 기침은 없다고 적혀 있어요.",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "N19",
+      "text": "소견서에 atrial fibrillation 가능성이 있다고 적혀 있어요.",
+      "expected": []
+    },
+    {
+      "id": "N20",
+      "text": "소견서에 어머니는 atrial fibrillation이고 저는 pulmonary embolism 확진이라고 적혀 있어요.",
+      "expected": [
+        "pulmonary_embolism"
+      ]
+    },
+    {
+      "id": "N21",
+      "text": "The letter says pulmonary embolism is not confirmed.",
+      "expected": []
+    },
+    {
+      "id": "N22",
+      "text": "The letter confirms pneumonia despite no fever.",
+      "expected": [
+        "pneumonia"
+      ]
+    },
+    {
+      "id": "N23",
+      "text": "The report says atrial fibrillation was suspected, but atrial fibrillation is confirmed now.",
+      "expected": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    {
+      "id": "N24",
+      "text": "The note confirms pneumonia in the patient and pulmonary embolism in her father.",
+      "expected": [
+        "pneumonia"
+      ]
+    }
+  ]
+}

@@ -220,3 +220,14 @@ def is_objective_only_feature(feature: str) -> bool:
         return False
     parts = [p for p in re.split(r"\s+or\s+", feature.lower()) if p.strip()]
     return bool(parts) and all(_OBJECTIVE_ONLY_FEATURE.search(p) for p in parts)
+
+
+def bedside_exam_for_feature(feature: str):
+    """Only mappings covered by existing EXAM maneuvers; lab/imaging findings stay unavailable.
+    Reuses taxonomy's cardiac/lung auscultation scope, not a generated test request."""
+    low = feature.lower()
+    if re.search(r"\bmurmur\b", low):
+        return "cardiac_auscultation"
+    if re.search(r"\b(?:crackles|rales|rhonchi)\b", low):
+        return "lung_auscultation"
+    return None

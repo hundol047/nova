@@ -1,0 +1,844 @@
+[
+  {
+    "case_id": "Fresh01",
+    "chief_complaint": "My left chest feels crushed when I walk to the mailbox. Today it persisted on the sofa and I felt clammy.",
+    "demographics": {
+      "age": 61,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "location": "Central chest pressure travels into my left shoulder.",
+      "onset": "It worsened over twenty minutes this morning.",
+      "associated_symptoms": "Sweating and nausea. No fever or cough.",
+      "past_medical_history": "Diabetes and a coronary stent three years ago."
+    },
+    "exam_results": {
+      "vital_signs": "BP 146/88, HR 108, RR 20, Temp 36.7, SpO2 97%",
+      "cardiac_auscultation": "Regular rhythm without murmur."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh02",
+    "chief_complaint": "After ten days mostly in bed with a broken ankle, I became breathless and developed pain on breathing.",
+    "demographics": {
+      "age": 52,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pulmonary_embolism",
+    "answers": {
+      "onset": "Abruptly this afternoon.",
+      "associated_symptoms": "One calf became swollen yesterday. I am not coughing and have no fever.",
+      "past_medical_history": "Previous deep vein thrombosis."
+    },
+    "exam_results": {
+      "vital_signs": "BP 108/70, HR 124, RR 27, Temp 36.9, SpO2 90%",
+      "extremity_exam": "Left calf swollen and tender.",
+      "lung_auscultation": "Air entry on both sides without wheeze."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh03",
+    "chief_complaint": "While lifting a box a headache hit its greatest intensity instantly. I vomited and my neck hurts.",
+    "demographics": {
+      "age": 49,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "subarachnoid_hemorrhage",
+    "answers": {
+      "onset": "Maximum pain within seconds, not a gradual build-up.",
+      "character": "The worst headache I have ever experienced.",
+      "associated_symptoms": "Vomiting and neck stiffness. No fever."
+    },
+    "exam_results": {
+      "vital_signs": "BP 158/94, HR 84, Temp 36.8, SpO2 98%",
+      "meningeal_signs": "Neck stiffness present.",
+      "neuro_exam": "No focal deficit."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh04",
+    "chief_complaint": "My roommate noticed I was confused after two days of fever and a worsening headache. Light hurts my eyes.",
+    "demographics": {
+      "age": 24,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "meningitis",
+    "answers": {
+      "associated_symptoms": "Neck stiffness and photophobia. There was no sudden maximal onset.",
+      "onset": "Gradual deterioration over two days."
+    },
+    "exam_results": {
+      "vital_signs": "BP 105/67, HR 118, Temp 39.2, RR 23, SpO2 98%",
+      "meningeal_signs": "Nuchal rigidity and positive Kernig sign.",
+      "skin_exam": "Non-blanching petechiae.",
+      "mental_status_exam": "Disoriented to date."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh05",
+    "chief_complaint": "My insulin pump stopped yesterday. I am very thirsty, urinating repeatedly and now have nausea and stomach pain.",
+    "demographics": {
+      "age": 31,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "diabetic_ketoacidosis",
+    "answers": {
+      "past_medical_history": "Type 1 diabetes.",
+      "medication": "No insulin delivered since the pump failed.",
+      "associated_symptoms": "Polyuria and polydipsia with vomiting."
+    },
+    "exam_results": {
+      "vital_signs": "BP 96/64, HR 122, RR 30, Temp 36.8, SpO2 99%",
+      "general_appearance": "Deep laboured breathing and dry mucous membranes.",
+      "abdominal_exam": "Diffuse mild tenderness without guarding."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh06",
+    "chief_complaint": "Pain started near my belly button yesterday and is now in the lower right side. Walking hurts and I have no appetite.",
+    "demographics": {
+      "age": 29,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "appendicitis",
+    "answers": {
+      "location": "Right lower quadrant.",
+      "associated_symptoms": "Anorexia and nausea. No diarrhea, urinary burning or vaginal bleeding.",
+      "onset": "Progressed over eighteen hours."
+    },
+    "exam_results": {
+      "vital_signs": "BP 116/72, HR 102, Temp 38.1",
+      "abdominal_exam": "Focal right lower quadrant tenderness with rebound."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh07",
+    "chief_complaint": "At rest my heartbeat became erratic and I felt close to passing out. The cardiologist report documents current atrial fibrillation.",
+    "demographics": {
+      "age": 67,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "associated_symptoms": "Palpitations with presyncope, without fever.",
+      "medication": "No new medicines."
+    },
+    "exam_results": {
+      "vital_signs": "BP 112/68, HR 133, Temp 36.6",
+      "cardiac_auscultation": "Irregularly irregular rhythm."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh08",
+    "chief_complaint": "심장이 갑자기 두근거리고 쓰러질 것 같았어요. 의사 소견서에 atrial fibrillation이 확정됐다고 써 있어요.",
+    "demographics": {
+      "age": 58,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "associated_symptoms": "가슴 두근거림과 어지러움이 있어요. 열은 없어요."
+    },
+    "exam_results": {
+      "vital_signs": "BP 108/72, HR 142, Temp 36.7",
+      "cardiac_auscultation": "Irregularly irregular rhythm."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh09",
+    "chief_complaint": "After missing lunch I developed my usual one-sided throbbing headache. Bright light and noise are unpleasant.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "migraine",
+    "answers": {
+      "character": "Pulsating pain like my previous episodes.",
+      "associated_symptoms": "Nausea and photophobia; no fever or weakness.",
+      "past_medical_history": "Recurrent migraine for fifteen years.",
+      "onset": "Gradually over an hour."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/72, HR 74, Temp 36.7",
+      "neuro_exam": "Normal cranial nerves and limb power.",
+      "meningeal_signs": "No neck stiffness."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh10",
+    "chief_complaint": "Both temples feel squeezed after a long day at my desk. It is mild and I can continue walking and eating.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "tension_headache",
+    "answers": {
+      "character": "Pressure like a tight band, not throbbing.",
+      "associated_symptoms": "No nausea, photophobia, fever or weakness.",
+      "onset": "Gradual over several hours."
+    },
+    "exam_results": {
+      "vital_signs": "BP 120/75, HR 72, Temp 36.6",
+      "neuro_exam": "Normal examination.",
+      "meningeal_signs": "No neck stiffness."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh11",
+    "chief_complaint": "The room briefly spins only when I tilt my head back to reach a high shelf. I feel well if I keep still.",
+    "demographics": {
+      "age": 56,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "bppv",
+    "answers": {
+      "duration": "About fifteen seconds each time.",
+      "aggravating": "Looking upward or turning my head.",
+      "associated_symptoms": "No hearing loss, headache, weakness or speech trouble."
+    },
+    "exam_results": {
+      "vital_signs": "BP 123/76, HR 70, Temp 36.7",
+      "dix_hallpike": "Brief positional torsional nystagmus.",
+      "neuro_exam": "No focal neurologic deficit."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh12",
+    "chief_complaint": "I fainted while watching a blood sample being drawn. Beforehand I felt warm and nauseated; lying flat quickly helped.",
+    "demographics": {
+      "age": 26,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "vasovagal_syncope",
+    "answers": {
+      "associated_symptoms": "Sweating before a brief loss of consciousness. No chest pain or palpitations.",
+      "duration": "Less than a minute with full recovery.",
+      "past_medical_history": "The same thing happened during a vaccination."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/74, HR 72, Temp 36.8",
+      "cardiac_auscultation": "Normal regular rhythm.",
+      "neuro_exam": "Normal examination."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh13",
+    "chief_complaint": "After late spicy meals I get burning behind the breastbone and a sour taste when I lie down.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "gerd",
+    "answers": {
+      "aggravating": "Lying flat after dinner, never walking uphill.",
+      "relieving": "Antacid relieves it.",
+      "associated_symptoms": "Acid regurgitation. No sweating or breathlessness."
+    },
+    "exam_results": {
+      "vital_signs": "BP 119/78, HR 76, Temp 36.7",
+      "cardiac_auscultation": "Regular rhythm."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh14",
+    "chief_complaint": "My chest wall became sore after carrying furniture. Touching one small spot recreates the pain.",
+    "demographics": {
+      "age": 35,
+      "sex": "male"
+    },
+    "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+    "answers": {
+      "aggravating": "Twisting and pressing the left rib margin.",
+      "associated_symptoms": "No breathlessness, sweating, nausea or fever."
+    },
+    "exam_results": {
+      "vital_signs": "BP 124/76, HR 74, Temp 36.6",
+      "chest_wall_palpation": "Focal reproducible chest wall tenderness.",
+      "lung_auscultation": "Clear breath sounds."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh15",
+    "chief_complaint": "My nose is running and my throat is scratchy after several coworkers had colds. I have a mild cough.",
+    "demographics": {
+      "age": 32,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "viral_uri",
+    "answers": {
+      "associated_symptoms": "Rhinorrhea and sore throat. No dyspnea, chest pain or confusion.",
+      "duration": "Three days."
+    },
+    "exam_results": {
+      "vital_signs": "BP 122/76, HR 82, Temp 37.3, SpO2 99%",
+      "lung_auscultation": "Clear bilaterally.",
+      "throat_exam": "Mild pharyngeal erythema."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh16",
+    "chief_complaint": "Several people at dinner got watery diarrhea. I have cramps and nausea but no blood in my stools.",
+    "demographics": {
+      "age": 38,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "gastroenteritis",
+    "answers": {
+      "onset": "Six hours after the shared dinner.",
+      "associated_symptoms": "Watery diarrhea and vomiting; no focal right-sided pain.",
+      "location": "Cramping across the abdomen."
+    },
+    "exam_results": {
+      "vital_signs": "BP 116/74, HR 88, Temp 37.2",
+      "abdominal_exam": "Mild diffuse tenderness without rebound or rigidity."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh17",
+    "chief_complaint": "소변을 볼 때 따갑고 자주 화장실에 가요. 한 번에 조금씩만 나와요.",
+    "demographics": {
+      "age": 34,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "uncomplicated_cystitis",
+    "answers": {
+      "associated_symptoms": "소변 볼 때 통증과 빈뇨가 있어요. 열과 옆구리 통증은 없어요.",
+      "duration": "이틀 전부터요."
+    },
+    "exam_results": {
+      "vital_signs": "BP 115/73, HR 79, Temp 36.8",
+      "abdominal_exam": "Mild suprapubic tenderness without guarding.",
+      "cva_tenderness": "No costovertebral angle tenderness."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh18",
+    "chief_complaint": "After moving house I have burning urination and urgency. My mother has kidney disease but I have no fever or flank pain.",
+    "demographics": {
+      "age": 42,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "uncomplicated_cystitis",
+    "answers": {
+      "associated_symptoms": "Dysuria, frequency and urgency without vaginal discharge.",
+      "past_medical_history": "No prior renal disease in me."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/70, HR 80, Temp 36.7",
+      "cva_tenderness": "No tenderness.",
+      "abdominal_exam": "Suprapubic tenderness only."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh19",
+    "chief_complaint": "My legs have become too weak for the stairs and my calves cramp. I have been vomiting and still taking my water tablet.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "severe_electrolyte_disorder",
+    "answers": {
+      "medication": "Furosemide daily for ankle swelling.",
+      "associated_symptoms": "General weakness, muscle cramps and occasional palpitations.",
+      "past_medical_history": "No kidney disease.",
+      "duration": "Four days."
+    },
+    "exam_results": {
+      "vital_signs": "BP 104/66, HR 102, Temp 36.7",
+      "neuro_exam": "Symmetric reduced power without focal deficit."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "candidate": "severe_electrolyte_disorder",
+      "no_unperformed_test": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh20",
+    "chief_complaint": "My family says I became forgetful and unsteady after drinking much more water. I recently started a thiazide tablet.",
+    "demographics": {
+      "age": 72,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "severe_electrolyte_disorder",
+    "answers": {
+      "medication": "Hydrochlorothiazide started last week.",
+      "associated_symptoms": "Nausea, headache and confusion, without fever.",
+      "past_medical_history": "Hypertension.",
+      "duration": "Worsening over three days."
+    },
+    "exam_results": {
+      "vital_signs": "BP 128/78, HR 80, Temp 36.7",
+      "mental_status_exam": "Disoriented to date.",
+      "neuro_exam": "No focal weakness."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "candidate": "severe_electrolyte_disorder",
+      "no_unperformed_test": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh21",
+    "chief_complaint": "I could not attend my dialysis session. Today all my muscles feel weak and my heart seems to pause.",
+    "demographics": {
+      "age": 63,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "severe_electrolyte_disorder",
+    "answers": {
+      "past_medical_history": "Kidney failure treated with dialysis.",
+      "medication": "Spironolactone and potassium supplements.",
+      "associated_symptoms": "General weakness and palpitations. No fever."
+    },
+    "exam_results": {
+      "vital_signs": "BP 110/68, HR 43, Temp 36.6",
+      "cardiac_auscultation": "Slow regular pulse."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "candidate": "severe_electrolyte_disorder",
+      "no_unperformed_test": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh22",
+    "chief_complaint": "설사 뒤로 양쪽 다리에 힘이 빠지고 쥐가 나요. 두근거림도 생겼어요.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "severe_electrolyte_disorder",
+    "answers": {
+      "medication": "이뇨제를 매일 복용해요.",
+      "associated_symptoms": "전신 쇠약과 근육 경련이 있어요.",
+      "past_medical_history": "고혈압이 있어요."
+    },
+    "exam_results": {
+      "vital_signs": "BP 102/66, HR 112, Temp 36.6",
+      "neuro_exam": "Symmetric weakness without focal deficit."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "candidate": "severe_electrolyte_disorder",
+      "no_unperformed_test": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh23",
+    "chief_complaint": "A pounding heartbeat began while reading. I felt faint although I was sitting, with no emotional trigger.",
+    "demographics": {
+      "age": 39,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "associated_symptoms": "Abrupt palpitations and presyncope.",
+      "medication": "No stimulant or new medicine."
+    },
+    "exam_results": {
+      "vital_signs": "BP 98/65, HR 176, Temp 36.8",
+      "cardiac_auscultation": "Fast regular rhythm."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "candidate": "cardiac_arrhythmia",
+      "no_unperformed_test": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh24",
+    "chief_complaint": "I blacked out while seated at breakfast without a warning feeling. I recovered but remain weak.",
+    "demographics": {
+      "age": 76,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "associated_symptoms": "No nausea, emotional trigger or fever.",
+      "medication": "Metoprolol for hypertension."
+    },
+    "exam_results": {
+      "vital_signs": "BP 99/62, HR 36, Temp 36.7",
+      "cardiac_auscultation": "Slow regular rhythm.",
+      "neuro_exam": "No focal deficit."
+    },
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "candidate": "cardiac_arrhythmia",
+      "no_unperformed_test": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh25",
+    "chief_complaint": "I feel different today but cannot describe how.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh26",
+    "chief_complaint": "몸이 평소와 다르지만 어떤 증상인지 말하기 어려워요.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh27",
+    "chief_complaint": "Sometimes I notice a heartbeat. I cannot say when or whether anything else happens.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh28",
+    "chief_complaint": "I feel a little tired. The referral report states pulmonary embolism has been excluded.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "undifferentiated": true,
+      "no_documented": [
+        "pulmonary_embolism"
+      ]
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh29",
+    "chief_complaint": "I cannot describe my symptoms. My sister was diagnosed with atrial fibrillation; I have never had that diagnosis.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "undifferentiated": true,
+      "no_documented": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh30",
+    "chief_complaint": "가끔 피곤해요. 진단서에 pulmonary embolism을 배제할 수 없다고 써 있지만 확진은 아니래요.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "undifferentiated": true,
+      "no_documented": [
+        "pulmonary_embolism"
+      ]
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "Fresh31",
+    "chief_complaint": "I feel faint but cannot explain more and do not consent to examination.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "undifferentiated": true,
+      "rejection_not_observation": true
+    },
+    "audit_rejected_exams": [
+      "vital_signs",
+      "general_appearance",
+      "cardiac_auscultation",
+      "neuro_exam",
+      "orthostatic_vitals",
+      "abdominal_exam",
+      "lung_auscultation",
+      "mental_status_exam",
+      "extremity_exam"
+    ]
+  },
+  {
+    "case_id": "Fresh32",
+    "chief_complaint": "I had atrial fibrillation years ago, but now my symptom is a vague tired feeling. The old report says atrial fibrillation in 2014.",
+    "demographics": {
+      "age": 44,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I do not know.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "acceptance_fresh_20261009",
+    "notes": "Engineering-authored working-diagnosis target; no independent clinical adjudication.",
+    "audit_expect": {
+      "undifferentiated": true,
+      "no_documented": [
+        "cardiac_arrhythmia"
+      ]
+    },
+    "audit_rejected_exams": []
+  }
+]

@@ -367,6 +367,10 @@ class NovaCompetitionAgent:
             prelim.metadata.update(wire.metadata)
             if final is not None:
                 prelim.metadata["final_decision"] = final.as_metadata()
+                from nova_agent.resolution import workup_coverage
+                prelim.metadata["workup_coverage"] = {
+                    d.diagnosis_id: workup_coverage(d.diagnosis_id, state)
+                    for d in (_differential or [])[:5] if d.dangerous_if_missed}
                 if final.undifferentiated:
                     prelim.metadata["completion_type"] = "UNDIFFERENTIATED_INSUFFICIENT_INFORMATION"
             wire = prelim

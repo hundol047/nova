@@ -191,9 +191,10 @@ class MissingInformationAnalyzer:
                 # long-tail candidate otherwise adds up to four generic questions to the action
                 # pool, and since the encounter ends once no action has value left, a longer pool
                 # meant longer encounters on cases that never involved those candidates.
-                questions = []
+                return
             else:
-                questions = entry.get("discriminating_questions", [])
+                from nova_agent.history_followup import followup_questions
+                questions = list(entry.get("discriminating_questions", [])) + followup_questions(state, item)
             supported_features = {normalize_feature(s) for s in item.supporting_evidence} if item is not None else set()
             for discriminator in questions:
                 category = discriminator.split(":", 1)[0]
@@ -205,7 +206,7 @@ class MissingInformationAnalyzer:
                     if feature and feature in supported_features:
                         continue
                 key = f"ask:{discriminator}"
-                if state.question_attempted(discriminator) or _already_answered(state, category):
+                if state.question_attempted(discriminator) or (":" not in discriminator and _already_answered(state, category)):
                     continue
                 if ":" in discriminator and cfg.action_v3_enabled:
                     from nova_agent.clinical_concepts import is_objective_only_feature

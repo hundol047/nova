@@ -23,13 +23,14 @@ def is_uncertain(clause: str) -> bool:
 UNCERTAIN_CUE = re.compile(
     _UNCERTAIN.pattern + r"|\b(?:probable|probably|likely|unlikely|query|suspect\w*|suspicion|maybe|could be|"
     r"not yet (?:excluded|ruled out)|not been (?:excluded|ruled out)|r/o)\b|\?|"
+    r"\b(?:cannot|can\'t)(?: yet| entirely| completely)? be (?:excluded|ruled out)\b|\b(?:remains? a possibility|considered)\b|"
     r"의심|배제할 ?수 ?없|배제(?:하지)? ?못|가능성|일 ?수도|아닐까|추정|것 ?같",
     re.I,
 )
 NEGATION_CUE = re.compile(
-    r"\b(?:excluded|excludes?|exclusion|ruled out|rules out|absent|negative for|no evidence of|no|not|without|"
+    r"\b(?:excluded|excludes?|exclusion|rejected|ruled out|rules out|absent|negative for|no evidence of|no|not|without|"
     r"free of|denies|denied|isn't|wasn't|aren't|weren't|never)\b|"
-    r"아니(?:라|다|에요|래|었|였|고|며)|아닌|없(?:다|어|음|었|는|고)|배제(?:됐|되었|됨|했|되어)|음성",
+    r"아니(?:라|다|에요|래|었|였|고|며)|아닌|없(?:다|어|음|었|는|고)|배제(?:됐|되었|됨|했|되어|라고)|음성",
     re.I,
 )
 AFFIRM_CUE = re.compile(

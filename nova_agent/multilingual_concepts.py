@@ -255,10 +255,13 @@ _KO_PATTERNS_V3 = (
 )
 
 
-def _present_not_negated(phrase: str, text: str) -> bool:
+def _present_not_negated(phrase: str, text: str, protected: tuple = ()) -> bool:
     start = text.find(phrase)
     while start != -1:
         end = start + len(phrase)
+        if any(lo <= start and end <= hi for lo, hi in protected):
+            start = text.find(phrase, start + 1)
+            continue
         tail = re.split(r"[.!?。！？,，;；\n]", text[end:], maxsplit=1)[0]
         # A denial belonging to the next symptom must not cancel this one.
         next_concepts = [tail.find(p) for ps in _BARE_CLINICAL_NOUNS.values()
@@ -278,12 +281,16 @@ def english_evidence_for(text: str) -> List[str]:
     if not text or text.isascii():
         return []
     found: List[str] = []
+    # Longest clinical term owns its span: muscle cramp is not an epileptic seizure.
+    # A separate occurrence of 경련 elsewhere still retains its existing meaning.
+    muscle_spans = tuple((m.start(), m.end()) for m in re.finditer(r"근육\s*경련", text))
     for concept, phrases in MULTILINGUAL_CONCEPT_ALIASES.items():
         english = _CANONICAL_ENGLISH_EVIDENCE.get(concept)
         if english and english not in found and any((not p.isascii()) and _present_not_negated(p, text) for p in phrases):
             found.append(english)
     for phrase, english in _DIRECT_LOCALIZED_EVIDENCE.items():
-        if english not in found and phrase in text and _present_not_negated(phrase, text):
+        if english not in found and phrase in text and _present_not_negated(
+                phrase, text, muscle_spans if phrase == "경련" else ()):
             found.append(english)
     from nova_agent.config import get_config
     if get_config().evidence_v3_enabled:

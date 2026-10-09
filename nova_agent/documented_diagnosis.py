@@ -17,7 +17,7 @@ PROVENANCE: engineering-authored wording rules; not clinician-reviewed.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from functools import lru_cache
 from typing import Dict, List, Literal, Optional, Tuple
 
@@ -37,8 +37,8 @@ _FRAMING = re.compile(
 _SENTENCE = re.compile(r"[.;!?\n]")
 # Hard boundaries keep a predicate on its own side ("confirms AF but excludes PE"); soft boundaries separate list
 # items that may share one predicate ("excludes AF and PE", "AF and PE were excluded").
-_HARD_BOUNDARY = re.compile(r"\s*\b(?:but|however|whereas|although|though|yet)\b|하지만|그러나|반면|지만", re.IGNORECASE)
-_SOFT_BOUNDARY = re.compile(r",|\s\band\b\s|\s및\s")
+_HARD_BOUNDARY = re.compile(r"\s*\b(?:but|however|whereas|although|though|despite)\b|하지만|그러나|반면|지만", re.IGNORECASE)
+_SOFT_BOUNDARY = re.compile(r",|\s\band\b\s|\s및\s|이고(?:요)?\s*|이며\s*")
 _MIN_NAME_LEN = 5
 
 Assertion = Literal["PRESENT", "NEGATED", "UNCERTAIN", "UNKNOWN"]
@@ -99,7 +99,6 @@ def _find_names(low: str, lo: int, hi: int) -> List[Tuple[int, int, str]]:
                              or (window[end - 1].isascii() and "가" <= window[end] <= "힣")))
             if boundary and not any(a < lo + end and lo + start < b for a, b, _ in taken):
                 taken.append((lo + start, lo + end, cid))
-                break
             start = window.find(name, start + 1)
     return sorted(taken)
 
@@ -149,70 +148,119 @@ def _assertion_cue(clause: str) -> Tuple[Optional[str], bool]:
     return None, False
 
 
-def _experiencer(text: str, s_lo: int, s_hi: int, mention_start: int) -> Experiencer:
-    """Whose diagnosis: a family member named before the mention is the experiencer unless a first-person
-    subject comes between them ("my mother says I was diagnosed with ..." is the patient's)."""
+_PATIENT_SUBJECT = re.compile(r"\b(?:I|I'm|I've|me|myself|the patient)\b|제가|저는|내가|나는|환자", re.I)
+_EXPLICIT_AFFIRM = re.compile(r"\b(?:confirms?|confirmed|diagnosed|present|positive|has|have|had)\b|확진|확정|진단|있다고|이라고|라고", re.I)
+_ELLIPSIS = re.compile(r"^\s*(?:it|this diagnosis|that diagnosis|the diagnosis)\b|^\s*(?:이|그|해당)\s*진단", re.I)
+_ATTRIBUTION = re.compile(r"\b(?:in|of|for)\s+(?:(?:my|her|his|the)\s+)?", re.I)
+
+
+def _experiencer(text: str, s_lo: int, part_hi: int, mention_start: int, mention_end: int) -> Experiencer:
+    # The last explicit subject wins. A new 'the patient' closes a preceding family scope too.
     before = text[s_lo:mention_start]
-    family = None
-    for family in FAMILY_CUE.finditer(before):
-        pass
-    if family is not None and not FIRST_PERSON_CUE.search(before[family.end():]):
-        return "FAMILY"
-    other = None
-    for other in OTHER_PERSON_CUE.finditer(before):
-        pass
-    if other is not None and not FIRST_PERSON_CUE.search(before[other.end():]):
-        return "OTHER"
-    if FIRST_PERSON_CUE.search(text[s_lo:s_hi]) or re.search(r"\bthe patient\b|환자", text[s_lo:s_hi], re.I):
-        return "PATIENT"
-    return "UNSPECIFIED"
+    subjects = [(m.start(), 'FAMILY') for m in FAMILY_CUE.finditer(before)]
+    subjects += [(m.start(), 'OTHER') for m in OTHER_PERSON_CUE.finditer(before)]
+    subjects += [(m.start(), 'PATIENT') for m in _PATIENT_SUBJECT.finditer(before)]
+    result = max(subjects, default=(-1, 'UNSPECIFIED'))[1]
+    after = text[mention_end:part_hi]
+    attributed = _ATTRIBUTION.match(after.lstrip())
+    if attributed:
+        tail = after.lstrip()[attributed.end():]
+        if FAMILY_CUE.match(tail): return 'FAMILY'
+        if OTHER_PERSON_CUE.match(tail): return 'OTHER'
+        if re.match(r"(?:the )?patient\b", tail, re.I): return 'PATIENT'
+    return result
 
 
-def documented_diagnosis_mentions(texts: List[str]) -> List[DiagnosisMention]:
-    """Every diagnosis named inside a clinician-documentation or patient-speculation sentence, with its scope."""
+def _parse_mentions(texts: List[str], documentation_only: bool) -> List[DiagnosisMention]:
     mentions: List[DiagnosisMention] = []
     for index, text in enumerate(texts):
-        text = text or ""
-        low = text.lower()
-        if len(low) != len(text):   # offsets must stay valid on the original text
-            low = "".join(ch.lower() if len(ch.lower()) == 1 else ch for ch in text)
+        text = text or ''
+        low = ''.join(ch.lower() if len(ch.lower()) == 1 else ch for ch in text)
         for s_lo, s_hi in _sentences(text):
             sentence = text[s_lo:s_hi]
             framed = bool(_FRAMING.search(sentence))
-            speculative = bool(SPECULATION_CUE.search(sentence))
-            if not (framed or speculative):
+            if documentation_only and not (framed or SPECULATION_CUE.search(sentence)):
                 continue
             names = _find_names(low, s_lo, s_hi)
-            if not names:
-                continue
-            source: Source = "PATIENT_SPECULATION" if speculative else "REPORTED_CLINICIAN"
+            if not names: continue
+            sentence_mentions = []
             for h_lo, h_hi in _split(text, s_lo, s_hi, _HARD_BOUNDARY, names):
                 parts = _split(text, h_lo, h_hi, _SOFT_BOUNDARY, names)
-                cues = [_assertion_cue(_masked(text, a, b, names)) for a, b in parts]
-                for p, (a, b) in enumerate(parts):
-                    in_part = [n for n in names if a <= n[0] < b]
-                    if not in_part:
+                part_names = [[n for n in names if a <= n[0] < b] for a,b in parts]
+                cues = []
+                for (a,b), ns in zip(parts,part_names):
+                    masked = _masked(text,a,b,names)
+                    cue = UNCERTAIN_CUE.search(masked) or NEGATION_CUE.search(masked) or _EXPLICIT_AFFIRM.search(masked)
+                    status = ('UNCERTAIN' if UNCERTAIN_CUE.search(masked) else
+                              'NEGATED' if NEGATION_CUE.search(masked) else 'PRESENT' if cue else None)
+                    # Only predicates following a list's diagnosis can propagate backwards.
+                    postposed = bool(cue and ns and cue.start()+a >= ns[-1][1])
+                    cues.append((status,postposed))
+                for p,(a,b) in enumerate(parts):
+                    ns = part_names[p]
+                    clause = _masked(text,a,b,names)
+                    if not ns:
+                        # Bounded anaphora: exactly one prior diagnosis in this sentence, explicit correction only.
+                        prior = {m.diagnosis_id:m for m in sentence_mentions}
+                        if len(prior)==1 and _ELLIPSIS.search(text[a:b]) and cues[p][0]:
+                            prev=next(iter(prior.values()))
+                            m=replace(prev,assertion=cues[p][0],evidence_span=(prev.mention_span[0],b))
+                            mentions.append(m);sentence_mentions.append(m)
                         continue
-                    assertion, _ = cues[p]
-                    if assertion is None:
-                        # A bare list item shares the predicate of its list: a postposed one that follows
-                        # ("AF and PE were excluded") or the one that precedes it ("excludes AF and PE").
-                        following = next((c for c in cues[p + 1:] if c[0] is not None), (None, False))
-                        preceding = next((c for c in reversed(cues[:p]) if c[0] is not None), (None, False))
-                        assertion = following[0] if following[0] is not None and following[1] else preceding[0]
-                    clause = _masked(text, a, b, names)
-                    scope = _masked(text, h_lo, h_hi, names)
-                    temporality: Temporality = ("HISTORICAL" if HISTORICAL_CUE.search(clause) or HISTORICAL_CUE.search(scope)
-                                                else "CURRENT" if CURRENT_CUE.search(clause) else "UNSPECIFIED")
-                    experiencer = _experiencer(text, s_lo, s_hi, in_part[0][0])
-                    for n_lo, n_hi, cid in in_part:
-                        mentions.append(DiagnosisMention(
-                            diagnosis_id=cid, text_index=index, mention_span=(n_lo, n_hi), evidence_span=(a, b),
-                            # A patient's own guess is a hypothesis, never an affirmation (an explicit denial stays one).
-                            assertion=("UNCERTAIN" if source == "PATIENT_SPECULATION" and assertion != "NEGATED"
-                                       else assertion or ("PRESENT" if framed else "UNKNOWN")),
-                            temporality=temporality, experiencer=experiencer, source=source))
+                    assertion,_ = cues[p]
+                    bare = not (SPECULATION_CUE.search(clause) or _PATIENT_SUBJECT.search(clause)
+                                or FAMILY_CUE.search(clause) or OTHER_PERSON_CUE.search(clause))
+                    if assertion is None and bare:
+                        following=next((cues[q] for q in range(p+1,len(parts)) if part_names[q] and cues[q][0]),(None,False))
+                        preceding=next((cues[q] for q in range(p-1,-1,-1) if part_names[q] and cues[q][0]),(None,False))
+                        assertion=following[0] if following[1] else preceding[0]
+                    speculative=bool(SPECULATION_CUE.search(clause))
+                    # A bare list continuation shares source/time, an independent predicate does not.
+                    inherit = bool(p and bare and not cues[p][0] and not _FRAMING.search(clause))
+                    previous = sentence_mentions[-1] if sentence_mentions else None
+                    source = ('PATIENT_SPECULATION' if speculative else
+                              previous.source if inherit and previous else
+                              'REPORTED_CLINICIAN' if framed else 'OTHER')
+                    temporal = ('HISTORICAL' if HISTORICAL_CUE.search(clause) else
+                                'CURRENT' if CURRENT_CUE.search(clause) else
+                                previous.temporality if inherit and previous else 'UNSPECIFIED')
+                    for lo,hi,cid in ns:
+                        m=DiagnosisMention(cid,index,(lo,hi),(a,b),
+                            'UNCERTAIN' if source=='PATIENT_SPECULATION' and assertion!='NEGATED' else assertion or 'PRESENT',
+                            temporal,_experiencer(text,s_lo,b,lo,hi),source)
+                        mentions.append(m);sentence_mentions.append(m)
     return mentions
+
+
+def documented_diagnosis_mentions(texts: List[str]) -> List[DiagnosisMention]:
+    """All occurrences, local predicate/source/subject/time, with original offsets."""
+    from nova_agent.matching import _scoped
+    return list(_scoped('diagnosis_mentions',tuple(texts),lambda:tuple(_parse_mentions(texts,True))))
+
+
+def diagnosis_evidence_text(text: str, allow_historical: bool = True) -> str:
+    """A scoring view, never a mutation of the patient's words. Nonpositive/other-person diagnosis spans
+    cannot become another disease's risk/feature. Patient history is retained as HISTORY when allowed.
+    No result (including a negative test) is invented from a reported exclusion.
+    """
+    if not text or not (NEGATION_CUE.search(text) or UNCERTAIN_CUE.search(text) or FAMILY_CUE.search(text)
+                        or OTHER_PERSON_CUE.search(text) or HISTORICAL_CUE.search(text) or SPECULATION_CUE.search(text)):
+        return text
+    from nova_agent.matching import _scoped
+    def compute():
+        mentions=_parse_mentions([text],False)
+        latest={m.diagnosis_id:m for m in mentions if m.experiencer not in ('FAMILY','OTHER')}
+        chars=list(text)
+        for m in mentions:
+            current=latest.get(m.diagnosis_id,m)
+            blocked=(m.experiencer in ('FAMILY','OTHER') or m.assertion!='PRESENT'
+                     or m.source=='PATIENT_SPECULATION' or current.assertion!='PRESENT'
+                     or (not allow_historical and m.temporality=='HISTORICAL'))
+            if blocked:
+                lo,hi=m.mention_span
+                chars[lo:hi]=' '* (hi-lo)
+        return ''.join(chars)
+    return _scoped('diagnosis_evidence',(text,allow_historical),compute)
 
 
 def documented_diagnosis_ids(texts: List[str]) -> List[str]:

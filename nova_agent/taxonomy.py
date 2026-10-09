@@ -151,6 +151,11 @@ def disease_specific_question(disease_id: str, discriminator: str) -> QuestionSp
     """Build a QuestionSpec for a disease-specific discriminating item declared in the knowledge
     base (e.g. "associated_symptoms:diaphoresis" -> a targeted yes/no question). Falls back to the
     base catalog entry when the discriminator is already a known category with no sub-detail."""
+    from nova_agent.history_followup import SHORT_FOLLOWUPS
+    if discriminator in SHORT_FOLLOWUPS:
+        return {"category": discriminator.partition(":")[0],
+                **{"text_" + lang: text for lang, text in SHORT_FOLLOWUPS[discriminator].items()},
+                "keywords": [discriminator.partition(":")[2]], "turn_cost": 1}
     if ":" in discriminator:
         category, detail = discriminator.split(":", 1)
     else:

@@ -115,3 +115,27 @@ Runtime content authored or edited in this pass, all engineering-authored and **
 | `nova_agent/orchestrator.py` | decision-scoped memo; legacy learning/ catalog context never runs under preliminary rules |
 | `nova_agent/soap.py` | clause-level answer classification merged with the integration branch's unclear/education handling |
 Existing rows above remain UNRESOLVED; this pass does not reconstruct earlier generation records.
+
+## Round R assertion and observation repair — 2026-10-09
+
+Engineering assistant changes on the Round Q working branch; no external LLM call,
+model download, fine-tuning, evaluation-label edit or blind execution. User request:
+implement the preceding acceptance work order, preserve observed evidence and fix
+negation, information collection and unsupported final diagnoses. New tests and
+fixtures are agent-authored synthetic development material, not independent clinical
+validation. Exact runtime and executed hashes are recorded in verification v23.
+
+Clinical guard provenance (not clearance of historical KB sources or licence):
+- ESC 2022 ventricular arrhythmia guideline, section 5.1.3, DOI
+  https://doi.org/10.1093/eurheartj/ehac262 : ECG evidence identifies the rhythm
+  subtype. The implementation does not infer ventricular origin from pulse rate.
+- NICE CG109 recommendations 1.1.2 and 1.1.4.3,
+  https://www.nice.org.uk/guidance/cg109/chapter/Recommendations : uncomplicated
+  faint requires no features suggesting another diagnosis. The final-label guard
+  reuses existing pulse thresholds and retains the cardiac alternative for evaluation.
+- Murmur and lung-sound EXAM routing reuses the existing taxonomy's auscultation
+  maneuvers. Electrolyte follow-ups reuse existing KB risk context; they add no
+  laboratory value, electrolyte direction, diagnostic weight or treatment instruction.
+- Generic-support and risk-only naming guards are uncalibrated engineering policies,
+  not clinical exclusion criteria. Source matching, timestamps and experiencer are
+  linguistic assertions; raw observations remain in the record.
