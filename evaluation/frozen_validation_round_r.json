@@ -1,0 +1,622 @@
+[
+  {
+    "case_id": "NewR_01",
+    "chief_complaint": "Heavy central chest pressure began as I climbed the station stairs and has not settled. My right jaw aches and I am drenched in sweat.",
+    "demographics": {
+      "age": 68,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "acute_coronary_syndrome",
+    "answers": {
+      "character": "Tight pressure behind the sternum with nausea.",
+      "past_medical_history": "Coronary artery disease and diabetes.",
+      "associated_symptoms": "No cough, no fever, no tearing pain."
+    },
+    "exam_results": {
+      "vital_signs": "BP 132/82, HR 112, RR 21, Temp 36.5, SpO2 97%",
+      "general_appearance": "Diaphoretic, uncomfortable."
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_02",
+    "chief_complaint": "Three weeks after hip surgery, a sharp ache under my ribs and breathlessness woke me. One leg has become bigger.",
+    "demographics": {
+      "age": 59,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "pulmonary_embolism",
+    "answers": {
+      "associated_symptoms": "Pain is worse when taking a breath. No fever.",
+      "past_medical_history": "Previous pulmonary embolism."
+    },
+    "exam_results": {
+      "vital_signs": "BP 104/68, HR 127, RR 29, Temp 36.6, SpO2 89%",
+      "extremity_exam": "Unilateral calf swelling with tenderness.",
+      "lung_auscultation": "Clear breath sounds bilaterally."
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_03",
+    "chief_complaint": "There is a wheeze every time I breathe out. A smoky room started this attack and my usual reliever did not help much.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "asthma_exacerbation",
+    "answers": {
+      "past_medical_history": "Asthma since adolescence.",
+      "associated_symptoms": "Shortness of breath and chest tightness. No fever."
+    },
+    "exam_results": {
+      "vital_signs": "BP 121/76, HR 108, RR 25, Temp 36.8, SpO2 94%",
+      "lung_auscultation": "Diffuse expiratory wheezes and prolonged expiration."
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_04",
+    "chief_complaint": "The corner of my mouth suddenly fell and I cannot grip a cup in my left hand. My speech sounds wrong.",
+    "demographics": {
+      "age": 72,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "stroke",
+    "answers": {
+      "onset": "All began at the same moment 35 minutes ago.",
+      "associated_symptoms": "Left sided weakness and slurred speech; no seizure.",
+      "past_medical_history": "Hypertension."
+    },
+    "exam_results": {
+      "neuro_exam": "Left facial droop, left arm drift, dysarthria.",
+      "vital_signs": "BP 164/91, HR 88, Temp 36.7, SpO2 98%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_05",
+    "chief_complaint": "I have fever and a painful stiff neck; ordinary room light now hurts and my partner says I answer slowly.",
+    "demographics": {
+      "age": 26,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "meningitis",
+    "answers": {
+      "onset": "Worsening through yesterday and today, not instant.",
+      "associated_symptoms": "Headache, photophobia and vomiting."
+    },
+    "exam_results": {
+      "meningeal_signs": "Nuchal rigidity.",
+      "mental_status_exam": "Disoriented to place.",
+      "vital_signs": "BP 109/68, HR 116, RR 22, Temp 39.1, SpO2 97%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_06",
+    "chief_complaint": "My lips and tongue swelled minutes after a bee sting. My chest is tight and I have itchy welts all over.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "anaphylaxis",
+    "answers": {
+      "onset": "Within five minutes of the sting.",
+      "associated_symptoms": "Hoarse voice and difficult breathing."
+    },
+    "exam_results": {
+      "vital_signs": "BP 82/49, HR 129, RR 28, Temp 36.7, SpO2 92%",
+      "skin_exam": "Generalized urticaria.",
+      "lung_auscultation": "Bilateral wheeze."
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_07",
+    "chief_complaint": "I feel my heart suddenly pounding in quick uneven bursts and I get woozy during them.",
+    "demographics": {
+      "age": 66,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "onset": "The pounding switches on abruptly.",
+      "duration": "Ten to twenty minutes.",
+      "associated_symptoms": "Lightheadedness without loss of consciousness.",
+      "medication": "An asthma inhaler, unchanged."
+    },
+    "exam_results": {
+      "vital_signs": "BP 108/72, HR 158, Temp 36.7, SpO2 98%",
+      "cardiac_auscultation": "Irregularly irregular rhythm."
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_08",
+    "chief_complaint": "가슴이 갑자기 두근거리고 어지러워요. 진료 의뢰서에 부정맥으로 진단받았다고 적혀 있어요.",
+    "demographics": {
+      "age": 54,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "onset": "갑자기 시작됐어요.",
+      "duration": "십 분 정도 지속돼요.",
+      "associated_symptoms": "의식을 잃지는 않았어요."
+    },
+    "exam_results": {
+      "vital_signs": "BP 114/70, HR 154, Temp 36.6, SpO2 98%",
+      "cardiac_auscultation": "Irregularly irregular rhythm."
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_09",
+    "chief_complaint": "For three months I get a burning feeling behind my breastbone after late dinners. Lying flat brings sour fluid into my mouth.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "gerd",
+    "answers": {
+      "relieving": "Sitting upright and antacids help.",
+      "aggravating": "Worse after meals and on lying down.",
+      "associated_symptoms": "No exertional chest pressure or dyspnea."
+    },
+    "exam_results": {
+      "vital_signs": "BP 118/72, HR 76, Temp 36.5, SpO2 99%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_10",
+    "chief_complaint": "When I roll onto my right side in bed the room spins for about twenty seconds, then settles if I keep still.",
+    "demographics": {
+      "age": 58,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "bppv",
+    "answers": {
+      "associated_symptoms": "No hearing loss, no weakness or headache.",
+      "aggravating": "Turning over or tilting my head.",
+      "duration": "Less than a minute each time."
+    },
+    "exam_results": {
+      "dix_hallpike": "Positional vertigo with transient torsional nystagmus.",
+      "neuro_exam": "No focal deficit.",
+      "vital_signs": "BP 123/76, HR 72, Temp 36.8, SpO2 99%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_11",
+    "chief_complaint": "It burns while I pass urine, and I have been rushing to the toilet repeatedly since yesterday.",
+    "demographics": {
+      "age": 32,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cystitis",
+    "answers": {
+      "associated_symptoms": "Urgency and urinary frequency without vaginal discharge; no fever or flank pain.",
+      "location": "Low central abdominal discomfort."
+    },
+    "exam_results": {
+      "vital_signs": "BP 116/71, HR 78, Temp 36.7, SpO2 99%",
+      "costovertebral_tenderness": "No costovertebral angle tenderness."
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_12",
+    "chief_complaint": "A tight band across both temples appears after working at my desk. Walking does not worsen it and I can still eat.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "tension_headache",
+    "answers": {
+      "character": "Dull pressing bilateral headache.",
+      "associated_symptoms": "No nausea, no photophobia, no neck stiffness.",
+      "onset": "Gradual at the end of a long workday."
+    },
+    "exam_results": {
+      "neuro_exam": "Normal neurological examination.",
+      "vital_signs": "BP 112/73, HR 70, Temp 36.6, SpO2 99%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": true,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {},
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_13",
+    "chief_complaint": "My legs have lost strength and my fingers cramp. My ankle tablets were doubled last week, and I have been vomiting.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "severe_electrolyte_disorder",
+    "answers": {
+      "medication": "Furosemide, dose increased last week.",
+      "associated_symptoms": "Muscle cramps and muscle weakness; no fever.",
+      "medication:recent medication changes": "The dose was doubled five days ago."
+    },
+    "exam_results": {
+      "vital_signs": "BP 102/64, HR 95, Temp 36.7, SpO2 98%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "candidate": true,
+      "forbidden": [
+        "onto::tier2:siadh",
+        "meningitis"
+      ]
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_14",
+    "chief_complaint": "I missed my dialysis transport yesterday. Today both arms feel weak and my heartbeat seems uneven.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "severe_electrolyte_disorder",
+    "answers": {
+      "past_medical_history": "Chronic kidney disease on dialysis.",
+      "past_medical_history:last dialysis": "The last session was four days ago; I missed yesterday.",
+      "associated_symptoms": "Muscle weakness and palpitations."
+    },
+    "exam_results": {
+      "vital_signs": "BP 141/86, HR 48, Temp 36.8, SpO2 97%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "candidate": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_15",
+    "chief_complaint": "I have felt muddled and nauseated since changing how much water I drink. My legs are cramping too.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "severe_electrolyte_disorder",
+    "answers": {
+      "medication": "A diuretic for hypertension.",
+      "social_history:fluid intake changes": "Several more bottles a day; I do not remember how many.",
+      "associated_symptoms": "Muscle cramps and confusion. No fever or photophobia."
+    },
+    "exam_results": {
+      "mental_status_exam": "Disoriented to date.",
+      "vital_signs": "BP 115/70, HR 81, Temp 36.7, SpO2 98%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "candidate": true,
+      "forbidden": [
+        "onto::tier2:siadh",
+        "meningitis"
+      ]
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_16",
+    "chief_complaint": "다리 근육 경련이 있고 힘이 빠져요. 최근 물약 같은 혈압약이 늘었어요.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "severe_electrolyte_disorder",
+    "answers": {
+      "medication": "이뇨제를 먹어요.",
+      "associated_symptoms": "근육 경련은 있지만 의식을 잃거나 발작한 적은 없어요."
+    },
+    "exam_results": {
+      "vital_signs": "BP 110/72, HR 85, Temp 36.5, SpO2 98%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "candidate": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_17",
+    "chief_complaint": "At breakfast my pulse suddenly sped up and I nearly fainted, but I could hear everything.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "associated_symptoms": "Palpitations and lightheadedness, never unconscious.",
+      "past_medical_history": "No known heart disease."
+    },
+    "exam_results": {
+      "vital_signs": "BP 103/66, HR 169 regular, Temp 36.8, SpO2 98%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "candidate": true,
+      "forbidden": [
+        "onto::tier2:ventricular_tachycardia"
+      ]
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_18",
+    "chief_complaint": "I briefly blacked out while seated reading. I was not frightened, hot, or standing up.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "cardiac_arrhythmia",
+    "answers": {
+      "medication": "Metoprolol.",
+      "associated_symptoms": "No warning, then I woke on the chair.",
+      "aggravating": "No standing or pain trigger."
+    },
+    "exam_results": {
+      "vital_signs": "BP 101/62, HR 39 regular, Temp 36.6, SpO2 97%"
+    },
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "candidate": true,
+      "forbidden": [
+        "vasovagal_syncope",
+        "onto::tier2:ventricular_tachycardia"
+      ]
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_19",
+    "chief_complaint": "The hospital note lists atrial fibrillation as an excluded diagnosis. I have no symptom to report today.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_20",
+    "chief_complaint": "아버지 진단서에는 atrial fibrillation 확진이라고 적혀 있어요. 제 증상은 잘 모르겠어요.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_21",
+    "chief_complaint": "The clinician wrote that pulmonary embolism remains possible, not that it is confirmed. I cannot describe what I feel.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_22",
+    "chief_complaint": "There is an odd lightheaded feeling. I cannot provide more detail and do not want an examination.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": [
+      "vital_signs",
+      "cardiac_auscultation",
+      "lung_auscultation",
+      "neuro_exam",
+      "mental_status_exam",
+      "general_appearance"
+    ]
+  },
+  {
+    "case_id": "NewR_23",
+    "chief_complaint": "I am a little tired. My sister had a heart rhythm diagnosis last winter.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": []
+  },
+  {
+    "case_id": "NewR_24",
+    "chief_complaint": "My referral discusses a remote episode of pneumonia which resolved. There is no current complaint.",
+    "demographics": {
+      "age": 43,
+      "sex": "female"
+    },
+    "ground_truth_diagnosis": "unknown",
+    "answers": {},
+    "exam_results": {},
+    "default_answer": "I cannot tell you that.",
+    "default_exam_result": "Not assessed.",
+    "default_test_result": "Not performed.",
+    "scoring_expected": false,
+    "category": "round_r_frozen_engineering_validation",
+    "notes": "Frozen before execution. Working diagnosis target, not clinician adjudicated. Author read implementation/development failures.",
+    "audit_expect": {
+      "undifferentiated": true
+    },
+    "audit_rejected_exams": []
+  }
+]

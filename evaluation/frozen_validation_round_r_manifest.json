@@ -1,0 +1,8 @@
+{
+  "sha256": "65a1b2855712214dc69481eb1f3eda8e57e03c139b12ea322c4b325ba3879397",
+  "frozen_at_utc": "2026-10-09T03:29:56.335173+00:00",
+  "case_count": 24,
+  "scored": 12,
+  "policy": "Existing preliminary_driver scoring unchanged. Ambiguous cases excluded before execution, explicit behavioral checks scored separately. No simulator default changes to existing sets. New fixtures use unknown defaults. Not independent clinical validation. No tuning after results.",
+  "author_exposure": "Implementer read existing code, Round P/Q and acceptance failures. New synthetic combinations, not external blind."
+}
