@@ -2,14 +2,14 @@
   "scope": "Every JSON leaf in legacy diseases/catalog/enrichment/tests/guidelines/red-flags; selected module-level literal constants",
   "source_hashes": {
     "nova_agent/knowledge/diseases/abdominal_gi.json": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
-    "nova_agent/knowledge/diseases/cardiac.json": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
+    "nova_agent/knowledge/diseases/cardiac.json": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
     "nova_agent/knowledge/diseases/endocrine_metabolic.json": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
     "nova_agent/knowledge/diseases/genitourinary.json": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
     "nova_agent/knowledge/diseases/infectious.json": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
     "nova_agent/knowledge/diseases/neuro.json": "c7b9f7536429ea6be1234ec5b5710fd84061d8e14d12dea83ae340d2a984baf2",
     "nova_agent/knowledge/diseases/pulmonary.json": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "nova_agent/knowledge/tier2_catalog.json": "56e6f197eafeef1533ac733c330099f82da453f8e0e0e571550a5f2416081fc6",
-    "nova_agent/knowledge/tier2_enrichment.json": "a127120bc1b5c73a40a57b6441aecda54b43c9e2ecc4ab1ac7a96e458c1adc74",
+    "nova_agent/knowledge/tier2_enrichment.json": "4c128f46f59696e785881eae4276631c4bb8e9bc228e97071e6eb5c7e4a3c730",
     "nova_agent/knowledge/diagnostic_tests/notes.json": "6cc5f51ac1c69c2a17354e5606e83749cb39ab19a313d0719afb1fe4ebadf161",
     "nova_agent/knowledge/guidelines/chief_complaint_guidelines.json": "958288db5865bd02917b1ad0a5431074f7c5e13b11ec1db2200c97790e69f471",
     "nova_agent/knowledge/red_flags/critical_conditions.json": "caae9d4d5520417eed70721b27e9ebdd299c14db10ecd2b684a0cdbd3a572609",
@@ -4387,6 +4387,26 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "pointer": "/5/typical_features/7",
+      "value": "syncope without warning",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "pointer": "/5/typical_features/8",
+      "value": "palpitations before syncope",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
       "pointer": "/5/risk_factors/0",
       "value": "hypertension",
       "original_source_status": "UNRESOLVED",
@@ -4611,6 +4631,16 @@
       "path": "nova_agent/knowledge/diseases/cardiac.json",
       "pointer": "/5/evidence_level",
       "value": "internally_authored_heuristic",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "pointer": "/5/round_u_followup_provenance",
+      "value": "typical_features 'syncope without warning' and 'palpitations before syncope' added in the Round U follow-up: syncope without prodrome (or with a very short one) and sudden palpitation immediately followed by syncope are listed among the high-risk features suggesting arrhythmic syncope (Brignole M et al., 2018 ESC Guidelines for the diagnosis and management of syncope, Eur Heart J 2018;39:1883-1948, Table 5, doi:10.1093/eurheartj/ehy037). It supports the arrhythmia CATEGORY only; it never identifies a rhythm subtype, and danger adds no score. Agent-authored, not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -188985,6 +189015,96 @@
       "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
     },
     {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/83/id",
+      "value": "sjogren_syndrome",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/83/typical_features/0",
+      "value": "persistent dry eyes",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/83/typical_features/1",
+      "value": "persistent dry mouth",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/83/typical_features/2",
+      "value": "sandy or gritty feeling in the eyes",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/83/typical_features/3",
+      "value": "drinking liquids to swallow dry food",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/83/typical_features/4",
+      "value": "recurrent salivary gland swelling",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/83/provenance/typical_features",
+      "value": "Ocular/oral dryness screening items of the 2002 American-European Consensus Group criteria (Vitali C et al., Ann Rheum Dis 2002;61:554-558, Table 1 items I-II), used as the entry criterion of the 2016 ACR/EULAR classification criteria for primary Sjogren's syndrome (Shiboski CH et al., Arthritis Rheumatol 2017;69:35-45). Symptom wording paraphrased; no threshold or test result is asserted.",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/83/provenance/confirmatory_findings",
+      "value": "UNRESOLVED: no objective item added (labial biopsy/anti-SSA/Schirmer are tests, not available in the preliminary round).",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/83/provenance/selection",
+      "value": "Round U follow-up Tier-2 priority subset (long-tail development failure RoundI_long_tail). Agent-authored, not clinician-reviewed.",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
       "path": "nova_agent/knowledge/diagnostic_tests/notes.json",
       "pointer": "/0/test_id",
       "value": "ecg",
@@ -190666,7 +190786,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 251,
+      "line": 252,
       "names": [
         "_ADDITIONAL_LAY_ALIASES"
       ],
@@ -190751,10 +190871,14 @@
           "light headed"
         ],
         "seizure": [
-          "convulsive fit",
-          "convulsing",
-          "convulsions",
-          "fitting and shaking"
+          "short fit",
+          "brief fit",
+          "a fit this morning",
+          "a fit last night",
+          "a fit today",
+          "had a fit and",
+          "one fit",
+          "fit this morning"
         ],
         "sudden onset palpitations": [
           "heart suddenly took off",
@@ -190823,17 +190947,206 @@
           "missed two dialysis sessions",
           "missed a dialysis session",
           "missed scheduled dialysis"
+        ],
+        "abdominal pain": [
+          "stomach pain",
+          "stomach ache",
+          "stomachache",
+          "tummy ache",
+          "pain in my stomach",
+          "stomach hurts",
+          "my stomach is sore"
+        ],
+        "known diabetes": [
+          "type 1 diabetes",
+          "type 2 diabetes",
+          "type 1 diabetic",
+          "type 2 diabetic",
+          "i have diabetes",
+          "i am diabetic",
+          "i'm diabetic"
+        ],
+        "missed insulin doses": [
+          "insulin pump stopped",
+          "insulin pump failed",
+          "pump stopped working",
+          "pen broke",
+          "insulin pen broke"
+        ],
+        "kussmaul breathing": [
+          "deep laboured breathing",
+          "deep labored breathing",
+          "deep sighing respirations",
+          "deep sighing breathing",
+          "deep and laboured breathing",
+          "deep and labored breathing"
+        ],
+        "recent similar illness contact": [
+          "several people at dinner got",
+          "everyone who ate",
+          "others who ate",
+          "people who ate there",
+          "who ate there has it",
+          "has the same bug",
+          "had the same bug",
+          "has the same illness",
+          "same illness",
+          "family are ill too"
+        ],
+        "diffuse crampy abdominal pain": [
+          "cramping across the abdomen",
+          "cramping across my belly",
+          "cramps across my belly",
+          "cramps across my tummy",
+          "abdominal cramps",
+          "cramping across my abdomen"
+        ],
+        "food exposure": [
+          "after the shared dinner",
+          "shared dinner",
+          "after a barbecue",
+          "after a takeaway",
+          "after eating out",
+          "a few hours after eating"
+        ],
+        "recent trauma": [
+          "fell off my bike",
+          "fell off my bicycle",
+          "after a fall",
+          "since i fell",
+          "had a fall",
+          "slipped and fell",
+          "slipped on ice",
+          "landed on my side",
+          "was hit in the chest"
+        ],
+        "reproducible with palpation": [
+          "pressing on the ribs",
+          "press on them",
+          "pressing on the sore spot",
+          "hurts when i press",
+          "sore to press",
+          "tender to touch",
+          "pressing on it hurts"
+        ],
+        "ankle swelling": [
+          "ankles swell",
+          "swollen ankles",
+          "ankles are swollen",
+          "ankles get swollen",
+          "ankle edema"
+        ],
+        "leg swelling": [
+          "pitting edema",
+          "swollen legs",
+          "legs are swollen",
+          "legs swell"
+        ],
+        "waking breathless at night": [
+          "wake up gasping",
+          "waking up gasping",
+          "wake up breathless",
+          "wake up short of breath"
+        ],
+        "crackles in lungs": [
+          "crackles at both bases",
+          "crackles at the bases",
+          "bibasal crackles",
+          "bibasilar crackles",
+          "basal crackles"
+        ],
+        "syncope without warning": [
+          "passed out without any warning",
+          "passed out without warning",
+          "out with no warning at all",
+          "blacked out with no warning",
+          "blacked out without warning",
+          "collapsed without warning",
+          "fainted without warning",
+          "fainted with no warning",
+          "lost consciousness without warning"
+        ],
+        "right upper quadrant pain": [
+          "under my right ribs",
+          "below my right ribs",
+          "under the right ribs",
+          "upper right of my belly",
+          "upper right belly",
+          "right upper belly"
+        ],
+        "big toe joint involvement": [
+          "my big toe",
+          "the big toe",
+          "base of the big toe",
+          "big toe joint"
+        ],
+        "night onset": [
+          "overnight my",
+          "came on overnight",
+          "woke at night with",
+          "woke me at night"
+        ],
+        "visual disturbance": [
+          "blurred vision",
+          "blurry vision",
+          "vision went blurry",
+          "loss of vision",
+          "lost vision",
+          "double vision"
+        ],
+        "night time pain": [
+          "wakes me at night",
+          "wakes me up at night",
+          "woke me at night"
+        ],
+        "palpitations before syncope": [
+          "heart skip beforehand",
+          "heart skipped beforehand",
+          "fluttering for a few minutes before",
+          "palpitations beforehand",
+          "palpitations before i fainted",
+          "palpitations before i passed out",
+          "heart raced before i passed out",
+          "heart racing before i blacked out"
+        ],
+        "unable to lie flat": [
+          "three pillows to sleep",
+          "need three pillows",
+          "need extra pillows to sleep",
+          "sleep propped up",
+          "cannot lie flat",
+          "can't lie flat"
+        ],
+        "rebound tenderness": [
+          "with rebound",
+          "rebound everywhere",
+          "rebound tenderness everywhere"
+        ],
+        "lying still": [
+          "lying very still",
+          "lying completely still",
+          "keeps very still"
         ]
       },
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 311,
+      "line": 374,
       "names": [
         "_TIER2_LAY"
       ],
       "value": {
+        "persistent dry eyes": [
+          "dry eyes for months",
+          "eyes have been dry for months",
+          "eyes stay dry"
+        ],
+        "persistent dry mouth": [
+          "dry mouth for months",
+          "mouth stays dry",
+          "mouth has been dry for months"
+        ],
         "band-like blistering rash": [
           "stripe of blisters",
           "line of blisters",
@@ -191828,7 +192141,7 @@
     },
     {
       "path": "nova_agent/taxonomy.py",
-      "line": 179,
+      "line": 184,
       "names": [
         "EXAM_CATALOG"
       ],
@@ -192023,7 +192336,7 @@
     },
     {
       "path": "nova_agent/taxonomy.py",
-      "line": 214,
+      "line": 219,
       "names": [
         "TEST_CATALOG"
       ],
@@ -192369,7 +192682,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 66,
+      "line": 67,
       "names": [
         "_STOPWORDS"
       ],
@@ -192406,7 +192719,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 70,
+      "line": 71,
       "names": [
         "_GENERIC_MEDICAL_WORDS"
       ],
@@ -192424,7 +192737,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 72,
+      "line": 73,
       "names": [
         "_OVERLAP_RATIO_THRESHOLD"
       ],
@@ -192433,7 +192746,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 87,
+      "line": 88,
       "names": [
         "_RELATIONAL_WORDS"
       ],
@@ -192455,7 +192768,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 163,
+      "line": 164,
       "names": [
         "_SUFFIX_RULES"
       ],
@@ -192497,7 +192810,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 166,
+      "line": 167,
       "names": [
         "_MIN_STEM_LENGTH"
       ],
@@ -192506,7 +192819,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 181,
+      "line": 182,
       "names": [
         "_IRREGULAR_STEM_OVERRIDES"
       ],
@@ -192539,7 +192852,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 269,
+      "line": 270,
       "names": [
         "_LAY_ANATOMY"
       ],
@@ -192551,7 +192864,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 298,
+      "line": 299,
       "names": [
         "_ABSENT_SIGN"
       ],
@@ -192560,7 +192873,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 365,
+      "line": 370,
       "names": [
         "_POLARITY_UP"
       ],
@@ -192577,7 +192890,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 366,
+      "line": 371,
       "names": [
         "_POLARITY_DOWN"
       ],
@@ -192593,7 +192906,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 522,
+      "line": 646,
       "names": [
         "_PATTERN_QUALIFIERS"
       ],
@@ -192611,7 +192924,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 607,
+      "line": 751,
       "names": [
         "FEATURE_ALIASES"
       ],
@@ -192789,7 +193102,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 652,
+      "line": 796,
       "names": [
         "_LAY_VARIANTS"
       ],
@@ -192927,7 +193240,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 58,
+      "line": 59,
       "names": [
         "FEATURE_WEIGHT"
       ],
@@ -192936,7 +193249,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 59,
+      "line": 60,
       "names": [
         "RISK_FACTOR_WEIGHT"
       ],
@@ -192945,7 +193258,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 60,
+      "line": 61,
       "names": [
         "CONTRADICTION_PENALTY"
       ],
@@ -192954,7 +193267,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 64,
+      "line": 65,
       "names": [
         "CONFIRMATORY_WEIGHT"
       ],
@@ -192963,7 +193276,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 85,
+      "line": 86,
       "names": [
         "_NEGATIVE_FEATURE_PREFIXES"
       ],
@@ -192977,7 +193290,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 94,
+      "line": 95,
       "names": [
         "_SPECIFICITY_STEP"
       ],
@@ -192986,7 +193299,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 95,
+      "line": 96,
       "names": [
         "_SPECIFICITY_CAP"
       ],
@@ -192995,7 +193308,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 103,
+      "line": 104,
       "names": [
         "_GENERIC_SEVERITY_MULTIPLIER"
       ],
@@ -193004,7 +193317,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 176,
+      "line": 177,
       "names": [
         "_ESCALATION_MIN_SUPPORT"
       ],
@@ -193013,7 +193326,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 237,
+      "line": 300,
       "names": [
         "_CONVERGING_MIN_SUPPORT"
       ],
@@ -193022,7 +193335,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 238,
+      "line": 301,
       "names": [
         "_THIN_ONTOLOGY_MAX_SUPPORT"
       ],
@@ -193267,7 +193580,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 338,
+      "line": 340,
       "names": [
         "_config"
       ],

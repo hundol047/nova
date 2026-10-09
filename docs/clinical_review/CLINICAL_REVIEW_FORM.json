@@ -95,7 +95,7 @@
     "disease_id": "acute_coronary_syndrome",
     "name": "Acute Coronary Syndrome",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
+    "source_sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -300,7 +300,7 @@
     "disease_id": "aortic_dissection",
     "name": "Aortic Dissection",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
+    "source_sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -512,7 +512,7 @@
     "disease_id": "cardiac_arrhythmia",
     "name": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
+    "source_sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
     "dangerous": true,
     "urgency": "MEDIUM",
     "current_profile": {
@@ -542,7 +542,9 @@
         "associated lightheadedness",
         "known history of arrhythmia",
         "pulse rate below 50",
-        "pulse rate of 150 or more"
+        "pulse rate of 150 or more",
+        "syncope without warning",
+        "palpitations before syncope"
       ],
       "risk_factors": [
         "hypertension",
@@ -579,6 +581,7 @@
         "chest pain with palpitations"
       ],
       "evidence_level": "internally_authored_heuristic",
+      "round_u_followup_provenance": "typical_features 'syncope without warning' and 'palpitations before syncope' added in the Round U follow-up: syncope without prodrome (or with a very short one) and sudden palpitation immediately followed by syncope are listed among the high-risk features suggesting arrhythmic syncope (Brignole M et al., 2018 ESC Guidelines for the diagnosis and management of syncope, Eur Heart J 2018;39:1883-1948, Table 5, doi:10.1093/eurheartj/ehy037). It supports the arrhythmia CATEGORY only; it never identifies a rhythm subtype, and danger adds no score. Agent-authored, not clinician-reviewed.",
       "round_q_provenance": "typical_features 'pulse rate below 50' / 'pulse rate of 150 or more' added in Round Q: a measured CURRENT rate at the thresholds the AHA adult bradycardia/tachycardia algorithms use to suggest a rhythm cause (Panchal AR et al., 2020 AHA Guidelines for CPR and ECC Part 3, Circulation 2020;142:S366-S468). Weighted like a generic physiological sign (the reduced multiplier differential.py gives tachycardia/hypotension); not a confirmatory finding and never a subtype. Agent-authored, not clinician-reviewed."
     },
     "source_leads": [
@@ -2251,7 +2254,7 @@
     "disease_id": "gerd",
     "name": "Gastroesophageal Reflux Disease",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
+    "source_sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2500,7 +2503,7 @@
     "disease_id": "musculoskeletal_chest_pain",
     "name": "Musculoskeletal Chest Pain (Costochondritis)",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
+    "source_sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2754,7 +2757,7 @@
     "disease_id": "panic_attack",
     "name": "Panic Attack",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
+    "source_sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2988,7 +2991,7 @@
     "disease_id": "vasovagal_syncope",
     "name": "Vasovagal (Reflex) Syncope",
     "source_path": "nova_agent/knowledge/diseases/cardiac.json",
-    "source_sha256": "4d050663eb353e5849d94d050acc9dafa83bdf298bb9f263205c2766667781f6",
+    "source_sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {

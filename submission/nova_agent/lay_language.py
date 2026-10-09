@@ -300,6 +300,68 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
                                  "weak heart muscle"],
     "missed dialysis session": ["missed dialysis", "missed my dialysis", "skipped dialysis", "missed two dialysis sessions",
                                 "missed a dialysis session", "missed scheduled dialysis"],
+    # --- Round U follow-up: observed wording that never reached an existing KB phrase (traced on development cases;
+    # disclosed as development use). Each list helps ONE phrase only and asserts no new clinical relationship.
+    # "Abdominal pain is pain that you feel anywhere between your chest and groin. This is often referred to as the
+    # stomach region or belly" (MedlinePlus, "Abdominal pain", medlineplus.gov/ency/article/003120.htm).
+    # "stomach" alone stays unmapped (organ vs region): only explicit pain/ache wording is listed.
+    "abdominal pain": ["stomach pain", "stomach ache", "stomachache", "tummy ache", "pain in my stomach",
+                       "stomach hurts", "my stomach is sore"],
+    # A current diabetes diagnosis stated by type. Family/past scoping is applied by the caller as for every alias.
+    "known diabetes": ["type 1 diabetes", "type 2 diabetes", "type 1 diabetic", "type 2 diabetic", "i have diabetes",
+                       "i am diabetic", "i'm diabetic"],
+    # Insulin not delivered because the device failed is a missed dose (same omission as running out).
+    "missed insulin doses": ["insulin pump stopped", "insulin pump failed", "pump stopped working", "pen broke",
+                             "insulin pen broke"],
+    # Kussmaul respiration is deep, laboured breathing (StatPearls, "Kussmaul Respirations", NBK470309).
+    "kussmaul breathing": ["deep laboured breathing", "deep labored breathing", "deep sighing respirations",
+                           "deep sighing breathing", "deep and laboured breathing", "deep and labored breathing"],
+    # NHS "Epilepsy": seizures are also called fits. Only an EVENT phrasing is listed (never bare "fit").
+    "seizure": ["short fit", "brief fit", "a fit this morning", "a fit last night", "a fit today", "had a fit and",
+                "one fit", "fit this morning"],
+    "recent similar illness contact": ["several people at dinner got", "everyone who ate", "others who ate",
+                                       "people who ate there", "who ate there has it", "has the same bug",
+                                       "had the same bug", "has the same illness", "same illness", "family are ill too"],
+    "diffuse crampy abdominal pain": ["cramping across the abdomen", "cramping across my belly", "cramps across my belly",
+                                      "cramps across my tummy", "abdominal cramps", "cramping across my abdomen"],
+    "food exposure": ["after the shared dinner", "shared dinner", "after a barbecue", "after a takeaway",
+                      "after eating out", "a few hours after eating"],
+    # --- chest-wall injury wording (the KB phrases already exist on musculoskeletal chest pain)
+    "recent trauma": ["fell off my bike", "fell off my bicycle", "after a fall", "since i fell", "had a fall",
+                      "slipped and fell", "slipped on ice", "landed on my side", "was hit in the chest"],
+    "reproducible with palpation": ["pressing on the ribs", "press on them", "pressing on the sore spot",
+                                    "hurts when i press", "sore to press", "tender to touch", "pressing on it hurts"],
+    # --- heart-failure congestion wording (Tier-2 HF profiles already list these phrases)
+    "ankle swelling": ["ankles swell", "swollen ankles", "ankles are swollen", "ankles get swollen", "ankle edema"],
+    "leg swelling": ["pitting edema", "swollen legs", "legs are swollen", "legs swell"],
+    "waking breathless at night": ["wake up gasping", "waking up gasping", "wake up breathless", "wake up short of breath"],
+    "crackles in lungs": ["crackles at both bases", "crackles at the bases", "bibasal crackles", "bibasilar crackles",
+                          "basal crackles"],
+    # Syncope with no prodrome (ESC 2018 syncope guideline Table 5); the KB phrase is on the arrhythmia CATEGORY.
+    "syncope without warning": ["passed out without any warning", "passed out without warning", "out with no warning at all",
+                                "blacked out with no warning", "blacked out without warning", "collapsed without warning",
+                                "fainted without warning", "fainted with no warning", "lost consciousness without warning"],
+    # Pain under the right costal margin IS right-upper-quadrant pain (anatomical region, no cause implied).
+    "right upper quadrant pain": ["under my right ribs", "below my right ribs", "under the right ribs",
+                                  "upper right of my belly", "upper right belly", "right upper belly"],
+    # Naming the big toe states that the big-toe joint region is involved; "overnight" onset is night onset.
+    "big toe joint involvement": ["my big toe", "the big toe", "base of the big toe", "big toe joint"],
+    "night onset": ["overnight my", "came on overnight", "woke at night with", "woke me at night"],
+    # Blurred / lost vision is a visual disturbance (no cause or laterality inferred).
+    "visual disturbance": ["blurred vision", "blurry vision", "vision went blurry", "loss of vision",
+                           "lost vision", "double vision"],
+    "night time pain": ["wakes me at night", "wakes me up at night", "woke me at night"],
+    # Palpitations immediately preceding syncope (ESC 2018 syncope guideline Table 5; arrhythmia CATEGORY only).
+    "palpitations before syncope": ["heart skip beforehand", "heart skipped beforehand", "fluttering for a few minutes before",
+                                    "palpitations beforehand", "palpitations before i fainted",
+                                    "palpitations before i passed out", "heart raced before i passed out",
+                                    "heart racing before i blacked out"],
+    # Orthopnoea quantified by pillows (NICE CKS "Heart failure - chronic": orthopnoea).
+    "unable to lie flat": ["three pillows to sleep", "need three pillows", "need extra pillows to sleep",
+                           "sleep propped up", "cannot lie flat", "can't lie flat"],
+    # --- peritonism wording on examination
+    "rebound tenderness": ["with rebound", "rebound everywhere", "rebound tenderness everywhere"],
+    "lying still": ["lying very still", "lying completely still", "keeps very still"],
 }
 for _phrase, _variants in _ADDITIONAL_LAY_ALIASES.items():
     _bucket = LAY_FEATURE_ALIASES.setdefault(_phrase, [])
@@ -310,6 +372,9 @@ for _phrase, _variants in _ADDITIONAL_LAY_ALIASES.items():
 # Same provenance and discipline as above: agent-authored patient-wording variants for ONE exact
 # enriched feature phrase each; multi-word, no bare generic words.
 _TIER2_LAY: Dict[str, List[str]] = {
+    # Round U follow-up (Sjogren entry, see its field provenance): chronic dryness stated with its duration.
+    "persistent dry eyes": ["dry eyes for months", "eyes have been dry for months", "eyes stay dry"],
+    "persistent dry mouth": ["dry mouth for months", "mouth stays dry", "mouth has been dry for months"],
     "band-like blistering rash": ["stripe of blisters", "line of blisters", "clusters of blisters", "blisters in a band", "band of blisters"],
     "burning pain on one side of body": ["burning stripe on one side", "burning on one side of my chest", "burning pain on one side", "burning band on one side"],
     "painful blistering rash": ["painful blisters", "blisters that hurt", "blistering rash"],

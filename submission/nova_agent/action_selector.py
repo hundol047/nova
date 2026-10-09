@@ -231,6 +231,23 @@ class ActionSelector:
             # Preliminary round: there is no TEST action. Tests the diagnosis would need are
             # carried into the SOAP plan instead (nova_agent/soap.py), never requested.
             raw_candidates = [c for c in raw_candidates if c.action_type != "TEST"]
+            if get_config().action_focus_enabled and differential and not differential[0].fallback_candidate:
+                # Round U follow-up: a targeted ASK/EXAM that only concerns candidates with NO observed support
+                # (and not flagged by the safety layer) is a sweep, not a discriminating step: it cannot separate
+                # the hypotheses actually in play. Generic history questions and the always-useful vital signs /
+                # general appearance stay available; nothing is marked absent or excluded by skipping a sweep.
+                supported = {d.diagnosis_id for d in differential if d.score > 0 and d.supporting_evidence}
+                in_play = supported | {f.diagnosis_id for f in safety_findings}
+                # Safety tracking (never a score): a bedside EXAM bearing on a time-critical diagnosis is never
+                # skipped -- a deficit described in a carer's words may only become the patient's own observation
+                # through that examination.
+                time_critical = time_critical_ids
+                if supported:  # with nothing observed yet, every question may still be the discriminating one
+                    raw_candidates = [c for c in raw_candidates
+                                      if not c.disease_ids_discriminated or c.key in {"vital_signs", "general_appearance"}
+                                      or (c.action_type == "ASK" and ":" not in c.key)
+                                      or set(c.disease_ids_discriminated) & in_play
+                                      or (c.action_type == "EXAM" and set(c.disease_ids_discriminated) & time_critical)]
 
         scored: List[ScoredCandidate] = []
         for cand in raw_candidates:

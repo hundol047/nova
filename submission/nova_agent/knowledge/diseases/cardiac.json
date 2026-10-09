@@ -317,7 +317,9 @@
       "associated lightheadedness",
       "known history of arrhythmia",
       "pulse rate below 50",
-      "pulse rate of 150 or more"
+      "pulse rate of 150 or more",
+      "syncope without warning",
+      "palpitations before syncope"
     ],
     "risk_factors": [
       "hypertension",
@@ -354,6 +356,7 @@
       "chest pain with palpitations"
     ],
     "evidence_level": "internally_authored_heuristic",
+    "round_u_followup_provenance": "typical_features 'syncope without warning' and 'palpitations before syncope' added in the Round U follow-up: syncope without prodrome (or with a very short one) and sudden palpitation immediately followed by syncope are listed among the high-risk features suggesting arrhythmic syncope (Brignole M et al., 2018 ESC Guidelines for the diagnosis and management of syncope, Eur Heart J 2018;39:1883-1948, Table 5, doi:10.1093/eurheartj/ehy037). It supports the arrhythmia CATEGORY only; it never identifies a rhythm subtype, and danger adds no score. Agent-authored, not clinician-reviewed.",
     "round_q_provenance": "typical_features 'pulse rate below 50' / 'pulse rate of 150 or more' added in Round Q: a measured CURRENT rate at the thresholds the AHA adult bradycardia/tachycardia algorithms use to suggest a rhythm cause (Panchal AR et al., 2020 AHA Guidelines for CPR and ECC Part 3, Circulation 2020;142:S366-S468). Weighted like a generic physiological sign (the reduced multiplier differential.py gives tachycardia/hypotension); not a confirmatory finding and never a subtype. Agent-authored, not clinician-reviewed."
   },
   {

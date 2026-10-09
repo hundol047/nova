@@ -43,10 +43,15 @@ RELATION_PATTERNS = {
 RELATION_PATTERNS["improves with sitting"] = RELATION_PATTERNS["improves with sitting or lying down"]
 
 ROOM_ROTATION = _compile(r"\b(?:room|surroundings|everything)\s+(?:(?:was|is|were|seemed to be)\s+)?(?:spins?|spun|spinning|whirls?|whirled|rotat\w*)\b",
-                         r"(?:방|주변|천장)(?:이|가)?\s*(?:빙빙\s*)?(?:돌|도는)")
-SHORT_DURATION = _compile(r"\b(?:a few|\d+)\s+seconds?\b", r"\b(?:half a|under a|less than a)\s+minute\b", r"\bbrief(?:ly)?\b", r"(?:몇\s*초|수초|30초|일\s*분\s*미만)")
+                         r"(?:방|주변|천장)(?:이|가)?\s*(?:빙빙\s*)?(?:돌|도는)",
+                         # Japanese: "ぐるぐる回る(めまい)" / "回転性めまい" / "目が回る" describe rotation, not mere unsteadiness.
+                         r"ぐるぐる(?:回|まわ)|回転性(?:の)?めまい|目が回")
+SHORT_DURATION = _compile(r"\b(?:a few|\d+)\s+seconds?\b", r"\b(?:half a|under a|less than a)\s+minute\b", r"\bbrief(?:ly)?\b", r"(?:몇\s*초|수초|30초|일\s*분\s*미만)",
+                          r"(?:数秒|何秒|\d+\s*秒)")
 HEAD_POSITION = _compile(r"\b(?:when|whenever|after|as)\s+(?:i\s+)?(?:roll(?:ed|ing)? over|turn(?:ed|ing)? over|turn(?:ed|ing)? my head|tilt(?:ed|ing)? my head)\b",
-                         r"(?:고개를\s*(?:돌리|돌렸)|돌아누우|돌아누웠)")
+                         r"(?:고개를\s*(?:돌리|돌렸)|돌아누우|돌아누웠)",
+                         # Japanese: turning over in bed (寝返り), moving/turning the head, sitting up.
+                         r"寝返り|頭を(?:動か|回|向け)|起き上が")
 
 
 def observed_rotation_features(clause: str) -> list[str]:

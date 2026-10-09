@@ -190,8 +190,12 @@ def retrieve_high_recall(retriever: OpenWorldRetriever, *, chief_complaint: str 
     # Only existing, observed canonical concepts; never infer a diagnosis or
     # generate free-form text. Bound expansion separately from the Top150 pool.
     from nova_agent.clinical_concepts import canonical_findings_for
-    expanded = list(dict.fromkeys(c for text in (chief_complaint, *history, *medications)
-                                 for c in canonical_findings_for(text)))[:12]
+    from nova_agent.retrieval_vocabulary import observed_vocabulary_terms
+    # Round U follow-up: the same bounded expansion also accepts an EXISTING KB phrase when its existing lay alias
+    # or Korean/Japanese wording is observed in the complaint (retrieval_vocabulary.py). Still capped at 12.
+    expanded = list(dict.fromkeys([*(c for text in (chief_complaint, *history, *medications)
+                                     for c in canonical_findings_for(text)),
+                                   *observed_vocabulary_terms(chief_complaint or "")]))[:12]
     symptom_terms = list(dict.fromkeys([*symptoms, *expanded]))
     signal_queries = build_signal_queries(
         chief_complaint=chief_complaint, symptoms=symptom_terms,

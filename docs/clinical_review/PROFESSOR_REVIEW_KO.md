@@ -136,7 +136,7 @@
 파일: `nova_agent/knowledge/diseases/cardiac.json`
 현재 코드 분류: urgency=MEDIUM, dangerous=True (미검토)
 
-- 증상 특징: ["sudden onset palpitations", "irregular heartbeat", "racing heart", "associated lightheadedness", "known history of arrhythmia", "pulse rate below 50", "pulse rate of 150 or more"]
+- 증상 특징: ["sudden onset palpitations", "irregular heartbeat", "racing heart", "associated lightheadedness", "known history of arrhythmia", "pulse rate below 50", "pulse rate of 150 or more", "syncope without warning", "palpitations before syncope"]
 - 현재 확진 관련 소견: ["irregularly irregular rhythm", "narrow complex tachycardia", "atrial fibrillation on ecg", "high-grade AV block", "second-degree AV block", "bradycardia with dropped beats"]
 - 위험 인자: ["hypertension", "structural heart disease", "hyperthyroidism", "excessive caffeine or stimulant use", "advanced age"]
 - 최소 검사: []
