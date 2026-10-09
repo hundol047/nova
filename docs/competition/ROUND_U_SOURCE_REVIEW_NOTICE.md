@@ -8,6 +8,6 @@ This publication contains ordinary application/submission source, new tests and 
 
 The public CURRENT_RELEASE.json is deliberately preserved as historical. Release-binding tests require the local complete v26 evidence; this branch does not claim those private artifacts are available in the public tree. The local ZIP was audited, source/mirror-synced and independently executed in mock mode.
 
-The exact public runtime commit and 100-file SHA256 parity are recorded after fetching the published source. This covers 98 runtime files plus launcher/requirements, not complete Git-tree equality. No claim of actual model, official interface, clinical safety or source/licence clearance.
+Fetched public runtime source commit: `82cb69ef909bb5fd78bab49400448de129c74219`. All 100 bound files matched the executed local runtime and ZIP hashes. Per-file SHA256 and public-path scope: [ROUND_U_SOURCE_PARITY.json](ROUND_U_SOURCE_PARITY.json). Subsequent publication metadata commits do not change runtime bytes. This covers 98 runtime files plus launcher/requirements, not complete Git-tree equality. No claim of actual model, official interface, clinical safety or source/licence clearance.
 
 Overall offline acceptance remains FAIL: one new scored preliminary abstention, pre-existing diagnostic errors, weak initial retrieval and higher action cost. See ROUND_U_REPAIR_REPORT_KO.md and ROUND_U_FOLLOWUP_KO.md.

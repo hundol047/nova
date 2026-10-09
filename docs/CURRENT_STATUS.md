@@ -41,7 +41,7 @@ Neither the entry count nor ontology coverage certifies clinical depth. Provenan
 
 Local v26 ZIP integrity, 100-file runtime/launcher/requirements byte binding and isolated mock PASS.
 ZIP SHA256: `b5c2c704c9463b9f12d941cf97e1997986faf245daa7d604ff2ddc1fffb39369` (830,977 bytes).
-Source review branch: `codex/nova-round-u-source-review-20261009`; exact public commit parity is recorded in the linked notice.
+Source review branch: `codex/nova-round-u-source-review-20261009`; byte-equivalent public runtime commit: `82cb69ef909bb5fd78bab49400448de129c74219`. Exact parity is recorded in the linked notice.
 Detailed local traces/XML and the local ZIP are not part of the source-only publication. The public CURRENT_RELEASE.json remains historical;
 it does not certify the current source branch. Local executed SHA, public byte-equivalent source and official readiness are distinct claims.
 
