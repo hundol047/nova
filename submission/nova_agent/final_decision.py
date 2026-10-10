@@ -274,6 +274,38 @@ def support_problems(item, state, differential: list) -> List[str]:
     return problems
 
 
+HIERARCHY_NEAR_TIE = 0.9
+
+
+def _curated_syndrome_on_same_observations(leader, state, differential):
+    """Round V (NOVA_HIERARCHY_V2): naming a specific cause over a broader syndrome needs an observation the
+    syndrome does not already explain.
+
+    When an unreviewed Tier-2 leader has none of its own confirmatory findings observed, and a curated Tier-1
+    candidate in the top three scores within 10% of it and is supported by at least two of the SAME observations
+    (each Tier-1 phrase is present in the leader's support), the curated profile is named: a perforated viscus whose
+    free air cannot be imaged rests on the same rigidity and rebound as the acute abdomen. Nothing changes a score,
+    excludes a candidate or uses danger; the Tier-2 cause stays in the differential."""
+    from nova_agent.matching import feature_present_with_aliases
+    if not get_config_flag("hierarchy_v2_enabled") or not leader.diagnosis_id.startswith("onto::tier2:"):
+        return None
+    if leader.score <= 0:
+        return None
+    entry = _entry(leader.diagnosis_id)
+    objective = state.objective_findings_text()
+    if any(feature_present_with_aliases(c, objective, scrub_negated_spans=True)
+           for c in entry.get("confirmatory_findings", [])):
+        return None
+    observed = _positive_support(leader)
+    for other in differential[1:3]:
+        if other.diagnosis_id.startswith("onto::") or other.score < HIERARCHY_NEAR_TIE * leader.score:
+            continue
+        shared = [p for p in _positive_support(other) if feature_present_with_aliases(p, observed, scrub_negated_spans=False)]
+        if len(shared) >= 2 and not support_problems(other, state, differential):
+            return other
+    return None
+
+
 def decide_final(state, differential: list, completion_reason: str = "supported") -> FinalDecision:
     """The leader if it may be named; else the best-ranked top-five candidate with SPECIFIC or at least two distinct
     supporting observations that may be named; else an undifferentiated completion."""
@@ -285,6 +317,11 @@ def decide_final(state, differential: list, completion_reason: str = "supported"
         return FinalDecision(leader.diagnosis_id, leader, "SUPPORTED", completion_reason, ("final_decision_off",))
     leader_problems = support_problems(leader, state, differential)
     if not leader_problems:
+        broader = _curated_syndrome_on_same_observations(leader, state, differential)
+        if broader is not None:
+            return FinalDecision(broader.diagnosis_id, broader, "SUPPORTED", completion_reason,
+                                 (f"leader:specific_cause_without_discriminating_observation:{leader.diagnosis_id}",
+                                  f"named:{broader.diagnosis_id}"))
         return FinalDecision(leader.diagnosis_id, leader, "SUPPORTED", completion_reason)
     reasons = tuple(f"leader:{p}" for p in leader_problems)
     for alt in differential[1:5]:

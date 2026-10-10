@@ -232,6 +232,8 @@ class NovaConfig:
     exam_links_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_EXAM_LINKS_V2", True))
     context_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_CONTEXT_V2", True))
     # Round V: under-5 heart/respiratory rate thresholds from NICE NG143 replace the adult ones (nova_agent/vitals_parser.py).
+    # Round V: a Tier-2 cause resting on the same observations as a near-tied curated syndrome does not name over it.
+    hierarchy_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_HIERARCHY_V2", True))
     # Round V: sourced non-emergency Tier-2 labels and context-only alternatives do not make the plan urgent.
     disposition_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_DISPOSITION_V2", True))
     pediatric_vitals_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_PEDIATRIC_VITALS", True))

@@ -23,6 +23,9 @@
 |---|---|---|
 | `unable to lie flat` | four/several/two/extra pillows, sit up to breathe, sit up to catch my breath, sleep sitting up, sleep in a chair | NICE CKS "Heart failure – chronic": orthopnoea |
 | `dysuria`, `urinary frequency`, `burning upper abdominal pain`, `pain relieved by eating`, `recent immobility or long travel`, `calf pain or tenderness`, `warmth and redness of leg`, `worsening shortness of breath`, `recent cold`, 대상포진 confirmatory 문구 | 환자 표현 변형 | 기존 KB 문구의 동의 표현(`lay_language.py` Round V 블록). Round V 동결 세트 개발 중 발견되었음을 공개 |
+| `pleuritic chest pain` | worse when taking a breath, worse when i take a breath, hurts when taking a breath | 흡기 시 악화되는 통증이 흉막성 통증의 정의(StatPearls "Pleurisy") |
+| `recent surgery` | after hip surgery, after knee surgery | 기존 "after surgery"·"hip operation" 별칭의 같은 뜻 변형 |
+| `leg swelling` | ankles are puffy, puffy ankles | NICE CKS "Heart failure – chronic": ankle swelling |
 | `vaginal bleeding`의 별칭 `spotting` | 형태소 예외: `spotting`은 명사 `spot`("아픈 부위")과 같은 어간이 아님 | 버그 수정(`matching._IRREGULAR_STEM_OVERRIDES`) |
 | 일본어·한국어 `substernal pressure`, `radiates to arm or jaw` | 胸が締め付け/圧迫/重苦しい, 腕・肩・顎に広がる; 가슴이 조이/짓누르/압박, 팔·어깨·턱으로 퍼지/뻗치 | 기존 영어 관계 문법(`feature_relations.py`)의 번역 |
 | 한국어 `unable to lie flat`, `leg swelling`, `shortness of breath on exertion` | 누우면 숨이 막혀/앉아서 자요, 다리·발목이 부어, 계단을 오르면 숨이 차 | 기존 KB 문구의 한국어 표현(`multilingual_concepts.py`) |
@@ -35,4 +38,5 @@
 | 핵심 증상 부정 | `NOVA_DENIAL_V2` | "숨이 차지 않다"는 "sudden onset dyspnea"도 부정(앞쪽 시간·강도 수식어만 제거, 3단어 이하 부정 구간만) |
 | 수식어 질문의 bare "No" | `NOVA_DENIAL_V2` | 이미 보고한 증상의 수식어 형태("worsening shortness of breath")에 대한 bare "No"는 부정이 아니라 conflict로 기록 |
 | 진찰 연결 | `NOVA_EXAM_LINKS_V2` | Tier-2 신체 징후(S3, 수포, 경부강직, 종아리 부종 등)를 기존 카탈로그 진찰에 연결. 환자 보고 증상은 연결하지 않음 |
+| 명칭 계층 | `NOVA_HIERARCHY_V2` | 검토되지 않은 Tier-2 원인 질환이 자기 confirmatory 소견 없이, 상위 3위 안의 검토된 Tier-1 증후군과 10% 이내 점수이고 그 증후군의 근거 2개 이상을 같은 관찰로 공유하면 Tier-1 증후군을 명명한다(예: 영상이 불가능한 free air 없이 경직·반발통만 있는 천공 → acute abdomen). 점수·후보·위험도는 바꾸지 않는다 |
 | 맥락 | `NOVA_CONTEXT_V2` | "recent …" 선행 맥락과 "… after trauma/exercise" 상황 맥락은 진단 명명 근거가 아님(순위에는 남음) |

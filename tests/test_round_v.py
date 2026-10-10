@@ -272,3 +272,48 @@ def test_score_ties_are_broken_by_present_findings_not_insertion_order():
     observed = (2.0, 0, {}, ['melena', 'lightheadedness'])
     absence = (2.0, 0, {}, ['lightheadedness on standing up', 'no chest pain'])
     assert _rank_key(observed) > _rank_key(absence)
+
+
+def test_tier2_cause_on_the_same_observations_yields_to_a_near_tied_curated_syndrome():
+    s = PatientState(chief_complaint='My whole tummy is rigid and it hurts to move.', preliminary_rules=True)
+    s.record_exam('abdominal_exam', 'Board-like rigidity, rebound tenderness.')
+    cause = _item('onto::tier2:perforated_viscus', 'Perforated Viscus',
+                  ['rigid board-like abdomen', 'rebound tenderness', 'lying still'], score=2.48)
+    syndrome = _item('acute_abdomen', 'Acute Abdomen (Surgical Abdomen)', ['rebound tenderness', 'rigid abdomen'],
+                     score=2.32)
+    decision = decide_final(s, [cause, syndrome], 'supported')
+    assert decision.primary_id == 'acute_abdomen'
+    assert any(r.startswith('leader:specific_cause_without_discriminating_observation') for r in decision.reasons)
+    # A clear lead, or an observed confirmatory finding of the cause, keeps the specific cause.
+    far = _item('acute_abdomen', 'Acute Abdomen (Surgical Abdomen)', ['rebound tenderness', 'rigid abdomen'], score=1.5)
+    assert decide_final(s, [cause, far], 'supported').primary_id == 'onto::tier2:perforated_viscus'
+
+def test_an_observed_confirmatory_finding_keeps_the_specific_cause(monkeypatch):
+    import nova_agent.final_decision as fd
+    real = fd._entry
+    monkeypatch.setattr(fd, '_entry', lambda did: {'confirmatory_findings': ['guarding with a hard abdominal wall']}
+                        if did == 'onto::tier2:perforated_viscus' else real(did))
+    s = PatientState(chief_complaint='My whole tummy is rigid and it hurts to move.', preliminary_rules=True)
+    s.record_exam('abdominal_exam', 'Guarding with a hard abdominal wall, rebound tenderness.')
+    cause = _item('onto::tier2:perforated_viscus', 'Perforated Viscus',
+                  ['rigid board-like abdomen', 'rebound tenderness', 'lying still'], score=2.48)
+    syndrome = _item('acute_abdomen', 'Acute Abdomen (Surgical Abdomen)', ['rebound tenderness', 'rigid abdomen'],
+                     score=2.32)
+    assert decide_final(s, [cause, syndrome], 'supported').primary_id == 'onto::tier2:perforated_viscus'
+
+
+def test_hierarchy_switch_off_names_the_leader(monkeypatch):
+    from nova_agent.config import get_config
+    monkeypatch.setenv('NOVA_HIERARCHY_V2', '0')
+    get_config(reload=True)
+    s = PatientState(chief_complaint='Rigid tummy.', preliminary_rules=True)
+    cause = _item('onto::tier2:perforated_viscus', 'Perforated Viscus', ['rigid board-like abdomen', 'rebound tenderness'],
+                  score=2.48)
+    syndrome = _item('acute_abdomen', 'Acute Abdomen', ['rebound tenderness', 'rigid abdomen'], score=2.32)
+    assert decide_final(s, [cause, syndrome], 'supported').primary_id == 'onto::tier2:perforated_viscus'
+
+
+@pytest.mark.parametrize('feature,text', [('pleuritic chest pain', 'The pain is worse when taking a breath.'),
+                                          ('recent surgery', 'Three weeks after hip surgery the ache began.')])
+def test_inspiratory_pain_and_operation_wording(feature, text):
+    assert feature_present_with_aliases(feature, [text])

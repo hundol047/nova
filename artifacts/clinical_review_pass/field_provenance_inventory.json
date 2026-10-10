@@ -190967,7 +190967,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 254,
+      "line": 256,
       "names": [
         "_ADDITIONAL_LAY_ALIASES"
       ],
@@ -190992,7 +190992,9 @@
           "operation last week",
           "recent operation",
           "post-op",
-          "after surgery"
+          "after surgery",
+          "after hip surgery",
+          "after knee surgery"
         ],
         "immobilization": [
           "mostly in bed",
@@ -191384,7 +191386,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 397,
+      "line": 400,
       "names": [
         "_TIER2_LAY"
       ],
@@ -193863,7 +193865,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 349,
+      "line": 351,
       "names": [
         "_config"
       ],

@@ -45,7 +45,9 @@ LAY_FEATURE_ALIASES: Dict[str, List[str]] = {
     "recent viral illness": ["after a cold", "following a cold", "after the flu", "after a chest cold", "after a head cold"],
     "chest wall soreness from coughing": ["sore chest muscles from coughing", "chest aches from coughing"],
     "pleuritic chest pain": ["breathing deeply hurts", "hurts to breathe deeply", "stitch in my side when i breathe", "stabbing pain when i breathe in", "sharp pain on breathing in",
-                              "hurts when i breathe in", "stabs when i breathe in", "pain when i breathe in deeply"],
+                              "hurts when i breathe in", "stabs when i breathe in", "pain when i breathe in deeply",
+                              # Round V: pain worse on inspiration is the definition of pleuritic pain (StatPearls "Pleurisy")
+                              "worse when taking a breath", "worse when i take a breath", "hurts when taking a breath"],
     "crackles on auscultation": ["crackles", "rattly chest"],
     "dyspnea": _BREATHLESS,
     "rhinorrhea": ["runny nose", "blocked nose", "stuffy nose", "sneezing"],
@@ -258,7 +260,8 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     "polydipsia": ["thirsty", "excessive thirst"],
     # --- venous-thromboembolism risk context (plain wording for an operation / being bed-bound)
     "recent surgery": ["after my operation", "hip operation", "knee operation", "hip replacement", "knee replacement",
-                       "operation last week", "recent operation", "post-op", "after surgery"],
+                       "operation last week", "recent operation", "post-op", "after surgery", "after hip surgery",
+                       "after knee surgery"],
     "immobilization": ["mostly in bed", "stuck in bed", "bedbound", "bed-bound", "confined to bed"],
     # --- exertional angina wording
     "exertional chest pain": ["comes on walking", "comes on when i walk", "eases when i rest", "goes away with rest",
