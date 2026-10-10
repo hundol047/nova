@@ -382,6 +382,9 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     # Orthopnoea quantified by pillows; progressive exertional breathlessness (NICE CKS "Heart failure - chronic").
     "worsening shortness of breath": ["become breathless", "becoming more breathless", "increasingly breathless",
                                       "getting more breathless", "breathlessness is getting worse"],
+    # Round W: restricted movement of a hot swollen joint (NICE CKS "Septic arthritis": painful, limited movement).
+    "inability to move the joint": ["too painful to bend", "can't bend it", "cannot bend it", "can't bend my knee",
+                                    "cannot bend my knee", "too painful to move", "can't move my knee", "unable to bend"],
     "recent cold": ["after a cold", "days after a cold", "following a cold", "after a runny nose", "following a runny nose",
                     "had a cold last week"],
     "grouped vesicles in a dermatomal distribution on examination": ["grouped vesicles on a red base in a band",

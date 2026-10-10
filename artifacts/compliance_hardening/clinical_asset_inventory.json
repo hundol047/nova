@@ -577,7 +577,7 @@
     {
       "asset_id": "nova_agent/config.py",
       "path": "nova_agent/config.py",
-      "sha256": "12db0a70cf725b42a5a44d67ebccc168a0f61ac3885680decc526906515205e4",
+      "sha256": "05864e99028c8f038f13ab2a8be25fa412e97679f16a1ade4b3a20cb4dd96645",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -2313,7 +2313,7 @@
     {
       "asset_id": "nova_agent/lay_language.py",
       "path": "nova_agent/lay_language.py",
-      "sha256": "6c1d9a3e11b8195b586d5887f21b51493303c0230cb6e420e5eaf154417a362f",
+      "sha256": "01cff4e6d9800fba52fcd229e32518a94f6f97ebf91488ffefd4088387795789",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",

@@ -29,6 +29,7 @@
 |---|---|---|
 | `symptomatic_rate_concern` 증상 | collapsed, collapse, keeled over | NICE CG109 1.1.1: 쓰러짐은 달리 밝혀질 때까지 일과성 의식소실로 평가 |
 | `band-like blistering rash`, `burning pain on one side of body` | 수포·발진 + 띠/줄/선(양방향), 한쪽·띠 모양의 화끈거리는 통증(영/한/일 관계 문법) | NICE CKS "Shingles": 한쪽 통증 후 피부분절 수포 발진. 기존 별칭은 문법 안에 그대로 포함 |
+| `inability to move the joint` | too painful to bend, can't bend it, too painful to move, unable to bend … | NICE CKS "Septic arthritis": 뜨겁고 부은 관절의 운동 제한 |
 | `recent cold` | after a runny nose, following a runny nose, had a cold last week | NICE CKS "Otitis media – acute": 상기도 감염 후 발생 |
 
 ## 순위·후보 유지
@@ -36,5 +37,5 @@
 | 기전 | 스위치 | 내용 |
 |---|---|---|
 | 근거 있는 후보 유지 | `NOVA_RETAIN_EVIDENCED` | 직전 턴 감별에 있던 ontology 후보가 자기 관찰 근거(기존 MIN_EVIDENCED_ONTOLOGY_WEIGHT 규칙)를 계속 가지면, 이번 턴 rerank가 빠뜨려도 후보 pool에 남긴다. 점수 가산 없음 |
-| bare "No" 반감의 패턴 조건 | `NOVA_PATTERN_V2` | Round V 반감 규칙은 관찰된 **비일반** typical feature 2개 이상인 가설에만 적용(흉통+호흡곤란 같은 공유 증상 둘은 패턴이 아님) |
+| bare "No" 반감의 패턴 조건 | `NOVA_PATTERN_V2` (**기본 OFF**) | 관찰된 **비일반** typical feature 2개 이상인 가설에만 반감 적용. 불필요 EXAM 지표를 줄였지만(283 → 261) 첫 동일 조건 실행에서 RoundM_109·CloseUF_11 새 오답을 만들어 기본값을 껐다 |
 | 선행 맥락 가중 | `NOVA_CONTEXT_V2` | "recent cold/infection/viral illness"는 typical feature여도 위험인자 가중(0.4)으로 순위에 반영 |

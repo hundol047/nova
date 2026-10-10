@@ -191361,6 +191361,16 @@
           "getting more breathless",
           "breathlessness is getting worse"
         ],
+        "inability to move the joint": [
+          "too painful to bend",
+          "can't bend it",
+          "cannot bend it",
+          "can't bend my knee",
+          "cannot bend my knee",
+          "too painful to move",
+          "can't move my knee",
+          "unable to bend"
+        ],
         "recent cold": [
           "after a cold",
           "days after a cold",
@@ -191389,7 +191399,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 401,
+      "line": 404,
       "names": [
         "_TIER2_LAY"
       ],
@@ -193868,7 +193878,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 360,
+      "line": 361,
       "names": [
         "_config"
       ],

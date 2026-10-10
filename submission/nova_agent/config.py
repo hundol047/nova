@@ -234,8 +234,9 @@ class NovaConfig:
     # Round V: under-5 heart/respiratory rate thresholds from NICE NG143 replace the adult ones (nova_agent/vitals_parser.py).
     # Round W: numeric vital-sign features ("blood pressure above 180 over 120") are decided by the measured value.
     measured_thresholds_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_MEASURED_THRESHOLDS", True))
-    # Round W: the bare-"No" half-weight pattern needs >= 2 observed NON-generic typical features.
-    pattern_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_PATTERN_V2", True))
+    # Round W: the bare-"No" half-weight pattern needs >= 2 observed NON-generic typical features. OFF by default:
+    # measured to cost RoundM_109 and CloseUF_11 (a thin true diagnosis lost to one templated "No").
+    pattern_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_PATTERN_V2", False))
     # Round W: an evidenced ontology candidate from the previous turn is not dropped by a reshuffled rerank.
     retain_evidenced_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RETAIN_EVIDENCED", True))
     # Round W: a first statement by a caregiver ("my husband collapsed") whose relation fits the patient's demographics
