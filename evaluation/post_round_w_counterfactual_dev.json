@@ -1,0 +1,706 @@
+[
+ {
+  "case_id": "PWCF_P01",
+  "chief_complaint": "My 10-day-old daughter feels hot and has hardly fed today.",
+  "demographics": {
+   "age": 0,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "Sleepier than usual."
+  },
+  "exam_results": {
+   "vital_signs": "HR 172, RR 58, Temp 38.3, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;neonate_fever",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_P02",
+  "chief_complaint": "Our 2-month-old feels cold and floppy and won't take his bottle.",
+  "demographics": {
+   "age": 0,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "Grey colour around the lips."
+  },
+  "exam_results": {
+   "vital_signs": "HR 184, RR 62, Temp 35.4, SpO2 94%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;infant_hypothermia",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_P03",
+  "chief_complaint": "My 6-week-old is grunting with every breath and not feeding, though she has no temperature.",
+  "demographics": {
+   "age": 0,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "Very pale and limp."
+  },
+  "exam_results": {
+   "vital_signs": "HR 192, RR 70, Temp 36.8, SpO2 92%",
+   "general_appearance": "Mottled, capillary refill 4 seconds."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;afebrile_infant",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_P04",
+  "chief_complaint": "My 9-month-old just isn't himself, he's very sleepy and pale.",
+  "demographics": {
+   "age": 0,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "He has hardly had a wet nappy since breakfast."
+  },
+  "exam_results": {
+   "vital_signs": "HR 176, RR 52, Temp 39.1, SpO2 96%",
+   "general_appearance": "Lethargic, capillary refill 3 seconds."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;vague_infant",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_P05",
+  "chief_complaint": "6개월 아기가 열은 없는데 축 처지고 계속 자기만 해요. 분유도 안 먹어요.",
+  "demographics": {
+   "age": 0,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "피부가 얼룩덜룩해요."
+  },
+  "exam_results": {
+   "vital_signs": "HR 178, RR 56, Temp 35.6, SpO2 95%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;ko_infant_hypothermia",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_P06",
+  "chief_complaint": "2개월 아기인데 fever 가 있고 계속 lethargic 해요.",
+  "demographics": {
+   "age": 0,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "젖을 거의 안 먹어요."
+  },
+  "exam_results": {
+   "vital_signs": "HR 182, RR 60, Temp 38.7, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;mixed_infant_fever",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_P07",
+  "chief_complaint": "My 18-month-old daughter has a high fever, cries when she wees and her urine smells strong.",
+  "demographics": {
+   "age": 1,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "Vomited twice, irritable."
+  },
+  "exam_results": {
+   "vital_signs": "HR 168, RR 40, Temp 39.6, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;toddler_urinary_source",
+  "scoring_expected": false,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_P08",
+  "chief_complaint": "My 5-month-old has a cough, is breathing fast and won't feed.",
+  "demographics": {
+   "age": 0,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "Ribs are sucking in when he breathes."
+  },
+  "exam_results": {
+   "vital_signs": "HR 170, RR 64, Temp 38.9, SpO2 91%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;infant_respiratory",
+  "scoring_expected": false,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_P09",
+  "chief_complaint": "My 3-year-old has a temperature and a runny nose but is still playing and eating.",
+  "demographics": {
+   "age": 3,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "viral_uri",
+  "answers": {
+   "associated_symptoms": "Mild cough, no rash, drinking plenty."
+  },
+  "exam_results": {
+   "vital_signs": "HR 118, RR 24, Temp 38.2, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;benign_febrile_toddler",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "PWCF_P10",
+  "chief_complaint": "My 2-year-old has had vomiting and runny poos since yesterday but is drinking well.",
+  "demographics": {
+   "age": 2,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "gastroenteritis",
+  "answers": {
+   "associated_symptoms": "Plenty of wet nappies, no blood in the poo, playful between episodes."
+  },
+  "exam_results": {
+   "vital_signs": "HR 122, RR 26, Temp 37.8, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;benign_toddler_gastro",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "PWCF_P11",
+  "chief_complaint": "My 7-year-old has a cold and a sore throat but is running around as usual.",
+  "demographics": {
+   "age": 7,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "viral_uri",
+  "answers": {
+   "associated_symptoms": "Runny nose, no ear pain, eating normally."
+  },
+  "exam_results": {
+   "vital_signs": "HR 96, RR 20, Temp 37.5, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;benign_child",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "PWCF_B01",
+  "chief_complaint": "I keep getting dizzy spells and the GP said my pulse is very slow.",
+  "demographics": {
+   "age": 72,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "Tired and breathless on the stairs."
+  },
+  "exam_results": {
+   "vital_signs": "BP 100/60, HR 38, RR 16, Temp 36.6, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;symptomatic_brady",
+  "scoring_expected": false,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_B02",
+  "chief_complaint": "I'm a rower and the nurse at my check-up said my heart rate was 42; I feel great.",
+  "demographics": {
+   "age": 23,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "No fainting, no dizziness, no chest pain."
+  },
+  "exam_results": {
+   "vital_signs": "BP 116/70, HR 42, RR 12, Temp 36.5, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;athletic_brady",
+  "scoring_expected": false,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "PWCF_B03",
+  "chief_complaint": "Since the doctor increased my heart tablet I feel sick, see yellow halos and my pulse is slow.",
+  "demographics": {
+   "age": 81,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "medication": "Digoxin, dose increased last week.",
+   "associated_symptoms": "Nausea and dizziness."
+  },
+  "exam_results": {
+   "vital_signs": "BP 104/62, HR 42, RR 16, Temp 36.6, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;drug_brady",
+  "scoring_expected": false,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_B04",
+  "chief_complaint": "할머니가 화장실에서 갑자기 쓰러지셨어요. 맥박이 36이래요.",
+  "demographics": {
+   "age": 83,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "금방 정신은 차렸는데 어지러워하세요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 96/58, HR 36, RR 16, Temp 36.4, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;ko_syncope_brady",
+  "scoring_expected": false,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_B05",
+  "chief_complaint": "I feel weak and washed out, and the paramedic said my blood pressure and pulse are both low.",
+  "demographics": {
+   "age": 66,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "Clammy."
+  },
+  "exam_results": {
+   "vital_signs": "BP 78/48, HR 40, RR 18, Temp 36.5, SpO2 95%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;brady_hypotension",
+  "scoring_expected": false,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_B06",
+  "chief_complaint": "I came for a routine medical; my pulse was 52 and I have no symptoms at all.",
+  "demographics": {
+   "age": 31,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "No dizziness, no fainting, no breathlessness."
+  },
+  "exam_results": {
+   "vital_signs": "BP 112/72, HR 52, RR 12, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;young_low_hr",
+  "scoring_expected": false,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "PWCF_B07",
+  "chief_complaint": "My heart keeps pausing and I nearly fainted twice this morning.",
+  "demographics": {
+   "age": 77,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "Light-headed between the pauses."
+  },
+  "exam_results": {
+   "vital_signs": "BP 98/60, HR 34, RR 16, Temp 36.6, SpO2 96%",
+   "cardiac_auscultation": "Slow irregular beat with pauses."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;av_block_like",
+  "scoring_expected": false,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_W01",
+  "chief_complaint": "Acute-onset retrosternal pressure radiating to the left arm with diaphoresis for 40 minutes.",
+  "demographics": {
+   "age": 61,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "acute_coronary_syndrome",
+  "answers": {
+   "past_medical_history": "Hypertension, smoker."
+  },
+  "exam_results": {
+   "vital_signs": "BP 150/92, HR 104, RR 20, Temp 36.7, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;clinical_acs",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_W02",
+  "chief_complaint": "chest feels liek an elefant sitting on it, im sweaty and my arm hurts",
+  "demographics": {
+   "age": 58,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "acute_coronary_syndrome",
+  "answers": {
+   "onset": "half an hour ago while shovelling snow"
+  },
+  "exam_results": {
+   "vital_signs": "BP 146/90, HR 102, RR 20, Temp 36.6, SpO2 97%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;noisy_acs",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_W03",
+  "chief_complaint": "가슴이 뻐근하게 누르고 왼팔까지 저려요. 식은땀이 나요.",
+  "demographics": {
+   "age": 63,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "acute_coronary_syndrome",
+  "answers": {
+   "past_medical_history": "당뇨가 있어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 148/88, HR 98, RR 20, Temp 36.6, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;ko_acs",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_W04",
+  "chief_complaint": "chest pain 이 있고 숨이 차요. 비행기 오래 타고 온 뒤로 다리가 swollen 했어요.",
+  "demographics": {
+   "age": 44,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "pulmonary_embolism",
+  "answers": {
+   "medication": "경구 피임약을 먹어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 112/70, HR 118, RR 26, Temp 37.1, SpO2 91%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;mixed_pe",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_W05",
+  "chief_complaint": "Cough. Fever. Yellow phlegm.",
+  "demographics": {
+   "age": 49,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "pneumonia",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 124/78, HR 104, RR 22, Temp 38.8, SpO2 94%",
+   "lung_auscultation": "Crackles at the left base."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;short_pneumonia",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "PWCF_W06",
+  "chief_complaint": "Well, it started this morning at breakfast, I was buttering toast and suddenly the knife fell out of my right hand, and my wife says the right side of my face looked droopy and my words came out all jumbled, which has never happened before, and it's still the same now.",
+  "demographics": {
+   "age": 69,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "ischemic_stroke",
+  "answers": {
+   "past_medical_history": "Atrial fibrillation, I stopped my blood thinner last month."
+  },
+  "exam_results": {
+   "vital_signs": "BP 172/96, HR 92, RR 16, Temp 36.7, SpO2 97%",
+   "neuro_exam": "Right arm weakness, right facial droop, expressive dysphasia."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;long_stroke",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF_W07",
+  "chief_complaint": "등에서 가슴 쪽으로 띠 모양으로 물집이 잡히고 따끔따끔 아파요.",
+  "demographics": {
+   "age": 66,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Herpes Zoster (Shingles)",
+  "answers": {
+   "onset": "나흘 전에 따끔거리다가 물집이 올라왔어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 134/82, HR 76, RR 14, Temp 37.2, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;ko_zoster_paraphrase",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "PWCF_W08",
+  "chief_complaint": "My big toe went red and swollen overnight and even the sheet hurts it.",
+  "demographics": {
+   "age": 52,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Acute Gout Flare",
+  "answers": {
+   "past_medical_history": "Had a similar attack last year."
+  },
+  "exam_results": {
+   "vital_signs": "BP 138/86, HR 80, RR 14, Temp 37.3, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf;gout_paraphrase",
+  "scoring_expected": true,
+  "notes": "Post-Round-W counterfactual development variation. Authored after Round W to probe whether its fixes generalise beyond the exact Round W cases (new wording, ages and controls). Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ }
+]

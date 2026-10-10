@@ -1,0 +1,787 @@
+{
+ "label": "LOCAL DEVELOPMENT / PRELIMINARY SIMULATION -- mock LLM, synthetic cases, NOT AN OFFICIAL SCORE",
+ "head": "b7481d40b0bf9bd8311332557cb035a4b1e2f39e",
+ "generated_utc": "2026-10-10T19:08:29.313767+00:00",
+ "preliminary": {
+  "Korean": {
+   "cases": 20,
+   "scored": 20,
+   "top1": 1.0,
+   "top3": 1.0,
+   "top5": 1.0,
+   "critical_cases": 8,
+   "critical_recall": 1.0,
+   "avg_interactions": 19.2,
+   "median_interactions": 21.0,
+   "say_count": 279,
+   "exam_count": 105,
+   "rejected_exam_count": 0,
+   "duplicate_action_rate": 0.0,
+   "premature_diagnosis_rate": 0.0,
+   "unresolved_critical_alternative_rate": 0.55,
+   "soap_information_retention": 1.0,
+   "soap_unsupported_info_rate": 0.0,
+   "rule_violations": 0,
+   "critical_miss_count": 0
+  },
+  "Round M": {
+   "cases": 128,
+   "scored": 123,
+   "top1": 0.983739837398374,
+   "top3": 0.991869918699187,
+   "top5": 0.991869918699187,
+   "critical_cases": 43,
+   "critical_recall": 1.0,
+   "avg_interactions": 20.34375,
+   "median_interactions": 22.0,
+   "say_count": 1904,
+   "exam_count": 700,
+   "rejected_exam_count": 0,
+   "duplicate_action_rate": 0.0,
+   "premature_diagnosis_rate": 0.015625,
+   "unresolved_critical_alternative_rate": 0.5390625,
+   "soap_information_retention": 1.0,
+   "soap_unsupported_info_rate": 0.0,
+   "rule_violations": 0,
+   "critical_miss_count": 0
+  },
+  "Round J": {
+   "cases": 54,
+   "scored": 52,
+   "top1": 0.9807692307692307,
+   "top3": 0.9807692307692307,
+   "top5": 0.9807692307692307,
+   "critical_cases": 20,
+   "critical_recall": 1.0,
+   "avg_interactions": 18.37037037037037,
+   "median_interactions": 20.0,
+   "say_count": 735,
+   "exam_count": 257,
+   "rejected_exam_count": 0,
+   "duplicate_action_rate": 0.0,
+   "premature_diagnosis_rate": 0.0,
+   "unresolved_critical_alternative_rate": 0.5740740740740741,
+   "soap_information_retention": 1.0,
+   "soap_unsupported_info_rate": 0.0,
+   "rule_violations": 0,
+   "critical_miss_count": 0
+  },
+  "Round I": {
+   "cases": 20,
+   "scored": 19,
+   "top1": 1.0,
+   "top3": 1.0,
+   "top5": 1.0,
+   "critical_cases": 8,
+   "critical_recall": 1.0,
+   "avg_interactions": 18.9,
+   "median_interactions": 18.5,
+   "say_count": 276,
+   "exam_count": 102,
+   "rejected_exam_count": 0,
+   "duplicate_action_rate": 0.0,
+   "premature_diagnosis_rate": 0.0,
+   "unresolved_critical_alternative_rate": 0.65,
+   "soap_information_retention": 1.0,
+   "soap_unsupported_info_rate": 0.0,
+   "rule_violations": 0,
+   "critical_miss_count": 0
+  },
+  "tuning": {
+   "cases": 8,
+   "scored": 8,
+   "top1": 1.0,
+   "top3": 1.0,
+   "top5": 1.0,
+   "critical_cases": 6,
+   "critical_recall": 1.0,
+   "avg_interactions": 23,
+   "median_interactions": 25.0,
+   "say_count": 127,
+   "exam_count": 57,
+   "rejected_exam_count": 0,
+   "duplicate_action_rate": 0.0,
+   "premature_diagnosis_rate": 0.0,
+   "unresolved_critical_alternative_rate": 0.625,
+   "soap_information_retention": 1.0,
+   "soap_unsupported_info_rate": 0.0,
+   "rule_violations": 0,
+   "critical_miss_count": 0
+  },
+  "ALL": {
+   "cases": 230,
+   "scored": 222,
+   "top1": 0.9864864864864865,
+   "top3": 0.990990990990991,
+   "top5": 0.990990990990991,
+   "critical_cases": 85,
+   "critical_recall": 1.0,
+   "avg_interactions": 19.747826086956522,
+   "median_interactions": 21.0,
+   "say_count": 3321,
+   "exam_count": 1221,
+   "rejected_exam_count": 0,
+   "duplicate_action_rate": 0.0,
+   "premature_diagnosis_rate": 0.008695652173913044,
+   "unresolved_critical_alternative_rate": 0.5608695652173913,
+   "soap_information_retention": 1.0,
+   "soap_unsupported_info_rate": 0.0,
+   "rule_violations": 0,
+   "critical_miss_count": 0
+  }
+ },
+ "preliminary_exam_rejection": {
+  "cases": 230,
+  "scored": 222,
+  "top1": 0.9774774774774775,
+  "top3": 0.990990990990991,
+  "top5": 0.990990990990991,
+  "critical_cases": 85,
+  "critical_recall": 1.0,
+  "avg_interactions": 19.86521739130435,
+  "median_interactions": 21.0,
+  "say_count": 3347,
+  "exam_count": 1222,
+  "rejected_exam_count": 204,
+  "duplicate_action_rate": 0.0,
+  "premature_diagnosis_rate": 0.008695652173913044,
+  "unresolved_critical_alternative_rate": 0.5565217391304348,
+  "soap_information_retention": 1.0,
+  "soap_unsupported_info_rate": 0.0,
+  "rule_violations": 0,
+  "critical_miss_count": 0
+ },
+ "preliminary_unscripted_unknown": {
+  "cases": 230,
+  "scored": 222,
+  "top1": 0.9819819819819819,
+  "top3": 0.990990990990991,
+  "top5": 0.990990990990991,
+  "critical_cases": 85,
+  "critical_recall": 1.0,
+  "avg_interactions": 26.07391304347826,
+  "median_interactions": 27.0,
+  "say_count": 4018,
+  "exam_count": 1979,
+  "rejected_exam_count": 0,
+  "duplicate_action_rate": 0.0,
+  "premature_diagnosis_rate": 0.017391304347826087,
+  "unresolved_critical_alternative_rate": 0.9782608695652174,
+  "soap_information_retention": 1.0,
+  "soap_unsupported_info_rate": 0.0,
+  "rule_violations": 0,
+  "critical_miss_count": 0
+ },
+ "same_condition": {
+  "definition": "union of every frozen synthetic fixture under evaluation/ (Rounds R-W, follow-up, acceptance), run with scripts/evaluate_round_s.py",
+  "pooled": {
+   "cases": 284,
+   "scored": 174,
+   "top1": 0.9310344827586207,
+   "top3": 0.9655172413793104,
+   "top5": 0.9712643678160919,
+   "critical_cases": 64,
+   "critical_recall": 0.96875,
+   "critical_miss_count": 2,
+   "avg_interactions": 23.028169014084508
+  },
+  "fixtures": {
+   "frozen_validation_round_r": {
+    "summary": {
+     "cases": 24,
+     "scored": 12,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 4,
+     "critical_recall": 1.0,
+     "avg_interactions": 26.25,
+     "median_interactions": 27.0,
+     "say_count": 420,
+     "exam_count": 210,
+     "rejected_exam_count": 6,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.08333333333333333,
+     "unresolved_critical_alternative_rate": 1.0,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 19,
+     "total": 19
+    }
+   },
+   "acceptance_regressions_round_r": {
+    "summary": {
+     "cases": 32,
+     "scored": 18,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 5,
+     "critical_recall": 1.0,
+     "avg_interactions": 26.84375,
+     "median_interactions": 28.0,
+     "say_count": 570,
+     "exam_count": 289,
+     "rejected_exam_count": 8,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.0625,
+     "unresolved_critical_alternative_rate": 1.0,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 14,
+     "total": 14
+    }
+   },
+   "frozen_validation_round_s": {
+    "summary": {
+     "cases": 24,
+     "scored": 14,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 4,
+     "critical_recall": 1.0,
+     "avg_interactions": 25.75,
+     "median_interactions": 26.0,
+     "say_count": 409,
+     "exam_count": 209,
+     "rejected_exam_count": 6,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.125,
+     "unresolved_critical_alternative_rate": 1.0,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 87,
+     "total": 87
+    }
+   },
+   "frozen_validation_round_t": {
+    "summary": {
+     "cases": 32,
+     "scored": 18,
+     "top1": 0.8333333333333334,
+     "top3": 0.8888888888888888,
+     "top5": 0.8888888888888888,
+     "critical_cases": 3,
+     "critical_recall": 1.0,
+     "avg_interactions": 25.25,
+     "median_interactions": 27.0,
+     "say_count": 529,
+     "exam_count": 279,
+     "rejected_exam_count": 4,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.15625,
+     "unresolved_critical_alternative_rate": 1.0,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 87,
+     "total": 89
+    }
+   },
+   "frozen_validation_round_t_confirmation": {
+    "summary": {
+     "cases": 12,
+     "scored": 8,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 4,
+     "critical_recall": 1.0,
+     "avg_interactions": 22.583333333333332,
+     "median_interactions": 26.5,
+     "say_count": 175,
+     "exam_count": 96,
+     "rejected_exam_count": 4,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.0,
+     "unresolved_critical_alternative_rate": 1.0,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 31,
+     "total": 31
+    }
+   },
+   "frozen_validation_round_t_final_probe": {
+    "summary": {
+     "cases": 8,
+     "scored": 4,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 2,
+     "critical_recall": 1.0,
+     "avg_interactions": 25.125,
+     "median_interactions": 26.5,
+     "say_count": 129,
+     "exam_count": 72,
+     "rejected_exam_count": 4,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.0,
+     "unresolved_critical_alternative_rate": 1.0,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 23,
+     "total": 23
+    }
+   },
+   "frozen_validation_round_t_postfreeze": {
+    "summary": {
+     "cases": 12,
+     "scored": 6,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 3,
+     "critical_recall": 1.0,
+     "avg_interactions": 23.833333333333332,
+     "median_interactions": 26.5,
+     "say_count": 180,
+     "exam_count": 106,
+     "rejected_exam_count": 5,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.0,
+     "unresolved_critical_alternative_rate": 1.0,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 35,
+     "total": 35
+    }
+   },
+   "frozen_validation_round_u": {
+    "summary": {
+     "cases": 20,
+     "scored": 12,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 4,
+     "critical_recall": 1.0,
+     "avg_interactions": 22.7,
+     "median_interactions": 24.0,
+     "say_count": 300,
+     "exam_count": 154,
+     "rejected_exam_count": 7,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.0,
+     "unresolved_critical_alternative_rate": 1.0,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 59,
+     "total": 59
+    }
+   },
+   "frozen_validation_round_u_confirmation": {
+    "summary": {
+     "cases": 12,
+     "scored": 6,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 2,
+     "critical_recall": 1.0,
+     "avg_interactions": 18.75,
+     "median_interactions": 21.0,
+     "say_count": 171,
+     "exam_count": 54,
+     "rejected_exam_count": 2,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.08333333333333333,
+     "unresolved_critical_alternative_rate": 0.5,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 36,
+     "total": 38
+    }
+   },
+   "frozen_validation_round_u_final": {
+    "summary": {
+     "cases": 10,
+     "scored": 6,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 2,
+     "critical_recall": 1.0,
+     "avg_interactions": 17.4,
+     "median_interactions": 21.0,
+     "say_count": 128,
+     "exam_count": 46,
+     "rejected_exam_count": 4,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.0,
+     "unresolved_critical_alternative_rate": 0.4,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 30,
+     "total": 30
+    }
+   },
+   "frozen_validation_round_u_closing": {
+    "summary": {
+     "cases": 8,
+     "scored": 4,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 2,
+     "critical_recall": 1.0,
+     "avg_interactions": 19.375,
+     "median_interactions": 21.5,
+     "say_count": 119,
+     "exam_count": 36,
+     "rejected_exam_count": 4,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.125,
+     "unresolved_critical_alternative_rate": 0.5,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 26,
+     "total": 26
+    }
+   },
+   "frozen_validation_round_u_followup": {
+    "summary": {
+     "cases": 24,
+     "scored": 16,
+     "top1": 0.8125,
+     "top3": 0.9375,
+     "top5": 1.0,
+     "critical_cases": 4,
+     "critical_recall": 1.0,
+     "avg_interactions": 20.25,
+     "median_interactions": 22.5,
+     "say_count": 347,
+     "exam_count": 139,
+     "rejected_exam_count": 1,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.125,
+     "unresolved_critical_alternative_rate": 0.75,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 82,
+     "total": 82
+    }
+   },
+   "frozen_validation_round_u_followup_closing": {
+    "summary": {
+     "cases": 12,
+     "scored": 7,
+     "top1": 0.8571428571428571,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 2,
+     "critical_recall": 1.0,
+     "avg_interactions": 21.833333333333332,
+     "median_interactions": 21.5,
+     "say_count": 192,
+     "exam_count": 70,
+     "rejected_exam_count": 0,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.16666666666666666,
+     "unresolved_critical_alternative_rate": 0.6666666666666666,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 43,
+     "total": 43
+    }
+   },
+   "frozen_validation_round_v": {
+    "summary": {
+     "cases": 18,
+     "scored": 14,
+     "top1": 0.9285714285714286,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 3,
+     "critical_recall": 1.0,
+     "avg_interactions": 21,
+     "median_interactions": 23.0,
+     "say_count": 288,
+     "exam_count": 90,
+     "rejected_exam_count": 0,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.16666666666666666,
+     "unresolved_critical_alternative_rate": 0.5555555555555556,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 55,
+     "total": 55
+    }
+   },
+   "frozen_validation_round_v_closing": {
+    "summary": {
+     "cases": 12,
+     "scored": 10,
+     "top1": 0.9,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 2,
+     "critical_recall": 1.0,
+     "avg_interactions": 19.75,
+     "median_interactions": 21.5,
+     "say_count": 183,
+     "exam_count": 54,
+     "rejected_exam_count": 0,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.08333333333333333,
+     "unresolved_critical_alternative_rate": 0.5833333333333334,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 35,
+     "total": 35
+    }
+   },
+   "frozen_validation_round_w": {
+    "summary": {
+     "cases": 12,
+     "scored": 9,
+     "top1": 1.0,
+     "top3": 1.0,
+     "top5": 1.0,
+     "critical_cases": 4,
+     "critical_recall": 1.0,
+     "avg_interactions": 20.833333333333332,
+     "median_interactions": 22.5,
+     "say_count": 182,
+     "exam_count": 68,
+     "rejected_exam_count": 0,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.0,
+     "unresolved_critical_alternative_rate": 0.5,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 0
+    },
+    "behavior": {
+     "passed": 35,
+     "total": 35
+    }
+   },
+   "frozen_validation_round_w_closing": {
+    "summary": {
+     "cases": 12,
+     "scored": 10,
+     "top1": 0.7,
+     "top3": 0.7,
+     "top5": 0.7,
+     "critical_cases": 6,
+     "critical_recall": 0.8333333333333334,
+     "avg_interactions": 20.5,
+     "median_interactions": 20.5,
+     "say_count": 182,
+     "exam_count": 64,
+     "rejected_exam_count": 0,
+     "duplicate_action_rate": 0.0,
+     "premature_diagnosis_rate": 0.0,
+     "unresolved_critical_alternative_rate": 0.08333333333333333,
+     "soap_information_retention": 1.0,
+     "soap_unsupported_info_rate": 0.0,
+     "rule_violations": 0,
+     "critical_miss_count": 1
+    },
+    "behavior": {
+     "passed": 35,
+     "total": 35
+    }
+   }
+  }
+ },
+ "closing_sets": {
+  "frozen_validation_round_u_closing": {
+   "summary": {
+    "cases": 8,
+    "scored": 4,
+    "top1": 1.0,
+    "top3": 1.0,
+    "top5": 1.0,
+    "critical_cases": 2,
+    "critical_recall": 1.0,
+    "avg_interactions": 19.375,
+    "median_interactions": 21.5,
+    "say_count": 119,
+    "exam_count": 36,
+    "rejected_exam_count": 4,
+    "duplicate_action_rate": 0.0,
+    "premature_diagnosis_rate": 0.125,
+    "unresolved_critical_alternative_rate": 0.5,
+    "soap_information_retention": 1.0,
+    "soap_unsupported_info_rate": 0.0,
+    "rule_violations": 0,
+    "critical_miss_count": 0
+   },
+   "behavior": {
+    "passed": 26,
+    "total": 26
+   }
+  },
+  "frozen_validation_round_u_followup_closing": {
+   "summary": {
+    "cases": 12,
+    "scored": 7,
+    "top1": 0.8571428571428571,
+    "top3": 1.0,
+    "top5": 1.0,
+    "critical_cases": 2,
+    "critical_recall": 1.0,
+    "avg_interactions": 21.833333333333332,
+    "median_interactions": 21.5,
+    "say_count": 192,
+    "exam_count": 70,
+    "rejected_exam_count": 0,
+    "duplicate_action_rate": 0.0,
+    "premature_diagnosis_rate": 0.16666666666666666,
+    "unresolved_critical_alternative_rate": 0.6666666666666666,
+    "soap_information_retention": 1.0,
+    "soap_unsupported_info_rate": 0.0,
+    "rule_violations": 0,
+    "critical_miss_count": 0
+   },
+   "behavior": {
+    "passed": 43,
+    "total": 43
+   }
+  },
+  "frozen_validation_round_v_closing": {
+   "summary": {
+    "cases": 12,
+    "scored": 10,
+    "top1": 0.9,
+    "top3": 1.0,
+    "top5": 1.0,
+    "critical_cases": 2,
+    "critical_recall": 1.0,
+    "avg_interactions": 19.75,
+    "median_interactions": 21.5,
+    "say_count": 183,
+    "exam_count": 54,
+    "rejected_exam_count": 0,
+    "duplicate_action_rate": 0.0,
+    "premature_diagnosis_rate": 0.08333333333333333,
+    "unresolved_critical_alternative_rate": 0.5833333333333334,
+    "soap_information_retention": 1.0,
+    "soap_unsupported_info_rate": 0.0,
+    "rule_violations": 0,
+    "critical_miss_count": 0
+   },
+   "behavior": {
+    "passed": 35,
+    "total": 35
+   }
+  },
+  "frozen_validation_round_w_closing": {
+   "summary": {
+    "cases": 12,
+    "scored": 10,
+    "top1": 0.7,
+    "top3": 0.7,
+    "top5": 0.7,
+    "critical_cases": 6,
+    "critical_recall": 0.8333333333333334,
+    "avg_interactions": 20.5,
+    "median_interactions": 20.5,
+    "say_count": 182,
+    "exam_count": 64,
+    "rejected_exam_count": 0,
+    "duplicate_action_rate": 0.0,
+    "premature_diagnosis_rate": 0.0,
+    "unresolved_critical_alternative_rate": 0.08333333333333333,
+    "soap_information_retention": 1.0,
+    "soap_unsupported_info_rate": 0.0,
+    "rule_violations": 0,
+    "critical_miss_count": 1
+   },
+   "behavior": {
+    "passed": 35,
+    "total": 35
+   }
+  }
+ },
+ "round_w_closing": {
+  "summary": {
+   "cases": 12,
+   "scored": 10,
+   "top1": 0.7,
+   "top3": 0.7,
+   "top5": 0.7,
+   "critical_cases": 6,
+   "critical_recall": 0.8333333333333334,
+   "avg_interactions": 20.5,
+   "median_interactions": 20.5,
+   "say_count": 182,
+   "exam_count": 64,
+   "rejected_exam_count": 0,
+   "duplicate_action_rate": 0.0,
+   "premature_diagnosis_rate": 0.0,
+   "unresolved_critical_alternative_rate": 0.08333333333333333,
+   "soap_information_retention": 1.0,
+   "soap_unsupported_info_rate": 0.0,
+   "rule_violations": 0,
+   "critical_miss_count": 1
+  },
+  "behavior": {
+   "passed": 35,
+   "total": 35
+  }
+ }
+}

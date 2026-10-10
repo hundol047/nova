@@ -50,7 +50,7 @@ def detect_proxy_relation(chief_complaint: str, sex: Optional[str], age: Optiona
         return None
     word = (m.group(1) or m.group(2) or "").lower()
     if word not in _RELATIONS:
-        korean = re.match(r"^\W*(?:우리|제)\s*(\S+?)(?:가|이|는|은|를|이가)?\s", chief_complaint or "")
+        korean = re.match(r"^\W*(?:(?:우리|제)\s*)?(\S+?)(?:께서|가|이|는|은|를|이가)?\s", chief_complaint or "")
         word = korean.group(1) if korean else word
     rule = _RELATIONS.get(word)
     if rule is None or age is None:

@@ -22,6 +22,9 @@ from nova_agent.stop_policy import StopDecision, StopPolicy
 AgentActionType = Literal["ASK", "EXAM", "TEST", "DIAGNOSE", "SAY"]
 
 
+_PADDING_SOURCES = frozenset({"zero_evidence_fallback", "ontology_retrieval"})
+
+
 def _time_critical_ids() -> set:
     """The "time is tissue/brain/myocardium" diagnosis cluster (stroke/ACS/sepsis/anaphylaxis-
     class) -- derived generically from the knowledge base's own `urgency`/`dangerous` fields
@@ -242,6 +245,14 @@ class ActionSelector:
                 # skipped -- a deficit described in a carer's words may only become the patient's own observation
                 # through that examination.
                 time_critical = time_critical_ids
+                if get_config().exam_utility_v2_enabled:
+                    # Post-W: a time-critical diagnosis present only as whole-catalog padding (nothing matched the
+                    # KB) or bare retrieval recall, with no observation and no safety flag, does not make its
+                    # examinations a step (an abdominal exam for a red eye). Any real source keeps the exemption.
+                    padding = {d.diagnosis_id for d in differential
+                               if d.candidate_sources and set(d.candidate_sources) <= _PADDING_SOURCES
+                               and not d.supporting_evidence}
+                    time_critical = time_critical - (padding - in_play)
                 if supported:  # with nothing observed yet, every question may still be the discriminating one
                     raw_candidates = [c for c in raw_candidates
                                       if not c.disease_ids_discriminated or c.key in {"vital_signs", "general_appearance"}

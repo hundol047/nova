@@ -18,7 +18,7 @@ four required-context profiles cite their clinical sources inline; not clinician
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Callable, Dict, List, Optional, Tuple
 
 UNDIFFERENTIATED_ID = "unknown"
@@ -32,6 +32,15 @@ class FinalDecision:
     support: str                           # "SUPPORTED" | "UNDIFFERENTIATED"
     completion_reason: str                 # "supported" | "information_exhausted" | "budget"
     reasons: Tuple[str, ...] = field(default_factory=tuple)
+    # Post-W calibration: other top-five candidates whose score is within CLOSE_ALTERNATIVE_RATIO of the named one.
+    # Metadata only (no score, ranking or wire change): a named diagnosis with such a rival is PROVISIONAL.
+    close_alternatives: Tuple[str, ...] = field(default_factory=tuple)
+
+    @property
+    def certainty(self) -> str:
+        if self.undifferentiated:
+            return "UNDIFFERENTIATED"
+        return "PROVISIONAL" if self.close_alternatives else "LEADING"
 
     @property
     def undifferentiated(self) -> bool:
@@ -45,7 +54,8 @@ class FinalDecision:
     def as_metadata(self) -> dict:
         return {"primary_id": self.primary_id, "support": self.support,
                 "completion_reason": self.completion_reason, "reasons": list(self.reasons),
-                "support_scope": "working_diagnosis_not_confirmation"}
+                "support_scope": "working_diagnosis_not_confirmation", "certainty": self.certainty,
+                "close_alternatives": list(self.close_alternatives)}
 
 
 def _current_texts(state) -> List[str]:
@@ -337,7 +347,26 @@ def _curated_syndrome_on_same_observations(leader, state, differential):
     return None
 
 
+CLOSE_ALTERNATIVE_RATIO = 0.9
+
+
+def _with_certainty(decision: FinalDecision, differential: list) -> FinalDecision:
+    """Attach the near-tied rivals of the named diagnosis (calibration metadata; the decision itself is unchanged)."""
+    from nova_agent.config import get_config
+    item = decision.item
+    if item is None or not get_config().decision_certainty or item.score <= 0:
+        return decision
+    rivals = tuple(d.diagnosis_id for d in differential[:5]
+                   if d.diagnosis_id != item.diagnosis_id and d.score >= CLOSE_ALTERNATIVE_RATIO * item.score
+                   and d.supporting_evidence)
+    return replace(decision, close_alternatives=rivals) if rivals else decision
+
+
 def decide_final(state, differential: list, completion_reason: str = "supported") -> FinalDecision:
+    return _with_certainty(_decide_final(state, differential, completion_reason), differential)
+
+
+def _decide_final(state, differential: list, completion_reason: str = "supported") -> FinalDecision:
     """The leader if it may be named; else the best-ranked top-five candidate with SPECIFIC or at least two distinct
     supporting observations that may be named; else an undifferentiated completion."""
     from nova_agent.config import get_config

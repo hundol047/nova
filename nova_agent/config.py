@@ -239,6 +239,12 @@ class NovaConfig:
     pattern_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_PATTERN_V2", False))
     # Round W: an evidenced ontology candidate from the previous turn is not dropped by a reshuffled rerank.
     retain_evidenced_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RETAIN_EVIDENCED", True))
+    # Post-W: final-decision certainty metadata (PROVISIONAL when a top-five rival is within 90% of the named score).
+    decision_certainty: bool = field(default_factory=lambda: _bool_env("NOVA_DECISION_CERTAINTY", True))
+    # Post-W: organ-bound diagnoses are not candidates for a patient of the other recorded sex (anatomic_compat.py).
+    anatomic_compat_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ANATOMIC_COMPAT", True))
+    # Post-W: whole-catalog padding does not exempt a time-critical diagnosis's exams from the sweep filter.
+    exam_utility_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_EXAM_UTILITY_V2", True))
     # Round W: a first statement by a caregiver ("my husband collapsed") whose relation fits the patient's demographics
     # describes the patient (nova_agent/evidence_scope.py).
     proxy_report_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_PROXY_REPORT", True))

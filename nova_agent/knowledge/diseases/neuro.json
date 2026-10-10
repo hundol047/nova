@@ -163,7 +163,9 @@
       "photophobia",
       "headache",
       "altered mental status",
-      "rash"
+      "rash",
+      "bulging fontanelle on examination",
+      "high-pitched cry on examination"
     ],
     "risk_factors": [
       "recent infection",
@@ -217,7 +219,8 @@
         "url": "https://www.nice.org.uk/guidance/ng240/chapter/Recommendations",
         "scope": "Clinical features and investigation results are combined; this software final-label guard does not exclude meningitis or suppress urgent evaluation."
       }
-    ]
+    ],
+    "post_round_w_provenance": "typical_features 'bulging fontanelle on examination' and 'high-pitched cry on examination' added post-Round-W: NICE NG143 (Fever in under 5s, Table 1 'traffic light' red features: bulging fontanelle; weak, high-pitched or continuous cry) and NICE NG240 (Meningitis (bacterial) and meningococcal disease, 2024: symptoms and signs in infants include a bulging fontanelle and irritability/abnormal cry). They are signs observed by the examiner or reported by a caregiver, never asked as questions, and only occur in infants with an open fontanelle. They support the working diagnosis of suspected bacterial meningitis; they do not confirm it (no CSF), and danger adds no score. Agent-authored, not clinician-reviewed."
   },
   {
     "id": "migraine",

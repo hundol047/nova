@@ -6,20 +6,32 @@ def load(path):return json.loads((ROOT/path).read_text())
 def current():
  p=load('artifacts/verification/CURRENT_RELEASE.json');d=load(p['current_verification_artifact'])
  assert p['current_verification_schema']==d['schema']
- assert d['schema'] in {'nova-verification-v12','nova-verification-v13','nova-verification-v14','nova-verification-v15','nova-verification-v16','nova-verification-v17','nova-verification-v18','nova-verification-v19','nova-verification-v20','nova-verification-v21','nova-verification-v22','nova-verification-v23','nova-verification-v24','nova-verification-v25','nova-verification-v26','nova-verification-v27','nova-verification-v28','nova-verification-v29'}
+ assert d['schema'] in {'nova-verification-v12','nova-verification-v13','nova-verification-v14','nova-verification-v15','nova-verification-v16','nova-verification-v17','nova-verification-v18','nova-verification-v19','nova-verification-v20','nova-verification-v21','nova-verification-v22','nova-verification-v23','nova-verification-v24','nova-verification-v25','nova-verification-v26','nova-verification-v27','nova-verification-v28','nova-verification-v29','nova-verification-v30'}
  assert p['verified_runtime_sha']==d['verified_runtime_sha']
  return d
 
 def test_current_runtime_exact_archive_and_commit():
- d=current()
- with zipfile.ZipFile(ROOT/d['submission']['zip']) as z:
+ d=current();sub=d['submission']
+ for name,h in d['runtime_sha256'].items():
+  data=(ROOT/name).read_bytes()
+  assert hashlib.sha256(data).hexdigest()==h
+  assert data==subprocess.check_output(['git','show',d['verified_runtime_sha']+':'+name],cwd=ROOT)
+ assert sub['bytes']<50_000_000
+ if sub.get('publication')=='LOCAL_ONLY':
+  # The archive itself is kept local (publication restriction); every member is pinned by hash instead and
+  # checked against the committed submission mirror the archive is built from. Same files, same bytes.
+  members=sub['member_sha256']
+  assert members and 'run.py' in members and 'requirements.txt' in members
+  for name,h in members.items():
+   if name!='MANIFEST.json':
+    assert hashlib.sha256((ROOT/'submission'/name).read_bytes()).hexdigest()==h,name
   for name,h in d['runtime_sha256'].items():
-   data=(ROOT/name).read_bytes()
-   assert hashlib.sha256(data).hexdigest()==h
-   assert data==subprocess.check_output(['git','show',d['verified_runtime_sha']+':'+name],cwd=ROOT)
-   assert data==z.read(name.removeprefix('submission/'))
- assert d['submission']['bytes']<50_000_000
- assert hashlib.sha256((ROOT/d['submission']['zip']).read_bytes()).hexdigest()==d['submission']['sha256']
+   assert members[name.removeprefix('submission/')]==h,name
+  return
+ with zipfile.ZipFile(ROOT/sub['zip']) as z:
+  for name,h in d['runtime_sha256'].items():
+   assert z.read(name.removeprefix('submission/'))==(ROOT/name).read_bytes()
+ assert hashlib.sha256((ROOT/sub['zip']).read_bytes()).hexdigest()==sub['sha256']
 
 def test_current_blind_and_readiness_are_honest():
  from evaluation.current_blind import CURRENT_BLIND_STATUS,reference_only_versions

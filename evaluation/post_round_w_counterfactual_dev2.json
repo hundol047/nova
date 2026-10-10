@@ -1,0 +1,195 @@
+[
+ {
+  "case_id": "PWCF2_M01",
+  "chief_complaint": "Our 7-month-old daughter has had a fever since this morning and won't stop screaming in a shrill way.",
+  "demographics": {
+   "age": 0,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "meningitis",
+  "answers": {
+   "associated_symptoms": "She vomited twice and doesn't want her bottle."
+  },
+  "exam_results": {
+   "vital_signs": "HR 182, RR 44, Temp 39.1, SpO2 98%",
+   "neuro_exam": "Anterior fontanelle tense and bulging. Irritable when handled."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf2;infant_meningitis",
+  "scoring_expected": true,
+  "notes": "Post-Round-W development fixture 2: infant meningitis sign variations and negative controls, authored after the CloseW_01 critical miss was traced (closing case already consumed) and frozen before the runtime change. Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF2_M02",
+  "chief_complaint": "My baby boy is 3 months old, he's burning up and the soft spot on top of his head looks swollen.",
+  "demographics": {
+   "age": 0,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "meningitis",
+  "answers": {
+   "associated_symptoms": "He's very drowsy and floppy."
+  },
+  "exam_results": {
+   "vital_signs": "HR 176, RR 50, Temp 38.9, SpO2 97%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf2;infant_meningitis",
+  "scoring_expected": true,
+  "notes": "Post-Round-W development fixture 2: infant meningitis sign variations and negative controls, authored after the CloseW_01 critical miss was traced (closing case already consumed) and frozen before the runtime change. Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF2_M03",
+  "chief_complaint": "10개월 아들이 열이 39도가 넘고 숫구멍이 볼록하게 튀어나왔어요.",
+  "demographics": {
+   "age": 0,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "meningitis",
+  "answers": {
+   "associated_symptoms": "계속 토하고 날카롭게 울어요."
+  },
+  "exam_results": {
+   "vital_signs": "HR 174, RR 42, Temp 39.3, SpO2 97%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf2;infant_meningitis;ko",
+  "scoring_expected": true,
+  "notes": "Post-Round-W development fixture 2: infant meningitis sign variations and negative controls, authored after the CloseW_01 critical miss was traced (closing case already consumed) and frozen before the runtime change. Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF2_M04",
+  "chief_complaint": "My 11-month-old has a temperature and a high-pitched cry that I've never heard before.",
+  "demographics": {
+   "age": 0,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "meningitis",
+  "answers": {
+   "associated_symptoms": "She's been sick a few times and is hard to wake."
+  },
+  "exam_results": {
+   "vital_signs": "HR 170, RR 40, Temp 38.8, SpO2 98%",
+   "neuro_exam": "Fontanelle full and bulging; reduced tone."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf2;infant_meningitis",
+  "scoring_expected": true,
+  "notes": "Post-Round-W development fixture 2: infant meningitis sign variations and negative controls, authored after the CloseW_01 critical miss was traced (closing case already consumed) and frozen before the runtime change. Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "PWCF2_N01",
+  "chief_complaint": "My 8-month-old has a runny nose and a slight fever, but he's feeding and playing normally.",
+  "demographics": {
+   "age": 0,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "viral_uri",
+  "answers": {
+   "associated_symptoms": "A bit of a cough and sneezing."
+  },
+  "exam_results": {
+   "vital_signs": "HR 130, RR 32, Temp 38.0, SpO2 99%",
+   "neuro_exam": "Fontanelle soft and flat. Alert and playful."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf2;negative_control",
+  "scoring_expected": true,
+  "notes": "Post-Round-W development fixture 2: infant meningitis sign variations and negative controls, authored after the CloseW_01 critical miss was traced (closing case already consumed) and frozen before the runtime change. Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "PWCF2_N02",
+  "chief_complaint": "My 6-month-old is teething and grizzly, chewing on everything.",
+  "demographics": {
+   "age": 0,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "Drooling a lot, no fever, feeding fine."
+  },
+  "exam_results": {
+   "vital_signs": "HR 128, RR 30, Temp 37.1, SpO2 99%",
+   "neuro_exam": "Fontanelle soft. Normal tone."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf2;negative_control",
+  "scoring_expected": false,
+  "notes": "Post-Round-W development fixture 2: infant meningitis sign variations and negative controls, authored after the CloseW_01 critical miss was traced (closing case already consumed) and frozen before the runtime change. Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "PWCF2_N03",
+  "chief_complaint": "I'm 34 and my head is pounding after a long week, no fever.",
+  "demographics": {
+   "age": 34,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "Tight band around my head, no vomiting, no neck stiffness."
+  },
+  "exam_results": {
+   "vital_signs": "BP 122/78, HR 74, RR 14, Temp 36.7, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "post_w_cf2;negative_control",
+  "scoring_expected": false,
+  "notes": "Post-Round-W development fixture 2: infant meningitis sign variations and negative controls, authored after the CloseW_01 critical miss was traced (closing case already consumed) and frozen before the runtime change. Development set: may inform source changes. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ }
+]

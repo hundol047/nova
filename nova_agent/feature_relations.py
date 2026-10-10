@@ -31,6 +31,19 @@ RELATION_PATTERNS = {
         r"\bburning (?:stripe|band|pain) on one side\b", r"\bburning on one side of my chest\b",
         r"\bburning\s+(?:band|strip|stripe)\s+of\s+pain\b",
         r"\bburning\s+(?:pain|ache|sensation)\s+(?:in\s+a\s+(?:strip|band|stripe)|on\s+(?:the\s+)?(?:left|right|one)\s+side)\b"),
+    # Post-W: infant meningitis signs (NICE NG143 Table 1 red features: bulging fontanelle; weak, high-pitched or
+    # continuous cry; NICE NG240). The sign must be attached to the fontanelle / soft spot or to the cry; a fever,
+    # irritability or a "soft" / "flat" fontanelle alone is not the relation.
+    "bulging fontanelle on examination": _compile(
+        r"\b(?:fontanel\w*|soft\s+spot)\b[^.;]{0,40}?\b(?:bulg\w*|swollen|swelling|raised|tense|puff\w*|sticking\s+out|pushing\s+out|full\s+and\s+bulging)\b",
+        r"\b(?:bulg\w*|swollen|raised|tense|puffy)\s+(?:anterior\s+)?(?:fontanel\w*|soft\s+spot)\b",
+        r"(?:숫구멍|대천문|천문)[^.。]{0,15}(?:볼록|부풀|튀어나|팽팽|불룩)",
+        r"大泉門[^。]{0,10}(?:膨隆|膨らん|張って)"),
+    "high-pitched cry on examination": _compile(
+        r"\b(?:high[-\s]pitched|shrill|piercing)\s+(?:cry\w*|scream\w*|wail\w*)\b",
+        r"\b(?:cry\w*|scream\w*|wail\w*)\b[^.;]{0,25}?\b(?:high[-\s]pitched|shrill|piercing)\b",
+        r"(?:날카롭게|고음으로|찢어지(?:는|듯)[^.。]{0,5}|자지러지(?:게|듯))\s*(?:울|소리)",
+        r"甲高い[^。]{0,5}(?:泣|声)"),
     # These catalog descriptors cannot be supplied by partial word overlap.
     # Require the reported intensity/location, without guessing it from a cause.
     "severe diffuse abdominal pain": _compile(
@@ -87,6 +100,12 @@ STERNAL_PRESSURE = _compile(
     r"\bchest\s+(?:pressure|squeezing|tightness|heaviness)\b",
     r"\b(?:crushing|squeezing|constricting)\s+chest\s+(?:pain|discomfort)\b",
     r"\b(?:pressure|squeezing|tightness|heaviness|(?:a\s+)?heavy weight)\s+(?:(?:began|started|developed)\s+)?(?:deep\s+)?(?:on|across|in)\s+(?:(?:my|the)\s+)?(?:upper\s+)?chest\b",
+    # Post-W: the classic weight-on-the-chest description, any noun ("an elephant / a weight / something heavy sitting on
+    # my chest"; "chest feels like ... sitting on it") -- the construction carries the meaning, so a misspelt noun or
+    # "liek" for "like" does not lose it.
+    r"\b(?:like|as\s+if|as\s+though|li\w{1,3})\s+(?:an?\s+|something\s+)?\w+\s+(?:is\s+)?(?:sitting|pressing|standing|crushing)\s+(?:down\s+)?on\s+(?:my\s+|the\s+)?chest\b",
+    r"\b(?:heavy\s+)?weight\s+(?:is\s+)?(?:sitting|pressing|crushing)\s+(?:down\s+)?on\s+(?:my\s+|the\s+)?chest\b",
+    r"\bchest\s+(?:feels?|felt)\s+(?:li\w{1,3}|as\s+if)\s+(?:an?\s+)?\w+\s+(?:is\s+)?(?:sitting|pressing|standing)\s+on\s+it\b",
     # Round V: the same sensation-on-chest wording in Japanese and Korean (締め付け/圧迫/重苦しい, 조이/짓누르/누르는).
     r"胸(?:が|を|の)?[^。、,]{0,4}(?:締め付け|締めつけ|圧迫|重苦し|押さえつけ)",
     r"가슴(?:이|을|에)?\s*(?:꽉\s*)?(?:조이|조여|짓누르|짓눌|누르는|눌리|압박)")

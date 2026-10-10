@@ -36,7 +36,7 @@ def symptomatic_rate_concern(state) -> list[str]:
     symptoms = [p for p in ("syncope", "loss of consciousness", "lost consciousness", "blacked out", "blackout", "presyncope",
                             "collapsed", "collapse", "keeled over",
                             "lightheadedness", "dizziness", "nearly fainted", "almost passed out",
-                            "의식을 잃", "실신", "쓰러졌", "어지러움")
+                            "의식을 잃", "실신", "쓰러졌", "어지러움", "쓰러지", "기절")
                 if feature_present_with_aliases(p, texts, scrub_negated_spans=True)]
     return [f"heart_rate={vitals.heart_rate}", *symptoms] if symptoms else []
 
