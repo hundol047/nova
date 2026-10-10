@@ -1,0 +1,10 @@
+{
+  "sha256": "c43d905044aac8237aac6b838dfde04d3da99f65cada4b3ab67b0b6e8f3ec5a2",
+  "cases": 12,
+  "scored": 9,
+  "created_utc": "2026-10-10T11:59:38.494216+00:00",
+  "runtime_before_authoring": "e7041ac250301f7c4d926beca56ba6a74c689a62",
+  "policy": "Frozen before any Round W runtime change; run first on baseline e16448e. Becomes development if results inform source changes.",
+  "author_exposure": "Implementation-aware author (wrote Rounds U/V; saw the Round V remaining failures, including CloseV_03, CloseV_02, CloseV_12 and the slow-pulse syncope FN).",
+  "independent_clinical_validation": false
+}

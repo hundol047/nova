@@ -1,0 +1,331 @@
+[
+ {
+  "case_id": "RoundW_01",
+  "chief_complaint": "My 14-month-old son is burning hot, very sleepy and won't drink; his hands and feet are cold and blotchy.",
+  "demographics": {
+   "age": 1,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "Hardly any wet nappies today. No rash that I can see."
+  },
+  "exam_results": {
+   "vital_signs": "HR 176, RR 54, Temp 39.6, SpO2 95%",
+   "general_appearance": "Drowsy, mottled limbs, capillary refill 4 seconds."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;pediatric_sepsis",
+  "scoring_expected": true,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RoundW_02",
+  "chief_complaint": "8개월 아기가 열이 펄펄 끓고 축 처져서 젖을 잘 안 먹어요.",
+  "demographics": {
+   "age": 0,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "기저귀가 거의 젖지 않아요. 피부가 얼룩덜룩해요."
+  },
+  "exam_results": {
+   "vital_signs": "HR 182, RR 58, Temp 39.5, SpO2 94%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;pediatric_sepsis_ko",
+  "scoring_expected": true,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RoundW_03",
+  "chief_complaint": "My husband collapsed after running a marathon in the heat; he is confused and his skin is hot and dry.",
+  "demographics": {
+   "age": 34,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Heat Stroke",
+  "answers": {
+   "onset": "At the finish line, it was 35 degrees today.",
+   "past_medical_history": "Healthy."
+  },
+  "exam_results": {
+   "vital_signs": "BP 102/60, HR 132, RR 26, Temp 41.2, SpO2 96%",
+   "mental_status_exam": "Disoriented, agitated."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;heat_stroke_control",
+  "scoring_expected": true,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RoundW_04",
+  "chief_complaint": "I blacked out in the kitchen this morning and my heart has been beating very slowly.",
+  "demographics": {
+   "age": 77,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "Dizzy and weak since yesterday."
+  },
+  "exam_results": {
+   "vital_signs": "BP 92/56, HR 34, RR 16, Temp 36.6, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;brady_syncope_fn",
+  "scoring_expected": false,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RoundW_05",
+  "chief_complaint": "갑자기 정신을 잃고 쓰러졌어요. 맥박이 너무 느리다고 들었어요.",
+  "demographics": {
+   "age": 80,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "어지럽고 기운이 없어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 94/58, HR 36, RR 16, Temp 36.5, SpO2 97%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;brady_syncope_fn_ko",
+  "scoring_expected": false,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RoundW_06",
+  "chief_complaint": "At a routine check my pulse was 46; I run marathons and I feel completely fine.",
+  "demographics": {
+   "age": 29,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "No fainting, no dizziness, no breathlessness."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/70, HR 46, RR 12, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;athlete_brady_fp",
+  "scoring_expected": false,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RoundW_07",
+  "chief_complaint": "My 4-year-old has a high temperature and keeps crying that his ear hurts.",
+  "demographics": {
+   "age": 4,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Acute Otitis Media",
+  "answers": {
+   "onset": "He had a cold last week.",
+   "associated_symptoms": "No rash, no neck stiffness, drinking fine."
+  },
+  "exam_results": {
+   "vital_signs": "HR 124, RR 26, Temp 38.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;aom",
+  "scoring_expected": true,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RoundW_08",
+  "chief_complaint": "Burning pain in a strip around my right side for three days, and now little blisters along the same line.",
+  "demographics": {
+   "age": 68,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Herpes Zoster (Shingles)",
+  "answers": {
+   "associated_symptoms": "No breathlessness or cough."
+  },
+  "exam_results": {
+   "vital_signs": "BP 134/82, HR 76, RR 14, Temp 37.3, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;zoster",
+  "scoring_expected": true,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RoundW_09",
+  "chief_complaint": "기침할 때 누런 가래가 나오고 열이 나요. 숨쉴 때 오른쪽 가슴이 아파요.",
+  "demographics": {
+   "age": 52,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "pneumonia",
+  "answers": {
+   "onset": "4일 전부터요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 126/78, HR 102, RR 22, Temp 38.8, SpO2 94%",
+   "lung_auscultation": "Crackles at the right base."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;pneumonia_ko",
+  "scoring_expected": true,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "RoundW_10",
+  "chief_complaint": "I vomited a lot of bright red blood an hour ago and I feel dizzy.",
+  "demographics": {
+   "age": 61,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "gi_bleeding",
+  "answers": {
+   "medication": "Naproxen for my back.",
+   "past_medical_history": "Heavy drinker."
+  },
+  "exam_results": {
+   "vital_signs": "BP 94/58, HR 118, RR 20, Temp 36.7, SpO2 97%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;gi_bleed_hematemesis",
+  "scoring_expected": true,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RoundW_11",
+  "chief_complaint": "My period is seven weeks late and I have sharp pain low on the left side with some spotting.",
+  "demographics": {
+   "age": 27,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "ectopic_pregnancy",
+  "answers": {
+   "onset": "Since this morning."
+  },
+  "exam_results": {
+   "vital_signs": "BP 104/66, HR 108, RR 18, Temp 36.8, SpO2 99%",
+   "abdominal_exam": "Left lower quadrant tenderness."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;ectopic",
+  "scoring_expected": true,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RoundW_12",
+  "chief_complaint": "Burning when I wee and needing to go all the time since yesterday.",
+  "demographics": {
+   "age": 35,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "uncomplicated_cystitis",
+  "answers": {
+   "associated_symptoms": "No fever, no back pain, not pregnant."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/72, HR 74, RR 14, Temp 36.8, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w;cystitis_control",
+  "scoring_expected": true,
+  "notes": "Round W synthetic mechanism control. Implementation-aware engineering author who has seen the Round V remaining failures; labels and behavior contracts fixed BEFORE first execution and before any Round W runtime change. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ }
+]
