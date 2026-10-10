@@ -1,13 +1,13 @@
 {
   "core_profiles": 34,
-  "field_count": 19036,
-  "literal_constant_count": 69,
+  "field_count": 19052,
+  "literal_constant_count": 72,
   "exact_text_occurrences": 138,
   "clinically_verified_fields": 0,
   "tier2_total": 1246,
   "tier2_enrichment_entries": 84,
   "tier2_with_features": 84,
-  "tier2_with_confirmatory": 27,
+  "tier2_with_confirmatory": 29,
   "tier2_clinician_reviewed": 0,
   "source_linked_core_profiles": 29,
   "tier2_without_features": 1162

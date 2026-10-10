@@ -73,10 +73,16 @@ STERNAL_PRESSURE = _compile(
     # a cause, exertion trigger, ECG finding or confirmed anatomical lesion.
     r"\bchest\s+(?:pressure|squeezing|tightness|heaviness)\b",
     r"\b(?:crushing|squeezing|constricting)\s+chest\s+(?:pain|discomfort)\b",
-    r"\b(?:pressure|squeezing|tightness|heaviness|(?:a\s+)?heavy weight)\s+(?:(?:began|started|developed)\s+)?(?:deep\s+)?(?:on|across|in)\s+(?:(?:my|the)\s+)?(?:upper\s+)?chest\b")
+    r"\b(?:pressure|squeezing|tightness|heaviness|(?:a\s+)?heavy weight)\s+(?:(?:began|started|developed)\s+)?(?:deep\s+)?(?:on|across|in)\s+(?:(?:my|the)\s+)?(?:upper\s+)?chest\b",
+    # Round V: the same sensation-on-chest wording in Japanese and Korean (締め付け/圧迫/重苦しい, 조이/짓누르/누르는).
+    r"胸(?:が|を|の)?[^。、,]{0,4}(?:締め付け|締めつけ|圧迫|重苦し|押さえつけ)",
+    r"가슴(?:이|을|에)?\s*(?:꽉\s*)?(?:조이|조여|짓누르|짓눌|누르는|눌리|압박)")
 PAIN_SPREAD = _compile(
     r"\b(?:pressure|pain|ache)\s+(?:that\s+)?(?:spreads?|spreading|travels?|traveling|radiates?|radiating)\s+(?:to|into)\s+(?:(?:my|the)\s+)?(?:(?:left|right)\s+)?(?:arms?|shoulders?|jaw)\b",
-    r"\bpain\s+(?:to|into)\s+(?:(?:my|the)\s+)?(?:(?:left|right|both)\s+)?(?:arms?|shoulders?|jaw)\b")
+    r"\bpain\s+(?:to|into)\s+(?:(?:my|the)\s+)?(?:(?:left|right|both)\s+)?(?:arms?|shoulders?|jaw)\b",
+    # Round V: spread of the chest pain to the arm/shoulder/jaw in Japanese and Korean.
+    r"(?:左|右|両)?(?:腕|肩|顎|あご)(?:に|へ|まで)(?:も)?(?:広が|放散|響|走)",
+    r"(?:왼|오른|양)?(?:쪽\s*)?(?:팔|어깨|턱)(?:으로|로|까지|에)\s*(?:도\s*)?(?:퍼지|퍼져|뻗치|뻗쳐|뻗|번지|번져|방사|울려)")
 
 
 def observed_pressure_features(clause: str) -> list[str]:

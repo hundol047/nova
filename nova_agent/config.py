@@ -226,6 +226,15 @@ class NovaConfig:
     final_decision_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_FINAL_DECISION", True))
     # Round U follow-up (preliminary rules only): skip targeted sweeps about candidates with no observed support.
     action_focus_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ACTION_FOCUS", True))
+    # Round V: a denied optional typical feature counts half a contradiction, capped (nova_agent/differential.py).
+    denial_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_DENIAL_V2", True))
+    # Round V: Tier-2 physical signs link to existing catalog exams; antecedent context is not naming support.
+    exam_links_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_EXAM_LINKS_V2", True))
+    context_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_CONTEXT_V2", True))
+    # Round V: under-5 heart/respiratory rate thresholds from NICE NG143 replace the adult ones (nova_agent/vitals_parser.py).
+    # Round V: sourced non-emergency Tier-2 labels and context-only alternatives do not make the plan urgent.
+    disposition_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_DISPOSITION_V2", True))
+    pediatric_vitals_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_PEDIATRIC_VITALS", True))
     competition_retrieval_enabled: bool = field(
         default_factory=lambda: _bool_env(
             "NOVA_COMPETITION_RETRIEVAL", _str_env("NOVA_LLM_PROVIDER", "mock") == "competition"

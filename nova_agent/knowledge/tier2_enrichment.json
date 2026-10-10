@@ -125,7 +125,11 @@
    ],
    "confirmatory_findings": [
     "ulcer crater seen on endoscopy"
-   ]
+   ],
+   "disposition": "non_emergency",
+   "provenance": {
+    "disposition": "NICE CG184 Gastro-oesophageal reflux disease and dyspepsia in adults (2014, updated 2019), sections 1.1-1.2: uncomplicated dyspepsia/ulcer is managed in primary care; same-day referral is for GI bleeding, which remains a separate candidate. Disposition metadata only: no diagnostic score effect; observed vital/rate red flags and supported dangerous alternatives still make the plan urgent."
+   }
   },
   {
    "id": "gi_duodenal_ulcer",
@@ -134,7 +138,11 @@
     "pain relieved by eating",
     "night time pain waking from sleep",
     "NSAID use"
-   ]
+   ],
+   "disposition": "non_emergency",
+   "provenance": {
+    "disposition": "NICE CG184 (2014, updated 2019), sections 1.1-1.2 and 1.6: uncomplicated duodenal ulcer is managed in primary care; same-day referral is for GI bleeding, which remains a separate candidate. Disposition metadata only: no diagnostic score effect; observed vital/rate red flags and supported dangerous alternatives still make the plan urgent."
+   }
   },
   {
    "id": "gi_perforated_ulcer",
@@ -352,7 +360,16 @@
     "weight gain",
     "waking breathless at night",
     "crackles in lungs"
-   ]
+   ],
+   "confirmatory_findings": [
+    "third heart sound",
+    "raised jugular venous pressure"
+   ],
+   "provenance": {
+    "typical_features": "GENERAL ONLY (pre-existing unreviewed enrichment; unchanged)",
+    "confirmatory_findings": "Round V: McDonagh TA et al., 2021 ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure, Eur Heart J 2021;42:3599-3726, Table 6 (more specific signs: elevated jugular venous pressure, third heart sound (gallop rhythm)). Bedside examination findings only; no imaging/BNP result is asserted.",
+    "selection": "Round V development (HF vs pneumonia confusions ValP_08, FollowU_23, RoundV_08/10). Agent-authored, not clinician-reviewed."
+   }
   },
   {
    "id": "chronic_heart_failure",
@@ -362,7 +379,16 @@
     "fatigue",
     "needing extra pillows",
     "weight gain"
-   ]
+   ],
+   "confirmatory_findings": [
+    "third heart sound",
+    "raised jugular venous pressure"
+   ],
+   "provenance": {
+    "typical_features": "GENERAL ONLY (pre-existing unreviewed enrichment; unchanged)",
+    "confirmatory_findings": "Round V: McDonagh TA et al., 2021 ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure, Eur Heart J 2021;42:3599-3726, Table 6 (more specific signs: elevated jugular venous pressure, third heart sound (gallop rhythm)). Bedside examination findings only; no imaging/BNP result is asserted.",
+    "selection": "Round V development (HF vs pneumonia confusions ValP_08, FollowU_23, RoundV_08/10). Agent-authored, not clinician-reviewed."
+   }
   },
   {
    "id": "hypertensive_emergency",
@@ -819,7 +845,11 @@
    "confirmatory_findings": [
     "urate crystals in joint fluid",
     "negatively birefringent needle-shaped crystals"
-   ]
+   ],
+   "disposition": "non_emergency",
+   "provenance": {
+    "disposition": "NICE NG219 Gout: diagnosis and management (2022), recommendations 1.1-1.4: flares are diagnosed and treated in primary care; same-day hospital assessment is for suspected septic arthritis, which remains a separate candidate. Disposition metadata only: no diagnostic score effect; observed vital/rate red flags and supported dangerous alternatives still make the plan urgent."
+   }
   },
   {
    "id": "acute_otitis_media",

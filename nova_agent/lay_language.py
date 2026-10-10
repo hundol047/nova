@@ -24,7 +24,7 @@ _SWEAT = ["sweating", "cold sweat", "clammy", "drenched in sweat", "sweaty", "br
 _FEVER = ["running a temperature", "high temperature", "feverish", "burning up", "slight fever", "low fever", "mild fever"]
 _CONFUSED = ["confused", "muddled", "disoriented", "not making sense", "drowsy and confused", "confusion", "unusual sleepiness",
              "unusually sleepy", "lethargic", "hard to wake"]
-_BREATHLESS = ["short of breath", "out of breath", "breathless", "cannot catch my breath", "cannot get air in"]
+_BREATHLESS = ["short of breath", "out of breath", "breathless", "breathlessness", "cannot catch my breath", "cannot get air in"]
 _DYSURIA = ["burning when i pee", "burns to pee", "stings to pee", "hurts to pee", "burning urination", "pee burns",
             "burning when i wee", "burns when i wee", "pain passing urine", "pain when urinating", "pain on urinating", "pain on urination", "stings when i pee",
             "hurts when i pee", "urinating hurts", "peeing hurts", "wee burns"]
@@ -335,7 +335,8 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
                                     "hurts when i press", "sore to press", "tender to touch", "pressing on it hurts"],
     # --- heart-failure congestion wording (Tier-2 HF profiles already list these phrases)
     "ankle swelling": ["ankles swell", "swollen ankles", "ankles are swollen", "ankles get swollen", "ankle edema"],
-    "leg swelling": ["pitting edema", "swollen legs", "legs are swollen", "legs swell"],
+    "leg swelling": ["pitting edema", "swollen legs", "legs are swollen", "legs swell",
+                     "ankles are puffy", "puffy ankles"],
     "waking breathless at night": ["wake up gasping", "waking up gasping", "wake up breathless", "wake up short of breath"],
     "crackles in lungs": ["crackles at both bases", "crackles at the bases", "bibasal crackles", "bibasilar crackles",
                           "basal crackles"],
@@ -360,7 +361,27 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
                                     "heart racing before i blacked out"],
     # Orthopnoea quantified by pillows (NICE CKS "Heart failure - chronic": orthopnoea).
     "unable to lie flat": ["three pillows to sleep", "need three pillows", "need extra pillows to sleep",
-                           "sleep propped up", "cannot lie flat", "can't lie flat"],
+                           "sleep propped up", "cannot lie flat", "can't lie flat",
+                           "four pillows", "several pillows", "two pillows", "extra pillows",
+                           # NICE CKS "Heart failure - chronic": orthopnoea (breathless lying flat, relieved sitting up)
+                           "sit up to breathe", "sit up to catch my breath", "sleep sitting up", "sleep in a chair"],
+    # --- Round V (development wording found on the frozen Round V set; each list helps ONE existing phrase)
+    "dysuria": ["stinging when i pass water", "burning when i pass water", "pain when i pass water",
+                "stings when i pass water", "hurts when i pass water"],
+    "urinary frequency": ["going every hour", "need to go every hour", "going to the toilet every hour"],
+    # Peptic ulcer pain is classically burning OR gnawing upper abdominal pain (MedlinePlus "Peptic ulcer", 000206).
+    "burning upper abdominal pain": ["gnawing pain high in my stomach", "gnawing upper abdominal pain", "gnawing stomach pain"],
+    "pain relieved by eating": ["better after i eat", "better after eating", "eases after eating", "better when i eat"],
+    "recent immobility or long travel": ["flew back from", "long-haul flight", "long haul flight", "long flight", "flight from"],
+    "calf pain or tenderness": ["aching calf", "calf aches", "calf is tender",
+                                "calf swollen and tender"],
+    "warmth and redness of leg": ["calf is warm", "leg is warm", "warm calf", "tender, warm"],
+    # Orthopnoea quantified by pillows; progressive exertional breathlessness (NICE CKS "Heart failure - chronic").
+    "worsening shortness of breath": ["become breathless", "becoming more breathless", "increasingly breathless",
+                                      "getting more breathless", "breathlessness is getting worse"],
+    "recent cold": ["after a cold", "days after a cold", "following a cold"],
+    "grouped vesicles in a dermatomal distribution on examination": ["grouped vesicles on a red base in a band",
+                                                                     "vesicles in a band", "grouped vesicles in a band"],
     # --- peritonism wording on examination
     "rebound tenderness": ["with rebound", "rebound everywhere", "rebound tenderness everywhere"],
     "lying still": ["lying very still", "lying completely still", "keeps very still"],

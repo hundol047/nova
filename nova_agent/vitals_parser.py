@@ -97,7 +97,27 @@ SLOW_PULSE_FINDING = "pulse rate below 50"
 FAST_PULSE_FINDING = "pulse rate of 150 or more"
 
 
-def describe_vital_sign_abnormalities(vitals: VitalSigns) -> List[str]:
+# Round V: children under 5 have higher normal heart and respiratory rates, so the adult HR >= 120 / RR >= 24 rules mark
+# an ordinary febrile toddler as deranged. NICE NG143 (Fever in under 5s, 2019, Table 1 "traffic light" amber
+# thresholds): tachycardia > 160/min under 12 months, > 150/min at 12-24 months, > 140/min at 2-5 years; respiratory
+# rate > 50/min at 6-12 months, > 40/min over 12 months. Age is in whole years, so age 0 uses the 6-12 month value.
+# Other vital rules (SBP, SpO2, temperature) and the slow-pulse finding are unchanged.
+def _pediatric_limits(age):
+    if age is None or age >= 5:
+        return None
+    return {"heart_rate": 160 if age < 1 else 150 if age < 2 else 140, "respiratory_rate": 50 if age < 1 else 40}
+
+
+def red_flag_rules_for_age(age=None) -> List[dict]:
+    from nova_agent.config import get_config
+    rules = vital_sign_red_flags()
+    limits = _pediatric_limits(age) if get_config().pediatric_vitals_enabled else None
+    if not limits:
+        return rules
+    return [dict(r, op=">", value=limits[r["field"]]) if r["field"] in limits and r["op"] == ">=" else r for r in rules]
+
+
+def describe_vital_sign_abnormalities(vitals: VitalSigns, age=None) -> List[str]:
     """Turns structured vital-sign values into short descriptive clinical findings (e.g. "Marked
     tachycardia", "Hypotension / shock") using the SAME threshold table safety.py's
     vital_sign_red_flags rules use -- a single source of truth for what counts as abnormal.
@@ -110,7 +130,9 @@ def describe_vital_sign_abnormalities(vitals: VitalSigns) -> List[str]:
     just also surfaces them as plain-text findings so ranking (not only safety flagging) benefits."""
     values = vitals.model_dump()
     findings: List[str] = []
-    for rule in vital_sign_red_flags():
+    from nova_agent.config import get_config
+    pediatric = get_config().pediatric_vitals_enabled and _pediatric_limits(age) is not None
+    for rule in red_flag_rules_for_age(age):
         value = values.get(rule["field"])
         if value is None:
             continue
@@ -120,7 +142,7 @@ def describe_vital_sign_abnormalities(vitals: VitalSigns) -> List[str]:
     # derangement (HR >= 120, T >= 39.0), so an ordinary tachycardia (HR 118) or fever (T 38.4) previously
     # never reached the evidence corpus at all. Each is added only when the stricter red flag did not fire.
     hr, temp = values.get("heart_rate"), values.get("temperature_c")
-    if hr is not None and 100 < hr < 120:
+    if hr is not None and 100 < hr < 120 and not pediatric:
         findings.append("Tachycardia")
     # Round Q: the heart rate itself, kept separate from any rhythm statement ("HR 37 regular" is still a slow rate).
     # Thresholds are the ones the AHA adult bradycardia / tachycardia algorithms use to suggest a RHYTHM cause

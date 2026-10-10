@@ -257,6 +257,10 @@ _KO_PATTERNS_V3 = (
      "epigastric pain radiating to back"),
     # Heavy drinking stated in Korean is the existing "alcohol use" risk phrase (no amount inferred).
     (re.compile(r"과음|폭음|술을\s*(?:많이|매일|자주)\s*마"), "alcohol use"),
+    # Round V: heart-failure congestion wording (existing KB phrases only).
+    (re.compile(r"누우면[^.。]{0,10}숨(?:이)?\s*(?:막|차|가빠)|앉아서\s*자"), "unable to lie flat"),
+    (re.compile(r"(?:다리|발목)(?:가|이|에)?\s*(?:퉁퉁\s*)?(?:부어|부었|붓|부종)"), "leg swelling"),
+    (re.compile(r"(?:계단|걸으면|걷|오르막)[^.。]{0,12}숨(?:이)?\s*(?:차|가빠|가쁘)"), "shortness of breath on exertion"),
 )
 
 

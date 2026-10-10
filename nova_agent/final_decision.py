@@ -149,6 +149,9 @@ def _base_name(name: str) -> str:
 def _generic_symptom(phrase: str) -> bool:
     # Grammatical qualifiers are not new discriminating evidence.
     plain = re.sub(r"^(?:(?:associated|reported|persistent|severe|marked|profound)\s+)+", "", phrase.strip().lower())
+    # Round V: a shared symptom placed in a situational context ("chest pain after trauma") is still the shared
+    # symptom -- a chest-wall injury and a pneumothorax share it. Only the context is removed, never a finding.
+    plain = re.sub(r"\s+(?:after|following|since)\s+(?:a\s+)?(?:trauma|injury|a fall|fall|exercise|exertion)$", "", plain)
     if plain in _GENERIC_SYMPTOMS:
         return True
     # A conjunction stored as ONE catalog feature does not become specific merely
@@ -163,6 +166,18 @@ def _risk_context(phrase: str) -> bool:
     Preserve ranking inputs, but a past illness/age cannot establish a current illness."""
     return bool(re.search(r"^(?:(?:known |family )?history of |known .+ on |prior |previous |older age$|advanced age$|young age$)",
                           phrase.lower())) or phrase.lower() == "atrial fibrillation or vascular disease"
+
+
+def _antecedent_context(phrase: str) -> bool:
+    """Round V (NOVA_CONTEXT_V2): "recent viral illness", "recent cold", "recent trauma" describe what came BEFORE the
+    current illness. Together with current findings such an antecedent discriminates (a viral prodrome before chest
+    pain and palpitations); on its own it is not an observation of any current illness."""
+    return get_config_flag("context_v2_enabled") and bool(re.search(r"^recent (?!onset\b)", phrase.lower()))
+
+
+def get_config_flag(name: str) -> bool:
+    from nova_agent.config import get_config
+    return bool(getattr(get_config(), name, False))
 
 
 def _positive_support(item) -> List[str]:
@@ -214,6 +229,8 @@ def support_problems(item, state, differential: list) -> List[str]:
     documented = "documented diagnosis" in item.supporting_evidence
     if getattr(item, "fallback_candidate", False) or item.score <= 0 or not (positive or documented):
         return ["no_positive_support"]
+    if not documented and all(_antecedent_context(e) for e in positive):
+        return ["antecedent_context_only"]
     specific = _specific_support(item, entry)
     observations = [e for e in item.supporting_evidence if _strip_negative_prefix(e) is None]
     if positive and all(_hemodynamic_only(e) for e in positive) and not documented:

@@ -9,7 +9,7 @@
     "nova_agent/knowledge/diseases/neuro.json": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
     "nova_agent/knowledge/diseases/pulmonary.json": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "nova_agent/knowledge/tier2_catalog.json": "56e6f197eafeef1533ac733c330099f82da453f8e0e0e571550a5f2416081fc6",
-    "nova_agent/knowledge/tier2_enrichment.json": "4c128f46f59696e785881eae4276631c4bb8e9bc228e97071e6eb5c7e4a3c730",
+    "nova_agent/knowledge/tier2_enrichment.json": "4f567dfbd24a1e9b7f44eaa42f49447a6bc9d1c8d558404a8a8ab7a2d8d92511",
     "nova_agent/knowledge/diagnostic_tests/notes.json": "6cc5f51ac1c69c2a17354e5606e83749cb39ab19a313d0719afb1fe4ebadf161",
     "nova_agent/knowledge/guidelines/chief_complaint_guidelines.json": "958288db5865bd02917b1ad0a5431074f7c5e13b11ec1db2200c97790e69f471",
     "nova_agent/knowledge/red_flags/critical_conditions.json": "caae9d4d5520417eed70721b27e9ebdd299c14db10ecd2b684a0cdbd3a572609",
@@ -183886,6 +183886,26 @@
     },
     {
       "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/8/disposition",
+      "value": "non_emergency",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/8/provenance/disposition",
+      "value": "NICE CG184 Gastro-oesophageal reflux disease and dyspepsia in adults (2014, updated 2019), sections 1.1-1.2: uncomplicated dyspepsia/ulcer is managed in primary care; same-day referral is for GI bleeding, which remains a separate candidate. Disposition metadata only: no diagnostic score effect; observed vital/rate red flags and supported dangerous alternatives still make the plan urgent.",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
       "pointer": "/entries/9/id",
       "value": "gi_duodenal_ulcer",
       "original_source_status": "UNRESOLVED",
@@ -183928,6 +183948,26 @@
       "path": "nova_agent/knowledge/tier2_enrichment.json",
       "pointer": "/entries/9/typical_features/3",
       "value": "NSAID use",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/9/disposition",
+      "value": "non_emergency",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/9/provenance/disposition",
+      "value": "NICE CG184 (2014, updated 2019), sections 1.1-1.2 and 1.6: uncomplicated duodenal ulcer is managed in primary care; same-day referral is for GI bleeding, which remains a separate candidate. Disposition metadata only: no diagnostic score effect; observed vital/rate red flags and supported dangerous alternatives still make the plan urgent.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -185256,6 +185296,56 @@
     },
     {
       "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/29/confirmatory_findings/0",
+      "value": "third heart sound",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/29/confirmatory_findings/1",
+      "value": "raised jugular venous pressure",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/29/provenance/typical_features",
+      "value": "GENERAL ONLY (pre-existing unreviewed enrichment; unchanged)",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/29/provenance/confirmatory_findings",
+      "value": "Round V: McDonagh TA et al., 2021 ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure, Eur Heart J 2021;42:3599-3726, Table 6 (more specific signs: elevated jugular venous pressure, third heart sound (gallop rhythm)). Bedside examination findings only; no imaging/BNP result is asserted.",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/29/provenance/selection",
+      "value": "Round V development (HF vs pneumonia confusions ValP_08, FollowU_23, RoundV_08/10). Agent-authored, not clinician-reviewed.",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
       "pointer": "/entries/30/id",
       "value": "chronic_heart_failure",
       "original_source_status": "UNRESOLVED",
@@ -185308,6 +185398,56 @@
       "path": "nova_agent/knowledge/tier2_enrichment.json",
       "pointer": "/entries/30/typical_features/4",
       "value": "weight gain",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/30/confirmatory_findings/0",
+      "value": "third heart sound",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/30/confirmatory_findings/1",
+      "value": "raised jugular venous pressure",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/30/provenance/typical_features",
+      "value": "GENERAL ONLY (pre-existing unreviewed enrichment; unchanged)",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/30/provenance/confirmatory_findings",
+      "value": "Round V: McDonagh TA et al., 2021 ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure, Eur Heart J 2021;42:3599-3726, Table 6 (more specific signs: elevated jugular venous pressure, third heart sound (gallop rhythm)). Bedside examination findings only; no imaging/BNP result is asserted.",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/30/provenance/selection",
+      "value": "Round V development (HF vs pneumonia confusions ValP_08, FollowU_23, RoundV_08/10). Agent-authored, not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -188106,6 +188246,26 @@
     },
     {
       "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/71/disposition",
+      "value": "non_emergency",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
+      "pointer": "/entries/71/provenance/disposition",
+      "value": "NICE NG219 Gout: diagnosis and management (2022), recommendations 1.1-1.4: flares are diagnosed and treated in primary care; same-day hospital assessment is for suspected septic arthritis, which remains a separate candidate. Disposition metadata only: no diagnostic score effect; observed vital/rate red flags and supported dangerous alternatives still make the plan urgent.",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/tier2_enrichment.json",
       "pointer": "/entries/72/id",
       "value": "acute_otitis_media",
       "original_source_status": "UNRESOLVED",
@@ -190772,6 +190932,7 @@
         "short of breath",
         "out of breath",
         "breathless",
+        "breathlessness",
         "cannot catch my breath",
         "cannot get air in"
       ],
@@ -190806,7 +190967,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 252,
+      "line": 254,
       "names": [
         "_ADDITIONAL_LAY_ALIASES"
       ],
@@ -191064,7 +191225,9 @@
           "pitting edema",
           "swollen legs",
           "legs are swollen",
-          "legs swell"
+          "legs swell",
+          "ankles are puffy",
+          "puffy ankles"
         ],
         "waking breathless at night": [
           "wake up gasping",
@@ -191083,8 +191246,6 @@
           "passed out without any warning",
           "passed out without warning",
           "out with no warning at all",
-          "blacked out with no warning",
-          "blacked out without warning",
           "collapsed without warning",
           "fainted without warning",
           "fainted with no warning",
@@ -191139,7 +191300,74 @@
           "need extra pillows to sleep",
           "sleep propped up",
           "cannot lie flat",
-          "can't lie flat"
+          "can't lie flat",
+          "four pillows",
+          "several pillows",
+          "two pillows",
+          "extra pillows",
+          "sit up to breathe",
+          "sit up to catch my breath",
+          "sleep sitting up",
+          "sleep in a chair"
+        ],
+        "dysuria": [
+          "stinging when i pass water",
+          "burning when i pass water",
+          "pain when i pass water",
+          "stings when i pass water",
+          "hurts when i pass water"
+        ],
+        "urinary frequency": [
+          "going every hour",
+          "need to go every hour",
+          "going to the toilet every hour"
+        ],
+        "burning upper abdominal pain": [
+          "gnawing pain high in my stomach",
+          "gnawing upper abdominal pain",
+          "gnawing stomach pain"
+        ],
+        "pain relieved by eating": [
+          "better after i eat",
+          "better after eating",
+          "eases after eating",
+          "better when i eat"
+        ],
+        "recent immobility or long travel": [
+          "flew back from",
+          "long-haul flight",
+          "long haul flight",
+          "long flight",
+          "flight from"
+        ],
+        "calf pain or tenderness": [
+          "aching calf",
+          "calf aches",
+          "calf is tender",
+          "calf swollen and tender"
+        ],
+        "warmth and redness of leg": [
+          "calf is warm",
+          "leg is warm",
+          "warm calf",
+          "tender, warm"
+        ],
+        "worsening shortness of breath": [
+          "become breathless",
+          "becoming more breathless",
+          "increasingly breathless",
+          "getting more breathless",
+          "breathlessness is getting worse"
+        ],
+        "recent cold": [
+          "after a cold",
+          "days after a cold",
+          "following a cold"
+        ],
+        "grouped vesicles in a dermatomal distribution on examination": [
+          "grouped vesicles on a red base in a band",
+          "vesicles in a band",
+          "grouped vesicles in a band"
         ],
         "rebound tenderness": [
           "with rebound",
@@ -191156,7 +191384,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 374,
+      "line": 397,
       "names": [
         "_TIER2_LAY"
       ],
@@ -192870,13 +193098,14 @@
         "swollen": "swell",
         "swelled": "swell",
         "swells": "swell",
-        "warmth": "warm"
+        "warmth": "warm",
+        "spotting": "spotting"
       },
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 269,
+      "line": 271,
       "names": [
         "_LAY_ANATOMY"
       ],
@@ -192888,7 +193117,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 298,
+      "line": 300,
       "names": [
         "_ABSENT_SIGN"
       ],
@@ -192897,7 +193126,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 369,
+      "line": 371,
       "names": [
         "_POLARITY_UP"
       ],
@@ -192914,7 +193143,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 370,
+      "line": 372,
       "names": [
         "_POLARITY_DOWN"
       ],
@@ -192930,7 +193159,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 649,
+      "line": 651,
       "names": [
         "_PATTERN_QUALIFIERS"
       ],
@@ -192948,7 +193177,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 754,
+      "line": 756,
       "names": [
         "FEATURE_ALIASES"
       ],
@@ -193129,7 +193358,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 801,
+      "line": 803,
       "names": [
         "_LAY_VARIANTS"
       ],
@@ -193294,7 +193523,25 @@
     },
     {
       "path": "nova_agent/differential.py",
+      "line": 63,
+      "names": [
+        "DENIAL_V2_SCALE"
+      ],
+      "value": 0.5,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/differential.py",
       "line": 65,
+      "names": [
+        "DENIAL_V2_MIN_PATTERN"
+      ],
+      "value": 2,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/differential.py",
+      "line": 69,
       "names": [
         "CONFIRMATORY_WEIGHT"
       ],
@@ -193303,7 +193550,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 86,
+      "line": 90,
       "names": [
         "_NEGATIVE_FEATURE_PREFIXES"
       ],
@@ -193317,7 +193564,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 95,
+      "line": 99,
       "names": [
         "_SPECIFICITY_STEP"
       ],
@@ -193326,7 +193573,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 96,
+      "line": 100,
       "names": [
         "_SPECIFICITY_CAP"
       ],
@@ -193335,7 +193582,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 104,
+      "line": 108,
       "names": [
         "_GENERIC_SEVERITY_MULTIPLIER"
       ],
@@ -193344,7 +193591,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 177,
+      "line": 181,
       "names": [
         "_ESCALATION_MIN_SUPPORT"
       ],
@@ -193353,7 +193600,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 300,
+      "line": 304,
       "names": [
         "_CONVERGING_MIN_SUPPORT"
       ],
@@ -193362,7 +193609,7 @@
     },
     {
       "path": "nova_agent/differential.py",
-      "line": 301,
+      "line": 305,
       "names": [
         "_THIN_ONTOLOGY_MAX_SUPPORT"
       ],
@@ -193494,6 +193741,15 @@
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
+      "path": "nova_agent/missing_info.py",
+      "line": 102,
+      "names": [
+        "TIER2_ADDRESSED_RATIO"
+      ],
+      "value": 0.8,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
       "path": "nova_agent/action_selector.py",
       "line": 53,
       "names": [
@@ -193607,7 +193863,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 340,
+      "line": 349,
       "names": [
         "_config"
       ],
