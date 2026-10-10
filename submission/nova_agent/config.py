@@ -232,6 +232,15 @@ class NovaConfig:
     exam_links_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_EXAM_LINKS_V2", True))
     context_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_CONTEXT_V2", True))
     # Round V: under-5 heart/respiratory rate thresholds from NICE NG143 replace the adult ones (nova_agent/vitals_parser.py).
+    # Round W: numeric vital-sign features ("blood pressure above 180 over 120") are decided by the measured value.
+    measured_thresholds_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_MEASURED_THRESHOLDS", True))
+    # Round W: the bare-"No" half-weight pattern needs >= 2 observed NON-generic typical features.
+    pattern_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_PATTERN_V2", True))
+    # Round W: an evidenced ontology candidate from the previous turn is not dropped by a reshuffled rerank.
+    retain_evidenced_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_RETAIN_EVIDENCED", True))
+    # Round W: a first statement by a caregiver ("my husband collapsed") whose relation fits the patient's demographics
+    # describes the patient (nova_agent/evidence_scope.py).
+    proxy_report_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_PROXY_REPORT", True))
     # Round V: a Tier-2 cause resting on the same observations as a near-tied curated syndrome does not name over it.
     hierarchy_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_HIERARCHY_V2", True))
     # Round V: sourced non-emergency Tier-2 labels and context-only alternatives do not make the plan urgent.

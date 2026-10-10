@@ -27,10 +27,14 @@ class Disposition:
 def symptomatic_rate_concern(state) -> list[str]:
     """An unexplained measured rate with cerebral/perfusion symptoms; never a subtype."""
     vitals = state.latest_vital_signs()
-    if not vitals or vitals.heart_rate is None or not (vitals.heart_rate < 50 or vitals.heart_rate >= 150):
+    from nova_agent.vitals_parser import fast_pulse_threshold
+    if not vitals or vitals.heart_rate is None or not (
+            vitals.heart_rate < 50 or vitals.heart_rate >= fast_pulse_threshold(state.demographics.age)):
         return []
     texts = state.all_findings_text(include_context=False, include_family=False)
+    # Round W: "collapsed" is reported transient loss of consciousness until shown otherwise (NICE CG109 1.1.1).
     symptoms = [p for p in ("syncope", "loss of consciousness", "lost consciousness", "blacked out", "blackout", "presyncope",
+                            "collapsed", "collapse", "keeled over",
                             "lightheadedness", "dizziness", "nearly fainted", "almost passed out",
                             "의식을 잃", "실신", "쓰러졌", "어지러움")
                 if feature_present_with_aliases(p, texts, scrub_negated_spans=True)]

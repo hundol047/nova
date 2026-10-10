@@ -32,7 +32,9 @@ class VitalSigns(BaseModel):
     sbp: Optional[int] = Field(default=None, ge=40, le=300)
     dbp: Optional[int] = Field(default=None, ge=20, le=200)
     heart_rate: Optional[int] = Field(default=None, ge=20, le=250)
-    respiratory_rate: Optional[int] = Field(default=None, ge=4, le=60)
+    # Round W: infants breathe faster than adults -- NICE NG143 Table 1 treats RR > 60 as a red feature in under-5s --
+    # so a measured 64/min is a real (abnormal) value, not a typo to be discarded.
+    respiratory_rate: Optional[int] = Field(default=None, ge=4, le=120)
     temperature_c: Optional[float] = Field(default=None, ge=25, le=45)
     spo2: Optional[int] = Field(default=None, ge=0, le=100)
     # Derived, not a direct measurement: |systolic1 - systolic2| when vitals_parser.py detects TWO

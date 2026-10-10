@@ -18,6 +18,19 @@ def _compile(*patterns):
     return re.compile("|".join("(?:" + p + ")" for p in patterns), re.I)
 
 RELATION_PATTERNS = {
+    # Round W: shingles distribution wording. A blister/vesicle mention with a band/strip/line, in either order, or a
+    # burning pain placed on one side / in a strip (NICE CKS "Shingles": unilateral pain, then a dermatomal vesicular
+    # rash). Each keeps the earlier aliases as literal alternatives; a rash or a pain alone is not the relation.
+    "band-like blistering rash": _compile(
+        r"\b(?:stripe|line|clusters?|band)\s+of\s+blisters\b", r"\bblisters\s+in\s+a\s+band\b",
+        r"\b(?:blister\w*|vesic\w*)\b[^.;]{0,40}?\b(?:band|strip|stripe|line|belt)\b",
+        r"\b(?:band|strip|stripe|belt)\b[^.;]{0,25}?\b(?:blister\w*|vesic\w*)\b",
+        r"(?:띠|줄)\s*(?:모양|처럼|같이)?[^.。]{0,15}물집|물집[^.。]{0,15}(?:띠|줄)",
+        r"帯状[^。]{0,10}(?:水疱|水ぶくれ)|(?:水疱|水ぶくれ)[^。]{0,10}帯状"),
+    "burning pain on one side of body": _compile(
+        r"\bburning (?:stripe|band|pain) on one side\b", r"\bburning on one side of my chest\b",
+        r"\bburning\s+(?:band|strip|stripe)\s+of\s+pain\b",
+        r"\bburning\s+(?:pain|ache|sensation)\s+(?:in\s+a\s+(?:strip|band|stripe)|on\s+(?:the\s+)?(?:left|right|one)\s+side)\b"),
     # These catalog descriptors cannot be supplied by partial word overlap.
     # Require the reported intensity/location, without guessing it from a cause.
     "severe diffuse abdominal pain": _compile(

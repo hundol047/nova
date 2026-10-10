@@ -4,8 +4,11 @@ Scope applies to bare symptoms as well as diagnosis names. Polarity is retained 
 the existing feature-local negation parser; this module does not turn an uncertain
 or excluded diagnosis into a normal examination. Engineering linguistic rules.
 """
+from contextlib import contextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass
 import re
+from typing import Iterator, Optional
 
 from nova_agent.assertion_status import (
     CURRENT_CUE, FAMILY_CUE, HISTORICAL_CUE, OTHER_PERSON_CUE,
@@ -17,6 +20,55 @@ _POSSESSIVE = re.compile(r"\bmy\s+(?!family\s+history\b)|제\s+", re.I)
 _PRONOUN = re.compile(r"^\s*(?:he|she|his|her|they|their)\b|^\s*(?:그분|그녀)", re.I)
 _BOUNDARY = re.compile(r"[;!?\n]|(?<=\w)\.(?=\s|$)|\b(?:but|however|whereas)\b|하지만|그러나|반면", re.I)
 _TEMPORAL_SWITCH = re.compile(r"(?:,|\band\b)\s*(?=(?:now|today|currently)\b)|(?=지금은|현재는)", re.I)
+
+
+# Round W: a caregiver's report. When the first statement opens with "my husband / my son / 우리 아들 ..." and that
+# relation agrees with the patient's stated sex and age, the relation IS the patient: the speaker is describing the
+# person being assessed. Detected once per case (detect_proxy_relation) and applied only while that case is being
+# processed (proxy_scope); nothing is stored across cases. Other relations ("his father had ...") stay FAMILY.
+_PROXY: ContextVar[Optional[str]] = ContextVar("nova_proxy_relation", default=None)
+_RELATIONS = {  # relation -> (sex or None, minimum age, maximum age)
+    "husband": ("male", 16, 120), "wife": ("female", 16, 120), "partner": (None, 16, 120),
+    "boyfriend": ("male", 14, 120), "girlfriend": ("female", 14, 120),
+    "father": ("male", 30, 120), "dad": ("male", 30, 120), "mother": ("female", 30, 120),
+    "mum": ("female", 30, 120), "mom": ("female", 30, 120),
+    "grandfather": ("male", 45, 120), "grandmother": ("female", 45, 120), "grandpa": ("male", 45, 120),
+    "grandma": ("female", 45, 120), "son": ("male", 0, 80), "daughter": ("female", 0, 80),
+    "brother": ("male", 0, 120), "sister": ("female", 0, 120),
+    "남편": ("male", 16, 120), "아내": ("female", 16, 120), "와이프": ("female", 16, 120),
+    "아버지": ("male", 30, 120), "아빠": ("male", 30, 120), "어머니": ("female", 30, 120), "엄마": ("female", 30, 120),
+    "할아버지": ("male", 45, 120), "할머니": ("female", 45, 120), "아들": ("male", 0, 80), "딸": ("female", 0, 80),
+}
+_PROXY_LEAD = re.compile(r"^\W*(?:(?:[A-Z][a-z]+,\s*)?(?:(?:my|our)\s+(?:\d+[- ](?:year|month|week)s?[- ]old\s+)?)?(\w+)\b"
+                         r"|(?:우리|제)\s*(\S+?)(?:가|이|는|은|를|이가)?\s)", re.I)
+
+
+def detect_proxy_relation(chief_complaint: str, sex: Optional[str], age: Optional[int]) -> Optional[str]:
+    """The relation word the first statement opens with, if the patient's demographics fit it; else None."""
+    m = _PROXY_LEAD.match(chief_complaint or "")
+    if not m:
+        return None
+    word = (m.group(1) or m.group(2) or "").lower()
+    if word not in _RELATIONS:
+        korean = re.match(r"^\W*(?:우리|제)\s*(\S+?)(?:가|이|는|은|를|이가)?\s", chief_complaint or "")
+        word = korean.group(1) if korean else word
+    rule = _RELATIONS.get(word)
+    if rule is None or age is None:
+        return None
+    want_sex, lo, hi = rule
+    if want_sex and sex and not str(sex).lower().startswith(want_sex[0]):
+        return None
+    return word if lo <= age <= hi else None
+
+
+@contextmanager
+def proxy_scope(relation: Optional[str]) -> Iterator[None]:
+    from nova_agent.config import get_config
+    token = _PROXY.set(relation if get_config().proxy_report_enabled else None)
+    try:
+        yield
+    finally:
+        _PROXY.reset(token)
 
 
 @dataclass(frozen=True)
@@ -40,7 +92,9 @@ def evidence_clauses(text: str, source: str = "narrative", default_subject: str 
     """
     if not text:
         return ()
-    subjects = [(m.start(), m.end(), 'FAMILY') for m in FAMILY_CUE.finditer(text)]
+    proxy = _PROXY.get()
+    subjects = [(m.start(), m.end(), 'PATIENT' if proxy and m.group(0).lower() == proxy and _owned(text, m.start())
+                 else 'FAMILY') for m in FAMILY_CUE.finditer(text)]
     subjects += [(m.start(), m.end(), 'OTHER') for m in OTHER_PERSON_CUE.finditer(text)]
     persons = sorted(subjects)
     subjects += [(m.start(), m.end(), 'PATIENT') for m in _PATIENT.finditer(text)]
@@ -88,12 +142,25 @@ def evidence_clauses(text: str, source: str = "narrative", default_subject: str 
     return tuple(out)
 
 
+def _owned(text: str, start: int) -> bool:
+    """The relation word is the speaker's own ("my son", "our son", "우리 아들"), not "his son"."""
+    before = text[max(0, start - 30):start].lower()
+    if not before.strip(" \t\"'"):
+        return True  # the statement opens with the relation itself ("Dad has become confused")
+    return bool(re.search(r"(?:\bmy|\bour)\s+(?:\d+[- ](?:year|month|week)s?[- ]old\s+)?$|(?:우리|제)\s*$", before))
+
+
 def patient_evidence_text(text: str, *, allow_historical: bool = True, source: str = "narrative",
                           allow_unattributed_pronoun: bool = False) -> str:
     from nova_agent.matching import _scoped
-    return _scoped('patient_scope', (text, allow_historical, source, allow_unattributed_pronoun),
+    return _scoped('patient_scope', (text, allow_historical, source, allow_unattributed_pronoun, _PROXY.get()),
                    lambda: _patient_evidence_text(text, allow_historical=allow_historical, source=source,
                                                   allow_unattributed_pronoun=allow_unattributed_pronoun))
+
+
+def _only_proxy(text: str) -> bool:
+    proxy = _PROXY.get()
+    return bool(proxy) and all(m.group(0).lower() == proxy and _owned(text, m.start()) for m in FAMILY_CUE.finditer(text))
 
 
 def _patient_evidence_text(text: str, *, allow_historical: bool, source: str,
@@ -105,7 +172,7 @@ def _patient_evidence_text(text: str, *, allow_historical: bool, source: str,
     """
     # Most objective results contain no subject or time cue. Fast path matters
     # because all candidates use the same observation view every turn.
-    if not (FAMILY_CUE.search(text) or OTHER_PERSON_CUE.search(text)
+    if not ((FAMILY_CUE.search(text) and not _only_proxy(text)) or OTHER_PERSON_CUE.search(text)
             or (_PRONOUN.search(text) and not allow_unattributed_pronoun)
             or (not allow_historical and HISTORICAL_CUE.search(text))):
         return text

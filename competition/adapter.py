@@ -270,6 +270,11 @@ class NovaCompetitionAgent:
         state = observation_to_state(obs, self.agent, self._states.get(obs.case_id),
                                       self._pending_actions.get(obs.case_id), preliminary=self.preliminary)
         self._states[obs.case_id] = state
+        from nova_agent.evidence_scope import proxy_scope
+        with proxy_scope(state.proxy_relation):  # Round W: SOAP/disposition after decide() see the same subject
+            return self._act_with_state(obs, state)
+
+    def _act_with_state(self, obs, state: PatientState) -> dict:
         if self._emitted_actions.get(obs.case_id, 0) >= state.max_turns:
             raise RuntimeError("Interaction budget exhausted; no further action may be emitted")
 

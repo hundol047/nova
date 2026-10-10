@@ -60,6 +60,26 @@ def _any_phrase(phrases: Tuple[str, ...]) -> Callable:
     return check
 
 
+_HEAT_EXPOSURE = re.compile(
+    r"\b(?:in|from|during)\s+(?:the\s+)?(?:heat|sun)\b|\bheat\s?wave\b|\bhot (?:weather|day|car|room|sun)\b|"
+    r"\bsauna\b|\bmarathon\b|\b(?:exercis|running|working|training)\w*\s+(?:\w+\s+){0,3}(?:in|under)\s+(?:the\s+)?"
+    r"(?:heat|sun)\b|\b(?:3[5-9]|4[0-9])\s*(?:degrees|°c?)\s+(?:outside|today|out)\b|"
+    r"폭염|더위|땡볕|뙤약볕|찜통|炎天下|猛暑|暑い中", re.I)
+
+
+def _heat_exposure(state, item) -> bool:
+    """Exposure wording in the patient's current statements, matched exactly (fuzzy matching let "very floppy, hot"
+    satisfy "very hot day"). A body temperature is not exposure."""
+    from nova_agent.evidence_scope import patient_evidence_text
+    for text in _current_texts(state):
+        scoped = patient_evidence_text(text)
+        for m in _HEAT_EXPOSURE.finditer(scoped):
+            clause = re.split(r"[.;!?]|,\s*but\b", scoped[:m.start()])[-1]
+            if not re.search(r"\b(?:not|no|never|wasn't|weren't|didn't|hasn't|haven't)\b|않|안\s", clause, re.I):
+                return True
+    return False
+
+
 def _hypertensive_range(state, item) -> bool:
     return any((v.sbp or 0) >= 180 or (v.dbp or 0) >= 120 for v in state.vital_signs)
 
@@ -85,6 +105,11 @@ _REQUIRED_CONTEXT: Dict[str, Tuple[str, Callable]] = {
     "ectopic_pregnancy": ("a pregnancy-related feature", _any_phrase((
         "missed period", "late period", "period is late", "positive pregnancy test", "pregnant", "vaginal bleeding",
         "생리가 늦", "생리를 안", "생리가 없", "임신", "질 출혈", "하혈"))),
+    # Round W: heatstroke is defined by hyperthermia with CNS dysfunction AFTER environmental heat exposure (classic)
+    # or strenuous exertion (exertional) (Epstein Y, Yanovich R. Heatstroke. N Engl J Med 2019;380:2449-2459). A
+    # febrile, floppy, mottled infant without such exposure is not named heat stroke; the candidate, its score and
+    # the urgent plan are unchanged.
+    "heat_stroke": ("environmental heat exposure or exertion", _heat_exposure),
 }
 
 
@@ -269,7 +294,9 @@ def support_problems(item, state, differential: list) -> List[str]:
     # alternative. Reuse the existing measured-rate thresholds; do not infer an ECG.
     if item.diagnosis_id in {"vasovagal_syncope", "orthostatic_hypotension", "onto::tier2:orthostatic_hypotension"}:
         rate = state.latest_vital_signs()
-        if rate and rate.heart_rate is not None and (rate.heart_rate < 50 or rate.heart_rate >= 150):
+        from nova_agent.vitals_parser import fast_pulse_threshold
+        if rate and rate.heart_rate is not None and (
+                rate.heart_rate < 50 or rate.heart_rate >= fast_pulse_threshold(state.demographics.age)):
             problems.append("marked_pulse_rate_requires_explanation")
     return problems
 
@@ -282,7 +309,7 @@ def _curated_syndrome_on_same_observations(leader, state, differential):
     syndrome does not already explain.
 
     When an unreviewed Tier-2 leader has none of its own confirmatory findings observed, and a curated Tier-1
-    candidate in the top three scores within 10% of it and is supported by at least two of the SAME observations
+    candidate of the SAME category in the top three scores within 10% of it and is supported by at least two of the SAME observations
     (each Tier-1 phrase is present in the leader's support), the curated profile is named: a perforated viscus whose
     free air cannot be imaged rests on the same rigidity and rebound as the acute abdomen. Nothing changes a score,
     excludes a candidate or uses danger; the Tier-2 cause stays in the differential."""
@@ -299,6 +326,10 @@ def _curated_syndrome_on_same_observations(leader, state, differential):
     observed = _positive_support(leader)
     for other in differential[1:3]:
         if other.diagnosis_id.startswith("onto::") or other.score < HIERARCHY_NEAR_TIE * leader.score:
+            continue
+        # Round W: a broader syndrome of a cause belongs to the same organ-system category (acute abdomen /
+        # perforated viscus); pneumonia is not a broader form of heart failure although both explain crackles.
+        if not entry.get("category") or _entry(other.diagnosis_id).get("category") != entry.get("category"):
             continue
         shared = [p for p in _positive_support(other) if feature_present_with_aliases(p, observed, scrub_negated_spans=False)]
         if len(shared) >= 2 and not support_problems(other, state, differential):

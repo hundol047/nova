@@ -58,9 +58,11 @@ class DoctorAgent:
         cfg = get_config()
         prelim = cfg.preliminary_rules if preliminary is None else bool(preliminary)
         ceiling = PRELIMINARY_MAX_TURNS if prelim else 60
+        from nova_agent.evidence_scope import detect_proxy_relation
+        demo = Demographics(**(demographics or {}))
         return PatientState(
             case_id=case_id, chief_complaint=chief_complaint,
-            demographics=Demographics(**(demographics or {})),
+            demographics=demo, proxy_relation=detect_proxy_relation(chief_complaint, demo.sex, demo.age),
             max_turns=effective_max_turns(max_turns, min(cfg.max_turns, ceiling), ceiling),
             preliminary_rules=prelim,
             time_limit_seconds=PRELIMINARY_CASE_SECONDS if prelim else None,
@@ -71,8 +73,9 @@ class DoctorAgent:
     def decide(self, state: PatientState) -> Tuple[AgentAction, Optional[AgentTurnOutput], List[DifferentialItem]]:
         # One decision = one memo scope for pure string normalisation (see matching.evaluation_scope); the
         # scope is discarded when this call returns, so nothing patient-derived is retained across cases.
+        from nova_agent.evidence_scope import proxy_scope
         from nova_agent.matching import evaluation_scope
-        with evaluation_scope():
+        with evaluation_scope(), proxy_scope(state.proxy_relation):
             return self._decide(state)
 
     def _decide(self, state: PatientState) -> Tuple[AgentAction, Optional[AgentTurnOutput], List[DifferentialItem]]:
@@ -192,7 +195,8 @@ class DoctorAgent:
             # PatientState/logging/clinical_summary see from here on.
             state.current_differential = [
                 DifferentialSnapshot(diagnosis=d.diagnosis, rank=d.rank, confidence_band=d.confidence_band,
-                                      urgency=d.urgency, dangerous_if_missed=d.dangerous_if_missed)
+                                      urgency=d.urgency, dangerous_if_missed=d.dangerous_if_missed,
+                                      diagnosis_id=getattr(d, "diagnosis_id", "") or "")
                 for d in result.differential
             ]
             # Legacy (non-competition) retrieval only: abstain with "unknown" when the chosen label lacks
@@ -282,6 +286,11 @@ class DoctorAgent:
     def observe(self, state: PatientState, action: AgentAction, result: str = "") -> None:
         """Records the environment's response to `action` into PatientState. For DIAGNOSE, `result`
         is an optional rationale string rather than an environment observation."""
+        from nova_agent.evidence_scope import proxy_scope
+        with proxy_scope(state.proxy_relation):
+            return self._observe(state, action, result)
+
+    def _observe(self, state: PatientState, action: AgentAction, result: str = "") -> None:
         try:
             if action.action_type == "ASK":
                 faithful = True

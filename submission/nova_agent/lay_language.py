@@ -382,7 +382,8 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     # Orthopnoea quantified by pillows; progressive exertional breathlessness (NICE CKS "Heart failure - chronic").
     "worsening shortness of breath": ["become breathless", "becoming more breathless", "increasingly breathless",
                                       "getting more breathless", "breathlessness is getting worse"],
-    "recent cold": ["after a cold", "days after a cold", "following a cold"],
+    "recent cold": ["after a cold", "days after a cold", "following a cold", "after a runny nose", "following a runny nose",
+                    "had a cold last week"],
     "grouped vesicles in a dermatomal distribution on examination": ["grouped vesicles on a red base in a band",
                                                                      "vesicles in a band", "grouped vesicles in a band"],
     # --- peritonism wording on examination

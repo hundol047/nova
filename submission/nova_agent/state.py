@@ -224,6 +224,7 @@ class DifferentialSnapshot(BaseModel):
     confidence_band: str
     urgency: str
     dangerous_if_missed: bool
+    diagnosis_id: str = ""
 
 
 class RedFlag(BaseModel):
@@ -244,6 +245,8 @@ class PatientState(BaseModel):
     # why -- so this is the only place that value can durably live between turns.
     locale: str = "en"
     demographics: Demographics = Field(default_factory=Demographics)
+    # Round W: relation word of a caregiver's first statement that denotes the patient ("husband"), or None.
+    proxy_relation: Optional[str] = None
 
     chief_complaint: str = ""
     symptoms: List[str] = Field(default_factory=list)

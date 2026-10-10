@@ -82,15 +82,22 @@ def parse_vital_signs(text: str) -> Optional[VitalSigns]:
            (sbp, dbp, heart_rate, respiratory_rate, temperature_c, spo2, sbp_arm_differential)):
         return None
 
-    try:
-        return VitalSigns(sbp=sbp, dbp=dbp, heart_rate=heart_rate, respiratory_rate=respiratory_rate,
-                           temperature_c=temperature_c, spo2=spo2,
-                           sbp_arm_differential=sbp_arm_differential, raw_text=text)
-    except Exception:
-        # An extracted number fell outside VitalSigns' physiologic validation range (e.g. a typo'd
-        # observation) -- keep the raw text available elsewhere (physical_examinations) but don't
-        # let a single malformed vital crash the turn (spec section 20).
+    values = dict(sbp=sbp, dbp=dbp, heart_rate=heart_rate, respiratory_rate=respiratory_rate,
+                  temperature_c=temperature_c, spo2=spo2, sbp_arm_differential=sbp_arm_differential)
+    # An extracted number outside VitalSigns' physiologic validation range (e.g. a typo'd observation) is dropped on
+    # its own (Round W: previously ONE such value discarded every other vital in the same reading, so an infant's
+    # HR 192 / Temp 39.8 vanished with an RR the model did not accept). The raw text stays in physical_examinations.
+    from pydantic import ValidationError
+    for name, value in list(values.items()):
+        if value is None:
+            continue
+        try:
+            VitalSigns(**{name: value})
+        except ValidationError:
+            values[name] = None
+    if all(v is None for v in values.values()):
         return None
+    return VitalSigns(**values, raw_text=text)
 
 
 SLOW_PULSE_FINDING = "pulse rate below 50"
@@ -106,6 +113,17 @@ def _pediatric_limits(age):
     if age is None or age >= 5:
         return None
     return {"heart_rate": 160 if age < 1 else 150 if age < 2 else 140, "respiratory_rate": 50 if age < 1 else 40}
+
+
+def fast_pulse_threshold(age=None) -> int:
+    """Rate at which a fast pulse prompts review of a RHYTHM cause. Adults: >= 150 (AHA adult tachycardia algorithm).
+    Round W (NOVA_PEDIATRIC_VITALS): children normally run faster, so sinus tachycardia from fever reaches 150+;
+    PALS separates likely SVT from sinus tachycardia at >= 220/min in infants and >= 180/min in children (Topjian AA
+    et al., 2020 AHA Guidelines Part 4: Pediatric Basic and Advanced Life Support, Circulation 2020;142:S469)."""
+    from nova_agent.config import get_config
+    if age is None or age >= 12 or not get_config().pediatric_vitals_enabled:
+        return 150
+    return 220 if age < 1 else 180
 
 
 def red_flag_rules_for_age(age=None) -> List[dict]:
@@ -151,8 +169,12 @@ def describe_vital_sign_abnormalities(vitals: VitalSigns, age=None) -> List[str]
     # never name a subtype (AF, VT, AV block) and do not remove fever/pain/volume/drug explanations.
     if hr is not None and hr < 50:
         findings.append(SLOW_PULSE_FINDING)
-    if hr is not None and hr >= 150:
+    if hr is not None and hr >= fast_pulse_threshold(age):
         findings.append(FAST_PULSE_FINDING)
     if temp is not None and 38.0 <= temp < 39.0:
         findings.append("Fever")
+    if temp is not None and temp > 40.0:
+        # Round W: the measured value in the wording of the existing KB feature (heatstroke core temperature > 40 C;
+        # Epstein Y, Yanovich R, N Engl J Med 2019;380:2449). A measurement, not a diagnosis.
+        findings.append("body temperature above 40 degrees")
     return findings

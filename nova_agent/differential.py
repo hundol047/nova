@@ -641,6 +641,58 @@ def _subsumed_typical_features(entry: dict, objective_pool) -> set:
     return out
 
 
+def _retained_evidenced_candidates(state: PatientState, presentation, present_ids: set) -> List[dict]:
+    """Round W (NOVA_RETAIN_EVIDENCED): an ontology candidate in the previous turn's differential that still has
+    observed evidence of its OWN (the same rule that admits a watched concept, MIN_EVIDENCED_ONTOLOGY_WEIGHT) stays in
+    the pool even when this turn's rerank no longer lists it. Retrieval reruns every turn on the whole history, and an
+    uninformative answer ("No.") could reshuffle the rerank and silently drop the supported leader. No score is
+    added; the candidate is scored exactly like any other."""
+    cfg = get_config()
+    if not (cfg.competition_retrieval_enabled and cfg.retain_evidenced_enabled):
+        return []
+    previous = [s.diagnosis_id for s in state.current_differential
+                if s.diagnosis_id.startswith("onto::") and s.diagnosis_id not in present_ids]
+    if not previous:
+        return []
+    from nova_agent.candidate_generator import (MIN_EVIDENCED_ONTOLOGY_WEIGHT, _concept_to_kb_entry,
+                                                _ontology_evidence_weight)
+    from nova_agent.ontology.registry import get_default_catalog
+    catalog = get_default_catalog()
+    out = []
+    for did in previous:
+        concept = catalog.get_condition(did.removeprefix("onto::"))
+        if concept is None:
+            continue
+        entry = _concept_to_kb_entry(concept)
+        if _ontology_evidence_weight(entry, presentation.evidence_text) >= MIN_EVIDENCED_ONTOLOGY_WEIGHT:
+            out.append(entry)
+    return out
+
+
+_THRESHOLD_FEATURES = (
+    (re.compile(r"^blood pressure above (\d+) over (\d+)$"),
+     lambda v, m: None if v.sbp is None and v.dbp is None else ((v.sbp or 0) > int(m[1]) or (v.dbp or 0) > int(m[2]))),
+    (re.compile(r"^body temperature above (\d+(?:\.\d+)?) degrees$"),
+     lambda v, m: None if v.temperature_c is None else v.temperature_c > float(m[1])),
+    (re.compile(r"^body temperature below (\d+(?:\.\d+)?) degrees$"),
+     lambda v, m: None if v.temperature_c is None else v.temperature_c < float(m[1])),
+)
+
+
+def _measured_threshold(feature: str, state: PatientState) -> Optional[bool]:
+    """True/False when the feature is a numeric vital threshold and the latest reading measured that vital; else None."""
+    if not get_config().measured_thresholds_enabled:
+        return None
+    vitals = state.latest_vital_signs()
+    if vitals is None:
+        return None
+    for pattern, test in _THRESHOLD_FEATURES:
+        m = pattern.match(feature.lower())
+        if m:
+            return test(vitals, m)
+    return None
+
+
 def _rank_key(row) -> tuple:
     """Score first. Round V (NOVA_DENIAL_V2): an exact score tie is broken by the number of supporting observations
     that are present findings (not "no X" reassuring absences), instead of by candidate-pool insertion order. Danger
@@ -692,9 +744,24 @@ def _score_disease(entry: dict, state: PatientState,
         if feature in subsumed:
             continue  # Round P: same observation as a present, more specific confirmatory finding -- credited there once
         weight = FEATURE_WEIGHT * _specificity_multiplier(feature)
+        from nova_agent.final_decision import _antecedent_context
+        if _antecedent_context(feature):
+            # Round W (NOVA_CONTEXT_V2): "recent cold / recent infection / recent viral illness" is what came before
+            # the current illness -- context, weighted like a risk factor rather than an observed current feature.
+            weight = RISK_FACTOR_WEIGHT
         max_possible += weight
         from nova_agent.final_decision import _risk_context
         feature_findings = findings if _risk_context(feature) else current_findings
+        measured = _measured_threshold(feature, state)
+        if measured is not None:
+            # Round W (NOVA_MEASURED_THRESHOLDS): a numeric vital-sign feature is decided by the latest MEASURED value,
+            # not by words: met -> supporting; measured and not met -> an objective contradiction.
+            (supporting if measured else contradictory).append(feature)
+            if measured:
+                typical_feature_score += weight
+            else:
+                typical_penalty -= CONTRADICTION_PENALTY
+            continue
         delta = _score_phrase(feature, weight, feature_findings, negatives, supporting, contradictory, missing,
                               explicit_negatives=explicit_negatives)
         typical_feature_score += max(delta, 0.0)
@@ -720,7 +787,10 @@ def _score_disease(entry: dict, state: PatientState,
                 generic_symptom_penalty += min(delta, 0.0)
         else:
             typical_penalty += min(delta, 0.0)
-    observed_typical = sum(1 for f in entry.get("typical_features", []) if f in supporting)
+    # Round W: the pattern must be made of specific observations -- two shared generic symptoms ("chest pain",
+    # "shortness of breath") are not a pattern a templated "No" should be weighed against at half strength.
+    observed_typical = sum(1 for f in entry.get("typical_features", []) if f in supporting
+                           and (not get_config().pattern_v2_enabled or not _generic_symptom(f)))
     for delta, generic in bare_denials:
         if observed_typical >= DENIAL_V2_MIN_PATTERN:
             optional_denial += delta * DENIAL_V2_SCALE
@@ -916,6 +986,9 @@ class DifferentialEngine:
         candidates = [c.entry for c in candidate_records]
         state.retrieval_safety_watch = list(presentation.retrieval_safety_watch)
         sources_by_id = {c.id: c.sources for c in candidate_records}
+        for entry in _retained_evidenced_candidates(state, presentation, {e["id"] for e in candidates}):
+            candidates.append(entry)
+            sources_by_id[entry["id"]] = ["retained_evidenced"]
         documented = _documented_ids(state)
         for did in documented:
             if did not in sources_by_id:
@@ -1057,7 +1130,8 @@ class DifferentialEngine:
 
         state.current_differential = [
             DifferentialSnapshot(diagnosis=i.diagnosis, rank=i.rank, confidence_band=i.confidence_band,
-                                  urgency=i.urgency, dangerous_if_missed=i.dangerous_if_missed)
+                                  urgency=i.urgency, dangerous_if_missed=i.dangerous_if_missed,
+                                  diagnosis_id=i.diagnosis_id)
             for i in items
         ]
         return items

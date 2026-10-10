@@ -302,6 +302,14 @@ def test_an_observed_confirmatory_finding_keeps_the_specific_cause(monkeypatch):
     assert decide_final(s, [cause, syndrome], 'supported').primary_id == 'onto::tier2:perforated_viscus'
 
 
+def test_a_near_tied_competitor_from_another_organ_system_is_not_a_broader_syndrome():
+    s = PatientState(chief_complaint='Breathless, ankles swollen, crackles.', preliminary_rules=True)
+    hf = _item('onto::tier2:heart_failure_acute', 'Acute Decompensated Heart Failure',
+               ['worsening shortness of breath', 'leg swelling', 'crackles in lungs'], score=2.40)
+    pneumonia = _item('pneumonia', 'Community-Acquired Pneumonia', ['crackles on auscultation', 'dyspnea'], score=2.20)
+    assert decide_final(s, [hf, pneumonia], 'supported').primary_id == 'onto::tier2:heart_failure_acute'
+
+
 def test_hierarchy_switch_off_names_the_leader(monkeypatch):
     from nova_agent.config import get_config
     monkeypatch.setenv('NOVA_HIERARCHY_V2', '0')
