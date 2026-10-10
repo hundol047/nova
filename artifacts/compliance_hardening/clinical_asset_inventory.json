@@ -987,7 +987,7 @@
     {
       "asset_id": "nova_agent/evidence_scope.py",
       "path": "nova_agent/evidence_scope.py",
-      "sha256": "d1fd02d0893a37743f99c2c57d8a701de4f82bfe7a23cbb46b095d483d38c7bf",
+      "sha256": "8220e5f566f67d617bee9aa9e3be760f8562f04c1bfb82732b3de9abafe22dda",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",

@@ -208,6 +208,8 @@ def test_korean_topic_relative_without_possessive_stays_family_history():
     from nova_agent.evidence_scope import detect_proxy_relation
     assert detect_proxy_relation('어머니는 irregular heartbeat가 있어요. 저는 지금 아픈 곳이 없어요.', 'female', 46) is None
     assert detect_proxy_relation('우리 아들이 열이 나요', 'male', 5) == '아들'
+    assert detect_proxy_relation('할머니가 화장실에서 갑자기 쓰러지셨어요.', 'female', 83) == '할머니'
+    assert detect_proxy_relation('어머니가 부정맥이 있어요. 저는 괜찮아요.', 'female', 46) is None
 
 
 def test_alternative_made_only_of_a_part_of_the_named_finding_is_not_urgent():
