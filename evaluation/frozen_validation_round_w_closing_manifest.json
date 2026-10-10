@@ -1,0 +1,11 @@
+{
+  "sha256": "e6ebff6aee14cae3fb6525a25f3852a13bbf45ea3f6b7976ad79db3d527d62a9",
+  "cases": 12,
+  "scored": 10,
+  "created_utc": "2026-10-10T13:56:59.732156+00:00",
+  "runtime_before_authoring": "0e89c2860d392e2f5dce94216c89906b74b39376",
+  "runtime_state": "uncommitted Round W changes in the working tree (final runtime not yet committed)",
+  "policy": "Closing set: frozen before the Round W runtime commit; executed only on baseline e16448e and the final runtime; never used to change source.",
+  "author_exposure": "Implementation-aware author (wrote the Round W changes; saw the Round W development set and its failures).",
+  "independent_clinical_validation": false
+}

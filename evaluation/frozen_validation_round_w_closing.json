@@ -1,0 +1,327 @@
+[
+ {
+  "case_id": "CloseW_01",
+  "chief_complaint": "My 5-month-old has a high fever, the soft spot on his head is bulging and he keeps vomiting.",
+  "demographics": {
+   "age": 0,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "meningitis",
+  "answers": {
+   "associated_symptoms": "Very irritable, high-pitched cry."
+  },
+  "exam_results": {
+   "vital_signs": "HR 178, RR 48, Temp 39.4, SpO2 97%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;infant_meningitis",
+  "scoring_expected": true,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseW_02",
+  "chief_complaint": "Mum is suddenly very confused, shivering, and says it burns when she passes urine.",
+  "demographics": {
+   "age": 84,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "onset": "Since this morning."
+  },
+  "exam_results": {
+   "vital_signs": "BP 86/50, HR 118, RR 24, Temp 38.9, SpO2 94%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;elderly_urosepsis",
+  "scoring_expected": true,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseW_03",
+  "chief_complaint": "아버지가 한 시간 전부터 갑자기 오른쪽 팔다리에 힘이 빠지고 말이 어눌해졌어요.",
+  "demographics": {
+   "age": 74,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "ischemic_stroke",
+  "answers": {
+   "past_medical_history": "고혈압과 심방세동이 있어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 168/94, HR 88, RR 16, Temp 36.6, SpO2 97%",
+   "neuro_exam": "Right-sided weakness and slurred speech."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;ko_stroke_caregiver",
+  "scoring_expected": true,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseW_04",
+  "chief_complaint": "Since starting my new heart tablet I keep feeling faint, and the nurse said my pulse is 38.",
+  "demographics": {
+   "age": 76,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "medication": "A beta blocker started ten days ago."
+  },
+  "exam_results": {
+   "vital_signs": "BP 98/60, HR 38, RR 16, Temp 36.5, SpO2 97%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;drug_bradycardia",
+  "scoring_expected": false,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseW_05",
+  "chief_complaint": "I race bikes, and at a check-up the nurse said my pulse was 44, but I feel perfectly well.",
+  "demographics": {
+   "age": 26,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "No dizziness, no fainting, no chest pain."
+  },
+  "exam_results": {
+   "vital_signs": "BP 112/68, HR 44, RR 12, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;athlete_low_hr",
+  "scoring_expected": false,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseW_06",
+  "chief_complaint": "My 6-year-old has had a runny nose and a mild cough for two days but is still running around playing.",
+  "demographics": {
+   "age": 6,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "viral_uri",
+  "answers": {
+   "associated_symptoms": "No ear pain, eating normally."
+  },
+  "exam_results": {
+   "vital_signs": "HR 98, RR 20, Temp 37.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;benign_child",
+  "scoring_expected": true,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseW_07",
+  "chief_complaint": "새우를 먹고 나서 lips swelling 이 생기고 숨이 차요.",
+  "demographics": {
+   "age": 31,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "anaphylaxis",
+  "answers": {
+   "associated_symptoms": "온몸에 두드러기가 났어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 88/54, HR 124, RR 26, Temp 36.8, SpO2 92%",
+   "lung_auscultation": "Diffuse wheeze."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;mixed_anaphylaxis",
+  "scoring_expected": true,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseW_08",
+  "chief_complaint": "왼쪽 옆구리에 띠 모양으로 물집이 생기고 화끈거리게 아파요.",
+  "demographics": {
+   "age": 72,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "Herpes Zoster (Shingles)",
+  "answers": {
+   "onset": "사흘 전부터 따끔거리다가 물집이 생겼어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 136/80, HR 78, RR 14, Temp 37.1, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;ko_zoster",
+  "scoring_expected": true,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseW_09",
+  "chief_complaint": "엄지발가락이 밤사이 빨갛게 부어서 이불만 닿아도 너무 아파요.",
+  "demographics": {
+   "age": 55,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Acute Gout Flare",
+  "answers": {
+   "past_medical_history": "예전에도 비슷하게 아픈 적이 있어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 140/88, HR 82, RR 14, Temp 37.2, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;ko_gout",
+  "scoring_expected": true,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseW_10",
+  "chief_complaint": "My period is six weeks late, I feel faint and there's a sharp pain low on one side.",
+  "demographics": {
+   "age": 29,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "ectopic_pregnancy",
+  "answers": {
+   "associated_symptoms": "A little brown spotting."
+  },
+  "exam_results": {
+   "vital_signs": "BP 96/58, HR 116, RR 18, Temp 36.7, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;ectopic_low_info",
+  "scoring_expected": true,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseW_11",
+  "chief_complaint": "My 15-year-old son is always thirsty, peeing all the time, and now he is vomiting and breathing very deeply.",
+  "demographics": {
+   "age": 15,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "diabetic_ketoacidosis",
+  "answers": {
+   "associated_symptoms": "Tummy pain and very tired."
+  },
+  "exam_results": {
+   "vital_signs": "BP 104/62, HR 122, RR 30, Temp 36.9, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;teen_dka",
+  "scoring_expected": true,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseW_12",
+  "chief_complaint": "My mother has been more muddled since yesterday, with a cough and a temperature.",
+  "demographics": {
+   "age": 88,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "pneumonia",
+  "answers": {
+   "associated_symptoms": "Coughing up yellow phlegm."
+  },
+  "exam_results": {
+   "vital_signs": "BP 128/76, HR 96, RR 22, Temp 38.3, SpO2 93%",
+   "lung_auscultation": "Crackles at the left base."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_w_closing;elderly_pneumonia",
+  "scoring_expected": true,
+  "notes": "Round W closing set. Authored AFTER all Round W reasoning changes and BEFORE the Round W runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e16448e and the final runtime; never used to change source. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ }
+]
