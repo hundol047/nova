@@ -1,0 +1,1518 @@
+{
+  "before_head": "e16448e13431ab7af21d1e1c8abc5ecf2cf16e3c",
+  "after_head": "f677d05eb3cd9b8a441c63a64ffdc9349b635d4f",
+  "prelim": {
+    "before": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 219,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 19.782608695652176,
+      "max_interactions": 30,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 19,
+      "unresolved_critical_cases": 127,
+      "unnecessary_exams": 296,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 219,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 19.747826086956522,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 20,
+      "unresolved_critical_cases": 129,
+      "unnecessary_exams": 283,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "RoundM_069",
+      "RoundM_108",
+      "RoundJ_52"
+    ]
+  },
+  "prelim_exam_rejection": {
+    "before": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 217,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 19.91304347826087,
+      "max_interactions": 31,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 19,
+      "unresolved_critical_cases": 126,
+      "unnecessary_exams": 295,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 217,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 19.86521739130435,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 20,
+      "unresolved_critical_cases": 128,
+      "unnecessary_exams": 282,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "RoundM_030",
+      "RoundM_038",
+      "RoundM_069",
+      "RoundM_108",
+      "RoundJ_52"
+    ]
+  },
+  "prelim_unscripted_unknown": {
+    "before": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 218,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 26.104347826086958,
+      "max_interactions": 41,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 21,
+      "unresolved_critical_cases": 226,
+      "unnecessary_exams": 980,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 230,
+      "scored": 222,
+      "correct": 218,
+      "critical_cases": 85,
+      "critical_correct": 85,
+      "avg_interactions": 26.07391304347826,
+      "max_interactions": 41,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 22,
+      "unresolved_critical_cases": 225,
+      "unnecessary_exams": 974,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "RoundM_066",
+      "RoundM_069",
+      "RoundM_108",
+      "RoundJ_52"
+    ]
+  },
+  "round_p": {
+    "before": {
+      "cases": 34,
+      "scored": 32,
+      "correct": 31,
+      "critical_cases": 13,
+      "critical_correct": 13,
+      "avg_interactions": 20.264705882352942,
+      "max_interactions": 29,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 19,
+      "unnecessary_exams": 61,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 34,
+      "scored": 32,
+      "correct": 31,
+      "critical_cases": 13,
+      "critical_correct": 13,
+      "avg_interactions": 20.676470588235293,
+      "max_interactions": 29,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 17,
+      "unnecessary_exams": 64,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "ValP_08"
+    ]
+  },
+  "round_q": {
+    "before": {
+      "cases": 48,
+      "scored": 36,
+      "correct": 35,
+      "critical_cases": 11,
+      "critical_correct": 11,
+      "avg_interactions": 19.791666666666668,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 27,
+      "unnecessary_exams": 80,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 48,
+      "scored": 36,
+      "correct": 35,
+      "critical_cases": 11,
+      "critical_correct": 11,
+      "avg_interactions": 19.666666666666668,
+      "max_interactions": 32,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 27,
+      "unnecessary_exams": 77,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "DevQ_28"
+    ],
+    "unscored_dangerous_named": {
+      "before": 2,
+      "after": 2
+    }
+  },
+  "round_r": {
+    "before": {
+      "cases": 24,
+      "scored": 12,
+      "correct": 12,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 26.25,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 3,
+      "unresolved_critical_cases": 24,
+      "unnecessary_exams": 117,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 24,
+      "scored": 12,
+      "correct": 12,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 26.25,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 3,
+      "unresolved_critical_cases": 24,
+      "unnecessary_exams": 117,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 19,
+        "total": 19
+      },
+      "after": {
+        "passed": 19,
+        "total": 19
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 4,
+      "after": 4
+    }
+  },
+  "acceptance_regression": {
+    "before": {
+      "cases": 32,
+      "scored": 18,
+      "correct": 18,
+      "critical_cases": 5,
+      "critical_correct": 5,
+      "avg_interactions": 26.9375,
+      "max_interactions": 36,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 32,
+      "unnecessary_exams": 164,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 32,
+      "scored": 18,
+      "correct": 18,
+      "critical_cases": 5,
+      "critical_correct": 5,
+      "avg_interactions": 26.84375,
+      "max_interactions": 36,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 32,
+      "unnecessary_exams": 163,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 14,
+        "total": 14
+      },
+      "after": {
+        "passed": 14,
+        "total": 14
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 4,
+      "after": 4
+    }
+  },
+  "round_s": {
+    "before": {
+      "cases": 24,
+      "scored": 14,
+      "correct": 14,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 25.75,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 24,
+      "unnecessary_exams": 118,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 24,
+      "scored": 14,
+      "correct": 14,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 25.75,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 24,
+      "unnecessary_exams": 118,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 87,
+        "total": 87
+      },
+      "after": {
+        "passed": 87,
+        "total": 87
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 2,
+      "after": 2
+    }
+  },
+  "round_t_development": {
+    "before": {
+      "cases": 32,
+      "scored": 18,
+      "correct": 15,
+      "critical_cases": 3,
+      "critical_correct": 3,
+      "avg_interactions": 25.1875,
+      "max_interactions": 34,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 32,
+      "unnecessary_exams": 153,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 32,
+      "scored": 18,
+      "correct": 15,
+      "critical_cases": 3,
+      "critical_correct": 3,
+      "avg_interactions": 25.25,
+      "max_interactions": 35,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 2,
+      "unresolved_critical_cases": 32,
+      "unnecessary_exams": 152,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "NewT_19",
+        "scored": false,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+        "before_correct": true,
+        "after_correct": false
+      }
+    ],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "NewT_11",
+      "NewT_15",
+      "NewT_18"
+    ],
+    "behavior": {
+      "before": {
+        "passed": 89,
+        "total": 89
+      },
+      "after": {
+        "passed": 87,
+        "total": 89
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": [
+        "NewT_19:no_support:irregular heartbeat",
+        "NewT_19:undifferentiated"
+      ]
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 1
+    }
+  },
+  "t_confirmation": {
+    "before": {
+      "cases": 12,
+      "scored": 8,
+      "correct": 8,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 22.5,
+      "max_interactions": 29,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 12,
+      "unnecessary_exams": 53,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 12,
+      "scored": 8,
+      "correct": 8,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 22.583333333333332,
+      "max_interactions": 29,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 12,
+      "unnecessary_exams": 53,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 31,
+        "total": 31
+      },
+      "after": {
+        "passed": 31,
+        "total": 31
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "t_probe": {
+    "before": {
+      "cases": 8,
+      "scored": 4,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 25.375,
+      "max_interactions": 37,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 8,
+      "unnecessary_exams": 40,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 8,
+      "scored": 4,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 25.125,
+      "max_interactions": 35,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 8,
+      "unnecessary_exams": 34,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 23,
+        "total": 23
+      },
+      "after": {
+        "passed": 23,
+        "total": 23
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "t_postfreeze": {
+    "before": {
+      "cases": 12,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 3,
+      "critical_correct": 3,
+      "avg_interactions": 24.083333333333332,
+      "max_interactions": 32,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 12,
+      "unnecessary_exams": 61,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 12,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 3,
+      "critical_correct": 3,
+      "avg_interactions": 23.833333333333332,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 12,
+      "unnecessary_exams": 55,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 35,
+        "total": 35
+      },
+      "after": {
+        "passed": 35,
+        "total": 35
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "u20": {
+    "before": {
+      "cases": 20,
+      "scored": 12,
+      "correct": 12,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 22.7,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 20,
+      "unnecessary_exams": 60,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 20,
+      "scored": 12,
+      "correct": 12,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 22.7,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 20,
+      "unnecessary_exams": 60,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 59,
+        "total": 59
+      },
+      "after": {
+        "passed": 59,
+        "total": 59
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "u12": {
+    "before": {
+      "cases": 12,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 18.833333333333332,
+      "max_interactions": 33,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 5,
+      "unnecessary_exams": 24,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 12,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 18.75,
+      "max_interactions": 31,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 6,
+      "unnecessary_exams": 22,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "ConfirmU_09",
+        "scored": false,
+        "critical": false,
+        "before": "Undifferentiated presentation",
+        "after": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+        "before_correct": true,
+        "after_correct": false
+      }
+    ],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 38,
+        "total": 38
+      },
+      "after": {
+        "passed": 36,
+        "total": 38
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": [
+        "ConfirmU_09:no_support:irregular heartbeat",
+        "ConfirmU_09:undifferentiated"
+      ]
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 1
+    }
+  },
+  "u10": {
+    "before": {
+      "cases": 10,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 17.5,
+      "max_interactions": 25,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 5,
+      "unnecessary_exams": 23,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 10,
+      "scored": 6,
+      "correct": 6,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 17.4,
+      "max_interactions": 25,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 4,
+      "unnecessary_exams": 23,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 30,
+        "total": 30
+      },
+      "after": {
+        "passed": 30,
+        "total": 30
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "closing_u8": {
+    "before": {
+      "cases": 8,
+      "scored": 4,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 19.375,
+      "max_interactions": 25,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 4,
+      "unnecessary_exams": 13,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 8,
+      "scored": 4,
+      "correct": 4,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 19.375,
+      "max_interactions": 25,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 4,
+      "unnecessary_exams": 13,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [],
+    "behavior": {
+      "before": {
+        "passed": 26,
+        "total": 26
+      },
+      "after": {
+        "passed": 26,
+        "total": 26
+      }
+    },
+    "behavior_failures": {
+      "before": [],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 1,
+      "after": 1
+    }
+  },
+  "followup_new": {
+    "before": {
+      "cases": 24,
+      "scored": 16,
+      "correct": 12,
+      "critical_cases": 4,
+      "critical_correct": 3,
+      "avg_interactions": 19.625,
+      "max_interactions": 31,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 18,
+      "unnecessary_exams": 56,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 24,
+      "scored": 16,
+      "correct": 13,
+      "critical_cases": 4,
+      "critical_correct": 4,
+      "avg_interactions": 20.25,
+      "max_interactions": 31,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 1,
+      "unresolved_critical_cases": 18,
+      "unnecessary_exams": 60,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [
+      {
+        "case_id": "FollowU_21",
+        "scored": true,
+        "critical": true,
+        "before": "Undifferentiated presentation",
+        "after": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+        "before_correct": false,
+        "after_correct": true
+      },
+      {
+        "case_id": "FollowU_23",
+        "scored": false,
+        "critical": false,
+        "before": "폐렴 (Community-Acquired Pneumonia)",
+        "after": "심부전 악화 (Acute Decompensated Heart Failure)",
+        "before_correct": false,
+        "after_correct": false
+      }
+    ],
+    "new_correct": [
+      "FollowU_21"
+    ],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "FollowU_04",
+      "FollowU_05",
+      "FollowU_10"
+    ],
+    "behavior": {
+      "before": {
+        "passed": 80,
+        "total": 82
+      },
+      "after": {
+        "passed": 82,
+        "total": 82
+      }
+    },
+    "behavior_failures": {
+      "before": [
+        "FollowU_21:disposition_urgent",
+        "FollowU_23:not:pneumonia"
+      ],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 1,
+      "after": 2
+    }
+  },
+  "followup_closing": {
+    "before": {
+      "cases": 12,
+      "scored": 7,
+      "correct": 6,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 21.666666666666668,
+      "max_interactions": 29,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 8,
+      "unnecessary_exams": 30,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "after": {
+      "cases": 12,
+      "scored": 7,
+      "correct": 6,
+      "critical_cases": 2,
+      "critical_correct": 2,
+      "avg_interactions": 21.833333333333332,
+      "max_interactions": 30,
+      "rule_violations": 0,
+      "duplicate_actions": 0,
+      "semantic_duplicate_questions": 0,
+      "unresolved_critical_cases": 8,
+      "unnecessary_exams": 32,
+      "malformed": 0,
+      "soap_unsupported_lines": 0
+    },
+    "changed": [],
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": [],
+    "still_wrong": [
+      "CloseUF_03"
+    ],
+    "behavior": {
+      "before": {
+        "passed": 42,
+        "total": 43
+      },
+      "after": {
+        "passed": 43,
+        "total": 43
+      }
+    },
+    "behavior_failures": {
+      "before": [
+        "CloseUF_03:disposition_urgent"
+      ],
+      "after": []
+    },
+    "unscored_dangerous_named": {
+      "before": 1,
+      "after": 1
+    }
+  },
+  "test_enabled": {
+    "held_out": {
+      "before": {
+        "scored_diagnostic_accuracy": 0.9444444444444444,
+        "all_case_diagnostic_accuracy": 0.9444444444444444,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 27.555555555555557,
+        "median_turns": 26.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.0,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 11.0,
+        "average_exam_count": 6.555555555555555,
+        "average_test_count": 9.0,
+        "utility_score_proxy": 0.6188888888888889,
+        "n_cases": 18,
+        "n_scored_cases": 18,
+        "n_critical_cases": 13
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 0.9444444444444444,
+        "all_case_diagnostic_accuracy": 0.9444444444444444,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 27,
+        "median_turns": 26.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.8888888888888888,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 10.61111111111111,
+        "average_exam_count": 6.555555555555555,
+        "average_test_count": 8.833333333333334,
+        "utility_score_proxy": 0.63,
+        "n_cases": 18,
+        "n_scored_cases": 18,
+        "n_critical_cases": 13
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "generalization_v2": {
+      "before": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 20.61111111111111,
+        "median_turns": 15.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.6111111111111112,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 7.777777777777778,
+        "average_exam_count": 5.0,
+        "average_test_count": 6.833333333333333,
+        "utility_score_proxy": 0.7633333333333333,
+        "n_cases": 18,
+        "n_scored_cases": 18,
+        "n_critical_cases": 5
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 20.666666666666668,
+        "median_turns": 15.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.6666666666666666,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 7.722222222222222,
+        "average_exam_count": 5.0,
+        "average_test_count": 6.944444444444445,
+        "utility_score_proxy": 0.76,
+        "n_cases": 18,
+        "n_scored_cases": 18,
+        "n_critical_cases": 5
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "stress": {
+      "before": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 20.125,
+        "median_turns": 18.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.5,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 6.75,
+        "average_exam_count": 5.625,
+        "average_test_count": 6.75,
+        "utility_score_proxy": 0.7737499999999999,
+        "n_cases": 8,
+        "n_scored_cases": 8,
+        "n_critical_cases": 5
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 20.25,
+        "median_turns": 18.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.5,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 6.875,
+        "average_exam_count": 5.625,
+        "average_test_count": 6.75,
+        "utility_score_proxy": 0.7725,
+        "n_cases": 8,
+        "n_scored_cases": 8,
+        "n_critical_cases": 5
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "round_d": {
+      "before": {
+        "scored_diagnostic_accuracy": 0.8571428571428571,
+        "all_case_diagnostic_accuracy": 0.8571428571428571,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 24.857142857142858,
+        "median_turns": 25,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.2857142857142858,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 8.571428571428571,
+        "average_exam_count": 7.857142857142857,
+        "average_test_count": 7.428571428571429,
+        "utility_score_proxy": 0.5442857142857143,
+        "n_cases": 7,
+        "n_scored_cases": 7,
+        "n_critical_cases": 3
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 0.8571428571428571,
+        "all_case_diagnostic_accuracy": 0.8571428571428571,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 24.571428571428573,
+        "median_turns": 25,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.2857142857142858,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 8.285714285714286,
+        "average_exam_count": 7.857142857142857,
+        "average_test_count": 7.428571428571429,
+        "utility_score_proxy": 0.5471428571428572,
+        "n_cases": 7,
+        "n_scored_cases": 7,
+        "n_critical_cases": 3
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "round_e": {
+      "before": {
+        "scored_diagnostic_accuracy": 0.8571428571428571,
+        "all_case_diagnostic_accuracy": 0.8571428571428571,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 31,
+        "median_turns": 39,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.5714285714285714,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 13.0,
+        "average_exam_count": 8.285714285714286,
+        "average_test_count": 8.714285714285714,
+        "utility_score_proxy": 0.4685714285714286,
+        "n_cases": 7,
+        "n_scored_cases": 7,
+        "n_critical_cases": 5
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 0.8571428571428571,
+        "all_case_diagnostic_accuracy": 0.8571428571428571,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 30.857142857142858,
+        "median_turns": 39,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 1.5714285714285714,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 12.857142857142858,
+        "average_exam_count": 8.285714285714286,
+        "average_test_count": 8.714285714285714,
+        "utility_score_proxy": 0.47000000000000003,
+        "n_cases": 7,
+        "n_scored_cases": 7,
+        "n_critical_cases": 5
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "round_g": {
+      "before": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 18.583333333333332,
+        "median_turns": 18.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.5,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 7.75,
+        "average_exam_count": 3.9166666666666665,
+        "average_test_count": 5.916666666666667,
+        "utility_score_proxy": 0.7891666666666667,
+        "n_cases": 12,
+        "n_scored_cases": 12,
+        "n_critical_cases": 4
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 1.0,
+        "all_case_diagnostic_accuracy": 1.0,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 18.583333333333332,
+        "median_turns": 18.0,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.5,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 7.75,
+        "average_exam_count": 3.9166666666666665,
+        "average_test_count": 5.916666666666667,
+        "utility_score_proxy": 0.7891666666666667,
+        "n_cases": 12,
+        "n_scored_cases": 12,
+        "n_critical_cases": 4
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "round_i": {
+      "before": {
+        "scored_diagnostic_accuracy": 0.95,
+        "all_case_diagnostic_accuracy": 0.95,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 14.6,
+        "median_turns": 12.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.35,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 5.85,
+        "average_exam_count": 3.6,
+        "average_test_count": 4.15,
+        "utility_score_proxy": 0.7865,
+        "n_cases": 20,
+        "n_scored_cases": 20,
+        "n_critical_cases": 8
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 0.95,
+        "all_case_diagnostic_accuracy": 0.95,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 14.6,
+        "median_turns": 12.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.35,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 5.85,
+        "average_exam_count": 3.6,
+        "average_test_count": 4.15,
+        "utility_score_proxy": 0.7865,
+        "n_cases": 20,
+        "n_scored_cases": 20,
+        "n_critical_cases": 8
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    },
+    "round_j": {
+      "before": {
+        "scored_diagnostic_accuracy": 0.9444444444444444,
+        "all_case_diagnostic_accuracy": 0.9444444444444444,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 16.574074074074073,
+        "median_turns": 13.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.6851851851851852,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 6.351851851851852,
+        "average_exam_count": 4.444444444444445,
+        "average_test_count": 4.777777777777778,
+        "utility_score_proxy": 0.7444444444444445,
+        "n_cases": 54,
+        "n_scored_cases": 54,
+        "n_critical_cases": 20
+      },
+      "after": {
+        "scored_diagnostic_accuracy": 0.9444444444444444,
+        "all_case_diagnostic_accuracy": 0.9444444444444444,
+        "unscored_case_names": [],
+        "unsupported_case_success_rate": null,
+        "critical_diagnosis_recall": 1.0,
+        "critical_miss_rate": 0.0,
+        "average_turns": 15.777777777777779,
+        "median_turns": 12.5,
+        "duplicate_action_rate": 0.0,
+        "unnecessary_test_rate": 0.5370370370370371,
+        "malformed_output_rate": 0.0,
+        "failed_diagnosis_rate": 0.0,
+        "fallback_rate": null,
+        "average_ask_count": 6.092592592592593,
+        "average_exam_count": 4.203703703703703,
+        "average_test_count": 4.481481481481482,
+        "utility_score_proxy": 0.7598148148148148,
+        "n_cases": 54,
+        "n_scored_cases": 54,
+        "n_critical_cases": 20
+      },
+      "new_wrong": [],
+      "new_correct": [],
+      "new_critical_miss": []
+    }
+  },
+  "round_m_test_enabled": {
+    "before": {
+      "top1": null,
+      "critical_recall": 1.0,
+      "retrieval_at150": 0.991869918699187,
+      "rerank_at25": 0.991869918699187,
+      "active_truth_retention": 1.0
+    },
+    "after": {
+      "top1": null,
+      "critical_recall": 1.0,
+      "retrieval_at150": 0.991869918699187,
+      "rerank_at25": 0.991869918699187,
+      "active_truth_retention": 1.0
+    },
+    "correct": {
+      "before": 121,
+      "after": 121,
+      "scored": 123
+    },
+    "critical": {
+      "before": 43,
+      "after": 43,
+      "n": 43
+    },
+    "final_top150": {
+      "before": 122,
+      "after": 122
+    },
+    "final_top25": {
+      "before": 122,
+      "after": 122
+    },
+    "active": {
+      "before": 123,
+      "after": 123
+    },
+    "long_tail": {
+      "Top1": {
+        "before": 24,
+        "after": 24
+      },
+      "Top5": {
+        "before": 26,
+        "after": 26
+      },
+      "Top10": {
+        "before": 26,
+        "after": 26
+      }
+    },
+    "long_tail_n": 26,
+    "avg_turns": {
+      "before": 23.4609375,
+      "after": 22.90625
+    },
+    "new_correct": [],
+    "new_wrong": [],
+    "new_critical_misses": []
+  },
+  "retrieval_proxy": {
+    "before": {
+      "chief_only": {
+        "n": 164,
+        "retrieved": 155,
+        "retained25": 155,
+        "before_safety25": 155,
+        "retained_safety_overflow": 155
+      },
+      "all_scripted_history_upper_bound": {
+        "n": 164,
+        "retrieved": 164,
+        "retained25": 164,
+        "before_safety25": 164,
+        "retained_safety_overflow": 164
+      }
+    },
+    "after": {
+      "chief_only": {
+        "n": 164,
+        "retrieved": 155,
+        "retained25": 155,
+        "before_safety25": 155,
+        "retained_safety_overflow": 155
+      },
+      "all_scripted_history_upper_bound": {
+        "n": 164,
+        "retrieved": 164,
+        "retained25": 164,
+        "before_safety25": 164,
+        "retained_safety_overflow": 164
+      }
+    }
+  },
+  "assertion_contrasts": {
+    "before": "10/10",
+    "after": "10/10"
+  },
+  "limitation": "Offline mock-LLM, synthetic development evidence. Not independent clinical validation, not real-model or official-API evidence. Development sets were used to change source (see report)."
+}

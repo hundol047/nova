@@ -1,0 +1,1 @@
+fresh-directory smoke OK: run.py fail-closed; 10 interactions -> 위식도역류질환 (Gastroesophageal Reflux Disease) (offline mock; official NOT VERIFIED)

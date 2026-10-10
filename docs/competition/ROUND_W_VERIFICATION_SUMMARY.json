@@ -1,0 +1,898 @@
+{
+ "baseline_runtime": "e16448e13431ab7af21d1e1c8abc5ecf2cf16e3c",
+ "final_runtime": "f677d05eb3cd9b8a441c63a64ffdc9349b635d4f",
+ "first_final_candidate": {
+  "runtime": "288d8d5f55d8f5744cc0aa719417e99eb3a72723",
+  "finding": "2 new scored wrong (RoundM_109, CloseUF_11); fixed in f677d05 and the full suite re-run from scratch"
+ },
+ "environment": {
+  "NOVA_LLM_PROVIDER": "mock",
+  "NOVA_COMPETITION_RETRIEVAL": "1 (unset for pytest)",
+  "PYTHONDONTWRITEBYTECODE": "1"
+ },
+ "final_steps": [
+  {
+   "step": "acceptance_regression",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_r.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/acceptance_regressions_round_r.json",
+    "--output",
+    "<scratch>/w2_out/acceptance_regression"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:44:45.780294+00:00",
+   "finished_utc": "2026-10-10T17:49:28.044523+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "8a67a5c5a94c71037e54d9dc5a839a42bb24189e18b3b6c0ab59d1595dca69b2",
+   "artifacts": {
+    "acceptance_regression/summary.json": "f36bc4be25ffaebc262d4fd51829a1bd82f2967e00faf625afe97639e885c1b0"
+   }
+  },
+  {
+   "step": "adversarial",
+   "command": [
+    "/usr/bin/python3",
+    "-m",
+    "evaluation.adversarial"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:33:57.613177+00:00",
+   "finished_utc": "2026-10-10T17:34:39.758388+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "e27665ad400452a12d4314cd026c588ad4ea9937797b17241b70dec861f95ddf",
+   "artifacts": {}
+  },
+  {
+   "step": "assertion_contrasts",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/reproduce_round_t_assertions.py"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:41:09.979985+00:00",
+   "finished_utc": "2026-10-10T17:41:14.037359+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "d7bf98b0505a5faf90021e77ee990ccce534e5603b12972fd594ce211f73e685",
+   "artifacts": {}
+  },
+  {
+   "step": "closing_u8",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/frozen_validation_round_u_closing.json",
+    "--output",
+    "<scratch>/w2_out/closing_u8",
+    "--freeze",
+    "evaluation/frozen_validation_round_u_closing_manifest.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T18:03:44.147974+00:00",
+   "finished_utc": "2026-10-10T18:04:26.263078+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "e8c4536ca8df2afbccf67db3899ecfac93bb7c96e8759542f0bde3187e29009e",
+   "artifacts": {
+    "closing_u8/summary.json": "e6b6792132ae68816aff11789953e134f2dc4a9c3d3456b8443510e5027289d1"
+   }
+  },
+  {
+   "step": "failure_analysis",
+   "command": [
+    "/usr/bin/python3",
+    "-m",
+    "evaluation.failure_analysis"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:34:39.794045+00:00",
+   "finished_utc": "2026-10-10T17:41:09.962595+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "99626bd3914c3a4b4a62b9daf71c2e6207e4dabe3ad22473f92aa32b41679748",
+   "artifacts": {}
+  },
+  {
+   "step": "followup_closing",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "/home/user/nova/evaluation/frozen_validation_round_u_followup_closing.json",
+    "--freeze",
+    "/home/user/nova/evaluation/frozen_validation_round_u_followup_closing_manifest.json",
+    "--output",
+    "<scratch>/w2_out/followup_closing"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T18:04:26.284555+00:00",
+   "finished_utc": "2026-10-10T18:05:25.781903+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "a3115a3f049f6d81be1cd17af9b6c02cf331aff90e84cd4ccfcfdb1a0256e961",
+   "artifacts": {
+    "followup_closing/summary.json": "d36e6caa05415e29793333b064766a621e78b375987e1ca028d5a3fa70cd5b87"
+   }
+  },
+  {
+   "step": "followup_new",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "/home/user/nova/evaluation/frozen_validation_round_u_followup.json",
+    "--freeze",
+    "/home/user/nova/evaluation/frozen_validation_round_u_followup_manifest.json",
+    "--output",
+    "<scratch>/w2_out/followup_new"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T18:03:58.142485+00:00",
+   "finished_utc": "2026-10-10T18:05:46.924746+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "8b3df26e8301065a7d067826907a595cbba60e8656ff6c91aa3ba56869a83a8f",
+   "artifacts": {
+    "followup_new.execution.json": "8ac297358445600d47d1871e4c28631a64e97b47c187c52055494d7205395246",
+    "followup_new/summary.json": "22185a4369a53e24dd6ba29b8e09b61876df0ec7b430792330ebba93dadb1f99"
+   }
+  },
+  {
+   "step": "leakage",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/check_eval_leakage.py"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:30:33.597309+00:00",
+   "finished_utc": "2026-10-10T17:33:57.579454+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "c9d26a5839bf9e49218694f064288c478637979f0ff708c9333852e64e0c31b3",
+   "artifacts": {}
+  },
+  {
+   "step": "prelim",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_preliminary_benchmark.py",
+    "--workers",
+    "2",
+    "--gate",
+    "--output",
+    "<scratch>/w2_out/prelim.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T16:29:58.832563+00:00",
+   "finished_utc": "2026-10-10T16:47:12.501202+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "1a00b1065a533aefefc1a9b3117f7e9a188000ea0dbb56e57363fa4babfaaa20",
+   "artifacts": {
+    "prelim.execution.json": "ed2f57f73ebb859647678cbfd49b21369c6cbda6b6de0a8993e951f8683f5ada",
+    "prelim.json": "a89ea913302e9c32e25757ccfb970377309a7d8523e6a9834d62bc0d4d780164"
+   }
+  },
+  {
+   "step": "prelim_exam_rejection",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_preliminary_benchmark.py",
+    "--workers",
+    "2",
+    "--exam-rejection",
+    "--output",
+    "<scratch>/w2_out/prelim_exam_rejection.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T16:42:32.486510+00:00",
+   "finished_utc": "2026-10-10T17:00:03.462048+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "f4be513c3c16ba3abd9cfe2b84be1f96b9ef2230149db2f561f7217b869dbe99",
+   "artifacts": {
+    "prelim_exam_rejection.json": "2967f79f67733b5cfc220c1df288f76f77426126c9efe902f5bed2b16d07323e"
+   }
+  },
+  {
+   "step": "prelim_unscripted_unknown",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_preliminary_benchmark.py",
+    "--workers",
+    "2",
+    "--unscripted-unknown",
+    "--output",
+    "<scratch>/w2_out/prelim_unscripted_unknown.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T16:47:12.684677+00:00",
+   "finished_utc": "2026-10-10T17:12:42.068667+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "498f145c30d78cb6522c52f3f3cb0de50c3d15835252d9ca285341141568e1f4",
+   "artifacts": {
+    "prelim_unscripted_unknown.json": "d1a84031d3d6ed1dfb589b240f4d85804afdad62af07d22a620570300c013bb5"
+   }
+  },
+  {
+   "step": "pytest",
+   "command": [
+    "/usr/bin/python3",
+    "-m",
+    "pytest",
+    "tests",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--junitxml",
+    "<scratch>/w2_out/pytest.xml"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": null,
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T16:29:58.831877+00:00",
+   "finished_utc": "2026-10-10T16:42:32.458613+00:00",
+   "exit_code": 1,
+   "runtime_unchanged": true,
+   "log_sha256": "b0b9644ed52e8fe7088d06265bf54026e05c29a259eaf90b41d7b595f69ab6b7",
+   "artifacts": {
+    "pytest.xml": "19d7a4ef7a26948aee205771ba6dd23a95bfe28e0c6be9c3411601c3e5a272dc"
+   }
+  },
+  {
+   "step": "regressions",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_pre_guide_regressions.py"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:12:42.090548+00:00",
+   "finished_utc": "2026-10-10T17:26:04.927508+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "d45e45d6c119e1f261dbf705e3910963c0b98a0e35a8fe78c1c2d605410f519c",
+   "artifacts": {
+    "regressions.json": "7a5639aa7e4f19c1750c3fb80340fa54ff173583d9f2cfe165208eccf69ef33b"
+   }
+  },
+  {
+   "step": "retrieval_benchmark",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/benchmark_competition_retrieval.py"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:30:31.351432+00:00",
+   "finished_utc": "2026-10-10T17:30:32.701775+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "0c322c3a307947de49e3c86d571ab7dd7711c3c36bb36a5d8207b2e852ce8462",
+   "artifacts": {}
+  },
+  {
+   "step": "retrieval_stages",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/audit_round_u_retrieval.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--output",
+    "<scratch>/w2_out/retrieval_stages.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:26:04.945676+00:00",
+   "finished_utc": "2026-10-10T17:30:31.311419+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "ed84e9d8594e0750d4b392f9ae625d0c70c609be2bc18aa0a800988aef5ef9da",
+   "artifacts": {
+    "retrieval_stages.json": "a64844c02d46dda069a5fee3eb94dd7d8d4661ed90247e409bae8c8bff61af17"
+   }
+  },
+  {
+   "step": "round_m",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_m_final.py"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:15:31.632935+00:00",
+   "finished_utc": "2026-10-10T18:03:03.132801+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "e0371b473941ebd2362ff27aa08ec023ad0a021222b1af58683504e0b8e615fc",
+   "artifacts": {
+    "round_m_failure_analysis.json": "093c7b048c69498322ccecf0acef708de4e5169b116de954ae6d2675fba896f0",
+    "round_m_final_summary.json": "796a6b65b60d34b253a2f21d6d1709e94b6860319aa93c7e852427201c01cbaf",
+    "round_m_traces.tar.xz": "f7dd28212ef5713277e019d7b03c2324e5d993bc47bb738b00c896c32210b997"
+   }
+  },
+  {
+   "step": "round_p",
+   "command": [
+    "/usr/bin/python3",
+    "evaluation/validation_benchmark_round_p.py",
+    "--output",
+    "<scratch>/w2_out/round_p.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:00:03.490735+00:00",
+   "finished_utc": "2026-10-10T17:06:48.859538+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "0565688a65150d49e6ad175bd3886f2bf637a687a24e653e86d38718f9f24c49",
+   "artifacts": {
+    "round_p.execution.json": "41b5b874fa05f047ae5ff32a86bc5de9deba2cde55b9dfcb97cf6bbaef956258",
+    "round_p.json": "3cc9ecfbee9cc780e6336c4dbd360b68ed91bbf5252c71603b2eae5cacdf56e5"
+   }
+  },
+  {
+   "step": "round_q",
+   "command": [
+    "/usr/bin/python3",
+    "evaluation/dev_benchmark_round_q.py",
+    "--output",
+    "<scratch>/w2_out/round_q.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:06:49.135511+00:00",
+   "finished_utc": "2026-10-10T17:15:31.615416+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "cbf1f3efa80817fcf316f039088b151213b96d25ca113c7cfcd78baab117cff3",
+   "artifacts": {
+    "round_q.json": "701b57b9091b0c7a5e65c3ae1e7bf4af6512ccad2c72216f77819fd605f771a5"
+   }
+  },
+  {
+   "step": "round_r",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_r.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/frozen_validation_round_r.json",
+    "--output",
+    "<scratch>/w2_out/round_r",
+    "--freeze",
+    "evaluation/frozen_validation_round_r_manifest.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:41:14.065710+00:00",
+   "finished_utc": "2026-10-10T17:44:45.747518+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "b4278b95ef1aea4b7fe8ba15cd9b349e8811f0f70e841c63129c126fbec0e398",
+   "artifacts": {
+    "round_r/summary.json": "2f4c6792a177d4a3e0c7f09126801c608a6349199c6910a41822572fd825db5d"
+   }
+  },
+  {
+   "step": "round_s",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/frozen_validation_round_s.json",
+    "--output",
+    "<scratch>/w2_out/round_s",
+    "--freeze",
+    "evaluation/frozen_validation_round_s_manifest.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:49:28.077167+00:00",
+   "finished_utc": "2026-10-10T17:52:48.258159+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "8735e2b29473f9795df5bc6f97fc194a67f124045e3f123cc6bb7a702131674b",
+   "artifacts": {
+    "round_s/summary.json": "d1e129e577c6606efe9c525efebb3a90c04636ac88caebb2e52c227f870c6a37"
+   }
+  },
+  {
+   "step": "round_t_development",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/frozen_validation_round_t.json",
+    "--output",
+    "<scratch>/w2_out/round_t_development",
+    "--freeze",
+    "evaluation/frozen_validation_round_t_manifest.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:52:48.287221+00:00",
+   "finished_utc": "2026-10-10T17:57:06.625225+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "9114b6653b8f2df96e7c47c906ff2aabe0cf25eee435f7aa68d716b0dfb0486e",
+   "artifacts": {
+    "round_t_development/summary.json": "0aab0f997734466ec84d960171dc8b6a7895425bc4940298d8ac002a802cc920"
+   }
+  },
+  {
+   "step": "round_v",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "/home/user/nova/evaluation/frozen_validation_round_v.json",
+    "--freeze",
+    "/home/user/nova/evaluation/frozen_validation_round_v_manifest.json",
+    "--output",
+    "<scratch>/w2_out/round_v"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T18:05:25.798939+00:00",
+   "finished_utc": "2026-10-10T18:06:47.897267+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "a41a72b8a7c8e0a9024e9530d1a48baa83c368b8f44f587dbd56dbe757e6cc2a",
+   "artifacts": {
+    "round_v_closing.execution.json": "03def197c252ae695b6128682df73f19d045c6d95ea8c2a093ce30a4684ec8d7",
+    "round_v/summary.json": "c4f3710bce4aee8f25836e9a915e79a4b698c41dfe0473d2c5ea75315aa5e6b0"
+   }
+  },
+  {
+   "step": "round_v_closing",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "/home/user/nova/evaluation/frozen_validation_round_v_closing.json",
+    "--freeze",
+    "/home/user/nova/evaluation/frozen_validation_round_v_closing_manifest.json",
+    "--output",
+    "<scratch>/w2_out/round_v_closing"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T18:05:46.943575+00:00",
+   "finished_utc": "2026-10-10T18:06:40.321887+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "d1d5b74f1b6d5bab0b5f72857de1458cadba91f8ef971843e8037de766bfd236",
+   "artifacts": {
+    "round_v_closing/summary.json": "66eb8f8bc7b4985aa162f70d581e9bfdf35dcfb1bd582242b375a22e37b32c06"
+   }
+  },
+  {
+   "step": "round_w",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "/home/user/nova/evaluation/frozen_validation_round_w.json",
+    "--freeze",
+    "/home/user/nova/evaluation/frozen_validation_round_w_manifest.json",
+    "--output",
+    "<scratch>/w2_out/round_w"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T18:06:40.338354+00:00",
+   "finished_utc": "2026-10-10T18:07:38.423405+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "aa05e58768f37df3d755939600c35d04dc198a566a811e5cfd5974edc6f6dbd8",
+   "artifacts": {
+    "round_w/summary.json": "49a7095e62b7d34f2b2226b9284a745f63dbf33430794ee531a9165b45fc24f1"
+   }
+  },
+  {
+   "step": "round_w_closing",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "/home/user/nova/evaluation/frozen_validation_round_w_closing.json",
+    "--freeze",
+    "/home/user/nova/evaluation/frozen_validation_round_w_closing_manifest.json",
+    "--output",
+    "<scratch>/w2_out/round_w_closing"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T18:06:47.916042+00:00",
+   "finished_utc": "2026-10-10T18:07:41.788346+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "5326ad0c8f88acb19016a7d0844d7f8eac4b199e95f6985b234b755792624a19",
+   "artifacts": {
+    "round_w_closing/summary.json": "1587fcc314f02913eb87a2727f22013973070e0ce4d1be0b5904b167fa51b3b2"
+   }
+  },
+  {
+   "step": "routing",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/benchmark_chief_complaint_routing.py"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:30:32.718222+00:00",
+   "finished_utc": "2026-10-10T17:30:33.132737+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "d34d88c7b146a4e1a7546f86da15859523c8eaa70872ba648b53244893bcfd51",
+   "artifacts": {}
+  },
+  {
+   "step": "specificity",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/audit_feature_match_specificity.py"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:30:33.149032+00:00",
+   "finished_utc": "2026-10-10T17:30:33.580510+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "df7e1c0967d81883df0b32c02055fa56513615ceb3e9d7a014fda28a443da95f",
+   "artifacts": {}
+  },
+  {
+   "step": "t_confirmation",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/frozen_validation_round_t_confirmation.json",
+    "--output",
+    "<scratch>/w2_out/t_confirmation",
+    "--freeze",
+    "evaluation/frozen_validation_round_t_confirmation_manifest.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:57:06.654233+00:00",
+   "finished_utc": "2026-10-10T17:58:31.062613+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "daefcde32b92c070116419ae3d4c4f2e4d28544312b59317c3514a08a8f55da7",
+   "artifacts": {
+    "t_confirmation/summary.json": "0183adc44d7d44b25356aae4acc62c070970274abbc6ae5aa2fe062918518c6b"
+   }
+  },
+  {
+   "step": "t_postfreeze",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/frozen_validation_round_t_postfreeze.json",
+    "--output",
+    "<scratch>/w2_out/t_postfreeze",
+    "--freeze",
+    "evaluation/frozen_validation_round_t_postfreeze_manifest.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:59:32.198647+00:00",
+   "finished_utc": "2026-10-10T18:01:05.357328+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "ea1c37a9ff30ed831dfb3aa64ff755b53c1ad03f6693bb2fb9de9c8a6f530648",
+   "artifacts": {
+    "t_postfreeze/summary.json": "9540194b8674b34aabc690adde7548ea4c4b4baa287a8ff4efbb7e54465074ff"
+   }
+  },
+  {
+   "step": "t_probe",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/frozen_validation_round_t_final_probe.json",
+    "--output",
+    "<scratch>/w2_out/t_probe",
+    "--freeze",
+    "evaluation/frozen_validation_round_t_final_probe_manifest.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T17:58:31.091046+00:00",
+   "finished_utc": "2026-10-10T17:59:32.177681+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "e2ae9efb2364587c830bf669b70bc20df8b39b9353bcf0b28a3f5d14bf13e641",
+   "artifacts": {
+    "t_probe/summary.json": "300545e4d99310b9261d85470964632c2d98753bad5a93e719bdb118cb53d17b"
+   }
+  },
+  {
+   "step": "u10",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/frozen_validation_round_u_final.json",
+    "--output",
+    "<scratch>/w2_out/u10",
+    "--freeze",
+    "evaluation/frozen_validation_round_u_final_manifest.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T18:03:03.167346+00:00",
+   "finished_utc": "2026-10-10T18:03:44.122108+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "5c64fa6decd1bbf6863bba3b6d3ce78539a4034c185a941a7be2325ac493c505",
+   "artifacts": {
+    "u10/summary.json": "e606eebbc639424aaa7f073a769a5820cafcdb5479c0026092a2066fefa3733c"
+   }
+  },
+  {
+   "step": "u12",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/frozen_validation_round_u_confirmation.json",
+    "--output",
+    "<scratch>/w2_out/u12",
+    "--freeze",
+    "evaluation/frozen_validation_round_u_confirmation_manifest.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T18:02:58.281097+00:00",
+   "finished_utc": "2026-10-10T18:03:58.123307+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "6041132d29d549f40c358eb63b9a05e520e7690b84716bd18f7e8b3ae73f5a8a",
+   "artifacts": {
+    "u12/summary.json": "69793f315432bda3bc1e546a31be37461d610df43987e757eb988611f68e1feb"
+   }
+  },
+  {
+   "step": "u20",
+   "command": [
+    "/usr/bin/python3",
+    "scripts/evaluate_round_s.py",
+    "--checkout",
+    "<scratch>/wt_w2",
+    "--cases",
+    "evaluation/frozen_validation_round_u.json",
+    "--output",
+    "<scratch>/w2_out/u20",
+    "--freeze",
+    "evaluation/frozen_validation_round_u_manifest.json"
+   ],
+   "cwd": "<verification worktree at f677d05>",
+   "environment": {
+    "NOVA_LLM_PROVIDER": "mock",
+    "NOVA_COMPETITION_RETRIEVAL": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+   },
+   "started_utc": "2026-10-10T18:01:05.381679+00:00",
+   "finished_utc": "2026-10-10T18:02:58.263432+00:00",
+   "exit_code": 0,
+   "runtime_unchanged": true,
+   "log_sha256": "55b56939bb53c406337a0a879732cdeaf9523ac9662a4b8bc96816cb13318c62",
+   "artifacts": {
+    "u20/summary.json": "1cff18edd5e5a2eb8ec98c350b4a5e868aa06d6509cd479b80ffc6a622497208"
+   }
+  }
+ ],
+ "round_w_baseline_runs": {
+  "round_w": "fef5ee97e51cb0dfb042788d998cca6dbbdef7903cf52f7c0c0c142e5351caba",
+  "round_w_closing": "498f419a346ea6276bc606ae886fa58d21fc1736e735491859bdaa9ae3a7be63"
+ },
+ "local_release": {
+  "schema": "nova-verification-v29",
+  "zip_sha256": "71237eeb5226783bb19a8f0b5ee2e1a94c2534e7f91a78e6ebed72eac71d3bf2",
+  "zip_bytes": 852119,
+  "tests": {
+   "passed": 2526,
+   "failed": 0,
+   "skipped": 2,
+   "skip_reasons": [
+    {
+     "test": "tests.test_learning_training.test_torch_training_and_checkpoint_roundtrip",
+     "reason": "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"
+    },
+    {
+     "test": "tests.test_no_evaluation_time_learning.test_submission_zip_contains_no_learning_training_or_private_artifacts",
+     "reason": "submission not built"
+    }
+   ],
+   "deselected": 0,
+   "binding_checks_rerun_after_record": [
+    "tests.test_current_pre_guide_release.test_current_runtime_exact_archive_and_commit"
+   ],
+   "junit_sha256": "19d7a4ef7a26948aee205771ba6dd23a95bfe28e0c6be9c3411601c3e5a272dc"
+  },
+  "publication": "LOCAL ONLY: ZIP, record and traces not pushed"
+ },
+ "official_api": "NOT VERIFIED",
+ "real_model": "NOT VERIFIED"
+}

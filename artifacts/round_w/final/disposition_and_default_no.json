@@ -1,0 +1,220 @@
+{
+ "disposition": {
+  "closing_u8": {
+   "before": {
+    "contracts": 5,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 5,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "followup_closing": {
+   "before": {
+    "contracts": 7,
+    "fp": [],
+    "fn": [
+     "CloseUF_03"
+    ]
+   },
+   "after": {
+    "contracts": 7,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "followup_new": {
+   "before": {
+    "contracts": 12,
+    "fp": [],
+    "fn": [
+     "FollowU_21"
+    ]
+   },
+   "after": {
+    "contracts": 12,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "round_s": {
+   "before": {
+    "contracts": 9,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 9,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "round_t_development": {
+   "before": {
+    "contracts": 4,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 4,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "round_v": {
+   "before": {
+    "contracts": 11,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 11,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "round_v_closing": {
+   "before": {
+    "contracts": 9,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 9,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "round_w": {
+   "before": {
+    "contracts": 11,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 11,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "round_w_closing": {
+   "before": {
+    "contracts": 11,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 11,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "t_confirmation": {
+   "before": {
+    "contracts": 0,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 0,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "t_postfreeze": {
+   "before": {
+    "contracts": 0,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 0,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "t_probe": {
+   "before": {
+    "contracts": 0,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 0,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "u10": {
+   "before": {
+    "contracts": 3,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 3,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "u12": {
+   "before": {
+    "contracts": 2,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 2,
+    "fp": [],
+    "fn": []
+   }
+  },
+  "u20": {
+   "before": {
+    "contracts": 5,
+    "fp": [],
+    "fn": []
+   },
+   "after": {
+    "contracts": 5,
+    "fp": [],
+    "fn": []
+   }
+  }
+ },
+ "disposition_totals": {
+  "before": {
+   "contracts": 89,
+   "fp": 0,
+   "fn": 2
+  },
+  "after": {
+   "contracts": 89,
+   "fp": 0,
+   "fn": 0
+  }
+ },
+ "default_no_dependence": {
+  "before": {
+   "scored": 222,
+   "correct_default": 219,
+   "correct_unscripted_unknown": 218,
+   "default_no_dependent": 1,
+   "cases": [
+    "RoundM_066"
+   ]
+  },
+  "after": {
+   "scored": 222,
+   "correct_default": 219,
+   "correct_unscripted_unknown": 218,
+   "default_no_dependent": 1,
+   "cases": [
+    "RoundM_066"
+   ]
+  }
+ }
+}

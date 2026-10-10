@@ -1,0 +1,4870 @@
+{
+ "rows": [
+  {
+   "case_id": "PrelimKo_ChestPain_ACS",
+   "counted": 0,
+   "top5": [
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "appendicitis",
+    "sepsis",
+    "pulmonary_embolism"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "PrelimKo_ChestPain_GERD",
+   "counted": 1,
+   "top5": [
+    "gerd",
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "severe_electrolyte_disorder",
+      "hypoglycemia",
+      "sepsis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "PrelimKo_Dyspnea_PE",
+   "counted": 2,
+   "top5": [
+    "pulmonary_embolism",
+    "pneumonia",
+    "asthma_copd_exacerbation",
+    "onto::tier2:sym_hemoptysis",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "gerd",
+      "acute_abdomen",
+      "diabetic_ketoacidosis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "onto::tier2:aortic_stenosis",
+      "acute_coronary_syndrome",
+      "aortic_dissection",
+      "cardiac_arrhythmia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "PrelimKo_Dyspnea_Asthma",
+   "counted": 5,
+   "top5": [
+    "asthma_copd_exacerbation",
+    "onto::tier2:heart_failure_acute",
+    "onto::tier2:aortic_stenosis",
+    "onto::tier2:chronic_heart_failure",
+    "onto::tier2:hypertrophic_cardiomyopathy"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "hypoglycemia",
+      "subarachnoid_hemorrhage",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "onto::tier2:aortic_stenosis",
+      "acute_coronary_syndrome",
+      "aortic_dissection",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism",
+      "aortic_dissection"
+     ]
+    },
+    {
+     "exam": "skin_exam",
+     "requested_for": [
+      "anaphylaxis",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "acute_abdomen",
+      "diabetic_ketoacidosis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "PrelimKo_Abd_Appendicitis",
+   "counted": 2,
+   "top5": [
+    "appendicitis",
+    "acute_abdomen",
+    "ectopic_pregnancy",
+    "acute_pancreatitis",
+    "diabetic_ketoacidosis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "viral_uri",
+      "asthma_copd_exacerbation",
+      "pneumonia",
+      "tension_pneumothorax"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "nephrolithiasis",
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "PrelimKo_Abd_Pancreatitis",
+   "counted": 0,
+   "top5": [
+    "acute_pancreatitis",
+    "aortic_dissection",
+    "gastroenteritis",
+    "diabetic_ketoacidosis",
+    "gi_bleeding"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "PrelimKo_Headache_SAH",
+   "counted": 2,
+   "top5": [
+    "subarachnoid_hemorrhage",
+    "meningitis",
+    "onto::tier2:pituitary_apoplexy",
+    "acute_pancreatitis",
+    "gastroenteritis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "anaphylaxis",
+      "tension_pneumothorax"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "PrelimKo_Headache_Migraine",
+   "counted": 0,
+   "top5": [
+    "migraine",
+    "meningitis",
+    "acute_coronary_syndrome",
+    "onto::tier2:cir_carotid_dissection",
+    "onto::tier2:siadh"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "PrelimKo_Fever_Meningitis",
+   "counted": 2,
+   "top5": [
+    "meningitis",
+    "subarachnoid_hemorrhage",
+    "sepsis",
+    "acute_pancreatitis",
+    "gastroenteritis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pneumonia",
+      "anaphylaxis",
+      "viral_uri",
+      "acute_bronchitis"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "PrelimKo_Fever_URI",
+   "counted": 0,
+   "top5": [
+    "viral_uri",
+    "gastroenteritis",
+    "pyelonephritis",
+    "sepsis",
+    "anaphylaxis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "PrelimKo_Syncope_Vasovagal",
+   "counted": 3,
+   "top5": [
+    "vasovagal_syncope",
+    "cardiac_arrhythmia",
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "onto::tier2:sym_syncope"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "ectopic_pregnancy",
+      "diabetic_ketoacidosis",
+      "acute_abdomen",
+      "gerd"
+     ]
+    },
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "orthostatic_hypotension",
+      "bppv",
+      "subarachnoid_hemorrhage"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "PrelimKo_Neuro_Stroke",
+   "counted": 2,
+   "top5": [
+    "ischemic_stroke",
+    "onto::tier2:angioedema",
+    "acute_coronary_syndrome",
+    "aortic_dissection",
+    "cardiac_arrhythmia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "subarachnoid_hemorrhage"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pulmonary_embolism",
+      "anaphylaxis",
+      "tension_pneumothorax",
+      "acute_bronchitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "PrelimKo_Allergy_Anaphylaxis",
+   "counted": 3,
+   "top5": [
+    "anaphylaxis",
+    "onto::tier2:cardiac_tamponade",
+    "pneumonia",
+    "asthma_copd_exacerbation",
+    "ectopic_pregnancy"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "onto::tier2:aortic_stenosis",
+      "acute_coronary_syndrome",
+      "aortic_dissection",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "hypoglycemia",
+      "diabetic_ketoacidosis",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "PrelimKo_Gluc_Hypoglycemia",
+   "counted": 0,
+   "top5": [
+    "hypoglycemia",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "diabetic_ketoacidosis",
+    "ectopic_pregnancy"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "PrelimKo_Uro_Cystitis",
+   "counted": 0,
+   "top5": [
+    "uncomplicated_cystitis",
+    "pyelonephritis",
+    "nephrolithiasis",
+    "sepsis",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "PrelimKo_Gyn_Ectopic",
+   "counted": 0,
+   "top5": [
+    "ectopic_pregnancy",
+    "diabetic_ketoacidosis",
+    "gi_bleeding",
+    "sepsis",
+    "pulmonary_embolism"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "PrelimKo_Dizzy_BPPV",
+   "counted": 0,
+   "top5": [
+    "bppv",
+    "vasovagal_syncope",
+    "cardiac_arrhythmia",
+    "severe_electrolyte_disorder",
+    "hypoglycemia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "PrelimKo_Noisy_Typo_Chest",
+   "counted": 0,
+   "top5": [
+    "acute_coronary_syndrome",
+    "pneumonia",
+    "hypoglycemia",
+    "onto::tier2:spontaneous_pneumothorax",
+    "diabetic_ketoacidosis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "PrelimKo_Mixed_Term_Pneumonia",
+   "counted": 2,
+   "top5": [
+    "pneumonia",
+    "asthma_copd_exacerbation",
+    "acute_bronchitis",
+    "viral_uri",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "aortic_dissection",
+      "pulmonary_embolism"
+     ]
+    },
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "pyelonephritis",
+      "acute_abdomen",
+      "gastroenteritis",
+      "gerd"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "PrelimKo_Abd_Gastroenteritis",
+   "counted": 0,
+   "top5": [
+    "gastroenteritis",
+    "acute_pancreatitis",
+    "diabetic_ketoacidosis",
+    "onto::tier2:thyroid_storm",
+    "acute_abdomen"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_001",
+   "counted": 1,
+   "top5": [
+    "acute_coronary_syndrome",
+    "acute_pancreatitis",
+    "appendicitis",
+    "nephrolithiasis",
+    "migraine"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "hypoglycemia",
+      "diabetic_ketoacidosis",
+      "subarachnoid_hemorrhage"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_002",
+   "counted": 3,
+   "top5": [
+    "acute_coronary_syndrome",
+    "pneumonia",
+    "asthma_copd_exacerbation",
+    "hypoglycemia",
+    "orthostatic_hypotension"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "pyelonephritis",
+      "acute_abdomen"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis"
+     ]
+    },
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "subarachnoid_hemorrhage"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_003",
+   "counted": 0,
+   "top5": [
+    "musculoskeletal_chest_pain",
+    "onto::tier2:pericarditis",
+    "ectopic_pregnancy",
+    "onto::tier2:ventricular_tachycardia",
+    "onto::tier2:sym_hemoptysis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_004",
+   "counted": 0,
+   "top5": [
+    "gerd",
+    "acute_coronary_syndrome",
+    "aortic_dissection",
+    "musculoskeletal_chest_pain",
+    "cardiac_arrhythmia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_005",
+   "counted": 3,
+   "top5": [
+    "acute_coronary_syndrome",
+    "diabetic_ketoacidosis",
+    "gerd",
+    "ischemic_stroke",
+    "aortic_dissection"
+   ],
+   "unnecessary": [
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    },
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "subarachnoid_hemorrhage"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "tension_pneumothorax",
+      "pneumonia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_006",
+   "counted": 2,
+   "top5": [
+    "panic_attack",
+    "cardiac_arrhythmia",
+    "severe_electrolyte_disorder",
+    "pneumonia",
+    "asthma_copd_exacerbation"
+   ],
+   "unnecessary": [
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism",
+      "aortic_dissection"
+     ]
+    },
+    {
+     "exam": "skin_exam",
+     "requested_for": [
+      "anaphylaxis",
+      "sepsis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_007",
+   "counted": 0,
+   "top5": [
+    "musculoskeletal_chest_pain",
+    "panic_attack",
+    "acute_coronary_syndrome",
+    "aortic_dissection",
+    "cardiac_arrhythmia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_008",
+   "counted": 2,
+   "top5": [
+    "aortic_dissection",
+    "subarachnoid_hemorrhage",
+    "acute_coronary_syndrome",
+    "cardiac_arrhythmia",
+    "ischemic_stroke"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "gerd",
+      "appendicitis",
+      "gastroenteritis"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pulmonary_embolism",
+      "pneumonia",
+      "musculoskeletal_chest_pain",
+      "tension_pneumothorax"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_009",
+   "counted": 0,
+   "top5": [
+    "ischemic_stroke",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "pulmonary_embolism",
+    "aortic_dissection"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_010",
+   "counted": 0,
+   "top5": [
+    "migraine",
+    "pyelonephritis",
+    "ischemic_stroke",
+    "uncomplicated_cystitis",
+    "sepsis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_011",
+   "counted": 0,
+   "top5": [
+    "ischemic_stroke",
+    "meningitis",
+    "migraine",
+    "subarachnoid_hemorrhage",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_012",
+   "counted": 0,
+   "top5": [
+    "tension_headache",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "pulmonary_embolism",
+    "ischemic_stroke"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_013",
+   "counted": 0,
+   "top5": [
+    "ischemic_stroke",
+    "bppv",
+    "ectopic_pregnancy",
+    "acute_coronary_syndrome",
+    "subarachnoid_hemorrhage"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_014",
+   "counted": 0,
+   "top5": [
+    "subarachnoid_hemorrhage",
+    "meningitis",
+    "acute_pancreatitis",
+    "gastroenteritis",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_015",
+   "counted": 1,
+   "top5": [
+    "pulmonary_embolism",
+    "onto::tier2:deep_vein_thrombosis",
+    "cardiac_arrhythmia",
+    "panic_attack",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": [
+    {
+     "exam": "skin_exam",
+     "requested_for": [
+      "sepsis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_016",
+   "counted": 3,
+   "top5": [
+    "pneumonia",
+    "asthma_copd_exacerbation",
+    "onto::tier2:sym_hemoptysis",
+    "pulmonary_embolism",
+    "acute_bronchitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "aortic_dissection",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "pyelonephritis",
+      "acute_abdomen",
+      "gastroenteritis",
+      "gerd"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_017",
+   "counted": 0,
+   "top5": [
+    "asthma_copd_exacerbation",
+    "anaphylaxis",
+    "pneumonia",
+    "acute_coronary_syndrome",
+    "panic_attack"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_018",
+   "counted": 3,
+   "top5": [
+    "pulmonary_embolism",
+    "cardiac_arrhythmia",
+    "panic_attack",
+    "severe_electrolyte_disorder",
+    "pneumonia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "skin_exam",
+     "requested_for": [
+      "anaphylaxis",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "acute_abdomen",
+      "diabetic_ketoacidosis"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "orthostatic_hypotension"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_019",
+   "counted": 1,
+   "top5": [
+    "tension_pneumothorax",
+    "pulmonary_embolism",
+    "pyelonephritis",
+    "onto::tier2:ruptured_ovarian_cyst",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "cardiac_arrhythmia",
+      "vasovagal_syncope",
+      "aortic_dissection"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_020",
+   "counted": 0,
+   "top5": [
+    "asthma_copd_exacerbation",
+    "pneumonia",
+    "onto::tier2:atrial_flutter",
+    "onto::tier2:cardiac_tamponade",
+    "onto::tier2:spontaneous_pneumothorax"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_021",
+   "counted": 0,
+   "top5": [
+    "bppv",
+    "vasovagal_syncope",
+    "cardiac_arrhythmia",
+    "severe_electrolyte_disorder",
+    "hypoglycemia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_022",
+   "counted": 0,
+   "top5": [
+    "vasovagal_syncope",
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "orthostatic_hypotension",
+    "sepsis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_023",
+   "counted": 0,
+   "top5": [
+    "orthostatic_hypotension",
+    "cardiac_arrhythmia",
+    "gi_bleeding",
+    "onto::tier2:adrenal_crisis",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_024",
+   "counted": 1,
+   "top5": [
+    "cardiac_arrhythmia",
+    "vasovagal_syncope",
+    "severe_electrolyte_disorder",
+    "ectopic_pregnancy",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": [
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "orthostatic_hypotension",
+      "bppv",
+      "tension_headache",
+      "subarachnoid_hemorrhage"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_025",
+   "counted": 1,
+   "top5": [
+    "hypoglycemia",
+    "sepsis",
+    "meningitis",
+    "acute_coronary_syndrome",
+    "diabetic_ketoacidosis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_026",
+   "counted": 2,
+   "top5": [
+    "cardiac_arrhythmia",
+    "orthostatic_hypotension",
+    "panic_attack",
+    "severe_electrolyte_disorder",
+    "ectopic_pregnancy"
+   ],
+   "unnecessary": [
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "aortic_dissection",
+      "pulmonary_embolism"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "acute_bronchitis",
+      "pulmonary_embolism"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_027",
+   "counted": 0,
+   "top5": [
+    "uncomplicated_cystitis",
+    "onto::tier2:prostatitis",
+    "sepsis",
+    "onto::tier2:epididymitis",
+    "onto::tier2:gu_epididymo_orchitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_028",
+   "counted": 1,
+   "top5": [
+    "pyelonephritis",
+    "nephrolithiasis",
+    "acute_coronary_syndrome",
+    "appendicitis",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "meningitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_029",
+   "counted": 0,
+   "top5": [
+    "nephrolithiasis",
+    "pyelonephritis",
+    "onto::tier2:epistaxis",
+    "acute_pancreatitis",
+    "aortic_dissection"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_030",
+   "counted": 0,
+   "top5": [
+    "pyelonephritis",
+    "gastroenteritis",
+    "sepsis",
+    "meningitis",
+    "pneumonia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_031",
+   "counted": 1,
+   "top5": [
+    "sepsis",
+    "diabetic_ketoacidosis",
+    "severe_electrolyte_disorder",
+    "hypoglycemia",
+    "onto::tier2:heat_stroke"
+   ],
+   "unnecessary": [
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "subarachnoid_hemorrhage",
+      "meningitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_032",
+   "counted": 0,
+   "top5": [
+    "nephrolithiasis",
+    "pyelonephritis",
+    "acute_coronary_syndrome",
+    "appendicitis",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_033",
+   "counted": 4,
+   "top5": [
+    "sepsis",
+    "acute_coronary_syndrome",
+    "viral_uri",
+    "asthma_copd_exacerbation",
+    "hypoglycemia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "pyelonephritis",
+      "acute_abdomen",
+      "gastroenteritis",
+      "appendicitis"
+     ]
+    },
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "aortic_dissection",
+      "pulmonary_embolism"
+     ]
+    },
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "meningitis"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_034",
+   "counted": 2,
+   "top5": [
+    "meningitis",
+    "subarachnoid_hemorrhage",
+    "sepsis",
+    "migraine",
+    "diabetic_ketoacidosis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pneumonia",
+      "anaphylaxis",
+      "viral_uri",
+      "acute_bronchitis"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_035",
+   "counted": 0,
+   "top5": [
+    "gastroenteritis",
+    "onto::tier2:thyroid_storm",
+    "acute_pancreatitis",
+    "subarachnoid_hemorrhage",
+    "acute_abdomen"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_036",
+   "counted": 0,
+   "top5": [
+    "viral_uri",
+    "appendicitis",
+    "acute_bronchitis",
+    "asthma_copd_exacerbation",
+    "pyelonephritis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_037",
+   "counted": 0,
+   "top5": [
+    "acute_bronchitis",
+    "onto::tier2:acute_otitis_media",
+    "onto::tier2:guillain_barre",
+    "viral_uri",
+    "asthma_copd_exacerbation"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_038",
+   "counted": 0,
+   "top5": [
+    "pyelonephritis",
+    "viral_uri",
+    "appendicitis",
+    "acute_bronchitis",
+    "sepsis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_039",
+   "counted": 1,
+   "top5": [
+    "cardiac_arrhythmia",
+    "onto::tier2:ventricular_tachycardia",
+    "gi_bleeding",
+    "acute_coronary_syndrome",
+    "aortic_dissection"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "subarachnoid_hemorrhage",
+      "hypoglycemia",
+      "severe_electrolyte_disorder"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_040",
+   "counted": 2,
+   "top5": [
+    "severe_electrolyte_disorder",
+    "acute_coronary_syndrome",
+    "cardiac_arrhythmia",
+    "panic_attack",
+    "pulmonary_embolism"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "acute_abdomen",
+      "pyelonephritis",
+      "gerd"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "orthostatic_hypotension",
+      "tension_headache",
+      "subarachnoid_hemorrhage"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_041",
+   "counted": 0,
+   "top5": [
+    "severe_electrolyte_disorder",
+    "onto::tier2:siadh",
+    "meningitis",
+    "sepsis",
+    "migraine"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_042",
+   "counted": 1,
+   "top5": [
+    "panic_attack",
+    "hypoglycemia",
+    "cardiac_arrhythmia",
+    "acute_coronary_syndrome",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "acute_abdomen",
+      "uncomplicated_cystitis",
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_043",
+   "counted": 0,
+   "top5": [
+    "severe_electrolyte_disorder",
+    "gastroenteritis",
+    "acute_pancreatitis",
+    "panic_attack",
+    "subarachnoid_hemorrhage"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_044",
+   "counted": 2,
+   "top5": [
+    "appendicitis",
+    "viral_uri",
+    "acute_abdomen",
+    "ectopic_pregnancy",
+    "acute_bronchitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "hypoglycemia"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "nephrolithiasis",
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_045",
+   "counted": 0,
+   "top5": [
+    "acute_pancreatitis",
+    "onto::tier2:biliary_colic",
+    "gerd",
+    "onto::tier2:cholecystitis",
+    "aortic_dissection"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_046",
+   "counted": 0,
+   "top5": [
+    "acute_abdomen",
+    "onto::tier2:gi_peritonitis_gi",
+    "diabetic_ketoacidosis",
+    "onto::tier2:hypercalcemia",
+    "gi_bleeding"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_047",
+   "counted": 1,
+   "top5": [
+    "ectopic_pregnancy",
+    "diabetic_ketoacidosis",
+    "sepsis",
+    "gi_bleeding",
+    "pulmonary_embolism"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope",
+      "cardiac_arrhythmia",
+      "aortic_dissection"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_048",
+   "counted": 1,
+   "top5": [
+    "gastroenteritis",
+    "appendicitis",
+    "viral_uri",
+    "acute_bronchitis",
+    "diabetic_ketoacidosis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_049",
+   "counted": 2,
+   "top5": [
+    "appendicitis",
+    "viral_uri",
+    "acute_abdomen",
+    "acute_bronchitis",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "hypoglycemia"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "nephrolithiasis",
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_050",
+   "counted": 0,
+   "top5": [
+    "gi_bleeding",
+    "cardiac_arrhythmia",
+    "diabetic_ketoacidosis",
+    "sepsis",
+    "pulmonary_embolism"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_051",
+   "counted": 3,
+   "top5": [
+    "diabetic_ketoacidosis",
+    "gastroenteritis",
+    "acute_pancreatitis",
+    "sepsis",
+    "subarachnoid_hemorrhage"
+   ],
+   "unnecessary": [
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_052",
+   "counted": 2,
+   "top5": [
+    "diabetic_ketoacidosis",
+    "uncomplicated_cystitis",
+    "acute_pancreatitis",
+    "gastroenteritis",
+    "subarachnoid_hemorrhage"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "tension_pneumothorax",
+      "acute_bronchitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_053",
+   "counted": 3,
+   "top5": [
+    "hypoglycemia",
+    "sepsis",
+    "meningitis",
+    "diabetic_ketoacidosis",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": [
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "subarachnoid_hemorrhage",
+      "tension_headache",
+      "orthostatic_hypotension"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pulmonary_embolism",
+      "asthma_copd_exacerbation",
+      "musculoskeletal_chest_pain"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_054",
+   "counted": 1,
+   "top5": [
+    "severe_electrolyte_disorder",
+    "sepsis",
+    "meningitis",
+    "diabetic_ketoacidosis",
+    "hypoglycemia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "orthostatic_hypotension",
+      "migraine",
+      "bppv"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_055",
+   "counted": 0,
+   "top5": [
+    "hypoglycemia",
+    "acute_coronary_syndrome",
+    "ectopic_pregnancy",
+    "aortic_dissection",
+    "vasovagal_syncope"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_056",
+   "counted": 0,
+   "top5": [
+    "gi_bleeding",
+    "orthostatic_hypotension",
+    "cardiac_arrhythmia",
+    "sepsis",
+    "pulmonary_embolism"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_057",
+   "counted": 1,
+   "top5": [
+    "anaphylaxis",
+    "asthma_copd_exacerbation",
+    "sepsis",
+    "pulmonary_embolism",
+    "tension_pneumothorax"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "aortic_dissection",
+      "cardiac_arrhythmia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_058",
+   "counted": 0,
+   "top5": [
+    "orthostatic_hypotension",
+    "cardiac_arrhythmia",
+    "gi_bleeding",
+    "onto::tier2:supraventricular_tachycardia",
+    "vasovagal_syncope"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_059",
+   "counted": 0,
+   "top5": [
+    "severe_electrolyte_disorder",
+    "orthostatic_hypotension",
+    "gi_bleeding",
+    "diabetic_ketoacidosis",
+    "hypoglycemia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_060",
+   "counted": 0,
+   "top5": [
+    "hypoglycemia",
+    "acute_pancreatitis",
+    "gastroenteritis",
+    "acute_coronary_syndrome",
+    "subarachnoid_hemorrhage"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_061",
+   "counted": 2,
+   "top5": [
+    "asthma_copd_exacerbation",
+    "acute_bronchitis",
+    "pneumonia",
+    "anaphylaxis",
+    "diabetic_ketoacidosis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "onto::tier2:aortic_stenosis",
+      "acute_coronary_syndrome",
+      "cardiac_arrhythmia",
+      "aortic_dissection"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_062",
+   "counted": 3,
+   "top5": [
+    "acute_coronary_syndrome",
+    "panic_attack",
+    "ischemic_stroke",
+    "subarachnoid_hemorrhage",
+    "aortic_dissection"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "pyelonephritis",
+      "gerd"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "pulmonary_embolism",
+      "tension_pneumothorax",
+      "pneumonia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_063",
+   "counted": 2,
+   "top5": [
+    "sepsis",
+    "meningitis",
+    "pneumonia",
+    "diabetic_ketoacidosis",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": [
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_064",
+   "counted": 0,
+   "top5": [
+    "cardiac_arrhythmia",
+    "panic_attack",
+    "severe_electrolyte_disorder",
+    "ectopic_pregnancy",
+    "onto::tier2:pheochromocytoma"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_065",
+   "counted": 0,
+   "top5": [
+    "uncomplicated_cystitis",
+    "onto::tier2:prostatitis",
+    "sepsis",
+    "onto::tier2:epididymitis",
+    "onto::tier2:gu_epididymo_orchitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_066",
+   "counted": 2,
+   "top5": [
+    "gastroenteritis",
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "severe_electrolyte_disorder",
+      "aortic_dissection",
+      "acute_coronary_syndrome"
+     ]
+    },
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "severe_electrolyte_disorder",
+      "diabetic_ketoacidosis",
+      "hypoglycemia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_067",
+   "counted": 0,
+   "top5": [
+    "orthostatic_hypotension",
+    "onto::tier2:adrenal_crisis",
+    "ectopic_pregnancy",
+    "severe_electrolyte_disorder",
+    "vasovagal_syncope"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_068",
+   "counted": 0,
+   "top5": [
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "aortic_dissection",
+    "gerd",
+    "musculoskeletal_chest_pain"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_069",
+   "counted": 0,
+   "top5": [
+    "diabetic_ketoacidosis",
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_070",
+   "counted": 2,
+   "top5": [
+    "cardiac_arrhythmia",
+    "onto::tier2:optic_neuritis",
+    "panic_attack",
+    "severe_electrolyte_disorder",
+    "onto::tier2:chronic_heart_failure"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pulmonary_embolism",
+      "asthma_copd_exacerbation",
+      "musculoskeletal_chest_pain"
+     ]
+    },
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism",
+      "aortic_dissection"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_071",
+   "counted": 0,
+   "top5": [
+    "gi_bleeding",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "pulmonary_embolism",
+    "ischemic_stroke"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_072",
+   "counted": 0,
+   "top5": [
+    "diabetic_ketoacidosis",
+    "acute_coronary_syndrome",
+    "pyelonephritis",
+    "sepsis",
+    "ischemic_stroke"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_073",
+   "counted": 0,
+   "top5": [
+    "pneumonia",
+    "pulmonary_embolism",
+    "viral_uri",
+    "asthma_copd_exacerbation",
+    "musculoskeletal_chest_pain"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_074",
+   "counted": 0,
+   "top5": [
+    "ischemic_stroke",
+    "gi_bleeding",
+    "diabetic_ketoacidosis",
+    "severe_electrolyte_disorder",
+    "hypoglycemia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_075",
+   "counted": 1,
+   "top5": [
+    "sepsis",
+    "panic_attack",
+    "pulmonary_embolism",
+    "pyelonephritis",
+    "anaphylaxis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "meningitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_076",
+   "counted": 0,
+   "top5": [
+    "gerd",
+    "acute_coronary_syndrome",
+    "aortic_dissection",
+    "musculoskeletal_chest_pain",
+    "cardiac_arrhythmia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_077",
+   "counted": 0,
+   "top5": [
+    "bppv",
+    "ectopic_pregnancy",
+    "vasovagal_syncope",
+    "cardiac_arrhythmia",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_078",
+   "counted": 0,
+   "top5": [
+    "vasovagal_syncope",
+    "acute_coronary_syndrome",
+    "acute_pancreatitis",
+    "onto::tier2:biliary_colic",
+    "orthostatic_hypotension"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_079",
+   "counted": 0,
+   "top5": [
+    "viral_uri",
+    "pyelonephritis",
+    "sepsis",
+    "pneumonia",
+    "acute_abdomen"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_080",
+   "counted": 1,
+   "top5": [
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "sepsis",
+    "pulmonary_embolism",
+    "ischemic_stroke"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "acute_abdomen",
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_081",
+   "counted": 0,
+   "top5": [
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "aortic_dissection",
+    "gerd",
+    "musculoskeletal_chest_pain"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_082",
+   "counted": 0,
+   "top5": [
+    "uncomplicated_cystitis",
+    "onto::tier2:prostatitis",
+    "sepsis",
+    "onto::tier2:epididymitis",
+    "onto::tier2:gu_epididymo_orchitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_083",
+   "counted": 0,
+   "top5": [
+    "uncomplicated_cystitis",
+    "onto::tier2:prostatitis",
+    "onto::tier2:hypercalcemia",
+    "sepsis",
+    "onto::tier2:epididymitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_084",
+   "counted": 1,
+   "top5": [
+    "pulmonary_embolism",
+    "onto::tier2:deep_vein_thrombosis",
+    "pneumonia",
+    "asthma_copd_exacerbation",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "aortic_dissection",
+      "cardiac_arrhythmia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_085",
+   "counted": 1,
+   "top5": [
+    "pulmonary_embolism",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "ischemic_stroke",
+    "aortic_dissection"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "gi_bleeding",
+      "acute_abdomen",
+      "ectopic_pregnancy",
+      "acute_pancreatitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_086",
+   "counted": 0,
+   "top5": [
+    "subarachnoid_hemorrhage",
+    "meningitis",
+    "acute_pancreatitis",
+    "gastroenteritis",
+    "onto::tier2:cir_carotid_dissection"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_087",
+   "counted": 2,
+   "top5": [
+    "subarachnoid_hemorrhage",
+    "meningitis",
+    "migraine",
+    "acute_pancreatitis",
+    "appendicitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "nephrolithiasis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_088",
+   "counted": 2,
+   "top5": [
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "acute_pancreatitis",
+    "appendicitis",
+    "nephrolithiasis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "migraine",
+      "tension_headache",
+      "orthostatic_hypotension"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "tension_pneumothorax",
+      "pneumonia",
+      "acute_bronchitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_089",
+   "counted": 1,
+   "top5": [
+    "pyelonephritis",
+    "sepsis",
+    "onto::tier2:prostatitis",
+    "onto::tier2:epididymitis",
+    "meningitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pneumonia",
+      "anaphylaxis",
+      "viral_uri",
+      "acute_bronchitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_090",
+   "counted": 0,
+   "top5": [
+    "ischemic_stroke",
+    "gi_bleeding",
+    "diabetic_ketoacidosis",
+    "severe_electrolyte_disorder",
+    "hypoglycemia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_091",
+   "counted": 0,
+   "top5": [
+    "asthma_copd_exacerbation",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "pulmonary_embolism",
+    "ischemic_stroke"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_092",
+   "counted": 3,
+   "top5": [
+    "appendicitis",
+    "viral_uri",
+    "acute_abdomen",
+    "ectopic_pregnancy",
+    "acute_bronchitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "hypoglycemia"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "nephrolithiasis",
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "migraine"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_093",
+   "counted": 0,
+   "top5": [
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "aortic_dissection",
+    "gerd",
+    "musculoskeletal_chest_pain"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_094",
+   "counted": 0,
+   "top5": [
+    "gastroenteritis",
+    "acute_pancreatitis",
+    "subarachnoid_hemorrhage",
+    "onto::tier2:thyroid_storm",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_095",
+   "counted": 0,
+   "top5": [
+    "bppv",
+    "ectopic_pregnancy",
+    "vasovagal_syncope",
+    "cardiac_arrhythmia",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_096",
+   "counted": 1,
+   "top5": [
+    "subarachnoid_hemorrhage",
+    "meningitis",
+    "acute_pancreatitis",
+    "gastroenteritis",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_097",
+   "counted": 1,
+   "top5": [
+    "vasovagal_syncope",
+    "acute_coronary_syndrome",
+    "appendicitis",
+    "acute_pancreatitis",
+    "migraine"
+   ],
+   "unnecessary": [
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_098",
+   "counted": 2,
+   "top5": [
+    "onto::tier2:cholecystitis",
+    "acute_pancreatitis",
+    "appendicitis",
+    "viral_uri",
+    "acute_bronchitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_099",
+   "counted": 0,
+   "top5": [
+    "onto::tier2:bowel_obstruction",
+    "gastroenteritis",
+    "acute_pancreatitis",
+    "diabetic_ketoacidosis",
+    "gi_bleeding"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_100",
+   "counted": 0,
+   "top5": [
+    "onto::tier2:herpes_zoster",
+    "gerd",
+    "onto::tier2:sickle_cell_disease",
+    "onto::tier2:ventricular_tachycardia",
+    "meningitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_101",
+   "counted": 0,
+   "top5": [
+    "onto::tier2:deep_vein_thrombosis",
+    "pulmonary_embolism",
+    "onto::tier2:gu_epididymo_orchitis",
+    "onto::tier2:der_cutaneous_abscess",
+    "onto::tier2:testicular_torsion"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_102",
+   "counted": 1,
+   "top5": [
+    "onto::tier2:pericarditis",
+    "gerd",
+    "acute_bronchitis",
+    "onto::tier2:guillain_barre",
+    "musculoskeletal_chest_pain"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "cardiac_arrhythmia",
+      "vasovagal_syncope"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_103",
+   "counted": 2,
+   "top5": [
+    "onto::tier2:diverticulitis",
+    "appendicitis",
+    "viral_uri",
+    "acute_abdomen",
+    "ectopic_pregnancy"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_104",
+   "counted": 3,
+   "top5": [
+    "onto::tier2:testicular_torsion",
+    "acute_pancreatitis",
+    "aortic_dissection",
+    "diabetic_ketoacidosis",
+    "gastroenteritis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "migraine",
+      "subarachnoid_hemorrhage"
+     ]
+    },
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "subarachnoid_hemorrhage"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "tension_pneumothorax"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_105",
+   "counted": 2,
+   "top5": [
+    "ectopic_pregnancy",
+    "diabetic_ketoacidosis",
+    "acute_pancreatitis",
+    "aortic_dissection",
+    "onto::tier2:ovarian_torsion"
+   ],
+   "unnecessary": [
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "migraine",
+      "tension_headache"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_106",
+   "counted": 1,
+   "top5": [
+    "onto::tier2:pelvic_inflammatory_disease",
+    "ectopic_pregnancy",
+    "diabetic_ketoacidosis",
+    "acute_abdomen",
+    "pyelonephritis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pneumonia",
+      "anaphylaxis",
+      "viral_uri",
+      "acute_bronchitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_107",
+   "counted": 0,
+   "top5": [
+    "onto::tier2:acute_angle_closure_glaucoma",
+    "meningitis",
+    "migraine",
+    "acute_coronary_syndrome",
+    "appendicitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_108",
+   "counted": 1,
+   "top5": [
+    "onto::tier2:gi_duodenal_ulcer",
+    "onto::tier2:peptic_ulcer_disease",
+    "diabetic_ketoacidosis",
+    "gi_bleeding",
+    "acute_abdomen"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "onto::tier2:heart_failure_acute",
+      "anaphylaxis",
+      "viral_uri",
+      "pneumonia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_109",
+   "counted": 3,
+   "top5": [
+    "onto::tier2:cellulitis",
+    "onto::tier2:cellulitis_derm",
+    "onto::tier2:gu_epididymo_orchitis",
+    "onto::tier2:deep_vein_thrombosis",
+    "pyelonephritis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pneumonia",
+      "anaphylaxis",
+      "viral_uri",
+      "acute_bronchitis"
+     ]
+    },
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "hypoglycemia"
+     ]
+    },
+    {
+     "exam": "skin_exam",
+     "requested_for": [
+      "anaphylaxis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_110",
+   "counted": 3,
+   "top5": [
+    "onto::tier2:gout",
+    "uncomplicated_cystitis",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "subarachnoid_hemorrhage",
+      "migraine",
+      "tension_headache",
+      "bppv"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    },
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "hypoglycemia",
+      "subarachnoid_hemorrhage"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_111",
+   "counted": 4,
+   "top5": [
+    "onto::tier2:acute_otitis_media",
+    "acute_bronchitis",
+    "onto::tier2:guillain_barre",
+    "sepsis",
+    "meningitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "pyelonephritis",
+      "acute_abdomen",
+      "diabetic_ketoacidosis",
+      "gastroenteritis"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "vasovagal_syncope",
+      "acute_coronary_syndrome"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "orthostatic_hypotension"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_112",
+   "counted": 1,
+   "top5": [
+    "uncomplicated_cystitis",
+    "sepsis",
+    "onto::tier2:epididymitis",
+    "onto::tier2:gu_epididymo_orchitis",
+    "onto::tier2:prostatitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pulmonary_embolism",
+      "anaphylaxis",
+      "musculoskeletal_chest_pain",
+      "tension_pneumothorax"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_113",
+   "counted": 1,
+   "top5": [
+    "onto::tier2:optic_neuritis",
+    "musculoskeletal_chest_pain",
+    "ischemic_stroke",
+    "sepsis",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "acute_abdomen",
+      "acute_pancreatitis",
+      "gerd"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_114",
+   "counted": 3,
+   "top5": [
+    "onto::tier2:hyperthyroidism",
+    "hypoglycemia",
+    "severe_electrolyte_disorder",
+    "cardiac_arrhythmia",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": [
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism",
+      "aortic_dissection"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pulmonary_embolism"
+     ]
+    },
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "acute_abdomen",
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_115",
+   "counted": 1,
+   "top5": [
+    "onto::tier2:giant_cell_arteritis",
+    "onto::tier2:gca",
+    "migraine",
+    "acute_coronary_syndrome",
+    "meningitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "acute_abdomen",
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_116",
+   "counted": 1,
+   "top5": [
+    "onto::tier2:myocarditis",
+    "acute_bronchitis",
+    "panic_attack",
+    "severe_electrolyte_disorder",
+    "onto::tier2:ventricular_tachycardia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "gerd",
+      "acute_abdomen",
+      "gastroenteritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_117",
+   "counted": 1,
+   "top5": [
+    "onto::tier2:mesenteric_ischemia",
+    "gerd",
+    "acute_abdomen",
+    "cardiac_arrhythmia",
+    "diabetic_ketoacidosis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "tension_pneumothorax",
+      "musculoskeletal_chest_pain"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_118",
+   "counted": 2,
+   "top5": [
+    "onto::tier2:cholangitis",
+    "onto::tier2:choledocholithiasis",
+    "onto::tier2:acute_hepatitis",
+    "diabetic_ketoacidosis",
+    "onto::tier2:cholecystitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pneumonia",
+      "anaphylaxis",
+      "viral_uri",
+      "acute_bronchitis"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_119",
+   "counted": 0,
+   "top5": [
+    "onto::tier2:spontaneous_pneumothorax",
+    "tension_pneumothorax",
+    "acute_coronary_syndrome",
+    "aortic_dissection",
+    "gerd"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_120",
+   "counted": 1,
+   "top5": [
+    "onto::tier2:guillain_barre",
+    "diabetic_ketoacidosis",
+    "sepsis",
+    "ischemic_stroke",
+    "gi_bleeding"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "aortic_dissection",
+      "vasovagal_syncope"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_121",
+   "counted": 0,
+   "top5": [
+    "onto::tier2:cauda_equina",
+    "severe_electrolyte_disorder",
+    "acute_pancreatitis",
+    "aortic_dissection",
+    "pyelonephritis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundM_122",
+   "counted": 2,
+   "top5": [
+    "onto::tier2:septic_arthritis",
+    "onto::tier2:septic_arthritis_ortho",
+    "pyelonephritis",
+    "sepsis",
+    "meningitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pneumonia",
+      "anaphylaxis",
+      "viral_uri",
+      "acute_bronchitis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_123",
+   "counted": 2,
+   "top5": [
+    "onto::tier2:rhabdomyolysis",
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_124",
+   "counted": 4,
+   "top5": [
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis",
+    "appendicitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "severe_electrolyte_disorder",
+      "hypoglycemia",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "uncomplicated_cystitis",
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_125",
+   "counted": 4,
+   "top5": [
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis",
+    "appendicitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "severe_electrolyte_disorder",
+      "hypoglycemia",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "uncomplicated_cystitis",
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_126",
+   "counted": 3,
+   "top5": [
+    "gi_bleeding",
+    "diabetic_ketoacidosis",
+    "severe_electrolyte_disorder",
+    "hypoglycemia",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "orthostatic_hypotension",
+      "bppv",
+      "tension_headache"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "acute_bronchitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_127",
+   "counted": 2,
+   "top5": [
+    "tension_headache",
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundM_128",
+   "counted": 4,
+   "top5": [
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis",
+    "appendicitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "severe_electrolyte_disorder",
+      "hypoglycemia",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "uncomplicated_cystitis",
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_01",
+   "counted": 1,
+   "top5": [
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "nephrolithiasis",
+    "appendicitis",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "tension_pneumothorax",
+      "pneumonia",
+      "acute_bronchitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_02",
+   "counted": 0,
+   "top5": [
+    "gerd",
+    "onto::tier2:sickle_cell_disease",
+    "onto::tier2:ventricular_tachycardia",
+    "acute_coronary_syndrome",
+    "aortic_dissection"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_03",
+   "counted": 0,
+   "top5": [
+    "musculoskeletal_chest_pain",
+    "ectopic_pregnancy",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "pulmonary_embolism"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_04",
+   "counted": 0,
+   "top5": [
+    "aortic_dissection",
+    "acute_pancreatitis",
+    "acute_coronary_syndrome",
+    "gerd",
+    "musculoskeletal_chest_pain"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_05",
+   "counted": 3,
+   "top5": [
+    "cardiac_arrhythmia",
+    "panic_attack",
+    "severe_electrolyte_disorder",
+    "onto::tier2:ventricular_tachycardia",
+    "onto::tier2:angioedema"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pulmonary_embolism",
+      "anaphylaxis",
+      "tension_pneumothorax"
+     ]
+    },
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism",
+      "aortic_dissection"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "orthostatic_hypotension",
+      "subarachnoid_hemorrhage"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_06",
+   "counted": 1,
+   "top5": [
+    "severe_electrolyte_disorder",
+    "ischemic_stroke",
+    "gi_bleeding",
+    "diabetic_ketoacidosis",
+    "hypoglycemia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pulmonary_embolism",
+      "tension_pneumothorax",
+      "acute_bronchitis",
+      "anaphylaxis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_07",
+   "counted": 0,
+   "top5": [
+    "vasovagal_syncope",
+    "onto::tier2:sym_syncope",
+    "orthostatic_hypotension",
+    "sepsis",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_08",
+   "counted": 0,
+   "top5": [
+    "orthostatic_hypotension",
+    "cardiac_arrhythmia",
+    "gi_bleeding",
+    "vasovagal_syncope",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_09",
+   "counted": 0,
+   "top5": [
+    "bppv",
+    "vasovagal_syncope",
+    "cardiac_arrhythmia",
+    "severe_electrolyte_disorder",
+    "hypoglycemia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_10",
+   "counted": 0,
+   "top5": [
+    "ischemic_stroke",
+    "ectopic_pregnancy",
+    "vasovagal_syncope",
+    "cardiac_arrhythmia",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_11",
+   "counted": 1,
+   "top5": [
+    "migraine",
+    "meningitis",
+    "subarachnoid_hemorrhage",
+    "tension_headache",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "acute_abdomen",
+      "gi_bleeding",
+      "ectopic_pregnancy",
+      "acute_pancreatitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_12",
+   "counted": 0,
+   "top5": [
+    "tension_headache",
+    "ischemic_stroke",
+    "subarachnoid_hemorrhage",
+    "meningitis",
+    "sepsis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_13",
+   "counted": 1,
+   "top5": [
+    "subarachnoid_hemorrhage",
+    "meningitis",
+    "ischemic_stroke",
+    "migraine",
+    "tension_headache"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope",
+      "cardiac_arrhythmia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_14",
+   "counted": 1,
+   "top5": [
+    "meningitis",
+    "subarachnoid_hemorrhage",
+    "migraine",
+    "pyelonephritis",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pneumonia",
+      "anaphylaxis",
+      "viral_uri",
+      "acute_bronchitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_15",
+   "counted": 0,
+   "top5": [
+    "hypoglycemia",
+    "sepsis",
+    "meningitis",
+    "diabetic_ketoacidosis",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_16",
+   "counted": 0,
+   "top5": [
+    "diabetic_ketoacidosis",
+    "acute_coronary_syndrome",
+    "pyelonephritis",
+    "sepsis",
+    "ischemic_stroke"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_17",
+   "counted": 1,
+   "top5": [
+    "pulmonary_embolism",
+    "onto::tier2:deep_vein_thrombosis",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "panic_attack"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "acute_abdomen",
+      "pyelonephritis",
+      "appendicitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_18",
+   "counted": 2,
+   "top5": [
+    "tension_pneumothorax",
+    "onto::tier2:supraventricular_tachycardia",
+    "sepsis",
+    "pulmonary_embolism",
+    "anaphylaxis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "gi_bleeding",
+      "diabetic_ketoacidosis",
+      "acute_abdomen",
+      "gerd"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "aortic_dissection",
+      "vasovagal_syncope"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_19",
+   "counted": 0,
+   "top5": [
+    "pneumonia",
+    "pulmonary_embolism",
+    "acute_bronchitis",
+    "viral_uri",
+    "asthma_copd_exacerbation"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_20",
+   "counted": 2,
+   "top5": [
+    "acute_bronchitis",
+    "viral_uri",
+    "pneumonia",
+    "appendicitis",
+    "onto::tier2:guillain_barre"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_21",
+   "counted": 0,
+   "top5": [
+    "asthma_copd_exacerbation",
+    "anaphylaxis",
+    "acute_coronary_syndrome",
+    "panic_attack",
+    "diabetic_ketoacidosis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_22",
+   "counted": 0,
+   "top5": [
+    "viral_uri",
+    "appendicitis",
+    "gastroenteritis",
+    "asthma_copd_exacerbation",
+    "pyelonephritis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_23",
+   "counted": 0,
+   "top5": [
+    "anaphylaxis",
+    "asthma_copd_exacerbation",
+    "onto::tier2:angioedema",
+    "acute_coronary_syndrome",
+    "panic_attack"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_24",
+   "counted": 1,
+   "top5": [
+    "panic_attack",
+    "onto::tier2:angioedema",
+    "onto::tier2:hypocalcemia",
+    "ischemic_stroke",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "acute_abdomen",
+      "gi_bleeding",
+      "ectopic_pregnancy",
+      "acute_pancreatitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_25",
+   "counted": 0,
+   "top5": [
+    "acute_abdomen",
+    "onto::tier2:gi_peritonitis_gi",
+    "onto::tier2:gi_perforated_ulcer",
+    "gi_bleeding",
+    "ectopic_pregnancy"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_26",
+   "counted": 0,
+   "top5": [
+    "gi_bleeding",
+    "orthostatic_hypotension",
+    "cardiac_arrhythmia",
+    "ectopic_pregnancy",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_27",
+   "counted": 1,
+   "top5": [
+    "ectopic_pregnancy",
+    "acute_abdomen",
+    "gi_bleeding",
+    "acute_pancreatitis",
+    "appendicitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "tension_pneumothorax",
+      "pneumonia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_28",
+   "counted": 2,
+   "top5": [
+    "acute_pancreatitis",
+    "diabetic_ketoacidosis",
+    "onto::tier2:mesenteric_ischemia",
+    "aortic_dissection",
+    "pyelonephritis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "migraine",
+      "tension_headache"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_29",
+   "counted": 0,
+   "top5": [
+    "appendicitis",
+    "viral_uri",
+    "onto::tier2:acute_hepatitis",
+    "ectopic_pregnancy",
+    "pyelonephritis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_30",
+   "counted": 0,
+   "top5": [
+    "gastroenteritis",
+    "onto::tier2:thyroid_storm",
+    "onto::tier2:adrenal_crisis",
+    "onto::tier2:bowel_obstruction",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_31",
+   "counted": 0,
+   "top5": [
+    "uncomplicated_cystitis",
+    "onto::tier2:prostatitis",
+    "sepsis",
+    "onto::tier2:epididymitis",
+    "onto::tier2:gu_epididymo_orchitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_32",
+   "counted": 1,
+   "top5": [
+    "pyelonephritis",
+    "sepsis",
+    "nephrolithiasis",
+    "acute_pancreatitis",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pneumonia",
+      "anaphylaxis",
+      "viral_uri",
+      "acute_bronchitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_33",
+   "counted": 0,
+   "top5": [
+    "nephrolithiasis",
+    "pyelonephritis",
+    "gastroenteritis",
+    "acute_pancreatitis",
+    "aortic_dissection"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_34",
+   "counted": 1,
+   "top5": [
+    "sepsis",
+    "meningitis",
+    "severe_electrolyte_disorder",
+    "pulmonary_embolism",
+    "gi_bleeding"
+   ],
+   "unnecessary": [
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_35",
+   "counted": 1,
+   "top5": [
+    "ischemic_stroke",
+    "bppv",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "pulmonary_embolism"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "acute_abdomen",
+      "gi_bleeding",
+      "ectopic_pregnancy",
+      "acute_pancreatitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_36",
+   "counted": 3,
+   "top5": [
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "ischemic_stroke",
+    "aortic_dissection",
+    "diabetic_ketoacidosis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    },
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "subarachnoid_hemorrhage"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "nephrolithiasis",
+      "uncomplicated_cystitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_37",
+   "counted": 1,
+   "top5": [
+    "severe_electrolyte_disorder",
+    "sepsis",
+    "meningitis",
+    "diabetic_ketoacidosis",
+    "hypoglycemia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "orthostatic_hypotension",
+      "bppv",
+      "subarachnoid_hemorrhage"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_38",
+   "counted": 0,
+   "top5": [
+    "gerd",
+    "onto::tier2:hypertensive_emergency",
+    "onto::tier2:sym_hemoptysis",
+    "onto::tier2:sickle_cell_disease",
+    "onto::tier2:supraventricular_tachycardia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_39",
+   "counted": 0,
+   "top5": [
+    "bppv",
+    "ectopic_pregnancy",
+    "vasovagal_syncope",
+    "cardiac_arrhythmia",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_40",
+   "counted": 2,
+   "top5": [
+    "acute_bronchitis",
+    "viral_uri",
+    "appendicitis",
+    "asthma_copd_exacerbation",
+    "pneumonia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "cardiac_arrhythmia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_41",
+   "counted": 1,
+   "top5": [
+    "severe_electrolyte_disorder",
+    "panic_attack",
+    "gi_bleeding",
+    "diabetic_ketoacidosis",
+    "hypoglycemia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "bppv",
+      "orthostatic_hypotension",
+      "subarachnoid_hemorrhage"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_42",
+   "counted": 0,
+   "top5": [
+    "cardiac_arrhythmia",
+    "gi_bleeding",
+    "acute_coronary_syndrome",
+    "panic_attack",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_43",
+   "counted": 2,
+   "top5": [
+    "pulmonary_embolism",
+    "onto::tier2:deep_vein_thrombosis",
+    "pneumonia",
+    "musculoskeletal_chest_pain",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "cardiac_arrhythmia",
+      "vasovagal_syncope"
+     ]
+    },
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "gerd",
+      "acute_abdomen"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_44",
+   "counted": 0,
+   "top5": [
+    "uncomplicated_cystitis",
+    "nephrolithiasis",
+    "acute_coronary_syndrome",
+    "pulmonary_embolism",
+    "ischemic_stroke"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_45",
+   "counted": 2,
+   "top5": [
+    "sepsis",
+    "meningitis",
+    "pyelonephritis",
+    "diabetic_ketoacidosis",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pulmonary_embolism",
+      "anaphylaxis",
+      "pneumonia",
+      "viral_uri"
+     ]
+    },
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_46",
+   "counted": 0,
+   "top5": [
+    "musculoskeletal_chest_pain",
+    "onto::tier2:sickle_cell_disease",
+    "onto::tier2:ventricular_tachycardia",
+    "acute_coronary_syndrome",
+    "aortic_dissection"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_47",
+   "counted": 2,
+   "top5": [
+    "pneumonia",
+    "asthma_copd_exacerbation",
+    "acute_bronchitis",
+    "viral_uri",
+    "sepsis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "pyelonephritis",
+      "acute_abdomen",
+      "diabetic_ketoacidosis",
+      "gastroenteritis"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_48",
+   "counted": 0,
+   "top5": [
+    "gerd",
+    "onto::tier2:sym_hemoptysis",
+    "onto::tier2:hypertensive_emergency",
+    "onto::tier2:myocarditis",
+    "onto::tier2:sickle_cell_disease"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_49",
+   "counted": 0,
+   "top5": [
+    "onto::tier2:peripheral_arterial_disease",
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_50",
+   "counted": 0,
+   "top5": [
+    "onto::tier2:premature_ventricular_contractions",
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_51",
+   "counted": 0,
+   "top5": [
+    "ectopic_pregnancy",
+    "onto::tier2:meniere_disease",
+    "vasovagal_syncope",
+    "cardiac_arrhythmia",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundJ_52",
+   "counted": 3,
+   "top5": [
+    "acute_coronary_syndrome",
+    "aortic_dissection",
+    "gerd",
+    "musculoskeletal_chest_pain",
+    "cardiac_arrhythmia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "orthostatic_hypotension",
+      "bppv",
+      "tension_headache"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "uncomplicated_cystitis",
+      "pyelonephritis"
+     ]
+    },
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "hypoglycemia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_53",
+   "counted": 4,
+   "top5": [
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis",
+    "appendicitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "severe_electrolyte_disorder",
+      "hypoglycemia",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "uncomplicated_cystitis",
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundJ_54",
+   "counted": 4,
+   "top5": [
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis",
+    "appendicitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "severe_electrolyte_disorder",
+      "hypoglycemia",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "uncomplicated_cystitis",
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundI_ion_rhythm",
+   "counted": 0,
+   "top5": [
+    "severe_electrolyte_disorder",
+    "cardiac_arrhythmia",
+    "subarachnoid_hemorrhage",
+    "acute_coronary_syndrome",
+    "panic_attack"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundI_sodium",
+   "counted": 3,
+   "top5": [
+    "severe_electrolyte_disorder",
+    "sepsis",
+    "diabetic_ketoacidosis",
+    "hypoglycemia",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": [
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "subarachnoid_hemorrhage",
+      "meningitis"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "migraine",
+      "subarachnoid_hemorrhage",
+      "tension_headache"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "nephrolithiasis",
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundI_primary_rhythm",
+   "counted": 0,
+   "top5": [
+    "cardiac_arrhythmia",
+    "gi_bleeding",
+    "onto::tier2:supraventricular_tachycardia",
+    "vasovagal_syncope",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundI_lung_source",
+   "counted": 1,
+   "top5": [
+    "pneumonia",
+    "acute_bronchitis",
+    "viral_uri",
+    "asthma_copd_exacerbation",
+    "onto::tier2:sym_hemoptysis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "pyelonephritis",
+      "acute_abdomen",
+      "gastroenteritis",
+      "diabetic_ketoacidosis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundI_urinary_systemic",
+   "counted": 2,
+   "top5": [
+    "sepsis",
+    "meningitis",
+    "pyelonephritis",
+    "diabetic_ketoacidosis",
+    "hypoglycemia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pulmonary_embolism",
+      "pneumonia",
+      "acute_bronchitis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundI_urinary_source",
+   "counted": 0,
+   "top5": [
+    "pyelonephritis",
+    "onto::tier2:prostatitis",
+    "musculoskeletal_chest_pain",
+    "sepsis",
+    "meningitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundI_enzyme_first",
+   "counted": 2,
+   "top5": [
+    "acute_pancreatitis",
+    "diabetic_ketoacidosis",
+    "pyelonephritis",
+    "gastroenteritis",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": [
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "migraine",
+      "tension_headache"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundI_enzyme_sparse",
+   "counted": 1,
+   "top5": [
+    "acute_pancreatitis",
+    "aortic_dissection",
+    "onto::tier2:cauda_equina",
+    "acute_abdomen",
+    "gi_bleeding"
+   ],
+   "unnecessary": [
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundI_multimorbid_ischemia",
+   "counted": 3,
+   "top5": [
+    "acute_coronary_syndrome",
+    "hypoglycemia",
+    "diabetic_ketoacidosis",
+    "severe_electrolyte_disorder",
+    "pyelonephritis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "subarachnoid_hemorrhage"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "subarachnoid_hemorrhage",
+      "tension_headache",
+      "orthostatic_hypotension"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "pulmonary_embolism",
+      "tension_pneumothorax",
+      "pneumonia"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundI_drug_glucose",
+   "counted": 0,
+   "top5": [
+    "hypoglycemia",
+    "sepsis",
+    "meningitis",
+    "diabetic_ketoacidosis",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundI_severity_specific",
+   "counted": 0,
+   "top5": [
+    "diabetic_ketoacidosis",
+    "acute_coronary_syndrome",
+    "sepsis",
+    "pulmonary_embolism",
+    "pyelonephritis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundI_benign_positional",
+   "counted": 0,
+   "top5": [
+    "bppv",
+    "musculoskeletal_chest_pain",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "pulmonary_embolism"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundI_dangerous_balance",
+   "counted": 0,
+   "top5": [
+    "ischemic_stroke",
+    "ectopic_pregnancy",
+    "onto::tier2:pituitary_apoplexy",
+    "onto::tier2:giant_cell_arteritis",
+    "onto::tier2:gca"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundI_negative_cardiac",
+   "counted": 0,
+   "top5": [
+    "gerd",
+    "onto::tier2:sickle_cell_disease",
+    "onto::tier2:ventricular_tachycardia",
+    "onto::tier2:supraventricular_tachycardia",
+    "orthostatic_hypotension"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundI_late_reversal",
+   "counted": 1,
+   "top5": [
+    "pulmonary_embolism",
+    "onto::tier2:deep_vein_thrombosis",
+    "sepsis",
+    "acute_coronary_syndrome",
+    "aortic_dissection"
+   ],
+   "unnecessary": [
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "gerd",
+      "acute_abdomen"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundI_pleural",
+   "counted": 4,
+   "top5": [
+    "tension_pneumothorax",
+    "onto::tier2:angioedema",
+    "viral_uri",
+    "asthma_copd_exacerbation",
+    "onto::tier2:sym_hemoptysis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "skin_exam",
+     "requested_for": [
+      "anaphylaxis",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "aortic_dissection",
+      "vasovagal_syncope"
+     ]
+    },
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "hypoglycemia",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "aortic_dissection",
+      "pulmonary_embolism"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundI_ko_urinary",
+   "counted": 0,
+   "top5": [
+    "uncomplicated_cystitis",
+    "pyelonephritis",
+    "nephrolithiasis",
+    "sepsis",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundI_ja_gut",
+   "counted": 1,
+   "top5": [
+    "gastroenteritis",
+    "acute_pancreatitis",
+    "diabetic_ketoacidosis",
+    "onto::tier2:thyroid_storm",
+    "onto::tier2:adrenal_crisis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "RoundI_long_tail",
+   "counted": 0,
+   "top5": [
+    "onto::tier2:sjogren_syndrome",
+    "uncomplicated_cystitis",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "RoundI_unsupported",
+   "counted": 4,
+   "top5": [
+    "acute_abdomen",
+    "gi_bleeding",
+    "ectopic_pregnancy",
+    "acute_pancreatitis",
+    "appendicitis"
+   ],
+   "unnecessary": [
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "severe_electrolyte_disorder",
+      "hypoglycemia",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "vasovagal_syncope",
+      "cardiac_arrhythmia"
+     ]
+    },
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "uncomplicated_cystitis",
+      "pyelonephritis",
+      "nephrolithiasis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "ChestPain01",
+   "counted": 4,
+   "top5": [
+    "acute_coronary_syndrome",
+    "onto::tier2:stable_angina",
+    "sepsis",
+    "ischemic_stroke",
+    "subarachnoid_hemorrhage"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "musculoskeletal_chest_pain",
+      "tension_pneumothorax",
+      "pneumonia",
+      "pulmonary_embolism"
+     ]
+    },
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "aortic_dissection",
+      "pulmonary_embolism"
+     ]
+    },
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "gerd",
+      "diabetic_ketoacidosis",
+      "pyelonephritis",
+      "acute_abdomen"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "AbdominalPain01",
+   "counted": 1,
+   "top5": [
+    "ectopic_pregnancy",
+    "diabetic_ketoacidosis",
+    "gi_bleeding",
+    "pulmonary_embolism",
+    "acute_coronary_syndrome"
+   ],
+   "unnecessary": [
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "migraine",
+      "bppv",
+      "orthostatic_hypotension",
+      "ischemic_stroke"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "Headache01",
+   "counted": 2,
+   "top5": [
+    "subarachnoid_hemorrhage",
+    "meningitis",
+    "onto::tier2:hypertensive_emergency",
+    "onto::tier2:pituitary_apoplexy",
+    "migraine"
+   ],
+   "unnecessary": [
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "cardiac_arrhythmia",
+      "severe_electrolyte_disorder",
+      "aortic_dissection"
+     ]
+    },
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism",
+      "aortic_dissection"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "Fever01",
+   "counted": 4,
+   "top5": [
+    "meningitis",
+    "sepsis",
+    "diabetic_ketoacidosis",
+    "severe_electrolyte_disorder",
+    "hypoglycemia"
+   ],
+   "unnecessary": [
+    {
+     "exam": "lung_auscultation",
+     "requested_for": [
+      "pneumonia",
+      "pulmonary_embolism",
+      "anaphylaxis",
+      "viral_uri"
+     ]
+    },
+    {
+     "exam": "neuro_exam",
+     "requested_for": [
+      "subarachnoid_hemorrhage"
+     ]
+    },
+    {
+     "exam": "costovertebral_tenderness",
+     "requested_for": [
+      "pyelonephritis",
+      "uncomplicated_cystitis"
+     ]
+    },
+    {
+     "exam": "extremity_exam",
+     "requested_for": [
+      "pulmonary_embolism"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "Dyspnea01",
+   "counted": 4,
+   "top5": [
+    "pulmonary_embolism",
+    "onto::tier2:deep_vein_thrombosis",
+    "onto::tier2:chronic_heart_failure",
+    "onto::tier2:aortic_stenosis",
+    "onto::tier2:spontaneous_pneumothorax"
+   ],
+   "unnecessary": [
+    {
+     "exam": "skin_exam",
+     "requested_for": [
+      "anaphylaxis",
+      "sepsis"
+     ]
+    },
+    {
+     "exam": "abdominal_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "gerd",
+      "acute_abdomen"
+     ]
+    },
+    {
+     "exam": "cardiac_auscultation",
+     "requested_for": [
+      "acute_coronary_syndrome",
+      "cardiac_arrhythmia",
+      "aortic_dissection"
+     ]
+    },
+    {
+     "exam": "mental_status_exam",
+     "requested_for": [
+      "diabetic_ketoacidosis",
+      "hypoglycemia",
+      "sepsis"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "Dizziness01",
+   "counted": 0,
+   "top5": [
+    "bppv",
+    "ectopic_pregnancy",
+    "orthostatic_hypotension",
+    "vasovagal_syncope",
+    "cardiac_arrhythmia"
+   ],
+   "unnecessary": []
+  },
+  {
+   "case_id": "AlteredMentalStatus01",
+   "counted": 3,
+   "top5": [
+    "diabetic_ketoacidosis",
+    "acute_pancreatitis",
+    "onto::tier2:acute_angle_closure_glaucoma",
+    "acute_coronary_syndrome",
+    "severe_electrolyte_disorder"
+   ],
+   "unnecessary": [
+    {
+     "exam": "skin_exam",
+     "requested_for": [
+      "sepsis",
+      "meningitis"
+     ]
+    },
+    {
+     "exam": "meningeal_signs",
+     "requested_for": [
+      "meningitis",
+      "subarachnoid_hemorrhage"
+     ]
+    },
+    {
+     "exam": "pelvic_exam",
+     "requested_for": [
+      "ectopic_pregnancy"
+     ]
+    }
+   ]
+  },
+  {
+   "case_id": "UrinarySymptoms01",
+   "counted": 0,
+   "top5": [
+    "uncomplicated_cystitis",
+    "onto::tier2:prostatitis",
+    "viral_uri",
+    "sepsis",
+    "onto::tier2:epididymitis"
+   ],
+   "unnecessary": []
+  }
+ ],
+ "total_counted": 238,
+ "top_requesters": [
+  [
+   "costovertebral_tenderness <- pyelonephritis",
+   37
+  ],
+  [
+   "cardiac_auscultation <- acute_coronary_syndrome",
+   34
+  ],
+  [
+   "abdominal_exam <- acute_abdomen",
+   28
+  ],
+  [
+   "lung_auscultation <- anaphylaxis",
+   27
+  ],
+  [
+   "cardiac_auscultation <- cardiac_arrhythmia",
+   25
+  ],
+  [
+   "lung_auscultation <- viral_uri",
+   23
+  ],
+  [
+   "lung_auscultation <- pneumonia",
+   22
+  ],
+  [
+   "lung_auscultation <- musculoskeletal_chest_pain",
+   22
+  ],
+  [
+   "mental_status_exam <- hypoglycemia",
+   20
+  ],
+  [
+   "costovertebral_tenderness <- uncomplicated_cystitis",
+   20
+  ],
+  [
+   "costovertebral_tenderness <- nephrolithiasis",
+   18
+  ],
+  [
+   "cardiac_auscultation <- vasovagal_syncope",
+   18
+  ],
+  [
+   "mental_status_exam <- diabetic_ketoacidosis",
+   17
+  ],
+  [
+   "lung_auscultation <- tension_pneumothorax",
+   17
+  ],
+  [
+   "lung_auscultation <- acute_bronchitis",
+   17
+  ],
+  [
+   "extremity_exam <- pulmonary_embolism",
+   16
+  ],
+  [
+   "abdominal_exam <- diabetic_ketoacidosis",
+   15
+  ],
+  [
+   "cardiac_auscultation <- aortic_dissection",
+   15
+  ],
+  [
+   "neuro_exam <- orthostatic_hypotension",
+   15
+  ],
+  [
+   "lung_auscultation <- pulmonary_embolism",
+   15
+  ],
+  [
+   "abdominal_exam <- pyelonephritis",
+   15
+  ],
+  [
+   "abdominal_exam <- gerd",
+   14
+  ],
+  [
+   "neuro_exam <- subarachnoid_hemorrhage",
+   12
+  ],
+  [
+   "neuro_exam <- tension_headache",
+   12
+  ],
+  [
+   "mental_status_exam <- sepsis",
+   11
+  ],
+  [
+   "extremity_exam <- aortic_dissection",
+   11
+  ],
+  [
+   "pelvic_exam <- ectopic_pregnancy",
+   11
+  ],
+  [
+   "neuro_exam <- migraine",
+   10
+  ],
+  [
+   "mental_status_exam <- severe_electrolyte_disorder",
+   9
+  ],
+  [
+   "neuro_exam <- bppv",
+   9
+  ],
+  [
+   "meningeal_signs <- subarachnoid_hemorrhage",
+   9
+  ],
+  [
+   "abdominal_exam <- gastroenteritis",
+   8
+  ],
+  [
+   "skin_exam <- sepsis",
+   7
+  ],
+  [
+   "skin_exam <- anaphylaxis",
+   6
+  ],
+  [
+   "meningeal_signs <- meningitis",
+   6
+  ],
+  [
+   "abdominal_exam <- ectopic_pregnancy",
+   5
+  ],
+  [
+   "abdominal_exam <- gi_bleeding",
+   5
+  ],
+  [
+   "abdominal_exam <- acute_pancreatitis",
+   5
+  ],
+  [
+   "cardiac_auscultation <- onto::tier2:aortic_stenosis",
+   4
+  ],
+  [
+   "mental_status_exam <- subarachnoid_hemorrhage",
+   4
+  ],
+  [
+   "lung_auscultation <- asthma_copd_exacerbation",
+   3
+  ],
+  [
+   "abdominal_exam <- appendicitis",
+   3
+  ],
+  [
+   "cardiac_auscultation <- severe_electrolyte_disorder",
+   2
+  ],
+  [
+   "abdominal_exam <- uncomplicated_cystitis",
+   1
+  ],
+  [
+   "lung_auscultation <- onto::tier2:heart_failure_acute",
+   1
+  ],
+  [
+   "neuro_exam <- ischemic_stroke",
+   1
+  ],
+  [
+   "skin_exam <- meningitis",
+   1
+  ]
+ ]
+}
