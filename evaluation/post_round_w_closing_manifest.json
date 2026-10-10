@@ -1,0 +1,11 @@
+{
+  "sha256": "83d366a43b1d848cdc0d40160f88bfa3daf31dbf7bb74d0abd3328fe6ec64a20",
+  "cases": 12,
+  "scored": 10,
+  "critical_expected": 6,
+  "created_utc": "2026-10-10T21:00:53.376405+00:00",
+  "runtime_frozen_before_authoring": "c5933310dc0310441a38bf2d91e406d624607e48",
+  "policy": "Post-Round-W CLOSING set: authored after the reasoning freeze, committed before its single run; run ONCE; not used to change source.",
+  "author_exposure": "Implementation-aware author (wrote Rounds U-W and post-W). Wording deliberately avoids the aliases added this round.",
+  "independent_clinical_validation": false
+}

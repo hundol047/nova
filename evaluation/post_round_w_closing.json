@@ -1,0 +1,334 @@
+[
+ {
+  "case_id": "CloseX_01",
+  "chief_complaint": "가슴 한가운데가 쥐어짜듯 아프고 식은땀이 나요. 왼쪽 팔까지 저려요.",
+  "demographics": {
+   "age": 64,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "acute_coronary_syndrome",
+  "answers": {
+   "onset": "30분 전에 계단 오르다가 시작됐어요.",
+   "past_medical_history": "당뇨랑 고지혈증 있어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 152/94, HR 104, RR 20, Temp 36.7, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x;ko;critical",
+  "scoring_expected": true,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseX_02",
+  "chief_complaint": "갑자기 left arm에 힘이 없고 말이 자꾸 꼬여요.",
+  "demographics": {
+   "age": 71,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "ischemic_stroke",
+  "answers": {
+   "onset": "40 minutes ago, 갑자기 시작됐어요.",
+   "past_medical_history": "Atrial fibrillation, 혈압약 먹어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 178/96, HR 92, RR 16, Temp 36.6, SpO2 97%",
+   "neuro_exam": "Left arm drift and left facial droop."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x;mixed;critical",
+  "scoring_expected": true,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseX_03",
+  "chief_complaint": "My 4-year-old has a fever, says his neck hurts when he looks down and the light hurts his eyes.",
+  "demographics": {
+   "age": 4,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "meningitis",
+  "answers": {
+   "associated_symptoms": "He has been sick twice and is very sleepy."
+  },
+  "exam_results": {
+   "vital_signs": "HR 150, RR 30, Temp 39.6, SpO2 97%",
+   "meningeal_signs": "Neck stiffness present; Kernig sign positive."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x;child;critical",
+  "scoring_expected": true,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseX_04",
+  "chief_complaint": "I got really short of breath all of a sudden and it hurts on the right side when I breathe in.",
+  "demographics": {
+   "age": 38,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "pulmonary_embolism",
+  "answers": {
+   "associated_symptoms": "My right calf has been swollen and sore since a long flight last week.",
+   "medication": "Combined oral contraceptive pill."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/74, HR 118, RR 26, Temp 37.2, SpO2 91%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x;critical",
+  "scoring_expected": true,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseX_05",
+  "chief_complaint": "15살인데 요즘 물을 엄청 마시고 화장실을 계속 가요. 오늘은 토하고 숨이 깊고 빨라요.",
+  "demographics": {
+   "age": 15,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "diabetic_ketoacidosis",
+  "answers": {
+   "associated_symptoms": "배도 아프고 몸무게가 빠졌어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 104/62, HR 122, RR 30, Temp 36.9, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x;ko;adolescent;critical",
+  "scoring_expected": true,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseX_06",
+  "chief_complaint": "I ate some prawns at a wedding and now my lips are swelling and I'm wheezy and itchy all over.",
+  "demographics": {
+   "age": 27,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "anaphylaxis",
+  "answers": {
+   "associated_symptoms": "Raised itchy welts on my chest and arms, throat feels tight."
+  },
+  "exam_results": {
+   "vital_signs": "BP 88/52, HR 124, RR 26, Temp 36.8, SpO2 93%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x;critical",
+  "scoring_expected": true,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseX_07",
+  "chief_complaint": "The pain started around my belly button yesterday and has now moved down to the right side; I don't want to eat.",
+  "demographics": {
+   "age": 19,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "appendicitis",
+  "answers": {
+   "associated_symptoms": "Felt sick, a bit feverish.",
+   "aggravating": "Walking and coughing make it worse."
+  },
+  "exam_results": {
+   "vital_signs": "BP 124/76, HR 98, RR 16, Temp 37.9, SpO2 99%",
+   "abdominal_exam": "Tender in the right lower quadrant with guarding."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x",
+  "scoring_expected": true,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseX_08",
+  "chief_complaint": "6살 딸이 이틀째 콧물이 나고 기침을 해요. 열은 조금 있어요.",
+  "demographics": {
+   "age": 6,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "viral_uri",
+  "answers": {
+   "associated_symptoms": "목이 조금 아프대요. 잘 먹고 잘 놀아요."
+  },
+  "exam_results": {
+   "vital_signs": "HR 108, RR 22, Temp 37.8, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x;ko;child",
+  "scoring_expected": true,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseX_09",
+  "chief_complaint": "been havin the runs n throwing up since last nite after a dodgy kebab, crampy tummy",
+  "demographics": {
+   "age": 24,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "gastroenteritis",
+  "answers": {
+   "associated_symptoms": "My flatmate who ate the same is ill too. No blood."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/72, HR 96, RR 16, Temp 37.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x;noisy",
+  "scoring_expected": true,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseX_10",
+  "chief_complaint": "I get a throbbing headache on one side with zigzag lights before it starts; it's like the ones I've had since I was a teenager.",
+  "demographics": {
+   "age": 32,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "migraine",
+  "answers": {
+   "associated_symptoms": "Light and noise bother me and I feel sick.",
+   "onset": "It came on gradually over an hour."
+  },
+  "exam_results": {
+   "vital_signs": "BP 122/76, HR 78, RR 14, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x",
+  "scoring_expected": true,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseX_11",
+  "chief_complaint": "Just here for a check-up; I'm a bit sore after a heavy gym session yesterday but otherwise fine.",
+  "demographics": {
+   "age": 25,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "No chest pain, no breathlessness, no dark urine."
+  },
+  "exam_results": {
+   "vital_signs": "BP 120/72, HR 62, RR 12, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x;negative_control",
+  "scoring_expected": false,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseX_12",
+  "chief_complaint": "아버지가 예전에 뇌졸중이 있으셨어요. 저는 아픈 데는 없고 혈압 기록하러 왔어요.",
+  "demographics": {
+   "age": 58,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "아니요, 특별한 증상 없어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 128/80, HR 72, RR 14, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_x;ko;negative_control;family",
+  "scoring_expected": false,
+  "notes": "Post-Round-W CLOSING set: authored after the reasoning freeze (runtime c593331), run ONCE for final evaluation, never used to change source. Implementation-aware author. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ }
+]
