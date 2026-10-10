@@ -760,6 +760,22 @@ class PatientState(BaseModel):
     def all_findings_text(self, include_context: bool = True, include_family: bool = True) -> List[str]:
         """Flat bag of every free-text clinical finding gathered so far, used by keyword-matching
         modules (differential.py, safety.py) as the evidence corpus."""
+        # Post-W: rebuilt ~80 times per decision (twice per candidate disease). Memoised inside ONE decision
+        # (matching.evaluation_scope) on a fingerprint of every input it reads, so any change yields a fresh build;
+        # nothing survives the decision, nothing is shared across cases.
+        from nova_agent.evidence_scope import _PROXY
+        from nova_agent.matching import _scoped
+        key = (id(self), include_context, include_family, _PROXY.get(), tuple(self.symptoms),
+               tuple(self.associated_symptoms), tuple(self.pertinent_positives), tuple(self.past_medical_history),
+               tuple(self.social_history), self.chief_complaint, self.symptom_onset, self.severity, self.duration,
+               tuple(self.physical_examinations.items()), tuple(self.imaging.items()), tuple(self.vital_sign_findings),
+               tuple(self.laboratory_tests.items()), tuple(self.medication_text), tuple(self.allergy_text),
+               tuple(m.name for m in self.medications), tuple(a.substance for a in self.allergies),
+               tuple(self.ambiguous_findings), tuple(self.family_history))
+        return list(_scoped("all_findings_text", key,
+                            lambda: self._all_findings_text_uncached(include_context, include_family)))
+
+    def _all_findings_text_uncached(self, include_context: bool, include_family: bool) -> List[str]:
         out = list(self.symptoms) + list(self.associated_symptoms) + list(self.pertinent_positives)
         if include_context:
             out += list(self.past_medical_history) + list(self.social_history)

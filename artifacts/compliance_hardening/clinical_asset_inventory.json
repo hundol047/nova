@@ -422,7 +422,7 @@
     {
       "asset_id": "nova_agent/clinical_concepts.py",
       "path": "nova_agent/clinical_concepts.py",
-      "sha256": "0780a8e43ee042d6cbaad7d592e51ca4c753f4e23406cbbe61bab58f81002684",
+      "sha256": "aba932515e8939e63ebf07015c2996e2499c57154438efe489427ee20f4d2b56",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",
@@ -2581,7 +2581,7 @@
     {
       "asset_id": "nova_agent/matching.py",
       "path": "nova_agent/matching.py",
-      "sha256": "56685dba24f8d933736d7c161051e9a75c43d35dcb0d741069d4e5eeefc40e83",
+      "sha256": "1a22b7b15fb3c21694e2433ab06e771598e15ad1c735383b000654bea1da4d2f",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",
@@ -4427,7 +4427,7 @@
     {
       "asset_id": "nova_agent/state.py",
       "path": "nova_agent/state.py",
-      "sha256": "73a24486029fb5a2a9e1a98b91aef096bc0403d015f26632dbbf90434f7c8515",
+      "sha256": "773c0adec25a1a92ed206922ff61599a2a6a2b07dd0e05406bc307bd5ba92a06",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",

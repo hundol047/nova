@@ -193174,7 +193174,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 651,
+      "line": 661,
       "names": [
         "_PATTERN_QUALIFIERS"
       ],
@@ -193192,7 +193192,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 756,
+      "line": 766,
       "names": [
         "FEATURE_ALIASES"
       ],
@@ -193373,7 +193373,7 @@
     },
     {
       "path": "nova_agent/matching.py",
-      "line": 803,
+      "line": 813,
       "names": [
         "_LAY_VARIANTS"
       ],

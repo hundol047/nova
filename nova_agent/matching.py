@@ -532,6 +532,22 @@ def and_branches(feature: str) -> tuple:
     return (left, right)
 
 
+def _prepared_clauses(finding: str, scrub_negated_spans: bool) -> tuple:
+    """Assertion clauses of one finding, normalised once per decision (Post-W: the same per-clause work used to be
+    redone for every one of the ~400 feature phrases checked against the same findings)."""
+    def build():
+        out = []
+        for clause in _assertion_clauses(finding):
+            # A Korean case/topic particle attached to an English clinical phrase
+            # is a grammatical boundary, not part of that English word.
+            clause = re.sub(r"(?<=[a-z])(?:은|는|이|가|을|를)(?=\s)", " ", clause)
+            if scrub_negated_spans:
+                clause = _strip_negated_spans(clause)
+            out.append(clause)
+        return tuple(out)
+    return _scoped("prepared_clauses", (finding, scrub_negated_spans), build)
+
+
 def _feature_present_uncached(feature: str, findings_text: List[str], scrub_negated_spans: bool = False,
                               strict: bool = False, ignore_words: frozenset = frozenset()) -> bool:
     """`scrub_negated_spans=True` is for checking against a general finding bag (e.g.
@@ -549,14 +565,8 @@ def _feature_present_uncached(feature: str, findings_text: List[str], scrub_nega
     from nova_agent.evidence_scope import patient_evidence_text
     scoped_findings = [patient_evidence_text(t) for t in findings_text] if (
         scrub_negated_spans and not feature_lower.startswith("family history")) else findings_text
-    clauses = (clause for finding in scoped_findings for clause in _assertion_clauses(finding))
     feature_is_pain = _scoped("is_pain", feature_lower, lambda: bool(_PAIN_FEATURE.search(feature_lower)))
-    for finding_lower in clauses:
-        # A Korean case/topic particle attached to an English clinical phrase
-        # is a grammatical boundary, not part of that English word.
-        finding_lower = re.sub(r"(?<=[a-z])(?:은|는|이|가|을|를)(?=\s)", " ", finding_lower)
-        if scrub_negated_spans:
-            finding_lower = _strip_negated_spans(finding_lower)
+    for finding_lower in (c for finding in scoped_findings for c in _prepared_clauses(finding, scrub_negated_spans)):
         capability = re.search(r"\b(?:unable to|inability to|cannot|can't)\s+(.+)", feature_lower)
         if capability:
             predicate = re.split(r"\b(?:came|started|began|suddenly|after|since)\b", capability.group(1))[0]

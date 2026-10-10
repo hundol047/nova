@@ -182,6 +182,14 @@ def canonical_findings_for(text: str) -> List[str]:
     """Canonical KB phrases asserted (current, not negated) by ``text``; empty when nothing matches."""
     if not text or len(text) < 4:
         return []
+    # Post-W: a pure function of the text (and of the case's caregiver-subject scope) evaluated thousands of times per
+    # decision -- memoised for the duration of ONE decision only (matching.evaluation_scope), never across cases.
+    from nova_agent.evidence_scope import _PROXY
+    from nova_agent.matching import _scoped
+    return list(_scoped("canonical_findings", (text, _PROXY.get()), lambda: _canonical_findings_for_uncached(text)))
+
+
+def _canonical_findings_for_uncached(text: str) -> List[str]:
     from nova_agent.evidence_scope import patient_evidence_text
     # This public vocabulary utility also normalizes third-person examination
     # wording. State/presentation project the actual source before calling it;
