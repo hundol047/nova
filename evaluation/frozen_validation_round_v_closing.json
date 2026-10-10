@@ -1,0 +1,340 @@
+[
+ {
+  "case_id": "CloseV_01",
+  "chief_complaint": "My big toe joint swelled up overnight; it is red and even the bedsheet touching it is agony.",
+  "demographics": {
+   "age": 58,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Acute Gout Flare",
+  "answers": {
+   "past_medical_history": "Two similar attacks in the same toe before.",
+   "associated_symptoms": "No fever, no injury."
+  },
+  "exam_results": {
+   "vital_signs": "BP 138/84, HR 80, RR 14, Temp 37.1, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;dispo_fp_gout",
+  "scoring_expected": true,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseV_02",
+  "chief_complaint": "My little girl has had a temperature since yesterday and keeps saying her ear hurts.",
+  "demographics": {
+   "age": 3,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "Acute Otitis Media",
+  "answers": {
+   "onset": "Started after a runny nose last week.",
+   "associated_symptoms": "No rash, no stiff neck, eating and drinking."
+  },
+  "exam_results": {
+   "vital_signs": "HR 128, RR 28, Temp 38.5, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;dispo_fp_pediatric_rates",
+  "scoring_expected": true,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseV_03",
+  "chief_complaint": "My baby is very floppy, hot and breathing fast, and his skin looks blotchy.",
+  "demographics": {
+   "age": 0,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "Not feeding since this morning, hardly any wet nappies."
+  },
+  "exam_results": {
+   "vital_signs": "HR 192, RR 64, Temp 39.8, SpO2 93%",
+   "general_appearance": "Lethargic, mottled skin, cool hands."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;dispo_fn_pediatric",
+  "scoring_expected": true,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseV_04",
+  "chief_complaint": "I can't sleep flat any more, I need extra pillows, and my legs are swollen by the evening.",
+  "demographics": {
+   "age": 74,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "past_medical_history": "Heart attack six years ago.",
+   "onset": "Getting worse over three weeks."
+  },
+  "exam_results": {
+   "vital_signs": "BP 150/88, HR 94, RR 22, Temp 36.6, SpO2 94%",
+   "lung_auscultation": "Crackles at both bases.",
+   "extremity_exam": "Pitting oedema to the knees."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;hf_vs_pneumonia",
+  "scoring_expected": false,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "forbidden": [
+    "pneumonia"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "CloseV_05",
+  "chief_complaint": "I have had a fever and a cough bringing up green phlegm for three days, and it hurts on the right when I breathe in.",
+  "demographics": {
+   "age": 45,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "pneumonia",
+  "answers": {
+   "associated_symptoms": "Shivering, tired, a bit breathless."
+  },
+  "exam_results": {
+   "vital_signs": "BP 124/76, HR 104, RR 22, Temp 38.9, SpO2 94%",
+   "lung_auscultation": "Crackles and bronchial breathing at the right base."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;pneumonia_control",
+  "scoring_expected": true,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "CloseV_06",
+  "chief_complaint": "소변 볼 때 따갑고 화장실에 너무 자주 가요.",
+  "demographics": {
+   "age": 26,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "uncomplicated_cystitis",
+  "answers": {
+   "associated_symptoms": "열은 없고 옆구리도 안 아파요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 110/70, HR 74, RR 14, Temp 36.8, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;dispo_fp_uti_ko",
+  "scoring_expected": true,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseV_07",
+  "chief_complaint": "High fever, shaking, pain in my right side under the ribs at the back, and I keep vomiting.",
+  "demographics": {
+   "age": 34,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "pyelonephritis",
+  "answers": {
+   "associated_symptoms": "Burning when passing urine for a few days before this."
+  },
+  "exam_results": {
+   "vital_signs": "BP 112/68, HR 112, RR 20, Temp 39.3, SpO2 97%",
+   "costovertebral_tenderness": "Marked right costovertebral angle tenderness."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;dispo_fn_vitals",
+  "scoring_expected": true,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseV_08",
+  "chief_complaint": "I slipped on the stairs and banged my side; one rib hurts when I press it or twist.",
+  "demographics": {
+   "age": 40,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+  "answers": {
+   "associated_symptoms": "Breathing is comfortable, no coughing blood.",
+   "onset": "This morning when I fell."
+  },
+  "exam_results": {
+   "vital_signs": "BP 126/80, HR 76, RR 14, Temp 36.6, SpO2 99%",
+   "lung_auscultation": "Normal, equal breath sounds."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;dispo_fp_trauma",
+  "scoring_expected": true,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "forbidden": [
+    "tension_pneumothorax"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseV_09",
+  "chief_complaint": "I fainted at a long outdoor ceremony after standing in the heat; I went sweaty and grey first and came round quickly.",
+  "demographics": {
+   "age": 19,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "vasovagal_syncope",
+  "answers": {
+   "past_medical_history": "Healthy.",
+   "associated_symptoms": "No palpitations, no chest pain, no jerking."
+  },
+  "exam_results": {
+   "vital_signs": "BP 112/70, HR 72, RR 14, Temp 36.7, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;syncope_control",
+  "scoring_expected": true,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "CloseV_10",
+  "chief_complaint": "Black tarry stools for two days and I feel faint whenever I stand up.",
+  "demographics": {
+   "age": 66,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "gi_bleeding",
+  "answers": {
+   "medication": "Ibuprofen most days for my knees."
+  },
+  "exam_results": {
+   "vital_signs": "BP 98/60, HR 114, RR 18, Temp 36.6, SpO2 97%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;critical_gi_bleed",
+  "scoring_expected": true,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseV_11",
+  "chief_complaint": "My pulse is really slow and I nearly passed out twice today.",
+  "demographics": {
+   "age": 81,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "Lightheaded and weak."
+  },
+  "exam_results": {
+   "vital_signs": "BP 96/58, HR 36, RR 16, Temp 36.5, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;dispo_fn_rate",
+  "scoring_expected": false,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseV_12",
+  "chief_complaint": "A burning band of pain on the left side of my chest wall for two days, and now a blistery rash in the same strip.",
+  "demographics": {
+   "age": 71,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "Herpes Zoster (Shingles)",
+  "answers": {
+   "associated_symptoms": "No breathlessness, the pain is on the skin."
+  },
+  "exam_results": {
+   "vital_signs": "BP 132/80, HR 78, RR 14, Temp 37.2, SpO2 98%",
+   "skin_exam": "Grouped vesicles on a red base in a band on the left chest."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v_closing;zoster_control",
+  "scoring_expected": true,
+  "notes": "Round V closing set. Authored by the implementation-aware engineering agent AFTER the Round V development changes and BEFORE the final runtime commit; labels and behavior contracts fixed before first execution; run only on baseline e207801 and the final runtime. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ }
+]
