@@ -15,7 +15,7 @@ import json
 from pathlib import Path
 
 DISPOSITION_SETS = ('round_s', 'round_t_development', 't_confirmation', 't_probe', 't_postfreeze', 'u20', 'u12', 'u10',
-                    'closing_u8', 'followup_new', 'followup_closing', 'round_v', 'round_v_closing')
+                    'closing_u8', 'followup_new', 'followup_closing', 'round_v', 'round_v_closing', 'round_w', 'round_w_closing')
 
 
 def disposition(run_dir: Path):
