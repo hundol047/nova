@@ -1,0 +1,10 @@
+{
+  "sha256": "87ce7ccb794fc5b57dd330b59a5220bba814581b08e42d0c00b5d919b9ddcc23",
+  "cases": 18,
+  "scored": 14,
+  "created_utc": "2026-10-10T01:41:24.333080+00:00",
+  "runtime_before_authoring": "4836479e86b5370efd9d1543db09c5705a54b3bb",
+  "policy": "Frozen before any Round V runtime change; run first on baseline e207801. Becomes development if results inform source changes.",
+  "author_exposure": "Implementation-aware author (saw Round U follow-up failures, including disposition and HF-vs-pneumonia).",
+  "independent_clinical_validation": false
+}

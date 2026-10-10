@@ -1,0 +1,517 @@
+[
+ {
+  "case_id": "RoundV_01",
+  "chief_complaint": "A football hit my chest during a match yesterday. The sore spot on my ribs hurts if I push on it or turn.",
+  "demographics": {
+   "age": 24,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "musculoskeletal_chest_pain",
+  "answers": {
+   "associated_symptoms": "Breathing is easy, no blood when I cough.",
+   "onset": "Yesterday during the game."
+  },
+  "exam_results": {
+   "vital_signs": "BP 122/76, HR 74, RR 14, Temp 36.7, SpO2 99%",
+   "lung_auscultation": "Equal breath sounds, clear."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;dispo_fp_trauma",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "forbidden": [
+    "tension_pneumothorax"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RoundV_02",
+  "chief_complaint": "Stinging when I pass water and going every hour since yesterday.",
+  "demographics": {
+   "age": 31,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "uncomplicated_cystitis",
+  "answers": {
+   "associated_symptoms": "No fever, no loin pain, not pregnant.",
+   "onset": "Yesterday morning."
+  },
+  "exam_results": {
+   "vital_signs": "BP 116/70, HR 72, RR 14, Temp 36.9, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;dispo_fp_uti",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RoundV_03",
+  "chief_complaint": "My big toe is red, hot and swollen again, just like my gout attack last spring.",
+  "demographics": {
+   "age": 58,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Acute Gout Flare",
+  "answers": {
+   "onset": "Came on overnight.",
+   "associated_symptoms": "No fever, no injury, no other joints."
+  },
+  "exam_results": {
+   "vital_signs": "BP 138/84, HR 78, RR 14, Temp 37.1, SpO2 98%",
+   "extremity_exam": "Hot, swollen, very tender first toe joint."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;dispo_fp_gout",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RoundV_04",
+  "chief_complaint": "Tight band around my head at the end of every working day this month.",
+  "demographics": {
+   "age": 36,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "tension_headache",
+  "answers": {
+   "associated_symptoms": "No vomiting, no weakness, no fever, vision fine.",
+   "onset": "Builds up slowly in the afternoon."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/74, HR 70, RR 14, Temp 36.6, SpO2 99%",
+   "neuro_exam": "Normal."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;dispo_fp_headache",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "forbidden": [
+    "subarachnoid_hemorrhage",
+    "meningitis"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RoundV_05",
+  "chief_complaint": "I keep nearly fainting and my heart feels very slow.",
+  "demographics": {
+   "age": 79,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "cardiac_arrhythmia",
+  "answers": {
+   "past_medical_history": "Previous heart attack.",
+   "associated_symptoms": "Lightheaded when I stand or sit."
+  },
+  "exam_results": {
+   "vital_signs": "BP 98/60, HR 38, RR 16, Temp 36.6, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;dispo_fn_brady",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RoundV_06",
+  "chief_complaint": "My elderly father is hot, shivering and muddled, and he has hardly passed urine today.",
+  "demographics": {
+   "age": 84,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "Burning when he passed urine yesterday.",
+   "past_medical_history": "Diabetes."
+  },
+  "exam_results": {
+   "vital_signs": "BP 84/48, HR 124, RR 26, Temp 39.2, SpO2 93%",
+   "mental_status_exam": "Confused, not oriented to place."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;dispo_fn_sepsis",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RoundV_07",
+  "chief_complaint": "Sudden explosive headache while straining in the gym, the worst ever, and I threw up.",
+  "demographics": {
+   "age": 51,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "subarachnoid_hemorrhage",
+  "answers": {
+   "onset": "Reached full strength in a second.",
+   "associated_symptoms": "Stiff neck."
+  },
+  "exam_results": {
+   "vital_signs": "BP 172/98, HR 90, RR 18, Temp 37.0, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;dispo_fn_sah",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RoundV_08",
+  "chief_complaint": "Over three weeks I have become breathless walking up stairs and my legs are puffy by night.",
+  "demographics": {
+   "age": 72,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "past_medical_history": "Two previous heart attacks.",
+   "associated_symptoms": "I sleep on four pillows and wake up gasping."
+  },
+  "exam_results": {
+   "vital_signs": "BP 150/90, HR 94, RR 22, Temp 36.6, SpO2 94%",
+   "lung_auscultation": "Crackles at both lung bases.",
+   "extremity_exam": "Pitting oedema up to the knees.",
+   "cardiac_auscultation": "Third heart sound."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;hf_vs_pneumonia",
+  "scoring_expected": false,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "forbidden": [
+    "pneumonia"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "RoundV_09",
+  "chief_complaint": "Fever and a cough bringing up green phlegm for three days; it stabs on the right when I breathe in.",
+  "demographics": {
+   "age": 45,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "pneumonia",
+  "answers": {
+   "associated_symptoms": "Shivering, short of breath.",
+   "onset": "Three days ago."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/72, HR 108, RR 24, Temp 38.9, SpO2 93%",
+   "lung_auscultation": "Crackles over the right lower zone only."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;pneumonia_control",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "RoundV_10",
+  "chief_complaint": "3주 전부터 계단을 오르면 숨이 차고 저녁마다 다리가 부어요. 누우면 숨이 막혀서 앉아서 자요.",
+  "demographics": {
+   "age": 76,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "past_medical_history": "심부전 진단을 받은 적 있어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 144/88, HR 96, RR 22, Temp 36.7, SpO2 93%",
+   "lung_auscultation": "Bibasal crackles.",
+   "extremity_exam": "Pitting oedema to the ankles."
+  },
+  "test_results": {},
+  "default_answer": "아니요, 없어요.",
+  "default_exam_result": "특이 소견 없음.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;hf_korean",
+  "scoring_expected": false,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "forbidden": [
+    "pneumonia"
+   ]
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "RoundV_11",
+  "chief_complaint": "Gnawing pain high in my stomach for weeks, worse when hungry and better after I eat.",
+  "demographics": {
+   "age": 49,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Peptic Ulcer Disease",
+  "answers": {
+   "medication": "Naproxen most days for my back.",
+   "associated_symptoms": "Some bloating, no black stools."
+  },
+  "exam_results": {},
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;hierarchy_pud",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "RoundV_12",
+  "chief_complaint": "A painful band of blisters has appeared on the left side of my chest after two days of burning there.",
+  "demographics": {
+   "age": 67,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "Herpes Zoster (Shingles)",
+  "answers": {
+   "associated_symptoms": "No fever, no breathing problem."
+  },
+  "exam_results": {
+   "skin_exam": "Grouped vesicles on a red base in a band on the left chest, not crossing the midline."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;long_tail_zoster",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RoundV_13",
+  "chief_complaint": "My left calf has been swollen and aching since I flew back from Australia.",
+  "demographics": {
+   "age": 39,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "Deep Vein Thrombosis",
+  "answers": {
+   "medication": "Combined contraceptive pill.",
+   "associated_symptoms": "No breathlessness, no chest pain."
+  },
+  "exam_results": {
+   "vital_signs": "BP 120/76, HR 82, RR 14, Temp 37.0, SpO2 99%",
+   "extremity_exam": "Left calf swollen and tender, warm."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;long_tail_dvt",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "RoundV_14",
+  "chief_complaint": "My toddler has had a fever and keeps pulling at his right ear, crying at night.",
+  "demographics": {
+   "age": 2,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "Acute Otitis Media",
+  "answers": {
+   "onset": "Two days after a cold.",
+   "associated_symptoms": "No rash, no neck stiffness, drinking well."
+  },
+  "exam_results": {
+   "vital_signs": "HR 120, RR 24, Temp 38.4, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;long_tail_aom",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RoundV_15",
+  "chief_complaint": "I have had loose stools today. I cannot answer further questions.",
+  "demographics": {
+   "age": 52,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 122/78, HR 76, RR 15, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot answer that.",
+  "default_exam_result": "Not assessed.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;insufficient_diarrhoea",
+  "scoring_expected": false,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "undifferentiated": true
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {}
+ },
+ {
+  "case_id": "RoundV_16",
+  "chief_complaint": "I feel tired. My GP letter says anaemia was ruled out.",
+  "demographics": {
+   "age": 41,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {},
+  "exam_results": {
+   "vital_signs": "BP 118/72, HR 72, RR 14, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "I cannot answer that.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;excluded_documentation",
+  "scoring_expected": false,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {
+   "undifferentiated": true
+  },
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "forbidden_support": [
+    "documented diagnosis"
+   ]
+  }
+ },
+ {
+  "case_id": "RoundV_17",
+  "chief_complaint": "排尿時に痛みがあって、トイレが近いです。",
+  "demographics": {
+   "age": 28,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "uncomplicated_cystitis",
+  "answers": {
+   "associated_symptoms": "No fever, no back pain."
+  },
+  "exam_results": {
+   "vital_signs": "BP 112/70, HR 70, RR 14, Temp 36.8, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;japanese_uti",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RoundV_18",
+  "chief_complaint": "胸が締め付けられるように痛くて、冷や汗が出ています。左腕にも広がります。",
+  "demographics": {
+   "age": 63,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "acute_coronary_syndrome",
+  "answers": {
+   "onset": "30 minutes ago at rest.",
+   "past_medical_history": "High blood pressure and smoker."
+  },
+  "exam_results": {
+   "vital_signs": "BP 150/92, HR 98, RR 20, Temp 36.7, SpO2 96%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "round_v;japanese_acs",
+  "scoring_expected": true,
+  "notes": "Round V synthetic mechanism control. Implementation-aware engineering author who has seen Round U follow-up failures; labels and behavior contracts fixed BEFORE first execution. Not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ }
+]
