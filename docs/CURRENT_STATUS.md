@@ -1,5 +1,24 @@
 # N.O.V.A. 2026 — current competition status
 
+**PRE-GUIDE CANDIDATE — ROUND V — SAME-CONDITION REGRESSION PASS (0 new wrong, 0 new critical miss), COMPLETION TARGET FAIL (unnecessary EXAM 296 > 238) — NOT OFFICIALLY READY.**
+
+Final runtime: `e16448e13431ab7af21d1e1c8abc5ecf2cf16e3c` on branch `claude/nova-round-u-followup-20261009`.
+Baseline: `e207801ce16faf38591fc0bed2dd2d238c1c1d7a` (Round U follow-up). main, the codex review branch and the original Claude branch are unchanged.
+Report: [ROUND_V_REPAIR_REPORT_KO.md](competition/ROUND_V_REPAIR_REPORT_KO.md); evidence: [ROUND_V_VERIFICATION_SUMMARY.json](competition/ROUND_V_VERIFICATION_SUMMARY.json); provenance: [ROUND_V_PROVENANCE.md](competition/ROUND_V_PROVENANCE.md).
+
+| Same-condition (mock, competition retrieval) | Baseline → final | Critical |
+|---|---:|---:|
+| Preliminary 230/222 | 218 → 219/222 | 85/85 → 85/85 |
+| Round P 34/32 | 31 → 31/32 | 13/13 → 13/13 |
+| Round M (TEST allowed) 128/123 | 117 → 121/123 | 43/43 → 43/43 |
+| Round V development 18/14 | 7 → 13/14 | 2/3 → 3/3 |
+| Round V closing 12/10 (frozen before final runtime) | 7 → 7/10 | 1/2 → 1/2 |
+| Disposition contracts (67) FP / FN | 9 / 3 → 0 / 2 | |
+
+Real GPT-OSS and official interface: NOT VERIFIED. Independent clinical validation: NOT PERFORMED.
+
+## Previous round (Round U follow-up)
+
 **PRE-GUIDE CANDIDATE — ROUND U FOLLOW-UP — SAME-CONDITION REGRESSION PASS, 90-POINT TARGET FAIL (Round M 117/123 < 118) — NOT OFFICIALLY READY.**
 
 Final runtime: `e207801ce16faf38591fc0bed2dd2d238c1c1d7a` on branch `claude/nova-round-u-followup-20261009`.
