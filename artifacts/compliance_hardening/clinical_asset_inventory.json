@@ -626,7 +626,7 @@
     {
       "asset_id": "nova_agent/config.py",
       "path": "nova_agent/config.py",
-      "sha256": "4e087cd866fb37d4acd6903fa6a2d2639baa100f4f7836de06f9991b6596251d",
+      "sha256": "de3b978a66c015d9964339238e84f4735dee1e0ad8634485dfe529d94b6248dd",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "UNRESOLVED",
@@ -840,7 +840,7 @@
     {
       "asset_id": "nova_agent/disposition.py",
       "path": "nova_agent/disposition.py",
-      "sha256": "19d164e6602f30a43c6e59b42054f6c9a1e24f5b41fbd8fd248a49eb5ae667cf",
+      "sha256": "132229c5568cab030826b892044d2f35d9865afb8b6b3061aefb7cb158e871e1",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",
@@ -987,7 +987,7 @@
     {
       "asset_id": "nova_agent/evidence_scope.py",
       "path": "nova_agent/evidence_scope.py",
-      "sha256": "93e67c037c53c71104eda1393efd6f2277b2ef3d710716ba7441644da078829d",
+      "sha256": "d1fd02d0893a37743f99c2c57d8a701de4f82bfe7a23cbb46b095d483d38c7bf",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",

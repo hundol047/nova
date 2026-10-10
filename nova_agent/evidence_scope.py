@@ -50,7 +50,10 @@ def detect_proxy_relation(chief_complaint: str, sex: Optional[str], age: Optiona
         return None
     word = (m.group(1) or m.group(2) or "").lower()
     if word not in _RELATIONS:
-        korean = re.match(r"^\W*(?:(?:우리|제)\s*)?(\S+?)(?:께서|가|이|는|은|를|이가)?\s", chief_complaint or "")
+        # A possessive (우리/제) marks the carer's relative; without one, only the honorific subject 께서 does
+        # ("아버지께서 쓰러지셨어요"). A bare topic ("어머니는 부정맥이 있어요. 저는 …") is family history.
+        korean = (re.match(r"^\W*(?:우리|제)\s*(\S+?)(?:께서|가|이|는|은|를|이가)?\s", chief_complaint or "")
+                  or re.match(r"^\W*(\S+?)께서\s", chief_complaint or ""))
         word = korean.group(1) if korean else word
     rule = _RELATIONS.get(word)
     if rule is None or age is None:

@@ -200,3 +200,32 @@ def test_exam_utility_switch_off_restores_the_time_critical_exemption(monkeypatc
     get_config(reload=True)
     u = _exam_utilities('Itchy red eye with crusting this morning.', {'age': 40, 'sex': 'male'})
     assert {'abdominal_exam', 'cardiac_auscultation'} <= set(u)
+
+
+# --- Korean family history vs caregiver, subsumed dangerous alternative ---------------------------------------------
+
+def test_korean_topic_relative_without_possessive_stays_family_history():
+    from nova_agent.evidence_scope import detect_proxy_relation
+    assert detect_proxy_relation('어머니는 irregular heartbeat가 있어요. 저는 지금 아픈 곳이 없어요.', 'female', 46) is None
+    assert detect_proxy_relation('우리 아들이 열이 나요', 'male', 5) == '아들'
+
+
+def test_alternative_made_only_of_a_part_of_the_named_finding_is_not_urgent():
+    from nova_agent.disposition import _subsumed_by_selected
+    zoster = _item('onto::tier2:herpes_zoster', 'Shingles', ['band-like blistering rash', 'burning pain on one side of body'], 2.0)
+    meningitis = _item('meningitis', 'Meningitis', ['rash'], 0.6, dangerous=True)
+    assert _subsumed_by_selected(meningitis, zoster)
+    febrile = _item('meningitis', 'Meningitis', ['rash', 'fever'], 0.9, dangerous=True)
+    assert not _subsumed_by_selected(febrile, zoster)
+    gout = _item('onto::tier2:gout', 'Gout', ['sudden hot red swollen joint'], 1.5)
+    septic = _item('onto::tier2:septic_arthritis', 'Septic arthritis', ['hot swollen painful joint'], 1.0, dangerous=True)
+    assert not _subsumed_by_selected(septic, gout)  # similar, not a literal part: stays a dangerous alternative
+
+
+def test_subsumed_switch_off(monkeypatch):
+    from nova_agent.config import get_config
+    from nova_agent.disposition import _subsumed_by_selected
+    monkeypatch.setenv('NOVA_DISPOSITION_SUBSUMED', '0')
+    get_config(reload=True)
+    zoster = _item('onto::tier2:herpes_zoster', 'Shingles', ['band-like blistering rash'], 2.0)
+    assert not _subsumed_by_selected(_item('meningitis', 'Meningitis', ['rash'], 0.6, dangerous=True), zoster)

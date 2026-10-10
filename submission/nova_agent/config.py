@@ -245,6 +245,9 @@ class NovaConfig:
     anatomic_compat_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ANATOMIC_COMPAT", True))
     # Post-W: whole-catalog padding does not exempt a time-critical diagnosis's exams from the sweep filter.
     exam_utility_v2_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_EXAM_UTILITY_V2", True))
+    # Post-W: a dangerous alternative whose every observation is a literal part of the named diagnosis's own more
+    # specific observation does not by itself make the plan urgent (disposition.py).
+    disposition_subsumed_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_DISPOSITION_SUBSUMED", True))
     # Round W: a first statement by a caregiver ("my husband collapsed") whose relation fits the patient's demographics
     # describes the patient (nova_agent/evidence_scope.py).
     proxy_report_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_PROXY_REPORT", True))

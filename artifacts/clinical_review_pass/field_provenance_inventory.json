@@ -193970,7 +193970,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 367,
+      "line": 370,
       "names": [
         "_config"
       ],

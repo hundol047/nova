@@ -8,6 +8,7 @@ ECG diagnoses. See docs/competition/ROUND_S_CLINICAL_PROVENANCE.md.
 from dataclasses import dataclass
 from functools import lru_cache
 import json
+import re
 from pathlib import Path
 
 from nova_agent.matching import feature_present_with_aliases
@@ -73,9 +74,29 @@ def disposition_for(state, final, differential) -> Disposition:
         if item.score > 0 and not support_problems(item, state, differential):
             if not _alternative_corroborated(item, state):
                 continue
+            if selected is not None and _subsumed_by_selected(item, selected):
+                continue
             reasons.append("supported_dangerous_alternative:" + item.diagnosis_id)
             evidence.extend(item.supporting_evidence)
     return Disposition(bool(reasons), tuple(dict.fromkeys(reasons)), tuple(dict.fromkeys(evidence)))
+
+
+def _subsumed_by_selected(item, selected) -> bool:
+    """Post-W (NOVA_DISPOSITION_SUBSUMED): every observation supporting the dangerous alternative is a word-for-word
+    part of a more specific observation of the named diagnosis ("rash" inside "band-like blistering rash"). The
+    alternative then has nothing of its own; a vital/rate red flag or any extra observation still counts. Shared
+    findings that are merely similar ("hot swollen painful joint" vs "sudden hot red swollen joint") are not subsumed."""
+    from nova_agent.config import get_config
+    if not get_config().disposition_subsumed_enabled:
+        return False
+    from nova_agent.differential import _strip_negative_prefix
+    own = [str(p).lower() for p in selected.supporting_evidence if _strip_negative_prefix(p) is None]
+    alt = [str(p).lower() for p in item.supporting_evidence if _strip_negative_prefix(p) is None]
+    if not alt or not own:
+        return False
+    def inside(short, long):
+        return short != long and re.search(r"(?<!\w)" + re.escape(short) + r"(?!\w)", long) is not None
+    return all(any(inside(a, o) for o in own) for a in alt)
 
 
 @lru_cache(maxsize=1)
