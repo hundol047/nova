@@ -138,7 +138,7 @@ def _ontology_workup_addressed(diagnosis_id: str, state: PatientState) -> bool:
             # Round P: an exam sign or lab value is not the patient's to report and is never asked (missing_info).
             # Bedside-obtainable signs still require their EXAM. Only unavailable lab/imaging
             # items are action-exhausted; neither path supplies negative evidence.
-            exam = bedside_exam_for_feature(question.split(":", 1)[1])
+            exam = bedside_exam_for_feature(question.split(":", 1)[1], signs=False)
             return state.exam_observed(exam) if exam else True
         feature = normalize(question.split(":", 1)[1])
         return bool(feature and feature in supported)
@@ -156,7 +156,7 @@ def workup_coverage(diagnosis_id: str, state: PatientState) -> dict:
     for q in entry.get("discriminating_questions", []):
         detail = q.partition(":")[2]
         if detail and is_objective_only_feature(detail):
-            exam = bedside_exam_for_feature(detail)
+            exam = bedside_exam_for_feature(detail, signs=False)
             if exam:
                 mapped_exams.append(exam)
             else:

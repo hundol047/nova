@@ -505,7 +505,7 @@ class PatientState(BaseModel):
             parsed = parse_vital_signs(result)
             if parsed is not None:
                 self.vital_signs.append(parsed)
-                for finding in describe_vital_sign_abnormalities(parsed):
+                for finding in describe_vital_sign_abnormalities(parsed, self.demographics.age):
                     if finding not in self.vital_sign_findings:
                         self.vital_sign_findings.append(finding)
         # Round U follow-up: an examination that OBSERVES a feature earlier denied only by a bare "No" turns that
@@ -524,7 +524,7 @@ class PatientState(BaseModel):
         parsed = parse_vital_signs(text)
         if parsed is not None:
             self.vital_signs.append(parsed)
-            for finding in describe_vital_sign_abnormalities(parsed):
+            for finding in describe_vital_sign_abnormalities(parsed, self.demographics.age):
                 if finding not in self.vital_sign_findings:
                     self.vital_sign_findings.append(finding)
         self.initial_vitals_text = text
@@ -731,9 +731,15 @@ class PatientState(BaseModel):
         said = _with_canonical_concepts([diagnosis_evidence_text(t, allow_historical=False) for t in said if t])
         # A bare No to an OR question conflicts when either branch is already
         # observed (including measured fever). Do not erase an objective finding.
-        branches = re.split(r"\bor\b|또는|혹은", feature)
-        return any(feature_present_with_aliases(part.strip(), said, scrub_negated_spans=True)
-                   for part in branches if part.strip())
+        branches = [part.strip() for part in re.split(r"\bor\b|또는|혹은", feature) if part.strip()]
+        from nova_agent.config import get_config
+        if get_config().denial_v2_enabled:
+            # Round V: a bare No to a qualified form of a symptom the patient already reported ("worsening shortness of
+            # breath" after "I get breathless walking") is ambiguous -- it may deny only the qualifier -- so it is a
+            # conflict, not a denial of the symptom. Only leading temporal/severity qualifiers are removed.
+            from nova_agent.differential import _QUALIFIER_PREFIX
+            branches += [core for core in (_QUALIFIER_PREFIX.sub("", b.lower()) for b in branches) if core not in branches]
+        return any(feature_present_with_aliases(part, said, scrub_negated_spans=True) for part in branches)
 
     def add_medication(self, medication: Medication) -> None:
         self.medications.append(medication)

@@ -59,6 +59,10 @@ ConfidenceBand = Literal["LOW", "MEDIUM", "HIGH"]
 FEATURE_WEIGHT = 1.0
 RISK_FACTOR_WEIGHT = 0.4
 CONTRADICTION_PENALTY = 1.2
+# Round V (NOVA_DENIAL_V2): denials of optional typical features -- see _score_disease.
+DENIAL_V2_SCALE = 0.5
+DENIAL_V2_CAP = 1.5 * CONTRADICTION_PENALTY
+DENIAL_V2_MIN_PATTERN = 2
 # Objective exam/imaging/lab findings that confirm a diagnosis (knowledge/diseases/*.json's
 # `confirmatory_findings`) are weighted higher than a soft symptom feature -- clinically, "ST
 # elevation on ECG" should move the ranking far more than "chest pain worse with exertion" does.
@@ -461,7 +465,7 @@ _INFERENCE_FEATURE = re.compile(r"^(?:suspected|presumed|possible)\b", re.IGNORE
 
 def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: List[str],
                    supporting: List[str], contradictory: List[str], missing: List[str], *, objective: bool = False,
-                   strict: bool = False) -> float:
+                   strict: bool = False, explicit_negatives: Optional[List[str]] = None) -> float:
     """Negation-aware scoring for ONE typical_feature or confirmatory_finding phrase. Shared by
     both loops in _score_disease() below -- confirmatory_findings previously used a naive
     present-or-not check with no negation awareness at all, which let a phrase like "absent breath
@@ -490,6 +494,12 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         # any substring of a negative report as a new positive absence sign.
         if feature_denied(underlying, negatives) or explicitly_denied_in_findings(underlying, findings):
             supporting.append(phrase)
+            if (explicit_negatives is not None and get_config().denial_v2_enabled
+                    and not feature_denied(underlying, explicit_negatives)
+                    and not explicitly_denied_in_findings(underlying, findings)):
+                # Round V (NOVA_DENIAL_V2): symmetric with a bare-"No" denial (half a contradiction), a reassuring
+                # absence supported only by a bare "No" to a templated question counts half.
+                return weight * DENIAL_V2_SCALE
             return weight
         if feature_present(underlying, findings, scrub_negated_spans=True):
             contradictory.append(phrase)
@@ -506,7 +516,15 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
             return weight
         missing.append(phrase)
         return 0.0
-    if feature_denied(phrase, negatives) or explicitly_denied_in_findings(phrase, findings):
+    if (feature_denied(phrase, negatives) or explicitly_denied_in_findings(phrase, findings) or (
+            not objective and _core_symptom_denied(
+                phrase, negatives if explicit_negatives is None else explicit_negatives, findings))) and not (
+            # Round V (NOVA_DENIAL_V2): a denial that rests only on a bare "No" to a templated question does not
+            # override the same feature described in the patient's own words; the observation is kept (the Round Q
+            # rule for a later report, applied however the two are worded).
+            not objective and explicit_negatives is not None and get_config().denial_v2_enabled
+            and not feature_denied(phrase, explicit_negatives) and not explicitly_denied_in_findings(phrase, findings)
+            and _present_with_aliases(phrase, findings, strict=strict)):
         contradictory.append(phrase)
         return -(CONFIRMATORY_WEIGHT if objective else CONTRADICTION_PENALTY)
     ignore = _MODALITY_WORDS if objective else frozenset()
@@ -519,6 +537,36 @@ def _score_phrase(phrase: str, weight: float, findings: List[str], negatives: Li
         return weight
     missing.append(phrase)
     return 0.0
+
+
+_QUALIFIER_PREFIX = re.compile(r"^(?:sudden(?: onset)?|acute|worsening|progressive|exertional|new|severe|recurrent|"
+                               r"intermittent|persistent|rapid)\s+")
+_NEGATED_SPAN = re.compile(r"\b(?:no|denies|denied|without|not)\s+([^,;.]+)", re.I)
+
+
+def _core_symptom_denied(phrase: str, negatives: List[str], findings: List[str]) -> bool:
+    """Round V (NOVA_DENIAL_V2): an explicit denial of a symptom also denies its qualified forms -- "no breathlessness"
+    refutes "sudden onset dyspnea". Only leading temporal/severity qualifiers are removed, the remaining core must be a
+    KB phrase with existing aliases, and the denial must name it (via those aliases) inside a negated span."""
+    if not get_config().denial_v2_enabled:
+        return False
+    core = phrase.lower()
+    while True:
+        stripped = _QUALIFIER_PREFIX.sub("", core, count=1)
+        if stripped == core:
+            break
+        core = stripped
+    if core == phrase.lower() or core not in FEATURE_ALIASES:
+        return False
+    spans = []
+    for text in [*negatives, *findings]:
+        for m in _NEGATED_SPAN.finditer(text):
+            span = re.split(r"\b(?:but|however|except|although|apart|unless|only)\b", m.group(1), maxsplit=1)[0].strip()
+            # An unqualified denial only: "not breathless at rest" or "no pain when sitting" is narrower than the
+            # symptom and refutes nothing about its qualified forms.
+            if span and len(span.split()) <= 3 and not re.search(r"\b(?:at|when|during|while|on|after|before|with)\b", span):
+                spans.append(span)
+    return bool(spans) and feature_present_with_aliases(core, spans, scrub_negated_spans=False)
 
 
 def _score_lactate(entry_id: str, lactate_mmol_l: Optional[float],
@@ -593,6 +641,15 @@ def _subsumed_typical_features(entry: dict, objective_pool) -> set:
     return out
 
 
+def _rank_key(row) -> tuple:
+    """Score first. Round V (NOVA_DENIAL_V2): an exact score tie is broken by the number of supporting observations
+    that are present findings (not "no X" reassuring absences), instead of by candidate-pool insertion order. Danger
+    plays no part in this order."""
+    if not get_config().denial_v2_enabled:
+        return (row[0],)
+    return (row[0], sum(1 for p in row[3] if _strip_negative_prefix(p) is None))
+
+
 def _score_disease(entry: dict, state: PatientState,
                     objective_findings: Optional[Dict[str, ObjectiveFinding]] = None) -> tuple[float, float, List[str], List[str], List[str]]:
     if objective_findings is None:
@@ -601,6 +658,10 @@ def _score_disease(entry: dict, state: PatientState,
     current_findings = state.all_findings_text(include_context=False, include_family=False)
     confirmatory_evidence_pool = state.objective_findings_text()
     negatives = state.pertinent_negatives
+    # Round V: the core-symptom extension of a denial uses only denials stated in the patient's own words; a bare "No"
+    # to a templated question already counts against that exact feature and is not widened to its qualified forms.
+    bare = {f"no {t}" for t in state.bare_denials}
+    explicit_negatives = [n for n in negatives if n not in bare]
 
     supporting: List[str] = []
     contradictory: List[str] = []
@@ -622,6 +683,8 @@ def _score_disease(entry: dict, state: PatientState,
     typical_feature_score = 0.0
     typical_penalty = 0.0
     generic_symptom_penalty = 0.0
+    optional_denial = 0.0
+    bare_denials: List[tuple] = []
     from nova_agent.final_decision import _generic_symptom
     from nova_agent.clinical_concepts import is_objective_only_feature
     subsumed = _subsumed_typical_features(entry, confirmatory_evidence_pool)
@@ -632,22 +695,46 @@ def _score_disease(entry: dict, state: PatientState,
         max_possible += weight
         from nova_agent.final_decision import _risk_context
         feature_findings = findings if _risk_context(feature) else current_findings
-        delta = _score_phrase(feature, weight, feature_findings, negatives, supporting, contradictory, missing)
+        delta = _score_phrase(feature, weight, feature_findings, negatives, supporting, contradictory, missing,
+                              explicit_negatives=explicit_negatives)
         typical_feature_score += max(delta, 0.0)
-        if (_generic_symptom(feature) and not is_objective_only_feature(feature)
-                and not _present_with_aliases(feature, feature_findings)):
+        bare_only = (delta < 0 and get_config().denial_v2_enabled and not feature_denied(feature, explicit_negatives)
+                     and not explicitly_denied_in_findings(feature, feature_findings)
+                     and not _core_symptom_denied(feature, explicit_negatives, feature_findings))
+        if (not is_objective_only_feature(feature) and not _present_with_aliases(feature, feature_findings)
+                and (_generic_symptom(feature) or bare_only)):
+            # Round V (NOVA_DENIAL_V2): an optional symptom denied ONLY by a bare "No" to a templated question is weak
+            # evidence against a hypothesis that already rests on a PATTERN (>= 2 observed typical features) -- the
+            # simulator answers every unscripted question that way, and most typical features are absent in many true
+            # cases. It is then netted against the observed typical features BEFORE saturation at half a
+            # contradiction, and such denials together are capped at 1.5 contradictions. A hypothesis with fewer
+            # observed features keeps the earlier full weight, so thinly supported alternatives still drop quickly.
+            # Subtracting -1.2 after saturation let one templated "No" outweigh an observed feature (+1.0) and undo a
+            # pattern of four observed ones. A denial in the patient's own words keeps the earlier behaviour.
             # An optional symptom never observed is different from a direct
             # contradiction of an already positive observation. The latter
             # keeps its full penalty even when the symptom class is saturated.
-            generic_symptom_penalty += min(delta, 0.0)
+            if bare_only:
+                bare_denials.append((delta, _generic_symptom(feature)))
+            else:
+                generic_symptom_penalty += min(delta, 0.0)
         else:
             typical_penalty += min(delta, 0.0)
+    observed_typical = sum(1 for f in entry.get("typical_features", []) if f in supporting)
+    for delta, generic in bare_denials:
+        if observed_typical >= DENIAL_V2_MIN_PATTERN:
+            optional_denial += delta * DENIAL_V2_SCALE
+        elif generic:
+            generic_symptom_penalty += delta  # unchanged: a hypothesis resting on one observation is not a pattern
+        else:
+            typical_penalty += delta
     # Soft saturation instead of a flat cap (Round M): with a hard min(), a candidate matching six
     # typical features and one matching two both sat at exactly the cap and TIED, so rank order fell
     # back to pool insertion order. Evidence up to the knee counts in full; beyond it the
     # contribution rises strictly monotonically but asymptotes to the cap, so more converging
     # evidence still orders above less while stacked weak clues can never reach (let alone exceed)
     # one confirmatory finding's worth.
+    generic_symptom_penalty += max(optional_denial, -DENIAL_V2_CAP)
     score += _soft_saturate(typical_feature_score + generic_symptom_penalty) + typical_penalty
 
     for risk_factor in entry.get("risk_factors", []):
@@ -864,7 +951,7 @@ class DifferentialEngine:
         # Pool provenance describes retrieval, not whether later scoring found evidence.
         is_zero_evidence_presentation = is_zero_evidence_presentation and not any(t[3] for t in scored)
 
-        scored.sort(key=lambda t: t[0], reverse=True)
+        scored.sort(key=_rank_key, reverse=True)
         # The final active-clinical-differential size: the legacy fixed 5 for any mock/legacy
         # caller (byte-identical, unchanged), or the configured reasoning_top_k (~25) once
         # competition retrieval is enabled -- see NovaConfig.effective_differential_top_k()'s
@@ -901,7 +988,7 @@ class DifferentialEngine:
                     weakest = non_dangerous_kept.pop(0)
                     kept.remove(weakest)
                 kept.append(missing)
-            kept.sort(key=lambda t: t[0], reverse=True)
+            kept.sort(key=_rank_key, reverse=True)
 
         # Stage B -- the ANALOGOUS protection to
         # retrieval_pipeline.lightweight_rerank's Stage 3, one layer up: candidate_generator.py's
@@ -946,7 +1033,7 @@ class DifferentialEngine:
                     weakest = non_dangerous_kept.pop(0)
                     kept.remove(weakest)
                 kept.append(missing)
-            kept.sort(key=lambda t: t[0], reverse=True)
+            kept.sort(key=_rank_key, reverse=True)
 
         if _cfg.escalation_priority_enabled:
             kept = _apply_red_flag_escalation(kept, state)

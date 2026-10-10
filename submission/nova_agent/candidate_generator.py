@@ -117,8 +117,12 @@ def _concept_to_kb_entry(concept) -> dict:
         if is_tier2_structured else []
     )
     from nova_agent.clinical_concepts import bedside_exam_for_feature
-    bedside = list(dict.fromkeys(exam for f in concept.typical_features
-                                if (exam := bedside_exam_for_feature(f)))) if is_tier2_structured else []
+    # Round V: a Tier-2 CONFIRMATORY physical sign (third heart sound, grouped vesicles) links to the catalog exam that
+    # observes it; typical features keep the earlier, narrower links.
+    bedside = list(dict.fromkeys(
+        [exam for f in concept.typical_features if (exam := bedside_exam_for_feature(f, signs=False))]
+        + [exam for f in (getattr(concept, "confirmatory_findings", ()) or ()) if (exam := bedside_exam_for_feature(f))]
+    )) if is_tier2_structured else []
     return {
         "id": f"onto::{concept.concept_id}",
         "name": concept.canonical_name,

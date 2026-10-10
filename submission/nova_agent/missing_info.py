@@ -98,6 +98,8 @@ def _expected_information_gain(prior: Dict[str, float], affected_ids: set) -> fl
 
 
 MAX_TIER2_QUESTION_RANK = 6
+# Round V: a contradicted, non-leading Tier-2 alternative below this fraction of the leader's score asks no more questions.
+TIER2_ADDRESSED_RATIO = 0.8
 
 
 def _resolve_entry(diagnosis_id: str) -> Optional[dict]:
@@ -205,6 +207,15 @@ class MissingInformationAnalyzer:
             else:
                 from nova_agent.history_followup import followup_questions
                 questions = list(entry.get("discriminating_questions", [])) + followup_questions(state, item)
+            if (item is not None and diagnosis_id.startswith("onto::") and state.preliminary_rules
+                    and cfg.denial_v2_enabled and item.contradictory_evidence and differential
+                    and item.diagnosis_id != differential[0].diagnosis_id
+                    and item.score < TIER2_ADDRESSED_RATIO * differential[0].score):
+                # Round V: with a bare "No" now worth half a contradiction, an already-contradicted Tier-2 alternative
+                # trailing the leader stays ranked longer. It keeps its rank and support (nothing is excluded), but it
+                # no longer spends further questions or examinations of its own. A safety-flagged diagnosis still
+                # contributes its workup through the safety path below (add_entry without a ranked item).
+                return
             supported_features = {normalize_feature(s) for s in item.supporting_evidence} if item is not None else set()
             # Routing already supplies a real clinical reason to investigate,
             # even before an exact scoring phrase is understood. A zero score

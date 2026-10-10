@@ -195,6 +195,8 @@ _IRREGULAR_STEM_OVERRIDES = {
     # swelling / swollen / swell are one clinical word that three different suffix paths stem to
     # three different values ("swel", "swollen", "swell"); warmth/warm likewise.
     "swelling": "swell", "swollen": "swell", "swelled": "swell", "swells": "swell", "warmth": "warm",
+    # Round V: "spotting" (light vaginal bleeding) is not the noun "spot" ("the sore spot on my ribs").
+    "spotting": "spotting",
 }
 
 

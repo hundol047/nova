@@ -19,9 +19,9 @@ from nova_agent.knowledge.retrieval import (
     demographic_risk_rules,
     disease_by_id,
     medication_risk_rules,
-    vital_sign_red_flags,
 )
 from nova_agent.matching import feature_present
+from nova_agent.vitals_parser import red_flag_rules_for_age
 from nova_agent.objective_evidence import normalize_objective_evidence
 from nova_agent.state import PatientState, RedFlag
 
@@ -135,7 +135,7 @@ class SafetyLayer:
 
         for vitals in state.vital_signs:
             values = vitals.model_dump()
-            for rule in vital_sign_red_flags():
+            for rule in red_flag_rules_for_age(state.demographics.age):
                 value = values.get(rule["field"])
                 if value is None:
                     continue

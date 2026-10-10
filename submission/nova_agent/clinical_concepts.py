@@ -259,7 +259,7 @@ def is_objective_only_feature(feature: str) -> bool:
     return bool(parts) and all(_OBJECTIVE_ONLY_FEATURE.search(p) for p in parts)
 
 
-def bedside_exam_for_feature(feature: str):
+def bedside_exam_for_feature(feature: str, signs: bool = True):
     """Only mappings covered by existing EXAM maneuvers; lab/imaging findings stay unavailable.
     Reuses taxonomy's cardiac/lung auscultation scope, not a generated test request."""
     low = feature.lower()
@@ -267,4 +267,25 @@ def bedside_exam_for_feature(feature: str):
         return "cardiac_auscultation"
     if re.search(r"\b(?:crackles|rales|rhonchi)\b", low):
         return "lung_auscultation"
+    from nova_agent.config import get_config
+    if not signs or not get_config().exam_links_v2_enabled:
+        return None
+    # Round V: findings an existing catalog maneuver observes directly (taxonomy.EXAM_CATALOG names). A symptom the
+    # patient reports is not mapped; only physical signs. Nothing is requested that the catalog cannot perform.
+    # Tier-2 entries use this only for their confirmatory findings (signs=False for typical features).
+    for exam, pattern in _BEDSIDE_SIGN_PATTERNS:
+        if pattern.search(low):
+            return exam
     return None
+
+
+_BEDSIDE_SIGN_PATTERNS = tuple((exam, re.compile(p)) for exam, p in (
+    ("meningeal_signs", r"\b(?:neck stiffness|nuchal rigidity|kernig|brudzinski)\b"),
+    ("cardiac_auscultation", r"\b(?:third heart sound|s3 gallop|gallop rhythm|friction rub|heart sounds?)\b"),
+    ("lung_auscultation", r"\b(?:breath sounds|wheez\w*|bronchial breathing)\b"),
+    ("skin_exam", r"\b(?:vesicles?|blisters?|blistering|rash|erythema\w*|urticaria|hives|petechia\w*|purpura|pustules?|plaques?)\b"),
+    ("abdominal_exam", r"\b(?:guarding|rebound|rigid\w*|murphy\w*|mcburney\w*|abdominal (?:tenderness|mass)|tender (?:right|left) (?:upper|lower))\b"),
+    ("extremity_exam", r"\b(?:calf (?:swelling|tenderness)|pitting|oedema|edema|swollen (?:\w+ )?joint|joint (?:swelling|effusion)|leg swelling)\b"),
+    ("costovertebral_tenderness", r"\b(?:costovertebral|renal angle) (?:angle )?tenderness\b"),
+    ("neuro_exam", r"\b(?:focal neurological deficit|pronator drift|facial droop|hemiparesis|reflexes|ataxia on examination)\b"),
+))
