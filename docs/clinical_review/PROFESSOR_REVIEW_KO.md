@@ -115,7 +115,7 @@
 파일: `nova_agent/knowledge/diseases/neuro.json`
 현재 코드 분류: urgency=CRITICAL, dangerous=True (미검토)
 
-- 증상 특징: ["fever", "neck stiffness", "photophobia", "headache", "altered mental status", "rash"]
+- 증상 특징: ["fever", "neck stiffness", "photophobia", "headache", "altered mental status", "rash", "bulging fontanelle on examination", "high-pitched cry on examination"]
 - 현재 확진 관련 소견: ["CSF pleocytosis", "gram-negative diplococci", "gram-positive", "elevated white blood cell count"]
 - 위험 인자: ["recent infection", "immunosuppression", "close contact exposure", "no vaccination"]
 - 최소 검사: ["lumbar_puncture"]
@@ -264,7 +264,7 @@
 파일: `nova_agent/knowledge/diseases/infectious.json`
 현재 코드 분류: urgency=CRITICAL, dangerous=True (미검토)
 
-- 증상 특징: ["fever", "tachycardia", "hypotension", "altered mental status", "tachypnea", "suspected infection source"]
+- 증상 특징: ["fever", "tachycardia", "hypotension", "altered mental status", "tachypnea", "suspected infection source", "mottled skin on examination", "temperature below 36 degrees", "grunting on examination"]
 - 현재 확진 관련 소견: ["positive blood culture", "gram-negative rods", "gram-positive cocci", "gram-negative diplococci"]
 - 위험 인자: ["immunosuppression", "recent infection", "indwelling catheter", "advanced age", "diabetes"]
 - 최소 검사: ["lactate", "blood_culture"]

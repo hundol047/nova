@@ -24,7 +24,10 @@
       "hypotension",
       "altered mental status",
       "tachypnea",
-      "suspected infection source"
+      "suspected infection source",
+      "mottled skin on examination",
+      "temperature below 36 degrees",
+      "grunting on examination"
     ],
     "risk_factors": [
       "immunosuppression",
@@ -66,7 +69,8 @@
       "lactate",
       "blood_culture"
     ],
-    "evidence_level": "internally_authored_heuristic"
+    "evidence_level": "internally_authored_heuristic",
+    "post_round_w_provenance": "typical_features 'mottled skin on examination', 'temperature below 36 degrees' and 'grunting on examination' added post-Round-W: they are NICE NG51 (Sepsis: recognition, diagnosis and early management, 2016, updated 2024) high-risk criteria observable without any test -- mottled or ashen appearance (all ages), temperature below 36 C (all ages), grunting (children under 5). The temperature feature is SUPPORT-ONLY and decided by the measured value (a fever does not contradict it: hypothermia is an alternative presentation, not a defining sign); the two signs are examination findings, never asked as questions. They support the working diagnosis of suspected sepsis; they do not identify a source or organism and danger adds no score. Agent-authored, not clinician-reviewed."
   },
   {
     "id": "anaphylaxis",

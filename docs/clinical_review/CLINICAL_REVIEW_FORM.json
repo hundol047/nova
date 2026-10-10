@@ -211,7 +211,7 @@
     "disease_id": "anaphylaxis",
     "name": "Anaphylaxis",
     "source_path": "nova_agent/knowledge/diseases/infectious.json",
-    "source_sha256": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
+    "source_sha256": "bdcef03bf1252e538df4004c2ed039cd98e110b82626db2e9a99379352bea811",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -400,7 +400,7 @@
     "disease_id": "meningitis",
     "name": "Bacterial Meningitis",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
+    "source_sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -425,7 +425,9 @@
         "photophobia",
         "headache",
         "altered mental status",
-        "rash"
+        "rash",
+        "bulging fontanelle on examination",
+        "high-pitched cry on examination"
       ],
       "risk_factors": [
         "recent infection",
@@ -479,7 +481,8 @@
           "url": "https://www.nice.org.uk/guidance/ng240/chapter/Recommendations",
           "scope": "Clinical features and investigation results are combined; this software final-label guard does not exclude meningitis or suppress urgent evaluation."
         }
-      ]
+      ],
+      "post_round_w_provenance": "typical_features 'bulging fontanelle on examination' and 'high-pitched cry on examination' added post-Round-W: NICE NG143 (Fever in under 5s, Table 1 'traffic light' red features: bulging fontanelle; weak, high-pitched or continuous cry) and NICE NG240 (Meningitis (bacterial) and meningococcal disease, 2024: symptoms and signs in infants include a bulging fontanelle and irritability/abnormal cry). They are signs observed by the examiner or reported by a caregiver, never asked as questions, and only occur in infants with an open fontanelle. They support the working diagnosis of suspected bacterial meningitis; they do not confirm it (no CSF), and danger adds no score. Agent-authored, not clinician-reviewed."
     },
     "source_leads": [
       {
@@ -913,7 +916,7 @@
     "disease_id": "ischemic_stroke",
     "name": "Ischemic Stroke",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
+    "source_sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1148,7 +1151,7 @@
     "disease_id": "sepsis",
     "name": "Sepsis",
     "source_path": "nova_agent/knowledge/diseases/infectious.json",
-    "source_sha256": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
+    "source_sha256": "bdcef03bf1252e538df4004c2ed039cd98e110b82626db2e9a99379352bea811",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -1176,7 +1179,10 @@
         "hypotension",
         "altered mental status",
         "tachypnea",
-        "suspected infection source"
+        "suspected infection source",
+        "mottled skin on examination",
+        "temperature below 36 degrees",
+        "grunting on examination"
       ],
       "risk_factors": [
         "immunosuppression",
@@ -1218,7 +1224,8 @@
         "lactate",
         "blood_culture"
       ],
-      "evidence_level": "internally_authored_heuristic"
+      "evidence_level": "internally_authored_heuristic",
+      "post_round_w_provenance": "typical_features 'mottled skin on examination', 'temperature below 36 degrees' and 'grunting on examination' added post-Round-W: they are NICE NG51 (Sepsis: recognition, diagnosis and early management, 2016, updated 2024) high-risk criteria observable without any test -- mottled or ashen appearance (all ages), temperature below 36 C (all ages), grunting (children under 5). The temperature feature is SUPPORT-ONLY and decided by the measured value (a fever does not contradict it: hypothermia is an alternative presentation, not a defining sign); the two signs are examination findings, never asked as questions. They support the working diagnosis of suspected sepsis; they do not identify a source or organism and danger adds no score. Agent-authored, not clinician-reviewed."
     },
     "source_leads": [
       {
@@ -1377,7 +1384,7 @@
     "disease_id": "subarachnoid_hemorrhage",
     "name": "Subarachnoid Hemorrhage",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
+    "source_sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
     "dangerous": true,
     "urgency": "CRITICAL",
     "current_profile": {
@@ -2094,7 +2101,7 @@
     "disease_id": "bppv",
     "name": "Benign Paroxysmal Positional Vertigo",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
+    "source_sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2427,7 +2434,7 @@
     "disease_id": "migraine",
     "name": "Migraine",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
+    "source_sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2668,7 +2675,7 @@
     "disease_id": "orthostatic_hypotension",
     "name": "Orthostatic Hypotension",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
+    "source_sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -2828,7 +2835,7 @@
     "disease_id": "tension_headache",
     "name": "Tension-Type Headache",
     "source_path": "nova_agent/knowledge/diseases/neuro.json",
-    "source_sha256": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
+    "source_sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {
@@ -3073,7 +3080,7 @@
     "disease_id": "viral_uri",
     "name": "Viral Upper Respiratory Infection",
     "source_path": "nova_agent/knowledge/diseases/infectious.json",
-    "source_sha256": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
+    "source_sha256": "bdcef03bf1252e538df4004c2ed039cd98e110b82626db2e9a99379352bea811",
     "dangerous": false,
     "urgency": "LOW",
     "current_profile": {

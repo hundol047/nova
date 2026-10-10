@@ -5,8 +5,8 @@
     "nova_agent/knowledge/diseases/cardiac.json": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
     "nova_agent/knowledge/diseases/endocrine_metabolic.json": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
     "nova_agent/knowledge/diseases/genitourinary.json": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
-    "nova_agent/knowledge/diseases/infectious.json": "3a605dc00d62dc6db247ec91a7f62eb3cc877c97b551175c6a5ba7350eef982b",
-    "nova_agent/knowledge/diseases/neuro.json": "c5a8528bbdec796a281278b8962d1dee1f54174d5e797208dd3eed37d3bb98cb",
+    "nova_agent/knowledge/diseases/infectious.json": "bdcef03bf1252e538df4004c2ed039cd98e110b82626db2e9a99379352bea811",
+    "nova_agent/knowledge/diseases/neuro.json": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
     "nova_agent/knowledge/diseases/pulmonary.json": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
     "nova_agent/knowledge/tier2_catalog.json": "56e6f197eafeef1533ac733c330099f82da453f8e0e0e571550a5f2416081fc6",
     "nova_agent/knowledge/tier2_enrichment.json": "4f567dfbd24a1e9b7f44eaa42f49447a6bc9d1c8d558404a8a8ab7a2d8d92511",
@@ -7574,6 +7574,36 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/infectious.json",
+      "pointer": "/0/typical_features/6",
+      "value": "mottled skin on examination",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/infectious.json",
+      "pointer": "/0/typical_features/7",
+      "value": "temperature below 36 degrees",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/infectious.json",
+      "pointer": "/0/typical_features/8",
+      "value": "grunting on examination",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/infectious.json",
       "pointer": "/0/risk_factors/0",
       "value": "immunosuppression",
       "original_source_status": "UNRESOLVED",
@@ -7840,6 +7870,16 @@
       "path": "nova_agent/knowledge/diseases/infectious.json",
       "pointer": "/0/evidence_level",
       "value": "internally_authored_heuristic",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/infectious.json",
+      "pointer": "/0/post_round_w_provenance",
+      "value": "typical_features 'mottled skin on examination', 'temperature below 36 degrees' and 'grunting on examination' added post-Round-W: they are NICE NG51 (Sepsis: recognition, diagnosis and early management, 2016, updated 2024) high-risk criteria observable without any test -- mottled or ashen appearance (all ages), temperature below 36 C (all ages), grunting (children under 5). The temperature feature is SUPPORT-ONLY and decided by the measured value (a fever does not contradict it: hypothermia is an alternative presentation, not a defining sign); the two signs are examination findings, never asked as questions. They support the working diagnosis of suspected sepsis; they do not identify a source or organism and danger adds no score. Agent-authored, not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -9629,6 +9669,26 @@
     },
     {
       "path": "nova_agent/knowledge/diseases/neuro.json",
+      "pointer": "/2/typical_features/6",
+      "value": "bulging fontanelle on examination",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/neuro.json",
+      "pointer": "/2/typical_features/7",
+      "value": "high-pitched cry on examination",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/neuro.json",
       "pointer": "/2/risk_factors/0",
       "value": "recent infection",
       "original_source_status": "UNRESOLVED",
@@ -9951,6 +10011,16 @@
       "path": "nova_agent/knowledge/diseases/neuro.json",
       "pointer": "/2/evidence_references/0/scope",
       "value": "Clinical features and investigation results are combined; this software final-label guard does not exclude meningitis or suppress urgent evaluation.",
+      "original_source_status": "UNRESOLVED",
+      "reference_occurrences": [],
+      "occurrence_status": "NO_LINK_ESTABLISHED",
+      "clinical_review": "PENDING",
+      "rights_review": "PENDING_ORIGINAL_OR_REPLACEMENT_EVIDENCE"
+    },
+    {
+      "path": "nova_agent/knowledge/diseases/neuro.json",
+      "pointer": "/2/post_round_w_provenance",
+      "value": "typical_features 'bulging fontanelle on examination' and 'high-pitched cry on examination' added post-Round-W: NICE NG143 (Fever in under 5s, Table 1 'traffic light' red features: bulging fontanelle; weak, high-pitched or continuous cry) and NICE NG240 (Meningitis (bacterial) and meningococcal disease, 2024: symptoms and signs in infants include a bulging fontanelle and irritability/abnormal cry). They are signs observed by the examiner or reported by a caregiver, never asked as questions, and only occur in infants with an open fontanelle. They support the working diagnosis of suspected bacterial meningitis; they do not confirm it (no CSF), and danger adds no score. Agent-authored, not clinician-reviewed.",
       "original_source_status": "UNRESOLVED",
       "reference_occurrences": [],
       "occurrence_status": "NO_LINK_ESTABLISHED",
@@ -191361,6 +191431,28 @@
           "getting more breathless",
           "breathlessness is getting worse"
         ],
+        "mottled skin on examination": [
+          "skin looks blotchy",
+          "blotchy skin",
+          "skin is blotchy",
+          "mottled limbs",
+          "mottled legs",
+          "looks mottled",
+          "skin looks mottled"
+        ],
+        "grunting on examination": [
+          "grunting with every breath",
+          "grunting when he breathes",
+          "grunting when she breathes",
+          "is grunting",
+          "keeps grunting"
+        ],
+        "diarrhea": [
+          "runny poos",
+          "runny poo",
+          "watery poos",
+          "watery poo"
+        ],
         "inability to move the joint": [
           "too painful to bend",
           "can't bend it",
@@ -191399,7 +191491,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 404,
+      "line": 411,
       "names": [
         "_TIER2_LAY"
       ],
@@ -193766,7 +193858,7 @@
     },
     {
       "path": "nova_agent/action_selector.py",
-      "line": 53,
+      "line": 56,
       "names": [
         "LEADER_CONFIRMATORY_BONUS"
       ],
@@ -193775,7 +193867,7 @@
     },
     {
       "path": "nova_agent/action_selector.py",
-      "line": 58,
+      "line": 61,
       "names": [
         "BLOCKING_WORKUP_BONUS"
       ],
@@ -193784,7 +193876,7 @@
     },
     {
       "path": "nova_agent/action_selector.py",
-      "line": 59,
+      "line": 62,
       "names": [
         "_CORE_HISTORY"
       ],
@@ -193878,7 +193970,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 361,
+      "line": 367,
       "names": [
         "_config"
       ],

@@ -257,6 +257,13 @@ _KO_PATTERNS_V3 = (
      "epigastric pain radiating to back"),
     # Heavy drinking stated in Korean is the existing "alcohol use" risk phrase (no amount inferred).
     (re.compile(r"과음|폭음|술을\s*(?:많이|매일|자주)\s*마"), "alcohol use"),
+    # Post-W: sepsis high-risk appearance (NICE NG51), shingles distribution and gout wording in Korean (existing KB
+    # phrases only; a rash or a pain alone is not the relation).
+    (re.compile(r"얼룩덜룩|피부가?\s*(?:잿빛|창백하고\s*얼룩)"), "mottled skin on examination"),
+    (re.compile(r"(?:띠|줄)\s*(?:모양|처럼|같이)?[^.。]{0,15}물집|물집[^.。]{0,15}(?:띠|줄)"), "band-like blistering rash"),
+    (re.compile(r"(?:(?:한쪽|왼쪽|오른쪽|옆구리|띠\s*모양)[^.。]{0,30}(?:화끈|따끔|쓰라))"), "burning pain on one side of body"),
+    (re.compile(r"엄지\s*발가락"), "big toe joint involvement"),
+    (re.compile(r"(?:발가락|무릎|발목|관절)[^.。]{0,15}(?:빨갛|벌겋|뜨겁)[^.。]{0,10}(?:붓|부었|부어)"), "sudden hot red swollen joint"),
     # Round V: heart-failure congestion wording (existing KB phrases only).
     (re.compile(r"누우면[^.。]{0,10}숨(?:이)?\s*(?:막|차|가빠)|앉아서\s*자"), "unable to lie flat"),
     (re.compile(r"(?:다리|발목)(?:가|이|에)?\s*(?:퉁퉁\s*)?(?:부어|부었|붓|부종)"), "leg swelling"),

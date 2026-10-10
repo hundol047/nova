@@ -81,6 +81,17 @@ class CandidateDiagnosis:
         return self.entry["id"]
 
 
+def _drop_anatomically_incompatible(pool: dict, presentation) -> None:
+    """Post-W: an organ-bound diagnosis the recorded sex cannot have is not a candidate (anatomic_compat.py)."""
+    from nova_agent.config import get_config
+    if not get_config().anatomic_compat_enabled:
+        return
+    from nova_agent.anatomic_compat import incompatible
+    sex = presentation.demographic_context.get("sex")
+    for key in [k for k in pool if incompatible(k, sex)]:
+        del pool[key]
+
+
 def _add(pool: dict, entry: dict, source: CandidateSource) -> None:
     existing = pool.get(entry["id"])
     if existing is None:
@@ -515,6 +526,7 @@ def generate_candidates(presentation: ClinicalPresentation,
             # recall, not evidence, so differential.py still treats an unscored pool as zero-evidence.
             _broaden_with_open_world(pool, presentation, imaging_text, chief_complaint_text,
                                      retrieval_top_k, rerank_top_k, objective_findings)
+        _drop_anatomically_incompatible(pool, presentation)
         return list(pool.values())
 
     # 4. safety_candidate -- the small, fixed can't-miss list always rides along ON TOP OF a
@@ -556,6 +568,7 @@ def generate_candidates(presentation: ClinicalPresentation,
         _broaden_with_open_world(pool, presentation, imaging_text, chief_complaint_text,
                                  retrieval_top_k, rerank_top_k, objective_findings)
 
+    _drop_anatomically_incompatible(pool, presentation)
     target_size = pool_target_size if pool_target_size is not None else TARGET_POOL_SIZE
     candidates = list(pool.values())
     if len(candidates) <= target_size:

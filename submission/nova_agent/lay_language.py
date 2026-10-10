@@ -382,6 +382,13 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
     # Orthopnoea quantified by pillows; progressive exertional breathlessness (NICE CKS "Heart failure - chronic").
     "worsening shortness of breath": ["become breathless", "becoming more breathless", "increasingly breathless",
                                       "getting more breathless", "breathlessness is getting worse"],
+    # Post-W: NICE NG51 sepsis high-risk criteria in lay words (mottled/ashen appearance; grunting in under-5s).
+    "mottled skin on examination": ["skin looks blotchy", "blotchy skin", "skin is blotchy", "mottled limbs", "mottled legs",
+                     "looks mottled", "skin looks mottled"],
+    "grunting on examination": ["grunting with every breath", "grunting when he breathes", "grunting when she breathes",
+                              "is grunting", "keeps grunting"],
+    # Post-W: UK/child lay word for loose stools (NHS "Diarrhoea and vomiting": "runny poo").
+    "diarrhea": ["runny poos", "runny poo", "watery poos", "watery poo"],
     # Round W: restricted movement of a hot swollen joint (NICE CKS "Septic arthritis": painful, limited movement).
     "inability to move the joint": ["too painful to bend", "can't bend it", "cannot bend it", "can't bend my knee",
                                     "cannot bend my knee", "too painful to move", "can't move my knee", "unable to bend"],

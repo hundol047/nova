@@ -676,6 +676,10 @@ _THRESHOLD_FEATURES = (
      lambda v, m: None if v.temperature_c is None else v.temperature_c > float(m[1])),
     (re.compile(r"^body temperature below (\d+(?:\.\d+)?) degrees$"),
      lambda v, m: None if v.temperature_c is None else v.temperature_c < float(m[1])),
+    # Post-W: SUPPORT-ONLY form -- an alternative presentation (sepsis hypothermia, NICE NG51) that a fever does not
+    # contradict: met -> supporting, otherwise no evidence either way.
+    (re.compile(r"^temperature below (\d+(?:\.\d+)?) degrees$"),
+     lambda v, m: True if v.temperature_c is not None and v.temperature_c < float(m[1]) else None),
 )
 
 
