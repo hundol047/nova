@@ -1,0 +1,51 @@
+{
+  "definition": "Ordered earliest observed terminal-stage loss, then heuristic evidence/action/ranking attribution; not clinician causal adjudication; see trace_diagnostic_ranking.primary_failure",
+  "counts": {
+    "FINAL_RANKING_ERROR": 2
+  },
+  "failures": [
+    {
+      "case_id": "RoundM_105",
+      "truth": "Ovarian Torsion",
+      "prediction": "Ruptured Ovarian Cyst",
+      "earliest_failure": "FINAL_RANKING_ERROR",
+      "final_stage": {
+        "retrieved": true,
+        "reranked": true,
+        "rerank_top25": true,
+        "scored": true,
+        "active_rank": 2,
+        "resolved": true,
+        "supporting": [
+          "sudden severe lower abdominal pain on one side",
+          "nausea and vomiting"
+        ],
+        "objective_evidence_score": 0.0
+      },
+      "unrequested_scripted_objective": [],
+      "trace_file": "RoundM_105.json"
+    },
+    {
+      "case_id": "RoundM_108",
+      "truth": "Peptic Ulcer Disease",
+      "prediction": "Duodenal Ulcer",
+      "earliest_failure": "FINAL_RANKING_ERROR",
+      "final_stage": {
+        "retrieved": true,
+        "reranked": true,
+        "rerank_top25": true,
+        "scored": true,
+        "active_rank": 2,
+        "resolved": true,
+        "supporting": [
+          "burning upper abdominal pain",
+          "pain relieved or worsened by eating",
+          "night time pain"
+        ],
+        "objective_evidence_score": 0.0
+      },
+      "unrequested_scripted_objective": [],
+      "trace_file": "RoundM_108.json"
+    }
+  ]
+}

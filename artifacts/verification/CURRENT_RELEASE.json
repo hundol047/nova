@@ -1,12 +1,13 @@
 {
-  "current_verification_artifact": "artifacts/verification/local-release-ed61341-v30.json",
-  "current_verification_schema": "nova-verification-v30",
-  "verified_runtime_sha": "ed613410c5f64d567ea7b937078d8fe59916fb5d",
+  "current_verification_artifact": "artifacts/verification/local-release-aeda1a0-v31.json",
+  "current_verification_schema": "nova-verification-v31",
+  "verified_runtime_sha": "aeda1a09d504eb721cd9fcd3d15960de8ea1cec4",
   "current_blind_version": "v19",
   "current_blind_manifest": null,
   "current_blind_status": "REFERENCE-ONLY",
   "fresh_final_blind": "NOT YET AUTHORED",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-ed61341-v30.json",
     "artifacts/verification/local-release-8257ba6-v22.json",
     "artifacts/verification/local-release-3831555-v21.json",
     "artifacts/verification/local-release-f86bfcc-v20.json",
@@ -29,6 +30,6 @@
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
   "status": "NOT READY",
-  "reason": "Post-Round-W verification (record committed; archive local).",
+  "reason": "Round X verification (record committed; archive local).",
   "latest_compliance_followup": "artifacts/clinical_review_pass/rule_matrix.json"
 }
