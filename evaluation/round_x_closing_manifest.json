@@ -1,0 +1,11 @@
+{
+  "sha256": "18eb91dc13377f41f6bedb30719b4f6deccfdba59504f05cbbc7f75afc03b680",
+  "cases": 12,
+  "scored": 11,
+  "critical_expected": 6,
+  "created_utc": "2026-10-11T12:00:46.002771+00:00",
+  "runtime_frozen_before_authoring": "263f243fca2cede3a68a141b06965f7485d3bf2f",
+  "policy": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run; run ONCE; not used to change source.",
+  "author_exposure": "Implementation-aware author (wrote Rounds U-X). Conditions chosen to differ from the Round X development classes.",
+  "independent_clinical_validation": false
+}

@@ -1,0 +1,332 @@
+[
+ {
+  "case_id": "CloseY_01",
+  "chief_complaint": "Since this morning I've had a tearing pain right through to my back between the shoulder blades.",
+  "demographics": {
+   "age": 68,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "aortic_dissection",
+  "answers": {
+   "onset": "It came on all at once while lifting a box.",
+   "past_medical_history": "High blood pressure, poorly controlled."
+  },
+  "exam_results": {
+   "vital_signs": "BP 192/104, HR 98, RR 20, Temp 36.7, SpO2 97%",
+   "extremity_exam": "Left radial pulse weaker than right."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y;critical",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseY_02",
+  "chief_complaint": "왼쪽 가슴이 갑자기 찌르듯 아프고 숨이 너무 차요.",
+  "demographics": {
+   "age": 23,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "tension_pneumothorax",
+  "answers": {
+   "associated_symptoms": "키가 크고 말랐어요. 숨 쉴수록 더 힘들어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 92/58, HR 128, RR 32, Temp 36.6, SpO2 86%",
+   "lung_auscultation": "Absent breath sounds on the left; trachea deviated to the right."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y;ko;critical",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseY_03",
+  "chief_complaint": "My 70-year-old mum is drowsy and muddled tonight; she's had a high fever and is shivering.",
+  "demographics": {
+   "age": 70,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "sepsis",
+  "answers": {
+   "associated_symptoms": "She's been weeing a lot and it smells strong; she's breathing fast."
+  },
+  "exam_results": {
+   "vital_signs": "BP 84/50, HR 124, RR 28, Temp 39.3, SpO2 93%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y;caregiver;critical",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseY_04",
+  "chief_complaint": "I'm type 1 diabetic and I've gone shaky, sweaty and confused after skipping lunch.",
+  "demographics": {
+   "age": 34,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "hypoglycemia",
+  "answers": {
+   "medication": "Insulin glargine and lispro."
+  },
+  "exam_results": {
+   "vital_signs": "BP 126/78, HR 108, RR 16, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y;critical",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseY_05",
+  "chief_complaint": "피를 토했어요. 검은 변도 봤고 어지러워요.",
+  "demographics": {
+   "age": 59,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "gi_bleeding",
+  "answers": {
+   "medication": "관절염 때문에 진통제(이부프로펜)를 매일 먹어요.",
+   "associated_symptoms": "일어서면 핑 돌아요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 96/60, HR 118, RR 20, Temp 36.6, SpO2 97%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y;ko;critical",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseY_06",
+  "chief_complaint": "Gasping, wheezy and can barely finish a sentence; my inhaler isn't helping.",
+  "demographics": {
+   "age": 41,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "asthma_copd_exacerbation",
+  "answers": {
+   "past_medical_history": "Asthma since childhood."
+  },
+  "exam_results": {
+   "vital_signs": "BP 132/84, HR 122, RR 30, Temp 36.8, SpO2 89%",
+   "lung_auscultation": "Widespread expiratory wheeze, poor air entry."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y;critical",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "CloseY_07",
+  "chief_complaint": "Severe cramping pain in my right side going down to my groin, comes in waves; I can't keep still.",
+  "demographics": {
+   "age": 38,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "nephrolithiasis",
+  "answers": {
+   "associated_symptoms": "There was some blood in my urine and I feel sick."
+  },
+  "exam_results": {
+   "vital_signs": "BP 142/88, HR 96, RR 18, Temp 36.9, SpO2 99%",
+   "costovertebral_tenderness": "Right costovertebral angle tenderness."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseY_08",
+  "chief_complaint": "소변 볼 때 따갑고 자주 마려워요. 열은 없어요.",
+  "demographics": {
+   "age": 27,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "uncomplicated_cystitis",
+  "answers": {
+   "associated_symptoms": "옆구리는 안 아파요. 아랫배가 조금 묵직해요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 116/72, HR 78, RR 14, Temp 36.8, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y;ko",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseY_09",
+  "chief_complaint": "Everything spins for a few seconds whenever I turn over in bed.",
+  "demographics": {
+   "age": 62,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "bppv",
+  "answers": {
+   "associated_symptoms": "No hearing loss, no weakness, no trouble speaking."
+  },
+  "exam_results": {
+   "vital_signs": "BP 134/82, HR 74, RR 14, Temp 36.6, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseY_10",
+  "chief_complaint": "Burning behind my breastbone after big meals and when I lie down at night, with a sour taste.",
+  "demographics": {
+   "age": 45,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "gerd",
+  "answers": {
+   "associated_symptoms": "No pain on exertion, no breathlessness."
+  },
+  "exam_results": {
+   "vital_signs": "BP 128/80, HR 72, RR 14, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseY_11",
+  "chief_complaint": "My brother has epilepsy and my mum had breast cancer; I'm well and just need a sports medical.",
+  "demographics": {
+   "age": 19,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "No, nothing at all."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/70, HR 60, RR 12, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y;family;negative_control",
+  "scoring_expected": false,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "CloseY_12",
+  "chief_complaint": "9개월 아기가 콧물이 나고 미열이 있는데 잘 먹고 잘 놀아요.",
+  "demographics": {
+   "age": 0,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "viral_uri",
+  "answers": {
+   "associated_symptoms": "기침을 조금 해요. 숨은 편하게 쉬어요."
+  },
+  "exam_results": {
+   "vital_signs": "HR 132, RR 34, Temp 37.9, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "close_y;ko;infant;benign",
+  "scoring_expected": true,
+  "notes": "Round X CLOSING set: authored after the Round X reasoning freeze, committed before its single run, run ONCE, never used to change source. Implementation-aware author; wording avoids the phrases added in Rounds W-X. Synthetic, not independent clinical validation; working-diagnosis labels.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ }
+]
