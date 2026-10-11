@@ -1,0 +1,10 @@
+{
+  "sha256": "491c5746d523aae6a958950243114527d8e4e5fa92943bb38b6e68a237ff4fda",
+  "cases": 14,
+  "scored": 10,
+  "created_utc": "2026-10-11T10:24:43.252538+00:00",
+  "runtime_before_authoring": "9a05a39004deb15ee9d5f474e6d967547322e50b",
+  "policy": "Round X DEVELOPMENT fixture: frozen before any Round X runtime change, measured on the baseline first; may inform source changes.",
+  "author_exposure": "Implementation-aware author; written after the post-W closing misses (CloseX_03, CloseX_05, CloseX_10) were diagnosed. The post-W closing set is now consumed.",
+  "independent_clinical_validation": false
+}

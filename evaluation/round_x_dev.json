@@ -1,0 +1,388 @@
+[
+ {
+  "case_id": "RX_D01",
+  "chief_complaint": "요즘 갈증이 너무 심하고 밤에도 소변 보러 자꾸 깨요. 오늘은 배가 아프고 토했어요.",
+  "demographics": {
+   "age": 16,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "diabetic_ketoacidosis",
+  "answers": {
+   "associated_symptoms": "숨이 차고 많이 피곤해요. 살도 빠졌어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 102/64, HR 118, RR 28, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;ko;dka",
+  "scoring_expected": true,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RX_D02",
+  "chief_complaint": "목이 계속 말라서 water를 엄청 마셔요. 소변도 너무 자주 보고 숨이 깊어요.",
+  "demographics": {
+   "age": 22,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "diabetic_ketoacidosis",
+  "answers": {
+   "associated_symptoms": "구역질이 나고 배가 아파요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 108/66, HR 116, RR 30, Temp 37.0, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;mixed;dka",
+  "scoring_expected": true,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RX_D03",
+  "chief_complaint": "I'm always thirsty and peeing all the time, and today I keep throwing up and breathing really deep.",
+  "demographics": {
+   "age": 14,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "diabetic_ketoacidosis",
+  "answers": {
+   "associated_symptoms": "Tummy ache and I've lost weight."
+  },
+  "exam_results": {
+   "vital_signs": "BP 100/60, HR 124, RR 32, Temp 36.9, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;lay;dka",
+  "scoring_expected": true,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RX_D04",
+  "chief_complaint": "운동을 시작해서 요즘 물을 많이 마셔요. 특별히 아픈 곳은 없어요.",
+  "demographics": {
+   "age": 30,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "아니요, 소변이나 체중 변화는 없어요."
+  },
+  "exam_results": {
+   "vital_signs": "BP 116/72, HR 64, RR 12, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;ko;negative_control",
+  "scoring_expected": false,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RX_M01",
+  "chief_complaint": "세 살 아들이 열이 나고 목을 못 숙이고 빛을 싫어해요.",
+  "demographics": {
+   "age": 3,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "meningitis",
+  "answers": {
+   "associated_symptoms": "두 번 토했고 계속 처져 있어요."
+  },
+  "exam_results": {
+   "vital_signs": "HR 156, RR 32, Temp 39.4, SpO2 97%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;ko;child_meningitis",
+  "scoring_expected": true,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RX_M02",
+  "chief_complaint": "My 2-year-old has a fever, won't let me bend her neck forward and cries when the light is on.",
+  "demographics": {
+   "age": 2,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "meningitis",
+  "answers": {
+   "associated_symptoms": "She has been sick and is very drowsy."
+  },
+  "exam_results": {
+   "vital_signs": "HR 160, RR 34, Temp 39.2, SpO2 97%",
+   "meningeal_signs": "Neck stiffness; Brudzinski sign positive."
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;child_meningitis",
+  "scoring_expected": true,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RX_M03",
+  "chief_complaint": "My 8-year-old has a fever, a bad headache and says his neck is stiff.",
+  "demographics": {
+   "age": 8,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "meningitis",
+  "answers": {
+   "associated_symptoms": "Bright light hurts his eyes and he vomited."
+  },
+  "exam_results": {
+   "vital_signs": "HR 132, RR 26, Temp 39.0, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;child_meningitis;verbal",
+  "scoring_expected": true,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ },
+ {
+  "case_id": "RX_M04",
+  "chief_complaint": "My 5-year-old's neck is sore on one side after sleeping awkwardly; no fever.",
+  "demographics": {
+   "age": 5,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "She is playing and eating normally."
+  },
+  "exam_results": {
+   "vital_signs": "HR 98, RR 22, Temp 36.7, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;negative_control",
+  "scoring_expected": false,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RX_F01",
+  "chief_complaint": "My father had an irregular heartbeat. I'm just here for a check-up and feel well.",
+  "demographics": {
+   "age": 50,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "No palpitations, no dizziness, no chest pain."
+  },
+  "exam_results": {
+   "vital_signs": "BP 124/78, HR 70, RR 14, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;family",
+  "scoring_expected": false,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false,
+   "forbidden_support": [
+    "irregular heartbeat"
+   ]
+  }
+ },
+ {
+  "case_id": "RX_F02",
+  "chief_complaint": "Mum has atrial fibrillation and my brother had a stroke; I have no symptoms myself, I want my blood pressure checked.",
+  "demographics": {
+   "age": 44,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "unknown",
+  "answers": {
+   "associated_symptoms": "No, nothing."
+  },
+  "exam_results": {
+   "vital_signs": "BP 126/80, HR 72, RR 14, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;family",
+  "scoring_expected": false,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false,
+   "forbidden_support": [
+    "irregular heartbeat"
+   ]
+  }
+ },
+ {
+  "case_id": "RX_B01",
+  "chief_complaint": "I've had migraines since my twenties; this one is the usual one-sided throbbing with sparkly lights first.",
+  "demographics": {
+   "age": 29,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "migraine",
+  "answers": {
+   "associated_symptoms": "Light hurts and I feel queasy.",
+   "onset": "Built up over about an hour like always."
+  },
+  "exam_results": {
+   "vital_signs": "BP 118/74, HR 76, RR 14, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;benign",
+  "scoring_expected": true,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RX_B02",
+  "chief_complaint": "Dull band-like pressure around my head at the end of work days for a couple of weeks.",
+  "demographics": {
+   "age": 41,
+   "sex": "male"
+  },
+  "ground_truth_diagnosis": "tension_headache",
+  "answers": {
+   "associated_symptoms": "No vomiting, no visual changes. Neck and shoulders are tight."
+  },
+  "exam_results": {
+   "vital_signs": "BP 124/80, HR 72, RR 14, Temp 36.6, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;benign",
+  "scoring_expected": true,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RX_B03",
+  "chief_complaint": "Sore throat, runny nose and a cough for three days, mild temperature.",
+  "demographics": {
+   "age": 33,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "viral_uri",
+  "answers": {
+   "associated_symptoms": "Eating and drinking fine. My kids had the same."
+  },
+  "exam_results": {
+   "vital_signs": "BP 116/72, HR 84, RR 14, Temp 37.7, SpO2 99%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;benign",
+  "scoring_expected": true,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": false
+  }
+ },
+ {
+  "case_id": "RX_B04",
+  "chief_complaint": "Woke up at 3am with the worst headache of my life, it hit like a thunderclap.",
+  "demographics": {
+   "age": 46,
+   "sex": "female"
+  },
+  "ground_truth_diagnosis": "subarachnoid_hemorrhage",
+  "answers": {
+   "associated_symptoms": "I vomited and my neck feels stiff."
+  },
+  "exam_results": {
+   "vital_signs": "BP 168/96, HR 92, RR 18, Temp 36.8, SpO2 98%"
+  },
+  "test_results": {},
+  "default_answer": "No.",
+  "default_exam_result": "Unremarkable.",
+  "default_test_result": "Not performed.",
+  "category": "rx;danger_control",
+  "scoring_expected": true,
+  "notes": "Round X development fixture: variations of the classes behind the post-W closing misses (Korean hyperglycaemia wording, a young child's unreportable symptoms, family-history leakage, benign over-triage) with negative controls. Frozen before any Round X runtime change; may inform source changes. Synthetic, not clinical validation.",
+  "audit_expect": {},
+  "audit_rejected_exams": [],
+  "round_s_expect": {
+   "urgent": true
+  }
+ }
+]
