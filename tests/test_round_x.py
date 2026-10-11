@@ -42,6 +42,10 @@ def test_korean_hyperglycaemia_wording(text, features):
     assert features <= set(_support('diabetic_ketoacidosis', text))
 
 
+def test_korean_frequency_with_dysuria_is_not_polyuria():
+    assert 'polyuria' not in _support('diabetic_ketoacidosis', '소변 볼 때 따갑고 화장실에 너무 자주 가요.')
+
+
 def test_korean_denial_still_cancels():
     assert 'polyuria' not in _support('diabetic_ketoacidosis', '소변이나 체중 변화는 없어요.')
 
@@ -79,6 +83,13 @@ def test_subarachnoid_haemorrhage_is_named_only_with_a_reported_headache():
 def test_meningitis_alternative_needs_an_anchor(support, anchored):
     from nova_agent.disposition import _alternative_anchored
     assert _alternative_anchored(_item('meningitis', support)) is anchored
+
+
+@pytest.mark.parametrize('support,anchored', [(['photophobia'], False), (['photophobia', 'neck stiffness'], True),
+                                              (['thunderclap headache'], True)])
+def test_sah_alternative_needs_an_anchor(support, anchored):
+    from nova_agent.disposition import _alternative_anchored
+    assert _alternative_anchored(_item('subarachnoid_hemorrhage', support)) is anchored
 
 
 def test_alternative_anchor_switch_off(monkeypatch):

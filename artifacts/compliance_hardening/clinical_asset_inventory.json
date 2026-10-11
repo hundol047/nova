@@ -840,7 +840,7 @@
     {
       "asset_id": "nova_agent/disposition.py",
       "path": "nova_agent/disposition.py",
-      "sha256": "ccece7f4ccf643720ebdc02034a62dd2132085a3a4d3cf163ddc6769e80fa487",
+      "sha256": "eb5a88c881498289e61f7ccd18afc93ff9e77820dbe4c3a31bb550e4a19f7a47",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",
@@ -2793,7 +2793,7 @@
     {
       "asset_id": "nova_agent/multilingual_concepts.py",
       "path": "nova_agent/multilingual_concepts.py",
-      "sha256": "10e2f3f11026454e235c5011181251335f9371df1717dc14c92458bdcc554f8f",
+      "sha256": "af7b93766cb341a3b287e6f6926ce450374d978e075d6030bfbcfbbae599c2f7",
       "runtime_use": "Static clinical data or clinical rules",
       "original_author": "UNRESOLVED",
       "original_source": "Internal heuristic authorship asserted in knowledge/PROVENANCE.md; not independently established",

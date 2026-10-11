@@ -251,6 +251,8 @@ _KO_CHEST_PAIN_WORD = re.compile(r"가슴[^.。]{0,6}(?:아파|아프|통증|답
 # Round X: findings whose Korean wording IS an inability ("목을 못 숙여요" = the neck cannot be bent); the 안/못 inside
 # such a match is the finding, not a denial of it. A denial after the match still cancels it (_present_not_negated).
 _KO_INABILITY_FINDINGS = frozenset({"neck stiffness"})
+# Round X: frequent voiding WITH pain on passing urine or urgency is urinary frequency (cystitis), not polyuria.
+_KO_PATTERN_EXCLUSIONS = {"polyuria": re.compile(r"따갑|따끔|화끈|쓰라|잔뇨|찔끔|마려|소변\s*볼\s*때\s*아")}
 
 _KO_PATTERNS_V3 = (
     (re.compile(r"소변[^.。]{0,8}(?:따갑|따가|화끈|쓰라|아파|아프)|배뇨통"), "dysuria"),
@@ -342,6 +344,8 @@ def english_evidence_for(text: str) -> List[str]:
                     found.append(english)
         for pattern, english in _KO_PATTERNS_V3:
             match = pattern.search(text)
+            if english in _KO_PATTERN_EXCLUSIONS and _KO_PATTERN_EXCLUSIONS[english].search(text):
+                continue
             if (match and english not in found and _present_not_negated(match.group(0), text)
                     and (english in _KO_INABILITY_FINDINGS
                          or not re.search(r"(?:^|\s)(?:안|못)\s", match.group(0)))):   # "소변 볼 때 안 따가워요"

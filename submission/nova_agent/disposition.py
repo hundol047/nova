@@ -88,8 +88,12 @@ def disposition_for(state, final, differential) -> Disposition:
 # and altered mental status essentially excludes it (Attia J et al., JAMA 1999;282:175); in infants a bulging
 # fontanelle is the equivalent sign (NICE NG143/NG240). Photophobia or headache alone (a migraine) is not enough.
 # The candidate stays in the differential; a named meningitis and every vital/rate red flag are unaffected.
+# Subarachnoid haemorrhage: the Ottawa SAH rule's discriminating findings are an acute (thunderclap) onset and neck
+# pain/stiffness (Perry JJ et al., JAMA 2013;310:1248); photophobia with a recurrent one-sided headache is migraine.
 _ALTERNATIVE_ANCHORS = {
     "meningitis": ("fever", "neck stiffness", "altered mental status", "bulging fontanelle on examination"),
+    "subarachnoid_hemorrhage": ("thunderclap headache", "worst headache of life", "sudden onset severe headache",
+                                "neck stiffness", "altered mental status"),
 }
 
 

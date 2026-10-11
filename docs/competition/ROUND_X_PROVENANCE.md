@@ -17,6 +17,8 @@
 |---|---|---|---|---|
 | 화자 자신의 건강 진술 | `NOVA_PROXY_REPORT` 범위 | "I'm just here for a check-up", "I have no symptoms myself", "저는 … 괜찮/아픈 곳/증상/검진" 같은 화자 본인 진술이 있으면 첫 관계어는 가족력(보호자 진술 아님). 보호자 행동 진술("I called an ambulance", "제가 해열제를 먹였어요")은 막지 않음 | 엔지니어링 언어 규칙 | — |
 | SAH 명명 맥락 | `_REQUIRED_CONTEXT` | 지주막하출혈은 보고된 두통이 있을 때만 명명(목 강직·눈부심·구토는 수막염과 공유). 후보·점수·긴급 처분 불변 | NICE NG228 (2023) 1.1; Perry JJ et al., Ottawa SAH rule, JAMA 2013;310:1248 | VERIFIED |
+| SAH 대안의 긴급 앵커 | `NOVA_ALTERNATIVE_ANCHORS` | SAH가 **대안**으로 긴급 계획을 만들려면 급성 발병 두통(thunderclap/worst/sudden), 목 강직, 의식 변화 중 하나 필요(편두통의 눈부심만으로는 아님) | Perry JJ et al., Ottawa SAH rule, JAMA 2013;310:1248 | VERIFIED |
+| 한국어 다뇨 표현 제외 | — | 배뇨통·절박(따갑/따끔/화끈/잔뇨/마려)과 함께인 잦은 배뇨는 빈뇨(방광염)이지 다뇨가 아님 | NICE CKS "UTI (lower) - women" | VERIFIED |
 | 수막염 대안의 긴급 앵커 | `NOVA_ALTERNATIVE_ANCHORS` | 수막염이 **대안**으로 긴급 계획을 만들려면 발열·목 강직·의식 변화·대천문 팽륜 중 하나가 필요(편두통의 눈부심만으로는 아님). 수막염 명명 자체, 활력 red flag는 불변 | Attia J et al., JAMA 1999;282:175 (세 소견 모두 없으면 성인 급성 수막염 사실상 배제); NICE NG143/NG240 (영아) | VERIFIED(성인) / UNRESOLVED(소아 일반화) |
 
 ## EXCLUDED
