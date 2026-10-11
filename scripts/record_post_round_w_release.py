@@ -50,6 +50,10 @@ def main():
     p.add_argument('--run-dir', required=True)
     p.add_argument('--zip', required=True)
     p.add_argument('--junit', action='append', required=True, help='label=path (e.g. py3.11=/tmp/junit.xml)')
+    p.add_argument('--version', default='v30', help='schema suffix (v30 post-Round-W, v31 Round X, ...)')
+    p.add_argument('--evidence-dir', default='artifacts/post_round_w/final')
+    p.add_argument('--report', default='docs/preliminary/POST_ROUND_W_REPORT.md')
+    p.add_argument('--reason', default='Post-Round-W verification (record committed; archive local).')
     a = p.parse_args()
     root, repo, run = Path(a.checkout).resolve(), Path(a.repo).resolve(), Path(a.run_dir).resolve()
     head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
@@ -70,7 +74,7 @@ def main():
         if name != 'MANIFEST.json':
             assert sha(root / 'submission' / name) == h, 'archive member differs from the mirror: ' + name
     tests = {label: junit_summary(path) for label, path in (j.split('=', 1) for j in a.junit)}
-    out = repo / 'artifacts/post_round_w/final'
+    out = repo / a.evidence_dir
     out.mkdir(parents=True, exist_ok=True)
     for name in ('round_m_final_summary.json', 'round_m_failure_analysis.json'):
         shutil.copyfile(run / name, out / name)
@@ -79,7 +83,7 @@ def main():
     zip_path = Path(a.zip)
     primary = tests[sorted(tests)[0]]
     record = dict(
-        schema='nova-verification-v30', status='NOT READY', verified_runtime_sha=a.runtime, runtime_sha256=runtime,
+        schema=f'nova-verification-{a.version}', status='NOT READY', verified_runtime_sha=a.runtime, runtime_sha256=runtime,
         generated_utc=datetime.now(timezone.utc).isoformat(), runtime_changed_after_freeze=False,
         tests=dict(primary, deselected=0, by_interpreter=tests),
         source_submission_sync=True, official_api_status='NOT VERIFIED', real_model_status='NOT VERIFIED',
@@ -87,18 +91,18 @@ def main():
         schema_status='PLACEHOLDER', official_submission_allowed=False, new_blind_runs=0, fresh_final_blind='NOT YET AUTHORED',
         submission=dict(zip='LOCAL ONLY (not in the repository)', publication='LOCAL_ONLY', bytes=zip_path.stat().st_size,
                         sha256=sha(zip_path), member_sha256=members, status='PRE-GUIDE CANDIDATE / NOT OFFICIALLY READY'),
-        round_m=m['metrics'], round_m_artifact='artifacts/post_round_w/final/round_m_final_summary.json',
-        failure_analysis_artifact='artifacts/post_round_w/final/round_m_failure_analysis.json',
-        report='docs/preliminary/POST_ROUND_W_REPORT.md',
+        round_m=m['metrics'], round_m_artifact=f'{a.evidence_dir}/round_m_final_summary.json',
+        failure_analysis_artifact=f'{a.evidence_dir}/round_m_failure_analysis.json',
+        report=a.report,
         publication='The record and member hashes are committed; the ZIP and detailed traces stay local (earlier '
                     'publication restriction). CI verifies every archive member against the committed mirror.')
-    rec = repo / f'artifacts/verification/local-release-{a.runtime[:7]}-v30.json'
+    rec = repo / f'artifacts/verification/local-release-{a.runtime[:7]}-{a.version}.json'
     rec.write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n')
     ptr_path = repo / 'artifacts/verification/CURRENT_RELEASE.json'
     ptr = json.loads(ptr_path.read_text())
     old = ptr['current_verification_artifact']
-    ptr.update(current_verification_artifact=str(rec.relative_to(repo)), current_verification_schema='nova-verification-v30',
-               verified_runtime_sha=a.runtime, reason='Post-Round-W verification (record committed; archive local).')
+    ptr.update(current_verification_artifact=str(rec.relative_to(repo)), current_verification_schema=f'nova-verification-{a.version}',
+               verified_runtime_sha=a.runtime, reason=a.reason)
     ptr['previous_verification_artifacts'] = list(dict.fromkeys([old] + ptr.get('previous_verification_artifacts', [])))
     ptr_path.write_text(json.dumps(ptr, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps(dict(record=str(rec), zip_sha256=record['submission']['sha256'], bytes=record['submission']['bytes'],
