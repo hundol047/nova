@@ -64,12 +64,14 @@ def test_own_health_statement_keeps_the_relative_as_family(text, sex, age, relat
     assert detect_proxy_relation(text, sex, age) == relation
 
 
-def test_subarachnoid_haemorrhage_is_named_only_with_an_acute_headache():
+def test_subarachnoid_haemorrhage_is_named_only_with_a_reported_headache():
     item = _item('subarachnoid_hemorrhage', ['neck stiffness', 'photophobia', 'vomiting'], 2.4)
     child = PatientState(chief_complaint='My 2-year-old has a fever and a stiff neck and hates the light.', preliminary_rules=True)
     assert any(p.startswith('required_context_missing') for p in support_problems(item, child, [item]))
-    sudden = PatientState(chief_complaint='The worst headache of my life came on suddenly, my neck is stiff.', preliminary_rules=True)
-    assert not any(p.startswith('required_context_missing') for p in support_problems(item, sudden, [item]))
+    for text in ('The worst headache of my life came on suddenly, my neck is stiff.',
+                 '머리가 깨질 듯이 아프고 목이 뻣뻣해요 and I vomited'):
+        adult = PatientState(chief_complaint=text, preliminary_rules=True)
+        assert not any(p.startswith('required_context_missing') for p in support_problems(item, adult, [item]))
 
 
 @pytest.mark.parametrize('support,anchored', [(['photophobia'], False), (['photophobia', 'headache'], False),

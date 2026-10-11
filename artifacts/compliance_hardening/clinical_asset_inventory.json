@@ -1085,7 +1085,7 @@
     {
       "asset_id": "nova_agent/final_decision.py",
       "path": "nova_agent/final_decision.py",
-      "sha256": "5d8261481f73a17c026fbb406b7221f6b715b0f72f76a8950e008724df6e6c46",
+      "sha256": "9515194246825251d80a4cfb7c09689662c98f3c940ad6f24df8c9332b352472",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",

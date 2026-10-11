@@ -123,10 +123,11 @@ _REQUIRED_CONTEXT: Dict[str, Tuple[str, Callable]] = {
     # Round X: subarachnoid haemorrhage presents as an acute severe headache reaching maximum intensity within an hour
     # (NICE CG150 / NG228 2023 "Subarachnoid haemorrhage caused by a ruptured aneurysm" 1.1; Perry JJ et al., Ottawa
     # SAH rule, JAMA 2013;310:1248). Neck stiffness, photophobia and vomiting are shared with meningitis; without any
-    # acute-onset headache observation SAH is not NAMED. The candidate, its score and the urgent plan are unchanged.
-    "subarachnoid_hemorrhage": ("an acute severe-onset headache", _any_phrase((
-        "thunderclap headache", "worst headache of life", "sudden onset severe headache", "sudden severe headache",
-        "sudden headache"))),
+    # headache observation at all (a febrile toddler with meningism) SAH is not NAMED. The onset is often unrecorded,
+    # so any reported headache satisfies this. The candidate, its score and the urgent plan are unchanged.
+    "subarachnoid_hemorrhage": ("a reported headache", _any_phrase((
+        "headache", "thunderclap headache", "worst headache of life", "sudden onset severe headache",
+        "head hurts", "head is pounding", "두통", "머리가 아프", "머리가 깨질", "머리가 터질", "머리가 너무 아프"))),
 }
 
 
