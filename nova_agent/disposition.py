@@ -76,9 +76,31 @@ def disposition_for(state, final, differential) -> Disposition:
                 continue
             if selected is not None and _subsumed_by_selected(item, selected):
                 continue
+            if not _alternative_anchored(item):
+                continue
             reasons.append("supported_dangerous_alternative:" + item.diagnosis_id)
             evidence.extend(item.supporting_evidence)
     return Disposition(bool(reasons), tuple(dict.fromkeys(reasons)), tuple(dict.fromkeys(evidence)))
+
+
+# Round X (NOVA_ALTERNATIVE_ANCHORS): a dangerous ALTERNATIVE to the named diagnosis makes the plan urgent only when at
+# least one of its anchoring observations is present. Acute bacterial meningitis: the absence of fever, neck stiffness
+# and altered mental status essentially excludes it (Attia J et al., JAMA 1999;282:175); in infants a bulging
+# fontanelle is the equivalent sign (NICE NG143/NG240). Photophobia or headache alone (a migraine) is not enough.
+# The candidate stays in the differential; a named meningitis and every vital/rate red flag are unaffected.
+_ALTERNATIVE_ANCHORS = {
+    "meningitis": ("fever", "neck stiffness", "altered mental status", "bulging fontanelle on examination"),
+}
+
+
+def _alternative_anchored(item) -> bool:
+    from nova_agent.config import get_config
+    anchors = _ALTERNATIVE_ANCHORS.get(item.diagnosis_id)
+    if not anchors or not get_config().alternative_anchors_enabled:
+        return True
+    from nova_agent.differential import _strip_negative_prefix
+    observed = {str(p).lower() for p in item.supporting_evidence if _strip_negative_prefix(p) is None}
+    return any(a in observed for a in anchors)
 
 
 def _subsumed_by_selected(item, selected) -> bool:

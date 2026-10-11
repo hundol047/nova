@@ -248,6 +248,10 @@ _DIRECT_LOCALIZED_EVIDENCE_V3: Dict[str, str] = {
 # observation; the bare chest word followed by a heartbeat verb describes the HEARTBEAT, not chest pain.
 _KO_HEARTBEAT = re.compile(r"(?:가슴|심장)(?:이|은)?\s*(?:갑자기\s*)?(?:너무\s*|막\s*)?(?:빨리|빠르게|두근|쿵쾅|벌렁)\s*(?:두근\s*)?(?:뛰|거려|거리)")
 _KO_CHEST_PAIN_WORD = re.compile(r"가슴[^.。]{0,6}(?:아파|아프|통증|답답|쥐어|조이|짓누르|뻐근|찌르)")
+# Round X: findings whose Korean wording IS an inability ("목을 못 숙여요" = the neck cannot be bent); the 안/못 inside
+# such a match is the finding, not a denial of it. A denial after the match still cancels it (_present_not_negated).
+_KO_INABILITY_FINDINGS = frozenset({"neck stiffness"})
+
 _KO_PATTERNS_V3 = (
     (re.compile(r"소변[^.。]{0,8}(?:따갑|따가|화끈|쓰라|아파|아프)|배뇨통"), "dysuria"),
     (re.compile(r"(?:소변[^.。]{0,6}자주|자주\s*마려|자꾸\s*마려|빈뇨)"), "urinary frequency"),
@@ -264,6 +268,16 @@ _KO_PATTERNS_V3 = (
     (re.compile(r"(?:(?:한쪽|왼쪽|오른쪽|옆구리|띠\s*모양)[^.。]{0,30}(?:화끈|따끔|쓰라))"), "burning pain on one side of body"),
     (re.compile(r"엄지\s*발가락"), "big toe joint involvement"),
     (re.compile(r"(?:발가락|무릎|발목|관절)[^.。]{0,15}(?:빨갛|벌겋|뜨겁)[^.。]{0,10}(?:붓|부었|부어)"), "sudden hot red swollen joint"),
+    # Round X: hyperglycaemia wording (NICE NG17/NG18: thirst, polyuria, deep rapid breathing in DKA) and a young
+    # child's meningism as a carer describes it (NICE NG240: neck stiffness, dislike of light). Existing KB phrases
+    # only; a denial after the phrase cancels it as for every pattern here.
+    (re.compile(r"갈증이\s*(?:너무|심하|많이|계속|자꾸)|목이\s*(?:계속|자꾸|너무)?\s*말라|물을\s*(?:엄청|너무|계속|자꾸)\s*(?:많이\s*)?마시"),
+     "polydipsia"),
+    (re.compile(r"소변(?:을|이)?\s*(?:너무|자꾸|계속|엄청)\s*(?:자주|많이)?\s*(?:보|나와|마려)|화장실(?:을|에)?\s*(?:계속|자꾸|너무\s*자주)\s*가|"
+                r"밤에도?\s*소변"), "polyuria"),
+    (re.compile(r"숨(?:이|을)?\s*(?:깊고|깊게|깊어|깊이)|깊은\s*숨을\s*(?:빨리|헐떡)"), "kussmaul breathing"),
+    (re.compile(r"(?:목|고개)(?:을|를)?\s*(?:못|안)\s*(?:숙|굽|구부)"), "neck stiffness"),
+    (re.compile(r"(?:빛|불빛|불|햇빛)(?:을|이)?\s*(?:싫어|보면\s*(?:울|자지러|찡그)|피하)"), "photophobia"),
     # Round V: heart-failure congestion wording (existing KB phrases only).
     (re.compile(r"누우면[^.。]{0,10}숨(?:이)?\s*(?:막|차|가빠)|앉아서\s*자"), "unable to lie flat"),
     (re.compile(r"(?:다리|발목)(?:가|이|에)?\s*(?:퉁퉁\s*)?(?:부어|부었|붓|부종)"), "leg swelling"),
@@ -329,6 +343,7 @@ def english_evidence_for(text: str) -> List[str]:
         for pattern, english in _KO_PATTERNS_V3:
             match = pattern.search(text)
             if (match and english not in found and _present_not_negated(match.group(0), text)
-                    and not re.search(r"(?:^|\s)(?:안|못)\s", match.group(0))):   # "소변 볼 때 안 따가워요"
+                    and (english in _KO_INABILITY_FINDINGS
+                         or not re.search(r"(?:^|\s)(?:안|못)\s", match.group(0)))):   # "소변 볼 때 안 따가워요"
                 found.append(english)
     return found

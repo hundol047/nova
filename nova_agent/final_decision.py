@@ -120,6 +120,13 @@ _REQUIRED_CONTEXT: Dict[str, Tuple[str, Callable]] = {
     # febrile, floppy, mottled infant without such exposure is not named heat stroke; the candidate, its score and
     # the urgent plan are unchanged.
     "heat_stroke": ("environmental heat exposure or exertion", _heat_exposure),
+    # Round X: subarachnoid haemorrhage presents as an acute severe headache reaching maximum intensity within an hour
+    # (NICE CG150 / NG228 2023 "Subarachnoid haemorrhage caused by a ruptured aneurysm" 1.1; Perry JJ et al., Ottawa
+    # SAH rule, JAMA 2013;310:1248). Neck stiffness, photophobia and vomiting are shared with meningitis; without any
+    # acute-onset headache observation SAH is not NAMED. The candidate, its score and the urgent plan are unchanged.
+    "subarachnoid_hemorrhage": ("an acute severe-onset headache", _any_phrase((
+        "thunderclap headache", "worst headache of life", "sudden onset severe headache", "sudden severe headache",
+        "sudden headache"))),
 }
 
 

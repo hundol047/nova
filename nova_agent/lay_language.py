@@ -389,6 +389,11 @@ _ADDITIONAL_LAY_ALIASES: Dict[str, List[str]] = {
                               "is grunting", "keeps grunting"],
     # Post-W: UK/child lay word for loose stools (NHS "Diarrhoea and vomiting": "runny poo").
     "diarrhea": ["runny poos", "runny poo", "watery poos", "watery poo"],
+    # Round X: a young child's meningism in a carer's words (NICE NG240: neck stiffness, dislike of bright light).
+    "neck stiffness": ["won't let me bend her neck", "won't let me bend his neck", "can't bend his neck", "can't bend her neck",
+                       "won't bend his neck", "won't bend her neck", "won't put his chin on his chest", "won't put her chin on her chest"],
+    "photophobia": ["cries when the light is on", "cries at the light", "hates the light", "hates bright light", "turns away from the light",
+                    "light makes him cry", "light makes her cry", "screams when the light is on", "doesn't like the light"],
     # Round W: restricted movement of a hot swollen joint (NICE CKS "Septic arthritis": painful, limited movement).
     "inability to move the joint": ["too painful to bend", "can't bend it", "cannot bend it", "can't bend my knee",
                                     "cannot bend my knee", "too painful to move", "can't move my knee", "unable to bend"],

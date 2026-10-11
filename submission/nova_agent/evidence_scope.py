@@ -43,10 +43,21 @@ _PROXY_LEAD = re.compile(r"^\W*(?:(?:[A-Z][a-z]+,\s*)?(?:(?:my|our)\s+(?:\d+[- ]
                          r"|(?:우리|제)\s*(\S+?)(?:가|이|는|은|를|이가)?\s)", re.I)
 
 
+_SELF_REPORT = re.compile(
+    r"\bI(?:'m|\s+am)\s+(?:just\s+|only\s+)?(?:here\s+(?:for|to)|fine|well|ok|okay|feeling\s+(?:fine|well|ok|okay|good))\b"
+    r"|\bI\s+(?:feel|felt)\s+(?:fine|well|ok|okay|good)\b|\bI\s+(?:have|'ve\s+got|'ve)\s+no\s+(?:symptoms|complaints|problems)\b"
+    r"|\bI\s+(?:don't|do\s+not)\s+have\s+any\b|\b(?:no\s+symptoms|nothing)\s+myself\b|\bI\s+want\s+my\b"
+    r"|(?:저는|나는)[^.。]{0,10}(?:괜찮|아픈\s*(?:곳|데)|증상|건강|검진|기록|혈압)", re.I)
+
+
 def detect_proxy_relation(chief_complaint: str, sex: Optional[str], age: Optional[int]) -> Optional[str]:
     """The relation word the first statement opens with, if the patient's demographics fit it; else None."""
     m = _PROXY_LEAD.match(chief_complaint or "")
     if not m:
+        return None
+    if _SELF_REPORT.search(chief_complaint or ""):
+        # Round X: the speaker states their OWN health ("I'm just here for a check-up", "I have no symptoms myself",
+        # "저는 괜찮아요"): the relative they opened with is family history, not the patient being described.
         return None
     word = (m.group(1) or m.group(2) or "").lower()
     if word not in _RELATIONS:

@@ -248,6 +248,8 @@ class NovaConfig:
     # Post-W: a dangerous alternative whose every observation is a literal part of the named diagnosis's own more
     # specific observation does not by itself make the plan urgent (disposition.py).
     disposition_subsumed_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_DISPOSITION_SUBSUMED", True))
+    # Round X: a dangerous alternative needs one of its anchoring observations to make the plan urgent (disposition.py).
+    alternative_anchors_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_ALTERNATIVE_ANCHORS", True))
     # Round W: a first statement by a caregiver ("my husband collapsed") whose relation fits the patient's demographics
     # describes the patient (nova_agent/evidence_scope.py).
     proxy_report_enabled: bool = field(default_factory=lambda: _bool_env("NOVA_PROXY_REPORT", True))

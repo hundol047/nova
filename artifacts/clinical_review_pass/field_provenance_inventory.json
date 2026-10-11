@@ -191453,6 +191453,27 @@
           "watery poos",
           "watery poo"
         ],
+        "neck stiffness": [
+          "won't let me bend her neck",
+          "won't let me bend his neck",
+          "can't bend his neck",
+          "can't bend her neck",
+          "won't bend his neck",
+          "won't bend her neck",
+          "won't put his chin on his chest",
+          "won't put her chin on her chest"
+        ],
+        "photophobia": [
+          "cries when the light is on",
+          "cries at the light",
+          "hates the light",
+          "hates bright light",
+          "turns away from the light",
+          "light makes him cry",
+          "light makes her cry",
+          "screams when the light is on",
+          "doesn't like the light"
+        ],
         "inability to move the joint": [
           "too painful to bend",
           "can't bend it",
@@ -191491,7 +191512,7 @@
     },
     {
       "path": "nova_agent/lay_language.py",
-      "line": 411,
+      "line": 416,
       "names": [
         "_TIER2_LAY"
       ],
@@ -193970,7 +193991,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 370,
+      "line": 372,
       "names": [
         "_config"
       ],
