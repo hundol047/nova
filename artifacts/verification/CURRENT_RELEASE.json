@@ -1,12 +1,13 @@
 {
-  "current_verification_artifact": "artifacts/verification/local-release-f383b2e-v32.json",
-  "current_verification_schema": "nova-verification-v32",
-  "verified_runtime_sha": "f383b2ed6d7bee910a5e5ca1e77825cbbce75e77",
+  "current_verification_artifact": "artifacts/verification/local-release-ea0decf-v33.json",
+  "current_verification_schema": "nova-verification-v33",
+  "verified_runtime_sha": "ea0decf2e0e0c955d26cba6b05ffb49b6de52e32",
   "current_blind_version": "v19",
   "current_blind_manifest": null,
   "current_blind_status": "REFERENCE-ONLY",
   "fresh_final_blind": "NOT YET AUTHORED",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-f383b2e-v32.json",
     "artifacts/verification/local-release-aeda1a0-v31.json",
     "artifacts/verification/local-release-ed61341-v30.json",
     "artifacts/verification/local-release-8257ba6-v22.json",
@@ -31,6 +32,6 @@
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
   "status": "NOT READY",
-  "reason": "Official NOVA SDK 1.0.1 integration (record committed; archive local; server-backed items NOT EXECUTED).",
+  "reason": "Independent official SDK audit: exact supplied SDK, complete preliminary-only benchmark, local/fake model verification; live stages HUMAN-RUN ONLY.",
   "latest_compliance_followup": "artifacts/clinical_review_pass/rule_matrix.json"
 }

@@ -1,0 +1,50 @@
+{
+  "passed": 2688,
+  "failed": 0,
+  "skipped": 1,
+  "skip_reasons": [
+    {
+      "test": "tests.test_learning_training.test_torch_training_and_checkpoint_roundtrip",
+      "reason": "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"
+    }
+  ],
+  "binding_checks_rerun_after_record": [],
+  "junit_sha256": "ab431a40792ecf8e8296620e46a00d9e04d9c25715cfb5dfa9eb4f2aff08af10",
+  "execution": "Full suite plus deferred release binding; on py3.11 the initially skipped ZIP test was separately executed after building the final ZIP.",
+  "full_suite_junit_sha256": "b574393c2d73ffa3b5119d4edd167e994962803a63da52102687837cab9d1fcf",
+  "deselected": 0,
+  "by_interpreter": {
+    "py3.11": {
+      "passed": 2688,
+      "failed": 0,
+      "skipped": 1,
+      "skip_reasons": [
+        {
+          "test": "tests.test_learning_training.test_torch_training_and_checkpoint_roundtrip",
+          "reason": "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"
+        }
+      ],
+      "binding_checks_rerun_after_record": [],
+      "junit_sha256": "ab431a40792ecf8e8296620e46a00d9e04d9c25715cfb5dfa9eb4f2aff08af10",
+      "execution": "Full suite plus deferred release binding; on py3.11 the initially skipped ZIP test was separately executed after building the final ZIP.",
+      "full_suite_junit_sha256": "b574393c2d73ffa3b5119d4edd167e994962803a63da52102687837cab9d1fcf"
+    },
+    "py3.12": {
+      "passed": 2688,
+      "failed": 0,
+      "skipped": 1,
+      "skip_reasons": [
+        {
+          "test": "tests.test_learning_training.test_torch_training_and_checkpoint_roundtrip",
+          "reason": "torch not installed (IMPLEMENTED_BUT_NOT_EXECUTED)"
+        }
+      ],
+      "binding_checks_rerun_after_record": [],
+      "junit_sha256": "e0c62b201f2187a09aa79013f41b281e81d1e82da285465362cd6bb2dbbe70e8",
+      "execution": "Full suite plus deferred release binding; on py3.11 the initially skipped ZIP test was separately executed after building the final ZIP.",
+      "full_suite_junit_sha256": "7d84945912c4e7d518544e17c65414a3040b71432dc0d847c9444ddd04db8c6d"
+    }
+  },
+  "deferred_release_binding": "PASSED on both interpreters after generating this record; no binding check waived",
+  "optional_test_trace": "Interrupted and discarded; not part of full pytest or completed preliminary benchmark evidence."
+}

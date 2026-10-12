@@ -55,6 +55,21 @@ engine diagnosis; this is a conservative tradeoff requiring real-model review.
 Strict grounding can omit legitimate derived/translated paraphrases; raw S/O and
 fallback quoted replies are retained, rather than treating inference as observation.
 
+The regression locations are explicit: `official_evidence.grounded_in` is covered
+by `test_evidence_preserves_numbers_polarity_and_laterality`; `OfficialEncounter.chat`
+by the phrasing/garbage-JSON and input/output-budget tests; `run` by the last-chance,
+legacy-provider and zero-turn tests; `_validated_primary` by unsupported-primary
+and supported-correction tests; `_followup_phase` by the medication-retention test;
+`_engine_plan` by the treatment/disposition test; `_call` by lost-DIAGNOSE replay;
+`build_index` by the cross-directory and intermediate-symlink tests; and
+`require_human_run` by the agent-environment guard test. The before/after assertion
+examples are saved under `artifacts/independent_official_audit/local/`.
+
+The diagnostic-response counter is a structural response check, not proof of
+medical correctness. A parsed diagnosis or nonempty diagnostic task list counts;
+the separate primary arbitration and evidence guards govern the actual record.
+Synthetic counter success must never be reported as meaningful live-model success.
+
 ## Correct behavior preserved
 
 `submission/run.py -> nova_sdk.run_agent -> prepare -> ready -> consult -> session
@@ -76,6 +91,17 @@ Guidelines are loaded from `NOVA_GUIDELINES_DIR` only at runtime. No corpus down
 protected text, derived summaries or weights are packaged. Excerpts stay in encounter
 memory with source URL and license. Real corpus retrieval quality is NOT VERIFIED;
 synthetic path, bounds and retrieval tests do not establish clinical relevance.
+Preparation caps index collection at 240 seconds and 30,000 documents, with at
+most 128 title/path terms per document. It does not read entire bodies into an
+index; retrieval reads bounded excerpts. Root/intermediate symlinks and traversal
+are rejected. This is a memory bound by construction and synthetic regression,
+not an 8 GB measurement with the organizer's full corpus.
+
+EXAM rejection charges one turn without adding objective findings. Attempted
+maneuvers, including refusals, are remembered only inside the current encounter.
+Actions are NFC-normalized and checked against the 30-character bound before
+transmission; each accepted proposed EXAM is one maneuver. Unsupported EXAM
+templates fall back to other available information rather than TEST.
 
 ## Final validation evidence
 
@@ -91,6 +117,89 @@ The official grading rubric includes information collection, diagnostic reasonin
 tests/follow-up, safety, communication and efficiency. Mock Top-1 accuracy is not
 the official 100-point competition score. Uploaded reference records are examples,
 not scoring oracles, and are never production answer maps.
+
+Fresh final-source functional checks passed: official package limits/secret scan,
+repository package scan, source/mirror equivalence, fake official HTTP smoke,
+fresh-directory package smoke, adversarial checks and 3-run/4-case stability
+(100% diagnosis and action-sequence agreement). The final runtime is
+`ea0decf` (resolve the full SHA through the current verification record).
+Rebuilding twice at this runtime produced the same ZIP SHA256:
+`14e34a4629e252da9089689b13842921b384eabfec7355cd52f3ebfe3a14a0e8`.
+ZIP: 887,744 bytes; uncompressed: 3,381,816 bytes; 107 members including manifest.
+
+All five exact runtime pins were downloaded as binary-only CPython 3.12
+manylinux x86_64 wheels. A `python:3.12-slim` container installed them using
+`--no-index --find-links`; the final archive then passed fake HTTP smoke under
+`--network none --read-only --cpus 2 --memory 8g`, dropped capabilities and a
+256 MB writable `/tmp`. The fake server runs on loopback inside that container:
+22 turns, 5 fake Doctor responses, 2 parsed diagnostic responses, 3 phrasing
+responses, zero TEST, maximum 25 action characters and all 15 record fields.
+This establishes package/transport behavior, not real GPT-OSS execution.
+
+The supplied official simulator separately completed C01/C03/C10 with explicitly
+named deterministic Doctor/patient stubs and a child environment without inherited
+credentials: 15/15/18 turns, two Doctor calls each, and 15 record fields each.
+No sample-specific production logic was added. These are plumbing checks with
+unknown/generic stub answers; no clinical score is assigned to these results.
+
+Known limits remain: strict grounding and mapped-primary arbitration need real
+model review; true novel diagnoses can be rejected; actual guideline retrieval
+and model revision are unverified; source-license permission remains BLOCKED.
+The previous closing-set spot review also exposed a hypoglycemia urgency omission
+and an asthma-to-PE error. The deterministic clinical engine was preserved here;
+these are unresolved clinical review items, not fixes claimed by this SDK audit.
+No fresh final blind set was authored or run, and no 95/100 or official score is
+claimed. Current public docs and hosted CI results could not be checked through
+the proxy; Git fetch/push access is separate from that blocked HTTP access.
+
+Reusable cloud installation/start instructions were refreshed in the environment
+draft, including production test dependencies and the HUMAN-RUN ONLY boundary.
+Public `nova.snubhai.org` and `api.github.com` domain requirements are saved;
+no secret requirement was added. The draft is saved, not applied/published.
+Review, save and publish it in environment settings for future-task reuse.
+
+### Completed test and benchmark results
+
+| Interpreter | Passed | Failed | Skipped |
+|---|---:|---:|---:|
+| CPython 3.11.16 / pydantic 2.14.0 | 2,688 | 0 | 1 |
+| CPython 3.12.14 / pydantic 2.14.0 | 2,688 | 0 | 1 |
+
+These are unique test totals from the full suites plus the deferred release-binding
+test. Python 3.11 initially skipped the ZIP-content test in its isolated source
+copy because no ZIP had been built there; that test was subsequently executed
+against the final ZIP and passed. The only remaining skip on either interpreter
+is optional Torch training (`IMPLEMENTED_BUT_NOT_EXECUTED`). It is outside the
+competition runtime. Consolidated JUnit hashes, original full-run hashes and skip
+reasons are in `artifacts/independent_official_audit/local/test_summary.json`.
+The new source/commit/mirror/archive binding passed on both interpreters.
+
+The completed preliminary-only benchmark ran 230 development cases (222 scored),
+with 85 critical scored cases: Top-1 219/222 = 98.6486%; Top-3/5 220/222 = 99.0991%;
+critical recall 85/85 = 100%, critical miss 0; mean interactions 19.6435; exact
+duplicate-action rate 0; SOAP retention/completeness 100%; unsupported-information
+rate 0; rule violations 0; all gates passed. Every per-case row and every suite
+summary equals the independently rerun baseline, so there is no measured clinical
+engine regression. These are the legacy preliminary simulation harness's metrics,
+not real Doctor/SOAP scoring. Semantic duplicate-question rate is 0.6342%, premature
+diagnosis rate 0.8696%, and unresolved-critical-alternative rate 55.6522% under its
+heuristic definition; the high latter value requires clinical interpretation.
+
+The v33 Round M evidence is derived from the completed 128-case preliminary-only
+subset (123 scored, 43 critical), not from the historical TEST-enabled trace
+harness: Top-1 121/123 = 98.3740%, Top-3/5 122/123 = 99.1870%, critical recall
+43/43 = 100%. Two scored misses are preserved in the failure artifact without
+inventing causal attribution. An extra TEST-enabled detailed trace was started,
+then interrupted and discarded from completion evidence; it is not counted as
+a passing run. Both the complete subset and full development comparison are
+committed under `artifacts/independent_official_audit/`. No blind cases were run.
+
+Leakage scan: 807 reference cases / 16 modules / 170 core files, no obvious leakage
+detected. The scan is a heuristic, not a guarantee. Provenance inventory coverage
+passed; permission status remains BLOCKED. The ordinary offline-branch push triggers
+the repository workflow, including its independent backend/frontend/database jobs.
+Hosted CI results remain NOT VERIFIED because GitHub API access is blocked; no
+competition key is added. Historical v32 and older verification records are intact.
 
 ## Human-run next step (own computer only)
 

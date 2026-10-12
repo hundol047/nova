@@ -1,0 +1,20 @@
+[
+  {
+    "claim": "졸피뎀 40mg을 하루 2회 복용합니다",
+    "corpus": "졸피뎀 10mg을 하루 2회 복용합니다",
+    "incorrectly_grounded": true,
+    "grounded_after": false
+  },
+  {
+    "claim": "왼쪽 팔 통증이 있다",
+    "corpus": "오른쪽 팔 통증이 있다",
+    "incorrectly_grounded": true,
+    "grounded_after": false
+  },
+  {
+    "claim": "chest pain is present",
+    "corpus": "chest pain is not present",
+    "incorrectly_grounded": true,
+    "grounded_after": false
+  }
+]

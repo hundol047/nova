@@ -1,0 +1,15 @@
+{
+  "exit_code": 0,
+  "ready_before_case_access": true,
+  "doctor_calls": 5,
+  "turns": 22,
+  "test_actions": 0,
+  "max_action_chars": 25,
+  "record_fields_ok": true,
+  "diagnosis": "폐렴 (Community-Acquired Pneumonia)",
+  "errors": [],
+  "stderr_tail": [
+    "[encounter] {\"turns_used\": 22, \"exam_rejections\": 0, \"chat_calls\": 5, \"successful_chat_calls\": 5, \"case_relevant_successful_calls\": 5, \"diagnostic_reasoning_successful_calls\": 2, \"phrasing_successful_calls\": 3, \"empty_response_retries\": 0, \"prompt_tokens\": 1000, \"completion_tokens\": 400, \"total_tokens\": 1400, \"total_chat_latency_seconds\": 0.02, \"mean_chat_latency_seconds\": 0.0, \"models_returned\": [\"openai/gpt-oss-20b\"]}"
+  ],
+  "pass": true
+}
