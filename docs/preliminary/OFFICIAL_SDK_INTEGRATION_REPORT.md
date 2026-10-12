@@ -73,3 +73,10 @@ scripts/run_dev_samples.py C01 C03 C10`. Do not start leaderboard evaluation bef
 The organizer corpus is used only at runtime from the read-only mount; nothing from it (text, translations,
 summaries, indexes) is stored in this repository or the submission. Excerpts live only in one encounter's memory with
 their license and source. Existing knowledge-base provenance is unchanged by the existence of the corpus.
+
+## Release record (v32)
+
+`artifacts/verification/local-release-f383b2e-v32.json` binds runtime `f383b2e` to the audited archive (members pinned
+by hash; ZIP kept local). Full suite (CI exclusions): py3.12 2576 passed / 0 failed / 1 skipped, py3.11 identical.
+Round M (synthetic, mock engine) unchanged from v31: Top1 0.9837, Top3 1.0, critical Top1 1.0 (123 scored).
+Status stays `NOT READY` / official API and real model `NOT VERIFIED` until the dev-key samples are run.
