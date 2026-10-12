@@ -1,0 +1,11 @@
+{
+  "guidelines": {
+    "available": true,
+    "documents": 15904,
+    "terms": 33761,
+    "build_seconds": 2.823,
+    "skipped": 0,
+    "source": "catalog.csv"
+  },
+  "peak_rss_kib": 65216
+}

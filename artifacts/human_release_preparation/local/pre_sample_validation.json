@@ -1,0 +1,81 @@
+{
+  "READY_FOR_HUMAN_SAMPLE_VALIDATION": "NO",
+  "LOCAL_TECHNICAL_CHECKS": "PASS",
+  "checks": {
+    "fresh_build": true,
+    "package": true,
+    "official_sdk_exact": true,
+    "secret_sync_scan": true,
+    "leakage_scan": true,
+    "fake_http_readonly": true,
+    "fresh_directory": true,
+    "provenance_inventory": true,
+    "wheels_present": true,
+    "docker_offline_install": true,
+    "docker_offline_readonly_2cpu_8gb": true,
+    "docker_full_corpus_prepare": true
+  },
+  "commands": [
+    {
+      "name": "fresh_build",
+      "exit_code": 0
+    },
+    {
+      "name": "secret_sync_scan",
+      "exit_code": 0
+    },
+    {
+      "name": "leakage_scan",
+      "exit_code": 0
+    },
+    {
+      "name": "fake_http_readonly",
+      "exit_code": 0
+    },
+    {
+      "name": "fresh_directory",
+      "exit_code": 0
+    },
+    {
+      "name": "docker_offline_install",
+      "exit_code": 0
+    },
+    {
+      "name": "docker_offline_readonly_2cpu_8gb",
+      "exit_code": 0
+    },
+    {
+      "name": "docker_full_corpus_prepare",
+      "exit_code": 0
+    }
+  ],
+  "package": {
+    "zip": "/workspace/nova/submission/submission.zip",
+    "checks": {
+      "zip_bytes": 891779,
+      "uncompressed_bytes": 3409419,
+      "files": 107,
+      "root:run.py": true,
+      "root:requirements.txt": true,
+      "root:nova_sdk.py": true,
+      "secret_hits": [],
+      "requirements": [
+        "pydantic==2.14.0",
+        "pydantic_core==2.50.0",
+        "annotated-types==0.8.0",
+        "typing-inspection==0.4.4",
+        "typing_extensions==4.16.0"
+      ],
+      "sha256": "72c6fb5ebd3d6a4033ff7aada540bb03308b182fd3ce7ab015f79188241f2f17"
+    },
+    "problems": [],
+    "all_pass": true
+  },
+  "provenance_permission_status": "BLOCKED",
+  "blockers": [
+    "Unresolved source/license rights; no automatic clearance"
+  ],
+  "real_gpt_oss": "NOT EXECUTED BY CODEX",
+  "participant_key_samples": "NOT EXECUTED BY CODEX",
+  "sample_validation_upload": "NOT EXECUTED BY CODEX"
+}

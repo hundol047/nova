@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-12 KST",
+  "target": "CPython 3.12 / manylinux x86_64",
+  "wheels": [
+    {
+      "filename": "annotated_types-0.8.0-py3-none-any.whl",
+      "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+      "public_pypi_hash_matches": true,
+      "version": "0.8.0",
+      "publisher_metadata_url": "https://pypi.org/pypi/annotated_types/0.8.0/json"
+    },
+    {
+      "filename": "pydantic-2.14.0-py3-none-any.whl",
+      "sha256": "15fab1bea6f1dc5003b54fc2ecab230c1fd1dbade2acd4addc52d81e32416d4b",
+      "public_pypi_hash_matches": true,
+      "version": "2.14.0",
+      "publisher_metadata_url": "https://pypi.org/pypi/pydantic/2.14.0/json"
+    },
+    {
+      "filename": "pydantic_core-2.50.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "f187030fc3d62c668feb0f09e92852e0eb414d7fcefc4748f2e67d245aade37e",
+      "public_pypi_hash_matches": true,
+      "version": "2.50.0",
+      "publisher_metadata_url": "https://pypi.org/pypi/pydantic_core/2.50.0/json"
+    },
+    {
+      "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "public_pypi_hash_matches": true,
+      "version": "4.16.0",
+      "publisher_metadata_url": "https://pypi.org/pypi/typing_extensions/4.16.0/json"
+    },
+    {
+      "filename": "typing_inspection-0.4.4-py3-none-any.whl",
+      "sha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+      "public_pypi_hash_matches": true,
+      "version": "0.4.4",
+      "publisher_metadata_url": "https://pypi.org/pypi/typing_inspection/0.4.4/json"
+    }
+  ],
+  "offline_docker_install": true
+}

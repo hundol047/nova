@@ -11,7 +11,7 @@
     {
       "path": "MANIFEST.json",
       "category": "D",
-      "sha256": "50cdadea48840d4f0534d53dfbc066eab88dc96ed5e837df770d9734941f2d1f",
+      "sha256": "9d014cff1e890eaaf9be9a9cf73bb15b7e48034fbb88e5208533b987f256b304",
       "evidence": {
         "generator": "scripts/build_nova_submission.py (manifest) / pinned PyPI dependency declaration",
         "inputs": "Tracked runtime hashes / exact package versions",
@@ -2461,5 +2461,6 @@
   ],
   "original_team_authored_verified": 0,
   "medical_adjudication": false,
-  "note": "Category B assets also generated reproducibly (D); exclusive primary counts avoid double counting. SDK C not corpus text. Category E is a submission blocker, not automatically licensed by team ownership or new fixes."
+  "note": "Category B assets also generated reproducibly (D); exclusive primary counts avoid double counting. SDK C not corpus text. Category E is a submission blocker, not automatically licensed by team ownership or new fixes.",
+  "verified_runtime_sha": "b8cb431f6840f5431ee855b597bce9125d30bb22"
 }

@@ -1,0 +1,25 @@
+{
+  "start_remote_head": "1b19a700fd5679b9422a2e8820f5675551ab432c",
+  "previous_verified_runtime": "ea0decf2e0e0c955d26cba6b05ffb49b6de52e32",
+  "previous_source_head": "26091a2a4642ffeefb0836d6483dfeb160435109",
+  "runtime_changed_from_previous_verified_runtime_to_start": false,
+  "changed_paths": [
+    "artifacts/compliance_hardening/provenance_validation.json",
+    "artifacts/independent_official_audit/final/round_m_failure_analysis.json",
+    "artifacts/independent_official_audit/final/round_m_final_summary.json",
+    "artifacts/independent_official_audit/local/benchmark_comparison.json",
+    "artifacts/independent_official_audit/local/binary_wheels.json",
+    "artifacts/independent_official_audit/local/final-docker-smoke.json",
+    "artifacts/independent_official_audit/local/final-http-smoke.json",
+    "artifacts/independent_official_audit/local/final-package.json",
+    "artifacts/independent_official_audit/local/interpreter_versions.json",
+    "artifacts/independent_official_audit/local/reproductions_after.json",
+    "artifacts/independent_official_audit/local/reproductions_before.json",
+    "artifacts/independent_official_audit/local/test_summary.json",
+    "artifacts/independent_official_audit/local/uploaded-sample-stubs-summary.json",
+    "artifacts/verification/CURRENT_RELEASE.json",
+    "artifacts/verification/local-release-ea0decf-v33.json",
+    "docs/preliminary/CODEX_INDEPENDENT_OFFICIAL_AUDIT.md"
+  ],
+  "current_verified_runtime": "b8cb431f6840f5431ee855b597bce9125d30bb22"
+}
