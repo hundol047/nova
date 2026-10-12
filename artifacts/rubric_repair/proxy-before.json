@@ -1,0 +1,857 @@
+{
+  "label": "LOCAL RUBRIC PROXY — NOT OFFICIAL SCORE",
+  "fixture_sha256": "aac540dec306944d990f5af4ede2582842dfa208cb7021561d293e20d5d02b2d",
+  "information_gathering": "Provided observations replayed; interview coverage measured in separate fake-SDK regressions.",
+  "diagnostic_reasoning": "Reference-family agreement; no clinician adjudication.",
+  "tests_followup": "Presence/interval/precaution lexical checks, not medical quality scores.",
+  "safety": "Expected urgency engineering assertions.",
+  "communication": "Actual fixture SAYs and submitted plan.",
+  "efficiency": "Closing turns only; no real-model token or latency claims.",
+  "metrics": {
+    "cases": 32,
+    "reference_compatible": 11,
+    "urgency_matches": 21,
+    "test_plan_present": 32,
+    "followup_has_interval": 0,
+    "precautions_present": 32,
+    "explanation_present": 32,
+    "mean_closing_turns": 2.0,
+    "unperformed_test_results": 0,
+    "plan_topic_compatible_proxy": 2,
+    "plan_topic_scored_cases": 23
+  },
+  "cases": [
+    {
+      "id": "thyroid_en_0",
+      "diagnosis": "갑상선기능항진증 (Hyperthyroidism)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "갑상선기능항진증 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "없음",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 갑상선기능항진증 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5117623789997197,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "thyroid_en_1",
+      "diagnosis": "갑상선기능항진증 (Hyperthyroidism)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "갑상선기능항진증 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "없음",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 갑상선기능항진증 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.4824874179998915,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "thyroid_en_2",
+      "diagnosis": "갑상선기능항진증 (Hyperthyroidism)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "갑상선기능항진증 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "없음",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 갑상선기능항진증 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.4270700739998574,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "sedative_en_0",
+      "diagnosis": "폐렴 (Community-Acquired Pneumonia)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "폐렴 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "흉부 X-ray, 전혈구검사(CBC), 요추천자(뇌척수액 검사), 혈액배양검사",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 폐렴 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.7417693000002146,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "sedative_en_1",
+      "diagnosis": "폐렴 (Community-Acquired Pneumonia)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "폐렴 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "흉부 X-ray, 전혈구검사(CBC), 요추천자(뇌척수액 검사), 혈액배양검사",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 폐렴 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.8997663979998833,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "sedative_en_2",
+      "diagnosis": "폐렴 (Community-Acquired Pneumonia)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "폐렴 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "흉부 X-ray, 전혈구검사(CBC), 요추천자(뇌척수액 검사), 혈액배양검사",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 폐렴 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.8571988559997408,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "growth_en_0",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5322346929997366,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "growth_en_1",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 1.509339607000129,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "growth_en_2",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 2.885064292000152,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "thyroid_ko_0",
+      "diagnosis": "갑상선기능항진증 (Hyperthyroidism)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "갑상선기능항진증 가능성이 있어요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "없음",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 갑상선기능항진증 가능성이 있어요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.9227396450000924,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "thyroid_ko_1",
+      "diagnosis": "갑상선기능항진증 (Hyperthyroidism)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "갑상선기능항진증 가능성이 있어요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "없음",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 갑상선기능항진증 가능성이 있어요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5936065030000464,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "thyroid_ko_2",
+      "diagnosis": "갑상선기능항진증 (Hyperthyroidism)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "갑상선기능항진증 가능성이 있어요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "없음",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 갑상선기능항진증 가능성이 있어요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5899391389998527,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "sedative_ko_0",
+      "diagnosis": "수막염 (Bacterial Meningitis)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "수막염 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "요추천자(뇌척수액 검사), 혈액배양검사, 전혈구검사(CBC), 혈중 젖산(lactate), 기본대사패널(전해질/신기능)",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 수막염 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5956124809999892,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "sedative_ko_1",
+      "diagnosis": "수막염 (Bacterial Meningitis)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "수막염 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "요추천자(뇌척수액 검사), 혈액배양검사, 전혈구검사(CBC), 혈중 젖산(lactate), 기본대사패널(전해질/신기능)",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 수막염 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.569379974000185,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "sedative_ko_2",
+      "diagnosis": "수막염 (Bacterial Meningitis)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "수막염 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "요추천자(뇌척수액 검사), 혈액배양검사, 전혈구검사(CBC), 혈중 젖산(lactate), 기본대사패널(전해질/신기능)",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 수막염 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5720677140002408,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "growth_ko_0",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5533513710001898,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "growth_ko_1",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5740826010001001,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "growth_ko_2",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5083942329997626,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "family_thyroid_only",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.4526982849997694,
+      "plan_topic_compatible_proxy": null
+    },
+    {
+      "id": "negated_thyroid",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5416487479997159,
+      "plan_topic_compatible_proxy": null
+    },
+    {
+      "id": "historical_thyroid",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5446803970003202,
+      "plan_topic_compatible_proxy": null
+    },
+    {
+      "id": "single_thyroid_feature",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "12유도 심전도, 기본대사패널(전해질/신기능)",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5191694189998088,
+      "plan_topic_compatible_proxy": null
+    },
+    {
+      "id": "sleep_no_dependence",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "비조영 뇌 CT, 요추천자(뇌척수액 검사)",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.7953183949998675,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "sleep_drug_only",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5655865009998706,
+      "plan_topic_compatible_proxy": null
+    },
+    {
+      "id": "hallucinated_cancer",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "없음",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.6038313039998684,
+      "plan_topic_compatible_proxy": null
+    },
+    {
+      "id": "normal_exam_control",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "12유도 심전도, 트로포닌, 흉부 X-ray",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.42791213200007405,
+      "plan_topic_compatible_proxy": null
+    },
+    {
+      "id": "dangerous_meningitis",
+      "diagnosis": "Bacterial Meningitis",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "Bacterial Meningitis 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "요추천자(뇌척수액 검사), 혈액배양검사, 전혈구검사(CBC), 비조영 뇌 CT",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: Bacterial Meningitis 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.6429212110001572,
+      "plan_topic_compatible_proxy": true
+    },
+    {
+      "id": "dangerous_pneumonia",
+      "diagnosis": "Community-Acquired Pneumonia",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": false,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "원인을 더 확인할게요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "흉부 X-ray, 전혈구검사(CBC)",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 원인을 더 확인할게요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 1.0495060759999433,
+      "plan_topic_compatible_proxy": true
+    },
+    {
+      "id": "new_symptom_contradicts_prior",
+      "diagnosis": "갑상선기능항진증 (Hyperthyroidism)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "갑상선기능항진증 가능성이 있어요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "없음",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 갑상선기능항진증 가능성이 있어요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.784134061000259,
+      "plan_topic_compatible_proxy": null
+    },
+    {
+      "id": "familial_growth",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5682902800003831,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "growth_velocity_slow",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": false,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.5522949870000957,
+      "plan_topic_compatible_proxy": false
+    },
+    {
+      "id": "unmeasured_growth",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.40146603499988487,
+      "plan_topic_compatible_proxy": null
+    }
+  ]
+}

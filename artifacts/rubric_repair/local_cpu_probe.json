@@ -1,0 +1,13 @@
+{
+  "label": "LOCAL CPU PROFILING PROBE \u2014 NOT real-model latency / NOT official efficiency score",
+  "measurement": "time.process_time during one warmed differential update; cProfile enabled in both runs",
+  "synthetic_input": "33-year-old male; vague abdominal complaint; explicitly observed diarrhea",
+  "environment": "Python 3.12; NOVA_LLM_PROVIDER=mock; NOVA_COMPETITION_RETRIEVAL=1",
+  "cpu_seconds": {
+    "before": 1.102759315,
+    "after": 0.39941711600000007
+  },
+  "scope": "Single profiled input only, on an uncontrolled shared cloud instance. These values cannot establish a latency improvement/regression; profiling overhead and changing machine load apply. Real model/server latency is unmeasured.",
+  "intermediate_after_cpu_seconds": 1.1979512980000002,
+  "final_runtime_core_digest": "684ba62ccbc46ef4380e2768ac349cf1ab241104a5b10595b94a75a2d2c4048a"
+}

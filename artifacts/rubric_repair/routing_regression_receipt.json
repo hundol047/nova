@@ -1,0 +1,45 @@
+{
+  "label": "Synthetic development regression; NOT official sample / NOT clinical adjudication",
+  "cause": "Supplemental hyperthyroidism entry discarded the existing four discriminating-question keys; restored exactly without changing diagnostic support guards",
+  "phases": [
+    {
+      "phase": "baseline",
+      "development_case_id": "RoundM_066",
+      "primary": "Acute Gastroenteritis",
+      "top1": true,
+      "turns": 20,
+      "actual_targeted_questions": [
+        {
+          "key": "associated_symptoms:palpitations",
+          "raw_answer": "No, I don't have that."
+        }
+      ],
+      "leader_support_problems": []
+    },
+    {
+      "phase": "intermediate_missing_questions",
+      "development_case_id": "RoundM_066",
+      "primary": "Undifferentiated presentation",
+      "top1": false,
+      "turns": 19,
+      "actual_targeted_questions": [],
+      "leader_support_problems": [
+        "single_nonspecific_support"
+      ]
+    },
+    {
+      "phase": "repaired",
+      "development_case_id": "RoundM_066",
+      "primary": "Acute Gastroenteritis",
+      "top1": true,
+      "turns": 20,
+      "actual_targeted_questions": [
+        {
+          "key": "associated_symptoms:palpitations",
+          "raw_answer": "No, I don't have that."
+        }
+      ],
+      "leader_support_problems": []
+    }
+  ]
+}

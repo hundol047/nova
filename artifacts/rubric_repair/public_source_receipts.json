@@ -1,0 +1,33 @@
+{
+  "label": "PUBLIC SOURCE REVIEW RECEIPTS; downloaded full text stays local; no redistribution or clinician review claim",
+  "sources": [
+    {
+      "source": "thyroid",
+      "url": "https://www.niddk.nih.gov/health-information/endocrine-diseases/hyperthyroidism",
+      "retrieved_date": "2026-10-12",
+      "html_sha256": "ef1e2f9c3090953868b9a39a152f12cc9dc7d710a57d0979b0c6418133f6c6e7",
+      "rights": "UNRESOLVED; source availability does not establish redistribution permission"
+    },
+    {
+      "source": "growth",
+      "url": "https://pedsendo.org/patient-resource/short-stature/",
+      "retrieved_date": "2026-10-12",
+      "html_sha256": "f9b5c9284a30d97bb8f306f96db60f116fea4c87f5be9a4182038db0c494cbdb",
+      "rights": "UNRESOLVED; source availability does not establish redistribution permission"
+    },
+    {
+      "source": "sedative",
+      "url": "https://www.nice.org.uk/guidance/ng215/chapter/Recommendations",
+      "retrieved_date": "2026-10-12",
+      "html_sha256": "edf98e39311fa26bb275a401f4fb19d0e92563c558fd79b52ab85552da1b4948",
+      "rights": "UNRESOLVED; source availability does not establish redistribution permission"
+    },
+    {
+      "source": "current_docs",
+      "url": "https://nova.snubhai.org/docs/",
+      "retrieved_date": "2026-10-12",
+      "html_sha256": "58b9776df2e873ef0525f21140c90d9b3cdd0d758369d41e827da98bc2264a42",
+      "rights": "UNRESOLVED; source availability does not establish redistribution permission"
+    }
+  ]
+}

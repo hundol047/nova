@@ -1,12 +1,13 @@
 {
-  "current_verification_artifact": "artifacts/verification/local-release-b8cb431-v34.json",
-  "current_verification_schema": "nova-verification-v34",
-  "verified_runtime_sha": "b8cb431f6840f5431ee855b597bce9125d30bb22",
+  "current_verification_artifact": "artifacts/verification/local-release-fb4b69b-v35.json",
+  "current_verification_schema": "nova-verification-v35",
+  "verified_runtime_sha": "fb4b69b72639c5fb5a90df54bad3dfc07443442d",
   "current_blind_version": "v19",
   "current_blind_manifest": null,
   "current_blind_status": "REFERENCE-ONLY",
   "fresh_final_blind": "NOT YET AUTHORED",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-b8cb431-v34.json",
     "artifacts/verification/local-release-ea0decf-v33.json",
     "artifacts/verification/local-release-f383b2e-v32.json",
     "artifacts/verification/local-release-aeda1a0-v31.json",
@@ -33,6 +34,6 @@
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
   "status": "NOT READY",
-  "reason": "Current public SDK and full public corpus audited; locally proven grounding, RAG and hypoglycemia urgency defects repaired. Exact human-run telemetry prepared; real samples and submission rights remain unverified.",
+  "reason": "General clinical-pipeline repair; paired regression PASS; real organizer execution remains HUMAN-RUN ONLY.",
   "latest_compliance_followup": "artifacts/clinical_review_pass/rule_matrix.json"
 }

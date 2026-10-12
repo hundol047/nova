@@ -1,0 +1,106 @@
+{
+  "label": "LOCAL RUBRIC PROXY — NOT OFFICIAL SCORE / FULL FAKE SDK / SCRIPTED DOCTOR",
+  "real_model_tokens_latency_cost": "NOT MEASURED; fixture usage constants are not real costs",
+  "mean_turns": 21.666666666666668,
+  "mean_doctor_physical_requests": 2.3333333333333335,
+  "mean_topic_coverage": 0.5428571428571428,
+  "mean_exam_count": 8.666666666666666,
+  "cases": [
+    {
+      "id": "thyroid_midlife",
+      "status": "completed",
+      "primary": "폐렴 (Community-Acquired Pneumonia)",
+      "expected": "Graves disease",
+      "turns": 22,
+      "exam_count": 9,
+      "say_count": 13,
+      "fixture_wall_seconds": 6.891319392998412,
+      "doctor_physical_requests": 2,
+      "fixture_reported_prompt_tokens": 200,
+      "fixture_reported_completion_tokens": 100,
+      "unique_required_topics": 4,
+      "required_topics": 4,
+      "topic_coverage": 1.0,
+      "duplicate_questions_exact": 0,
+      "age_inappropriate_social_questions": 0,
+      "communication": [
+        "폐렴 가능성이 있어요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "unsafe_emergency_disposition": false,
+      "nfc_or_test_violations": 0,
+      "clinical_plan": {
+        "tests": "흉부 X-ray, 전혈구검사(CBC)",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 폐렴 가능성이 있어요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "diagnostic_successes_fixture": 2
+    },
+    {
+      "id": "sleep_sedative",
+      "status": "completed",
+      "primary": "수막염 (Bacterial Meningitis)",
+      "expected": "Sedative-Hypnotic Use Disorder",
+      "turns": 22,
+      "exam_count": 9,
+      "say_count": 13,
+      "fixture_wall_seconds": 8.18457281299925,
+      "doctor_physical_requests": 2,
+      "fixture_reported_prompt_tokens": 200,
+      "fixture_reported_completion_tokens": 100,
+      "unique_required_topics": 3,
+      "required_topics": 7,
+      "topic_coverage": 0.42857142857142855,
+      "duplicate_questions_exact": 0,
+      "age_inappropriate_social_questions": 0,
+      "communication": [
+        "수막염 가능성이 있어요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "unsafe_emergency_disposition": true,
+      "nfc_or_test_violations": 0,
+      "clinical_plan": {
+        "tests": "요추천자(뇌척수액 검사), 혈액배양검사, 전혈구검사(CBC), 혈중 젖산(lactate), 기본대사패널(전해질/신기능)",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 입원 여부 결정, 결과에 따라 즉시 재평가",
+        "education": "진료 중 설명함: 수막염 가능성이 있어요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "diagnostic_successes_fixture": 2
+    },
+    {
+      "id": "growth_school_age",
+      "status": "completed",
+      "primary": "폐렴 (Community-Acquired Pneumonia)",
+      "expected": "Constitutional growth delay",
+      "turns": 21,
+      "exam_count": 8,
+      "say_count": 13,
+      "fixture_wall_seconds": 8.814860759999647,
+      "doctor_physical_requests": 3,
+      "fixture_reported_prompt_tokens": 100,
+      "fixture_reported_completion_tokens": 50,
+      "unique_required_topics": 1,
+      "required_topics": 5,
+      "topic_coverage": 0.2,
+      "duplicate_questions_exact": 0,
+      "age_inappropriate_social_questions": 1,
+      "communication": [
+        "폐렴 가능성이 있어요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "unsafe_emergency_disposition": false,
+      "nfc_or_test_violations": 0,
+      "clinical_plan": {
+        "tests": "흉부 X-ray, 전혈구검사(CBC)",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "증상 변화를 보며 필요 시 외래 재진, 악화·지속 시 조기 재평가",
+        "education": "진료 중 설명함: 폐렴 가능성이 있어요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "diagnostic_successes_fixture": 1
+    }
+  ]
+}

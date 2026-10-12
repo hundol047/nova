@@ -1,0 +1,23 @@
+{
+  "baseline_remote_head": "dc1b1b94182c8cd0d128f21bc78c215317945923",
+  "target_branch": "offline/nova-competition-agent-optimization",
+  "baseline_provider": "deterministic mock / scripted Doctor",
+  "official_scores_source": "User-provided prompt; original official receipts unavailable",
+  "official_scores_before": {
+    "information_gathering": 7.82,
+    "diagnostic_reasoning": 4.17,
+    "tests_followup": 0.08,
+    "safety": 6.25,
+    "communication": 2.67,
+    "efficiency": 20.0,
+    "sum": 40.99
+  },
+  "new_official_scores": "NOT MEASURED; HUMAN-RUN ONLY",
+  "participant_key": "NEVER ACCESSED BY CODEX",
+  "real_public_samples": "NOT EXECUTED BY CODEX",
+  "blind_validation": "NONE; authored with failure-type and code access",
+  "repeated_prompt": "Later uploaded request has identical SHA256 512b0b161260fd5bdf066eba446c4e35db3112059b5f87c25264ca99876418c8; same requirements handled once",
+  "runtime_specific_case_branches": "NONE; no public IDs, names, UUID answer tables or exact-opening lookup added",
+  "clinical_review": "NONE; follow-up and supplemental profiles need independent clinical review",
+  "provenance_permission_status": "BLOCKED; new supplemental profile assets are UNRESOLVED"
+}

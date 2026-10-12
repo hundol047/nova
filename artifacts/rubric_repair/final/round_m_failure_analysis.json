@@ -1,0 +1,17 @@
+{
+  "definition": "All scored incorrect primary diagnoses in the complete 128-case Round M regression; NOT ADJUDICATED",
+  "failures": [
+    {
+      "case_id": "RoundM_069",
+      "truth": "acute_pancreatitis",
+      "prediction": "Undifferentiated presentation",
+      "attribution": "NOT ADJUDICATED"
+    },
+    {
+      "case_id": "RoundM_108",
+      "truth": "Peptic Ulcer Disease",
+      "prediction": "Duodenal Ulcer",
+      "attribution": "NOT ADJUDICATED"
+    }
+  ]
+}
