@@ -169,7 +169,8 @@ def _build_zip_and_manifest() -> None:
             p.relative_to(SUBMISSION).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in files
         },
     }
-    # Write canonical LF bytes on every platform so the release-bound MANIFEST hash is reproducible on Windows too.\n    (SUBMISSION / "MANIFEST.json").write_bytes((json.dumps(manifest, indent=2) + "\n").encode("utf-8"))
+    # Write canonical LF bytes on every platform so the release-bound MANIFEST hash is reproducible on Windows too.
+    (SUBMISSION / "MANIFEST.json").write_bytes((json.dumps(manifest, indent=2) + "\n").encode("utf-8"))
 
     zip_path = SUBMISSION / "submission.zip"
     if zip_path.exists():
