@@ -32,7 +32,7 @@ def main(argv=None):
   names=z.namelist()
   assert {'run.py','requirements.txt'}<=set(names)
   for name in names:
-   if name not in {'run.py','requirements.txt','MANIFEST.json'} and not name.startswith(('nova_agent/','competition/')):forbidden.append(name)
+   if name not in {'run.py','requirements.txt','nova_sdk.py','MANIFEST.json'} and not name.startswith(('nova_agent/','competition/')):forbidden.append(name)
    if any(x in Path(name).parts for x in ('tests','evaluation','frontend','backend','ml')) or Path(name).suffix in {'.pt','.pth','.onnx','.safetensors','.ckpt','.bin','.pkl','.joblib'}:forbidden.append(name)
    data=z.read(name)
    try:content=data.decode('utf-8')
@@ -44,7 +44,7 @@ def main(argv=None):
     for n in ast.walk(tree):
      if isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr in {'fit','partial_fit','backward','load_state_dict'}:training.append({'file':name,'line':n.lineno,'operation':n.func.attr})
   package_hits=[h for h in hits if h['file'].startswith('submission/')]
- report={'secret_scan':{'status':'PASS' if not unresolved else 'REVIEW_REQUIRED','repository_findings':hits,'submission_findings':package_hits,'scope':'Tracked UTF-8 source/config/docs; regex heuristics cannot prove absence of every credential'},'source_submission_byte_equivalence':not sync,'sync_mismatches':sync,'forbidden_files':forbidden,'training_operations':training,'utf8_failures':utf8,'zip_bytes':package.stat().st_size,'zip_sha256':hashlib.sha256(package.read_bytes()).hexdigest(),'package_file_count':len(names),'model_weights_bundled':False,'provider_boundary':'Fail closed for every network route pending organizer guide; explicit offline mock only','static_retrieval':'Local fixed KB/catalog; no patient-specific index write/update in inference path'}
+ report={'secret_scan':{'status':'PASS' if not unresolved else 'REVIEW_REQUIRED','repository_findings':hits,'submission_findings':package_hits,'scope':'Tracked UTF-8 source/config/docs; regex heuristics cannot prove absence of every credential'},'source_submission_byte_equivalence':not sync,'sync_mismatches':sync,'forbidden_files':forbidden,'training_operations':training,'utf8_failures':utf8,'zip_bytes':package.stat().st_size,'zip_sha256':hashlib.sha256(package.read_bytes()).hexdigest(),'package_file_count':len(names),'model_weights_bundled':False,'provider_boundary':'Official SDK only: organizer API via nova_sdk (NOVA_API_BASE/NOVA_RUN_TOKEN); Doctor model via client.chat; no other network route','static_retrieval':'Local fixed KB/catalog; no patient-specific index write/update in inference path'}
  target=ROOT/args.output;target.parent.mkdir(parents=True,exist_ok=True)
  target.write_text(json.dumps(report,indent=2)+'\n')
  print(json.dumps(report,indent=2))
