@@ -67,6 +67,12 @@ RELATION_PATTERNS = {
 }
 # Explicit disjunction branches must not drop the shared relief predicate.
 RELATION_PATTERNS["improves with sitting"] = RELATION_PATTERNS["improves with sitting or lying down"]
+# Rebound is a clinical relation, not the word shared with rebound insomnia or
+# withdrawal. Preserve terse abdominal-exam wording and explicit tenderness.
+RELATION_PATTERNS['rebound tenderness'] = _compile(
+    r'\brebound\s+(?:(?:abdominal\s+)?tenderness|is present|positive|everywhere|and guarding)\b',
+    r'\b(?:with|diffuse)\s+rebound(?!\s+(?:insomnia|withdrawal|headaches?|acid))\b',
+    r'반발통|반발\s*압통|반동\s*압통')
 
 ROOM_ROTATION = _compile(r"\b(?:room|surroundings|everything)\s+(?:(?:was|is|were|seemed to be)\s+)?(?:spins?|spun|spinning|whirls?|whirled|rotat\w*)\b",
                          r"(?:방|주변|천장)(?:이|가)?\s*(?:빙빙\s*)?(?:돌|도는)",

@@ -265,6 +265,9 @@ def support_problems(item, state, differential: list) -> List[str]:
     from nova_agent.differential import _strip_negative_prefix
     entry = _entry(item.diagnosis_id)
     problems: List[str] = []
+    if entry.get('support_requirements'):
+        from nova_agent.clinical_profiles import profile_problems
+        problems.extend(profile_problems(entry, state, item.supporting_evidence))
     risk_only = {str(x).lower() for x in entry.get("risk_factors", [])}
     risk_only.update(e.lower() for e in item.supporting_evidence if _risk_context(e))
     positive = [e for e in item.supporting_evidence

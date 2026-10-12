@@ -306,6 +306,8 @@ def _strip_negated_spans(text: str) -> str:
 
 
 def _strip_negated_spans_uncached(text: str) -> str:
+    from nova_agent.clinical_assertions import normalize_exam_notation
+    text = normalize_exam_notation(text)
     # Negation ends at a clause boundary, not an arbitrary four-word window.
     # Keep affirmative clauses after "but"/"however" rather than erasing the entire report.
     # Sentence periods are boundaries too; decimal points are not.
@@ -424,7 +426,8 @@ _ASSERTION_SPLIT = re.compile(r"[;\n]|(?<=\w)\.(?=\s|$)")
 
 
 def _assertion_clauses(finding: str) -> tuple:
-    return _scoped("clauses", finding, lambda: tuple(_ASSERTION_SPLIT.split(finding.lower())))
+    from nova_agent.clinical_assertions import normalize_exam_notation
+    return _scoped("clauses", finding, lambda: tuple(_ASSERTION_SPLIT.split(normalize_exam_notation(finding).lower())))
 
 
 # Round Q: a qualifier that IS the clinical meaning of a feature. Stemming folds "irregularly" into "irregular", so
@@ -454,6 +457,8 @@ POSTURAL_LIGHTHEADEDNESS = re.compile(
 
 
 def _protected_qualifier(feature_lower: str):
+    if feature_lower == 'rebound tenderness':
+        return re.compile(r'\brebound\s+(?:(?:abdominal\s+)?tenderness|is present|positive)\b|반발통|반동\s*압통')
     from nova_agent.feature_relations import RELATION_PATTERNS
     if feature_lower in RELATION_PATTERNS:
         return RELATION_PATTERNS[feature_lower]

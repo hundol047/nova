@@ -1,0 +1,356 @@
+{
+  "schema": "nova-supplemental-clinical-profiles-v1",
+  "provenance": {
+    "author": "Codex engineering agent, 2026-10-12",
+    "exact_model_revision": "UNKNOWN",
+    "generation": "Manual engineering composition of general clinical features and conservative planned care; no runtime generation, no copied guideline excerpts",
+    "clinician_review": false,
+    "redistribution_clearance": "UNRESOLVED",
+    "sources": {
+      "thyroid": "https://www.niddk.nih.gov/health-information/endocrine-diseases/hyperthyroidism",
+      "growth": "https://pedsendo.org/patient-resource/short-stature/",
+      "sedative": "https://www.nice.org.uk/guidance/ng215/chapter/Recommendations"
+    }
+  },
+  "profiles": [
+    {
+      "id": "onto::tier2:hyperthyroidism",
+      "name": "Hyperthyroidism",
+      "aliases": [
+        "갑상샘항진증",
+        "갑상선기능항진증",
+        "갑상선 기능 항진증",
+        "Thyrotoxicosis"
+      ],
+      "category": "thyroid",
+      "urgency": "LOW",
+      "dangerous": false,
+      "chief_complaint_tags": [],
+      "typical_features": [
+        "weight loss",
+        "increased appetite",
+        "heat intolerance",
+        "sweating",
+        "tremor",
+        "palpitations",
+        "diffuse goiter",
+        "hyperreflexia"
+      ],
+      "confirmatory_findings": [
+        "suppressed TSH with raised free T4",
+        "diffuse goiter on examination"
+      ],
+      "risk_factors": [],
+      "contradictory_features": [],
+      "discriminating_questions": [
+        "associated_symptoms:weight loss despite good appetite",
+        "associated_symptoms:palpitations",
+        "associated_symptoms:heat intolerance",
+        "associated_symptoms:tremor"
+      ],
+      "minimum_workup": [],
+      "support_requirements": {
+        "minimum_positive_features": 2,
+        "anchor_any": [
+          "heat intolerance",
+          "increased appetite",
+          "diffuse goiter"
+        ]
+      },
+      "plan": {
+        "tests": "TSH와 free T4 측정; 결과에 따라 T3 추가; 두근거림이 있으면 ECG 고려",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "follow_up": "1~2주 내 검사 결과와 맥박·체중·증상 재평가; 악화 시 조기 진료",
+        "education": "고열, 의식 변화, 흉통, 호흡곤란 시 즉시 평가"
+      },
+      "source_url": "https://www.niddk.nih.gov/health-information/endocrine-diseases/hyperthyroidism",
+      "clinical_validation_status": "NOT_VERIFIED",
+      "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance",
+      "discriminating_exams": [],
+      "discriminating_tests": []
+    },
+    {
+      "id": "clinical:graves_disease",
+      "name": "Graves disease",
+      "aliases": [
+        "그레이브스병",
+        "Graves hyperthyroidism",
+        "Graves Disease",
+        "그레이브스",
+        "그레이브스 갑상샘항진증"
+      ],
+      "category": "thyroid",
+      "urgency": "LOW",
+      "dangerous": false,
+      "chief_complaint_tags": [],
+      "typical_features": [
+        "weight loss",
+        "increased appetite",
+        "heat intolerance",
+        "sweating",
+        "tremor",
+        "palpitations",
+        "diffuse goiter",
+        "thyroid eye signs",
+        "hyperreflexia"
+      ],
+      "confirmatory_findings": [],
+      "risk_factors": [],
+      "contradictory_features": [],
+      "discriminating_questions": [],
+      "minimum_workup": [],
+      "support_requirements": {
+        "minimum_positive_features": 3,
+        "anchor_any": [
+          "diffuse goiter",
+          "thyroid eye signs"
+        ]
+      },
+      "plan": {
+        "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료",
+        "education": "고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가"
+      },
+      "source_url": "https://www.niddk.nih.gov/health-information/endocrine-diseases/hyperthyroidism",
+      "clinical_validation_status": "NOT_VERIFIED",
+      "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+    },
+    {
+      "id": "clinical:sedative_hypnotic_use_disorder",
+      "name": "Sedative-Hypnotic Use Disorder",
+      "aliases": [
+        "수면제 사용장애",
+        "수면제 의존",
+        "진정수면제 사용장애",
+        "sedative hypnotic use disorder",
+        "sedative dependence",
+        "hypnotic dependence"
+      ],
+      "category": "sedative",
+      "urgency": "LOW",
+      "dangerous": false,
+      "chief_complaint_tags": [],
+      "typical_features": [
+        "sedative use",
+        "insomnia",
+        "daytime sleepiness",
+        "dose escalation",
+        "withdrawal symptoms",
+        "difficulty reducing sedative use"
+      ],
+      "confirmatory_findings": [],
+      "risk_factors": [],
+      "contradictory_features": [],
+      "discriminating_questions": [],
+      "minimum_workup": [],
+      "support_requirements": {
+        "minimum_positive_features": 2,
+        "anchor_any": [
+          "dose escalation",
+          "withdrawal symptoms",
+          "difficulty reducing sedative use"
+        ]
+      },
+      "plan": {
+        "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락",
+        "education": "갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가"
+      },
+      "source_url": "https://www.nice.org.uk/guidance/ng215/chapter/Recommendations",
+      "clinical_validation_status": "NOT_VERIFIED",
+      "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+    },
+    {
+      "id": "clinical:medication_related_hypersomnia",
+      "name": "Medication-related hypersomnia",
+      "aliases": [
+        "약물 관련 과다졸림",
+        "Medication-induced sleep disorder",
+        "약물 유발 수면장애",
+        "약물성 과다수면"
+      ],
+      "category": "sedative",
+      "urgency": "LOW",
+      "dangerous": false,
+      "chief_complaint_tags": [],
+      "typical_features": [
+        "sedative use",
+        "daytime sleepiness",
+        "sleepiness after medication"
+      ],
+      "confirmatory_findings": [],
+      "risk_factors": [],
+      "contradictory_features": [],
+      "discriminating_questions": [],
+      "minimum_workup": [],
+      "support_requirements": {
+        "minimum_positive_features": 2,
+        "anchor_any": [
+          "sleepiness after medication"
+        ]
+      },
+      "plan": {
+        "tests": "복약 검토: 용량·빈도·복용 시점·병용약 확인; 수면무호흡 등 다른 원인은 증상에 따라 평가",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "follow_up": "1주 내 약 복용과 졸림·낮 활동 영향 재평가; 과도한 졸림 시 조기 진료",
+        "education": "졸리면 운전 금지; 약을 임의 증량하거나 갑자기 중단하지 않기; 깨우기 어렵거나 호흡이 느리면 즉시 평가"
+      },
+      "source_url": "https://www.nice.org.uk/guidance/ng215/chapter/Recommendations",
+      "clinical_validation_status": "NOT_VERIFIED",
+      "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+    },
+    {
+      "id": "clinical:rebound_insomnia",
+      "name": "Rebound insomnia",
+      "aliases": [
+        "반동 불면",
+        "반동성 불면증"
+      ],
+      "category": "sedative",
+      "urgency": "LOW",
+      "dangerous": false,
+      "chief_complaint_tags": [],
+      "typical_features": [
+        "sedative use",
+        "insomnia",
+        "rebound insomnia after stopping"
+      ],
+      "confirmatory_findings": [],
+      "risk_factors": [],
+      "contradictory_features": [],
+      "discriminating_questions": [],
+      "minimum_workup": [],
+      "support_requirements": {
+        "minimum_positive_features": 2,
+        "anchor_any": [
+          "rebound insomnia after stopping"
+        ]
+      },
+      "plan": {
+        "tests": "중단 시점과 이전 약물 용량·기간, 금단 증상 및 병용약 검토",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "follow_up": "수일~1주 내 불면·금단 증상 재평가; 처방의와 감량 계획 조정",
+        "education": "급작스러운 중단·임의 재복용 피하고 처방의와 상의; 경련·혼돈 시 즉시 평가"
+      },
+      "source_url": "https://www.nice.org.uk/guidance/ng215/chapter/Recommendations",
+      "clinical_validation_status": "NOT_VERIFIED",
+      "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+    },
+    {
+      "id": "clinical:constitutional_growth_delay",
+      "name": "Constitutional growth delay",
+      "aliases": [
+        "체질성 성장지연",
+        "constitutional delay of growth and puberty",
+        "체질성 성장 및 사춘기 지연"
+      ],
+      "category": "growth",
+      "urgency": "LOW",
+      "dangerous": false,
+      "chief_complaint_tags": [],
+      "typical_features": [
+        "short stature",
+        "preserved prepubertal growth velocity",
+        "family delayed puberty",
+        "documented delayed bone age"
+      ],
+      "confirmatory_findings": [],
+      "risk_factors": [],
+      "contradictory_features": [],
+      "discriminating_questions": [],
+      "minimum_workup": [],
+      "support_requirements": {
+        "minimum_positive_features": 2,
+        "anchor_any": [
+          "family delayed puberty",
+          "documented delayed bone age"
+        ]
+      },
+      "plan": {
+        "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료",
+        "education": "성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가"
+      },
+      "source_url": "https://pedsendo.org/patient-resource/short-stature/",
+      "clinical_validation_status": "NOT_VERIFIED",
+      "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+    },
+    {
+      "id": "clinical:familial_short_stature",
+      "name": "Familial short stature",
+      "aliases": [
+        "가족성 저신장"
+      ],
+      "category": "growth",
+      "urgency": "LOW",
+      "dangerous": false,
+      "chief_complaint_tags": [],
+      "typical_features": [
+        "short stature",
+        "preserved prepubertal growth velocity",
+        "short parental stature"
+      ],
+      "confirmatory_findings": [],
+      "risk_factors": [],
+      "contradictory_features": [],
+      "discriminating_questions": [],
+      "minimum_workup": [],
+      "support_requirements": {
+        "minimum_positive_features": 2,
+        "anchor_any": [
+          "short parental stature"
+        ]
+      },
+      "plan": {
+        "tests": "날짜별 신장 측정·성장곡선 및 부모 키 검토; 성장속도·증상에 따라 표적 검사 고려",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "follow_up": "3~6개월 후 성장속도와 성장곡선 재평가; 예측 경로 이탈 시 소아내분비 상담",
+        "education": "성장속도 저하·체중 감소·만성 전신 증상이 생기면 조기 평가"
+      },
+      "source_url": "https://pedsendo.org/patient-resource/short-stature/",
+      "clinical_validation_status": "NOT_VERIFIED",
+      "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+    },
+    {
+      "id": "clinical:growth_hormone_deficiency",
+      "name": "Growth hormone deficiency",
+      "aliases": [
+        "성장호르몬 결핍 의심",
+        "Growth hormone deficiency",
+        "성장호르몬 결핍증"
+      ],
+      "category": "growth",
+      "urgency": "LOW",
+      "dangerous": false,
+      "chief_complaint_tags": [],
+      "typical_features": [
+        "short stature",
+        "reduced linear growth velocity",
+        "documented delayed bone age"
+      ],
+      "confirmatory_findings": [],
+      "risk_factors": [],
+      "contradictory_features": [],
+      "discriminating_questions": [],
+      "minimum_workup": [],
+      "support_requirements": {
+        "minimum_positive_features": 2,
+        "anchor_any": [
+          "reduced linear growth velocity"
+        ]
+      },
+      "plan": {
+        "tests": "성장곡선·골연령 검토; 소아내분비 의뢰; 원인 감별에 따라 TSH·free T4, IGF-1/IGFBP-3 고려; 자극검사는 전문의 판단",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "follow_up": "2~4주 내 소아내분비 평가 연결; 이후 3~6개월 성장속도 재평가",
+        "education": "확인 전 성장호르몬 치료 보류; 두통·구토·시야 변화가 생기면 조기 평가"
+      },
+      "source_url": "https://pedsendo.org/patient-resource/short-stature/",
+      "clinical_validation_status": "NOT_VERIFIED",
+      "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+    }
+  ]
+}

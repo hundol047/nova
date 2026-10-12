@@ -24,8 +24,8 @@ def capture_response(operation, response):
 
 
 def verify_runtime(root):
-    ptr = json.loads((root/'artifacts/verification/CURRENT_RELEASE.json').read_text())
-    record = json.loads((root/ptr['current_verification_artifact']).read_text())
+    ptr = json.loads((root/'artifacts/verification/CURRENT_RELEASE.json').read_text(encoding='utf-8'))
+    record = json.loads((root/ptr['current_verification_artifact']).read_text(encoding='utf-8'))
     for name, expected in record['runtime_sha256'].items():
         packaged = root/'submission'/name.removeprefix('submission/')
         if hashlib.sha256(packaged.read_bytes()).hexdigest() != expected:

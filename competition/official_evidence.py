@@ -44,7 +44,8 @@ def _assertions(text):
 
 
 def _clean(text):
-    return unicodedata.normalize("NFC", str(text or "")).lower().strip()
+    from nova_agent.clinical_assertions import normalize_exam_notation
+    return unicodedata.normalize("NFC", normalize_exam_notation(text)).lower().strip()
 
 
 def _facts(text):

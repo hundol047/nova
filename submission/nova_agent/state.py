@@ -274,6 +274,7 @@ class PatientState(BaseModel):
     raw_history_facts: List[str] = Field(default_factory=list)
 
     physical_examinations: Dict[str, str] = Field(default_factory=dict)
+    exam_request_text: Dict[str, str] = Field(default_factory=dict)
     vital_signs: List[VitalSigns] = Field(default_factory=list)
     # Descriptive labels (e.g. "Marked tachycardia") derived from the latest structured vital
     # signs via the same thresholds safety.py's vital_sign_red_flags uses -- lets the differential
@@ -502,7 +503,7 @@ class PatientState(BaseModel):
             targets=[target] if target else [], faithful=faithful or not detail, raw=answer or ""))
         self._absorb_answer(discriminator, answer, target=target, kind=kind)
 
-    def record_exam(self, exam_id: str, result: str) -> None:
+    def record_exam(self, exam_id: str, result: str, request_text: Optional[str] = None) -> None:
         self.turn_count += 1
         if exam_id in self.rejected_exams:
             self.rejected_exams.remove(exam_id)
@@ -514,12 +515,27 @@ class PatientState(BaseModel):
         self.performed_actions.append(turn)
         self.conversation_history.append(turn)
         self.physical_examinations[exam_id] = result
+        if request_text:
+            self.exam_request_text[exam_id] = request_text
         unknown = bool(_EXAM_RESULT_UNKNOWN.search(result or "")) or not (result or "").strip()
         self.action_outcomes.append(ActionOutcome(action_type="EXAM", key=exam_id, status="UNKNOWN" if unknown else "OBSERVED",
                                                   raw=result or ""))
-        if exam_id == "vital_signs":
-            parsed = parse_vital_signs(result)
+        # Numeric vitals returned by another physical maneuver are still actual
+        # measurements (e.g. SpO2 during a respiratory exam). Never parse ASKs.
+        from nova_agent.documented_diagnosis import diagnosis_evidence_text
+        projected = diagnosis_evidence_text(result, allow_historical=False, source='patient_observation')
+        measured = parse_vital_signs(projected)
+        if exam_id == "vital_signs" or measured is not None:
+            parsed = measured
             if parsed is not None:
+                # A respiratory exam's SpO2 does not erase a known rapid pulse.
+                # Keep the latest actual observation PER FIELD; an explicit
+                # new normal value replaces its own earlier abnormal reading.
+                previous=self.latest_vital_signs()
+                if previous is not None:
+                    values=previous.model_dump()
+                    values.update(parsed.model_dump(exclude_none=True))
+                    parsed=type(parsed)(**values)
                 self.vital_signs.append(parsed)
                 for finding in describe_vital_sign_abnormalities(parsed, self.demographics.age):
                     if finding not in self.vital_sign_findings:
@@ -784,7 +800,7 @@ class PatientState(BaseModel):
         key = (id(self), include_context, include_family, _PROXY.get(), tuple(self.symptoms),
                tuple(self.associated_symptoms), tuple(self.pertinent_positives), tuple(self.past_medical_history),
                tuple(self.social_history), self.chief_complaint, self.symptom_onset, self.severity, self.duration,
-               tuple(self.physical_examinations.items()), tuple(self.imaging.items()), tuple(self.vital_sign_findings),
+               tuple(self.physical_examinations.items()), tuple(self.exam_request_text.items()), tuple(self.imaging.items()), tuple(self.vital_sign_findings),
                tuple(self.laboratory_tests.items()), tuple(self.medication_text), tuple(self.allergy_text),
                tuple(m.name for m in self.medications), tuple(a.substance for a in self.allergies),
                tuple(self.ambiguous_findings), tuple(self.family_history))
@@ -797,6 +813,7 @@ class PatientState(BaseModel):
             out += list(self.past_medical_history) + list(self.social_history)
         out += [self.chief_complaint, self.symptom_onset or "", self.severity or "", self.duration or ""]
         out += list(self.physical_examinations.values()) + list(self.imaging.values())
+        out += self._contextual_exam_findings()
         out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
         from nova_agent.clinical_concepts import procedure_context_findings
@@ -833,6 +850,7 @@ class PatientState(BaseModel):
         word-overlap. Confirmatory findings must only ever be earned by evidence an EXAM/TEST action
         actually produced this encounter."""
         out = list(self.physical_examinations.values()) + list(self.imaging.values())
+        out += self._contextual_exam_findings()
         out += list(self.vital_sign_findings)
         out += list(self.laboratory_tests.values())
         from nova_agent.clinical_concepts import procedure_context_findings
@@ -840,3 +858,10 @@ class PatientState(BaseModel):
         from nova_agent.documented_diagnosis import diagnosis_evidence_text
         out = [diagnosis_evidence_text(t, allow_historical=False, source="patient_observation") for t in out if t]
         return _with_canonical_concepts(out)
+
+    def _contextual_exam_findings(self) -> List[str]:
+        # The requested maneuver gives an actual anatomical context to a terse
+        # returned finding. It is not an additional observation or an inferred exam.
+        return ['thyroid examination: '+self.physical_examinations[key]
+                for key,text in self.exam_request_text.items() if key in self.physical_examinations
+                and re.search(r'thyroid|갑상선|갑상샘',text,re.I)]

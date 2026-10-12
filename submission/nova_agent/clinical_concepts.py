@@ -145,14 +145,39 @@ _DRUG_CONCEPTS = {"diuretic use"}
 
 def _current_positive_clauses(text: str) -> List[str]:
     from nova_agent.matching import _strip_negated_spans
+    from nova_agent.clinical_assertions import normalize_exam_notation
     out = []
-    for clause in _CLAUSE.split(text or ""):
+    for clause in _CLAUSE.split(normalize_exam_notation(text)):
         if not clause or not clause.strip() or _HISTORY.search(clause):
             continue
         positive = _strip_negated_spans(clause.lower())
         if positive.strip(" ;"):
             out.append(positive)
     return out
+
+
+# General observed findings, never diagnosis translations or case-opening maps.
+_CHRONIC_FINDINGS = tuple((feature, re.compile(pattern, re.I)) for feature, pattern in (
+    ('weight loss', r'체중(?:이|은)?\s*(?:줄|감소|빠)|살(?:이|은)?\s*(?:자꾸\s*)?빠|\b(?:lost|losing) weight\b'),
+    ('increased appetite', r'식욕(?:이|은)?\s*(?:늘|증가|좋아)|먹는\s*양(?:이|은)?\s*늘|\b(?:increased appetite|eating more)\b'),
+    ('heat intolerance', r'더위(?:를|는)?\s*(?:못\s*견|견디기\s*(?:힘|어려))|더위를\s*많이\s*타|\b(?:overheated|intolerant of heat)\b'),
+    ('sweating', r'땀(?:이|은)?\s*(?:많|늘|자주)|다한|발한'),
+    ('tremor', r'손(?:이|은)?\s*(?:자꾸\s*)?떨|손\s*떨림|진전|\bhands? (?:shake|shaking)\b'),
+    ('diarrhea', r'묽은\s*변|설사'),
+    ('restlessness', r'안절부절|초조'),
+    ('hyperreflexia', r'반사\s*(?:항진|증가)|\bbrisk reflexes\b'),
+    ('diffuse goiter', r'(?:갑상선|갑상샘|thyroid)[^;,.]{0,35}(?:미만성|diffuse)[^;,.]{0,15}(?:비대|enlarg|goiter)|\bdiffuse goiter\b'),
+    ('thyroid eye signs', r'안구\s*돌출|\b(?:eye proptosis|exophthalmos|thyroid ophthalmopathy)\b'),
+    ('insomnia', r'불면|잠(?:이|을)?\s*(?:잘\s*)?(?:안\s*오|못\s*자)|\binsomnia\b'),
+    ('daytime sleepiness', r'낮(?:에|에도|이면)?[^;,.]{0,15}졸|\bdaytime (?:sleepiness|drowsiness)\b'),
+    ('sedative use', r'졸피뎀|벤조디아제핀|수면제|(?<![a-z])(?:zolpidem|benzodiazepines?|diazepam|lorazepam|alprazolam|clonazepam|zopiclone|eszopiclone)(?![a-z])'),
+    ('dose escalation', r'용량(?:을|이)?\s*늘|같은\s*효과[^;,.]{0,20}(?:증량|늘)|\b(?:increasing doses|dose escalation|tolerance)\b'),
+    ('withdrawal symptoms', r'금단|(?:끊|줄|중단)[^;,.]{0,20}(?:떨|불면|잠이.*안)|\bwithdrawal\b|stopping causes[^;,.]{0,30}tremor'),
+    ('difficulty reducing sedative use', r'약(?:을)?\s*줄이기\s*(?:어려|힘)|\bunable to reduce\b'),
+    ('rebound insomnia after stopping', r'(?:끊|중단)[^;,.]{0,25}(?:잠이.*안|불면)|\brebound insomnia\b'),
+    ('sleepiness after medication', r'(?:약|복용)[^;,.]{0,20}(?:졸림|졸려|졸음).*|daytime sleepiness began after taking'),
+    ('short stature', r'키(?:가|는)?\s*(?:또래보다\s*)?작|또래보다\s*키(?:가|는)?\s*작|\bshort stature\b'),
+))
 
 
 _BP = r"(?:bp\s*)?(\d{2,3})\s*/\s*(\d{2,3})"
@@ -202,6 +227,13 @@ def _canonical_findings_for_uncached(text: str) -> List[str]:
     patterns = (_CONCEPTS + (_CONCEPTS_V2 if get_config().concepts_v2_enabled else [])
                 + (_CONCEPTS_V3 if get_config().evidence_v3_enabled else []))
     for clause in _current_positive_clauses(text):
+        from nova_agent.multilingual_concepts import _present_not_negated
+        for canonical, pattern in _CHRONIC_FINDINGS:
+            match = pattern.search(clause)
+            if match and canonical=='sedative use' and re.search(r'안\s*(?:먹|드|복용)|(?:먹|복용|사용)[^;]{0,6}않',clause[match.end():match.end()+25]):
+                continue
+            if match and canonical not in found and _present_not_negated(match.group(0), clause):
+                found.append(canonical)
         from nova_agent.feature_relations import observed_rotation_features, observed_pressure_features
         for feature in observed_rotation_features(clause) + observed_pressure_features(clause):
             if feature not in found:

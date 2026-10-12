@@ -3,7 +3,7 @@
 > `submission/run.py` uses the organizer SDK `run_agent(prepare, consult)` path. Actual Doctor calls go through
 > the organizer's `client.chat`; the internal engine is deterministic. Real `openai/gpt-oss-20b` is **NOT VERIFIED**.
 > Participant-key execution is **HUMAN-RUN ONLY**, outside Codex / Claude Code / Cursor / CI.
-> See [the current human-run verification workflow](docs/preliminary/HUMAN_OFFICIAL_VERIFICATION_REPORT.md) and the
+> See [the current pipeline repair and human-run workflow](docs/preliminary/RUBRIC_PIPELINE_REPAIR_REPORT_KO.md) and the
 > [verification pointer](artifacts/verification/CURRENT_RELEASE.json). Scores below are synthetic **mock**
 > development evidence, not official competition scores. Older reports describe their named commits.
 
@@ -36,7 +36,7 @@ Historical status of the earlier reasoning cycles: see the linked reports and `d
   ([`artifacts/verification/CURRENT_RELEASE.json`](artifacts/verification/CURRENT_RELEASE.json)).
 - Real fixed-model calls: **NOT VERIFIED**. Official SDK 15-field contract: **VERIFIED LOCALLY**; legacy API / schema: **NOT VERIFIED / PLACEHOLDER**
   (`competition/schema.py`, `competition/adapter.py`; transport boundary in `competition/official_transport.py`).
-- Clinical review of the knowledge base: **none**. Runtime asset provenance/licence: **90 nova_agent assets UNRESOLVED**
+- Clinical review of the knowledge base: **none**. Runtime asset provenance/licence: **94 nova_agent assets UNRESOLVED**
   (submission clearance BLOCKED, see the status page).
 - Preliminary-only development benchmark: `scripts/evaluate_preliminary_benchmark.py`
   (**LOCAL DEVELOPMENT / PRELIMINARY SIMULATION**, mock model, no `TEST`). Historical results below that used

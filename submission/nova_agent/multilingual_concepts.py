@@ -142,7 +142,7 @@ for _concept, _nouns in _BARE_CLINICAL_NOUNS.items():
         n for n in _nouns if n not in MULTILINGUAL_CONCEPT_ALIASES[_concept]]
 
 # A localized symptom immediately followed by one of these is DENIED, not present.
-_NEGATION_MARKERS = ("없", "않", "아니", "ありません", "ない", "なし", "ませんでした", "ないです", "なかっ")
+_NEGATION_MARKERS = ("없", "않", "아니", "absent", "negative", "uncertain", "ありません", "ない", "なし", "ませんでした", "ないです", "なかっ")
 
 
 # Canonical ENGLISH evidence wording for each concept above. Routing/pool selection already uses the
@@ -234,7 +234,7 @@ _DIRECT_LOCALIZED_EVIDENCE.update({
 _DIRECT_LOCALIZED_EVIDENCE_V3: Dict[str, str] = {
     "점상 출혈": "petechial rash rash", "점상출혈": "petechial rash rash", "자반": "petechial rash rash",
     "보라색 반점": "petechial rash rash", "보라색 점": "petechial rash rash",
-    "졸려": "altered mental status", "기면": "altered mental status", "의식 저하": "altered mental status",
+    "졸려": "sleepiness", "기면": "altered mental status", "의식 저하": "altered mental status",
     "의식이 흐": "altered mental status", "혼미": "altered mental status", "지남력 저하": "altered mental status confusion",
     "헛소리": "confusion",
     "이뇨제": "diuretic use", "소변 나오는 약": "diuretic use",
@@ -255,6 +255,10 @@ _KO_INABILITY_FINDINGS = frozenset({"neck stiffness"})
 _KO_PATTERN_EXCLUSIONS = {"polyuria": re.compile(r"따갑|따끔|화끈|쓰라|잔뇨|찔끔|마려|소변\s*볼\s*때\s*아")}
 
 _KO_PATTERNS_V3 = (
+    # Sleepiness alone is not altered mentation. Preserve the distinct current
+    # observation of sleepiness WITH slowed verbal/behavioral responsiveness.
+    (re.compile(r"(?:졸려|졸음|기면)[^.;\n]{0,25}(?:대답|반응)(?:이|은)?\s*(?:늦어|늦고|느려|느리게|느리고|느립)"),
+     "altered mental status"),
     (re.compile(r"소변[^.。]{0,8}(?:따갑|따가|화끈|쓰라|아파|아프)|배뇨통"), "dysuria"),
     (re.compile(r"(?:소변[^.。]{0,6}자주|자주\s*마려|자꾸\s*마려|빈뇨)"), "urinary frequency"),
     (re.compile(r"(?:급하게\s*마려|참기\s*(?:어려|힘들))"), "urinary urgency"),
@@ -315,6 +319,8 @@ def english_evidence_for(text: str) -> List[str]:
     `text`. Only phrases containing a non-ASCII character can fire, so plain English never changes."""
     if not text or text.isascii():
         return []
+    from nova_agent.clinical_assertions import normalize_exam_notation
+    text = normalize_exam_notation(text)
     found: List[str] = []
     # Longest clinical term owns its span: muscle cramp is not an epileptic seizure.
     # A separate occurrence of 경련 elsewhere still retains its existing meaning.

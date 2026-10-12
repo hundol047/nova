@@ -356,6 +356,10 @@ def _documented_ids(state: PatientState) -> List[str]:
 
 
 def _entry_for_candidate_id(candidate_id: str) -> Optional[dict]:
+    from nova_agent.clinical_profiles import profile_by_id
+    supplemental = profile_by_id(candidate_id)
+    if supplemental is not None:
+        return supplemental
     from nova_agent.knowledge.retrieval import disease_by_id
     entry = disease_by_id(candidate_id)
     if entry is not None or not candidate_id.startswith("onto::"):
@@ -712,6 +716,17 @@ def _score_disease(entry: dict, state: PatientState,
         objective_findings = normalize_objective_evidence(state)
     findings = state.all_findings_text(include_family=False)
     current_findings = state.all_findings_text(include_context=False, include_family=False)
+    if entry.get('support_requirements'):
+        from nova_agent.clinical_profiles import profile_observations
+        supplied = profile_observations(state)
+        findings += supplied
+        current_findings += supplied
+        if entry.get('category')=='sedative':
+            from nova_agent.evidence_scope import patient_evidence_text
+            from nova_agent.clinical_concepts import canonical_findings_for
+            for text in state.medication_text:
+                projected=patient_evidence_text(text,allow_historical=False)
+                if projected:current_findings += [projected,*canonical_findings_for(projected)]
     confirmatory_evidence_pool = state.objective_findings_text()
     negatives = state.pertinent_negatives
     # Round V: the core-symptom extension of a denial uses only denials stated in the patient's own words; a bare "No"
@@ -793,6 +808,14 @@ def _score_disease(entry: dict, state: PatientState,
             typical_penalty += min(delta, 0.0)
     # Round W: the pattern must be made of specific observations -- two shared generic symptoms ("chest pain",
     # "shortness of breath") are not a pattern a templated "No" should be weighed against at half strength.
+    if entry.get('support_requirements'):
+        # Explicit longitudinal / family-pattern facts belong to their own
+        # labeled context, never a relative's symptom copied to the patient.
+        for f in supplied:
+            if f in entry['typical_features'] and f not in supporting:
+                supporting.append(f)
+                score += RISK_FACTOR_WEIGHT
+                if f in missing:missing.remove(f)
     observed_typical = sum(1 for f in entry.get("typical_features", []) if f in supporting
                            and (not get_config().pattern_v2_enabled or not _generic_symptom(f)))
     for delta, generic in bare_denials:
@@ -988,8 +1011,24 @@ class DifferentialEngine:
             pool_target_size=_cfg.reasoning_top_k if _cfg.competition_retrieval_enabled else None,
         )
         candidates = [c.entry for c in candidate_records]
+        from nova_agent.clinical_profiles import profiles, profile_observations, profile_problems, thyroid_function_supported
+        supplied = state.all_findings_text(include_context=False, include_family=False)
+        context = state.all_findings_text(include_context=True, include_family=False)
+        group_gates = {
+            'thyroid': thyroid_function_supported(state) or any(feature_present_with_aliases(f,supplied,scrub_negated_spans=True)
+                           for f in ('heat intolerance','increased appetite','diffuse goiter','thyroid eye signs')),
+            'growth': feature_present_with_aliases('short stature',supplied,scrub_negated_spans=True),
+            'sedative': feature_present_with_aliases('sedative use',context,scrub_negated_spans=True),
+        }
+        for profile in profiles().values():
+            if group_gates[profile['category']] and not profile_problems(profile,state):
+                candidates = [p for p in candidates if p['id'] != profile['id']]
+                candidates.append(profile)
         state.retrieval_safety_watch = list(presentation.retrieval_safety_watch)
         sources_by_id = {c.id: c.sources for c in candidate_records}
+        for entry in candidates:
+            if entry.get('support_requirements'):
+                sources_by_id[entry['id']] = list(dict.fromkeys(sources_by_id.get(entry['id'], []) + ['symptom_match']))
         for entry in _retained_evidenced_candidates(state, presentation, {e["id"] for e in candidates}):
             candidates.append(entry)
             sources_by_id[entry["id"]] = ["retained_evidenced"]

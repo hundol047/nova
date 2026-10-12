@@ -113,6 +113,10 @@ def _resolve_entry(diagnosis_id: str) -> Optional[dict]:
     resolve to the SAME shallow, tier-aware dict `candidate_generator._concept_to_kb_entry()`
     already builds (Tier-2: bounded generic questions from real typical_features; Tier-3: correctly
     empty, no fabricated clinical content) -- reusing that logic rather than forking it."""
+    from nova_agent.clinical_profiles import profile_by_id
+    supplemental = profile_by_id(diagnosis_id)
+    if supplemental is not None:
+        return supplemental
     entry = disease_by_id(diagnosis_id)
     if entry is not None:
         return entry

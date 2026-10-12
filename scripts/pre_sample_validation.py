@@ -21,7 +21,7 @@ def preflight(output_dir, wheels=None, corpus_root=None):
     # Allowlist process environment; do not copy or inspect participant variables.
     env={k:os.environ[k] for k in ('PATH','HTTPS_PROXY','HTTP_PROXY','NO_PROXY') if k in os.environ}
     env.update(NOVA_LLM_PROVIDER='mock',NOVA_COMPETITION_RETRIEVAL='1',PYTHONDONTWRITEBYTECODE='1')
-    ptr=json.loads((ROOT/'artifacts/verification/CURRENT_RELEASE.json').read_text())
+    ptr=json.loads((ROOT/'artifacts/verification/CURRENT_RELEASE.json').read_text(encoding='utf-8'))
     env['SOURCE_DATE_EPOCH']=subprocess.check_output(['git','show','-s','--format=%ct',ptr['verified_runtime_sha']],cwd=ROOT,text=True).strip()
     checks={};commands=[]
     def run(name,args):

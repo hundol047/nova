@@ -88,7 +88,7 @@ def disposition_for(state, final, differential) -> Disposition:
                 continue
             if selected is not None and _subsumed_by_selected(item, selected):
                 continue
-            if not _alternative_anchored(item):
+            if not _alternative_anchored(item, state):
                 continue
             reasons.append("supported_dangerous_alternative:" + item.diagnosis_id)
             evidence.extend(item.supporting_evidence)
@@ -140,8 +140,19 @@ _ALTERNATIVE_ANCHORS = {
 }
 
 
-def _alternative_anchored(item) -> bool:
+def _alternative_anchored(item, state=None) -> bool:
     from nova_agent.config import get_config
+    if item.diagnosis_id == 'cardiac_arrhythmia' and state is not None:
+        # Palpitations with a stable regular measured pulse do not by themselves
+        # warrant emergency referral. Rhythm abnormalities, fainting with rhythm
+        # symptoms and marked symptomatic measured rates remain actionable.
+        current = state.all_findings_text(include_context=False, include_family=False)
+        objective = state.objective_findings_text()
+        rhythm = any(feature_present_with_aliases(f, objective, scrub_negated_spans=True)
+                     for f in ('irregular heartbeat','irregularly irregular rhythm','arrhythmia on ECG'))
+        syncope = any(feature_present_with_aliases(f,current,scrub_negated_spans=True)
+                      for f in ('syncope','loss of consciousness'))
+        return rhythm or bool(symptomatic_rate_concern(state)) or syncope or 'documented diagnosis' in item.supporting_evidence
     anchors = _ALTERNATIVE_ANCHORS.get(item.diagnosis_id)
     if not anchors or not get_config().alternative_anchors_enabled:
         return True

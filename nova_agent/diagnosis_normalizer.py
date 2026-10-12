@@ -68,6 +68,10 @@ class NormalizedDiagnosis:
 def normalize_diagnosis(text: str) -> NormalizedDiagnosis:
     if not text or not text.strip():
         return NormalizedDiagnosis(raw_text=text, canonical_id=None, canonical_name=None, mapped=False, codes=[])
+    from nova_agent.clinical_profiles import profile_named
+    supplemental = profile_named(text)
+    if supplemental:
+        return NormalizedDiagnosis(text, supplemental['id'], supplemental['name'], True, [])
     from nova_agent.ontology.registry import get_default_catalog
     from nova_agent.ontology.normalizer import normalize
     cat = get_default_catalog()

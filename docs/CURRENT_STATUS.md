@@ -1,21 +1,23 @@
 # Current official-path status — 2026-10-12 KST
 
-**LOCAL SDK / HUMAN-RUN PREPARATION — NOT OFFICIALLY READY.**
-Current public SDK 1.0.1 is vendored exactly (SHA256 `fdd65302…d6bc871`, default timeout 240 seconds).
-The current public docs/rules both charge one turn for the two EXAM refusal codes.
-Actual `openai/gpt-oss-20b` execution remains **NOT VERIFIED / NOT EXECUTED BY CODEX**.
-Participant keys, official public sample sessions and uploads are **HUMAN-RUN ONLY**.
-See [human-run preparation and measured local changes](preliminary/HUMAN_OFFICIAL_VERIFICATION_REPORT.md)
-and `artifacts/verification/CURRENT_RELEASE.json` for the current runtime and exact package evidence.
-The complete public 15,904-document corpus was hash-verified and tested locally; the 36-query
-metadata topical proxy improved to 100% hit@3/5. This is not clinician relevance or real Doctor benefit.
-The corpus is neither committed nor packaged. New clinical development variants improved 11/16 → 16/16;
-they are not a blind test or independent medical validation. All diagnostic benchmark metrics are
-**LOCAL DEVELOPMENT / PRELIMINARY SIMULATION**. Full-sample server results are absent.
-Runtime provenance inventory coverage passes, but inherited source/license clearance remains **BLOCKED**.
-Therefore even a technical preflight PASS does not establish official submission readiness.
-The legacy placeholder schema and actual 15-field SDK contract are reported separately.
-Current bundled catalog: 34 Tier-1 + 1,246 Tier-2 = 1,280; counts do not certify clinical depth.
+**LOCAL PIPELINE REPAIR / SDK VERIFICATION — NOT OFFICIALLY READY.**
+The shared clinical pipeline now handles signed negative examinations, supported Doctor corrections,
+diagnosis-specific plans, consistent closing explanations, pediatric context and retained prior advisories.
+See [the current repair report and HUMAN-RUN PowerShell commands](preliminary/RUBRIC_PIPELINE_REPAIR_REPORT_KO.md)
+and `artifacts/verification/CURRENT_RELEASE.json` for measured results and the exact verified runtime.
+The previous [human-run preparation report](preliminary/HUMAN_OFFICIAL_VERIFICATION_REPORT.md) remains historical evidence.
+
+Public SDK 1.0.1 is preserved exactly (SHA256 `fdd65302…d6bc871`, default timeout 240 seconds).
+Real fixed-model execution, organizer sample sessions, uploads and new official scores remain unverified;
+participant-key actions are HUMAN-RUN ONLY. Local replay and scripted Doctor results are development
+proxies, not blind tests or independent medical validation. The base 34 + 1,246 catalog is unchanged;
+8 supplemental profiles add 7 diagnostic concepts and strengthen an existing hyperthyroidism entry.
+No official disease code mappings or clinician review are invented.
+
+The hash-verified public corpus has 15,904 documents and is neither committed nor packaged.
+Runtime inventory coverage passes, but 94 assets remain UNRESOLVED and submission rights are BLOCKED.
+Technical verification does not clear these rights or certify official competition readiness.
+The legacy placeholder schema and the locally checked official 15-field SDK contract remain distinct.
 
 The following text is historical evidence, superseded by the current SDK audit:
 
