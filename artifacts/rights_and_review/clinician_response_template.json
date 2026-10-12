@@ -1,0 +1,16 @@
+{
+  "schema": "nova-clinician-response-v1",
+  "packet_sha256": "5ab1f548c1f04c4dc99b4278bba9a82748830f62cf1c586b64287c6aa885a48c",
+  "reviewer": {
+    "actor_type": "HUMAN_CLINICIAN",
+    "name": null,
+    "qualification": null,
+    "credential_verification_reference": null,
+    "review_date": null,
+    "conflict_of_interest": null
+  },
+  "attestation": null,
+  "credential_verification": null,
+  "signature_evidence": null,
+  "items": []
+}

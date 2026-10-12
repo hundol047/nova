@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "scope": "Only the 27 staged task files; known regex patterns; no credential values reported",
+  "files": 27,
+  "findings": []
+}

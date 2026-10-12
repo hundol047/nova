@@ -12,6 +12,7 @@ import tempfile
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from scripts.audit_official_package import audit
 from scripts.validate_runtime_provenance import validate
+from scripts.prepare_rights_and_review import release_review_gate
 
 PUBLIC_SDK_SHA256='fdd65302e82791ed862c22fe5a014ef443ab331d8986ec7c72b3923add6bc871'
 
@@ -65,14 +66,19 @@ def preflight(output_dir, wheels=None, corpus_root=None):
         else:
             checks['docker_offline_readonly_2cpu_8gb']=False
     technical=all(checks.values())
-    rights=provenance['permission_status']!='BLOCKED'
-    result={'READY_FOR_HUMAN_SAMPLE_VALIDATION':'YES' if technical and rights else 'NO',
+    gate=release_review_gate(ROOT)
+    rights=provenance['permission_status']!='BLOCKED' and not gate['errors'] and not gate['unverified_archive_members']
+    clinical_review=gate['clinician_review']=='INDEPENDENT_CLINICIAN_SCOPE_APPROVED'
+    result={'READY_FOR_HUMAN_SAMPLE_VALIDATION':'YES' if technical and rights and clinical_review else 'NO',
             'LOCAL_TECHNICAL_CHECKS':'PASS' if technical else 'FAIL','checks':checks,'commands':commands,'package':package,
             'provenance_permission_status':provenance['permission_status'],
-            'blockers':(['Unresolved source/license rights; no automatic clearance'] if not rights else [])+
+            'archive_and_clinical_review_gate':gate,
+            'blockers':(['Archive rights not fully evidenced: '+', '.join(gate['unverified_archive_members'])] if not rights else [])+
                        ([] if technical else ['Local technical checks incomplete/failed']),
             'real_gpt_oss':'NOT EXECUTED BY CODEX','participant_key_samples':'NOT EXECUTED BY CODEX',
             'sample_validation_upload':'NOT EXECUTED BY CODEX'}
+    if not clinical_review:
+        result['blockers'].append('Independent clinician review absent; engineering/literature checks do not replace it')
     (output/'pre_sample_validation.json').write_text(json.dumps(result,indent=2)+'\n')
     return result
 

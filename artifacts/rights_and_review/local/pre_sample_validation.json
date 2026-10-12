@@ -1,0 +1,91 @@
+{
+  "READY_FOR_HUMAN_SAMPLE_VALIDATION": "NO",
+  "LOCAL_TECHNICAL_CHECKS": "PASS",
+  "checks": {
+    "fresh_build": true,
+    "package": true,
+    "official_sdk_exact": true,
+    "secret_sync_scan": true,
+    "leakage_scan": true,
+    "fake_http_readonly": true,
+    "fresh_directory": true,
+    "provenance_inventory": true,
+    "wheels_present": true,
+    "docker_offline_install": true,
+    "docker_offline_readonly_2cpu_8gb": true,
+    "docker_full_corpus_prepare": true
+  },
+  "commands": [
+    {
+      "name": "fresh_build",
+      "exit_code": 0
+    },
+    {
+      "name": "secret_sync_scan",
+      "exit_code": 0
+    },
+    {
+      "name": "leakage_scan",
+      "exit_code": 0
+    },
+    {
+      "name": "fake_http_readonly",
+      "exit_code": 0
+    },
+    {
+      "name": "fresh_directory",
+      "exit_code": 0
+    },
+    {
+      "name": "docker_offline_install",
+      "exit_code": 0
+    },
+    {
+      "name": "docker_offline_readonly_2cpu_8gb",
+      "exit_code": 0
+    },
+    {
+      "name": "docker_full_corpus_prepare",
+      "exit_code": 0
+    }
+  ],
+  "package": {
+    "zip": "/workspace/nova/submission/submission.zip",
+    "checks": {
+      "zip_bytes": 909211,
+      "uncompressed_bytes": 3463408,
+      "files": 111,
+      "root:run.py": true,
+      "root:requirements.txt": true,
+      "root:nova_sdk.py": true,
+      "secret_hits": [],
+      "requirements": [
+        "pydantic==2.14.0",
+        "pydantic_core==2.50.0",
+        "annotated-types==0.8.0",
+        "typing-inspection==0.4.4",
+        "typing_extensions==4.16.0"
+      ],
+      "sha256": "17e11b90ffdb5c62533bcc2ef6bde52796dd09c25a8e374e50ce04a9ac4c3ecf"
+    },
+    "problems": [],
+    "all_pass": true
+  },
+  "provenance_permission_status": "DOCUMENTED_FOR_STATED_SCOPE",
+  "archive_and_clinical_review_gate": {
+    "archive_rights_coverage": "PASS",
+    "errors": [],
+    "unverified_archive_members": [
+      "nova_sdk.py"
+    ],
+    "clinician_review": "PENDING_EXTERNAL_CLINICIAN",
+    "official_submission_allowed": false
+  },
+  "blockers": [
+    "Archive rights not fully evidenced: nova_sdk.py",
+    "Independent clinician review absent; engineering/literature checks do not replace it"
+  ],
+  "real_gpt_oss": "NOT EXECUTED BY CODEX",
+  "participant_key_samples": "NOT EXECUTED BY CODEX",
+  "sample_validation_upload": "NOT EXECUTED BY CODEX"
+}

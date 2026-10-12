@@ -1,0 +1,67 @@
+{
+  "schema": "nova-rights-review-followup-v1",
+  "recorded_utc": "2026-10-12T14:12:48.668883+00:00",
+  "runtime_commit": "fb4b69b72639c5fb5a90df54bad3dfc07443442d",
+  "existing_performance_verification": "artifacts/verification/local-release-fb4b69b-v35.json",
+  "runtime_or_diagnostic_rules_modified": false,
+  "owner_declared_assets_in_legacy_inventory": 94,
+  "additional_owner_declared_packaged_sources": 12,
+  "independently_audited_ownership": false,
+  "rights_scope": "COMPETITION_AND_RELATED_RESEARCH",
+  "publisher_terms_assets": 3,
+  "rights_inventory_validation": {
+    "coverage_status": "PASS",
+    "errors": [],
+    "permission_status": "DOCUMENTED_FOR_STATED_SCOPE",
+    "unresolved_assets": [],
+    "official_submission_allowed": false,
+    "note": "Owner declarations and publisher terms within stated scopes only; no independent legal audit, clinician approval or complete ZIP rights clearance."
+  },
+  "archive_and_clinical_review_gate": {
+    "archive_rights_coverage": "PASS",
+    "errors": [],
+    "unverified_archive_members": [
+      "nova_sdk.py"
+    ],
+    "clinician_review": "PENDING_EXTERNAL_CLINICIAN",
+    "official_submission_allowed": false
+  },
+  "clinician_review": {
+    "status": "NOT_PERFORMED",
+    "cards_prepared": 42,
+    "priority_questions": 6,
+    "tier2_concepts_clinically_reviewed": 0
+  },
+  "tests": {
+    "passed": 70,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "Six rights/review/release/reference test modules; not a new full-suite execution",
+    "junit": "artifacts/rights_and_review/pytest.xml",
+    "junit_sha256": "14d9c6e71dd60e9879850dcdea70fab5d0f664d641b2b703c21d1d832d15d2cc",
+    "initial_attempt": {
+      "passed": 69,
+      "failed": 1,
+      "cause": "Package rebuild and test read overlapped; staging file was temporarily absent. Final suite rerun sequentially after rebuild completed.",
+      "junit": "artifacts/rights_and_review/pytest-initial-build-overlap.xml"
+    }
+  },
+  "technical_preflight": {
+    "passed": 12,
+    "failed": 0,
+    "artifact": "artifacts/rights_and_review/local/pre_sample_validation.json",
+    "sha256": "886b7d4bcc550ae246242b7e619c83ed5a16b911939fba423eb70660e5dc8681"
+  },
+  "submission_zip_sha256": "17e11b90ffdb5c62533bcc2ef6bde52796dd09c25a8e374e50ce04a9ac4c3ecf",
+  "official_execution": "NOT_PERFORMED",
+  "official_score": "NOT_REEVALUATED",
+  "official_submission_allowed": false,
+  "evidence_sha256": {
+    "artifacts/rights_and_review/archive_rights.json": "86038547fdf1888cf40fd07522656c2c6d7008a50308982d513450bd3479a340",
+    "artifacts/rights_and_review/asset_evidence.json": "bc04321a2ffe6a850d9598a5e8eb05b3e07b3b51fad6b6419dab6c182d69ef6e",
+    "artifacts/rights_and_review/clinical_review_packet.json": "5ab1f548c1f04c4dc99b4278bba9a82748830f62cf1c586b64287c6aa885a48c",
+    "artifacts/rights_and_review/clinician_response_template.json": "57afcd1fdc4b4a4042bd5b89cac7328c0197963daaa2cbc733be8dcdfc5b475e",
+    "artifacts/rights_and_review/owner_declaration.json": "6c5aece5a681a5a2c9d533d857297f84a93d38452dc7abd71b62629f5dd8841e",
+    "artifacts/rights_and_review/pytest.receipt.json": "d945c679293c92f643a687d672499f4a6ab2c1342e7d7b0e9452b9aa180392be"
+  }
+}

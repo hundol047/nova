@@ -54,15 +54,17 @@ def main() -> None:
              "Git commits listed as history are commit records, not generation receipts. No clinician review is claimed.", "",
              "| Status | Assets |", "| --- | --- |"] + [f"| {k} | {v} |" for k, v in counts.most_common()] + [
              "", "Mapping to the requested vocabulary: VERIFIED = VERIFIED, UNRESOLVED = UNRESOLVED, NOT_USED_IN_SUBMISSION = EXCLUDE_FROM_SUBMISSION.",
-             "The repository has **no LICENSE file**, so even team-authored code and data carry no stated outbound licence.", "",
-             "## Owner decisions that would legitimately resolve the blockers", "",
+             "Rights scopes and owner declarations, when present, are linked per asset; a declaration does not establish clinical validity.", "",
+             "## Scope and evidence still required", "",
              "1. **Team authorship + licence (engine code, team-authored heuristics):** if the team (not a third party) authored or",
-             "   commissioned these files, the owner can state that in writing and add a repository LICENSE; the inventory can then",
+             "   commissioned these files, the owner can state that in writing and supply a scoped permission document; the inventory can then",
              "   record `TEAM_ORIGINAL_VERIFIED` with that statement as evidence. An engineering agent cannot make this declaration.",
-             "2. **AI-generated clinical heuristics:** record the actual tool/model/date/prompt if the owner still has them; otherwise",
-             "   keep `UNRESOLVED` and either (a) re-derive the entries from licensed references (MedlinePlus / Orphanet / Disease",
+             "2. **Historical AI generation:** model/date/prompt fields stay `UNRESOLVED` when not recovered, even if owner-declared rights are documented.",
+             "   If source or authorship is disputed, (a) re-derive the entries from licensed references (MedlinePlus / Orphanet / Disease",
              "   Ontology / Mondo are already integrated with documented terms) and re-run every regression suite, or (b) exclude.",
              "3. **Clinical correctness** is a separate question: an external reference existing for a disease does not validate a rule.",
+             "4. **Current owner grant:** see `TEAM_COMPETITION_PERMISSION.md` and `artifacts/rights_and_review/owner_declaration.json`.",
+             "   `TEAM_ORIGINAL_VERIFIED` here means hash-bound owner declaration, not independent ownership or medical certification.",
              "", "## Records", "",
              "| Path | Status | Shipped | Kind | Recorded source / licence | Evidence that exists | Why unresolved | Exclusion impact |",
              "| --- | --- | --- | --- | --- | --- | --- | --- |"]
@@ -70,7 +72,7 @@ def main() -> None:
         history = a.get("history_evidence") or []
         evidence = f"{len(history)} git commit record(s); first {history[-1].split('|')[1][:10]}" if history else "embedded source/terms records"
         reason = ("source, licence, authorship and generation record not recoverable" if a["status"] == "UNRESOLVED"
-                  else "-" if a["status"] == "VERIFIED" else "not bundled")
+                  else "owner-declared rights; clinical/generation review separate" if a["status"] == "TEAM_ORIGINAL_VERIFIED" else "-" if a["status"] == "VERIFIED" else "not bundled")
         source = f"{(a.get('original_source') or '')[:70]} / {(a.get('license') or '')[:40]}"
         lines.append(f"| `{a['path']}` | {a['status']} | {'yes' if a.get('submission_included') else 'no'} | {kind(a['path'])} | "
                      f"{source.replace('|', '/')} | {evidence} | {reason} | {exclusion_impact(a['path']) if a['status'] == 'UNRESOLVED' else '-'} |")

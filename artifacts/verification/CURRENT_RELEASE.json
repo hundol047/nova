@@ -35,5 +35,6 @@
   ],
   "status": "NOT READY",
   "reason": "General clinical-pipeline repair; paired regression PASS; real organizer execution remains HUMAN-RUN ONLY.",
-  "latest_compliance_followup": "artifacts/clinical_review_pass/rule_matrix.json"
+  "latest_compliance_followup": "artifacts/clinical_review_pass/rule_matrix.json",
+  "latest_rights_and_review_followup": "artifacts/rights_and_review/CURRENT_STATUS.json"
 }

@@ -1,0 +1,3189 @@
+{
+  "schema": "nova-clinical-review-packet-v1",
+  "runtime_commit": "fb4b69b72639c5fb5a90df54bad3dfc07443442d",
+  "runtime_sha256": {
+    "competition/__init__.py": "ee70b1ed0048ab3ad9444d7ac11073b624d30caf811906758e2ff65ef1f870c1",
+    "competition/adapter.py": "190b1c5d4bd4bccbf22afc07902f1eaa42573694ec4945e3c1e45a2994000260",
+    "competition/local_runner.py": "801d97192c52455a9546c4bb2d66dbba15fe9f5735cf70096b61dfdcbee74dd2",
+    "competition/nova_sdk_adapter.py": "861bb524cf4e0e23002fdabaffecf25618c7f78668dffae4f5bbef4483c93282",
+    "competition/official_evidence.py": "17d114fe2f9eded1d3f5104af5cd0ee5f0331a28d1f3c0f8ed1b235fbd131e7f",
+    "competition/official_transport.py": "88da0262e746ebce13d1eebffd44c792b6217f298bfd2faab5b7429e87145a83",
+    "competition/provider_lock.py": "78093f101c0ad182f2bdbe27162c07412622b23804d6eac969a476994bd9e5ff",
+    "competition/readiness.py": "ac8940459c6135e54110ee483071ddc44623928799762e4ad23a591b635038f7",
+    "competition/schema.py": "143df15d62c8c8f6082428fea7746cefbc00b8a13dad583b4b6a5716eca21534",
+    "competition/submission_profile.py": "c4818b450dba75c7b87510ea1611e2d2d255118cdfeae4341abe498e18657b4f",
+    "nova_agent/__init__.py": "b5daddc1f1cfdc584094b957cf7f70244dbc53807744cc3ab9e1deebab26d706",
+    "nova_agent/_synex.py": "5889d42af17fb777f4715c9739e0ec2f27be50ad102e148e026dbfca7efc0e09",
+    "nova_agent/action_canonicalizer.py": "8f720d348cb5beb727c92af9465d913dcba62bb37da0eda65daf8be65676e678",
+    "nova_agent/action_selector.py": "9430b3a1e3f2ba99888bdd521288375b84a021ed1207a165ae0ad660b09dbf54",
+    "nova_agent/anatomic_compat.py": "66c3af9905823fd742e574eb811fe1fa85858b7481b8c400f01db7afd146a143",
+    "nova_agent/assertion_status.py": "05e4bfc58e1ae95ab6f49ef65b231fac1426bde768f8a76322799753f2b34e6f",
+    "nova_agent/candidate_generator.py": "b8a9a6b45ae88729a4e015f0dc214ebe51b4920ddcdb458e9a3ee6964d53aa9e",
+    "nova_agent/catalog_context.py": "b308b25b512a16260c67a4e57f3a980831c63a2c2a9469cb2f80431b62e10b95",
+    "nova_agent/chief_complaint.py": "978d315fbf7c2c29cd8084e7efa849300c7ac96aa9ae8ceed6016bced2077368",
+    "nova_agent/clinical_assertions.py": "ed44c6545eeee434df988b95ea118c0562a3e9c7677d71c12d2db6e4ae330165",
+    "nova_agent/clinical_concepts.py": "bf2c29679ebc12442677406578569a135fbf8db86346a0c07c9f68ec050b8e76",
+    "nova_agent/clinical_interview.py": "d31ef2fd381df92b5808e3cf961c5c98adecaba3679a7f35f3796ffedc4baeaf",
+    "nova_agent/clinical_presentation.py": "e52c06d34d147d0bae062376824f4fe69517286358f269268a7f0e54a1fcd5b5",
+    "nova_agent/clinical_profiles.py": "59b76dbfecc0709d1ca16aa0887d7ef044e3617fabd5be887bc9e015c3b63990",
+    "nova_agent/clinical_summary.py": "582ddc2ab221ce7c248a5b6be7dd2e64f24e0ef23c8a092847cc709b4813e3a7",
+    "nova_agent/config.py": "30e83db3df61610eca6ce39f5683a8143aba2aa255311dd3255cd2f08a809219",
+    "nova_agent/contextual_safety.py": "8df37655c6a65741eac67d2b33297efade496448b18e7fd30e1ac28932940be9",
+    "nova_agent/diagnosis_normalizer.py": "1d5e55bd503e872df0270edc2f30d20daadc1a65f926adf607936f8962aabe9f",
+    "nova_agent/differential.py": "a294ca5c895c9ea7809b655cecb65724ec9ad2114dc1b52338fca38d5c6d57cd",
+    "nova_agent/disposition.py": "ca1c380b9a066a9dd69cf299144a8e216ffcc5bba747d22ab13fc064c63cabbe",
+    "nova_agent/documented_diagnosis.py": "73905de81f87a236241090cf11b688e0f1a5b944f27696e553ae3e96e692718d",
+    "nova_agent/evidence_grounding.py": "d5f626f8c09f1722c5083ea25a7466a926993882fa6459871cbdcc22cff5afe5",
+    "nova_agent/evidence_scope.py": "101d31ed4002a54c095adc89a71e71adf0edf9f43e4a9dc245ede5eddf5a1aa9",
+    "nova_agent/feature_relations.py": "4365476661678dd30e3e19cb4be80b8a8e8ff24473df413853d1ad49d78ef842",
+    "nova_agent/final_decision.py": "d465b35a810c12fc0d0f6a99e0d2e80fc53c2498092cf8b10560208dea64fb0b",
+    "nova_agent/glucose_evidence.py": "eb24ee4537c7cc2f8d908edebc2191f61719966fb972c992ef4f39f4da8e749f",
+    "nova_agent/history_followup.py": "08ebcda5bd6cff2bfe04080e217b03895d2631e6f20d56c4bf47b558774fb2d9",
+    "nova_agent/i18n/__init__.py": "4364b709729553cbb08d134278077d6b16a4ad69359b6e18ec6358ffdb8192f3",
+    "nova_agent/i18n/diagnosis_display.py": "db03770c3f2a5983a76dd1fbab73bb7ffd3fb58a4419162f9521abe00f45b472",
+    "nova_agent/knowledge/PROVENANCE.md": "b0e9f48e9da1faf6a8860ac0bc3b105aa029af313a6a2a5545599ac69e3fb103",
+    "nova_agent/knowledge/__init__.py": "1d6e6e8e96a20516815a620b28f6b90dd21726036c5a4812c2d90ef18bee18a6",
+    "nova_agent/knowledge/clinical_profiles.json": "b3584fd6c502a47eb2486c37d78f2332e5be61adabc82944a716242e35ef5095",
+    "nova_agent/knowledge/diagnostic_tests/notes.json": "6cc5f51ac1c69c2a17354e5606e83749cb39ab19a313d0719afb1fe4ebadf161",
+    "nova_agent/knowledge/diseases/abdominal_gi.json": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
+    "nova_agent/knowledge/diseases/cardiac.json": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
+    "nova_agent/knowledge/diseases/endocrine_metabolic.json": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
+    "nova_agent/knowledge/diseases/genitourinary.json": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
+    "nova_agent/knowledge/diseases/infectious.json": "bdcef03bf1252e538df4004c2ed039cd98e110b82626db2e9a99379352bea811",
+    "nova_agent/knowledge/diseases/neuro.json": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
+    "nova_agent/knowledge/diseases/pulmonary.json": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
+    "nova_agent/knowledge/guidelines/chief_complaint_guidelines.json": "958288db5865bd02917b1ad0a5431074f7c5e13b11ec1db2200c97790e69f471",
+    "nova_agent/knowledge/licensed_reference_store.py": "752956c93d4c859119942951a40a4f8ce867dbda8061b76e3b877adf36534cc2",
+    "nova_agent/knowledge/licensed_references.json": "6d4494db4090c204523a5f512fcc31308820bf34a2dfbf402f1b85241811a2c0",
+    "nova_agent/knowledge/red_flags/critical_conditions.json": "caae9d4d5520417eed70721b27e9ebdd299c14db10ecd2b684a0cdbd3a572609",
+    "nova_agent/knowledge/red_flags/demographic_and_medication_risk.json": "bca3d6b97636685a59d4dec197eb33bda38dc93d3fe8e98c12c65e3b2941ebf2",
+    "nova_agent/knowledge/retrieval.py": "4b6954be365186926d29d53cbfe82cb1981cc24f2797a5ea09cfcb2df89bdaea",
+    "nova_agent/knowledge/tier2_catalog.json": "56e6f197eafeef1533ac733c330099f82da453f8e0e0e571550a5f2416081fc6",
+    "nova_agent/knowledge/tier2_enrichment.json": "4f567dfbd24a1e9b7f44eaa42f49447a6bc9d1c8d558404a8a8ab7a2d8d92511",
+    "nova_agent/knowledge/tier2_mondo_synonyms.json": "74c5315e47484829f1b5fa8fad359b3687317c920c63c45c3de9764976366063",
+    "nova_agent/knowledge/tier2_open_features.json": "7ea122cb0b8746548f39a0e1d230dc306149199d8a51e78a2715809cb4fd66f9",
+    "nova_agent/lay_language.py": "4184885201a32a35d36b18a039f31b9a552dc681d15e1fdd227ef892d47aeed2",
+    "nova_agent/llm_client.py": "84471eb4e80e586709ef45254be024bbc71ff76bb9261776456c2a4af8a1faeb",
+    "nova_agent/llm_preflight.py": "3ca142caf9b0738b1f0a219e007d260092ffe22a8e39383948a6e5200d3e30ba",
+    "nova_agent/llm_schema.py": "4d963d5979c2d1575833efdf4ac5cc6d1511fe32b5e8de31511a4aa6ecdd8ca2",
+    "nova_agent/logging_store.py": "2dda03a348cf5b6bf87cc82803529f5b85138b0cb49de02fe44d878b23a6b7aa",
+    "nova_agent/matching.py": "f8b3bc7c1045bbe5ff4b98fdbd7340aa3e7be6f12001cc27403b116bb513b0f9",
+    "nova_agent/missing_info.py": "b64723b7fa8e8603d6a61160c852d3c5aacab43bfd0a2050930612e4fe0ab6b2",
+    "nova_agent/models.py": "f7723287ae5f36412bf2cdec87c18d43b777b6c861bf65dc4f6b646ee19ee07a",
+    "nova_agent/multilingual_concepts.py": "919fbaa356655f54050b390f2a5a0814654cdf2a0e73e260ea4fe68c3433ffbe",
+    "nova_agent/objective_evidence.py": "f498463d75acac057f0acc366cd008ecdd3ac668be4a28af5c80dce03d40f398",
+    "nova_agent/ontology/__init__.py": "4363b6d3d57f3014aa23fe93bc96d1624c778a3dfeb915c3ade4704a0c9db92f",
+    "nova_agent/ontology/hierarchy.py": "a03338f6ca4ad7a0d514a1b9087cf7238da5dbfa91da13a277027b094d7cd151",
+    "nova_agent/ontology/icd11_reference.py": "fc560a768d02214250555dadb282a1a0f2e7dbf5561237a5365bc64f6d99df32",
+    "nova_agent/ontology/mappings.py": "c2d40c5427e64dc9b51c6f73e39ef9397a5d92931c45f33dfa2fe237a820619c",
+    "nova_agent/ontology/models.py": "227a371556503cf6e111a0e8ef683d374f3ce7a6bc11c378b6ebdd0fec80cea5",
+    "nova_agent/ontology/normalizer.py": "f0d38f699ee5a804cb3b976142f66ccb00d1ee61dec2ac4c227490120da9ba3c",
+    "nova_agent/ontology/providers/__init__.py": "1e8adf6481fde36a5aa6034d8bd0d735d516ff32b397b38a3ae63d8d3c7a5647",
+    "nova_agent/ontology/providers/base.py": "a175884c4a62b7ba3a23dafa419207c9467be2e57ad6c5087cd7b1f7be90a0fb",
+    "nova_agent/ontology/providers/core_kb.py": "52ccefaac805f5f3b9273bb9a2cb4a0c44b3bee074584a9b486664ecaf61c9c7",
+    "nova_agent/ontology/providers/custom.py": "1a74e102964ec79cdd16ba1070f763c48e52ba481e963c64f20978579d40fdfe",
+    "nova_agent/ontology/providers/icd10.py": "4b9c8860428e1304d7134926e9101614a8251cf2e40f49cda9127874e11b2a74",
+    "nova_agent/ontology/providers/icd11.py": "8b4ca36dd1c0b0bd608d92e01555ac6fe41f71eb269e4f03d90e4b1ae2ca83a8",
+    "nova_agent/ontology/providers/snomed.py": "82869031b39df0d6ce5831ad2ddd5996b0f3ca08933925df9450bbb31031eb9c",
+    "nova_agent/ontology/providers/tier2_catalog.py": "38661a156b7f4692817eec23f700c80c4765d28b1d64f15bfa57d88a685d7cbe",
+    "nova_agent/ontology/registry.py": "23643415a929a3e2576e70d691e8d1c5954cf085dc69d634e72f9ec1b16095cd",
+    "nova_agent/ontology/search.py": "a9a0ab8ec1cf0ca8d78694ed1e90ac493aaaa0515e1cf0bc15a74ab8dd8f9e0e",
+    "nova_agent/ontology/snapshots/README.md": "8f5a0109db449fe882f9ef7ad943419c2e3617de0ed1d9a80e90040bd636a7cc",
+    "nova_agent/open_world.py": "20e99f63965b13cfff0c98b27c6d58e99f045c08b7775499d7516ba07da38213",
+    "nova_agent/orchestrator.py": "508559ea355c16cc247340a3bcfc4f8c264a4315ba5a9720e5422c9cb2ca3a5e",
+    "nova_agent/organizer_guidelines.py": "8109845c784c8f391d42ddc38c891b233e4dfad7497259ac515b328d62090ca8",
+    "nova_agent/pr15_feature_aliases.py": "1fb5328f3f430a9e10618c2ceacc6e9d1ae0c06c406287ca1317d5fc545210c3",
+    "nova_agent/preliminary.py": "c239b02e20a9df52e9631e52a6b7ea1bf3d14d9dfec35d79522825b3917f4c0e",
+    "nova_agent/resolution.py": "456a8c05c84448aa3712d8a8a549babd9fed72f78e83973480d01dddad840422",
+    "nova_agent/retrieval_pipeline.py": "fa07919a846f83fc455747b4d3a0b410360c6b5c4643e5634106837ecb122149",
+    "nova_agent/retrieval_vocabulary.py": "d363a3a3ff7d742411fba927109f8f0c7232b5ead93b6ff54d84fa25b4b901ff",
+    "nova_agent/safety.py": "345040c4852fd19815a90012f4ca3eac190995bab10072bbda96f1b24241574a",
+    "nova_agent/safety_validator.py": "8f3e3da9fbbb3aa50e73e12eb82308945f4efed6b5ad1967ab1a5563533db546",
+    "nova_agent/semantic_dedup.py": "d7b9d3913c9a2f1e66ea2ace68452156f6c39dd932f4fe7fa44effa28ad5207e",
+    "nova_agent/severity_evidence.py": "ef458b1708d721b01a46451cc146301ad610a0807192d10c304ef51a2da946b7",
+    "nova_agent/soap.py": "e92112c040295fec54598fb73188f300730eb6dd3157a70394ae0f876d4b5f06",
+    "nova_agent/state.py": "dfca517806e7be22294a4ea15de0070def4a1bddd34b28831ca4e881d214834a",
+    "nova_agent/stop_policy.py": "b999b772cb5ebea19dd0fbbeda94309a6ee1dad1f17775c2cd3636a820c8cc14",
+    "nova_agent/syndrome_relationships.py": "01dcff286a02ab68b5c576d90eb7c8c94b4318174572f5369c345ae165065d68",
+    "nova_agent/taxonomy.py": "e8bcda89b4a1e24d3a64f3dac453f1ef21fff2c19b039c966ac59386597a8f7f",
+    "nova_agent/uncertainty.py": "85ec3928ea4b1ffd40cd345b97c8492ff51998b149f7298d4bdf14d7bdddc7d0",
+    "nova_agent/unit_safety.py": "e0994fecea0d7a0da45e16fef48883dafd6836ad1273881f771d4452eee16e09",
+    "nova_agent/vitals_parser.py": "0d394011474777f9c6925ee5ee1a3af22a192bd48cb391bccce60b8a38cd1cf0",
+    "submission/run.py": "7bca7e5c9b7d19bc61b53576f0341188e5d27b15c3c432c29ce5cb1e1eb27cf2",
+    "submission/requirements.txt": "2cd731f5fd345026b71115c2b0dfa5dd80c92f86b935fed2d52e2bd3c0e26661",
+    "submission/nova_sdk.py": "fdd65302e82791ed862c22fe5a014ef443ab331d8986ec7c72b3923add6bc871"
+  },
+  "review_status": "PENDING_EXTERNAL_CLINICIAN",
+  "reviewer": null,
+  "cards": [
+    {
+      "id": "acute_abdomen",
+      "name": "Acute Abdomen (Surgical Abdomen)",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+      "sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
+      "current_profile": {
+        "id": "acute_abdomen",
+        "name": "Acute Abdomen (Surgical Abdomen)",
+        "aliases": [
+          "acute abdomen",
+          "surgical abdomen",
+          "peritonitis",
+          "급성복증"
+        ],
+        "chief_complaint_tags": [
+          "abdominal_pain",
+          "vomiting"
+        ],
+        "category": "abdominal_gi",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "severe abdominal pain",
+          "rebound tenderness",
+          "guarding",
+          "rigid abdomen",
+          "fever"
+        ],
+        "risk_factors": [
+          "prior abdominal surgery",
+          "elderly age"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "severity",
+          "location",
+          "character"
+        ],
+        "discriminating_exams": [
+          "abdominal_exam",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "cbc",
+          "lipase",
+          "ct_abdomen"
+        ],
+        "confirmatory_findings": [
+          "free air",
+          "peritoneal signs on imaging",
+          "perforation"
+        ],
+        "red_flag_keywords": [
+          "rebound tenderness",
+          "guarding",
+          "rigid abdomen",
+          "peritoneal signs"
+        ],
+        "minimum_workup": [
+          "ct_abdomen"
+        ],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "gi_bleeding",
+      "name": "Gastrointestinal Bleeding",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+      "sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
+      "current_profile": {
+        "id": "gi_bleeding",
+        "name": "Gastrointestinal Bleeding",
+        "aliases": [
+          "GI bleed",
+          "upper GI bleeding",
+          "lower GI bleeding",
+          "위장관출혈"
+        ],
+        "chief_complaint_tags": [
+          "abdominal_pain",
+          "vomiting",
+          "weakness",
+          "gi_bleeding"
+        ],
+        "category": "abdominal_gi",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "hematemesis",
+          "melena",
+          "hematochezia",
+          "lightheadedness",
+          "pallor",
+          "tachycardia"
+        ],
+        "risk_factors": [
+          "NSAID use",
+          "anticoagulant use",
+          "antiplatelet use",
+          "liver disease",
+          "peptic ulcer disease",
+          "alcohol use"
+        ],
+        "discriminating_questions": [
+          "associated_symptoms",
+          "medication",
+          "past_medical_history",
+          "social_history"
+        ],
+        "discriminating_exams": [
+          "abdominal_exam",
+          "vital_signs",
+          "fecal_occult_blood"
+        ],
+        "discriminating_tests": [
+          "cbc",
+          "fecal_occult_blood"
+        ],
+        "confirmatory_findings": [
+          "positive fecal occult blood",
+          "hemoglobin drop",
+          "low hemoglobin"
+        ],
+        "red_flag_keywords": [
+          "hematemesis",
+          "melena",
+          "hematochezia",
+          "hypotension",
+          "tachycardia",
+          "pallor"
+        ],
+        "minimum_workup": [
+          "cbc"
+        ],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "ectopic_pregnancy",
+      "name": "Ectopic Pregnancy",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+      "sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
+      "current_profile": {
+        "id": "ectopic_pregnancy",
+        "name": "Ectopic Pregnancy",
+        "aliases": [
+          "ectopic pregnancy",
+          "tubal pregnancy",
+          "자궁외임신"
+        ],
+        "chief_complaint_tags": [
+          "abdominal_pain",
+          "syncope",
+          "pelvic_gynecologic"
+        ],
+        "category": "abdominal_gi",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "lower abdominal pain",
+          "vaginal bleeding",
+          "missed period",
+          "unilateral pelvic pain",
+          "dizziness"
+        ],
+        "risk_factors": [
+          "prior ectopic pregnancy",
+          "pelvic inflammatory disease",
+          "IUD use",
+          "tubal surgery",
+          "childbearing age female"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "location",
+          "associated_symptoms",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "pelvic_exam",
+          "abdominal_exam",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "beta_hcg",
+          "pelvic_ultrasound"
+        ],
+        "confirmatory_findings": [
+          "positive beta-hCG",
+          "no intrauterine pregnancy",
+          "adnexal mass"
+        ],
+        "red_flag_keywords": [
+          "vaginal bleeding",
+          "missed period",
+          "unilateral pelvic pain",
+          "hypotension",
+          "syncope"
+        ],
+        "minimum_workup": [
+          "beta_hcg",
+          "pelvic_ultrasound"
+        ],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "acute_pancreatitis",
+      "name": "Acute Pancreatitis",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+      "sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
+      "current_profile": {
+        "id": "acute_pancreatitis",
+        "name": "Acute Pancreatitis",
+        "aliases": [
+          "pancreatitis",
+          "급성췌장염"
+        ],
+        "chief_complaint_tags": [
+          "abdominal_pain",
+          "vomiting",
+          "back_pain"
+        ],
+        "category": "abdominal_gi",
+        "dangerous": false,
+        "urgency": "MEDIUM",
+        "typical_features": [
+          "epigastric pain radiating to back",
+          "nausea",
+          "vomiting",
+          "worse after eating fatty food"
+        ],
+        "risk_factors": [
+          "alcohol use",
+          "gallstones",
+          "hypertriglyceridemia"
+        ],
+        "discriminating_questions": [
+          "location",
+          "character",
+          "social_history",
+          "aggravating"
+        ],
+        "discriminating_exams": [
+          "abdominal_exam",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "lipase",
+          "abdominal_ultrasound"
+        ],
+        "confirmatory_findings": [
+          "elevated lipase",
+          "pancreatic inflammation on imaging",
+          "peripancreatic fat stranding"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic",
+        "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "appendicitis",
+      "name": "Acute Appendicitis",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+      "sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
+      "current_profile": {
+        "id": "appendicitis",
+        "name": "Acute Appendicitis",
+        "aliases": [
+          "appendicitis",
+          "충수염"
+        ],
+        "chief_complaint_tags": [
+          "abdominal_pain"
+        ],
+        "category": "abdominal_gi",
+        "dangerous": false,
+        "urgency": "MEDIUM",
+        "typical_features": [
+          "periumbilical pain migrating to right lower quadrant",
+          "anorexia",
+          "low grade fever",
+          "nausea"
+        ],
+        "risk_factors": [
+          "young age"
+        ],
+        "discriminating_questions": [
+          "location",
+          "onset",
+          "associated_symptoms"
+        ],
+        "discriminating_exams": [
+          "abdominal_exam",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "cbc",
+          "ct_abdomen"
+        ],
+        "red_flag_keywords": [
+          "rebound tenderness",
+          "guarding"
+        ],
+        "evidence_level": "internally_authored_heuristic",
+        "confirmatory_findings": [
+          "inflamed appendix",
+          "appendiceal wall thickening",
+          "dilated appendix",
+          "periappendiceal fat stranding",
+          "appendicolith",
+          "appendiceal inflammation",
+          "McBurney's point tenderness",
+          "right lower quadrant tenderness",
+          "right lower quadrant rebound tenderness"
+        ],
+        "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset. Round N: unlocalised 'rebound tenderness' (a generalised peritoneal sign, already a typical feature of acute_abdomen) narrowed to its right-lower-quadrant form so diffuse peritonitis is not credited as appendicitis-confirmatory.",
+        "evidence_references": [
+          {
+            "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/appendicitis/diagnosis",
+            "scope": "Imaging evidence of appendiceal enlargement or inflammation supports evaluation of appendicitis; not a standalone diagnostic guarantee."
+          },
+          {
+            "url": "https://link.springer.com/article/10.1186/s13017-016-0090-5",
+            "scope": "Imaging findings including wall thickening and noncompressibility suggest appendicitis."
+          }
+        ]
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "gastroenteritis",
+      "name": "Acute Gastroenteritis",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/abdominal_gi.json",
+      "sha256": "8987424827e282ac088ae6da1468cdf2632143bd47653b2ce9f46d50643d747b",
+      "current_profile": {
+        "id": "gastroenteritis",
+        "name": "Acute Gastroenteritis",
+        "aliases": [
+          "gastroenteritis",
+          "stomach flu",
+          "급성위장염"
+        ],
+        "chief_complaint_tags": [
+          "abdominal_pain",
+          "fever",
+          "vomiting",
+          "diarrhea"
+        ],
+        "category": "abdominal_gi",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "diffuse crampy abdominal pain",
+          "diarrhea",
+          "vomiting",
+          "recent similar illness contact"
+        ],
+        "risk_factors": [
+          "recent travel",
+          "sick contacts",
+          "food exposure"
+        ],
+        "discriminating_questions": [
+          "associated_symptoms",
+          "onset",
+          "social_history"
+        ],
+        "discriminating_exams": [
+          "abdominal_exam",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "cbc"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "acute_coronary_syndrome",
+      "name": "Acute Coronary Syndrome",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
+      "current_profile": {
+        "id": "acute_coronary_syndrome",
+        "name": "Acute Coronary Syndrome",
+        "aliases": [
+          "MI",
+          "myocardial infarction",
+          "acute myocardial infarction",
+          "AMI",
+          "STEMI",
+          "NSTEMI",
+          "heart attack",
+          "ACS",
+          "unstable angina",
+          "급성 관상동맥증후군",
+          "심근경색"
+        ],
+        "chief_complaint_tags": [
+          "chest_pain",
+          "dyspnea",
+          "syncope",
+          "palpitations",
+          "vomiting"
+        ],
+        "category": "cardiac",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "exertional chest pain",
+          "substernal pressure",
+          "radiates to arm or jaw",
+          "diaphoresis",
+          "nausea",
+          "dyspnea on exertion",
+          "left arm pain"
+        ],
+        "risk_factors": [
+          "hypertension",
+          "diabetes",
+          "smoking",
+          "hyperlipidemia",
+          "family history",
+          "male over 45",
+          "female over 55",
+          "prior coronary disease"
+        ],
+        "discriminating_questions": [
+          "character",
+          "aggravating",
+          "associated_symptoms",
+          "past_medical_history",
+          "family_history"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "cardiac_auscultation",
+          "general_appearance"
+        ],
+        "discriminating_tests": [
+          "ecg",
+          "troponin",
+          "cxr"
+        ],
+        "confirmatory_findings": [
+          "ST elevation",
+          "ST depression",
+          "elevated troponin",
+          "troponin elevated"
+        ],
+        "red_flag_keywords": [
+          "diaphoresis",
+          "radiating pain",
+          "crushing",
+          "pressure",
+          "hypotension",
+          "sweating"
+        ],
+        "minimum_workup": [
+          "ecg",
+          "troponin"
+        ],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "aortic_dissection",
+      "name": "Aortic Dissection",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
+      "current_profile": {
+        "id": "aortic_dissection",
+        "name": "Aortic Dissection",
+        "aliases": [
+          "dissecting aortic aneurysm",
+          "aortic tear",
+          "대동맥 박리"
+        ],
+        "chief_complaint_tags": [
+          "chest_pain",
+          "abdominal_pain",
+          "syncope",
+          "back_pain"
+        ],
+        "category": "cardiac",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "tearing chest pain",
+          "ripping pain",
+          "pain radiates to back",
+          "sudden onset severe pain",
+          "pulse differential",
+          "unequal blood pressure between arms"
+        ],
+        "risk_factors": [
+          "hypertension",
+          "marfan syndrome",
+          "bicuspid aortic valve",
+          "cocaine use",
+          "connective tissue disease"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "character",
+          "location",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "extremity_exam",
+          "cardiac_auscultation"
+        ],
+        "discriminating_tests": [
+          "ct_aorta",
+          "cxr",
+          "ecg"
+        ],
+        "confirmatory_findings": [
+          "widened mediastinum",
+          "dissection flap",
+          "intimal flap"
+        ],
+        "red_flag_keywords": [
+          "tearing",
+          "ripping",
+          "sudden onset",
+          "radiates to back",
+          "pulse differential",
+          "unequal blood pressure"
+        ],
+        "minimum_workup": [
+          "ct_aorta"
+        ],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "gerd",
+      "name": "Gastroesophageal Reflux Disease",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
+      "current_profile": {
+        "id": "gerd",
+        "name": "Gastroesophageal Reflux Disease",
+        "aliases": [
+          "GERD",
+          "acid reflux",
+          "heartburn",
+          "위식도역류질환"
+        ],
+        "chief_complaint_tags": [
+          "chest_pain",
+          "abdominal_pain"
+        ],
+        "category": "cardiac",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "burning chest pain",
+          "worse after meals",
+          "worse lying down",
+          "relieved by antacids",
+          "sour taste"
+        ],
+        "risk_factors": [
+          "obesity",
+          "hiatal hernia",
+          "smoking"
+        ],
+        "discriminating_questions": [
+          "character",
+          "aggravating",
+          "relieving",
+          "associated_symptoms"
+        ],
+        "discriminating_exams": [
+          "abdominal_exam",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "ecg",
+          "troponin"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic",
+        "confirmatory_findings": [
+          "esophagitis on endoscopy"
+        ],
+        "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "musculoskeletal_chest_pain",
+      "name": "Musculoskeletal Chest Pain (Costochondritis)",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
+      "current_profile": {
+        "id": "musculoskeletal_chest_pain",
+        "name": "Musculoskeletal Chest Pain (Costochondritis)",
+        "aliases": [
+          "costochondritis",
+          "chest wall pain",
+          "근골격계 흉통"
+        ],
+        "chief_complaint_tags": [
+          "chest_pain"
+        ],
+        "category": "cardiac",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "reproducible with palpation",
+          "worse with movement",
+          "localized tenderness",
+          "sharp pain"
+        ],
+        "risk_factors": [
+          "recent physical strain",
+          "recent trauma"
+        ],
+        "discriminating_questions": [
+          "character",
+          "aggravating",
+          "location"
+        ],
+        "discriminating_exams": [
+          "lung_auscultation",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "ecg"
+        ],
+        "confirmatory_findings": [
+          "reproducible chest wall tenderness",
+          "pain reproduced on palpation"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic",
+        "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "vasovagal_syncope",
+      "name": "Vasovagal (Reflex) Syncope",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
+      "current_profile": {
+        "id": "vasovagal_syncope",
+        "name": "Vasovagal (Reflex) Syncope",
+        "aliases": [
+          "vasovagal syncope",
+          "reflex syncope",
+          "neurocardiogenic syncope",
+          "미주신경성 실신"
+        ],
+        "chief_complaint_tags": [
+          "syncope",
+          "dizziness"
+        ],
+        "category": "cardiac",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "prodrome of lightheadedness",
+          "triggered by standing or pain or fear",
+          "brief loss of consciousness",
+          "rapid spontaneous recovery",
+          "no chest pain",
+          "no palpitations before the episode"
+        ],
+        "risk_factors": [
+          "prolonged standing",
+          "dehydration",
+          "emotional stress",
+          "young age"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "aggravating",
+          "associated_symptoms",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "cardiac_auscultation"
+        ],
+        "discriminating_tests": [
+          "ecg"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "cardiac_arrhythmia",
+      "name": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
+      "current_profile": {
+        "id": "cardiac_arrhythmia",
+        "name": "Cardiac Arrhythmia (e.g. Atrial Fibrillation, SVT)",
+        "aliases": [
+          "arrhythmia",
+          "atrial fibrillation",
+          "afib",
+          "svt",
+          "supraventricular tachycardia",
+          "부정맥"
+        ],
+        "chief_complaint_tags": [
+          "palpitations",
+          "syncope",
+          "dizziness",
+          "chest_pain"
+        ],
+        "category": "cardiac",
+        "dangerous": true,
+        "urgency": "MEDIUM",
+        "typical_features": [
+          "sudden onset palpitations",
+          "irregular heartbeat",
+          "racing heart",
+          "associated lightheadedness",
+          "known history of arrhythmia",
+          "pulse rate below 50",
+          "pulse rate of 150 or more",
+          "syncope without warning",
+          "palpitations before syncope"
+        ],
+        "risk_factors": [
+          "hypertension",
+          "structural heart disease",
+          "hyperthyroidism",
+          "excessive caffeine or stimulant use",
+          "advanced age"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "duration",
+          "associated_symptoms",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "cardiac_auscultation"
+        ],
+        "discriminating_tests": [
+          "ecg",
+          "bmp"
+        ],
+        "confirmatory_findings": [
+          "irregularly irregular rhythm",
+          "narrow complex tachycardia",
+          "atrial fibrillation on ecg",
+          "high-grade AV block",
+          "second-degree AV block",
+          "bradycardia with dropped beats"
+        ],
+        "red_flag_keywords": [
+          "hypotension",
+          "syncope with palpitations",
+          "chest pain with palpitations"
+        ],
+        "evidence_level": "internally_authored_heuristic",
+        "round_u_followup_provenance": "typical_features 'syncope without warning' and 'palpitations before syncope' added in the Round U follow-up: syncope without prodrome (or with a very short one) and sudden palpitation immediately followed by syncope are listed among the high-risk features suggesting arrhythmic syncope (Brignole M et al., 2018 ESC Guidelines for the diagnosis and management of syncope, Eur Heart J 2018;39:1883-1948, Table 5, doi:10.1093/eurheartj/ehy037). It supports the arrhythmia CATEGORY only; it never identifies a rhythm subtype, and danger adds no score. Agent-authored, not clinician-reviewed.",
+        "round_q_provenance": "typical_features 'pulse rate below 50' / 'pulse rate of 150 or more' added in Round Q: a measured CURRENT rate at the thresholds the AHA adult bradycardia/tachycardia algorithms use to suggest a rhythm cause (Panchal AR et al., 2020 AHA Guidelines for CPR and ECC Part 3, Circulation 2020;142:S366-S468). Weighted like a generic physiological sign (the reduced multiplier differential.py gives tachycardia/hypotension); not a confirmatory finding and never a subtype. Agent-authored, not clinician-reviewed."
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "panic_attack",
+      "name": "Panic Attack",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/cardiac.json",
+      "sha256": "eb4298e67250cbeddcf134febca83d47bd04c6093bcf4225597e3e645dd20299",
+      "current_profile": {
+        "id": "panic_attack",
+        "name": "Panic Attack",
+        "aliases": [
+          "panic attack",
+          "anxiety attack",
+          "공황발작"
+        ],
+        "chief_complaint_tags": [
+          "chest_pain",
+          "dyspnea",
+          "palpitations"
+        ],
+        "category": "cardiac",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "sudden onset intense anxiety or fear",
+          "hyperventilation",
+          "tingling around the mouth or fingers",
+          "fear of dying or losing control",
+          "chest tightness",
+          "palpitations",
+          "symptoms peak within minutes then improve",
+          "resolves with calming down or reassurance"
+        ],
+        "risk_factors": [
+          "history of anxiety or panic disorder",
+          "recent significant stressor"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "duration",
+          "associated_symptoms",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "general_appearance"
+        ],
+        "discriminating_tests": [
+          "ecg"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "diabetic_ketoacidosis",
+      "name": "Diabetic Ketoacidosis",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "sha256": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
+      "current_profile": {
+        "id": "diabetic_ketoacidosis",
+        "name": "Diabetic Ketoacidosis",
+        "aliases": [
+          "DKA",
+          "diabetic ketoacidosis",
+          "당뇨병성 케톤산증"
+        ],
+        "chief_complaint_tags": [
+          "altered_mental_status",
+          "abdominal_pain",
+          "dyspnea",
+          "vomiting",
+          "weakness",
+          "metabolic"
+        ],
+        "category": "endocrine_metabolic",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "polyuria",
+          "polydipsia",
+          "nausea and vomiting",
+          "abdominal pain",
+          "fruity breath odor",
+          "kussmaul breathing",
+          "confusion"
+        ],
+        "risk_factors": [
+          "known diabetes",
+          "missed insulin doses",
+          "recent infection"
+        ],
+        "discriminating_questions": [
+          "past_medical_history",
+          "medication",
+          "associated_symptoms",
+          "onset"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "mental_status_exam",
+          "abdominal_exam"
+        ],
+        "discriminating_tests": [
+          "glucose_point_of_care",
+          "ketones",
+          "abg",
+          "bmp"
+        ],
+        "confirmatory_findings": [
+          "large ketones",
+          "metabolic acidosis",
+          "kussmaul breathing"
+        ],
+        "red_flag_keywords": [
+          "kussmaul breathing",
+          "fruity breath",
+          "confusion with known diabetes",
+          "polyuria polydipsia"
+        ],
+        "minimum_workup": [
+          "glucose_point_of_care",
+          "ketones"
+        ],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "severe_electrolyte_disorder",
+      "name": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "sha256": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
+      "current_profile": {
+        "id": "severe_electrolyte_disorder",
+        "name": "Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)",
+        "aliases": [
+          "hyperkalemia",
+          "hyponatremia",
+          "severe electrolyte disturbance",
+          "중증 전해질이상"
+        ],
+        "chief_complaint_tags": [
+          "altered_mental_status",
+          "dizziness",
+          "palpitations",
+          "weakness",
+          "metabolic",
+          "seizure"
+        ],
+        "category": "endocrine_metabolic",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "muscle weakness",
+          "palpitations",
+          "confusion",
+          "arrhythmia",
+          "seizure",
+          "muscle cramps"
+        ],
+        "risk_factors": [
+          "chronic kidney disease",
+          "diuretic use",
+          "vomiting or diarrhea",
+          "renin-angiotensin system inhibitor use",
+          "missed dialysis session"
+        ],
+        "discriminating_questions": [
+          "past_medical_history",
+          "medication",
+          "associated_symptoms"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "cardiac_auscultation",
+          "mental_status_exam"
+        ],
+        "discriminating_tests": [
+          "bmp",
+          "ecg"
+        ],
+        "red_flag_keywords": [
+          "arrhythmia",
+          "muscle weakness with renal disease",
+          "confusion with renal disease"
+        ],
+        "confirmatory_findings": [
+          "peaked t waves",
+          "hyperkalemia",
+          "elevated potassium",
+          "hyponatremia",
+          "low sodium",
+          "widened qrs",
+          "hypokalemia",
+          "low potassium",
+          "prominent u waves"
+        ],
+        "minimum_workup": [
+          "bmp"
+        ],
+        "evidence_level": "internally_authored_heuristic",
+        "round_q_provenance": "Round Q: risk factor 'missed dialysis session' -- missed or inadequate dialysis is a recognised cause of hyperkalaemia in people on dialysis (UK Kidney Association, Clinical Practice Guidelines: Treatment of Acute Hyperkalaemia in Adults, 2020/2023 update, causes section). Risk-factor weight only; it never establishes a potassium value or direction. Agent-authored, not clinician-reviewed.",
+        "round_p_provenance": "Round P: hypokalemia / low potassium / prominent U waves added as confirmatory findings and muscle cramps as a typical feature -- the entry already covered both directions of sodium but only the high direction of potassium, so a severely LOW potassium was scored as evidence AGAINST the disorder. Agent-authored from widely taught physiology; not clinician-reviewed."
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "hypoglycemia",
+      "name": "Hypoglycemia",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/endocrine_metabolic.json",
+      "sha256": "3b7ad094ff581780b401cdfe75d8c3ad21e3234137d1b9a6c14576ce61373a82",
+      "current_profile": {
+        "id": "hypoglycemia",
+        "name": "Hypoglycemia",
+        "aliases": [
+          "low blood sugar",
+          "hypoglycemia",
+          "저혈당"
+        ],
+        "chief_complaint_tags": [
+          "altered_mental_status",
+          "dizziness",
+          "weakness",
+          "metabolic"
+        ],
+        "category": "endocrine_metabolic",
+        "dangerous": false,
+        "urgency": "MEDIUM",
+        "typical_features": [
+          "diaphoresis",
+          "confusion",
+          "tremor",
+          "known diabetes on insulin",
+          "resolves with glucose"
+        ],
+        "risk_factors": [
+          "insulin use",
+          "sulfonylurea use",
+          "missed meal"
+        ],
+        "discriminating_questions": [
+          "past_medical_history",
+          "medication",
+          "onset"
+        ],
+        "discriminating_exams": [
+          "mental_status_exam",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "glucose_point_of_care"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "uncomplicated_cystitis",
+      "name": "Uncomplicated Cystitis (Lower UTI)",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/genitourinary.json",
+      "sha256": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
+      "current_profile": {
+        "id": "uncomplicated_cystitis",
+        "name": "Uncomplicated Cystitis (Lower UTI)",
+        "aliases": [
+          "UTI",
+          "urinary tract infection",
+          "cystitis",
+          "방광염",
+          "요로감염"
+        ],
+        "chief_complaint_tags": [
+          "urinary_symptoms"
+        ],
+        "category": "genitourinary",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "dysuria",
+          "urinary frequency",
+          "urinary urgency",
+          "suprapubic discomfort",
+          "no fever",
+          "no flank pain"
+        ],
+        "risk_factors": [
+          "female sex",
+          "sexual activity",
+          "prior UTI"
+        ],
+        "discriminating_questions": [
+          "associated_symptoms",
+          "onset",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "abdominal_exam",
+          "vital_signs",
+          "costovertebral_tenderness"
+        ],
+        "discriminating_tests": [
+          "urinalysis",
+          "urine_culture"
+        ],
+        "confirmatory_findings": [
+          "positive leukocyte esterase",
+          "positive nitrites"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "pyelonephritis",
+      "name": "Acute Pyelonephritis",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/genitourinary.json",
+      "sha256": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
+      "current_profile": {
+        "id": "pyelonephritis",
+        "name": "Acute Pyelonephritis",
+        "aliases": [
+          "pyelonephritis",
+          "upper UTI",
+          "kidney infection",
+          "신우신염"
+        ],
+        "chief_complaint_tags": [
+          "urinary_symptoms",
+          "fever",
+          "back_pain"
+        ],
+        "category": "genitourinary",
+        "dangerous": false,
+        "urgency": "MEDIUM",
+        "typical_features": [
+          "flank pain",
+          "fever",
+          "costovertebral angle tenderness",
+          "dysuria",
+          "nausea and vomiting"
+        ],
+        "risk_factors": [
+          "female sex",
+          "diabetes",
+          "urinary obstruction",
+          "pregnancy"
+        ],
+        "discriminating_questions": [
+          "location",
+          "associated_symptoms",
+          "onset"
+        ],
+        "discriminating_exams": [
+          "costovertebral_tenderness",
+          "vital_signs",
+          "abdominal_exam"
+        ],
+        "discriminating_tests": [
+          "urinalysis",
+          "urine_culture",
+          "cbc",
+          "bmp"
+        ],
+        "red_flag_keywords": [
+          "fever with flank pain",
+          "hypotension",
+          "confusion"
+        ],
+        "confirmatory_findings": [
+          "positive leukocyte esterase",
+          "positive nitrites",
+          "elevated white blood cell count"
+        ],
+        "evidence_level": "internally_authored_heuristic",
+        "required_diagnostic_context_any": [
+          "flank pain",
+          "costovertebral angle tenderness",
+          "CVA tenderness",
+          "dysuria",
+          "painful urination",
+          "urinary frequency",
+          "pyuria",
+          "positive nitrites",
+          "nitrite positive",
+          "positive leukocyte esterase",
+          "leukocyte esterase positive",
+          "positive urine culture",
+          "urine culture positive",
+          "renal inflammation"
+        ],
+        "evidence_references": [
+          {
+            "url": "https://www.niddk.nih.gov/health-information/urologic-diseases/kidney-infection-pyelonephritis/diagnosis",
+            "scope": "History, examination and urine investigations inform diagnosis; this internal abstention guard is not a guideline diagnostic criterion."
+          }
+        ]
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "nephrolithiasis",
+      "name": "Nephrolithiasis (Kidney Stone)",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/genitourinary.json",
+      "sha256": "a4668b802fd4dce45c06471bcf0b3e909aebb46b6341fe0aec69ca978784133a",
+      "current_profile": {
+        "id": "nephrolithiasis",
+        "name": "Nephrolithiasis (Kidney Stone)",
+        "aliases": [
+          "kidney stone",
+          "renal colic",
+          "nephrolithiasis",
+          "요로결석"
+        ],
+        "chief_complaint_tags": [
+          "urinary_symptoms",
+          "abdominal_pain",
+          "back_pain"
+        ],
+        "category": "genitourinary",
+        "dangerous": false,
+        "urgency": "MEDIUM",
+        "typical_features": [
+          "colicky flank pain",
+          "pain radiates to groin",
+          "hematuria",
+          "nausea",
+          "unable to find comfortable position"
+        ],
+        "risk_factors": [
+          "prior kidney stones",
+          "dehydration",
+          "family history"
+        ],
+        "discriminating_questions": [
+          "location",
+          "character",
+          "family_history"
+        ],
+        "discriminating_exams": [
+          "costovertebral_tenderness",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "urinalysis",
+          "ct_abdomen"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic",
+        "confirmatory_findings": [
+          "ureteral stone on imaging",
+          "hydronephrosis",
+          "blood in urine on urinalysis"
+        ],
+        "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "sepsis",
+      "name": "Sepsis",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/infectious.json",
+      "sha256": "bdcef03bf1252e538df4004c2ed039cd98e110b82626db2e9a99379352bea811",
+      "current_profile": {
+        "id": "sepsis",
+        "name": "Sepsis",
+        "aliases": [
+          "sepsis",
+          "septic shock",
+          "패혈증"
+        ],
+        "chief_complaint_tags": [
+          "fever",
+          "altered_mental_status",
+          "dyspnea",
+          "urinary_symptoms",
+          "weakness",
+          "leg_swelling"
+        ],
+        "category": "infectious",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "fever",
+          "tachycardia",
+          "hypotension",
+          "altered mental status",
+          "tachypnea",
+          "suspected infection source",
+          "mottled skin on examination",
+          "temperature below 36 degrees",
+          "grunting on examination"
+        ],
+        "risk_factors": [
+          "immunosuppression",
+          "recent infection",
+          "indwelling catheter",
+          "advanced age",
+          "diabetes"
+        ],
+        "discriminating_questions": [
+          "associated_symptoms",
+          "onset",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "mental_status_exam",
+          "skin_exam"
+        ],
+        "discriminating_tests": [
+          "lactate",
+          "blood_culture",
+          "cbc",
+          "bmp"
+        ],
+        "confirmatory_findings": [
+          "positive blood culture",
+          "gram-negative rods",
+          "gram-positive cocci",
+          "gram-negative diplococci"
+        ],
+        "red_flag_keywords": [
+          "hypotension",
+          "tachycardia",
+          "altered mental status",
+          "tachypnea",
+          "fever with confusion"
+        ],
+        "minimum_workup": [
+          "lactate",
+          "blood_culture"
+        ],
+        "evidence_level": "internally_authored_heuristic",
+        "post_round_w_provenance": "typical_features 'mottled skin on examination', 'temperature below 36 degrees' and 'grunting on examination' added post-Round-W: they are NICE NG51 (Sepsis: recognition, diagnosis and early management, 2016, updated 2024) high-risk criteria observable without any test -- mottled or ashen appearance (all ages), temperature below 36 C (all ages), grunting (children under 5). The temperature feature is SUPPORT-ONLY and decided by the measured value (a fever does not contradict it: hypothermia is an alternative presentation, not a defining sign); the two signs are examination findings, never asked as questions. They support the working diagnosis of suspected sepsis; they do not identify a source or organism and danger adds no score. Agent-authored, not clinician-reviewed."
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "anaphylaxis",
+      "name": "Anaphylaxis",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/infectious.json",
+      "sha256": "bdcef03bf1252e538df4004c2ed039cd98e110b82626db2e9a99379352bea811",
+      "current_profile": {
+        "id": "anaphylaxis",
+        "name": "Anaphylaxis",
+        "aliases": [
+          "anaphylaxis",
+          "anaphylactic reaction",
+          "아나필락시스"
+        ],
+        "chief_complaint_tags": [
+          "dyspnea",
+          "fever",
+          "allergic"
+        ],
+        "category": "infectious",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "sudden onset urticaria",
+          "facial swelling",
+          "wheeze",
+          "throat tightness",
+          "hypotension",
+          "recent allergen exposure"
+        ],
+        "risk_factors": [
+          "known allergy",
+          "recent new medication",
+          "insect sting",
+          "food exposure"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "associated_symptoms",
+          "allergy"
+        ],
+        "discriminating_exams": [
+          "skin_exam",
+          "lung_auscultation",
+          "vital_signs"
+        ],
+        "discriminating_tests": [],
+        "red_flag_keywords": [
+          "urticaria",
+          "facial swelling",
+          "throat tightness",
+          "wheeze after exposure",
+          "hypotension"
+        ],
+        "minimum_workup": [],
+        "evidence_level": "internally_authored_heuristic",
+        "confirmatory_findings": [
+          "elevated tryptase"
+        ],
+        "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "viral_uri",
+      "name": "Viral Upper Respiratory Infection",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/infectious.json",
+      "sha256": "bdcef03bf1252e538df4004c2ed039cd98e110b82626db2e9a99379352bea811",
+      "current_profile": {
+        "id": "viral_uri",
+        "name": "Viral Upper Respiratory Infection",
+        "aliases": [
+          "common cold",
+          "viral URI",
+          "상기도감염"
+        ],
+        "chief_complaint_tags": [
+          "fever",
+          "cough",
+          "upper_respiratory"
+        ],
+        "category": "infectious",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "low grade fever",
+          "rhinorrhea",
+          "sore throat",
+          "cough",
+          "mild symptoms"
+        ],
+        "risk_factors": [
+          "sick contacts",
+          "seasonal exposure"
+        ],
+        "discriminating_questions": [
+          "associated_symptoms",
+          "duration"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "lung_auscultation"
+        ],
+        "discriminating_tests": [],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "ischemic_stroke",
+      "name": "Ischemic Stroke",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/neuro.json",
+      "sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
+      "current_profile": {
+        "id": "ischemic_stroke",
+        "name": "Ischemic Stroke",
+        "aliases": [
+          "stroke",
+          "cerebrovascular accident",
+          "CVA",
+          "brain attack",
+          "뇌졸중",
+          "뇌경색"
+        ],
+        "chief_complaint_tags": [
+          "headache",
+          "dizziness",
+          "altered_mental_status",
+          "weakness",
+          "syncope",
+          "focal_weakness",
+          "aphasia",
+          "numbness",
+          "vision_changes"
+        ],
+        "category": "neuro",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "sudden onset focal weakness",
+          "facial droop",
+          "slurred speech",
+          "aphasia",
+          "unilateral numbness",
+          "sudden vision loss",
+          "ataxia",
+          "focal neurological deficit on examination"
+        ],
+        "round_u_followup_provenance": "typical_feature 'focal neurological deficit on examination' added in the Round U follow-up: stroke is an episode of acute neurological dysfunction caused by focal cerebral infarction (Sacco RL et al., An Updated Definition of Stroke, Stroke 2013;44:2064-2089), presenting with a sudden focal neurological deficit (Powers WJ et al., 2019 AHA/ASA acute ischemic stroke guideline, Stroke 2019;50:e344). It is an examination finding (objective-only); it is not imaging confirmation and danger adds no score. Agent-authored, not clinician-reviewed.",
+        "risk_factors": [
+          "atrial fibrillation",
+          "hypertension",
+          "diabetes",
+          "smoking",
+          "prior stroke or TIA",
+          "advanced age"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "associated_symptoms",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "neuro_exam",
+          "vital_signs",
+          "mental_status_exam"
+        ],
+        "discriminating_tests": [
+          "ct_head",
+          "mri_brain",
+          "glucose_point_of_care"
+        ],
+        "confirmatory_findings": [
+          "acute infarct",
+          "diffusion restriction"
+        ],
+        "reassuring_if_present": [
+          "no focal neurological deficit",
+          "no focal neuro deficit",
+          "normal neurologic exam",
+          "normal neurological exam"
+        ],
+        "red_flag_keywords": [
+          "facial droop",
+          "slurred speech",
+          "unilateral weakness",
+          "sudden onset",
+          "focal deficit"
+        ],
+        "minimum_workup": [
+          "ct_head",
+          "glucose_point_of_care"
+        ],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "subarachnoid_hemorrhage",
+      "name": "Subarachnoid Hemorrhage",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/neuro.json",
+      "sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
+      "current_profile": {
+        "id": "subarachnoid_hemorrhage",
+        "name": "Subarachnoid Hemorrhage",
+        "aliases": [
+          "SAH",
+          "ruptured aneurysm",
+          "지주막하출혈"
+        ],
+        "chief_complaint_tags": [
+          "headache",
+          "altered_mental_status",
+          "neck_stiffness"
+        ],
+        "category": "neuro",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "thunderclap headache",
+          "worst headache of life",
+          "sudden onset severe headache",
+          "neck stiffness",
+          "photophobia",
+          "vomiting"
+        ],
+        "risk_factors": [
+          "hypertension",
+          "smoking",
+          "family history of aneurysm",
+          "polycystic kidney disease"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "character",
+          "severity",
+          "associated_symptoms"
+        ],
+        "discriminating_exams": [
+          "meningeal_signs",
+          "neuro_exam",
+          "mental_status_exam"
+        ],
+        "discriminating_tests": [
+          "ct_head",
+          "lumbar_puncture"
+        ],
+        "confirmatory_findings": [
+          "subarachnoid blood",
+          "xanthochromia"
+        ],
+        "red_flag_keywords": [
+          "thunderclap",
+          "worst headache of life",
+          "sudden onset severe",
+          "neck stiffness"
+        ],
+        "minimum_workup": [
+          "ct_head"
+        ],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "meningitis",
+      "name": "Bacterial Meningitis",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/neuro.json",
+      "sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
+      "current_profile": {
+        "id": "meningitis",
+        "name": "Bacterial Meningitis",
+        "aliases": [
+          "meningitis",
+          "수막염"
+        ],
+        "chief_complaint_tags": [
+          "headache",
+          "fever",
+          "altered_mental_status",
+          "neck_stiffness"
+        ],
+        "category": "neuro",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "fever",
+          "neck stiffness",
+          "photophobia",
+          "headache",
+          "altered mental status",
+          "rash",
+          "bulging fontanelle on examination",
+          "high-pitched cry on examination"
+        ],
+        "risk_factors": [
+          "recent infection",
+          "immunosuppression",
+          "close contact exposure",
+          "no vaccination"
+        ],
+        "discriminating_questions": [
+          "associated_symptoms",
+          "onset",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "meningeal_signs",
+          "skin_exam",
+          "vital_signs",
+          "mental_status_exam"
+        ],
+        "discriminating_tests": [
+          "lumbar_puncture",
+          "blood_culture",
+          "cbc"
+        ],
+        "confirmatory_findings": [
+          "CSF pleocytosis",
+          "gram-negative diplococci",
+          "gram-positive",
+          "elevated white blood cell count"
+        ],
+        "red_flag_keywords": [
+          "neck stiffness",
+          "photophobia",
+          "petechial rash",
+          "fever with headache",
+          "altered mental status"
+        ],
+        "minimum_workup": [
+          "lumbar_puncture"
+        ],
+        "evidence_level": "internally_authored_heuristic",
+        "required_diagnostic_context_any": [
+          "neck stiffness",
+          "photophobia",
+          "altered mental status",
+          "CSF pleocytosis",
+          "gram-negative diplococci",
+          "gram-positive"
+        ],
+        "evidence_references": [
+          {
+            "url": "https://www.nice.org.uk/guidance/ng240/chapter/Recommendations",
+            "scope": "Clinical features and investigation results are combined; this software final-label guard does not exclude meningitis or suppress urgent evaluation."
+          }
+        ],
+        "post_round_w_provenance": "typical_features 'bulging fontanelle on examination' and 'high-pitched cry on examination' added post-Round-W: NICE NG143 (Fever in under 5s, Table 1 'traffic light' red features: bulging fontanelle; weak, high-pitched or continuous cry) and NICE NG240 (Meningitis (bacterial) and meningococcal disease, 2024: symptoms and signs in infants include a bulging fontanelle and irritability/abnormal cry). They are signs observed by the examiner or reported by a caregiver, never asked as questions, and only occur in infants with an open fontanelle. They support the working diagnosis of suspected bacterial meningitis; they do not confirm it (no CSF), and danger adds no score. Agent-authored, not clinician-reviewed."
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "migraine",
+      "name": "Migraine",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/neuro.json",
+      "sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
+      "current_profile": {
+        "id": "migraine",
+        "name": "Migraine",
+        "aliases": [
+          "migraine headache",
+          "편두통"
+        ],
+        "chief_complaint_tags": [
+          "headache",
+          "dizziness",
+          "vomiting"
+        ],
+        "category": "neuro",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "unilateral pulsating headache",
+          "photophobia",
+          "phonophobia",
+          "nausea",
+          "aura",
+          "recurrent similar episodes"
+        ],
+        "risk_factors": [
+          "family history of migraine",
+          "female sex",
+          "known migraine history"
+        ],
+        "discriminating_questions": [
+          "character",
+          "associated_symptoms",
+          "family_history",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "neuro_exam",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "ct_head"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "tension_headache",
+      "name": "Tension-Type Headache",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/neuro.json",
+      "sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
+      "current_profile": {
+        "id": "tension_headache",
+        "name": "Tension-Type Headache",
+        "aliases": [
+          "tension headache",
+          "긴장성두통"
+        ],
+        "chief_complaint_tags": [
+          "headache"
+        ],
+        "category": "neuro",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "bilateral band-like pressure",
+          "mild to moderate intensity",
+          "no nausea",
+          "stress related"
+        ],
+        "risk_factors": [
+          "stress",
+          "poor sleep",
+          "prolonged screen time"
+        ],
+        "discriminating_questions": [
+          "character",
+          "location",
+          "aggravating"
+        ],
+        "discriminating_exams": [
+          "neuro_exam",
+          "vital_signs"
+        ],
+        "discriminating_tests": [],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "bppv",
+      "name": "Benign Paroxysmal Positional Vertigo",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/neuro.json",
+      "sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
+      "current_profile": {
+        "id": "bppv",
+        "name": "Benign Paroxysmal Positional Vertigo",
+        "aliases": [
+          "BPPV",
+          "positional vertigo",
+          "양성돌발체위현훈"
+        ],
+        "chief_complaint_tags": [
+          "dizziness"
+        ],
+        "category": "neuro",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "brief episodic vertigo",
+          "triggered by head position change",
+          "no focal neuro deficit",
+          "no hearing loss"
+        ],
+        "risk_factors": [
+          "prior episodes",
+          "recent head trauma",
+          "advanced age"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "duration",
+          "aggravating",
+          "associated_symptoms"
+        ],
+        "discriminating_exams": [
+          "neuro_exam",
+          "vital_signs"
+        ],
+        "discriminating_tests": [],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic",
+        "confirmatory_findings": [
+          "positive dix-hallpike",
+          "positional nystagmus",
+          "torsional nystagmus"
+        ],
+        "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "orthostatic_hypotension",
+      "name": "Orthostatic Hypotension",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/neuro.json",
+      "sha256": "034e892acb929f7cb307396fa6544c209301b8d391c1df0f09f537d877bc4db8",
+      "current_profile": {
+        "id": "orthostatic_hypotension",
+        "name": "Orthostatic Hypotension",
+        "aliases": [
+          "orthostatic hypotension",
+          "postural hypotension",
+          "기립성 저혈압"
+        ],
+        "chief_complaint_tags": [
+          "dizziness",
+          "syncope"
+        ],
+        "category": "neuro",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "lightheadedness on standing up",
+          "improves with sitting or lying down",
+          "no focal neurological deficit",
+          "no chest pain",
+          "no palpitations before the episode"
+        ],
+        "risk_factors": [
+          "dehydration",
+          "diuretic use",
+          "prolonged bed rest",
+          "advanced age"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "aggravating",
+          "relieving",
+          "medication"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "neuro_exam"
+        ],
+        "discriminating_tests": [],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic",
+        "confirmatory_findings": [
+          "orthostatic drop in blood pressure",
+          "blood pressure falls on standing"
+        ],
+        "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "pulmonary_embolism",
+      "name": "Pulmonary Embolism",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
+      "current_profile": {
+        "id": "pulmonary_embolism",
+        "name": "Pulmonary Embolism",
+        "aliases": [
+          "PE",
+          "pulmonary thromboembolism",
+          "폐색전증"
+        ],
+        "chief_complaint_tags": [
+          "dyspnea",
+          "chest_pain",
+          "syncope",
+          "palpitations",
+          "cough",
+          "leg_swelling",
+          "hemoptysis"
+        ],
+        "category": "pulmonary",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "sudden onset dyspnea",
+          "pleuritic chest pain",
+          "tachycardia",
+          "hemoptysis",
+          "calf swelling",
+          "unilateral leg pain",
+          "tachypnea",
+          "hypoxia"
+        ],
+        "risk_factors": [
+          "recent surgery",
+          "immobilization",
+          "long travel",
+          "malignancy",
+          "oral contraceptive use",
+          "prior DVT or PE",
+          "pregnancy"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "character",
+          "associated_symptoms",
+          "past_medical_history",
+          "social_history"
+        ],
+        "discriminating_exams": [
+          "vital_signs",
+          "extremity_exam",
+          "lung_auscultation"
+        ],
+        "discriminating_tests": [
+          "d_dimer",
+          "ct_chest_angio",
+          "ecg"
+        ],
+        "confirmatory_findings": [
+          "filling defect in the pulmonary artery",
+          "elevated D-dimer"
+        ],
+        "red_flag_keywords": [
+          "sudden onset dyspnea",
+          "pleuritic",
+          "calf swelling",
+          "hemoptysis",
+          "tachycardia",
+          "hypoxia"
+        ],
+        "minimum_workup": [
+          "d_dimer",
+          "ct_chest_angio"
+        ],
+        "evidence_level": "internally_authored_heuristic",
+        "round_p_provenance": "Round P: tachypnea and hypoxia added as typical features (classic bedside signs, and the only objective PE signs a test-free encounter can obtain). Agent-authored; not clinician-reviewed."
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "tension_pneumothorax",
+      "name": "Tension Pneumothorax",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
+      "current_profile": {
+        "id": "tension_pneumothorax",
+        "name": "Tension Pneumothorax",
+        "aliases": [
+          "tension pneumo",
+          "긴장성 기흉"
+        ],
+        "chief_complaint_tags": [
+          "dyspnea",
+          "chest_pain",
+          "cough",
+          "trauma"
+        ],
+        "category": "pulmonary",
+        "dangerous": true,
+        "urgency": "CRITICAL",
+        "typical_features": [
+          "sudden onset dyspnea",
+          "unilateral absent breath sounds",
+          "tracheal deviation",
+          "hypotension",
+          "chest pain after trauma"
+        ],
+        "risk_factors": [
+          "chest trauma",
+          "tall thin body habitus",
+          "COPD",
+          "mechanical ventilation"
+        ],
+        "discriminating_questions": [
+          "onset",
+          "character",
+          "past_medical_history"
+        ],
+        "discriminating_exams": [
+          "lung_auscultation",
+          "vital_signs",
+          "general_appearance"
+        ],
+        "discriminating_tests": [
+          "cxr"
+        ],
+        "confirmatory_findings": [
+          "absent breath sounds",
+          "tracheal deviation"
+        ],
+        "red_flag_keywords": [
+          "absent breath sounds",
+          "tracheal deviation",
+          "hypotension",
+          "sudden onset dyspnea",
+          "distended neck veins"
+        ],
+        "minimum_workup": [
+          "lung_auscultation",
+          "cxr"
+        ],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "pneumonia",
+      "name": "Community-Acquired Pneumonia",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
+      "current_profile": {
+        "id": "pneumonia",
+        "name": "Community-Acquired Pneumonia",
+        "aliases": [
+          "pneumonia",
+          "폐렴"
+        ],
+        "chief_complaint_tags": [
+          "dyspnea",
+          "fever",
+          "chest_pain",
+          "cough"
+        ],
+        "category": "pulmonary",
+        "dangerous": false,
+        "urgency": "MEDIUM",
+        "typical_features": [
+          "productive cough",
+          "fever",
+          "pleuritic chest pain",
+          "crackles on auscultation",
+          "dyspnea"
+        ],
+        "risk_factors": [
+          "elderly age",
+          "smoking",
+          "COPD",
+          "immunosuppression"
+        ],
+        "discriminating_questions": [
+          "associated_symptoms",
+          "onset",
+          "duration"
+        ],
+        "discriminating_exams": [
+          "lung_auscultation",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "cxr",
+          "cbc"
+        ],
+        "red_flag_keywords": [
+          "hypoxia",
+          "confusion",
+          "hypotension"
+        ],
+        "confirmatory_findings": [
+          "consolidation",
+          "infiltrate",
+          "focal consolidation"
+        ],
+        "evidence_level": "internally_authored_heuristic",
+        "evidence_references": [
+          {
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6812437/",
+            "scope": "Auscultatory signs alone are nonspecific; crackles are retained as a typical feature, not independent confirmatory evidence."
+          }
+        ]
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "asthma_copd_exacerbation",
+      "name": "Asthma / COPD Exacerbation",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
+      "current_profile": {
+        "id": "asthma_copd_exacerbation",
+        "name": "Asthma / COPD Exacerbation",
+        "aliases": [
+          "asthma exacerbation",
+          "COPD exacerbation",
+          "천식 악화",
+          "만성폐쇄성폐질환 악화"
+        ],
+        "chief_complaint_tags": [
+          "dyspnea",
+          "cough"
+        ],
+        "category": "pulmonary",
+        "dangerous": false,
+        "urgency": "MEDIUM",
+        "typical_features": [
+          "wheeze",
+          "worse with triggers",
+          "prolonged expiration",
+          "dyspnea",
+          "cough",
+          "worsening dyspnea"
+        ],
+        "risk_factors": [
+          "smoking",
+          "known reactive airway disease",
+          "allergen exposure",
+          "asthma",
+          "COPD"
+        ],
+        "discriminating_questions": [
+          "past_medical_history",
+          "aggravating",
+          "associated_symptoms"
+        ],
+        "discriminating_exams": [
+          "lung_auscultation",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "cxr",
+          "abg"
+        ],
+        "red_flag_keywords": [
+          "silent chest",
+          "unable to speak in full sentences",
+          "hypoxia"
+        ],
+        "evidence_level": "internally_authored_heuristic",
+        "confirmatory_findings": [
+          "reduced peak flow",
+          "hyperinflation on chest x-ray"
+        ],
+        "confirmatory_findings_provenance": "confirmatory_findings added in Round M: agent-authored, widely taught defining objective findings; unreviewed general knowledge, no external dataset",
+        "evidence_references": [
+          {
+            "url": "https://www.nhlbi.nih.gov/health/copd/symptoms",
+            "scope": "Known disease is risk context; worsening respiratory symptoms require evaluation and are not confirmed by history alone."
+          }
+        ]
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "acute_bronchitis",
+      "name": "Acute Bronchitis",
+      "kind": "core_profile",
+      "path": "nova_agent/knowledge/diseases/pulmonary.json",
+      "sha256": "be1f9819e7fc727e91b4405bfd0fc9f42261938ed5155038e59f864a93da50c2",
+      "current_profile": {
+        "id": "acute_bronchitis",
+        "name": "Acute Bronchitis",
+        "aliases": [
+          "bronchitis",
+          "chest cold",
+          "급성기관지염"
+        ],
+        "chief_complaint_tags": [
+          "cough",
+          "fever"
+        ],
+        "category": "pulmonary",
+        "dangerous": false,
+        "urgency": "LOW",
+        "typical_features": [
+          "productive cough",
+          "mild fever",
+          "no focal consolidation",
+          "recent viral illness",
+          "chest wall soreness from coughing"
+        ],
+        "risk_factors": [
+          "smoking",
+          "recent viral upper respiratory infection"
+        ],
+        "discriminating_questions": [
+          "duration",
+          "associated_symptoms",
+          "social_history"
+        ],
+        "discriminating_exams": [
+          "lung_auscultation",
+          "vital_signs"
+        ],
+        "discriminating_tests": [
+          "cxr"
+        ],
+        "red_flag_keywords": [],
+        "evidence_level": "internally_authored_heuristic"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "onto::tier2:hyperthyroidism",
+      "name": "Hyperthyroidism",
+      "kind": "supplemental_profile",
+      "path": "nova_agent/knowledge/clinical_profiles.json",
+      "sha256": "b3584fd6c502a47eb2486c37d78f2332e5be61adabc82944a716242e35ef5095",
+      "current_profile": {
+        "id": "onto::tier2:hyperthyroidism",
+        "name": "Hyperthyroidism",
+        "aliases": [
+          "갑상샘항진증",
+          "갑상선기능항진증",
+          "갑상선 기능 항진증",
+          "Thyrotoxicosis"
+        ],
+        "category": "thyroid",
+        "urgency": "LOW",
+        "dangerous": false,
+        "chief_complaint_tags": [],
+        "typical_features": [
+          "weight loss",
+          "increased appetite",
+          "heat intolerance",
+          "sweating",
+          "tremor",
+          "palpitations",
+          "diffuse goiter",
+          "hyperreflexia"
+        ],
+        "confirmatory_findings": [
+          "suppressed TSH with raised free T4",
+          "diffuse goiter on examination"
+        ],
+        "risk_factors": [],
+        "contradictory_features": [],
+        "discriminating_questions": [
+          "associated_symptoms:weight loss despite good appetite",
+          "associated_symptoms:palpitations",
+          "associated_symptoms:heat intolerance",
+          "associated_symptoms:tremor"
+        ],
+        "minimum_workup": [],
+        "support_requirements": {
+          "minimum_positive_features": 2,
+          "anchor_any": [
+            "heat intolerance",
+            "increased appetite",
+            "diffuse goiter"
+          ]
+        },
+        "plan": {
+          "tests": "TSH와 free T4 측정; 결과에 따라 T3 추가; 두근거림이 있으면 ECG 고려",
+          "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+          "follow_up": "1~2주 내 검사 결과와 맥박·체중·증상 재평가; 악화 시 조기 진료",
+          "education": "고열, 의식 변화, 흉통, 호흡곤란 시 즉시 평가"
+        },
+        "source_url": "https://www.niddk.nih.gov/health-information/endocrine-diseases/hyperthyroidism",
+        "clinical_validation_status": "NOT_VERIFIED",
+        "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance",
+        "discriminating_exams": [],
+        "discriminating_tests": []
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "clinical:graves_disease",
+      "name": "Graves disease",
+      "kind": "supplemental_profile",
+      "path": "nova_agent/knowledge/clinical_profiles.json",
+      "sha256": "b3584fd6c502a47eb2486c37d78f2332e5be61adabc82944a716242e35ef5095",
+      "current_profile": {
+        "id": "clinical:graves_disease",
+        "name": "Graves disease",
+        "aliases": [
+          "그레이브스병",
+          "Graves hyperthyroidism",
+          "Graves Disease",
+          "그레이브스",
+          "그레이브스 갑상샘항진증"
+        ],
+        "category": "thyroid",
+        "urgency": "LOW",
+        "dangerous": false,
+        "chief_complaint_tags": [],
+        "typical_features": [
+          "weight loss",
+          "increased appetite",
+          "heat intolerance",
+          "sweating",
+          "tremor",
+          "palpitations",
+          "diffuse goiter",
+          "thyroid eye signs",
+          "hyperreflexia"
+        ],
+        "confirmatory_findings": [],
+        "risk_factors": [],
+        "contradictory_features": [],
+        "discriminating_questions": [],
+        "minimum_workup": [],
+        "support_requirements": {
+          "minimum_positive_features": 3,
+          "anchor_any": [
+            "diffuse goiter",
+            "thyroid eye signs"
+          ]
+        },
+        "plan": {
+          "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG",
+          "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+          "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료",
+          "education": "고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가"
+        },
+        "source_url": "https://www.niddk.nih.gov/health-information/endocrine-diseases/hyperthyroidism",
+        "clinical_validation_status": "NOT_VERIFIED",
+        "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "clinical:sedative_hypnotic_use_disorder",
+      "name": "Sedative-Hypnotic Use Disorder",
+      "kind": "supplemental_profile",
+      "path": "nova_agent/knowledge/clinical_profiles.json",
+      "sha256": "b3584fd6c502a47eb2486c37d78f2332e5be61adabc82944a716242e35ef5095",
+      "current_profile": {
+        "id": "clinical:sedative_hypnotic_use_disorder",
+        "name": "Sedative-Hypnotic Use Disorder",
+        "aliases": [
+          "수면제 사용장애",
+          "수면제 의존",
+          "진정수면제 사용장애",
+          "sedative hypnotic use disorder",
+          "sedative dependence",
+          "hypnotic dependence"
+        ],
+        "category": "sedative",
+        "urgency": "LOW",
+        "dangerous": false,
+        "chief_complaint_tags": [],
+        "typical_features": [
+          "sedative use",
+          "insomnia",
+          "daytime sleepiness",
+          "dose escalation",
+          "withdrawal symptoms",
+          "difficulty reducing sedative use"
+        ],
+        "confirmatory_findings": [],
+        "risk_factors": [],
+        "contradictory_features": [],
+        "discriminating_questions": [],
+        "minimum_workup": [],
+        "support_requirements": {
+          "minimum_positive_features": 2,
+          "anchor_any": [
+            "dose escalation",
+            "withdrawal symptoms",
+            "difficulty reducing sedative use"
+          ]
+        },
+        "plan": {
+          "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토",
+          "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+          "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락",
+          "education": "갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가"
+        },
+        "source_url": "https://www.nice.org.uk/guidance/ng215/chapter/Recommendations",
+        "clinical_validation_status": "NOT_VERIFIED",
+        "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "clinical:medication_related_hypersomnia",
+      "name": "Medication-related hypersomnia",
+      "kind": "supplemental_profile",
+      "path": "nova_agent/knowledge/clinical_profiles.json",
+      "sha256": "b3584fd6c502a47eb2486c37d78f2332e5be61adabc82944a716242e35ef5095",
+      "current_profile": {
+        "id": "clinical:medication_related_hypersomnia",
+        "name": "Medication-related hypersomnia",
+        "aliases": [
+          "약물 관련 과다졸림",
+          "Medication-induced sleep disorder",
+          "약물 유발 수면장애",
+          "약물성 과다수면"
+        ],
+        "category": "sedative",
+        "urgency": "LOW",
+        "dangerous": false,
+        "chief_complaint_tags": [],
+        "typical_features": [
+          "sedative use",
+          "daytime sleepiness",
+          "sleepiness after medication"
+        ],
+        "confirmatory_findings": [],
+        "risk_factors": [],
+        "contradictory_features": [],
+        "discriminating_questions": [],
+        "minimum_workup": [],
+        "support_requirements": {
+          "minimum_positive_features": 2,
+          "anchor_any": [
+            "sleepiness after medication"
+          ]
+        },
+        "plan": {
+          "tests": "복약 검토: 용량·빈도·복용 시점·병용약 확인; 수면무호흡 등 다른 원인은 증상에 따라 평가",
+          "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+          "follow_up": "1주 내 약 복용과 졸림·낮 활동 영향 재평가; 과도한 졸림 시 조기 진료",
+          "education": "졸리면 운전 금지; 약을 임의 증량하거나 갑자기 중단하지 않기; 깨우기 어렵거나 호흡이 느리면 즉시 평가"
+        },
+        "source_url": "https://www.nice.org.uk/guidance/ng215/chapter/Recommendations",
+        "clinical_validation_status": "NOT_VERIFIED",
+        "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "clinical:rebound_insomnia",
+      "name": "Rebound insomnia",
+      "kind": "supplemental_profile",
+      "path": "nova_agent/knowledge/clinical_profiles.json",
+      "sha256": "b3584fd6c502a47eb2486c37d78f2332e5be61adabc82944a716242e35ef5095",
+      "current_profile": {
+        "id": "clinical:rebound_insomnia",
+        "name": "Rebound insomnia",
+        "aliases": [
+          "반동 불면",
+          "반동성 불면증"
+        ],
+        "category": "sedative",
+        "urgency": "LOW",
+        "dangerous": false,
+        "chief_complaint_tags": [],
+        "typical_features": [
+          "sedative use",
+          "insomnia",
+          "rebound insomnia after stopping"
+        ],
+        "confirmatory_findings": [],
+        "risk_factors": [],
+        "contradictory_features": [],
+        "discriminating_questions": [],
+        "minimum_workup": [],
+        "support_requirements": {
+          "minimum_positive_features": 2,
+          "anchor_any": [
+            "rebound insomnia after stopping"
+          ]
+        },
+        "plan": {
+          "tests": "중단 시점과 이전 약물 용량·기간, 금단 증상 및 병용약 검토",
+          "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+          "follow_up": "수일~1주 내 불면·금단 증상 재평가; 처방의와 감량 계획 조정",
+          "education": "급작스러운 중단·임의 재복용 피하고 처방의와 상의; 경련·혼돈 시 즉시 평가"
+        },
+        "source_url": "https://www.nice.org.uk/guidance/ng215/chapter/Recommendations",
+        "clinical_validation_status": "NOT_VERIFIED",
+        "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "clinical:constitutional_growth_delay",
+      "name": "Constitutional growth delay",
+      "kind": "supplemental_profile",
+      "path": "nova_agent/knowledge/clinical_profiles.json",
+      "sha256": "b3584fd6c502a47eb2486c37d78f2332e5be61adabc82944a716242e35ef5095",
+      "current_profile": {
+        "id": "clinical:constitutional_growth_delay",
+        "name": "Constitutional growth delay",
+        "aliases": [
+          "체질성 성장지연",
+          "constitutional delay of growth and puberty",
+          "체질성 성장 및 사춘기 지연"
+        ],
+        "category": "growth",
+        "urgency": "LOW",
+        "dangerous": false,
+        "chief_complaint_tags": [],
+        "typical_features": [
+          "short stature",
+          "preserved prepubertal growth velocity",
+          "family delayed puberty",
+          "documented delayed bone age"
+        ],
+        "confirmatory_findings": [],
+        "risk_factors": [],
+        "contradictory_features": [],
+        "discriminating_questions": [],
+        "minimum_workup": [],
+        "support_requirements": {
+          "minimum_positive_features": 2,
+          "anchor_any": [
+            "family delayed puberty",
+            "documented delayed bone age"
+          ]
+        },
+        "plan": {
+          "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가",
+          "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+          "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료",
+          "education": "성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가"
+        },
+        "source_url": "https://pedsendo.org/patient-resource/short-stature/",
+        "clinical_validation_status": "NOT_VERIFIED",
+        "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "clinical:familial_short_stature",
+      "name": "Familial short stature",
+      "kind": "supplemental_profile",
+      "path": "nova_agent/knowledge/clinical_profiles.json",
+      "sha256": "b3584fd6c502a47eb2486c37d78f2332e5be61adabc82944a716242e35ef5095",
+      "current_profile": {
+        "id": "clinical:familial_short_stature",
+        "name": "Familial short stature",
+        "aliases": [
+          "가족성 저신장"
+        ],
+        "category": "growth",
+        "urgency": "LOW",
+        "dangerous": false,
+        "chief_complaint_tags": [],
+        "typical_features": [
+          "short stature",
+          "preserved prepubertal growth velocity",
+          "short parental stature"
+        ],
+        "confirmatory_findings": [],
+        "risk_factors": [],
+        "contradictory_features": [],
+        "discriminating_questions": [],
+        "minimum_workup": [],
+        "support_requirements": {
+          "minimum_positive_features": 2,
+          "anchor_any": [
+            "short parental stature"
+          ]
+        },
+        "plan": {
+          "tests": "날짜별 신장 측정·성장곡선 및 부모 키 검토; 성장속도·증상에 따라 표적 검사 고려",
+          "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+          "follow_up": "3~6개월 후 성장속도와 성장곡선 재평가; 예측 경로 이탈 시 소아내분비 상담",
+          "education": "성장속도 저하·체중 감소·만성 전신 증상이 생기면 조기 평가"
+        },
+        "source_url": "https://pedsendo.org/patient-resource/short-stature/",
+        "clinical_validation_status": "NOT_VERIFIED",
+        "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    },
+    {
+      "id": "clinical:growth_hormone_deficiency",
+      "name": "Growth hormone deficiency",
+      "kind": "supplemental_profile",
+      "path": "nova_agent/knowledge/clinical_profiles.json",
+      "sha256": "b3584fd6c502a47eb2486c37d78f2332e5be61adabc82944a716242e35ef5095",
+      "current_profile": {
+        "id": "clinical:growth_hormone_deficiency",
+        "name": "Growth hormone deficiency",
+        "aliases": [
+          "성장호르몬 결핍 의심",
+          "Growth hormone deficiency",
+          "성장호르몬 결핍증"
+        ],
+        "category": "growth",
+        "urgency": "LOW",
+        "dangerous": false,
+        "chief_complaint_tags": [],
+        "typical_features": [
+          "short stature",
+          "reduced linear growth velocity",
+          "documented delayed bone age"
+        ],
+        "confirmatory_findings": [],
+        "risk_factors": [],
+        "contradictory_features": [],
+        "discriminating_questions": [],
+        "minimum_workup": [],
+        "support_requirements": {
+          "minimum_positive_features": 2,
+          "anchor_any": [
+            "reduced linear growth velocity"
+          ]
+        },
+        "plan": {
+          "tests": "성장곡선·골연령 검토; 소아내분비 의뢰; 원인 감별에 따라 TSH·free T4, IGF-1/IGFBP-3 고려; 자극검사는 전문의 판단",
+          "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+          "follow_up": "2~4주 내 소아내분비 평가 연결; 이후 3~6개월 성장속도 재평가",
+          "education": "확인 전 성장호르몬 치료 보류; 두통·구토·시야 변화가 생기면 조기 평가"
+        },
+        "source_url": "https://pedsendo.org/patient-resource/short-stature/",
+        "clinical_validation_status": "NOT_VERIFIED",
+        "evidence_level": "engineering-authored clinical feature/plan heuristic; not clinician-reviewed; source citation is not redistribution clearance"
+      },
+      "review": {
+        "reviewer_name": null,
+        "qualification": null,
+        "date": null,
+        "decision": "PENDING",
+        "evidence": [],
+        "corrections": [],
+        "scope_and_exceptions": null
+      }
+    }
+  ],
+  "priority_review_questions": [
+    {
+      "id": "CR-01",
+      "priority": "HIGH",
+      "title": "진정수면제 의존과 사용장애의 구분",
+      "paths": [
+        "nova_agent/knowledge/clinical_profiles.json",
+        "nova_agent/clinical_profiles.py"
+      ],
+      "observation": "용량 증가·금단·감량 어려움만으로 사용장애를 선택할 수 있음. 치료 중 생리적 의존과 사용장애의 동등성은 입증되지 않음.",
+      "review_question": "처방대로 복용하던 환자의 금단을 사용장애로 단정하지 않는지, 기능 손상·조절 실패·유해 사용 조건과 명칭을 검토.",
+      "reference_url": "https://www.nice.org.uk/guidance/ng215/chapter/Recommendations",
+      "source_section": "NG215 1.2, 1.3, 1.5; 사용장애 진단 기준 자체를 제공하는 근거는 아님"
+    },
+    {
+      "id": "CR-02",
+      "priority": "HIGH",
+      "title": "갑상샘 비대는 확진 검사가 아님",
+      "paths": [
+        "nova_agent/knowledge/clinical_profiles.json",
+        "nova_agent/clinical_profiles.py"
+      ],
+      "observation": "Hyperthyroidism confirmatory_findings에 diffuse goiter가 포함됨. Graves와 thyrotoxicosis 명칭 범위도 별도 검토 필요.",
+      "review_question": "혈액검사 전 작업 가설과 확진을 구분하고, 미만성 비대만으로 원인 확진·확정 문구가 출력되는지 검토.",
+      "reference_url": "https://www.niddk.nih.gov/health-information/endocrine-diseases/hyperthyroidism",
+      "source_section": "How do doctors diagnose hyperthyroidism?"
+    },
+    {
+      "id": "CR-03",
+      "priority": "HIGH",
+      "title": "소아 성장속도와 사춘기 상태",
+      "paths": [
+        "nova_agent/clinical_profiles.py",
+        "nova_agent/knowledge/clinical_profiles.json"
+      ],
+      "observation": "3≤나이<12에서 4~7 cm/year를 prepubertal로 투영하지만 실제 사춘기 단계는 확인하지 않음. 골연령 지연은 단독 확진이 아님.",
+      "review_question": "성별·사춘기 단계·키 백분위·측정 간격·부모키·만성 질환을 검토하고 성장호르몬 결핍 과진단 가능성 확인.",
+      "reference_url": "https://pedsendo.org/patient-resource/short-stature/",
+      "source_section": "What Kind of Growth Pattern is Atypical? / What Tests Might Be Used to Assess Your Child?"
+    },
+    {
+      "id": "CR-04",
+      "priority": "HIGH",
+      "title": "응급 전환과 부정·시간·가족 정보의 분리",
+      "paths": [
+        "nova_agent/safety.py",
+        "nova_agent/clinical_assertions.py",
+        "nova_agent/evidence_scope.py",
+        "nova_agent/vitals_parser.py"
+      ],
+      "observation": "의식 저하와 단순 졸림, 현재 위험과 과거·가족·부정 소견은 서로 다른 근거임.",
+      "review_question": "성인·영아·소아의 실제 위험 소견, 정상 재측정, (-)/(+/-), 가족 병력만 존재하는 상황을 각각 검토.",
+      "reference_url": null,
+      "source_section": "기존 위험 규칙 원출처 미확정; 해당 전문 분야의 최신 근거 필요"
+    },
+    {
+      "id": "CR-05",
+      "priority": "MEDIUM",
+      "title": "추적 간격과 약물 계획",
+      "paths": [
+        "nova_agent/knowledge/clinical_profiles.json",
+        "competition/nova_sdk_adapter.py"
+      ],
+      "observation": "1주·1~2주·3~6개월 간격은 일부 일반화한 개발 휴리스틱. 심한 금단·의식 저하 등에 일률적 추적 간격 적용은 부적절할 수 있음.",
+      "review_question": "환자 상태별 추적 간격과 즉시 평가 예외, 임의 중단·증량 금지 및 치료 계획의 적용 대상을 검토.",
+      "reference_url": "https://www.nice.org.uk/guidance/ng215/chapter/Recommendations",
+      "source_section": "NG215 1.4, 1.5; 개별 간격의 검증을 의미하지 않음"
+    },
+    {
+      "id": "CR-06",
+      "priority": "HIGH",
+      "title": "시행 전 검사 계획과 실제 환자 근거의 분리",
+      "paths": [
+        "competition/nova_sdk_adapter.py",
+        "nova_agent/final_decision.py",
+        "nova_agent/soap.py"
+      ],
+      "observation": "검사 권고·질문·외부 배경 문서는 실제 환자의 양성 검사 결과가 아님.",
+      "review_question": "감별·A/P·환자 설명이 같은 결정에 근거하는지, 시행되지 않은 검사·음성 근거가 확진 근거로 출력되는지 검토.",
+      "reference_url": null,
+      "source_section": "실제 전문가 판독 및 독립 사례 필요; 합성 테스트는 검토 완료 증거가 아님"
+    }
+  ],
+  "tier2_scope": {
+    "catalog_concepts": 1246,
+    "reviewed": 0,
+    "clinical_validation": "NOT_VERIFIED"
+  },
+  "limit": "Engineering observations and literature leads only; no clinical approval or patient-outcome validation."
+}

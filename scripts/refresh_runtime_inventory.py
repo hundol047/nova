@@ -7,6 +7,7 @@ What it does (and the only things it does):
   * adds a NEW entry for a runtime file that has none, copied from a conservative template whose every
     authorship/licence/permission field is ``UNRESOLVED`` (status UNRESOLVED), unless the file has an
     explicit, source-evidenced override below;
+  * invalidates hash-bound owner clearance when existing bytes change; new files never inherit an owner grant;
   * marks an entry whose file no longer exists as removed (submission_included false, status
     NOT_USED_IN_SUBMISSION) instead of deleting history.
 It never edits original_author/license/permission/clinician fields of an existing entry, and never
@@ -82,6 +83,9 @@ def build(check_only: bool) -> dict:
         if path in by_path:
             asset = by_path[path]
             if asset.get("sha256") != digest or not asset.get("submission_included", True) and asset.get("removed_from_runtime"):
+                if asset.get('status') == 'TEAM_ORIGINAL_VERIFIED':
+                    asset['status'] = 'UNRESOLVED'
+                    asset['rights_status'] = 'Bytes changed: obtain a renewed hash-bound owner declaration'
                 asset["sha256"] = digest
                 if asset.get("removed_from_runtime"):
                     asset.pop("removed_from_runtime")
@@ -89,6 +93,10 @@ def build(check_only: bool) -> dict:
                 changes["refreshed"].append(path)
             continue
         base = copy.deepcopy(template_data if path.startswith("nova_agent/knowledge/") else template_code)
+        base.pop('owner_evidence', None)
+        for field in ('original_author', 'license', 'research_publication_permission',
+                      'redistribution_permission', 'modification_permission', 'authorship_status', 'rights_status'):
+            base[field] = 'UNRESOLVED'
         base.update(asset_id=path, path=path, sha256=digest, submission_included=True, status="UNRESOLVED",
                     history_evidence=[], runtime_use=("Static clinical data or clinical rules" if path.startswith("nova_agent/knowledge/")
                                                      else "Supporting runtime code/metadata; conservatively inventoried"),

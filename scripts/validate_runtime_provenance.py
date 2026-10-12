@@ -8,6 +8,11 @@ import hashlib
 import json
 from pathlib import Path
 
+try:
+    from scripts.prepare_rights_and_review import owner_errors
+except ModuleNotFoundError:
+    from prepare_rights_and_review import owner_errors
+
 ROOT = Path(__file__).resolve().parents[1]
 FIELDS = set("asset_id path sha256 runtime_use original_author original_source source_reference source_version license research_publication_permission redistribution_permission modification_permission generation_method generating_model model_version generation_prompt generation_code generation_date manual_review clinician_review submission_included status".split())
 STATUSES = {"VERIFIED", "TEAM_ORIGINAL_VERIFIED", "UNRESOLVED", "REPLACEMENT_REQUIRED", "NOT_USED_IN_SUBMISSION"}
@@ -34,13 +39,16 @@ def validate(root=ROOT):
                 for key in ("original_author", "license", "research_publication_permission", "redistribution_permission", "modification_permission"):
                     if asset.get(key) in (None, "", "UNRESOLVED"):
                         errors.append({"path": name, "error": "unsubstantiated clearance: " + key})
+                if asset.get('status') == 'TEAM_ORIGINAL_VERIFIED':
+                    for problem in owner_errors(root, asset):
+                        errors.append({'path': name, 'error': problem})
     actual = {str(p.relative_to(root)) for p in (root / "nova_agent").rglob("*")
               if p.is_file() and "__pycache__" not in p.parts and p.suffix in {".py", ".json", ".md"}}
     for missing in sorted(actual - paths): errors.append({"path": missing, "error": "not inventoried"})
     return {"coverage_status": "FAIL" if errors else "PASS", "errors": errors,
-            "permission_status": "BLOCKED" if errors or blocked else "NOT_VERIFIED",
+            "permission_status": "BLOCKED" if errors or blocked else "DOCUMENTED_FOR_STATED_SCOPE",
             "unresolved_assets": blocked, "official_submission_allowed": False,
-            "note": "Manual rights/authorship review required; no automatic legal or medical certification."}
+            "note": "Owner declarations and publisher terms within stated scopes only; no independent legal audit, clinician approval or complete ZIP rights clearance."}
 
 
 if __name__ == "__main__":
@@ -51,4 +59,4 @@ if __name__ == "__main__":
     path = ROOT / "artifacts/compliance_hardening/provenance_validation.json"
     path.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({k: v for k, v in result.items() if k != "unresolved_assets"}, indent=2))
-    if result["errors"] or args.require_cleared: raise SystemExit(2)
+    if result["errors"] or (args.require_cleared and result["unresolved_assets"]): raise SystemExit(2)

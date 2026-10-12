@@ -1,6 +1,12 @@
 # Sources and licenses
 
-Audit date: 2026-10-05 Asia/Seoul. Status: UNRESOLVED — NOT CLEARED FOR OFFICIAL SUBMISSION.
+Current follow-up: **2026-10-12 — 94 team assets have hash-bound, owner-declared competition/research rights; three publisher assets retain their source-specific terms.**
+See [TEAM_COMPETITION_PERMISSION.md](TEAM_COMPETITION_PERMISSION.md) and [RIGHTS_AND_REVIEW_STATUS_KO.md](RIGHTS_AND_REVIEW_STATUS_KO.md).
+This is not an independent ownership audit, recovery of unknown historical generation records, or clinical approval.
+The separate whole-archive ledger includes the organizer SDK, whose explicit redistribution terms remain unverified.
+
+The sections below retain the earlier 2026-10-05 audit and follow-up history. Earlier UNRESOLVED entries are superseded only
+for owner-declared rights of the exact files/hashes in the current declaration, not for clinical or historical generation evidence.
 
 AI generation is not a medical source. Internal authorship, “standard clinical references”,
 “engineering-agent general knowledge” and `unreviewed_general_knowledge` do not prove provenance,

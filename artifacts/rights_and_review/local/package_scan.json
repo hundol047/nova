@@ -1,0 +1,62 @@
+{
+  "secret_scan": {
+    "status": "PASS",
+    "repository_findings": [
+      {
+        "file": "backend/tests/test_cds_hooks.py",
+        "line": 230,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "backend/tests/test_fhir_adapter.py",
+        "line": 199,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "backend/tests/test_fhir_adapter.py",
+        "line": 217,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "backend/tests/test_fhir_adapter.py",
+        "line": 250,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "backend/tests/test_fhir_adapter.py",
+        "line": 268,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "tests/test_safety_regression.py",
+        "line": 750,
+        "pattern": "sk-ant-[A-Za-z0-9\\-_]{16,}",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      },
+      {
+        "file": "tests/test_safety_regression.py",
+        "line": 750,
+        "pattern": "(?i)\\b(api_key|apikey|secret_key|access_token|password)\\s*[:=]\\s*[\\\"'][A-Za-z0-9/+_\\-]{12,}[\\\"']",
+        "classification": "REVIEWED_SYNTHETIC_TEST_FIXTURE"
+      }
+    ],
+    "submission_findings": [],
+    "scope": "Tracked UTF-8 source/config/docs; regex heuristics cannot prove absence of every credential"
+  },
+  "source_submission_byte_equivalence": true,
+  "sync_mismatches": [],
+  "forbidden_files": [],
+  "training_operations": [],
+  "utf8_failures": [],
+  "zip_bytes": 909211,
+  "zip_sha256": "17e11b90ffdb5c62533bcc2ef6bde52796dd09c25a8e374e50ce04a9ac4c3ecf",
+  "package_file_count": 111,
+  "model_weights_bundled": false,
+  "provider_boundary": "Official SDK only: organizer API via nova_sdk (NOVA_API_BASE/NOVA_RUN_TOKEN); Doctor model via client.chat; no other network route",
+  "static_retrieval": "Local fixed KB/catalog; no patient-specific index write/update in inference path"
+}
