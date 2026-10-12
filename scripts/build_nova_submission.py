@@ -80,8 +80,11 @@ def _check_requirements() -> None:
 
 def _submission_files() -> list:
     files = sorted(
-        p for p in SUBMISSION.rglob("*")
-        if p.is_file() and "__pycache__" not in p.parts and p.name not in {"submission.zip", "MANIFEST.json"}
+        (
+            p for p in SUBMISSION.rglob("*")
+            if p.is_file() and "__pycache__" not in p.parts and p.name not in {"submission.zip", "MANIFEST.json"}
+        ),
+        key=lambda p: p.relative_to(SUBMISSION).as_posix(),
     )
     # A recursive ZIP of an operator-controlled staging directory can accidentally include
     # answers, credentials or unrelated files. Only checked-in runtime files may enter.
