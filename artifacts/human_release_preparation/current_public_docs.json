@@ -1,0 +1,43 @@
+{
+  "access_date": "2026-10-12 Asia/Seoul",
+  "pages": [
+    {
+      "url": "https://nova.snubhai.org/docs/",
+      "retrieved": true,
+      "html_sha256": "85b22deb85d555b3d2c3e7b64fba1a1d63ccf5f55b90a760973f8ce4c724b71a"
+    },
+    {
+      "url": "https://nova.snubhai.org/rules/",
+      "retrieved": true,
+      "html_sha256": "ca4d9ef69df237b59aafc38d741989d3912d54669f700e149b583dbff03d9afa"
+    },
+    {
+      "url": "https://nova.snubhai.org/qna/",
+      "retrieved": true,
+      "html_sha256": "5e748e859c5a5a60338772da438aa389f76489ea6818b0192a4b35bdc5eb4131"
+    }
+  ],
+  "examination_turn_rule": "Current public docs and rules BOTH specify EXAM_NOT_SPECIFIC and EXAM_NOT_RECOGNIZED consume one turn. Previous zero-turn text is superseded; natural current server measurements remain HUMAN-RUN ONLY.",
+  "limits": {
+    "turns": 50,
+    "content_nfc": 30,
+    "encounter_minutes": 30,
+    "prepare_minutes": 10,
+    "llm_calls": 200,
+    "input_tokens": 500000,
+    "output_tokens": 100000,
+    "zip_bytes": 50000000,
+    "uncompressed_bytes": 500000000,
+    "files": 5000
+  },
+  "api_origin": "https://nova.snubhai.org",
+  "sdk": {
+    "version": "1.0.1",
+    "public_sha256": "fdd65302e82791ed862c22fe5a014ef443ab331d8986ec7c72b3923add6bc871",
+    "public_starter_url": "https://nova.snubhai.org/docs/starter.zip",
+    "vendored_match": true,
+    "difference_from_supplied_old_sdk": "Only Client default timeout changed 120 -> 240 seconds; same version 1.0.1."
+  },
+  "sample_case_ids": "Published server identifiers may be UUIDs; --list and explicit --case-id alias mapping required. No opening-based selection or runtime answer map.",
+  "revision": "Declared revision retained from organizer briefing; current public API documentation does not expose actual runtime revision. Not directly verified."
+}

@@ -19,7 +19,7 @@ import zipfile
 from pathlib import Path
 
 ZIP_LIMIT = 50_000_000
-UNCOMPRESSED_LIMIT = 500 * 1024 * 1024
+UNCOMPRESSED_LIMIT = 500_000_000
 FILE_LIMIT = 5_000
 ROOT_FILES = ("run.py", "requirements.txt", "nova_sdk.py")
 PIN = re.compile(r"^[A-Za-z0-9_.\-]+==[0-9][A-Za-z0-9.\-+]*$")

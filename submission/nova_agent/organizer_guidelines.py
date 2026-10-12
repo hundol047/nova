@@ -19,6 +19,7 @@ import math
 import os
 import re
 import time
+import unicodedata
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -30,6 +31,39 @@ _STOP = frozenset("the and for with from that this are was were has have not but
                   "management treatment diagnosis disease disorder 진료지침 권고 환자 치료 진단 질환".split())
 _MAX_READ_BYTES = 400_000
 _FRONT_MATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*\n", re.S)
+
+# General bilingual topical retrieval vocabulary, authored for this implementation.
+# These expand reference searches only; they never supply patient facts or diagnoses.
+_CONCEPTS = (
+    ('thyroid_hyper', 'hyperthyroidism|thyrotoxicosis|갑상선기능항진|갑상샘기능항진'),
+    ('thyroid_hypo', 'hypothyroidism|갑상선기능저하|갑상샘기능저하'),
+    ('sedative', 'sedative|benzodiazepine|수면제|진정제'),
+    ('zolpidem', 'zolpidem|졸피뎀'), ('asthma', 'asthma|천식'),
+    ('embolism', 'pulmonary embolism|폐색전'), ('coronary', 'coronary|myocardial|관상동맥|심근'),
+    ('pneumonia', 'pneumonia|폐렴'), ('sepsis', 'sepsis|패혈증'),
+    ('meningitis', 'meningitis|수막염'), ('stroke', 'stroke|뇌졸중'),
+    ('pancreatitis', 'pancreatitis|췌장염'), ('ulcer', 'peptic ulcer|소화성궤양'),
+    ('diabetes', 'diabetes|당뇨'), ('glucose_low', 'hypoglycemia|hypoglycaemia|저혈당'),
+    ('growth', 'growth delay|short stature|성장지연|저신장'),
+    ('pregnancy', 'pregnancy|pregnant|임신'), ('menstrual', 'menstrual|월경'),
+    ('urinary', 'urinary|요로'), ('dementia', 'dementia|치매'),
+    ('frailty', 'frailty|frail|노쇠'), ('delirium', 'delirium|섬망'),
+    ('depression', 'depression|우울'), ('suicide', 'suicide|자살'),
+    ('adverse_drug', 'adverse drug|약물이상반응|약물부작용'),
+)
+
+
+def search_terms(text):
+    text = unicodedata.normalize('NFC', text or '').lower()
+    terms = set(tokens(text))
+    compact = re.sub(r'\s+', '', text)
+    for concept, forms in _CONCEPTS:
+        for form in forms.split('|'):
+            match = form in compact if re.search('[가-힣]', form) else re.search(r'\b'+re.escape(form)+r'\b', text)
+            if match:
+                terms.add('concept:'+concept)
+                break
+    return terms
 
 
 def tokens(text: str) -> List[str]:
@@ -83,13 +117,17 @@ class GuidelineIndex:
             return []
         n = len(self.docs)
         scores: Dict[int, float] = {}
-        for term in set(tokens(query)):
+        if k <= 0:
+            return []
+        for term in sorted(search_terms(query[:4096])):
             hits = self.postings.get(term)
             if not hits:
                 continue
             idf = math.log(1 + n / len(hits))
             for doc_id in hits:
-                scores[doc_id] = scores.get(doc_id, 0.0) + idf
+                boost = 3.0 if term.startswith('concept:') else 1.0
+                length = max(1, len(tokens(self.docs[doc_id].title)))
+                scores[doc_id] = scores.get(doc_id, 0.0) + boost * idf / (1 + 0.04 * length)
         ranked = sorted(scores.items(), key=lambda kv: (-kv[1], self.docs[kv[0]].path))
         return [self.docs[i] for i, _ in ranked[:k]]
 
@@ -104,9 +142,9 @@ class GuidelineIndex:
         except OSError:
             return ""
         text = _FRONT_MATTER.sub("", text, count=1)
-        wanted = set(tokens(query))
+        wanted = search_terms(query[:4096])
         paragraphs = [p.strip() for p in re.split(r"\n\s*\n", text) if len(p.strip()) > 40]
-        scored = sorted(((len(wanted & set(tokens(p))), -i, p) for i, p in enumerate(paragraphs)), reverse=True)
+        scored = sorted(((len(wanted & search_terms(p)), -i, p) for i, p in enumerate(paragraphs)), reverse=True)
         picked, used = [], 0
         for score, _, para in scored:
             if score == 0 or used >= max_chars:
@@ -142,7 +180,7 @@ _CATALOG_FIELDS = {
     "language": ("language", "lang", "언어"),
     "doc_type": ("documenttype", "doctype", "type", "문서유형", "유형"),
     "license": ("license", "licence", "라이선스", "이용허락"),
-    "source_url": ("sourceurl", "source", "url", "출처", "원문url"),
+    "source_url": ("sourceurl", "source", "url", "출처", "출처url", "원문url"),
 }
 
 
@@ -177,7 +215,11 @@ def build_index(root: Optional[str] = None, time_budget_seconds: float = 240.0, 
                 for row in reader:
                     if time.monotonic() - started > time_budget_seconds:
                         break
-                    rows.append({k: (row.get(col) or "").strip() if col else "" for k, col in lookup.items()})
+                    item = {k: (row.get(col) or "").strip() if col else "" for k, col in lookup.items()}
+                    if any(len(v) > 4096 for v in item.values()):
+                        index.skipped += 1
+                        continue
+                    rows.append(item)
                     if len(rows) >= max_documents:
                         break
             index.source = "catalog.csv"
@@ -224,7 +266,7 @@ def build_index(root: Optional[str] = None, time_budget_seconds: float = 240.0, 
         doc_id = len(index.docs)
         index.docs.append(doc)
         stem = re.sub(r"[_\-.]+", " ", Path(relative).stem)
-        for term in sorted(set(tokens(f"{doc.title} {stem}")))[:128]:
+        for term in sorted(search_terms(f"{doc.title} {stem} {doc.organization} {doc.doc_type}"))[:128]:
             index.postings.setdefault(term, []).append(doc_id)
     index.build_seconds = time.monotonic() - started
     return index

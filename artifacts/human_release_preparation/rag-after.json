@@ -1,0 +1,349 @@
+{
+  "label": "PUBLIC ORGANIZER CORPUS / GENERIC TOPICAL METADATA PROXY / NOT CLINICAL ADJUDICATION",
+  "definition": "Hit@k and first topical reciprocal rank using manually declared metadata keywords; not clinician relevance adjudication or exhaustive document recall",
+  "stats": {
+    "available": true,
+    "documents": 15904,
+    "terms": 33761,
+    "build_seconds": 2.565,
+    "skipped": 0,
+    "source": "catalog.csv"
+  },
+  "build_seconds": 2.5660396039997977,
+  "peak_rss_kib": 55024,
+  "postings_count": 212831,
+  "language_counts": {
+    "영어": 14398,
+    "한국어": 1506
+  },
+  "source_url_retained": 15904,
+  "license_retained": 15904,
+  "query_latency_seconds": {
+    "n": 36,
+    "mean": 0.0011275989999906717,
+    "median": 0.0009554074997595308,
+    "p95": 0.0033103900000241993,
+    "max": 0.0034426669999447768
+  },
+  "bounded_excerpt_query_seconds": 0.04043307599977197,
+  "excerpt_metadata_retained": true,
+  "metrics": {
+    "queries": 36,
+    "Recall@3_topical_proxy": 1.0,
+    "Recall@5_topical_proxy": 1.0,
+    "MRR_first_topical_proxy": 0.9861111111111112
+  },
+  "by_language": {
+    "en": {
+      "queries": 12,
+      "Recall@3_topical_proxy": 1.0,
+      "Recall@5_topical_proxy": 1.0,
+      "MRR_first_topical_proxy": 0.9583333333333334
+    },
+    "ko": {
+      "queries": 12,
+      "Recall@3_topical_proxy": 1.0,
+      "Recall@5_topical_proxy": 1.0,
+      "MRR_first_topical_proxy": 1.0
+    },
+    "mixed": {
+      "queries": 12,
+      "Recall@3_topical_proxy": 1.0,
+      "Recall@5_topical_proxy": 1.0,
+      "MRR_first_topical_proxy": 1.0
+    }
+  },
+  "queries": [
+    {
+      "domain": "cardiology",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "cardiology",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "cardiology",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "pulmonology",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "pulmonology",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "pulmonology",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "infectious disease",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "infectious disease",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "infectious disease",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "neurology",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 2,
+      "returned": 5
+    },
+    {
+      "domain": "neurology",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "neurology",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "GI",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "GI",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "GI",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "endocrine",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "endocrine",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "endocrine",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "pediatrics",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "pediatrics",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "pediatrics",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "OB/GYN",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "OB/GYN",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "OB/GYN",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "urology",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "urology",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "urology",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "psychiatry/substance use",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "psychiatry/substance use",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "psychiatry/substance use",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "geriatrics",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "geriatrics",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "geriatrics",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "medication adverse effects",
+      "language": "en",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "medication adverse effects",
+      "language": "ko",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    },
+    {
+      "domain": "medication adverse effects",
+      "language": "mixed",
+      "hit3": true,
+      "hit5": true,
+      "first_topical_rank": 1,
+      "returned": 5
+    }
+  ],
+  "corpus_text_persisted": false,
+  "heavy_embeddings": false,
+  "verified_source_zip_sha256": "ef58c2f4369750af382f2706dcc1c9c7a85e3a93c261d880f7470d695eaf30d5"
+}

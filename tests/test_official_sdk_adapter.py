@@ -252,7 +252,7 @@ def test_official_limits_are_per_case_and_separate_from_the_internal_target():
 def test_vendored_sdk_is_the_organizer_file():
     import hashlib
     data = (ROOT / "submission" / "nova_sdk.py").read_bytes()
-    assert hashlib.sha256(data).hexdigest() == "c6238ac466abc5b99b3e80de9ace2c7a54b51f7efc8d8a671d1c08bb0476f00d"
+    assert hashlib.sha256(data).hexdigest() == "fdd65302e82791ed862c22fe5a014ef443ab331d8986ec7c72b3923add6bc871"
     assert nova_sdk.__version__ == "1.0.1"
 
 

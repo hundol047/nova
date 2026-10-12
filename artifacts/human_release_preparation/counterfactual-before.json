@@ -1,0 +1,189 @@
+{
+  "label": "New independent development variants; engineering assertions, not clinician adjudication",
+  "fixture_sha256": "5331e5392b8596026ec660849b711ca37042ebb451127b6bc5f7bf0f0aed6914",
+  "cases": [
+    {
+      "id": "glucose_severe_confusion",
+      "top1": "hypoglycemia",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "urgency": false
+      },
+      "passed": false
+    },
+    {
+      "id": "glucose_severe_no_medication",
+      "top1": "hypoglycemia",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "urgency": false
+      },
+      "passed": false
+    },
+    {
+      "id": "glucose_low_symptomatic",
+      "top1": "hypoglycemia",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "urgency": false
+      },
+      "passed": false
+    },
+    {
+      "id": "glucose_normal_dizziness",
+      "top1": "orthostatic_hypotension",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "urgency": true
+      },
+      "passed": true
+    },
+    {
+      "id": "glucose_historical_control",
+      "top1": "ectopic_pregnancy",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "urgency": true
+      },
+      "passed": true
+    },
+    {
+      "id": "glucose_family_control",
+      "top1": "ectopic_pregnancy",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "urgency": true
+      },
+      "passed": true
+    },
+    {
+      "id": "glucose_other_analyte",
+      "top1": "ectopic_pregnancy",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "urgency": true
+      },
+      "passed": true
+    },
+    {
+      "id": "glucose_resolved_context",
+      "top1": "acute_abdomen",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "urgency": true
+      },
+      "passed": true
+    },
+    {
+      "id": "asthma_recurrent_young",
+      "top1": "asthma_copd_exacerbation",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "diagnosis_family": true
+      },
+      "passed": true
+    },
+    {
+      "id": "asthma_no_pe_risk",
+      "top1": "asthma_copd_exacerbation",
+      "urgent": true,
+      "reasons": [
+        "supported_dangerous_alternative:anaphylaxis"
+      ],
+      "checks": {
+        "diagnosis_family": true
+      },
+      "passed": true
+    },
+    {
+      "id": "pe_with_wheeze",
+      "top1": "pulmonary_embolism",
+      "urgent": true,
+      "reasons": [
+        "observed_vital_red_flag:heart_rate",
+        "observed_vital_red_flag:spo2",
+        "urgent_working_diagnosis:pulmonary_embolism"
+      ],
+      "checks": {
+        "urgency": true,
+        "diagnosis_family": true
+      },
+      "passed": true
+    },
+    {
+      "id": "pe_post_immobilization",
+      "top1": "pulmonary_embolism",
+      "urgent": true,
+      "reasons": [
+        "observed_vital_red_flag:heart_rate",
+        "observed_vital_red_flag:spo2",
+        "urgent_working_diagnosis:pulmonary_embolism",
+        "supported_dangerous_alternative:tension_pneumothorax"
+      ],
+      "checks": {
+        "urgency": true,
+        "diagnosis_family": true
+      },
+      "passed": true
+    },
+    {
+      "id": "asthma_hypoxemia_safety",
+      "top1": "asthma_copd_exacerbation",
+      "urgent": true,
+      "reasons": [
+        "observed_vital_red_flag:spo2"
+      ],
+      "checks": {
+        "urgency": true
+      },
+      "passed": true
+    },
+    {
+      "id": "mixed_risk_safety",
+      "top1": "pulmonary_embolism",
+      "urgent": true,
+      "reasons": [
+        "observed_vital_red_flag:heart_rate",
+        "observed_vital_red_flag:spo2",
+        "urgent_working_diagnosis:pulmonary_embolism",
+        "supported_dangerous_alternative:anaphylaxis"
+      ],
+      "checks": {
+        "urgency": true
+      },
+      "passed": true
+    },
+    {
+      "id": "suspected_hypo_no_meter",
+      "top1": "hypoglycemia",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "urgency": false
+      },
+      "passed": false
+    },
+    {
+      "id": "suspected_hypo_tremor",
+      "top1": "hypoglycemia",
+      "urgent": false,
+      "reasons": [],
+      "checks": {
+        "urgency": false
+      },
+      "passed": false
+    }
+  ],
+  "passed": 11,
+  "failed": 5,
+  "clinical_adjudication": false
+}

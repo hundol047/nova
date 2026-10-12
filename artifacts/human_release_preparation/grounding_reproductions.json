@@ -1,0 +1,26 @@
+[
+  {
+    "claim": "chest pain is absent and dyspnea is present",
+    "source": "chest pain is present and dyspnea is absent",
+    "grounded_before": true,
+    "grounded_after": false
+  },
+  {
+    "claim": "blood glucose 40 mg/L",
+    "source": "blood glucose 40 mg/dL",
+    "grounded_before": true,
+    "grounded_after": false
+  },
+  {
+    "claim": "hemoglobin 10 g/L",
+    "source": "hemoglobin 10 g/dL",
+    "grounded_before": true,
+    "grounded_after": false
+  },
+  {
+    "claim": "my father has atrial fibrillation",
+    "source": "my mother has atrial fibrillation",
+    "grounded_before": true,
+    "grounded_after": false
+  }
+]

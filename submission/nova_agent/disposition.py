@@ -46,6 +46,10 @@ def disposition_for(state, final, differential) -> Disposition:
     from nova_agent.vitals_parser import red_flag_rules_for_age
     from nova_agent.final_decision import support_problems
     reasons, evidence = [], []
+    glucose_concern = measured_hypoglycemia_concern(state)
+    if glucose_concern:
+        reasons.append('current_measured_hypoglycemia')
+        evidence.extend(glucose_concern)
     rate = symptomatic_rate_concern(state)
     if rate:
         reasons.append("unexplained_symptomatic_marked_rate")
@@ -61,6 +65,14 @@ def disposition_for(state, final, differential) -> Disposition:
                 reasons.append("observed_vital_red_flag:" + rule["field"])
                 evidence.append(f"{rule['field']}={value}")
     selected = final.item if final is not None else (differential[0] if differential else None)
+    if selected and selected.diagnosis_id=='hypoglycemia' and not support_problems(selected,state,differential):
+        observed={str(p).lower() for p in selected.supporting_evidence}
+        acute=observed & {'diaphoresis','tremor','confusion','altered mental status','seizure','loss of consciousness'}
+        medication=observed & {'insulin use','known diabetes on insulin','sulfonylurea use'}
+        current_glucose=current_measured_glucose(state)
+        if medication and len(acute)>=2 and (current_glucose is None or current_glucose<70):
+            reasons.append('supported_symptomatic_hypoglycemia')
+            evidence.extend(sorted(acute | medication))
     if selected and (selected.dangerous_if_missed or selected.urgency in ("CRITICAL", "HIGH")) \
             and not _sourced_non_emergency(selected):
         reasons.append("urgent_working_diagnosis:" + selected.diagnosis_id)
@@ -81,6 +93,37 @@ def disposition_for(state, final, differential) -> Disposition:
             reasons.append("supported_dangerous_alternative:" + item.diagnosis_id)
             evidence.extend(item.supporting_evidence)
     return Disposition(bool(reasons), tuple(dict.fromkeys(reasons)), tuple(dict.fromkeys(evidence)))
+
+
+def current_measured_glucose(state):
+    """One unambiguous current supplied mg/dL glucose; None never means normal."""
+    from nova_agent.glucose_evidence import current_asserted_lab_clauses, extract_glucose_mg_dl
+    from nova_agent.assertion_status import FAMILY_CUE
+    sources=[];direct=[]
+    lab=state.laboratory_tests.get('glucose_point_of_care')
+    if lab:sources.append(lab)
+    for clause in current_asserted_lab_clauses(state.physical_examinations.get('vital_signs', '')):
+        if FAMILY_CUE.search(clause):continue
+        m=re.search(r'(?:\bglucose\b|\bblood sugar\b|혈당)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg\s*/\s*d?l\b',clause,re.I)
+        if m:direct.append(float(m[1]))
+    readings=set(direct)|{x for text in sources if (x:=extract_glucose_mg_dl(text)) is not None}
+    return next(iter(readings)) if len(readings)==1 else None
+
+
+def measured_hypoglycemia_concern(state) -> list[str]:
+    """Current supplied glucose, independent of a diagnostic label's urgency flag.
+
+    ADA Standards of Care: <54 mg/dL is clinically significant; <70 mg/dL
+    with acute symptoms requires prompt action. No test is requested, no value
+    is invented, and no historical/family/reference value becomes current.
+    This is an engineering triage guard, not a clinician-certified protocol.
+    """
+    glucose=current_measured_glucose(state)
+    if glucose is None or glucose>=70:return []
+    text=state.all_findings_text(include_context=False,include_family=False)
+    symptoms=[p for p in ('confusion','altered mental status','diaphoresis','tremor','seizure','loss of consciousness',
+                         '의식 저하','식은땀','떨림') if feature_present_with_aliases(p,text,scrub_negated_spans=True)]
+    return [f'current_glucose={glucose:g} mg/dL',*symptoms] if glucose<54 or symptoms else []
 
 
 # Round X (NOVA_ALTERNATIVE_ANCHORS): a dangerous ALTERNATIVE to the named diagnosis makes the plan urgent only when at

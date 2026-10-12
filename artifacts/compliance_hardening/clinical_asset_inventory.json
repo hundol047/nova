@@ -840,7 +840,7 @@
     {
       "asset_id": "nova_agent/disposition.py",
       "path": "nova_agent/disposition.py",
-      "sha256": "eb5a88c881498289e61f7ccd18afc93ff9e77820dbe4c3a31bb550e4a19f7a47",
+      "sha256": "f8e5d06ecda70edc50ed45206c809e6e6aa0013c485d18929e1c411e44bb792a",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",
@@ -2274,7 +2274,7 @@
     {
       "asset_id": "nova_agent/knowledge/tier2_mondo_synonyms.json",
       "path": "nova_agent/knowledge/tier2_mondo_synonyms.json",
-      "sha256": "df0427050f21e76a77ae28a62a0073c0dc76b400d59bc7092ea310f938489596",
+      "sha256": "74c5315e47484829f1b5fa8fad359b3687317c920c63c45c3de9764976366063",
       "runtime_use": "Alias vocabulary (EXACT synonyms) for Tier-2 concepts; opt-in (NOVA_MONDO_SYNONYMS), default off; never patient evidence",
       "original_author": "Monarch Initiative (Mondo Disease Ontology)",
       "original_source": "Mondo mondo-edit.obo, https://raw.githubusercontent.com/monarch-initiative/mondo/master/src/ontology/mondo-edit.obo",
@@ -3957,7 +3957,7 @@
     {
       "asset_id": "nova_agent/organizer_guidelines.py",
       "path": "nova_agent/organizer_guidelines.py",
-      "sha256": "a98f0d8e44397f31816da12684122780463df105f5428ca5f12390e77d4a8699",
+      "sha256": "8109845c784c8f391d42ddc38c891b233e4dfad7497259ac515b328d62090ca8",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",

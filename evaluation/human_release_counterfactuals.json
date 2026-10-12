@@ -1,0 +1,119 @@
+{
+  "label": "New independent development variants; engineering assertions, not clinician adjudication",
+  "cases": [
+    {
+      "id": "glucose_severe_confusion",
+      "opening": "confused and sweating",
+      "history": "takes insulin",
+      "exam": "glucose 48 mg/dL; heart rate 92; blood pressure 120/70",
+      "urgent": true
+    },
+    {
+      "id": "glucose_severe_no_medication",
+      "opening": "shaky and sweating",
+      "history": "no diabetes medication",
+      "exam": "glucose 51 mg/dL; heart rate 89",
+      "urgent": true
+    },
+    {
+      "id": "glucose_low_symptomatic",
+      "opening": "sweating and trembling",
+      "history": "takes insulin",
+      "exam": "glucose 63 mg/dL; heart rate 91",
+      "urgent": true
+    },
+    {
+      "id": "glucose_normal_dizziness",
+      "opening": "mild dizziness on standing",
+      "history": "no insulin or diabetes medication",
+      "exam": "glucose 102 mg/dL; pulse 78; BP 118/72; SpO2 99%",
+      "urgent": false
+    },
+    {
+      "id": "glucose_historical_control",
+      "opening": "mild dizziness",
+      "history": "no diabetes medication",
+      "exam": "last week glucose 48 mg/dL; glucose 104 mg/dL; pulse 80",
+      "urgent": false
+    },
+    {
+      "id": "glucose_family_control",
+      "opening": "mild dizziness",
+      "history": "mother takes insulin; patient takes no medicines",
+      "exam": "mother glucose 48 mg/dL; patient glucose 108 mg/dL; pulse 80",
+      "urgent": false
+    },
+    {
+      "id": "glucose_other_analyte",
+      "opening": "mild dizziness",
+      "history": "no diabetes medication",
+      "exam": "cholesterol 48 mg/dL; pulse 80; BP 122/74",
+      "urgent": false
+    },
+    {
+      "id": "glucose_resolved_context",
+      "opening": "mild dizziness now resolved",
+      "history": "felt better after juice; currently alert",
+      "exam": "previously glucose 46 mg/dL; current glucose 105 mg/dL; pulse 79",
+      "urgent": false
+    },
+    {
+      "id": "asthma_recurrent_young",
+      "opening": "wheezing and shortness of breath",
+      "history": "recurrent asthma since childhood; improves with inhaler; no pleuritic pain; no immobilization; no hemoptysis",
+      "exam": "diffuse wheezing; pulse 94; SpO2 97%",
+      "top_family": "asthma"
+    },
+    {
+      "id": "asthma_no_pe_risk",
+      "opening": "episodic wheezing",
+      "history": "prior asthma; inhaler helps; no DVT; no recent immobilization",
+      "exam": "wheezing; pulse 88; SpO2 98%",
+      "top_family": "asthma"
+    },
+    {
+      "id": "pe_with_wheeze",
+      "opening": "pleuritic chest pain and shortness of breath",
+      "history": "recent immobilization; hemoptysis; swollen left calf",
+      "exam": "pulse 122; SpO2 88%; wheezing",
+      "top_family": "pulmonary_embolism",
+      "urgent": true
+    },
+    {
+      "id": "pe_post_immobilization",
+      "opening": "sudden dyspnea and pleuritic pain",
+      "history": "recent immobilization; previous DVT",
+      "exam": "pulse 124; SpO2 89%",
+      "top_family": "pulmonary_embolism",
+      "urgent": true
+    },
+    {
+      "id": "asthma_hypoxemia_safety",
+      "opening": "wheezing and shortness of breath",
+      "history": "recurrent asthma; inhaler unavailable",
+      "exam": "diffuse wheezing; pulse 112; SpO2 88%",
+      "urgent": true
+    },
+    {
+      "id": "mixed_risk_safety",
+      "opening": "wheezing and pleuritic chest pain",
+      "history": "prior asthma; recent immobilization; previous DVT",
+      "exam": "pulse 128; SpO2 86%",
+      "urgent": true
+    },
+    {
+      "id": "suspected_hypo_no_meter",
+      "opening": "confused and sweating",
+      "history": "takes insulin; skipped a meal",
+      "exam": "pulse 91; BP 120/72; SpO2 98%",
+      "urgent": true
+    },
+    {
+      "id": "suspected_hypo_tremor",
+      "opening": "tremor and diaphoresis",
+      "history": "known diabetes on insulin; missed lunch",
+      "exam": "pulse 93; BP 118/72; SpO2 98%",
+      "urgent": true
+    }
+  ]
+}

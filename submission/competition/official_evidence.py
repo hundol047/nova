@@ -7,7 +7,7 @@ import re
 import unicodedata
 from decimal import Decimal
 
-_UNIT = r"밀리그램|마이크로그램|tablets?|pills?|months?|years?|days?|weeks?|hours?|times?|mg|mcg|µg|kg|cm|mmhg|mmol/l|g|ml|회|번|알|정|개월|달|년|주|일|시간|세|살|%|°c"
+_UNIT = r"mg\s*/\s*dl|mg\s*/\s*l|g\s*/\s*dl|g\s*/\s*l|ng\s*/\s*ml|mmol\s*/\s*l|밀리그램|마이크로그램|tablets?|pills?|months?|years?|days?|weeks?|hours?|times?|mg|mcg|µg|kg|cm|mmhg|g|ml|회|번|알|정|개월|달|년|주|일|시간|세|살|%|°c"
 _NUMBER = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)\s*(" + _UNIT + r")?", re.I)
 _UNITS = {"밀리그램": "mg", "마이크로그램": "mcg", "µg": "mcg", "살": "세", "달": "개월", "번": "회",
           "month": "개월", "months": "개월", "year": "년", "years": "년", "day": "일", "days": "일",
@@ -25,6 +25,22 @@ _SIDE = {"left": re.compile(r"\bleft\b|왼쪽|좌측", re.I), "right": re.compil
 _CLAUSES = re.compile(r"\n|;|(?<!\d)\.(?!\d)|\bbut\b|하지만|그러나", re.I)
 _RATE = re.compile(r"\b(once|twice|three times|four times)\s+(daily|a day|per day|weekly|a week)\b|"
                    r"(하루|매일|일주일에)\s*(한|두|세|네|\d+)\s*(?:번|회)", re.I)
+_RELATIONS={'mother':r'\bmother\b|\bmom\b|어머니|엄마','father':r'\bfather\b|\bdad\b|아버지|아빠',
+            'sibling':r'\bsibling|\bbrother\b|\bsister\b|형제|자매|동생'}
+
+
+def _assertions(text):
+    for clause in _CLAUSES.split(text):
+        context,arrow,answer=clause.partition('→')
+        if arrow:
+            for piece in _assertions(answer):yield context+'→'+piece
+            continue
+        negative_list=False
+        for piece in re.split(r'\band\b|그리고|\s및\s',clause,flags=re.I):
+            if negative_list and not _NEG.search(piece) and not re.search(r'\b(?:has|reports|present|is|are)\b|있|보임',piece,re.I):
+                piece='no '+piece.strip()
+            if piece.strip():yield piece.strip()
+            negative_list=bool(re.match(r'^\s*(?:no\b|denies\b|without\b)',piece,re.I))
 
 
 def _clean(text):
@@ -36,7 +52,8 @@ def _facts(text):
     text = _clean(text)
     result = []
     for m in _NUMBER.finditer(text):
-        unit = _UNITS.get((m[2] or "").lower(), (m[2] or "").lower())
+        raw_unit = re.sub(r'\s+','',(m[2] or '').lower())
+        unit = _UNITS.get(raw_unit,raw_unit)
         anchor = _dose_anchor(text, m.start(), unit)
         value = format(Decimal(m[1]), "f")  # no context rounding of long values
         if "." in value:
@@ -82,12 +99,15 @@ def grounded_in(claim, corpus, threshold=0.6):
     affirmative finding. A negative reply keeps its negative polarity.
     """
     claim = _clean(claim)
+    assertions=list(_assertions(claim))
+    if len(assertions)>1:
+        return all(grounded_in(piece,corpus,threshold) for piece in assertions)
     words = _words(claim)
     if not words:
         return False
     claim_facts = _facts(claim)
     sides = {k for k, pattern in _SIDE.items() if pattern.search(claim)}
-    for source in _CLAUSES.split(_clean(corpus)):
+    for source in _assertions(_clean(corpus)):
         if not source.strip():
             continue
         context, sep, answer = source.partition("→")
@@ -95,6 +115,8 @@ def grounded_in(claim, corpus, threshold=0.6):
         comparison = source if sep else factual
         from nova_agent.assertion_status import FAMILY_CUE
         if bool(FAMILY_CUE.search(claim)) != bool(FAMILY_CUE.search(comparison)):
+            continue
+        if any(re.search(pattern,claim,re.I) and not re.search(pattern,comparison,re.I) for pattern in _RELATIONS.values()):
             continue
         if _polarity(claim) != _polarity(factual):
             continue

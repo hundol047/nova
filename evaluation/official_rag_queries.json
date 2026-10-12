@@ -1,0 +1,18 @@
+{
+  "label": "Independent generic topical probes; no private cases or sample openings",
+  "definition": "Hit@k and first topical reciprocal rank using manually declared metadata keywords; not clinician relevance adjudication or exhaustive document recall",
+  "queries": [
+    {"domain":"cardiology","en":"acute coronary syndrome myocardial ischemia","ko":"관상동맥 심근 허혈 급성 증후군","keywords":["coronary","myocardial","관상동맥","심근"]},
+    {"domain":"pulmonology","en":"asthma exacerbation wheezing","ko":"천식 급성 악화 쌕쌕거림","keywords":["asthma","천식"]},
+    {"domain":"infectious disease","en":"pneumonia fever antibiotics","ko":"폐렴 발열 항생제","keywords":["pneumonia","폐렴"]},
+    {"domain":"neurology","en":"acute stroke neurological deficit","ko":"급성 뇌졸중 신경학적 결손","keywords":["stroke","뇌졸중"]},
+    {"domain":"GI","en":"acute pancreatitis abdominal pain","ko":"급성 췌장염 복통","keywords":["pancreatitis","췌장염"]},
+    {"domain":"endocrine","en":"hyperthyroidism tremor weight loss","ko":"갑상샘 기능 항진 떨림 체중 감소","keywords":["hyperthyroid","thyrotox","갑상선기능항진","갑상샘기능항진"]},
+    {"domain":"pediatrics","en":"short stature growth delay evaluation","ko":"저신장 성장지연 평가","keywords":["stature","growth","성장","저신장"]},
+    {"domain":"OB/GYN","en":"pregnancy menstrual assessment","ko":"임신 월경 평가","keywords":["pregnan","menstrual","임신","월경"]},
+    {"domain":"urology","en":"urinary tract infection dysuria","ko":"요로 감염 배뇨통","keywords":["urinary","cystitis","요로","방광염"]},
+    {"domain":"psychiatry/substance use","en":"zolpidem sedative dependence long term use","ko":"졸피뎀 수면제 장기 복용 의존","keywords":["zolpidem","sedative","benzodiazepine","졸피뎀","수면제"]},
+    {"domain":"geriatrics","en":"frailty dementia geriatric assessment","ko":"노쇠 치매 노인 평가","keywords":["frail","dementia","노쇠","치매"]},
+    {"domain":"medication adverse effects","en":"adverse drug reactions polypharmacy","ko":"약물 부작용 다약제 복용","keywords":["adverse","polypharmacy","부작용","약물이상","다약제"]}
+  ]
+}

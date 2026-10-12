@@ -43,7 +43,7 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 class Client:
-    def __init__(self, api_base=None, token=None, session_id=None, *, sample=False, timeout=120):
+    def __init__(self, api_base=None, token=None, session_id=None, *, sample=False, timeout=240):
         self.api_base = (api_base or os.environ['NOVA_API_BASE']).rstrip('/')
         self.token = token or os.environ['NOVA_RUN_TOKEN']
         self.session_id = str(session_id or os.getenv('NOVA_SESSION_ID', ''))

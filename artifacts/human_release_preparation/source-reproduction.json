@@ -1,0 +1,20 @@
+{
+  "tier2_open_features": {
+    "source_sha256": "51e717b6b9f5d391f2793f9e16faf9c8629a661ab8f21c3a024458129f182ad2",
+    "matches_recorded_source": true,
+    "source_url": "https://raw.githubusercontent.com/DiseaseOntology/HumanDiseaseOntology/main/src/ontology/doid.obo",
+    "license": "CC0 1.0 Universal (public domain dedication), stated inside the source file",
+    "entries_reproduced_exactly": true
+  },
+  "tier2_mondo_synonyms": {
+    "source_sha256": "0c1db51e6d84b7a5e9999257022838d2b416030cacdc62386191a3db09442195",
+    "matches_recorded_source": false,
+    "source_url": "https://raw.githubusercontent.com/monarch-initiative/mondo/master/src/ontology/mondo-edit.obo",
+    "license": "CC BY 4.0, stated inside the source file and in the repository LICENSE"
+  },
+  "licensed_references": {
+    "snapshot_sha256": "2b05a02bd5e5c7eb237d52d45d032267e27d01e6bdd67302032cdae23bcd3d38",
+    "bytes_reproduced_exactly": true,
+    "source": "Repository retained permitted publisher-field snapshot and deterministic build; original live publishers not re-authenticated here"
+  }
+}

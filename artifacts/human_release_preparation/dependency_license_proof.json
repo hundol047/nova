@@ -1,0 +1,37 @@
+[
+  {
+    "wheel": "annotated_types-0.8.0-py3-none-any.whl",
+    "license_member": "annotated_types-0.8.0.dist-info/licenses/LICENSE",
+    "license_sha256": "fe1049884b1a0d9342901e88e07f32925d24b3121d9972b6a6805fb9824b095d",
+    "license_file": "docs/compliance/dependency_licenses/annotated-types-0.8.0-LICENSE.txt",
+    "license": "MIT"
+  },
+  {
+    "wheel": "pydantic-2.14.0-py3-none-any.whl",
+    "license_member": "pydantic-2.14.0.dist-info/licenses/LICENSE",
+    "license_sha256": "a9e186f3ca16b5eef84318e7a701721351a00cb7b8ae3a4394b67b49e3529ef3",
+    "license_file": "docs/compliance/dependency_licenses/pydantic-2.14.0-LICENSE.txt",
+    "license": "MIT"
+  },
+  {
+    "wheel": "pydantic_core-2.50.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "license_member": "pydantic_core-2.50.0.dist-info/licenses/LICENSE",
+    "license_sha256": "2afdd30d54b4d62b6f488a6bcc1546e84ec5061f13f4209c03d012348783795a",
+    "license_file": "docs/compliance/dependency_licenses/pydantic-core-2.50.0-LICENSE.txt",
+    "license": "MIT"
+  },
+  {
+    "wheel": "typing_extensions-4.16.0-py3-none-any.whl",
+    "license_member": "typing_extensions-4.16.0.dist-info/licenses/LICENSE",
+    "license_sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+    "license_file": "docs/compliance/dependency_licenses/typing-extensions-4.16.0-LICENSE.txt",
+    "license": "MIT"
+  },
+  {
+    "wheel": "typing_inspection-0.4.4-py3-none-any.whl",
+    "license_member": "typing_inspection-0.4.4.dist-info/licenses/LICENSE",
+    "license_sha256": "804b59b25f2c31bd278f9202a19ae49a3945aa2664387e2d0a128c7cacc61ec3",
+    "license_file": "docs/compliance/dependency_licenses/typing-inspection-0.4.4-LICENSE.txt",
+    "license": "MIT"
+  }
+]

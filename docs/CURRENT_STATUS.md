@@ -1,16 +1,21 @@
-# Current official-path status — 2026-10-12
+# Current official-path status — 2026-10-12 KST
 
-**PRE-GUIDE CANDIDATE / LOCAL SDK VERIFICATION ONLY — NOT OFFICIALLY READY.**
-Official SDK 1.0.1 is integrated, byte-identical to the supplied organizer devkit.
-Actual `openai/gpt-oss-20b@4d7ae4984b7db7de8f8457170b3f1a419ee76d52` execution is **NOT VERIFIED**.
-Development keys are HUMAN-RUN ONLY; none are used by coding tools or CI.
-See [independent audit](preliminary/CODEX_INDEPENDENT_OFFICIAL_AUDIT.md) and
-`artifacts/verification/CURRENT_RELEASE.json` for the final runtime and evidence.
-The legacy internal placeholder schema remains distinct from the actual SDK record.
-All published mock metrics are **LOCAL DEVELOPMENT / PRELIMINARY SIMULATION**.
-SDK fake-server and read-only/offline Docker validation do not establish real-model performance.
-Real guideline corpus and independent clinical validation remain unverified.
-Current bundled catalog: 34 Tier-1 + 1,246 Tier-2 = 1,280; these counts do not certify clinical depth.
+**LOCAL SDK / HUMAN-RUN PREPARATION — NOT OFFICIALLY READY.**
+Current public SDK 1.0.1 is vendored exactly (SHA256 `fdd65302…d6bc871`, default timeout 240 seconds).
+The current public docs/rules both charge one turn for the two EXAM refusal codes.
+Actual `openai/gpt-oss-20b` execution remains **NOT VERIFIED / NOT EXECUTED BY CODEX**.
+Participant keys, official public sample sessions and uploads are **HUMAN-RUN ONLY**.
+See [human-run preparation and measured local changes](preliminary/HUMAN_OFFICIAL_VERIFICATION_REPORT.md)
+and `artifacts/verification/CURRENT_RELEASE.json` for the current runtime and exact package evidence.
+The complete public 15,904-document corpus was hash-verified and tested locally; the 36-query
+metadata topical proxy improved to 100% hit@3/5. This is not clinician relevance or real Doctor benefit.
+The corpus is neither committed nor packaged. New clinical development variants improved 11/16 → 16/16;
+they are not a blind test or independent medical validation. All diagnostic benchmark metrics are
+**LOCAL DEVELOPMENT / PRELIMINARY SIMULATION**. Full-sample server results are absent.
+Runtime provenance inventory coverage passes, but inherited source/license clearance remains **BLOCKED**.
+Therefore even a technical preflight PASS does not establish official submission readiness.
+The legacy placeholder schema and actual 15-field SDK contract are reported separately.
+Current bundled catalog: 34 Tier-1 + 1,246 Tier-2 = 1,280; counts do not certify clinical depth.
 
 The following text is historical evidence, superseded by the current SDK audit:
 

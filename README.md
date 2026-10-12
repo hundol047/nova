@@ -3,7 +3,7 @@
 > `submission/run.py` uses the organizer SDK `run_agent(prepare, consult)` path. Actual Doctor calls go through
 > the organizer's `client.chat`; the internal engine is deterministic. Real `openai/gpt-oss-20b` is **NOT VERIFIED**.
 > Participant-key execution is **HUMAN-RUN ONLY**, outside Codex / Claude Code / Cursor / CI.
-> See [the independent official-path audit](docs/preliminary/CODEX_INDEPENDENT_OFFICIAL_AUDIT.md) and the
+> See [the current human-run verification workflow](docs/preliminary/HUMAN_OFFICIAL_VERIFICATION_REPORT.md) and the
 > [verification pointer](artifacts/verification/CURRENT_RELEASE.json). Scores below are synthetic **mock**
 > development evidence, not official competition scores. Older reports describe their named commits.
 
@@ -13,14 +13,12 @@ A conversational medical-diagnosis agent built for the N.O.V.A. 2026 competition
 standalone `nova_agent` module. It reasons iteratively from a limited initial presentation toward a
 differential diagnosis and actively guards against missing time-critical ("can't-miss") conditions.
 
-**Preliminary round (예선) wire actions** (organizer briefing of 2026-10-06 *as transcribed by the team*; it
-conflicts with the public web page in places and must be re-confirmed against the participant guide):
+**Preliminary round (예선) wire actions** (current public guide checked 2026-10-12 KST):
 `SAY` (patient dialogue, one question/explanation, ≤ 30 characters), `EXAM` (one physical-examination
 maneuver per request), `DIAGNOSE` (ends the encounter; one primary diagnosis + an S/O/A/P initial-visit note),
 ≤ 50 interactions and ≤ 30 minutes per case; **no `TEST` action**. The development / hospital paths below still
-use the internal `ASK / EXAM / TEST / DIAGNOSE` vocabulary, and the public page's 60-turn limit applies only to
-the non-preliminary development mode. Only information actually asked or examined is recorded; unasked
-information is "not asked", never negative, and a rejected EXAM yields no finding.
+use the internal `ASK / EXAM / TEST / DIAGNOSE` vocabulary, while current official preliminary sessions use 50 turns. Only information actually asked or examined is recorded; unasked
+information is "not asked", never negative, and a rejected EXAM yields no finding but uses one turn for EXAM_NOT_SPECIFIC / EXAM_NOT_RECOGNIZED.
 
 Latest reasoning/evaluation cycle: [implementation, measured results and live-model blockers](docs/evaluation/reasoning_cycle8/REPORT.md).
 History/medication context, grounded quoted evidence, novel-hypothesis handling and a fixed-model
@@ -36,9 +34,9 @@ Historical status of the earlier reasoning cycles: see the linked reports and `d
 **What is and is not verified** (details and numbers: [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)):
 - Local code/tests/CI under the mock provider: verified on the commit named in the release pointer
   ([`artifacts/verification/CURRENT_RELEASE.json`](artifacts/verification/CURRENT_RELEASE.json)).
-- Real fixed-model calls: **NOT VERIFIED**. Official API / schema: **NOT VERIFIED / PLACEHOLDER**
+- Real fixed-model calls: **NOT VERIFIED**. Official SDK 15-field contract: **VERIFIED LOCALLY**; legacy API / schema: **NOT VERIFIED / PLACEHOLDER**
   (`competition/schema.py`, `competition/adapter.py`; transport boundary in `competition/official_transport.py`).
-- Clinical review of the knowledge base: **none**. Runtime asset provenance/licence: **75 assets UNRESOLVED**
+- Clinical review of the knowledge base: **none**. Runtime asset provenance/licence: **90 nova_agent assets UNRESOLVED**
   (submission clearance BLOCKED, see the status page).
 - Preliminary-only development benchmark: `scripts/evaluate_preliminary_benchmark.py`
   (**LOCAL DEVELOPMENT / PRELIMINARY SIMULATION**, mock model, no `TEST`). Historical results below that used
