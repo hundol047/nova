@@ -19,6 +19,7 @@ frontend/dist/models/
 .venv-jetson/
 /SynexAgent-YMAS-*.tar.gz
 *.log
+/artifacts/official_samples/
 .sites-runtime/
 onnxruntime_profile__*.json
 

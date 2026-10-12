@@ -3957,7 +3957,7 @@
     {
       "asset_id": "nova_agent/organizer_guidelines.py",
       "path": "nova_agent/organizer_guidelines.py",
-      "sha256": "9f442d1678a5c14b4b7c2fba8325250859668e25c01f4a01422cc18b64fc6c6f",
+      "sha256": "a98f0d8e44397f31816da12684122780463df105f5428ca5f12390e77d4a8699",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",

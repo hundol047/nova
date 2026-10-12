@@ -40,6 +40,7 @@ from typing import Callable, Dict, List, Optional
 
 from nova_agent.config import (OFFICIAL_SAY_EXAM_MAX_CHARS, OFFICIAL_SESSION_DOCTOR_CALLS,
                                OFFICIAL_SESSION_INPUT_TOKENS, OFFICIAL_SESSION_OUTPUT_TOKENS)
+from competition.official_evidence import grounded_in, followup_category, diagnosis_text
 
 MAX_CHARS = OFFICIAL_SAY_EXAM_MAX_CHARS
 # Codes from nova_sdk / devkit / organizer material.
@@ -106,11 +107,17 @@ def first_json(text: str) -> Optional[dict]:
     return None
 
 
+def _list(value):
+    return value if isinstance(value, list) else []
+
+
 @dataclass
 class DoctorStats:
     calls: int = 0               # HTTP requests sent to client.chat (the server's 200 counts these)
     successful: int = 0
     case_relevant_successful: int = 0
+    diagnostic_reasoning_successful: int = 0
+    phrasing_successful: int = 0
     empty_retries: int = 0
     prompt_tokens: int = 0
     completion_tokens: int = 0
@@ -120,6 +127,8 @@ class DoctorStats:
     def as_dict(self) -> dict:
         return {"chat_calls": self.calls, "successful_chat_calls": self.successful,
                 "case_relevant_successful_calls": self.case_relevant_successful,
+                "diagnostic_reasoning_successful_calls": self.diagnostic_reasoning_successful,
+                "phrasing_successful_calls": self.phrasing_successful,
                 "empty_response_retries": self.empty_retries, "prompt_tokens": self.prompt_tokens,
                 "completion_tokens": self.completion_tokens,
                 "total_tokens": self.prompt_tokens + self.completion_tokens,
@@ -158,10 +167,10 @@ def _sdk():
 def prepare() -> dict:
     """Static initialisation before case access (no client call is made here)."""
     started = time.monotonic()
-    os.environ.setdefault("NOVA_COMPETITION_RETRIEVAL", "1")
-    os.environ.setdefault("NOVA_PRELIMINARY_RULES", "1")
+    os.environ["NOVA_COMPETITION_RETRIEVAL"] = "1"
+    os.environ["NOVA_PRELIMINARY_RULES"] = "1"
     # The engine reasons deterministically inside; every model call of the encounter goes through client.chat.
-    os.environ.setdefault("NOVA_LLM_PROVIDER", "mock")
+    os.environ["NOVA_LLM_PROVIDER"] = "mock"
     from nova_agent.config import get_config
     get_config(reload=True)
     from nova_agent.knowledge.retrieval import all_diseases
@@ -199,6 +208,9 @@ class OfficialEncounter:
         self.guideline_refs: List[dict] = []
         self.exam_rejections = 0
         self.over = False
+        self._chat_allocations: Dict[str, tuple] = {}
+        self._accepted_primary = ""
+        self._diagnosis_checked = False
 
     # --- time / budget --------------------------------------------------------------------------------------------
     def seconds_left(self) -> float:
@@ -215,6 +227,11 @@ class OfficialEncounter:
             return False
         return required or s.calls < DOCTOR_CALL_TARGET
 
+    def _timeout(self, submitting=False):
+        """The SDK remains verbatim; its configurable timeout cannot eat submission headroom."""
+        margin = 1.0 if submitting else SUBMIT_MARGIN
+        return max(0.1, min(120.0, self.seconds_left() - margin))
+
     # --- transport ------------------------------------------------------------------------------------------------
     def _call(self, fn, *args, with_request_id: bool = True, **kwargs):
         """One logical operation: same request_id across transport retries, a new one after a server-side
@@ -222,13 +239,17 @@ class OfficialEncounter:
         (``with_request_id=False``)."""
         request_id = str(uuid.uuid4())
         NovaError = self.sdk.NovaError
+        submitting = fn == getattr(self.client, "diagnose", None)
         for wait in (*RETRY_WAITS, None):
             try:
+                previous_timeout = getattr(self.client, "timeout", None)
+                if previous_timeout is not None:
+                    self.client.timeout = min(previous_timeout, self._timeout(submitting))
                 if not with_request_id:
                     return fn(*args, **kwargs)
                 return fn(*args, request_id=request_id, **kwargs)
             except NovaError as exc:
-                retry = wait is not None and self.seconds_left() > wait + SUBMIT_MARGIN
+                retry = wait is not None and self.seconds_left() > wait + (1.0 if submitting else SUBMIT_MARGIN)
                 if exc.code in TRANSPORT_CODES and retry:
                     self.sleep(wait)
                     continue
@@ -239,19 +260,39 @@ class OfficialEncounter:
                     request_id = str(uuid.uuid4())
                     continue
                 raise
+            finally:
+                if previous_timeout is not None:
+                    self.client.timeout = previous_timeout
 
-    def chat(self, messages: List[dict], *, max_tokens: int, effort: str, required: bool, case_relevant: bool) -> Optional[str]:
+    def chat(self, messages: List[dict], *, max_tokens: int, effort: str, required: bool, case_relevant: bool,
+             purpose: str = "reasoning") -> Optional[str]:
         """One Doctor (gpt-oss-20b) consultation through the official client; None if unavailable."""
-        if not self._doctor_allowed(required):
+        if not self._doctor_allowed(required) or self.seconds_left() <= SUBMIT_MARGIN:
             return None
         NovaError = self.sdk.NovaError
         request_id = str(uuid.uuid4())
+        # Byte-level prompt allowance plus template headroom. The server is the
+        # authority for exact tokens; unresolved transport outcomes retain their
+        # reservations, so a lost response cannot silently reset the local budget.
+        prompt_bound = sum(len(str(m.get("content", "")).encode()) + 256 for m in messages) + 4096
         for wait in (*RETRY_WAITS, None):
-            if self.stats.calls >= OFFICIAL_SESSION_DOCTOR_CALLS - 1:
+            if self.stats.calls >= OFFICIAL_SESSION_DOCTOR_CALLS - 1 or self.seconds_left() <= SUBMIT_MARGIN:
                 return None
+            if request_id not in self._chat_allocations:
+                used_input = sum(v[0] for v in self._chat_allocations.values())
+                used_output = sum(v[1] for v in self._chat_allocations.values())
+                if used_input + prompt_bound > OFFICIAL_SESSION_INPUT_TOKENS:
+                    return None
+                max_tokens = min(max_tokens, OFFICIAL_SESSION_OUTPUT_TOKENS - used_output)
+                if max_tokens <= 0:
+                    return None
+                self._chat_allocations[request_id] = (prompt_bound, max_tokens)
             self.stats.calls += 1
             started = time.monotonic()
+            previous_timeout = getattr(self.client, "timeout", None)
             try:
+                if previous_timeout is not None:
+                    self.client.timeout = min(previous_timeout, self._timeout())
                 response = self.client.chat(messages, max_tokens=max_tokens, reasoning_effort=effort, request_id=request_id)
             except NovaError as exc:
                 self.stats.latency_seconds += time.monotonic() - started
@@ -262,22 +303,32 @@ class OfficialEncounter:
                 if exc.code in SERVER_RETRY_CODES and retry:
                     if exc.code == "PROVIDER_RESPONSE_INVALID":
                         self.stats.empty_retries += 1
+                        self._chat_allocations[request_id] = (0, 0)  # official empty completion: calls only
                     self.sleep(wait)
                     request_id = str(uuid.uuid4())
                     continue
                 self.log(f"[doctor] chat failed: {exc.code}")
                 return None
+            finally:
+                if previous_timeout is not None:
+                    self.client.timeout = previous_timeout
             self.stats.latency_seconds += time.monotonic() - started
+            if not isinstance(response, dict):
+                return None
             usage = response.get("usage") or {}
-            self.stats.prompt_tokens += int(usage.get("prompt_tokens") or 0)
-            self.stats.completion_tokens += int(usage.get("completion_tokens") or 0)
+            if not isinstance(usage, dict):
+                usage = {}
+            if all(isinstance(usage.get(k), int) and usage[k] >= 0 for k in ("prompt_tokens", "completion_tokens")):
+                self._chat_allocations[request_id] = (usage["prompt_tokens"], usage["completion_tokens"])
+            self.stats.prompt_tokens += usage.get("prompt_tokens", 0) if isinstance(usage.get("prompt_tokens"), int) and usage["prompt_tokens"] >= 0 else 0
+            self.stats.completion_tokens += usage.get("completion_tokens", 0) if isinstance(usage.get("completion_tokens"), int) and usage["completion_tokens"] >= 0 else 0
             if response.get("model"):
                 self.stats.models.append(str(response["model"]))
             try:
                 content = response["choices"][0]["message"]["content"] or ""
             except (KeyError, IndexError, TypeError):
                 content = ""
-            if not content.strip():
+            if not isinstance(content, str) or not content.strip():
                 if wait is not None and self.seconds_left() > wait + SUBMIT_MARGIN:
                     self.stats.empty_retries += 1
                     self.sleep(wait)
@@ -287,6 +338,13 @@ class OfficialEncounter:
             self.stats.successful += 1
             if case_relevant:
                 self.stats.case_relevant_successful += 1
+                if purpose == "phrasing":
+                    self.stats.phrasing_successful += 1
+                else:
+                    parsed = first_json(content) or {}
+                    if diagnosis_text(parsed.get("primary_diagnosis")) or any(
+                            isinstance(parsed.get(k), list) and parsed[k] for k in ("questions", "exams", "differential")):
+                        self.stats.diagnostic_reasoning_successful += 1
             return content
         return None
 
@@ -339,6 +397,13 @@ class OfficialEncounter:
 
     # --- the encounter ----------------------------------------------------------------------------------------------
     def run(self):
+        # Legacy development provider settings must not activate the separate
+        # engine real-LLM gate. All actual Doctor calls use the official SDK.
+        os.environ["NOVA_LLM_PROVIDER"] = "mock"
+        os.environ["NOVA_COMPETITION_RETRIEVAL"] = "1"
+        os.environ["NOVA_PRELIMINARY_RULES"] = "1"
+        from nova_agent.config import get_config
+        get_config(reload=True)
         from nova_agent.evidence_scope import proxy_scope
         from nova_agent.llm_client import MockLLMClient
         from nova_agent.orchestrator import DoctorAgent
@@ -348,8 +413,12 @@ class OfficialEncounter:
         initial = session.get("initial") or {}
         opening = nfc(initial.get("opening", ""))
         vitals = str(initial.get("vital_signs", "") or "").strip()
-        self.turns_left = int(session.get("turns_remaining") or 50)
+        remaining = session.get("turns_remaining")
+        self.turns_left = remaining if isinstance(remaining, int) and remaining >= 0 else 50
         self.deadline = parse_deadline(session.get("deadline"))
+        if self.deadline is None:
+            self.deadline = self.clock() + 30 * 60
+            self.log("[session] invalid/missing deadline; bounded 30-minute local fallback")
         if "TEST" in (session.get("available_actions") or []):
             self.log("[session] TEST is offered by the server; the preliminary agent never uses it")
 
@@ -372,15 +441,20 @@ class OfficialEncounter:
         with proxy_scope(pstate.proxy_relation):
             differential, final = self._engine_final()
             self._final_consult(differential, final)
+            if self.stats.diagnostic_reasoning_successful == 0 and self.seconds_left() > SUBMIT_MARGIN:
+                # Robustness policy, not an additional organizer rule: phrasing
+                # must not hide failure of all diagnostic calls. Incorporate the
+                # last result BEFORE the explanation and record are constructed.
+                self._minimal_consult()
+            self._diagnosis_checked = False
+            self._accepted_primary = self._validated_primary(differential, final)
+            self._diagnosis_checked = True
             if not self.over:
                 try:
                     self._explain(differential, final)
                 except EncounterOver as exc:
                     self.log(f"[encounter] server ended before explanation: {exc}")
             note, diagnosis = self.official_record(differential, final)
-        if self.stats.case_relevant_successful == 0:
-            # Organizer rule: a case without a Doctor call scores 0. Last bounded attempt before submitting.
-            self._minimal_consult()
         self.log("[encounter] " + json.dumps({"turns_used": sum(1 for t in self.turns if t.kind in ("SAY", "EXAM")),
                                               "exam_rejections": self.exam_rejections, **self.stats.as_dict()},
                                              ensure_ascii=False))
@@ -444,7 +518,7 @@ class OfficialEncounter:
                                               "한국어 질문 한 문장으로 바꾸세요. 의미를 바꾸거나 다른 내용을 덧붙이지 말고 30자 이내로, "
                                               "질문 문장만 출력하세요."},
                 {"role": "user", "content": f"환자 첫 진술: {self.opening[:300]}\n바꿀 질문: {text}"}],
-                max_tokens=PHRASE_MAX_TOKENS, effort="low", required=False, case_relevant=True)
+                max_tokens=PHRASE_MAX_TOKENS, effort="low", required=False, case_relevant=True, purpose="phrasing")
             candidate = nfc((reply or "").strip().strip('"“”\''))
             candidate = candidate.splitlines()[0] if candidate else ""
             already = {t.text for t in self.turns} | set(self.phrase_cache.values())
@@ -486,18 +560,27 @@ class OfficialEncounter:
         self.followup_plan = plan
         asked = {_norm(t.text) for t in self.turns}
         budget = max(0, min(self.turns_left - 3, TOTAL_TURN_TARGET - len(self.turns) - 2))
-        questions = [nfc(q) for q in plan.get("questions") or [] if isinstance(q, str)]
-        exams = [nfc(e) for e in plan.get("exams") or [] if isinstance(e, str)]
-        for q in [q for q in questions if fits(q) and _norm(q) not in asked][:MAX_FOLLOWUP_QUESTIONS]:
+        questions = []
+        for q in _list(plan.get("questions")):
+            text = nfc(q.get("text", "")) if isinstance(q, dict) else nfc(q) if isinstance(q, str) else ""
+            proposed = q.get("category", "") if isinstance(q, dict) else ""
+            if fits(text) and _norm(text) not in asked:
+                questions.append((text, followup_category(text, proposed)))
+                asked.add(_norm(text))
+        exams = [nfc(e) for e in _list(plan.get("exams")) if isinstance(e, str)]
+        for q, category in questions[:MAX_FOLLOWUP_QUESTIONS]:
             if budget <= 0 or not self.can_gather():
                 break
-            turn = self.say(q, category="followup")
+            turn = self.say(q, category=category)
             budget -= 1
             if turn.ok:
-                self._absorb("ASK", "associated_symptoms", q, turn.reply)
+                self._absorb("ASK", category, q, turn.reply)
         for e in [e for e in exams if _single_maneuver(e) and _norm(e) not in asked][:MAX_FOLLOWUP_EXAMS]:
             if budget <= 0 or not self.can_gather():
                 break
+            if _norm(e) in asked:
+                continue
+            asked.add(_norm(e))
             turn = self.exam(e, category="followup_exam")
             budget -= 1
             if turn.ok:
@@ -528,11 +611,11 @@ class OfficialEncounter:
         return differential or [], final
 
     def _final_consult(self, differential, final) -> None:
-        required = self.stats.case_relevant_successful == 0
+        required = self.stats.diagnostic_reasoning_successful == 0
         if self.seconds_left() < FINAL_CONSULT_MARGIN and not required:
             return
         from nova_agent.organizer_guidelines import retrieve
-        names = [d.get("name", "") for d in (self.followup_plan.get("differential") or []) if isinstance(d, dict)]
+        names = [str(d.get("name", "")) for d in _list(self.followup_plan.get("differential")) if isinstance(d, dict)]
         query = " ".join([self.opening[:200], *names[:4], *[d.diagnosis for d in differential[:3]]])
         self.guideline_refs = retrieve(self.prepared.get("guidelines"), query, k=3, max_chars=700)
         refs = "\n\n".join(f"[{r['title']} | {r['organization']} {r['year']} | {r['license']}]\n{r['excerpt']}"
@@ -555,13 +638,13 @@ class OfficialEncounter:
             {"role": "system", "content": "외래 의사로서 아래 진료 기록의 가장 가능성 높은 진단 하나를 JSON {\"primary_diagnosis\": \"...\"}으로만 답하세요."},
             {"role": "user", "content": self.transcript_text()[:6000]}],
             max_tokens=2048, effort="low", required=True, case_relevant=True)
-        if reply and not self.final_consult:
+        if reply and not diagnosis_text(self.final_consult.get("primary_diagnosis")):
             self.final_consult = first_json(reply) or {}
 
     def _diagnosis_label(self, final) -> str:
-        primary = nfc(str(self.final_consult.get("primary_diagnosis") or ""))
-        primary = " ".join(primary.split())
-        if primary and "\n" not in primary and len(primary.encode()) <= 400:
+        primary = self._accepted_primary if self._diagnosis_checked else self._validated_primary(
+            list(getattr(getattr(self, "pstate", None), "current_differential", []) or []), final)
+        if primary:
             return primary
         if final is not None and final.item is not None:
             from nova_agent.soap import _entry_for, localized_name
@@ -569,8 +652,50 @@ class OfficialEncounter:
             return name if name == final.item.diagnosis else f"{name} ({final.item.diagnosis})"
         return "진단 미정 (추가 평가 필요)"
 
+    def _validated_primary(self, differential, final) -> str:
+        """Accept supported Doctor corrections; a free-form label is not evidence."""
+        primary = diagnosis_text(self.final_consult.get("primary_diagnosis"))
+        if not primary:
+            return ""
+        from nova_agent.diagnosis_normalizer import normalize_diagnosis
+        from nova_agent.soap import _entry_for, localized_name
+        variants = [primary, re.sub(r"\s*\(.*?\)", "", primary).strip(), *re.findall(r"\(([^()]*)\)", primary)]
+        cid = next((n.canonical_id for v in variants if (n := normalize_diagnosis(v)).mapped), None)
+        if final is not None and final.item is not None:
+            item = final.item
+            names = {item.diagnosis, localized_name(_entry_for(item.diagnosis_id), item.diagnosis, "ko")}
+            if cid and cid.removeprefix("onto::") == item.diagnosis_id.removeprefix("onto::") or primary in names:
+                return primary
+        state = getattr(self, "pstate", None)
+        if state is None or cid is None:
+            return ""
+        from nova_agent.differential import _entry_for_candidate_id, _score_disease
+        entry = _entry_for_candidate_id(cid if cid.startswith("onto::") else cid)
+        if entry is None and cid.startswith("tier"):
+            entry = _entry_for_candidate_id("onto::" + cid)
+        if entry is None:
+            return ""
+        _, _, support, contra, _ = _score_disease(entry, state)
+        from nova_agent.severity_evidence import GENERIC_PHYSIOLOGIC_SEVERITY_WORDS
+        from nova_agent.matching import content_words
+        specific = [s for s in support if not s.startswith(("no ", "not "))
+                    and not content_words(s).issubset(GENERIC_PHYSIOLOGIC_SEVERITY_WORDS)]
+        evidence = _list(self.final_consult.get("evidence"))
+        if isinstance(evidence, list) and len(specific) >= 2 and not contra and any(
+                isinstance(e, str) and grounded_in(e, self._observed_corpus()) for e in evidence):
+            return primary
+        return ""
+
+    def _observed_corpus(self) -> str:
+        lines = [self.opening, self.vitals]
+        for t in self.turns:
+            if t.ok and t.category not in ("explanation", "plan_explanation"):
+                lines.append(f"{t.text} → {t.reply}" if t.kind == "SAY" else t.reply)
+        return "\n".join(lines)
+
     def _urgent(self, differential, final) -> bool:
-        urgent = bool(self.final_consult.get("urgent") is True)
+        accepted = self._accepted_primary if self._diagnosis_checked else self._validated_primary(differential, final)
+        urgent = bool(accepted and self.final_consult.get("urgent") is True)
         try:
             from nova_agent.disposition import disposition_for
             urgent = urgent or (final is not None and disposition_for(self.pstate, final, differential).urgent)
@@ -584,7 +709,7 @@ class OfficialEncounter:
         if self.turns_left <= 0 or self.seconds_left() < SUBMIT_MARGIN + 10:
             return
         label = self._diagnosis_label(final)
-        short = nfc(str(self.final_consult.get("short_name") or ""))
+        short = nfc(str(self.final_consult.get("short_name") or "")) if self._accepted_primary else ""
         names = [n for n in (short, re.sub(r"\s*\(.*?\)", "", label).strip(), label) if n]
         text = explanation_text(names[0], "ko", names[1:]) if names and not label.startswith("진단 미정") \
             else uncertain_explanation_text("ko")
@@ -616,16 +741,19 @@ class OfficialEncounter:
         record["O"]["exam"] = "\n".join([f"V/S : {self.vitals}" if self.vitals else ""]
                                         + [f"- {t.text} → {t.reply}" for t in exams]).strip()
         record["O"]["tests"] = "시행한 검사 없음 (예선: 검사 행동 없음)"
-        corpus = self.transcript_text()
-        evidence = [nfc(e) for e in self.final_consult.get("evidence") or [] if isinstance(e, str)]
+        corpus = self._observed_corpus()
+        evidence = [nfc(e) for e in _list(self.final_consult.get("evidence")) if isinstance(e, str)]
         grounded = [e for e in evidence if grounded_in(e, corpus)][:8]
         if not grounded:
             grounded = [f"{t.text} → {t.reply}" for t in by_cat.get("hpi", [])[:4]]
         record["A"]["evidence"] = f"#1. {diagnosis}\n" + "\n".join(f"- 근거 : {e}" for e in grounded)
         ddx_lines = []
-        for d in self.final_consult.get("differential") or []:
+        for d in _list(self.final_consult.get("differential")):
             if isinstance(d, dict) and d.get("name"):
-                ddx_lines.append(f"r/o {nfc(d['name'])} : {nfc(str(d.get('reason') or ''))}")
+                name = diagnosis_text(d['name'])
+                reason = nfc(str(d.get('reason') or ''))
+                if name:
+                    ddx_lines.append(f"r/o {name} : {reason if grounded_in(reason, corpus) else '감별 필요 (미확인)'}")
         from nova_agent.soap import _entry_for, localized_name
         listed = " ".join(ddx_lines) + " " + diagnosis
         supported_alternatives = set()
@@ -643,10 +771,13 @@ class OfficialEncounter:
                     ddx_lines.append(f"r/o {name} ({d.diagnosis}) : 위험 질환 배제 필요")
         record["A"]["differential"] = "\n".join(ddx_lines[:8])
         plan = self.final_consult.get("plan") if isinstance(self.final_consult.get("plan"), dict) else {}
+        accepted = self._accepted_primary if self._diagnosis_checked else self._validated_primary(differential, final)
+        if self.final_consult.get("primary_diagnosis") and not accepted:
+            plan = {}  # a rejected unsupported diagnosis cannot still dictate its treatment
         fallback = self._engine_plan(differential, final)
         for key in ("tests", "treatment", "disposition", "follow_up", "education"):
             value = plan.get(key)
-            value = "\n".join(map(str, value)) if isinstance(value, list) else str(value or "")
+            value = "\n".join(v for v in value if isinstance(v, str)) if isinstance(value, list) else value if isinstance(value, str) else ""
             record["P"][key] = nfc(value) or fallback.get(key, "")
         said = [t.text for t in self.turns if t.ok and t.category in ("explanation", "plan_explanation")]
         if said:
@@ -666,7 +797,9 @@ class OfficialEncounter:
         except Exception:  # noqa: BLE001
             lines = []
         pick = lambda prefix: next((l.split(":", 1)[1].strip() for l in lines if l.startswith(prefix)), "")
-        return {"tests": pick("추가 검사"), "treatment": pick("치료"), "disposition": pick("치료"),
+        urgent = self._urgent(differential, final)
+        return {"tests": pick("추가 검사"), "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+                "disposition": "즉시 응급실 평가 및 모니터링" if urgent else "외래 평가; 악화 시 즉시 재평가",
                 "follow_up": pick("추적"), "education": pick("환자 교육")}
 
 
@@ -704,20 +837,10 @@ def _single_maneuver(text: str) -> bool:
     return fits(text) and bool(_EXAM_VERB.search(text)) and not _COMPOUND_EXAM.search(text) and not _NOT_EXAM.search(text)
 
 
-def grounded_in(claim: str, corpus: str, threshold: float = 0.6) -> bool:
-    """An assessment evidence line is kept only when most of its content words occur in the actual transcript."""
-    words = [w for w in re.findall(r"[가-힣]{2,}|[A-Za-z]{3,}|\d+(?:\.\d+)?", claim or "")]
-    if not words:
-        return False
-    corpus = corpus or ""
-    hits = sum(1 for w in words if w in corpus or (len(w) >= 3 and w[:2] in corpus and w[-2:] in corpus))
-    return hits / len(words) >= threshold
-
-
 _FOLLOWUP_SYSTEM = (
     "당신은 외래 진료실의 의사입니다. 지금까지의 진료 기록을 보고, 진단을 가르기 위해 아직 확인하지 않은 핵심 정보를 정합니다. "
     "JSON 객체 하나만 출력하세요: {\"differential\": [{\"name\": \"한국어 진단명\", \"why\": \"짧은 이유\"}], "
-    "\"questions\": [\"환자에게 할 질문\"], \"exams\": [\"신체진찰 동작 하나\"]}.\n"
+    "\"questions\": [{\"text\": \"환자에게 할 질문\", \"category\": \"medication|allergy|past_medical_history|family_history|social_history|associated_symptoms\"}], \"exams\": [\"신체진찰 동작 하나\"]}.\n"
     "규칙: differential은 가능성 순 최대 5개. questions는 최대 6개, 각각 30자 이내의 질문 하나(한 번에 한 가지만), 이미 물은 내용 금지. "
     "복용 약물이 언급되면 약 이름·용량·하루 복용 횟수·사용 기간·효과 감소나 증량·끊었을 때 증상을 확인합니다. "
     "만성 경과(체중·성장·수면 등)는 시작 시점, 변화 속도, 과거 기록, 동반 증상, 가족력을 확인합니다. 위험 신호도 확인합니다. "

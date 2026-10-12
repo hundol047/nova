@@ -1,11 +1,11 @@
-> **Current status: PRE-GUIDE CANDIDATE — NOT OFFICIALLY READY.** The organizer's participant guide / runtime API
-> has not been published to us, so the official model transport, schema and `run.py` invocation are **not
-> integrated and not verified** (`submission/run.py` fails closed on purpose). Real `openai/gpt-oss-20b`
-> behaviour has **never been observed**; every number in this repository is a same-author, synthetic,
-> deterministic-**mock** development result — **not** an official score and **not** clinical accuracy.
-> Read [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) first: it is the single maintained status page
-> (what is verified, what is assumed, what is blocked). Older sections of this README and anything under
-> `docs/round_*`, `artifacts/` and `docs/compliance/*REPORT*` are **historical evidence for the commit they name**.
+> **Current status: official SDK 1.0.1 integrated; LOCAL VERIFICATION ONLY — NOT OFFICIALLY READY.**
+> The older **PRE-GUIDE CANDIDATE** readiness label is historical; SDK integration is now present.
+> `submission/run.py` uses the organizer SDK `run_agent(prepare, consult)` path. Actual Doctor calls go through
+> the organizer's `client.chat`; the internal engine is deterministic. Real `openai/gpt-oss-20b` is **NOT VERIFIED**.
+> Participant-key execution is **HUMAN-RUN ONLY**, outside Codex / Claude Code / Cursor / CI.
+> See [the independent official-path audit](docs/preliminary/CODEX_INDEPENDENT_OFFICIAL_AUDIT.md) and the
+> [verification pointer](artifacts/verification/CURRENT_RELEASE.json). Scores below are synthetic **mock**
+> development evidence, not official competition scores. Older reports describe their named commits.
 
 # N.O.V.A. 2026 Doctor Agent
 
@@ -17,7 +17,7 @@ differential diagnosis and actively guards against missing time-critical ("can't
 conflicts with the public web page in places and must be re-confirmed against the participant guide):
 `SAY` (patient dialogue, one question/explanation, ≤ 30 characters), `EXAM` (one physical-examination
 maneuver per request), `DIAGNOSE` (ends the encounter; one primary diagnosis + an S/O/A/P initial-visit note),
-≤ 50 interactions and ≤ 20 minutes per case; **no `TEST` action**. The development / hospital paths below still
+≤ 50 interactions and ≤ 30 minutes per case; **no `TEST` action**. The development / hospital paths below still
 use the internal `ASK / EXAM / TEST / DIAGNOSE` vocabulary, and the public page's 60-turn limit applies only to
 the non-preliminary development mode. Only information actually asked or examined is recorded; unasked
 information is "not asked", never negative, and a rejected EXAM yields no finding.

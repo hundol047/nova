@@ -121,7 +121,7 @@ class GuidelineIndex:
             return None
         candidate = (self.root / relative)
         try:
-            if candidate.is_symlink():
+            if candidate.is_symlink() or any(p.is_symlink() for p in candidate.parents if p != self.root.parent):
                 return None
             resolved = candidate.resolve()
             resolved.relative_to(self.root.resolve())
@@ -163,8 +163,8 @@ def build_index(root: Optional[str] = None, time_budget_seconds: float = 240.0, 
     started = time.monotonic()
     root_value = root if root is not None else os.environ.get("NOVA_GUIDELINES_DIR", "")
     base = Path(root_value) if root_value else None
-    index = GuidelineIndex(root=base if base and base.is_dir() else None)
-    if index.root is None:
+    index = GuidelineIndex(root=base if base and base.is_dir() and not base.is_symlink() else None)
+    if index.root is None or max_documents <= 0 or time_budget_seconds <= 0:
         return index
     catalog = index.root / "catalog.csv"
     rows: List[dict] = []
@@ -175,6 +175,8 @@ def build_index(root: Optional[str] = None, time_budget_seconds: float = 240.0, 
                 header = {_norm_header(h): h for h in (reader.fieldnames or [])}
                 lookup = {k: next((header[c] for c in v if c in header), None) for k, v in _CATALOG_FIELDS.items()}
                 for row in reader:
+                    if time.monotonic() - started > time_budget_seconds:
+                        break
                     rows.append({k: (row.get(col) or "").strip() if col else "" for k, col in lookup.items()})
                     if len(rows) >= max_documents:
                         break
@@ -184,6 +186,9 @@ def build_index(root: Optional[str] = None, time_budget_seconds: float = 240.0, 
     if not rows:
         index.source = "front_matter"
         for dirpath, dirnames, filenames in os.walk(index.root, followlinks=False):
+            if len(rows) >= max_documents or time.monotonic() - started > time_budget_seconds:
+                break
+            dirnames[:] = sorted(d for d in dirnames if not (Path(dirpath) / d).is_symlink())
             for name in sorted(filenames):
                 if not name.endswith(".md") or time.monotonic() - started > time_budget_seconds:
                     continue
@@ -210,13 +215,16 @@ def build_index(root: Optional[str] = None, time_budget_seconds: float = 240.0, 
         if not relative or relative.startswith(("/", "\\")) or ".." in Path(relative).parts:
             index.skipped += 1
             continue
+        if index._resolve(relative) is None or any(len(str(v)) > 4096 for v in row.values()):
+            index.skipped += 1
+            continue
         doc = GuidelineDoc(path=relative, title=row.get("title", ""), organization=row.get("organization", ""),
                            year=row.get("year", ""), language=row.get("language", ""), doc_type=row.get("doc_type", ""),
                            license=row.get("license", ""), source_url=row.get("source_url", ""))
         doc_id = len(index.docs)
         index.docs.append(doc)
         stem = re.sub(r"[_\-.]+", " ", Path(relative).stem)
-        for term in set(tokens(f"{doc.title} {stem}")):
+        for term in sorted(set(tokens(f"{doc.title} {stem}")))[:128]:
             index.postings.setdefault(term, []).append(doc_id)
     index.build_seconds = time.monotonic() - started
     return index

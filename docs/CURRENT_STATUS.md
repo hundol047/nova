@@ -1,3 +1,21 @@
+# Current official-path status — 2026-10-12
+
+**PRE-GUIDE CANDIDATE / LOCAL SDK VERIFICATION ONLY — NOT OFFICIALLY READY.**
+Official SDK 1.0.1 is integrated, byte-identical to the supplied organizer devkit.
+Actual `openai/gpt-oss-20b@4d7ae4984b7db7de8f8457170b3f1a419ee76d52` execution is **NOT VERIFIED**.
+Development keys are HUMAN-RUN ONLY; none are used by coding tools or CI.
+See [independent audit](preliminary/CODEX_INDEPENDENT_OFFICIAL_AUDIT.md) and
+`artifacts/verification/CURRENT_RELEASE.json` for the final runtime and evidence.
+The legacy internal placeholder schema remains distinct from the actual SDK record.
+All published mock metrics are **LOCAL DEVELOPMENT / PRELIMINARY SIMULATION**.
+SDK fake-server and read-only/offline Docker validation do not establish real-model performance.
+Real guideline corpus and independent clinical validation remain unverified.
+Current bundled catalog: 34 Tier-1 + 1,246 Tier-2 = 1,280; these counts do not certify clinical depth.
+
+The following text is historical evidence, superseded by the current SDK audit:
+
+---
+
 # N.O.V.A. 2026 — current competition status
 
 **PRE-GUIDE CANDIDATE — ROUND V — SAME-CONDITION REGRESSION PASS (0 new wrong, 0 new critical miss), COMPLETION TARGET FAIL (unnecessary EXAM 296 > 238) — NOT OFFICIALLY READY.**

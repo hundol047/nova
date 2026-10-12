@@ -14,9 +14,9 @@ from pathlib import Path
 # on `python -I` keeping the script directory on sys.path.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 # Engine configuration for the official encounter (set before any nova_agent import reads it).
-os.environ.setdefault("NOVA_COMPETITION_RETRIEVAL", "1")
-os.environ.setdefault("NOVA_PRELIMINARY_RULES", "1")
-os.environ.setdefault("NOVA_LLM_PROVIDER", "mock")  # engine reasons deterministically; Doctor calls go via client.chat
+os.environ["NOVA_COMPETITION_RETRIEVAL"] = "1"
+os.environ["NOVA_PRELIMINARY_RULES"] = "1"
+os.environ["NOVA_LLM_PROVIDER"] = "mock"  # engine reasons deterministically; Doctor calls go via client.chat
 os.environ.setdefault("PYTHONDONTWRITEBYTECODE", "1")
 sys.dont_write_bytecode = True  # the root filesystem is read-only
 
