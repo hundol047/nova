@@ -93,10 +93,10 @@ def _submission_files() -> list:
     allowed |= tracked & {"nova_agent/knowledge/PROVENANCE.md",
                           "nova_agent/ontology/snapshots/README.md"}
     allowed |= {"run.py", "requirements.txt", "nova_sdk.py"}  # nova_sdk.py: organizer SDK, vendored verbatim
-    unexpected = [str(p.relative_to(SUBMISSION)) for p in files
-                  if str(p.relative_to(SUBMISSION)) not in allowed or p.is_symlink()]
+    unexpected = [p.relative_to(SUBMISSION).as_posix() for p in files
+                  if p.relative_to(SUBMISSION).as_posix() not in allowed or p.is_symlink()]
     # Reject directory symlinks as well, even when pathlib does not descend into them.
-    unexpected += [str(p.relative_to(SUBMISSION)) for p in SUBMISSION.rglob("*")
+    unexpected += [p.relative_to(SUBMISSION).as_posix() for p in SUBMISSION.rglob("*")
                    if p.is_symlink() and p.is_dir()]
     if unexpected:
         raise SystemExit("Unapproved staging files or symlinks: " + ", ".join(sorted(set(unexpected))))
@@ -166,7 +166,7 @@ def _build_zip_and_manifest() -> None:
         "built_at_utc": _reference_time(),
         "file_count": len(files),
         "files": {
-            str(p.relative_to(SUBMISSION)): hashlib.sha256(p.read_bytes()).hexdigest() for p in files
+            p.relative_to(SUBMISSION).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in files
         },
     }
     (SUBMISSION / "MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
@@ -175,7 +175,7 @@ def _build_zip_and_manifest() -> None:
     if zip_path.exists():
         zip_path.unlink()
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
-        entries = [(str(p.relative_to(SUBMISSION)), p) for p in files] + [("MANIFEST.json", SUBMISSION / "MANIFEST.json")]
+        entries = [(p.relative_to(SUBMISSION).as_posix(), p) for p in files] + [("MANIFEST.json", SUBMISSION / "MANIFEST.json")]
         for arcname, path in sorted(entries):
             # Fixed timestamp and permissions: file mtimes/modes are not build inputs.
             info = zipfile.ZipInfo(arcname, date_time=(1980, 1, 1, 0, 0, 0))
