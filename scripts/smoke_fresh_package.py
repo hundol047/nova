@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Fresh-directory smoke test of submission/submission.zip (LOCAL PRE-GUIDE CANDIDATE check, not an official run).
+"""Fresh-directory smoke test of submission/submission.zip (local check, not an official run).
 
 Unzips the archive into an empty temporary directory (nothing from the source repository on the path), then
- 1. checks run.py / requirements.txt at the ZIP root, UTF-8 text, size < 50 MB;
- 2. runs ``run.py`` and requires the documented FAIL-CLOSED exit (the official interface is not integrated);
+ 1. checks run.py / requirements.txt / nova_sdk.py at the ZIP root, UTF-8 text, size < 50 MB;
+ 2. runs ``run.py`` WITHOUT the organizer environment (NOVA_API_BASE / NOVA_RUN_TOKEN): the official SDK entrypoint
+    must stop with a non-zero exit, print nothing on stdout and contact nothing (the full official flow over HTTP is
+    scripts/smoke_official_http.py);
  3. drives one complete Korean preliminary encounter through the packaged adapter with the explicit offline mock
     (SAY/EXAM/DIAGNOSE only, S/O/A/P note, a mixed positive/negative answer retained verbatim).
 
@@ -32,14 +34,14 @@ def main() -> None:
         pkg = Path(tmp)
         with zipfile.ZipFile(archive) as z:
             names = z.namelist()
-            assert "run.py" in names and "requirements.txt" in names, "run.py / requirements.txt must be at the ZIP root"
+            assert {"run.py", "requirements.txt", "nova_sdk.py"} <= set(names), "run.py / requirements.txt / nova_sdk.py at the ZIP root"
             z.extractall(pkg)
         for name in names:
             if name.endswith((".py", ".txt", ".json", ".md")):
                 (pkg / name).read_bytes().decode("utf-8")
         env = {"PATH": "/usr/bin:/bin", "PYTHONDONTWRITEBYTECODE": "1", "NOVA_LLM_PROVIDER": "mock", "NOVA_PRELIMINARY_RULES": "1"}
         run = subprocess.run([args.python, "run.py"], cwd=pkg, env=env, capture_output=True, text=True, timeout=120)
-        assert run.returncode != 0 and "NOT READY" in run.stderr and not run.stdout.strip(), (run.returncode, run.stderr)
+        assert run.returncode != 0 and "NOVA_API_BASE" in run.stderr and not run.stdout.strip(), (run.returncode, run.stderr)
         proc = subprocess.Popen([args.python, "-m", "competition.local_runner"], cwd=pkg, env=env, stdin=subprocess.PIPE,
                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
@@ -63,7 +65,8 @@ def main() -> None:
         assert action["action_type"] == "DIAGNOSE" and set(action["soap"]) == set("SOAP") and action["primary_diagnosis"]
         assert ANSWER in action["soap"]["S"], "mixed positive/negative answer must survive into the SOAP note"
         assert steps <= 50
-        print(f"fresh-directory smoke OK: run.py fail-closed; {steps} interactions -> {action['primary_diagnosis']} (offline mock; official NOT VERIFIED)")
+        print(f"fresh-directory smoke OK: run.py needs the organizer environment; offline harness {steps} interactions -> "
+              f"{action['primary_diagnosis']} (local harness, not an official run)")
 
 
 if __name__ == "__main__":

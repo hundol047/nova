@@ -193928,9 +193928,9 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 22,
+      "line": 25,
       "names": [
-        "PRELIMINARY_MAX_TURNS"
+        "OFFICIAL_MAX_TURNS"
       ],
       "value": 50,
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
@@ -193939,6 +193939,42 @@
       "path": "nova_agent/config.py",
       "line": 26,
       "names": [
+        "OFFICIAL_SAY_EXAM_MAX_CHARS"
+      ],
+      "value": 30,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/config.py",
+      "line": 29,
+      "names": [
+        "OFFICIAL_SESSION_DOCTOR_CALLS"
+      ],
+      "value": 200,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/config.py",
+      "line": 30,
+      "names": [
+        "OFFICIAL_SESSION_INPUT_TOKENS"
+      ],
+      "value": 500000,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/config.py",
+      "line": 31,
+      "names": [
+        "OFFICIAL_SESSION_OUTPUT_TOKENS"
+      ],
+      "value": 100000,
+      "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
+    },
+    {
+      "path": "nova_agent/config.py",
+      "line": 39,
+      "names": [
         "PRELIMINARY_TIME_SAFETY_FRACTION"
       ],
       "value": 0.85,
@@ -193946,7 +193982,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 30,
+      "line": 43,
       "names": [
         "PRELIMINARY_CLOSING_TURNS"
       ],
@@ -193955,7 +193991,7 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 31,
+      "line": 44,
       "names": [
         "PRELIMINARY_TIME_HARD_FRACTION"
       ],
@@ -193964,34 +194000,34 @@
     },
     {
       "path": "nova_agent/config.py",
-      "line": 39,
+      "line": 50,
       "names": [
-        "PRELIMINARY_MAX_LLM_CALLS_PER_CASE"
+        "INTERNAL_ENGINE_LLM_CALLS_PER_CASE"
       ],
       "value": 8,
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
       "path": "nova_agent/config.py",
-      "line": 43,
+      "line": 51,
       "names": [
-        "PRELIMINARY_CASE_INPUT_TOKENS"
+        "INTERNAL_ENGINE_INPUT_TOKENS"
       ],
       "value": 50000,
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
       "path": "nova_agent/config.py",
-      "line": 44,
+      "line": 52,
       "names": [
-        "PRELIMINARY_CASE_OUTPUT_TOKENS"
+        "INTERNAL_ENGINE_OUTPUT_TOKENS"
       ],
       "value": 10000,
       "status": "UNRESOLVED_OR_ENGINEERING_PARAMETER_REQUIRES_CLASSIFICATION"
     },
     {
       "path": "nova_agent/config.py",
-      "line": 372,
+      "line": 384,
       "names": [
         "_config"
       ],

@@ -1,12 +1,8 @@
-# Minimal runtime dependencies for the standalone N.O.V.A. Doctor Agent submission. No FastAPI,
-# ONNX Runtime, Redis, or any other backend/frontend dependency is required -- see
-# nova_agent/_synex.py (optional-only backend reuse) and nova_agent/models.py (standalone models).
-#
-# NOVA_LLM_PROVIDER=mock (dev/offline) / openai_compatible / local / competition all need NOTHING
-# beyond pydantic: OpenAICompatibleLLMClient (nova_agent/llm_client.py) talks to the model server
-# over stdlib `urllib`, deliberately avoiding a dependency on the `openai` package -- a competition
-# environment cannot silently fall back to mock just because a third-party SDK wasn't installed.
-pydantic>=2.6,<3
-
-# Optional: only required if NOVA_LLM_PROVIDER=anthropic.
-# anthropic>=0.40
+# Official submission runtime dependencies, exact pins (the organizer image installs PyPI wheels only, at build time;
+# the encounter container is offline). Verified: Python 3.12 cp312 manylinux wheels exist for every pin, and the
+# test suite passes with them on Python 3.11 and 3.12. nova_sdk.py (organizer SDK) is standard-library only.
+pydantic==2.14.0
+pydantic_core==2.50.0
+annotated-types==0.8.0
+typing-inspection==0.4.4
+typing_extensions==4.16.0

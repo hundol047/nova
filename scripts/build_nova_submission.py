@@ -92,7 +92,7 @@ def _submission_files() -> list:
                (name.startswith("nova_agent/knowledge/") and name.endswith(".json"))}
     allowed |= tracked & {"nova_agent/knowledge/PROVENANCE.md",
                           "nova_agent/ontology/snapshots/README.md"}
-    allowed |= {"run.py", "requirements.txt"}
+    allowed |= {"run.py", "requirements.txt", "nova_sdk.py"}  # nova_sdk.py: organizer SDK, vendored verbatim
     unexpected = [str(p.relative_to(SUBMISSION)) for p in files
                   if str(p.relative_to(SUBMISSION)) not in allowed or p.is_symlink()]
     # Reject directory symlinks as well, even when pathlib does not descend into them.
@@ -200,7 +200,7 @@ def main(argv=None) -> None:
     SUBMISSION.mkdir(exist_ok=True)
     _copy_package("nova_agent")
     _copy_package("competition")
-    for required in ("run.py", "requirements.txt"):
+    for required in ("run.py", "requirements.txt", "nova_sdk.py"):
         if not (SUBMISSION / required).exists():
             raise SystemExit(f"submission/{required} is missing -- it is hand-authored and must "
                               "exist before running this script.")

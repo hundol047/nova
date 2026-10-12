@@ -18,16 +18,18 @@ from nova_agent.models import VitalSigns
 
 _OPS = {">=": lambda v, t: v >= t, "<=": lambda v, t: v <= t, ">": lambda v, t: v > t, "<": lambda v, t: v < t}
 
-_BP = re.compile(r"\b(?:bp|blood pressure)\s*[:\s]*?(\d{2,3})\s*/\s*(\d{2,3})", re.IGNORECASE)
+# Official N.O.V.A. start information labels vitals in Korean ("혈압 : 138/72 mmHg", "맥박 : 102 회/분",
+# "호흡 : 19 회/분", "체온 : 36.9°C"); the Korean labels sit beside the English ones.
+_BP = re.compile(r"(?:\b(?:bp|blood pressure)|혈압)\s*[:\s]*?(\d{2,3})\s*/\s*(\d{2,3})", re.IGNORECASE)
 # ANY blood-pressure-shaped number pair, not just ones with a leading "BP"/"blood pressure" label
 # -- used only to detect a SECOND bilateral reading in the same text (e.g. "BP 180/60 right arm,
 # 130/50 left arm"), where the second pair often has no repeated label. Gated below on the text
 # also naming both sides explicitly, so an unrelated pair of numbers is never misread as a limb.
 _BP_PAIR = re.compile(r"\b(\d{2,3})\s*/\s*(\d{2,3})\b")
-_HR = re.compile(r"\b(?:hr|heart rate|pulse)\s*[:\s]*?(\d{2,3})\b", re.IGNORECASE)
-_RR = re.compile(r"\b(?:rr|respiratory rate|resp(?:iration)? rate)\s*[:\s]*?(\d{1,2})\b", re.IGNORECASE)
-_TEMP = re.compile(r"\b(?:temp(?:erature)?)\s*[:\s]*?(\d{2,3}(?:\.\d)?)\s*(f|fahrenheit)?", re.IGNORECASE)
-_SPO2 = re.compile(r"\b(?:spo2|sp02|o2 sat(?:uration)?|oxygen saturation)\s*[:\s]*?(\d{2,3})\s*%?", re.IGNORECASE)
+_HR = re.compile(r"(?:\b(?:hr|heart rate|pulse)|맥박|심박수?)\s*[:\s]*?(\d{2,3})(?!\d)", re.IGNORECASE)
+_RR = re.compile(r"(?:\b(?:rr|respiratory rate|resp(?:iration)? rate)|호흡수?)\s*[:\s]*?(\d{1,3})(?!\d)", re.IGNORECASE)
+_TEMP = re.compile(r"(?:\b(?:temp(?:erature)?)|체온)\s*[:\s]*?(\d{2,3}(?:\.\d)?)\s*(?:°\s*)?(f|fahrenheit)?", re.IGNORECASE)
+_SPO2 = re.compile(r"(?:\b(?:spo2|sp02|o2 sat(?:uration)?|oxygen saturation)|산소포화도)\s*[:\s]*?(\d{2,3})\s*%?", re.IGNORECASE)
 
 
 def _fahrenheit_to_celsius(f: float) -> float:

@@ -352,6 +352,9 @@ class PatientState(BaseModel):
     # time.time()-based (not perf_counter) since it must be meaningful even if PatientState is
     # constructed and later resumed across separate calls, not just within one process lifetime.
     case_started_at_unix: float = Field(default_factory=time.time)
+    # Official SDK encounter: the server's consult deadline (session["deadline"], epoch seconds). When set it is the
+    # only clock: the local PRELIMINARY_CASE_SECONDS default never ends an official encounter early.
+    deadline_unix: Optional[float] = None
 
     @property
     def case_elapsed_seconds(self) -> float:
@@ -363,15 +366,25 @@ class PatientState(BaseModel):
         closing dialogue plus the final submission would no longer fit. Always False without a limit."""
         from nova_agent.config import (PRELIMINARY_CLOSING_TURNS, PRELIMINARY_TIME_HARD_FRACTION,
                                        PRELIMINARY_TIME_SAFETY_FRACTION)
-        if self.time_limit_seconds is None:
+        if self.deadline_unix is not None:
+            limit = self.deadline_unix - self.case_started_at_unix
+        elif self.time_limit_seconds is None:
             return False
+        else:
+            limit = self.time_limit_seconds
+        return self._time_nearly_up(limit)
+
+    def _time_nearly_up(self, limit: float) -> bool:
+        from nova_agent.config import (PRELIMINARY_CLOSING_TURNS, PRELIMINARY_TIME_HARD_FRACTION,
+                                       PRELIMINARY_TIME_SAFETY_FRACTION)
+        self_limit = limit
         elapsed = self.case_elapsed_seconds
-        if elapsed >= self.time_limit_seconds * PRELIMINARY_TIME_SAFETY_FRACTION:
+        if elapsed >= self_limit * PRELIMINARY_TIME_SAFETY_FRACTION:
             return True
         turns = len(self.performed_actions)
         if turns >= 3:  # need a few samples before the average means anything
             per_turn = elapsed / turns
-            return elapsed + PRELIMINARY_CLOSING_TURNS * per_turn * 1.5 >= self.time_limit_seconds * PRELIMINARY_TIME_HARD_FRACTION
+            return elapsed + PRELIMINARY_CLOSING_TURNS * per_turn * 1.5 >= self_limit * PRELIMINARY_TIME_HARD_FRACTION
         return False
 
     # LLM call reliability (spec: an evaluation run must never look "normal" while the real LLM is
@@ -532,10 +545,13 @@ class PatientState(BaseModel):
                     self.vital_sign_findings.append(finding)
         self.initial_vitals_text = text
 
-    def record_exam_rejected(self, exam_id: str) -> None:
-        """The environment rejected an examination request (not on its list). Per the preliminary
-        rules a rejected request costs NO turn; it is marked done so it is never re-sent, and it
-        contributes no evidence (never recorded as a normal finding)."""
+    def record_exam_rejected(self, exam_id: str, turn_used: bool = False) -> None:
+        """The environment rejected an examination request. It is marked done so it is never re-sent and it
+        contributes no evidence (never recorded as a normal finding). ``turn_used``: the official server
+        (2026-10-11 behaviour: EXAM_NOT_SPECIFIC / EXAM_NOT_RECOGNIZED, HTTP 422) charges one turn for the
+        rejected request; the local simulation harnesses keep the older no-charge behaviour."""
+        if turn_used:
+            self.turn_count += 1
         if exam_id not in self.completed_examinations:
             self.completed_examinations.append(exam_id)
         self.rejected_exams.append(exam_id)

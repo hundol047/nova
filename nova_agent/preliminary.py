@@ -44,6 +44,25 @@ _FEMALE = re.compile(r"여자|여성|여\b|女性|女の|女\b|\bfemale\b|\bwoma
 _MALE = re.compile(r"남자|남성|남\b|男性|男の|男\b|\bmale\b|\bman\b|\bboy\b", re.IGNORECASE)
 
 
+# Official N.O.V.A. openings spell ages out in native Korean numerals ("서른두 살", "예순두 살", "여섯 살");
+# only an age written immediately before 살/세 is read, so a companion's age later in the sentence
+# ("엄마 김지영, 서른일곱 살이 보호자로") is ignored by taking the FIRST match only.
+_KO_TENS = {"열": 10, "스물": 20, "스무": 20, "서른": 30, "마흔": 40, "쉰": 50, "예순": 60, "일흔": 70, "여든": 80, "아흔": 90}
+_KO_UNITS = {"한": 1, "하나": 1, "두": 2, "둘": 2, "세": 3, "셋": 3, "네": 4, "넷": 4, "다섯": 5, "여섯": 6, "일곱": 7,
+             "여덟": 8, "아홉": 9}
+_KO_AGE = re.compile(r"(?<![가-힣])(" + "|".join(sorted(_KO_TENS, key=len, reverse=True)) + r")?\s*("
+                     + "|".join(sorted(_KO_UNITS, key=len, reverse=True)) + r")?\s*(?:살|세)(?![가-힣]*\s*(?:때|전|후))")
+
+
+def _korean_word_age(text: str) -> Optional[int]:
+    for match in _KO_AGE.finditer(text or ""):
+        tens, unit = match.group(1), match.group(2)
+        if not tens and not unit:
+            continue
+        return _KO_TENS.get(tens, 0) + _KO_UNITS.get(unit, 0)
+    return None
+
+
 def parse_first_statement(text: str) -> dict:
     """Age and sex from the patient's first statement ("김철수, 45세 남자입니다..."). The briefing says
     the first statement carries name, age, sex and the reason for the visit and everything else
@@ -55,6 +74,10 @@ def parse_first_statement(text: str) -> dict:
         if match and 0 <= int(match.group(1)) <= 120:
             out["age"] = int(match.group(1))
             break
+    if "age" not in out:
+        word_age = _korean_word_age(text)
+        if word_age is not None and 0 < word_age <= 120:
+            out["age"] = word_age
     female, male = bool(_FEMALE.search(text or "")), bool(_MALE.search(text or ""))
     if female != male:  # ambiguous when both words appear
         out["sex"] = "female" if female else "male"
@@ -92,18 +115,18 @@ _EXPLAIN = {
 }
 
 _EXAM_REQUEST = {
-    "vital_signs": {"ko": "혈압을 재 주세요.", "en": "Please measure the blood pressure.", "ja": "血圧を測ってください。", "zh": "请测量血压。"},
-    "general_appearance": {"ko": "전반적인 모습을 관찰해 주세요.", "en": "Please observe the general appearance.", "ja": "全身の様子を観察してください。", "zh": "请观察整体状态。"},
-    "cardiac_auscultation": {"ko": "심장 소리를 청진해 주세요.", "en": "Please listen to the heart sounds.", "ja": "心音を聴診してください。", "zh": "请听诊心脏。"},
-    "lung_auscultation": {"ko": "폐 소리를 청진해 주세요.", "en": "Please listen to the lung sounds.", "ja": "肺音を聴診してください。", "zh": "请听诊肺部。"},
-    "abdominal_exam": {"ko": "배를 눌러 압통을 확인해 주세요.", "en": "Please palpate the abdomen for tenderness.", "ja": "腹部を触診して圧痛を確認してください。", "zh": "请触诊腹部检查压痛。"},
-    "neuro_exam": {"ko": "양팔을 들어 근력을 확인해 주세요.", "en": "Please check the arm strength.", "ja": "腕の筋力を確認してください。", "zh": "请检查双臂肌力。"},
-    "meningeal_signs": {"ko": "목을 앞으로 굽혀 강직을 확인해 주세요.", "en": "Please flex the neck to check for stiffness.", "ja": "首を前屈させて項部硬直を確認してください。", "zh": "请屈颈检查颈强直。"},
-    "skin_exam": {"ko": "피부를 관찰해 주세요.", "en": "Please inspect the skin.", "ja": "皮膚を観察してください。", "zh": "请检查皮肤。"},
-    "extremity_exam": {"ko": "종아리를 만져 압통을 확인해 주세요.", "en": "Please palpate the calf for tenderness.", "ja": "ふくらはぎを触診して圧痛を確認してください。", "zh": "请触诊小腿检查压痛。"},
-    "costovertebral_tenderness": {"ko": "옆구리 뒤쪽을 두드려 통증을 확인해 주세요.", "en": "Please percuss the flank for tenderness.", "ja": "背部の肋骨脊柱角を叩打してください。", "zh": "请叩击肋脊角检查压痛。"},
-    "pelvic_exam": {"ko": "골반 진찰을 해 주세요.", "en": "Please perform a pelvic examination.", "ja": "骨盤の診察をしてください。", "zh": "请做盆腔检查。"},
-    "mental_status_exam": {"ko": "의식 수준을 확인해 주세요.", "en": "Please assess the level of consciousness.", "ja": "意識レベルを確認してください。", "zh": "请评估意识水平。"},
+    "vital_signs": {"ko": "활력징후를 측정하겠습니다.", "en": "Please measure the blood pressure.", "ja": "血圧を測ってください。", "zh": "请测量血压。"},
+    "general_appearance": {"ko": "전반적인 외관을 살펴보겠습니다.", "en": "Please observe the general appearance.", "ja": "全身の様子を観察してください。", "zh": "请观察整体状态。"},
+    "cardiac_auscultation": {"ko": "심장 청진을 하겠습니다.", "en": "Please listen to the heart sounds.", "ja": "心音を聴診してください。", "zh": "请听诊心脏。"},
+    "lung_auscultation": {"ko": "폐 청진을 하겠습니다.", "en": "Please listen to the lung sounds.", "ja": "肺音を聴診してください。", "zh": "请听诊肺部。"},
+    "abdominal_exam": {"ko": "복부를 눌러 압통을 보겠습니다.", "en": "Please palpate the abdomen for tenderness.", "ja": "腹部を触診して圧痛を確認してください。", "zh": "请触诊腹部检查压痛。"},
+    "neuro_exam": {"ko": "팔다리 근력을 검사하겠습니다.", "en": "Please check the arm strength.", "ja": "腕の筋力を確認してください。", "zh": "请检查双臂肌力。"},
+    "meningeal_signs": {"ko": "목 경직(경부강직)을 보겠습니다.", "en": "Please flex the neck to check for stiffness.", "ja": "首を前屈させて項部硬直を確認してください。", "zh": "请屈颈检查颈强直。"},
+    "skin_exam": {"ko": "피부 발진을 살펴보겠습니다.", "en": "Please inspect the skin.", "ja": "皮膚を観察してください。", "zh": "请检查皮肤。"},
+    "extremity_exam": {"ko": "종아리 압통을 촉진하겠습니다.", "en": "Please palpate the calf for tenderness.", "ja": "ふくらはぎを触診して圧痛を確認してください。", "zh": "请触诊小腿检查压痛。"},
+    "costovertebral_tenderness": {"ko": "늑골척추각 압통을 보겠습니다.", "en": "Please percuss the flank for tenderness.", "ja": "背部の肋骨脊柱角を叩打してください。", "zh": "请叩击肋脊角检查压痛。"},
+    "pelvic_exam": {"ko": "골반 내진을 하겠습니다.", "en": "Please perform a pelvic examination.", "ja": "骨盤の診察をしてください。", "zh": "请做盆腔检查。"},
+    "mental_status_exam": {"ko": "의식과 지남력을 평가하겠습니다.", "en": "Please assess the level of consciousness.", "ja": "意識レベルを確認してください。", "zh": "请评估意识水平。"},
 }
 
 # Closing SAY that tells the patient the next step (<= 30 characters; urgent vs routine).
@@ -253,7 +276,10 @@ def _say_core(key: str, lang: str, fallback: str) -> str:
 
 
 def exam_request_text(exam_id: str, lang: str = "en", fallback: str = "") -> str:
-    """One physical-examination maneuver as a request sentence (no length limit applies to EXAM)."""
+    """One physical-examination maneuver as a request sentence. The official preliminary server limits EXAM to
+    30 NFC characters (like SAY) and rejects -- charging a turn -- a request bundling several maneuvers
+    (EXAM_NOT_SPECIFIC) or one that is not a physical examination (EXAM_NOT_RECOGNIZED); the Korean table
+    therefore names ONE maneuver the doctor performs ("심장 청진을 하겠습니다")."""
     table = _EXAM_REQUEST.get(exam_id)
     if table is not None:
         return _pick(table, lang)

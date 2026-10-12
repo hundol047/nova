@@ -108,7 +108,7 @@ def test_isolated_submission_runtime_modes(tmp_path, mode):
                         {"case_id": "isolated", "observation_type": "exam_result", "content": "Normal findings."}]
         proc = subprocess.run([sys.executable, "run.py"], cwd=isolated, env=env,
             input="\n".join(json.dumps(x) for x in observations) + "\n", capture_output=True, text=True, timeout=15)
-        assert proc.returncode == 1 and "NOT READY" in proc.stderr
+        assert proc.returncode != 0 and "NOVA_API_BASE" in proc.stderr  # official SDK entrypoint needs organizer env
         assert not proc.stdout.strip()
     if mode == "stub":
         with stub() as (url, requests):

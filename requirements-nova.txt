@@ -7,7 +7,7 @@
 # submission/requirements.txt, which is this same file minus pytest, for the minimal competition
 # runtime footprint). For running the test suite / evaluation harness / dev tooling, also install
 # requirements-nova-dev.txt.
-pydantic>=2.6,<3
+pydantic==2.14.0
 
 # Optional: only required when NOVA_LLM_PROVIDER=anthropic (see nova_agent/config.py and
 # nova_agent/llm_client.py).

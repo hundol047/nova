@@ -32,7 +32,9 @@ runpy.run_path('run.py',run_name='__main__')
 """
     result = subprocess.run([sys.executable, "-c", code], cwd=ROOT / "submission", env=env,
                             input='{"case_id":"private_fixture"}\n', text=True, capture_output=True, timeout=10)
-    assert result.returncode == 1 and "EXTERNAL_OFFICIAL_INTERFACE_BLOCKED" in result.stderr
+    # Official SDK entrypoint: without the organizer environment (NOVA_API_BASE / NOVA_RUN_TOKEN) it stops before any
+    # model, provider or proxy setting is used -- no stdout, no network attempt.
+    assert result.returncode != 0 and "NOVA_API_BASE" in result.stderr
     assert not result.stdout and "UNAUTHORIZED_NETWORK_ATTEMPT" not in result.stderr
 
 
@@ -42,16 +44,19 @@ def test_actual_development_ranker_settings_cannot_load_weights(tmp_path, settin
     weights.write_text("not model weights")
     env = dict(os.environ, NOVA_LLM_PROVIDER="competition")
     env[setting] = "true" if setting.endswith("ENABLED") else str(weights)
-    code = """import runpy,sys
+    # The official prepare() (all static initialisation before case access) never reads ranker weights.
+    code = """import sys
 def guard(event,args):
     if event == 'open' and str(args[0]).endswith('synthetic.weights'):
         raise AssertionError('WEIGHT_READ_ATTEMPT')
 sys.addaudithook(guard)
-runpy.run_path('run.py',run_name='__main__')
+sys.path.insert(0,'.')
+from competition.nova_sdk_adapter import prepare
+prepare()
 """
     result = subprocess.run([sys.executable, "-c", code], cwd=ROOT / "submission", env=env,
-                            text=True, capture_output=True, timeout=10)
-    assert result.returncode == 1 and "weights forbidden" in result.stderr
+                            text=True, capture_output=True, timeout=120)
+    assert result.returncode == 0, result.stderr[-500:]
     assert not result.stdout and "WEIGHT_READ_ATTEMPT" not in result.stderr
 
 

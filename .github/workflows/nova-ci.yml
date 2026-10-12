@@ -98,8 +98,14 @@ jobs:
       - name: Build submission (validates requirements, secret scan, standalone smoke test, zip+manifest)
         run: python scripts/build_nova_submission.py
 
-      - name: Fresh-directory smoke of the built ZIP (run.py fail-closed + one offline preliminary encounter)
+      - name: Fresh-directory smoke of the built ZIP (run.py needs organizer env + one offline harness encounter)
         run: python scripts/smoke_fresh_package.py
+
+      - name: Official SDK end-to-end smoke over HTTP (read-only package, unwritable HOME, ready before case access)
+        run: python scripts/smoke_official_http.py submission/submission.zip
+
+      - name: Official package limits audit (50 MB / 500 MB / 5000 files, root files, exact pins, no symlinks/secrets)
+        run: python scripts/audit_official_package.py submission/submission.zip
 
       - name: Package audit (secrets, forbidden files, UTF-8, source/submission byte equivalence)
         run: python scripts/audit_pre_guide_package.py --output /tmp/package_audit.json

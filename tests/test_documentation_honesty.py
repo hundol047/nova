@@ -64,4 +64,5 @@ def test_eight_calls_is_labelled_an_internal_budget_never_an_organizer_requireme
 def test_official_run_py_is_fail_closed():
     run = subprocess.run([sys.executable, str(ROOT / "submission/run.py")], capture_output=True, text=True, cwd=ROOT, timeout=60,
                          env={"PATH": "/usr/bin:/bin", "NOVA_LLM_PROVIDER": "mock", "PYTHONPATH": str(ROOT / "submission")})
-    assert run.returncode != 0 and "NOT READY" in run.stderr and run.stdout.strip() == ""
+    # Official SDK entrypoint: needs the organizer environment; without it, a non-zero exit and no stdout.
+    assert run.returncode != 0 and "NOVA_API_BASE" in run.stderr and run.stdout.strip() == ""

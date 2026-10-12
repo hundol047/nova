@@ -17,9 +17,22 @@ import os
 from dataclasses import dataclass, field
 
 
-# Preliminary-round limits from the organizer briefing of 2026-10-06 (opening ceremony slides,
-# supplied by the team): at most 50 turns and 20 minutes per case; DIAGNOSE costs no turn.
-PRELIMINARY_MAX_TURNS = 50
+# --- OFFICIAL N.O.V.A. limits (nova_sdk 1.0.1 / devkit nova_local.py / organizer run_agent material 2026-10-11) ---
+# Each evaluated case runs in its OWN session and container, so these are PER CASE, never to be divided by a case
+# count. prepare() gets up to 10 minutes before case access; consult() gets up to 30 minutes after client.ready().
+# The runtime source of truth for the consult window is session["deadline"] (competition/nova_sdk_adapter.py);
+# OFFICIAL_CONSULT_SECONDS is only a local-simulation default.
+OFFICIAL_MAX_TURNS = 50
+OFFICIAL_SAY_EXAM_MAX_CHARS = 30
+OFFICIAL_PREPARE_SECONDS = 10 * 60
+OFFICIAL_CONSULT_SECONDS = 30 * 60
+OFFICIAL_SESSION_DOCTOR_CALLS = 200
+OFFICIAL_SESSION_INPUT_TOKENS = 500_000
+OFFICIAL_SESSION_OUTPUT_TOKENS = 100_000
+
+# Local preliminary simulation (evaluation/ harnesses). These drive the deterministic engine's own clock when no
+# server deadline is known; an official encounter sets PatientState.deadline_unix from the session instead.
+PRELIMINARY_MAX_TURNS = OFFICIAL_MAX_TURNS
 PRELIMINARY_CASE_SECONDS = 20 * 60
 # Fraction of the wall-clock limit after which the agent stops gathering and submits its diagnosis
 # (leaves headroom for the final SOAP submission and for model latency on the last turn).
@@ -29,19 +42,18 @@ PRELIMINARY_TIME_SAFETY_FRACTION = 0.85
 # SAY, DIAGNOSE) would no longer fit; PRELIMINARY_CLOSING_TURNS turns at 1.5x the average, inside 97%.
 PRELIMINARY_CLOSING_TURNS = 4
 PRELIMINARY_TIME_HARD_FRACTION = 0.97
-# Real-model calls per case in the preliminary round: an INTERNAL ENGINEERING BUDGET, NOT an organizer
-# requirement. The briefing (as transcribed by the team) says the fixed model is limited to 200 calls and
-# 500k input / 100k output tokens per session, that efficiency counts model usage, and that a case with no
-# model call scores 0 -- so at least one successful case-relevant call per case is needed. This cap of 8 is the
-# team's own sizing so that a session of 10 cases stays inside every transcribed cap: 10 x 8 = 80 calls,
-# ~8k characters (~3-4k tokens) of prompt per call (~320k input) and max_tokens=1024 per call (~82k output),
-# leaving headroom for retries. Re-derive it when the participant guide states the real session size/limits.
-PRELIMINARY_MAX_LLM_CALLS_PER_CASE = 8
-# INTERNAL operating policy, not an organizer limit: the cap above counts HTTP REQUESTS (retries included,
-# state.llm_http_attempts), because the session caps count requests. Per-case token ceilings are the
-# session caps divided by the 10 cases that policy assumes (500k input / 100k output per session).
-PRELIMINARY_CASE_INPUT_TOKENS = 50_000
-PRELIMINARY_CASE_OUTPUT_TOKENS = 10_000
+# INTERNAL ENGINEERING BUDGET (INTERNAL operating policy, not an organizer limit) for the per-turn reasoning call inside DoctorAgent.decide() when a real provider is
+# configured for LOCAL experiments. NOT an organizer rule and NOT derived from the official caps (an earlier
+# version wrongly divided the per-session caps by ten cases). The official SDK encounter does not use this path:
+# competition/nova_sdk_adapter.py makes its own Doctor calls under OFFICIAL_SESSION_* hard caps and its own
+# internal efficiency target (NOVA_DOCTOR_CALL_TARGET).
+INTERNAL_ENGINE_LLM_CALLS_PER_CASE = 8
+INTERNAL_ENGINE_INPUT_TOKENS = 50_000
+INTERNAL_ENGINE_OUTPUT_TOKENS = 10_000
+# Backward-compatible names (older code/tests import these).
+PRELIMINARY_MAX_LLM_CALLS_PER_CASE = INTERNAL_ENGINE_LLM_CALLS_PER_CASE
+PRELIMINARY_CASE_INPUT_TOKENS = INTERNAL_ENGINE_INPUT_TOKENS
+PRELIMINARY_CASE_OUTPUT_TOKENS = INTERNAL_ENGINE_OUTPUT_TOKENS
 
 
 def effective_max_turns(value, default=60, ceiling=60):

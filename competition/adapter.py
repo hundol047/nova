@@ -85,8 +85,9 @@ def observation_to_state(obs: CompetitionObservation, agent: DoctorAgent,
 
     rejected = pending_action.action_type == "EXAM" and rejection_signal(obs.raw, obs.content)
     if pending_action.action_type == "EXAM" and rejected:
-        # Preliminary rules: a request not on the organizer's list is rejected and costs no turn.
-        existing_state.record_exam_rejected(pending_action.key)
+        # No finding is recorded. The official server (2026-10-11) charges one turn for EXAM_NOT_SPECIFIC /
+        # EXAM_NOT_RECOGNIZED; the SDK adapter passes raw["turn_used"]. Local harnesses keep the no-charge rule.
+        existing_state.record_exam_rejected(pending_action.key, turn_used=bool((obs.raw or {}).get("turn_used")))
         return existing_state
     agent.observe(existing_state, pending_action, obs.content or "")
     return existing_state
@@ -252,6 +253,10 @@ class NovaCompetitionAgent:
     @staticmethod
     def _time_nearly_up(state: PatientState) -> bool:
         return state.time_nearly_up()
+
+    def state(self, case_id: str) -> PatientState:
+        """The live PatientState of an open case (official SDK adapter keeps driving it in-process)."""
+        return self._states[case_id]
 
     def close_case(self, case_id: str) -> None:
         """Drop patient-derived state on completion/error; retain no patient tombstones."""

@@ -10,7 +10,8 @@ user site) against the declared requirements only:
   * no evaluation cases, answers, keys/tokens, web server, training code or weights are shipped;
   * requirements.txt names only packages the runtime imports (pydantic) and no ML/server stack;
   * a full offline mock encounter runs from the extracted tree under the preliminary rules;
-  * ``run.py`` still FAILS CLOSED (exit code != 0, "NOT READY" message): no organizer transport is integrated.
+  * ``run.py`` is the official SDK entrypoint: without the organizer environment (NOVA_API_BASE / NOVA_RUN_TOKEN) it
+    stops with a non-zero exit and no stdout, contacting nothing (the official flow is scripts/smoke_official_http.py).
 
 A pass proves the package is self-contained and well-formed. It does NOT prove official-interface
 compatibility, real-model behaviour, or licence clearance, and the report says so.
@@ -32,7 +33,8 @@ LIMIT = 50_000_000
 FORBIDDEN_PARTS = re.compile(r"(^|/)(evaluation|tests?|backend|frontend|web|production|docker|learning|training|artifacts|research)(/|$)", re.I)
 FORBIDDEN_NAMES = re.compile(r"(\.env|\.pem|\.key|id_rsa|credentials|secret|token)|\.(pt|pth|bin|ckpt|safetensors|onnx|gguf|npy|npz|pkl|pickle|h5|sqlite3?|db)$", re.I)
 FORBIDDEN_IMPORTS = re.compile(r"^\s*(?:import|from)\s+(?:torch|transformers|sentence_transformers|fastapi|flask|uvicorn|django|peft|tensorflow|sklearn|numpy|pandas)\b", re.M)
-ALLOWED_REQUIREMENTS = {"pydantic"}
+ALLOWED_REQUIREMENTS = {"pydantic", "pydantic_core", "pydantic-core", "annotated-types", "annotated_types",
+                        "typing-inspection", "typing_inspection", "typing_extensions", "typing-extensions"}
 
 ENCOUNTER = r"""
 import json, sys
@@ -99,7 +101,8 @@ def validate(zip_path: Path, python: str) -> dict:
         else:
             report["encounter_error"] = run.stderr[-800:]
         gate = subprocess.run([python, "-I", "run.py"], cwd=tmp, capture_output=True, text=True, timeout=120)
-        ok["run_py_fails_closed_until_official_interface"] = gate.returncode != 0 and "NOT READY" in gate.stderr
+        ok["run_py_requires_organizer_environment"] = (gate.returncode != 0 and "NOVA_API_BASE" in gate.stderr
+                                                        and not gate.stdout.strip())
         report["run_py_gate_message"] = gate.stderr.strip()[:300]
     report["all_pass"] = all(ok.values())
     report["scope"] = ("Package well-formedness and offline self-containment only. NOT evidence of official-interface "
