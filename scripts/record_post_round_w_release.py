@@ -54,6 +54,7 @@ def main():
     p.add_argument('--evidence-dir', default='artifacts/post_round_w/final')
     p.add_argument('--report', default='docs/preliminary/POST_ROUND_W_REPORT.md')
     p.add_argument('--reason', default='Post-Round-W verification (record committed; archive local).')
+    p.add_argument('--extra', help='JSON file merged into the record (e.g. official SDK integration statuses)')
     a = p.parse_args()
     root, repo, run = Path(a.checkout).resolve(), Path(a.repo).resolve(), Path(a.run_dir).resolve()
     head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
@@ -96,6 +97,8 @@ def main():
         report=a.report,
         publication='The record and member hashes are committed; the ZIP and detailed traces stay local (earlier '
                     'publication restriction). CI verifies every archive member against the committed mirror.')
+    if a.extra:
+        record.update(json.loads(Path(a.extra).read_text()))
     rec = repo / f'artifacts/verification/local-release-{a.runtime[:7]}-{a.version}.json'
     rec.write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n')
     ptr_path = repo / 'artifacts/verification/CURRENT_RELEASE.json'
