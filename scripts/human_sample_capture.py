@@ -33,7 +33,7 @@ def verify_runtime(root):
         if hashlib.sha256((root/name).read_bytes()).hexdigest()!=expected:
             raise SystemExit('Source differs from verified runtime: '+name)
     members=record['submission']['member_sha256']
-    actual={str(p.relative_to(root/'submission')) for p in (root/'submission').rglob('*')
+    actual={p.relative_to(root/'submission').as_posix() for p in (root/'submission').rglob('*')
             if p.is_file() and '__pycache__' not in p.parts and p.name!='submission.zip' and p.suffix!='.pyc'}
     if actual!=set(members):raise SystemExit('Unexpected/missing staging files; run pre_sample_validation first.')
     for name,h in members.items():
