@@ -1,0 +1,22 @@
+Collecting pydantic==2.14.0 (from -r submission/requirements.txt (line 4))
+  Downloading pydantic-2.14.0-py3-none-any.whl.metadata (131 kB)
+Collecting pydantic_core==2.50.0 (from -r submission/requirements.txt (line 5))
+  Downloading pydantic_core-2.50.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+Collecting annotated-types==0.8.0 (from -r submission/requirements.txt (line 6))
+  Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+Collecting typing-inspection==0.4.4 (from -r submission/requirements.txt (line 7))
+  Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting typing_extensions==4.16.0 (from -r submission/requirements.txt (line 8))
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Downloading pydantic-2.14.0-py3-none-any.whl (487 kB)
+Downloading pydantic_core-2.50.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 17.5 MB/s  0:00:00
+Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Saved /tmp/nova-resource-preflight-mrx76mbj/wheels/pydantic-2.14.0-py3-none-any.whl
+Saved /tmp/nova-resource-preflight-mrx76mbj/wheels/pydantic_core-2.50.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+Saved /tmp/nova-resource-preflight-mrx76mbj/wheels/annotated_types-0.8.0-py3-none-any.whl
+Saved /tmp/nova-resource-preflight-mrx76mbj/wheels/typing_inspection-0.4.4-py3-none-any.whl
+Saved /tmp/nova-resource-preflight-mrx76mbj/wheels/typing_extensions-4.16.0-py3-none-any.whl
+Successfully downloaded pydantic pydantic_core annotated-types typing-inspection typing_extensions

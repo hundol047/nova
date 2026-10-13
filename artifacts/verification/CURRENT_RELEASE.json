@@ -1,12 +1,14 @@
 {
-  "current_verification_artifact": "artifacts/verification/local-release-fb4b69b-v35.json",
-  "current_verification_schema": "nova-verification-v35",
-  "verified_runtime_sha": "fb4b69b72639c5fb5a90df54bad3dfc07443442d",
+  "current_verification_artifact": "artifacts/verification/local-release-955e554-v36.json",
+  "current_verification_schema": "nova-verification-v36",
+  "verified_runtime_sha": "955e55439f69c0b887a1aeaa19dc71d4795e699f",
   "current_blind_version": "v19",
   "current_blind_manifest": null,
   "current_blind_status": "REFERENCE-ONLY",
   "fresh_final_blind": "NOT YET AUTHORED",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-955e554-v36.json",
+    "artifacts/verification/local-release-fb4b69b-v35.json",
     "artifacts/verification/local-release-b8cb431-v34.json",
     "artifacts/verification/local-release-ea0decf-v33.json",
     "artifacts/verification/local-release-f383b2e-v32.json",
@@ -34,7 +36,7 @@
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
   "status": "NOT READY",
-  "reason": "General clinical-pipeline repair; paired regression PASS; real organizer execution remains HUMAN-RUN ONLY.",
+  "reason": "Scoped interview evidence, diagnostic reassessment and actual patient closing; paired offline evaluation; official performance unverified.",
   "latest_compliance_followup": "artifacts/clinical_review_pass/rule_matrix.json",
   "latest_rights_and_review_followup": "artifacts/rights_and_review/CURRENT_STATUS.json"
 }

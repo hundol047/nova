@@ -1,0 +1,36 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+_____ test_existing_gerd_alias_is_not_rejected_by_duplicate_catalog_entry ______
+
+    def test_existing_gerd_alias_is_not_rejected_by_duplicate_catalog_entry():
+>       assert normalize_diagnosis('GERD').canonical_id == 'gerd'
+E       AssertionError: assert None == 'gerd'
+E        +  where None = NormalizedDiagnosis(raw_text='GERD', canonical_id=None, canonical_name=None, mapped=False, codes=[]).canonical_id
+E        +    where NormalizedDiagnosis(raw_text='GERD', canonical_id=None, canonical_name=None, mapped=False, codes=[]) = normalize_diagnosis('GERD')
+
+tests/test_diagnosis_identity.py:7: AssertionError
+______ test_every_exact_duplicate_core_name_resolves_to_the_same_identity ______
+
+    def test_every_exact_duplicate_core_name_resolves_to_the_same_identity():
+        from collections import defaultdict
+        from nova_agent.ontology.registry import get_default_catalog
+        from nova_agent.ontology.normalizer import normalize
+        groups=defaultdict(list)
+        for c in get_default_catalog().all_concepts():groups[normalize(c.canonical_name)].append(c)
+        checked=0
+        for rows in groups.values():
+            core={c.kb_id for c in rows if c.kb_id}
+            if len(rows)>1 and len(core)==1:
+                checked+=1
+                expected=next(iter(core))
+>               assert normalize_diagnosis(rows[0].canonical_name).canonical_id == expected
+E               AssertionError: assert None == 'ectopic_pregnancy'
+E                +  where None = NormalizedDiagnosis(raw_text='Ectopic Pregnancy', canonical_id=None, canonical_name=None, mapped=False, codes=[]).canonical_id
+E                +    where NormalizedDiagnosis(raw_text='Ectopic Pregnancy', canonical_id=None, canonical_name=None, mapped=False, codes=[]) = normalize_diagnosis('Ectopic Pregnancy')
+E                +      where 'Ectopic Pregnancy' = ClinicalConcept(concept_id='core:ectopic_pregnancy', canonical_name='Ectopic Pregnancy', semantic_type=<SemanticType.D...leeding', 'missed period', 'unilateral pelvic pain', 'dizziness'), confirmatory_findings=(), kb_id='ectopic_pregnancy').canonical_name
+
+tests/test_diagnosis_identity.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_diagnosis_identity.py::test_existing_gerd_alias_is_not_rejected_by_duplicate_catalog_entry
+FAILED tests/test_diagnosis_identity.py::test_every_exact_duplicate_core_name_resolves_to_the_same_identity
+2 failed, 1 passed in 0.30s

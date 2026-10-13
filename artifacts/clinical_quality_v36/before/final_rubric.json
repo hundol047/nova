@@ -1,0 +1,857 @@
+{
+  "label": "LOCAL RUBRIC PROXY — NOT OFFICIAL SCORE",
+  "fixture_sha256": "aac540dec306944d990f5af4ede2582842dfa208cb7021561d293e20d5d02b2d",
+  "information_gathering": "Provided observations replayed; interview coverage measured in separate fake-SDK regressions.",
+  "diagnostic_reasoning": "Reference-family agreement; no clinician adjudication.",
+  "tests_followup": "Presence/interval/precaution lexical checks, not medical quality scores.",
+  "safety": "Expected urgency engineering assertions.",
+  "communication": "Actual fixture SAYs and submitted plan.",
+  "efficiency": "Closing turns only; no real-model token or latency claims.",
+  "metrics": {
+    "cases": 32,
+    "reference_compatible": 32,
+    "urgency_matches": 32,
+    "test_plan_present": 32,
+    "plan_topic_compatible_proxy": 23,
+    "plan_topic_scored_cases": 23,
+    "followup_has_interval": 30,
+    "precautions_present": 32,
+    "explanation_present": 32,
+    "mean_closing_turns": 2.0,
+    "unperformed_test_results": 0
+  },
+  "cases": [
+    {
+      "id": "thyroid_en_0",
+      "diagnosis": "Graves disease",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요.",
+        "갑상샘 검사 후 재진, 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요. / 갑상샘 검사 후 재진, 악화 시 즉시 진료\n고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.20908245099963096
+    },
+    {
+      "id": "thyroid_en_1",
+      "diagnosis": "Graves disease",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요.",
+        "갑상샘 검사 후 재진, 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요. / 갑상샘 검사 후 재진, 악화 시 즉시 진료\n고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.12245405200019377
+    },
+    {
+      "id": "thyroid_en_2",
+      "diagnosis": "Graves disease",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요.",
+        "갑상샘 검사 후 재진, 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요. / 갑상샘 검사 후 재진, 악화 시 즉시 진료\n고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.11659270100017238
+    },
+    {
+      "id": "sedative_en_0",
+      "diagnosis": "Sedative-Hypnotic Use Disorder",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요.",
+        "임의 중단·운전 피하고 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토",
+        "treatment": "복약 검토 후 처방의와 감독하 감량 논의; 갑작스러운 중단·임의 증량 금지",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락",
+        "education": "진료 중 설명함: 걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요. / 임의 중단·운전 피하고 악화 시 즉시 진료\n갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.15743259400005627
+    },
+    {
+      "id": "sedative_en_1",
+      "diagnosis": "Sedative-Hypnotic Use Disorder",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요.",
+        "임의 중단·운전 피하고 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토",
+        "treatment": "복약 검토 후 처방의와 감독하 감량 논의; 갑작스러운 중단·임의 증량 금지",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락",
+        "education": "진료 중 설명함: 걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요. / 임의 중단·운전 피하고 악화 시 즉시 진료\n갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.17988824900021427
+    },
+    {
+      "id": "sedative_en_2",
+      "diagnosis": "Sedative-Hypnotic Use Disorder",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요.",
+        "임의 중단·운전 피하고 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토",
+        "treatment": "복약 검토 후 처방의와 감독하 감량 논의; 갑작스러운 중단·임의 증량 금지",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락",
+        "education": "진료 중 설명함: 걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요. / 임의 중단·운전 피하고 악화 시 즉시 진료\n갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.15419153600032587
+    },
+    {
+      "id": "growth_en_0",
+      "diagnosis": "Constitutional growth delay",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요.",
+        "성장 추적, 키 증가가 줄면 조기 재진"
+      ],
+      "plan": {
+        "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요. / 성장 추적, 키 증가가 줄면 조기 재진\n성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.11434400600001027
+    },
+    {
+      "id": "growth_en_1",
+      "diagnosis": "Constitutional growth delay",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요.",
+        "성장 추적, 키 증가가 줄면 조기 재진"
+      ],
+      "plan": {
+        "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요. / 성장 추적, 키 증가가 줄면 조기 재진\n성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.11452224399999977
+    },
+    {
+      "id": "growth_en_2",
+      "diagnosis": "Constitutional growth delay",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요.",
+        "성장 추적, 키 증가가 줄면 조기 재진"
+      ],
+      "plan": {
+        "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요. / 성장 추적, 키 증가가 줄면 조기 재진\n성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.13844403700022667
+    },
+    {
+      "id": "thyroid_ko_0",
+      "diagnosis": "Graves disease",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요.",
+        "갑상샘 검사 후 재진, 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요. / 갑상샘 검사 후 재진, 악화 시 즉시 진료\n고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.1141717969999263
+    },
+    {
+      "id": "thyroid_ko_1",
+      "diagnosis": "Graves disease",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요.",
+        "갑상샘 검사 후 재진, 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요. / 갑상샘 검사 후 재진, 악화 시 즉시 진료\n고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.11452914499977851
+    },
+    {
+      "id": "thyroid_ko_2",
+      "diagnosis": "Graves disease",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요.",
+        "갑상샘 검사 후 재진, 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요. / 갑상샘 검사 후 재진, 악화 시 즉시 진료\n고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.10827332999997452
+    },
+    {
+      "id": "sedative_ko_0",
+      "diagnosis": "Sedative-Hypnotic Use Disorder",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요.",
+        "임의 중단·운전 피하고 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토",
+        "treatment": "복약 검토 후 처방의와 감독하 감량 논의; 갑작스러운 중단·임의 증량 금지",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락",
+        "education": "진료 중 설명함: 걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요. / 임의 중단·운전 피하고 악화 시 즉시 진료\n갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.1630638890001137
+    },
+    {
+      "id": "sedative_ko_1",
+      "diagnosis": "Sedative-Hypnotic Use Disorder",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요.",
+        "임의 중단·운전 피하고 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토",
+        "treatment": "복약 검토 후 처방의와 감독하 감량 논의; 갑작스러운 중단·임의 증량 금지",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락",
+        "education": "진료 중 설명함: 걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요. / 임의 중단·운전 피하고 악화 시 즉시 진료\n갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.16391888499993001
+    },
+    {
+      "id": "sedative_ko_2",
+      "diagnosis": "Sedative-Hypnotic Use Disorder",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요.",
+        "임의 중단·운전 피하고 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토",
+        "treatment": "복약 검토 후 처방의와 감독하 감량 논의; 갑작스러운 중단·임의 증량 금지",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락",
+        "education": "진료 중 설명함: 걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요. / 임의 중단·운전 피하고 악화 시 즉시 진료\n갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.161710340999889
+    },
+    {
+      "id": "growth_ko_0",
+      "diagnosis": "Constitutional growth delay",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요.",
+        "성장 추적, 키 증가가 줄면 조기 재진"
+      ],
+      "plan": {
+        "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요. / 성장 추적, 키 증가가 줄면 조기 재진\n성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.12845697600005224
+    },
+    {
+      "id": "growth_ko_1",
+      "diagnosis": "Constitutional growth delay",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요.",
+        "성장 추적, 키 증가가 줄면 조기 재진"
+      ],
+      "plan": {
+        "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요. / 성장 추적, 키 증가가 줄면 조기 재진\n성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.1187823360000948
+    },
+    {
+      "id": "growth_ko_2",
+      "diagnosis": "Constitutional growth delay",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요.",
+        "성장 추적, 키 증가가 줄면 조기 재진"
+      ],
+      "plan": {
+        "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요. / 성장 추적, 키 증가가 줄면 조기 재진\n성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.12045083700013492
+    },
+    {
+      "id": "family_thyroid_only",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": null,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "1~2주 내 증상과 검사 결과 재평가; 악화·지속 시 조기 진료",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.09584407400006967
+    },
+    {
+      "id": "negated_thyroid",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": null,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "1~2주 내 증상과 검사 결과 재평가; 악화·지속 시 조기 진료",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.10075552599982984
+    },
+    {
+      "id": "historical_thyroid",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": null,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "1~2주 내 증상과 검사 결과 재평가; 악화·지속 시 조기 진료",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.1097691320001104
+    },
+    {
+      "id": "single_thyroid_feature",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": null,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "12유도 심전도, 기본대사패널(전해질/신기능)",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "1~2주 내 증상과 검사 결과 재평가; 악화·지속 시 조기 진료",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.05903314399984083
+    },
+    {
+      "id": "sleep_no_dependence",
+      "diagnosis": "Medication-related hypersomnia",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 복약 기록상 약물 관련 과다졸림 의심돼요.",
+        "임의 중단·운전 피하고 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "복약 검토: 용량·빈도·복용 시점·병용약 확인; 수면무호흡 등 다른 원인은 증상에 따라 평가",
+        "treatment": "복약 검토 후 처방의와 감독하 감량 논의; 갑작스러운 중단·임의 증량 금지",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1주 내 약 복용과 졸림·낮 활동 영향 재평가; 과도한 졸림 시 조기 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 복약 기록상 약물 관련 과다졸림 의심돼요. / 임의 중단·운전 피하고 악화 시 즉시 진료\n졸리면 운전 금지; 약을 임의 증량하거나 갑자기 중단하지 않기; 깨우기 어렵거나 호흡이 느리면 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.17454499799987389
+    },
+    {
+      "id": "sleep_drug_only",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": null,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "1~2주 내 증상과 검사 결과 재평가; 악화·지속 시 조기 진료",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.10652011199999833
+    },
+    {
+      "id": "hallucinated_cancer",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": null,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "없음",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "1~2주 내 증상과 검사 결과 재평가; 악화·지속 시 조기 진료",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.10684043299988844
+    },
+    {
+      "id": "normal_exam_control",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": null,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "요검사, 소변배양검사",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "1~2주 내 증상과 검사 결과 재평가; 악화·지속 시 조기 진료",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.12157666199982486
+    },
+    {
+      "id": "dangerous_meningitis",
+      "diagnosis": "Bacterial Meningitis",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "진료 기록상 수막염 의심돼요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "요추천자(뇌척수액 검사), 혈액배양검사, 전혈구검사(CBC), 비조영 뇌 CT",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 즉시 재평가",
+        "education": "진료 중 설명함: 진료 기록상 수막염 의심돼요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.09234661099981167
+    },
+    {
+      "id": "dangerous_pneumonia",
+      "diagnosis": "Community-Acquired Pneumonia",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": false,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "진료 기록상 폐렴 의심돼요.",
+        "지금 바로 응급 검사가 필요해요."
+      ],
+      "plan": {
+        "tests": "흉부 X-ray, 전혈구검사(CBC), D-dimer, 흉부 CT 혈관조영술 (PE protocol), 12유도 심전도",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "즉시 응급실 평가 및 모니터링",
+        "follow_up": "응급 평가 후 즉시 재평가",
+        "education": "진료 중 설명함: 진료 기록상 폐렴 의심돼요. / 지금 바로 응급 검사가 필요해요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.08855184000003646
+    },
+    {
+      "id": "new_symptom_contradicts_prior",
+      "diagnosis": "갑상샘항진증 (Hyperthyroidism)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": null,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "갑상샘항진증 가능성이 있어요.",
+        "갑상샘 검사 후 재진, 악화 시 즉시 진료"
+      ],
+      "plan": {
+        "tests": "TSH와 free T4 측정; 결과에 따라 T3 추가; 두근거림이 있으면 ECG 고려",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1~2주 내 검사 결과와 맥박·체중·증상 재평가; 악화 시 조기 진료",
+        "education": "진료 중 설명함: 갑상샘항진증 가능성이 있어요. / 갑상샘 검사 후 재진, 악화 시 즉시 진료\n고열, 의식 변화, 흉통, 호흡곤란 시 즉시 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.11143246400024509
+    },
+    {
+      "id": "familial_growth",
+      "diagnosis": "Familial short stature",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "걱정되셨죠. 성장 기록상 가족성 저신장 의심돼요.",
+        "성장 추적, 키 증가가 줄면 조기 재진"
+      ],
+      "plan": {
+        "tests": "날짜별 신장 측정·성장곡선 및 부모 키 검토; 성장속도·증상에 따라 표적 검사 고려",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "3~6개월 후 성장속도와 성장곡선 재평가; 예측 경로 이탈 시 소아내분비 상담",
+        "education": "진료 중 설명함: 걱정되셨죠. 성장 기록상 가족성 저신장 의심돼요. / 성장 추적, 키 증가가 줄면 조기 재진\n성장속도 저하·체중 감소·만성 전신 증상이 생기면 조기 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.15217095600019093
+    },
+    {
+      "id": "growth_velocity_slow",
+      "diagnosis": "Growth hormone deficiency",
+      "reference_compatible": true,
+      "doctor_accepted": true,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": true,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "성장 기록상 성장호르몬 결핍 의심 의심돼요.",
+        "성장 추적, 키 증가가 줄면 조기 재진"
+      ],
+      "plan": {
+        "tests": "성장곡선·골연령 검토; 소아내분비 의뢰; 원인 감별에 따라 TSH·free T4, IGF-1/IGFBP-3 고려; 자극검사는 전문의 판단",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "2~4주 내 소아내분비 평가 연결; 이후 3~6개월 성장속도 재평가",
+        "education": "진료 중 설명함: 성장 기록상 성장호르몬 결핍 의심 의심돼요. / 성장 추적, 키 증가가 줄면 조기 재진\n확인 전 성장호르몬 치료 보류; 두통·구토·시야 변화가 생기면 조기 평가"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.15182367200031877
+    },
+    {
+      "id": "unmeasured_growth",
+      "diagnosis": "진단 미정 (추가 평가 필요)",
+      "reference_compatible": true,
+      "doctor_accepted": false,
+      "urgency_matches": true,
+      "test_plan_present": true,
+      "plan_topic_compatible_proxy": null,
+      "followup_has_interval": true,
+      "precautions_present": true,
+      "communication_turns": 2,
+      "explanation_present": true,
+      "communication": [
+        "아직 진단이 불확실해요.",
+        "검사 후 악화되면 바로 오세요."
+      ],
+      "plan": {
+        "tests": "복부/골반 조영증강 CT, 전혈구검사(CBC), 혈청 리파아제",
+        "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        "disposition": "외래 평가; 악화 시 즉시 재평가",
+        "follow_up": "1~2주 내 증상과 검사 결과 재평가; 악화·지속 시 조기 진료",
+        "education": "진료 중 설명함: 아직 진단이 불확실해요. / 검사 후 악화되면 바로 오세요.\n진료 중 시행하지 않음(계획: 진단과 필요한 검사를 설명하고 경고 증상을 안내)"
+      },
+      "objective_tests_empty": true,
+      "seconds": 0.09201024399999369
+    }
+  ]
+}

@@ -1,0 +1,266 @@
+F.F..FFF.F.F.FFFFF                                                       [100%]
+=================================== FAILURES ===================================
+_ test_known_means_actual_topic_evidence[\ubd88\uba74 \ub54c\ubb38\uc5d0 \uc218\uba74\uc81c\ub97c \uba39\uc5b4\uc694. amlodipine 5mg\uc744 \uba39\uc5b4\uc694.-medication_dose-False] _
+
+opening = '불면 때문에 수면제를 먹어요. amlodipine 5mg을 먹어요.', topic = 'medication_dose'
+known = False
+
+    @pytest.mark.parametrize('opening,topic,known', [
+        ('불면 때문에 수면제를 먹어요. amlodipine 5mg을 먹어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요. 용량은 잘 모르겠어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요.', 'medication_name', False),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_dose', True),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_name', True),
+        ('불면입니다. 어머니는 졸피뎀 5mg을 먹어요.', 'medication_dose', False),
+        ('체중이 줄어요. 어머니가 더위를 많이 타요.', 'heat', False),
+        ('체중이 줄어요. 더위를 타는지는 모르겠어요.', 'heat', False),
+        ('체중이 줄어요. 더위는 타지 않아요.', 'heat', True),
+        ('키가 작아요. 아버지 키 172cm입니다.', 'parent_height', False),
+        ('키가 작아요. 아버지 키 172cm, 어머니 키 162cm입니다.', 'parent_height', True),
+    ])
+    def test_known_means_actual_topic_evidence(opening, topic, known):
+>       assert topic_known(PatientState(chief_complaint=opening), topic) is known
+E       AssertionError: assert True is False
+E        +  where True = topic_known(PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False), 'medication_dose')
+E        +    where PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False) = PatientState(chief_complaint='불면 때문에 수면제를 먹어요. amlodipine 5mg을 먹어요.')
+
+tests/test_interview_quality.py:26: AssertionError
+_ test_known_means_actual_topic_evidence[\ubd88\uba74 \ub54c\ubb38\uc5d0 \uc218\uba74\uc81c\ub97c \uba39\uc5b4\uc694.-medication_name-False] _
+
+opening = '불면 때문에 수면제를 먹어요.', topic = 'medication_name', known = False
+
+    @pytest.mark.parametrize('opening,topic,known', [
+        ('불면 때문에 수면제를 먹어요. amlodipine 5mg을 먹어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요. 용량은 잘 모르겠어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요.', 'medication_name', False),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_dose', True),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_name', True),
+        ('불면입니다. 어머니는 졸피뎀 5mg을 먹어요.', 'medication_dose', False),
+        ('체중이 줄어요. 어머니가 더위를 많이 타요.', 'heat', False),
+        ('체중이 줄어요. 더위를 타는지는 모르겠어요.', 'heat', False),
+        ('체중이 줄어요. 더위는 타지 않아요.', 'heat', True),
+        ('키가 작아요. 아버지 키 172cm입니다.', 'parent_height', False),
+        ('키가 작아요. 아버지 키 172cm, 어머니 키 162cm입니다.', 'parent_height', True),
+    ])
+    def test_known_means_actual_topic_evidence(opening, topic, known):
+>       assert topic_known(PatientState(chief_complaint=opening), topic) is known
+E       AssertionError: assert True is False
+E        +  where True = topic_known(PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False), 'medication_name')
+E        +    where PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False) = PatientState(chief_complaint='불면 때문에 수면제를 먹어요.')
+
+tests/test_interview_quality.py:26: AssertionError
+_ test_known_means_actual_topic_evidence[\ubd88\uba74\uc785\ub2c8\ub2e4. \uc5b4\uba38\ub2c8\ub294 \uc878\ud53c\ub380 5mg\uc744 \uba39\uc5b4\uc694.-medication_dose-False] _
+
+opening = '불면입니다. 어머니는 졸피뎀 5mg을 먹어요.', topic = 'medication_dose', known = False
+
+    @pytest.mark.parametrize('opening,topic,known', [
+        ('불면 때문에 수면제를 먹어요. amlodipine 5mg을 먹어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요. 용량은 잘 모르겠어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요.', 'medication_name', False),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_dose', True),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_name', True),
+        ('불면입니다. 어머니는 졸피뎀 5mg을 먹어요.', 'medication_dose', False),
+        ('체중이 줄어요. 어머니가 더위를 많이 타요.', 'heat', False),
+        ('체중이 줄어요. 더위를 타는지는 모르겠어요.', 'heat', False),
+        ('체중이 줄어요. 더위는 타지 않아요.', 'heat', True),
+        ('키가 작아요. 아버지 키 172cm입니다.', 'parent_height', False),
+        ('키가 작아요. 아버지 키 172cm, 어머니 키 162cm입니다.', 'parent_height', True),
+    ])
+    def test_known_means_actual_topic_evidence(opening, topic, known):
+>       assert topic_known(PatientState(chief_complaint=opening), topic) is known
+E       AssertionError: assert True is False
+E        +  where True = topic_known(PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False), 'medication_dose')
+E        +    where PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False) = PatientState(chief_complaint='불면입니다. 어머니는 졸피뎀 5mg을 먹어요.')
+
+tests/test_interview_quality.py:26: AssertionError
+_ test_known_means_actual_topic_evidence[\uccb4\uc911\uc774 \uc904\uc5b4\uc694. \uc5b4\uba38\ub2c8\uac00 \ub354\uc704\ub97c \ub9ce\uc774 \ud0c0\uc694.-heat-False] _
+
+opening = '체중이 줄어요. 어머니가 더위를 많이 타요.', topic = 'heat', known = False
+
+    @pytest.mark.parametrize('opening,topic,known', [
+        ('불면 때문에 수면제를 먹어요. amlodipine 5mg을 먹어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요. 용량은 잘 모르겠어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요.', 'medication_name', False),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_dose', True),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_name', True),
+        ('불면입니다. 어머니는 졸피뎀 5mg을 먹어요.', 'medication_dose', False),
+        ('체중이 줄어요. 어머니가 더위를 많이 타요.', 'heat', False),
+        ('체중이 줄어요. 더위를 타는지는 모르겠어요.', 'heat', False),
+        ('체중이 줄어요. 더위는 타지 않아요.', 'heat', True),
+        ('키가 작아요. 아버지 키 172cm입니다.', 'parent_height', False),
+        ('키가 작아요. 아버지 키 172cm, 어머니 키 162cm입니다.', 'parent_height', True),
+    ])
+    def test_known_means_actual_topic_evidence(opening, topic, known):
+>       assert topic_known(PatientState(chief_complaint=opening), topic) is known
+E       AssertionError: assert True is False
+E        +  where True = topic_known(PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False), 'heat')
+E        +    where PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False) = PatientState(chief_complaint='체중이 줄어요. 어머니가 더위를 많이 타요.')
+
+tests/test_interview_quality.py:26: AssertionError
+_ test_known_means_actual_topic_evidence[\uccb4\uc911\uc774 \uc904\uc5b4\uc694. \ub354\uc704\ub97c \ud0c0\ub294\uc9c0\ub294 \ubaa8\ub974\uaca0\uc5b4\uc694.-heat-False] _
+
+opening = '체중이 줄어요. 더위를 타는지는 모르겠어요.', topic = 'heat', known = False
+
+    @pytest.mark.parametrize('opening,topic,known', [
+        ('불면 때문에 수면제를 먹어요. amlodipine 5mg을 먹어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요. 용량은 잘 모르겠어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요.', 'medication_name', False),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_dose', True),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_name', True),
+        ('불면입니다. 어머니는 졸피뎀 5mg을 먹어요.', 'medication_dose', False),
+        ('체중이 줄어요. 어머니가 더위를 많이 타요.', 'heat', False),
+        ('체중이 줄어요. 더위를 타는지는 모르겠어요.', 'heat', False),
+        ('체중이 줄어요. 더위는 타지 않아요.', 'heat', True),
+        ('키가 작아요. 아버지 키 172cm입니다.', 'parent_height', False),
+        ('키가 작아요. 아버지 키 172cm, 어머니 키 162cm입니다.', 'parent_height', True),
+    ])
+    def test_known_means_actual_topic_evidence(opening, topic, known):
+>       assert topic_known(PatientState(chief_complaint=opening), topic) is known
+E       AssertionError: assert True is False
+E        +  where True = topic_known(PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False), 'heat')
+E        +    where PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False) = PatientState(chief_complaint='체중이 줄어요. 더위를 타는지는 모르겠어요.')
+
+tests/test_interview_quality.py:26: AssertionError
+_ test_known_means_actual_topic_evidence[\ud0a4\uac00 \uc791\uc544\uc694. \uc544\ubc84\uc9c0 \ud0a4 172cm\uc785\ub2c8\ub2e4.-parent_height-False] _
+
+opening = '키가 작아요. 아버지 키 172cm입니다.', topic = 'parent_height', known = False
+
+    @pytest.mark.parametrize('opening,topic,known', [
+        ('불면 때문에 수면제를 먹어요. amlodipine 5mg을 먹어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요. 용량은 잘 모르겠어요.', 'medication_dose', False),
+        ('불면 때문에 수면제를 먹어요.', 'medication_name', False),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_dose', True),
+        ('불면 때문에 졸피뎀 5mg을 매일 밤 먹어요.', 'medication_name', True),
+        ('불면입니다. 어머니는 졸피뎀 5mg을 먹어요.', 'medication_dose', False),
+        ('체중이 줄어요. 어머니가 더위를 많이 타요.', 'heat', False),
+        ('체중이 줄어요. 더위를 타는지는 모르겠어요.', 'heat', False),
+        ('체중이 줄어요. 더위는 타지 않아요.', 'heat', True),
+        ('키가 작아요. 아버지 키 172cm입니다.', 'parent_height', False),
+        ('키가 작아요. 아버지 키 172cm, 어머니 키 162cm입니다.', 'parent_height', True),
+    ])
+    def test_known_means_actual_topic_evidence(opening, topic, known):
+>       assert topic_known(PatientState(chief_complaint=opening), topic) is known
+E       AssertionError: assert True is False
+E        +  where True = topic_known(PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False), 'parent_height')
+E        +    where PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False) = PatientState(chief_complaint='키가 작아요. 아버지 키 172cm입니다.')
+
+tests/test_interview_quality.py:26: AssertionError
+______________________ test_unknown_attempt_is_not_known _______________________
+
+    def test_unknown_attempt_is_not_known():
+        s = PatientState(chief_complaint='불면 때문에 수면제를 먹어요.')
+        s.record_ask('medication', '수면제 한 번 용량은 몇 mg인가요?', '잘 모르겠어요.')
+>       assert not topic_known(s, 'medication_dose')
+E       AssertionError: assert not True
+E        +  where True = topic_known(PatientState(case_id='case', locale='en', demographics=Demographics(age=None, sex=None, pregnant=None), proxy_relation...=0.0, llm_latency_sample_count=0, llm_total_input_tokens=0, llm_total_output_tokens=0, llm_token_usage_available=False), 'medication_dose')
+
+tests/test_interview_quality.py:32: AssertionError
+______________ test_followup_rechecks_knowledge_after_each_reply _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fdac96b9010>
+
+    def test_followup_rechecks_knowledge_after_each_reply(monkeypatch):
+        e, _ = encounter(); initialise(e, '불면 때문에 수면제를 먹어요.')
+        monkeypatch.setattr(e, 'chat', lambda *a, **k: json.dumps({'questions': [
+            '수면제 한 번 용량은 몇 mg인가요?', '수면제를 하루 몇 번 드시나요?', '한 번에 몇 mg 드세요?']}))
+        def say(text, category):
+            t = A.Turn('SAY', text, '졸피뎀 5mg을 하루 한 번 매일 밤 먹어요.', category)
+            e.turns.append(t); e.turns_left -= 1
+            return t
+        monkeypatch.setattr(e, 'say', say)
+        e._followup_phase()
+>       assert len(e.turns) == 1
+E       AssertionError: assert 3 == 1
+E        +  where 3 = len([Turn(kind='SAY', text='수면제 한 번 용량은 몇 mg인가요?', reply='졸피뎀 5mg을 하루 한 번 매일 밤 먹어요.', category='medication', turn=None, re...AY', text='한 번에 몇 mg 드세요?', reply='졸피뎀 5mg을 하루 한 번 매일 밤 먹어요.', category='associated_symptoms', turn=None, rejected='')])
+E        +    where [Turn(kind='SAY', text='수면제 한 번 용량은 몇 mg인가요?', reply='졸피뎀 5mg을 하루 한 번 매일 밤 먹어요.', category='medication', turn=None, re...AY', text='한 번에 몇 mg 드세요?', reply='졸피뎀 5mg을 하루 한 번 매일 밤 먹어요.', category='associated_symptoms', turn=None, rejected='')] = <competition.nova_sdk_adapter.OfficialEncounter object at 0x7fdac96b8b90>.turns
+
+tests/test_interview_quality.py:51: AssertionError
+________________ test_followup_does_not_repeat_equivalent_exam _________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fdac9649df0>
+
+    def test_followup_does_not_repeat_equivalent_exam(monkeypatch):
+        e, _ = encounter(); initialise(e, '체중이 줄고 더위를 타요.')
+        e.pstate.record_exam('thyroid_exam', '갑상선 미만성 비대(+)', request_text='갑상선을 촉진하겠습니다')
+        e.turns.append(A.Turn('EXAM', '갑상선을 촉진하겠습니다', '갑상선 미만성 비대(+)', 'thyroid_exam'))
+        monkeypatch.setattr(e, 'chat', lambda *a, **k: json.dumps({'exams': ['갑상샘을 촉진하겠습니다']}))
+        e._followup_phase()
+>       assert len(e.turns) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([Turn(kind='EXAM', text='갑상선을 촉진하겠습니다', reply='갑상선 미만성 비대(+)', category='thyroid_exam', turn=None, rejected=''), Turn(kind='EXAM', text='갑상샘을 촉진하겠습니다', reply='갑상선 미만성 비대(+)', category='followup_exam', turn=1, rejected='')])
+E        +    where [Turn(kind='EXAM', text='갑상선을 촉진하겠습니다', reply='갑상선 미만성 비대(+)', category='thyroid_exam', turn=None, rejected=''), Turn(kind='EXAM', text='갑상샘을 촉진하겠습니다', reply='갑상선 미만성 비대(+)', category='followup_exam', turn=1, rejected='')] = <competition.nova_sdk_adapter.OfficialEncounter object at 0x7fdac964a720>.turns
+
+tests/test_interview_quality.py:60: AssertionError
+________ test_provider_unavailable_replays_same_logical_request[action] ________
+
+method = 'action'
+
+    @pytest.mark.parametrize('method', ['action', 'chat'])
+    def test_provider_unavailable_replays_same_logical_request(method):
+        e, _ = encounter(); ids = []
+        def fn(*args, request_id, **kwargs):
+            ids.append(request_id)
+            if len(ids) == 1: raise nova_sdk.NovaError('PROVIDER_UNAVAILABLE', 503)
+            return {'choices': [{'message': {'content': '{"primary_diagnosis":"undetermined"}'}}],
+                    'usage': {'prompt_tokens': 10, 'completion_tokens': 5}}
+        if method == 'action': e._call(fn, '질문')
+        else:
+            e.client.chat = fn
+            e.chat([{'role': 'user', 'content': 'question'}], max_tokens=50, effort='low', required=True, case_relevant=True)
+>       assert len(ids) == 2 and ids[0] == ids[1]
+E       AssertionError: assert (2 == 2 and 'd201f795-494...-d94a6b78766f' == '53e4e3b1-a7b...-027fdb3ee5be'
+E        +  where 2 = len(['d201f795-4949-472b-94f6-d94a6b78766f', '53e4e3b1-a7b9-4822-bd95-027fdb3ee5be'])
+E         
+E         - 53e4e3b1-a7b9-4822-bd95-027fdb3ee5be
+E         + d201f795-4949-472b-94f6-d94a6b78766f)
+
+tests/test_interview_quality.py:75: AssertionError
+_________ test_provider_unavailable_replays_same_logical_request[chat] _________
+
+method = 'chat'
+
+    @pytest.mark.parametrize('method', ['action', 'chat'])
+    def test_provider_unavailable_replays_same_logical_request(method):
+        e, _ = encounter(); ids = []
+        def fn(*args, request_id, **kwargs):
+            ids.append(request_id)
+            if len(ids) == 1: raise nova_sdk.NovaError('PROVIDER_UNAVAILABLE', 503)
+            return {'choices': [{'message': {'content': '{"primary_diagnosis":"undetermined"}'}}],
+                    'usage': {'prompt_tokens': 10, 'completion_tokens': 5}}
+        if method == 'action': e._call(fn, '질문')
+        else:
+            e.client.chat = fn
+            e.chat([{'role': 'user', 'content': 'question'}], max_tokens=50, effort='low', required=True, case_relevant=True)
+>       assert len(ids) == 2 and ids[0] == ids[1]
+E       AssertionError: assert (2 == 2 and '66c66f55-97e...-9c87df7691c1' == 'ac87fd79-b09...-9e8031702ce7'
+E        +  where 2 = len(['66c66f55-97e4-411b-8c45-9c87df7691c1', 'ac87fd79-b09b-40fe-ae22-9e8031702ce7'])
+E         
+E         - ac87fd79-b09b-40fe-ae22-9e8031702ce7
+E         + 66c66f55-97e4-411b-8c45-9c87df7691c1)
+
+tests/test_interview_quality.py:75: AssertionError
+_______ test_record_evidence_retains_objective_findings_on_failed_doctor _______
+
+    def test_record_evidence_retains_objective_findings_on_failed_doctor():
+        e, _ = encounter(); initialise(e, '기침이 있어요.')
+        e.pstate.record_exam('lung_auscultation', '수포음(+/+)', request_text='폐를 청진하겠습니다')
+        e.turns.append(A.Turn('EXAM', '폐를 청진하겠습니다', '수포음(+/+)', 'lung_auscultation'))
+        record, _ = e.official_record([], None)
+>       assert '수포음(+/+)' in record['A']['evidence']
+E       AssertionError: assert '수포음(+/+)' in '#1. 진단 미정 (추가 평가 필요)'
+
+tests/test_interview_quality.py:83: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_interview_quality.py::test_known_means_actual_topic_evidence[\ubd88\uba74 \ub54c\ubb38\uc5d0 \uc218\uba74\uc81c\ub97c \uba39\uc5b4\uc694. amlodipine 5mg\uc744 \uba39\uc5b4\uc694.-medication_dose-False]
+FAILED tests/test_interview_quality.py::test_known_means_actual_topic_evidence[\ubd88\uba74 \ub54c\ubb38\uc5d0 \uc218\uba74\uc81c\ub97c \uba39\uc5b4\uc694.-medication_name-False]
+FAILED tests/test_interview_quality.py::test_known_means_actual_topic_evidence[\ubd88\uba74\uc785\ub2c8\ub2e4. \uc5b4\uba38\ub2c8\ub294 \uc878\ud53c\ub380 5mg\uc744 \uba39\uc5b4\uc694.-medication_dose-False]
+FAILED tests/test_interview_quality.py::test_known_means_actual_topic_evidence[\uccb4\uc911\uc774 \uc904\uc5b4\uc694. \uc5b4\uba38\ub2c8\uac00 \ub354\uc704\ub97c \ub9ce\uc774 \ud0c0\uc694.-heat-False]
+FAILED tests/test_interview_quality.py::test_known_means_actual_topic_evidence[\uccb4\uc911\uc774 \uc904\uc5b4\uc694. \ub354\uc704\ub97c \ud0c0\ub294\uc9c0\ub294 \ubaa8\ub974\uaca0\uc5b4\uc694.-heat-False]
+FAILED tests/test_interview_quality.py::test_known_means_actual_topic_evidence[\ud0a4\uac00 \uc791\uc544\uc694. \uc544\ubc84\uc9c0 \ud0a4 172cm\uc785\ub2c8\ub2e4.-parent_height-False]
+FAILED tests/test_interview_quality.py::test_unknown_attempt_is_not_known - A...
+FAILED tests/test_interview_quality.py::test_followup_rechecks_knowledge_after_each_reply
+FAILED tests/test_interview_quality.py::test_followup_does_not_repeat_equivalent_exam
+FAILED tests/test_interview_quality.py::test_provider_unavailable_replays_same_logical_request[action]
+FAILED tests/test_interview_quality.py::test_provider_unavailable_replays_same_logical_request[chat]
+FAILED tests/test_interview_quality.py::test_record_evidence_retains_objective_findings_on_failed_doctor
+12 failed, 6 passed in 0.51s

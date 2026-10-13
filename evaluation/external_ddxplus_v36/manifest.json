@@ -1,0 +1,30 @@
+{
+  "schema": "external-ddxplus-v36",
+  "dataset": "DDXPlus English v2",
+  "source": "https://doi.org/10.6084/m9.figshare.22687585.v2",
+  "organizer_archive_url": "https://nova.snubhai.org/downloads/nova-benchmarks-2026.zip",
+  "organizer_archive_sha256": "a2b4dbc6a2bc177a54cf7c7f1a4e15f94625bfd335738737b575c6832a1060a7",
+  "license": "CC BY 4.0",
+  "cases": 2000,
+  "distinct_evidence_profiles": 2000,
+  "split_counts": {
+    "dev": 1200,
+    "validation": 400,
+    "holdout": 400
+  },
+  "conditions": 49,
+  "case_sha256": "b217cc31f1fb664b43ab473ca6f25f8752605ff22a66050efb2aed81cc5d26e4",
+  "evidence_metadata_sha256": "281c78b044ae60514e28ecc9052d08a8225dd3e2db3f00f8788b99c47b05e0c0",
+  "selection": "First distinct evidence profiles per sorted-condition quota, original partitions preserved",
+  "generated_paraphrases": false,
+  "labels_modified": false,
+  "patient_or_official_hidden_cases": false,
+  "mode": "Positive/structured questionnaire observations replayed; no physical exams, tests or live model",
+  "attribution": "Fansi Tchango, Goel, Wen, Martel, Ghosn. DDXPlus: A New Dataset For Automatic Medical Diagnosis. NeurIPS 2022; arXiv:2205.09148.",
+  "limitations": [
+    "Synthetic source, not real patients or independent clinician review of this agent",
+    "English questionnaire format differs from Korean NOVA patient interactions",
+    "Initial positive complaint + all supplied evidence is a diagnostic replay, not interview coverage",
+    "Dataset severity is reported as given, not used as a gold triage disposition"
+  ]
+}

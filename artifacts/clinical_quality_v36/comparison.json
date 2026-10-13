@@ -1,0 +1,490 @@
+{
+  "label": "PAIRED LOCAL PROCESS/DIAGNOSTIC REPLAY, NOT OFFICIAL SCORE",
+  "baseline_sha": "51c7282766db20d0fb2f1c906834a6d1b7e34c5e",
+  "execution_sha": "f3c30e4f6fd2ba2b3dd1d66fcfb91ec47fe0bf75",
+  "publishable_runtime_sha": "955e55439f69c0b887a1aeaa19dc71d4795e699f",
+  "full_sdk_stress": {
+    "before": {
+      "cases": 1150,
+      "scored": 666,
+      "rubric_process_proxy": {
+        "information_gathering": 20.379859150511322,
+        "diagnostic_reasoning": 13.671171171171173,
+        "tests_followup": 10.0,
+        "safety": 14.864864864864865,
+        "communication": 10.021739130434783,
+        "efficiency": 20,
+        "total": 88.93763431698214
+      },
+      "top1": 0.9114114114114115,
+      "top3": 0.975975975975976,
+      "top5": 0.975975975975976,
+      "critical_recall": 0.9372549019607843,
+      "critical_misses": 16,
+      "undertriage_proxy": 6,
+      "overtriage_proxy": 159,
+      "mean_turns": 17.758260869565216,
+      "median_turns": 18.0,
+      "p90_turns": 25,
+      "mean_doctor_requests": 2.291304347826087,
+      "mean_exams": 1.8617391304347826,
+      "duplicate_question_rate": 0.06801827169764095,
+      "known_fact_reask_rate": 0.010449909267254864,
+      "dangerous_false_primary_rate": null,
+      "rule_errors": 0,
+      "real_tokens_latency_cost": null,
+      "fixture_wall_seconds": 3767.606221414007
+    },
+    "after": {
+      "cases": 1150,
+      "scored": 666,
+      "rubric_process_proxy": {
+        "information_gathering": 20.379859150511322,
+        "diagnostic_reasoning": 13.671171171171173,
+        "tests_followup": 10.0,
+        "safety": 14.864864864864865,
+        "communication": 12.108695652173912,
+        "efficiency": 20,
+        "total": 91.02459083872127
+      },
+      "top1": 0.9114114114114115,
+      "top3": 0.975975975975976,
+      "top5": 0.975975975975976,
+      "critical_recall": 0.9372549019607843,
+      "critical_misses": 16,
+      "undertriage_proxy": 6,
+      "overtriage_proxy": 159,
+      "mean_turns": 18.19217391304348,
+      "median_turns": 18.0,
+      "p90_turns": 25,
+      "mean_doctor_requests": 2.405217391304348,
+      "mean_exams": 1.8617391304347826,
+      "duplicate_question_rate": 0.06820881525476712,
+      "known_fact_reask_rate": 0.010440762738355737,
+      "dangerous_false_primary_rate": 0.015015015015015015,
+      "rule_errors": 0,
+      "real_tokens_latency_cost": null,
+      "fixture_wall_seconds": 4481.126267939988
+    }
+  },
+  "sdk_by_split": {
+    "before": {
+      "dev": {
+        "cases": 690,
+        "scored": 396,
+        "rubric_process_proxy": {
+          "information_gathering": 20.772659305268,
+          "diagnostic_reasoning": 13.522727272727272,
+          "tests_followup": 10.0,
+          "safety": 14.772727272727273,
+          "communication": 10.03623188405797,
+          "efficiency": 20,
+          "total": 89.10434573478051
+        },
+        "top1": 0.9015151515151515,
+        "top3": 0.9747474747474747,
+        "top5": 0.9747474747474747,
+        "critical_recall": 0.9425287356321839,
+        "critical_misses": 10,
+        "undertriage_proxy": 6,
+        "overtriage_proxy": 90,
+        "mean_turns": 17.92753623188406,
+        "median_turns": 18.0,
+        "p90_turns": 25,
+        "mean_doctor_requests": 2.263768115942029,
+        "mean_exams": 1.7565217391304349,
+        "duplicate_question_rate": 0.06616895070566578,
+        "known_fact_reask_rate": 0.010227040294538761,
+        "dangerous_false_primary_rate": null,
+        "rule_errors": 0,
+        "real_tokens_latency_cost": null,
+        "fixture_wall_seconds": 1982.145898971999
+      },
+      "validation": {
+        "cases": 230,
+        "scored": 135,
+        "rubric_process_proxy": {
+          "information_gathering": 19.547501411631846,
+          "diagnostic_reasoning": 13.777777777777779,
+          "tests_followup": 10.0,
+          "safety": 15,
+          "communication": 10.0,
+          "efficiency": 20,
+          "total": 88.32527918940963
+        },
+        "top1": 0.9185185185185185,
+        "top3": 0.9777777777777777,
+        "top5": 0.9777777777777777,
+        "critical_recall": 0.9285714285714286,
+        "critical_misses": 3,
+        "undertriage_proxy": 0,
+        "overtriage_proxy": 30,
+        "mean_turns": 16.691304347826087,
+        "median_turns": 16.0,
+        "p90_turns": 25,
+        "mean_doctor_requests": 2.4130434782608696,
+        "mean_exams": 2.260869565217391,
+        "duplicate_question_rate": 0.07520111927247289,
+        "known_fact_reask_rate": 0.01224204267226303,
+        "dangerous_false_primary_rate": null,
+        "rule_errors": 0,
+        "real_tokens_latency_cost": null,
+        "fixture_wall_seconds": 823.0726112920033
+      },
+      "holdout": {
+        "cases": 230,
+        "scored": 135,
+        "rubric_process_proxy": {
+          "information_gathering": 20.033816425120772,
+          "diagnostic_reasoning": 14.0,
+          "tests_followup": 10.0,
+          "safety": 15,
+          "communication": 10.0,
+          "efficiency": 20,
+          "total": 89.03381642512078
+        },
+        "top1": 0.9333333333333333,
+        "top3": 0.9777777777777777,
+        "top5": 0.9777777777777777,
+        "critical_recall": 0.9230769230769231,
+        "critical_misses": 3,
+        "undertriage_proxy": 0,
+        "overtriage_proxy": 39,
+        "mean_turns": 18.317391304347826,
+        "median_turns": 18.0,
+        "p90_turns": 26,
+        "mean_doctor_requests": 2.252173913043478,
+        "mean_exams": 1.7782608695652173,
+        "duplicate_question_rate": 0.06728468899521531,
+        "known_fact_reask_rate": 0.009569377990430622,
+        "dangerous_false_primary_rate": null,
+        "rule_errors": 0,
+        "real_tokens_latency_cost": null,
+        "fixture_wall_seconds": 962.3877111500046
+      }
+    },
+    "after": {
+      "dev": {
+        "cases": 690,
+        "scored": 396,
+        "rubric_process_proxy": {
+          "information_gathering": 20.772659305268,
+          "diagnostic_reasoning": 13.522727272727272,
+          "tests_followup": 10.0,
+          "safety": 14.772727272727273,
+          "communication": 11.978260869565217,
+          "efficiency": 20,
+          "total": 91.04637472028776
+        },
+        "top1": 0.9015151515151515,
+        "top3": 0.9747474747474747,
+        "top5": 0.9747474747474747,
+        "critical_recall": 0.9425287356321839,
+        "critical_misses": 10,
+        "undertriage_proxy": 6,
+        "overtriage_proxy": 90,
+        "mean_turns": 18.343478260869563,
+        "median_turns": 18.0,
+        "p90_turns": 25,
+        "mean_doctor_requests": 2.417391304347826,
+        "mean_exams": 1.7565217391304349,
+        "duplicate_question_rate": 0.0664828431372549,
+        "known_fact_reask_rate": 0.010212418300653595,
+        "dangerous_false_primary_rate": 0.017676767676767676,
+        "rule_errors": 0,
+        "real_tokens_latency_cost": null,
+        "fixture_wall_seconds": 2898.1804778649876
+      },
+      "validation": {
+        "cases": 230,
+        "scored": 135,
+        "rubric_process_proxy": {
+          "information_gathering": 19.547501411631846,
+          "diagnostic_reasoning": 13.777777777777779,
+          "tests_followup": 10.0,
+          "safety": 15,
+          "communication": 12.391304347826088,
+          "efficiency": 20,
+          "total": 90.7165835372357
+        },
+        "top1": 0.9185185185185185,
+        "top3": 0.9777777777777777,
+        "top5": 0.9777777777777777,
+        "critical_recall": 0.9285714285714286,
+        "critical_misses": 3,
+        "undertriage_proxy": 0,
+        "overtriage_proxy": 30,
+        "mean_turns": 17.169565217391305,
+        "median_turns": 16.0,
+        "p90_turns": 25,
+        "mean_doctor_requests": 2.4565217391304346,
+        "mean_exams": 2.260869565217391,
+        "duplicate_question_rate": 0.07520111927247289,
+        "known_fact_reask_rate": 0.01224204267226303,
+        "dangerous_false_primary_rate": 0.0,
+        "rule_errors": 0,
+        "real_tokens_latency_cost": null,
+        "fixture_wall_seconds": 820.6576138409946
+      },
+      "holdout": {
+        "cases": 230,
+        "scored": 135,
+        "rubric_process_proxy": {
+          "information_gathering": 20.033816425120772,
+          "diagnostic_reasoning": 14.0,
+          "tests_followup": 10.0,
+          "safety": 15,
+          "communication": 12.217391304347826,
+          "efficiency": 20,
+          "total": 91.2512077294686
+        },
+        "top1": 0.9333333333333333,
+        "top3": 0.9777777777777777,
+        "top5": 0.9777777777777777,
+        "critical_recall": 0.9230769230769231,
+        "critical_misses": 3,
+        "undertriage_proxy": 0,
+        "overtriage_proxy": 39,
+        "mean_turns": 18.76086956521739,
+        "median_turns": 19.0,
+        "p90_turns": 26,
+        "mean_doctor_requests": 2.3173913043478263,
+        "mean_exams": 1.7782608695652173,
+        "duplicate_question_rate": 0.06728468899521531,
+        "known_fact_reask_rate": 0.009569377990430622,
+        "dangerous_false_primary_rate": 0.022222222222222223,
+        "rule_errors": 0,
+        "real_tokens_latency_cost": null,
+        "fixture_wall_seconds": 762.2881762340057
+      }
+    }
+  },
+  "external_ddxplus": {
+    "before": {
+      "metrics": {
+        "cases": 2000,
+        "top1": 0.04,
+        "top3": 0.107,
+        "top5": 0.1325,
+        "undifferentiated": 0.362
+      },
+      "by_split": {
+        "dev": {
+          "cases": 1200,
+          "top1": 0.03916666666666667,
+          "top3": 0.10333333333333333,
+          "top5": 0.13416666666666666,
+          "undifferentiated": 0.365
+        },
+        "validation": {
+          "cases": 400,
+          "top1": 0.0425,
+          "top3": 0.1125,
+          "top5": 0.1275,
+          "undifferentiated": 0.36
+        },
+        "holdout": {
+          "cases": 400,
+          "top1": 0.04,
+          "top3": 0.1125,
+          "top5": 0.1325,
+          "undifferentiated": 0.355
+        }
+      }
+    },
+    "after": {
+      "metrics": {
+        "cases": 2000,
+        "top1": 0.04,
+        "top3": 0.107,
+        "top5": 0.1325,
+        "undifferentiated": 0.362
+      },
+      "by_split": {
+        "dev": {
+          "cases": 1200,
+          "top1": 0.03916666666666667,
+          "top3": 0.10333333333333333,
+          "top5": 0.13416666666666666,
+          "undifferentiated": 0.365
+        },
+        "validation": {
+          "cases": 400,
+          "top1": 0.0425,
+          "top3": 0.1125,
+          "top5": 0.1275,
+          "undifferentiated": 0.36
+        },
+        "holdout": {
+          "cases": 400,
+          "top1": 0.04,
+          "top3": 0.1125,
+          "top5": 0.1325,
+          "undifferentiated": 0.355
+        }
+      }
+    }
+  },
+  "legacy_preliminary": {
+    "before": {
+      "label": "LOCAL DEVELOPMENT / PRELIMINARY SIMULATION -- mock LLM, synthetic cases, NOT AN OFFICIAL SCORE",
+      "cases": 230,
+      "scored": 222,
+      "top1": 0.9864864864864865,
+      "top3": 0.990990990990991,
+      "top5": 0.990990990990991,
+      "critical_cases": 85,
+      "critical_recall": 1.0,
+      "critical_miss_rate": 0.0,
+      "avg_interactions": 19.669565217391305,
+      "median_interactions": 21.0,
+      "max_interactions": 33,
+      "say_count": 3316,
+      "exam_count": 1208,
+      "rejected_exam_count": 0,
+      "unnecessary_exam_share": 0.2251655629139073,
+      "duplicate_action_rate": 0.0,
+      "semantic_duplicate_question_rate": 0.006031363088057901,
+      "premature_diagnosis_rate": 0.008695652173913044,
+      "unresolved_critical_alternative_rate": 0.5608695652173913,
+      "soap_completeness": 1.0,
+      "soap_information_retention": 1.0,
+      "soap_unsupported_info_rate": 0.0,
+      "soap_unsupported_lines": 0,
+      "explained_before_diagnose_rate": 1.0,
+      "rule_violations": 0,
+      "malformed_output_rate": 0.0,
+      "llm_fallback_turns": 0,
+      "cases_over_cap": 0
+    },
+    "after": {
+      "label": "LOCAL DEVELOPMENT / PRELIMINARY SIMULATION -- mock LLM, synthetic cases, NOT AN OFFICIAL SCORE",
+      "cases": 230,
+      "scored": 222,
+      "top1": 0.9864864864864865,
+      "top3": 0.990990990990991,
+      "top5": 0.990990990990991,
+      "critical_cases": 85,
+      "critical_recall": 1.0,
+      "critical_miss_rate": 0.0,
+      "avg_interactions": 19.669565217391305,
+      "median_interactions": 21.0,
+      "max_interactions": 33,
+      "say_count": 3316,
+      "exam_count": 1208,
+      "rejected_exam_count": 0,
+      "unnecessary_exam_share": 0.2251655629139073,
+      "duplicate_action_rate": 0.0,
+      "semantic_duplicate_question_rate": 0.006031363088057901,
+      "premature_diagnosis_rate": 0.008695652173913044,
+      "unresolved_critical_alternative_rate": 0.5608695652173913,
+      "soap_completeness": 1.0,
+      "soap_information_retention": 1.0,
+      "soap_unsupported_info_rate": 0.0,
+      "soap_unsupported_lines": 0,
+      "explained_before_diagnose_rate": 1.0,
+      "rule_violations": 0,
+      "malformed_output_rate": 0.0,
+      "llm_fallback_turns": 0,
+      "cases_over_cap": 0
+    }
+  },
+  "closing_replay": {
+    "before": {
+      "cases": 32,
+      "reference_compatible": 32,
+      "urgency_matches": 32,
+      "test_plan_present": 32,
+      "plan_topic_compatible_proxy": 23,
+      "plan_topic_scored_cases": 23,
+      "followup_has_interval": 30,
+      "precautions_present": 32,
+      "explanation_present": 32,
+      "mean_closing_turns": 2.0,
+      "unperformed_test_results": 0
+    },
+    "after": {
+      "cases": 32,
+      "reference_compatible": 32,
+      "urgency_matches": 32,
+      "test_plan_present": 32,
+      "plan_topic_compatible_proxy": 23,
+      "plan_topic_scored_cases": 23,
+      "followup_has_interval": 30,
+      "precautions_present": 32,
+      "explanation_present": 32,
+      "mean_closing_turns": 2.9375,
+      "unperformed_test_results": 0
+    }
+  },
+  "fixture": {
+    "before": {
+      "label": "LOCAL RUBRIC PROXY — NOT OFFICIAL SCORE / FULL FAKE SDK / SCRIPTED DOCTOR",
+      "real_model_tokens_latency_cost": "NOT MEASURED; fixture usage constants are not real costs",
+      "mean_turns": 9.666666666666666,
+      "mean_doctor_physical_requests": 2.3333333333333335,
+      "mean_topic_coverage": 1.0,
+      "mean_exam_count": 1.3333333333333333
+    },
+    "after": {
+      "label": "LOCAL RUBRIC PROXY — NOT OFFICIAL SCORE / FULL FAKE SDK / SCRIPTED DOCTOR",
+      "real_model_tokens_latency_cost": "NOT MEASURED; fixture usage constants are not real costs",
+      "mean_turns": 12.0,
+      "mean_doctor_physical_requests": 2.6666666666666665,
+      "mean_topic_coverage": 1.0,
+      "mean_exam_count": 1.6666666666666667
+    }
+  },
+  "top1_regressions": [],
+  "top1_improvements": [],
+  "critical_miss_ids": {
+    "before": [
+      "RoundI_pleural:complete",
+      "RoundI_pleural:unscripted_unknown",
+      "RoundI_pleural:opening_disclosure",
+      "RoundJ_25:complete",
+      "RoundJ_25:unscripted_unknown",
+      "RoundJ_25:opening_disclosure",
+      "RoundM_068:complete",
+      "RoundM_068:unscripted_unknown",
+      "RoundM_068:opening_disclosure",
+      "RoundM_087:unscripted_unknown",
+      "RoundM_019:complete",
+      "RoundM_019:unscripted_unknown",
+      "RoundM_019:opening_disclosure",
+      "RoundJ_18:complete",
+      "RoundJ_18:unscripted_unknown",
+      "RoundJ_18:opening_disclosure"
+    ],
+    "after": [
+      "RoundI_pleural:complete",
+      "RoundI_pleural:unscripted_unknown",
+      "RoundI_pleural:opening_disclosure",
+      "RoundJ_25:complete",
+      "RoundJ_25:unscripted_unknown",
+      "RoundJ_25:opening_disclosure",
+      "RoundM_068:complete",
+      "RoundM_068:unscripted_unknown",
+      "RoundM_068:opening_disclosure",
+      "RoundM_087:unscripted_unknown",
+      "RoundM_019:complete",
+      "RoundM_019:unscripted_unknown",
+      "RoundM_019:opening_disclosure",
+      "RoundJ_18:complete",
+      "RoundJ_18:unscripted_unknown",
+      "RoundJ_18:opening_disclosure"
+    ]
+  },
+  "measurement_notes": [
+    "Initial display-label scoring corrected for both captures; full/nested canonical parentheses preserved.",
+    "Before SDK captured no differential names or dangerous-primary flags; original Top3/Top5 booleans retained unless primary matched.",
+    "Historical SDK cases are not independent blind clinical validation.",
+    "Frozen external 2000 profiles are original synthetic questionnaire evidence, not live interviewing.",
+    "No official real-model score/token/latency/cost measurements."
+  ],
+  "source_data_hashes": {
+    "sdk_protocol": "76f64e4ab5fcf38e35a508956a5e09989fdc0fe7f957426a7e15e4dd4ee6d542",
+    "external_manifest": "1f8887367578d226cc0553a05d356da47bad20d623e8b918e62907fd4566a2a0",
+    "identity_comparator": "3fa4bd1452f8a3e63f76bbcee58e7c87e272903686a9707f3c9cdcd879ad828d"
+  }
+}

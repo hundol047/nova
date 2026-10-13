@@ -1,0 +1,89 @@
+{
+  "READY_FOR_HUMAN_SAMPLE_VALIDATION": "NO",
+  "LOCAL_TECHNICAL_CHECKS": "FAIL",
+  "checks": {
+    "fresh_build": true,
+    "package": true,
+    "official_sdk_exact": true,
+    "secret_sync_scan": true,
+    "leakage_scan": true,
+    "fake_http_readonly": true,
+    "fresh_directory": true,
+    "provenance_inventory": true,
+    "binary_wheel_download": true,
+    "wheels_present": true,
+    "docker_offline_readonly_2cpu_8gb": false
+  },
+  "commands": [
+    {
+      "name": "fresh_build",
+      "exit_code": 0
+    },
+    {
+      "name": "secret_sync_scan",
+      "exit_code": 0
+    },
+    {
+      "name": "leakage_scan",
+      "exit_code": 0
+    },
+    {
+      "name": "fake_http_readonly",
+      "exit_code": 0
+    },
+    {
+      "name": "fresh_directory",
+      "exit_code": 0
+    },
+    {
+      "name": "binary_wheel_download",
+      "exit_code": 0
+    }
+  ],
+  "package": {
+    "zip": "/workspace/scratch/f37173f96701/nova/submission/submission.zip",
+    "checks": {
+      "zip_bytes": 913778,
+      "uncompressed_bytes": 3476141,
+      "files": 112,
+      "root:run.py": true,
+      "root:requirements.txt": true,
+      "root:nova_sdk.py": true,
+      "secret_hits": [],
+      "requirements": [
+        "pydantic==2.14.0",
+        "pydantic_core==2.50.0",
+        "annotated-types==0.8.0",
+        "typing-inspection==0.4.4",
+        "typing_extensions==4.16.0"
+      ],
+      "sha256": "7da4f049459a273fea45c3b88b50cf22b73d5d188623ec85d4b765d5348dc202"
+    },
+    "problems": [],
+    "all_pass": true
+  },
+  "provenance_permission_status": "BLOCKED",
+  "archive_and_clinical_review_gate": {
+    "archive_rights_coverage": "PASS",
+    "errors": [],
+    "unverified_archive_members": [
+      "competition/nova_sdk_adapter.py",
+      "nova_agent/clinical_interview.py",
+      "nova_agent/diagnosis_normalizer.py",
+      "nova_agent/interview_evidence.py",
+      "nova_sdk.py"
+    ],
+    "clinician_review": "PENDING_EXTERNAL_CLINICIAN",
+    "official_submission_allowed": false
+  },
+  "blockers": [
+    "Archive rights not fully evidenced: competition/nova_sdk_adapter.py, nova_agent/clinical_interview.py, nova_agent/diagnosis_normalizer.py, nova_agent/interview_evidence.py, nova_sdk.py",
+    "Local technical checks incomplete/failed",
+    "Independent clinician review absent; engineering/literature checks do not replace it"
+  ],
+  "real_gpt_oss": "NOT EXECUTED BY CODEX",
+  "participant_key_samples": "NOT EXECUTED BY CODEX",
+  "sample_validation_upload": "NOT EXECUTED BY CODEX",
+  "release_zip_binding_verified": true,
+  "binding_note": "Final archive uses SOURCE_DATE_EPOCH UTC. Detached runtime archive, current archive, release record and rights inventory were rebound to identical ZIP bytes; final binding tests passed."
+}

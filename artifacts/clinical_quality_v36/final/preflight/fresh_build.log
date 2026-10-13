@@ -1,0 +1,7 @@
+copied /workspace/scratch/f37173f96701/nova/nova_agent -> /workspace/scratch/f37173f96701/nova/submission/nova_agent
+copied /workspace/scratch/f37173f96701/nova/competition -> /workspace/scratch/f37173f96701/nova/submission/competition
+requirements OK: ['pydantic==2.14.0', 'pydantic_core==2.50.0', 'annotated-types==0.8.0', 'typing-inspection==0.4.4', 'typing_extensions==4.16.0']
+secret scan OK: no suspicious credential-shaped strings
+import/subprocess smoke test OK: explicit mock standalone (real model NOT VERIFIED)
+submission.zip built: 111 files, 0.87 MB -- /workspace/scratch/f37173f96701/nova/submission/submission.zip
+LOCAL PRE-GUIDE candidate only; official interface and real model NOT VERIFIED.

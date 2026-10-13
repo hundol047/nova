@@ -143,6 +143,10 @@ def test_current_review_packet_includes_all_34_plus_8_profiles():
 def test_archive_gate_tracks_sdk_and_clinical_gap_separately():
     result = review.release_review_gate(ROOT)
     assert result['archive_rights_coverage'] == 'PASS'
-    assert result['unverified_archive_members'] == ['nova_sdk.py']
+    # The old human statement remains immutable. New/changed v36 bytes are
+    # explicitly unresolved; engineering tests must not renew a human grant.
+    assert result['unverified_archive_members'] == [
+        'competition/nova_sdk_adapter.py', 'nova_agent/clinical_interview.py',
+        'nova_agent/diagnosis_normalizer.py', 'nova_agent/interview_evidence.py', 'nova_sdk.py']
     assert result['clinician_review'] == 'PENDING_EXTERNAL_CLINICIAN'
     assert not result['official_submission_allowed']

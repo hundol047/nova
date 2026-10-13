@@ -1,8 +1,12 @@
 {
   "coverage_status": "PASS",
   "errors": [],
-  "permission_status": "DOCUMENTED_FOR_STATED_SCOPE",
-  "unresolved_assets": [],
+  "permission_status": "BLOCKED",
+  "unresolved_assets": [
+    "nova_agent/clinical_interview.py",
+    "nova_agent/diagnosis_normalizer.py",
+    "nova_agent/interview_evidence.py"
+  ],
   "official_submission_allowed": false,
   "note": "Owner declarations and publisher terms within stated scopes only; no independent legal audit, clinician approval or complete ZIP rights clearance."
 }

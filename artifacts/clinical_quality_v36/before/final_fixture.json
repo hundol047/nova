@@ -1,0 +1,106 @@
+{
+  "label": "LOCAL RUBRIC PROXY — NOT OFFICIAL SCORE / FULL FAKE SDK / SCRIPTED DOCTOR",
+  "real_model_tokens_latency_cost": "NOT MEASURED; fixture usage constants are not real costs",
+  "mean_turns": 9.666666666666666,
+  "mean_doctor_physical_requests": 2.3333333333333335,
+  "mean_topic_coverage": 1.0,
+  "mean_exam_count": 1.3333333333333333,
+  "cases": [
+    {
+      "id": "thyroid_midlife",
+      "status": "completed",
+      "primary": "Graves disease",
+      "expected": "Graves disease",
+      "turns": 8,
+      "exam_count": 2,
+      "say_count": 6,
+      "fixture_wall_seconds": 0.7389690290001454,
+      "doctor_physical_requests": 2,
+      "fixture_reported_prompt_tokens": 200,
+      "fixture_reported_completion_tokens": 100,
+      "unique_required_topics": 4,
+      "required_topics": 4,
+      "topic_coverage": 1.0,
+      "duplicate_questions_exact": 0,
+      "age_inappropriate_social_questions": 0,
+      "communication": [
+        "걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요.",
+        "갑상샘 검사 후 재진, 악화 시 즉시 진료"
+      ],
+      "unsafe_emergency_disposition": false,
+      "nfc_or_test_violations": 0,
+      "clinical_plan": {
+        "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 갑상샘 비대상 그레이브스병 의심돼요. / 갑상샘 검사 후 재진, 악화 시 즉시 진료\n고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가"
+      },
+      "diagnostic_successes_fixture": 2
+    },
+    {
+      "id": "sleep_sedative",
+      "status": "completed",
+      "primary": "Sedative-Hypnotic Use Disorder",
+      "expected": "Sedative-Hypnotic Use Disorder",
+      "turns": 11,
+      "exam_count": 0,
+      "say_count": 11,
+      "fixture_wall_seconds": 1.0571420860001126,
+      "doctor_physical_requests": 2,
+      "fixture_reported_prompt_tokens": 200,
+      "fixture_reported_completion_tokens": 100,
+      "unique_required_topics": 7,
+      "required_topics": 7,
+      "topic_coverage": 1.0,
+      "duplicate_questions_exact": 0,
+      "age_inappropriate_social_questions": 0,
+      "communication": [
+        "걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요.",
+        "임의 중단·운전 피하고 악화 시 즉시 진료"
+      ],
+      "unsafe_emergency_disposition": false,
+      "nfc_or_test_violations": 0,
+      "clinical_plan": {
+        "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토",
+        "treatment": "복약 검토 후 처방의와 감독하 감량 논의; 갑작스러운 중단·임의 증량 금지",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락",
+        "education": "진료 중 설명함: 걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요. / 임의 중단·운전 피하고 악화 시 즉시 진료\n갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가"
+      },
+      "diagnostic_successes_fixture": 2
+    },
+    {
+      "id": "growth_school_age",
+      "status": "completed",
+      "primary": "Constitutional growth delay",
+      "expected": "Constitutional growth delay",
+      "turns": 10,
+      "exam_count": 2,
+      "say_count": 8,
+      "fixture_wall_seconds": 0.8696877540000969,
+      "doctor_physical_requests": 3,
+      "fixture_reported_prompt_tokens": 100,
+      "fixture_reported_completion_tokens": 50,
+      "unique_required_topics": 5,
+      "required_topics": 5,
+      "topic_coverage": 1.0,
+      "duplicate_questions_exact": 0,
+      "age_inappropriate_social_questions": 0,
+      "communication": [
+        "걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요.",
+        "성장 추적, 키 증가가 줄면 조기 재진"
+      ],
+      "unsafe_emergency_disposition": false,
+      "nfc_or_test_violations": 0,
+      "clinical_plan": {
+        "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료",
+        "education": "진료 중 설명함: 걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요. / 성장 추적, 키 증가가 줄면 조기 재진\n성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가"
+      },
+      "diagnostic_successes_fixture": 1
+    }
+  ]
+}
