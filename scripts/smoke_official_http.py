@@ -8,7 +8,7 @@ NOVA_GUIDELINES_DIR unset -- the way the organizer container starts it (offline 
 Checks: exit 0, ready before any case access (else 409 MODEL_NOT_READY), at least one Doctor call, no TEST action,
 every SAY/EXAM <= 30 NFC characters, the 15-field record and one main diagnosis.
 
-NOT the organizer server, NOT gpt-oss-20b, NOT a score.
+NOT the organizer server, NOT a live designated model, NOT a score.
 
     python scripts/smoke_official_http.py submission/submission.zip
 """
@@ -91,18 +91,30 @@ def make_handler(state: State):
             if self.path == "/v1/chat/completions":
                 state.chat_calls += 1
                 system = body["messages"][0]["content"]
-                if '"questions"' in system:
+                if '"actions"' in system:
+                    asked = {text for kind, text in state.events}
+                    actions = [{'kind': kind, 'text': text, 'topic': topic} for kind, text, topic in
+                        [('SAY', '가래가 나오나요?', 'sputum'), ('SAY', '숨이 차나요?', 'dyspnea'),
+                         ('EXAM', '폐 청진을 하겠습니다', 'lungs')] if text not in asked]
+                    content = json.dumps({'actions': actions, 'ready': not actions}, ensure_ascii=False)
+                elif '"questions"' in system:
                     content = json.dumps({"differential": [{"name": "지역사회획득 폐렴", "why": "기침, 발열"}],
                                           "questions": ["가래가 나오나요?", "숨이 차나요?"],
                                           "exams": ["폐 청진을 하겠습니다"]}, ensure_ascii=False)
                 elif "primary_diagnosis" in system:
                     content = json.dumps({"primary_diagnosis": "지역사회획득 폐렴", "short_name": "폐렴", "urgent": False,
-                                          "evidence": ["이틀 전부터 기침과 열"], "differential": [],
-                                          "plan": {"tests": "흉부 X선", "treatment": "항생제 고려", "disposition": "외래",
-                                                   "follow_up": "2-3일 후", "education": "호흡곤란 시 내원"}}, ensure_ascii=False)
+                                          "reason": "급성 기침과 발열에 근거한 추정 진단",
+                                          "evidence": ["I0"], "differential": [],
+                                          "plan": {"tests": [{"name":"흉부 X선", "purpose":"폐렴 여부 확인", "evidence":["I0"],
+                                                    "when":"오늘", "if_abnormal":"상태에 따라 치료 결정", "if_normal":"지속되면 재평가"}],
+                                              "treatment":"충분히 쉬고 수분을 섭취하세요.",
+                                              "disposition":{"level":"same_day", "where":"담당 진료처", "reason":"급성 발열 평가", "evidence":["I0"]},
+                                              "follow_up":{"when":"2일 내", "where":"외래", "review":"증상과 검사 결과를 확인해요"},
+                                              "precautions":"숨이 더 차면 즉시 진료받으세요.",
+                                              "education":"현재 추정 진단이며 추가 확인이 필요해요."}}, ensure_ascii=False)
                 else:
                     content = "그런 증상이 있으신가요?"
-                return self._send(200, {"id": "x", "object": "chat.completion", "model": "openai/gpt-oss-20b",
+                return self._send(200, {"id": "x", "object": "chat.completion", "model": "scripted-doctor-not-live",
                                         "choices": [{"index": 0, "message": {"role": "assistant", "content": content},
                                                      "finish_reason": "stop"}],
                                         "usage": {"prompt_tokens": 200, "completion_tokens": 80, "total_tokens": 280}})

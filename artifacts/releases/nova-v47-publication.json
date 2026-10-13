@@ -1,0 +1,79 @@
+{
+  "status": "UNSCORED_QUALITY_CANDIDATE",
+  "base_source_commit": "829e5ab9cd3984fc81cd6d152871f44706399c5c",
+  "artifact": "artifacts/releases/nova-v47-submission.zip",
+  "bytes": 952583,
+  "sha256": "1bbeb3659d33ed1582be0bf31e265002e504585fa46a8d27d4d33876e0c66927",
+  "source_mirror_archive_match": true,
+  "hashed_runtime_files": 116,
+  "reproducible_build": true,
+  "regression": {
+    "legacy_and_new_controller_run": "1109 passed in 183.63s",
+    "command": "python -m pytest -q tests/test_official_sdk_adapter.py tests/test_official_independent_audit.py tests/test_official_transport_boundary.py tests/test_interview_quality.py tests/test_encounter_completion.py tests/test_purposeful_encounter.py tests/test_guardian_narrative_and_spoken_numbers.py tests/test_v46_care_quality.py tests/test_adaptive_history.py tests/test_closing_deadline_reserve.py tests/test_onset_and_teachback.py tests/test_question_bound_followup.py tests/test_question_coverage_invariants.py tests/test_targeted_turn_allocation.py tests/test_preliminary*.py tests/test_safety*.py tests/test_soap_regression.py tests/test_native_questions_and_patient_answers.py tests/test_clinical_presentation.py tests/test_multilingual_clinical_concepts.py tests/test_documented_diagnosis_assertion_scope.py tests/test_round_r_assertion_evidence.py tests/test_round_t_evidence_scope.py tests/test_round_q_expression_answers_final_decision.py tests/test_round_s_observation_safety.py tests/test_case_isolation.py tests/test_medication_risk_context.py tests/test_no_evaluation_time_learning.py tests/test_no_answer_leakage_in_retrieval_eval.py tests/test_adaptive_encounter.py --tb=short",
+    "final_controller_and_package_review": "36 passed in 13.41s",
+    "final_command": "python -m pytest -q tests/test_adaptive_encounter.py tests/test_submission_zip_clean_room.py --tb=short",
+    "unique_retained_regressions": 1077,
+    "final_controller_tests": 33,
+    "package_tests": 3,
+    "note": "The final controller review was rerun after the last bounded format-repair and gathering-cap changes. Functional verification is not a clinical score."
+  },
+  "cleanroom_pass": true,
+  "synthetic_http_pass": true,
+  "isolated_dependency_versions": {
+    "pydantic": "2.14.0",
+    "pydantic_core": "2.50.0",
+    "annotated-types": "0.8.0",
+    "typing-inspection": "0.4.4",
+    "typing_extensions": "4.16.0"
+  },
+  "synthetic_http": {
+    "exit_code": 0,
+    "ready_before_case_access": true,
+    "doctor_calls": 3,
+    "turns": 17,
+    "test_actions": 0,
+    "max_action_chars": 23,
+    "record_fields_ok": true,
+    "diagnosis": "지역사회획득 폐렴",
+    "errors": [],
+    "pass": true
+  },
+  "scripted_comparison": [
+    {
+      "controller": "OfficialEncounter",
+      "turns": 34,
+      "scripted_doctor_requests": 3,
+      "submitted_primary": "방광염 (Uncomplicated Cystitis (Lower UTI))",
+      "exam_count": 5,
+      "supplied_followup_retained": false,
+      "supplied_followup_spoken": false,
+      "action_length_violations": 0,
+      "diagnostic_accuracy": "NOT MEASURED"
+    },
+    {
+      "controller": "AdaptiveEncounter",
+      "turns": 18,
+      "scripted_doctor_requests": 3,
+      "submitted_primary": "급성 방광염",
+      "exam_count": 1,
+      "supplied_followup_retained": true,
+      "supplied_followup_spoken": true,
+      "action_length_violations": 0,
+      "diagnostic_accuracy": "NOT MEASURED"
+    }
+  ],
+  "owner_reported_latest_scores": {
+    "information": 9.46,
+    "reasoning": 7.08,
+    "tests_followup": 3.79,
+    "safety": 9.75,
+    "communication": 4.45,
+    "efficiency": 14.44,
+    "total": 48.97
+  },
+  "official_score_improvement_proven": false,
+  "real_model_executed": false,
+  "official_submission_performed": false,
+  "blind_v18_rerun": false,
+  "limitations": "Aggregate scores do not establish per-case causes. Observation IDs establish provenance, not clinical accuracy. Scripted request counts and turns are not real model cost or leaderboard estimates."
+}

@@ -194,7 +194,8 @@ def prepare() -> dict:
 # ---------------------------------------------------------------------------------------------------------------
 
 def consult(client, state: Optional[dict] = None):
-    return OfficialEncounter(client, state or {}).run()
+    from competition.adaptive_encounter import AdaptiveEncounter
+    return AdaptiveEncounter(client, state or {}).run()
 
 
 class OfficialEncounter:
@@ -404,7 +405,9 @@ class OfficialEncounter:
 
     @staticmethod
     def _diagnostic_response(parsed):
-        return bool(diagnosis_text(parsed.get('primary_diagnosis')) or
+        return bool(any(isinstance(a, dict) and a.get('kind') in ('SAY', 'EXAM') and fits(a.get('text', ''))
+                        for a in _list(parsed.get('actions'))) or
+                    diagnosis_text(parsed.get('primary_diagnosis')) or
                     any(isinstance(q, str) and fits(q) or isinstance(q, dict) and isinstance(q.get('text'), str) and fits(q['text'])
                         for q in _list(parsed.get('questions'))) or
                     any(isinstance(e, str) and _single_maneuver(e) for e in _list(parsed.get('exams'))) or
@@ -510,27 +513,7 @@ class OfficialEncounter:
         pstate.deadline_unix = self.deadline
         self.pstate, self.engine, self.opening, self.vitals = pstate, engine, opening, vitals
 
-        try:
-            with proxy_scope(pstate.proxy_relation):
-                self._opening_concern()
-                self._engine_phase(wire, case_id)
-                self._foundation_phase()
-            with proxy_scope(pstate.proxy_relation):
-                for round_index in range(MAX_FOLLOWUP_ROUNDS):
-                    before = len(self.turns)
-                    self._followup_phase()
-                    observed = any(t.ok and t.reply for t in self.turns[before:])
-                    # New negative answers can eliminate an alternative too.
-                    # Reassess unresolved coverage even if the optional model
-                    # flag is absent; empty/unchanged plans still stop the loop.
-                    if not observed or not self._needs_more_information():
-                        break
-                    self._observe('interview_reassessment', round=round_index + 1,
-                                  reason='new_observations_with_unresolved_differential')
-                self._foundation_phase(reserve_followup=False)
-                self._clarify_history_phase()
-        except EncounterOver as exc:
-            self.log(f"[encounter] server ended gathering: {exc}")
+        self._gather_encounter(wire, case_id)
         with proxy_scope(pstate.proxy_relation):
             differential, final = self._engine_final()
             self._final_consult(differential, final)
@@ -556,6 +539,31 @@ class OfficialEncounter:
                                               "exam_rejections": self.exam_rejections, **self.stats.as_dict()},
                                              ensure_ascii=False))
         return self._call(self.client.diagnose, note=note, diagnosis=diagnosis)
+
+    def _gather_encounter(self, wire, case_id):
+        from nova_agent.evidence_scope import proxy_scope
+        pstate=self.pstate
+        try:
+            with proxy_scope(pstate.proxy_relation):
+                self._opening_concern()
+                self._engine_phase(wire, case_id)
+                self._foundation_phase()
+            with proxy_scope(pstate.proxy_relation):
+                for round_index in range(MAX_FOLLOWUP_ROUNDS):
+                    before = len(self.turns)
+                    self._followup_phase()
+                    observed = any(t.ok and t.reply for t in self.turns[before:])
+                    # New negative answers can eliminate an alternative too.
+                    # Reassess unresolved coverage even if the optional model
+                    # flag is absent; empty/unchanged plans still stop the loop.
+                    if not observed or not self._needs_more_information():
+                        break
+                    self._observe('interview_reassessment', round=round_index + 1,
+                                  reason='new_observations_with_unresolved_differential')
+                self._foundation_phase(reserve_followup=False)
+                self._clarify_history_phase()
+        except EncounterOver as exc:
+            self.log(f"[encounter] server ended gathering: {exc}")
 
     def _opening_concern(self):
         """Invite the patient's agenda before gathering, without delaying urgent care."""
