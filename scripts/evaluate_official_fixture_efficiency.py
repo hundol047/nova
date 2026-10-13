@@ -15,9 +15,11 @@ sys.path.insert(0,str(ROOT));sys.path.append(str(ROOT/'tests'))
 from test_official_sdk_adapter import FakeServer,FakeClient,nova_sdk
 from competition.nova_sdk_adapter import OfficialEncounter
 
+COMMUNICATION = {'explanation','plan_explanation','understanding_check','patient_questions'}
+
 
 def fixtures():
-    return [
+    cases = [
         {'id':'thyroid_midlife','opening':'44세 여자입니다. 식사량은 늘었는데 살이 빠져요.',
          'primary':'Graves disease','answers':{
           'appetite':'식욕이 늘었어요','heat':'더위를 못 견뎌요','sweat':'땀이 많아요','tremor':'손이 떨려요',
@@ -42,10 +44,33 @@ def fixtures():
          'questions':['부모님도 사춘기가 늦었나요?','설사가 오래 지속되나요?'],'requested_exams':[],
          'required':['parent_height','parent_puberty','nutrition','birth','height'],'urgent':False,'fail_final':True},
     ]
+    # Same synthetic patients, newly explicit general-history response channels.
+    # These are development fixtures, not independent or official case traces.
+    for c in cases:
+        c['answers'].update({'course':'증상은 비슷하게 지속돼요','medical_history':'기저질환 없어요',
+            'family_illness':'관련 가족력 없어요','function':'일상생활이 조금 불편해요',
+            'prior_care':'이 증상으로 진료받은 적 없어요','symptom_onset':'8개월 전부터요',
+            'allergy':'약물 알레르기 없어요'})
+        c['required'] += ['medical_history','family_illness','allergy','symptom_onset','course','function','prior_care']
+    cases[0]['answers'].update({'weight_change':'7kg 줄었어요','menstrual':'생리 주기 변화 없어요'})
+    cases[0]['required'] += ['weight_change','bowel','sweat','tremor','menstrual']
+    cases[1]['answers'].update({'sleep_pattern':'자주 잠에서 깨요','sleep_hours':'4시간 자요',
+                              'snoring':'코골이 없어요','caffeine':'커피는 하루 두 잔 마셔요'})
+    cases[1]['required'] += ['sleep_pattern','sleep_hours','snoring','caffeine']
+    cases[2]['answers']['med_name']='복용 약 없어요'
+    return cases
 
 
 def topic(text):
     for name,pattern in (
+        ('birth',r'태어|출생'),('bowel',r'배변|bowel'),
+        ('symptom_onset',r'언제부터|when.*start'),('course',r'점점.*심|경과|worsen'),
+        ('medical_history',r'진단받.*병|과거.*병|병력|기저질환'),
+        ('family_illness',r'가족.*(?:질환|병)|가족력'),
+        ('function',r'일상.*지장'),('prior_care',r'이 증상.*진료'),
+        ('sleep_pattern',r'잠들기|잠 유지'),('sleep_hours',r'몇 시간.*주무'),
+        ('snoring',r'코골'),('caffeine',r'카페인|커피'),
+        ('weight_change',r'체중.*(?:몇|얼마)'),('menstrual',r'생리|월경'),
         ('dose',r'몇\s*mg|용량|dose'),('frequency',r'몇\s*번|횟수|frequency'),
         ('duration',r'얼마나.*(?:드|복용)|복용.*기간'),('tolerance',r'같은 효과|내성|tolerance'),
         ('withdrawal',r'줄이면|끊으면|금단|withdraw'),('combined',r'다른.*진정제|병용'),
@@ -110,14 +135,18 @@ def run():
         # Explicit opening appetite is already an observation, not a question.
         if '식사량은 늘' in case['opening']:gathered.add('appetite')
         required=set(case['required'])
-        communication=[t.text for t in e.turns if t.category in ('explanation','plan_explanation')]
+        communication=[t.text for t in e.turns if t.category in COMMUNICATION]
+        questions=[t.text for t in e.turns if t.kind=='SAY' and t.category not in COMMUNICATION]
         rows.append({'id':case['id'],'status':result['status'],'primary':server.diagnosis,'expected':case['primary'],
             'turns':server.turns,'exam_count':sum(t.kind=='EXAM' for t in e.turns),'say_count':sum(t.kind=='SAY' for t in e.turns),'fixture_wall_seconds':time.monotonic()-started,'doctor_physical_requests':e.stats.calls,'fixture_reported_prompt_tokens':e.stats.prompt_tokens,
             'fixture_reported_completion_tokens':e.stats.completion_tokens,'unique_required_topics':len(required&gathered),
             'required_topics':len(required),'topic_coverage':len(required&gathered)/len(required),
-            'duplicate_questions_exact':len([t.text for t in e.turns if t.kind=='SAY'])-len(set(t.text for t in e.turns if t.kind=='SAY')),
+            'duplicate_questions_exact':len(questions)-len(set(questions)),
             'age_inappropriate_social_questions':sum('흡연' in t.text or '음주' in t.text for t in e.turns) if '9세' in case['opening'] else 0,
             'communication':communication,'unsafe_emergency_disposition':not case['urgent'] and '응급실' in server.record['P']['disposition'],
+            'understanding_check':any(t.category=='understanding_check' for t in e.turns),
+            'question_opportunity':any(t.category=='patient_questions' for t in e.turns),
+            'observed_required_topics':sorted(required&gathered),'missing_required_topics':sorted(required-gathered),
             'nfc_or_test_violations':sum(len(t.text)>30 or t.kind=='TEST' for t in e.turns),
             'clinical_plan':server.record['P'],'diagnostic_successes_fixture':e.stats.diagnostic_reasoning_successful})
     n=len(rows)

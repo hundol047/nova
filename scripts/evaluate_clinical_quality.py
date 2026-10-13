@@ -28,6 +28,10 @@ os.environ['NOVA_LLM_PROVIDER'] = 'mock'
 os.environ['NOVA_COMPETITION_RETRIEVAL'] = '1'
 os.environ['NOVA_PRELIMINARY_RULES'] = '1'
 MODES = ('complete', 'unscripted_unknown', 'exam_unavailable', 'history_unavailable', 'opening_disclosure')
+COMMUNICATION = {'explanation','plan_explanation','understanding_check','patient_questions'}
+FOUNDATION_KEYS = {'onset:symptom_onset':'onset','course:course':'course',
+    'past_medical_history:medical_history':'past_medical_history','medication:medication_name':'medication',
+    'allergy:allergy':'allergy','family_history:family_illness':'family_history'}
 
 
 def digest(value):
@@ -79,10 +83,12 @@ class ScriptedClient:
     def say(self, text, request_id):
         if request_id in self.store: return self.store[request_id]
         default = '잘 모르겠어요.' if self.mode in {'unscripted_unknown','history_unavailable'} else self.case.default_answer
-        value = self.case.answers.get(self.key, default)
+        key = FOUNDATION_KEYS.get(self.key,self.key)
+        value = self.case.answers.get(key, default)
         if self.mode == 'history_unavailable' and self.key.partition(':')[0] in {'associated_symptoms','past_medical_history'}:
             value = '잘 모르겠어요.'
-        if self.key in {'explanation','plan_explanation'}: value = '알겠습니다.'
+        if self.key in COMMUNICATION: value = '알겠습니다.'
+        if self.key=='patient_concern':value='원인이 궁금해요.'
         self.turns += 1
         self.events.append(('SAY', self.key, text, value))
         row = {'content': value, 'turn': self.turns, 'turns_remaining': 50-self.turns}
@@ -140,14 +146,15 @@ def worker(row):
     ddx = list(e.pstate.current_differential)
     correct = same_diagnosis(client.diagnosis, case.ground_truth_diagnosis)
     scored = case.scoring_expected and row['mode'] not in {'exam_unavailable','history_unavailable'}
-    history = [x for x in client.events if x[0]=='SAY' and x[1] not in {'explanation','plan_explanation'}]
+    history = [(x[0],FOUNDATION_KEYS.get(x[1],x[1]),x[2],x[3]) for x in client.events
+               if x[0]=='SAY' and x[1] not in COMMUNICATION|{'patient_concern'}]
     actions = [(x[0], x[1]) for x in client.events]
     known_reask = sum(x[1] in client.disclosed for x in history)
     successful = sum(answer_kind(x[3]) != 'unknown' for x in history)
     required = set(case.answers)
     elicited = {x[1] for x in history if answer_kind(x[3]) != 'unknown'} | client.disclosed
     coverage = len(required & elicited)/len(required) if required else 1.0
-    said = [t.text for t in e.turns if t.category in {'explanation','plan_explanation'} and t.ok]
+    said = [t.text for t in e.turns if t.category in COMMUNICATION and t.ok]
     urgency = '응급' in client.record['P']['disposition']
     critical = case.critical
     rule_errors = sum(len(x[2])>30 for x in client.events) + int(client.turns>50) + bool(client.record['O']['tests'])
@@ -169,6 +176,8 @@ def worker(row):
             'disclosed_facts':len(client.disclosed),'urgent':urgency,'rule_errors':int(rule_errors),
             'plan_has_test':next_step,'plan_has_interval':interval,'spoken_has_interval':spoken_interval,
             'closing_turns':len(said),'education_records_actual_say':all(s in client.record['P']['education'] for s in said),
+            'understanding_check':any(t.ok and t.category=='understanding_check' for t in e.turns),
+            'question_opportunity':any(t.ok and t.category=='patient_questions' for t in e.turns),
             'fixture_wall_seconds':time.monotonic()-started}
 
 
@@ -226,6 +235,7 @@ def main():
     p.add_argument('--rescore',help='Recompute only label normalization and summary from captured output')
     p.add_argument('--split',choices=['dev','validation','holdout','all'],default='dev')
     p.add_argument('--workers',type=int,default=2);p.add_argument('--limit',type=int)
+    p.add_argument('--mode',choices=['all',*MODES],default='all')
     a=p.parse_args()
     if a.freeze:
         path=Path(a.freeze)
@@ -239,7 +249,8 @@ def main():
         return
     from scripts.runtime_identity import tracked_runtime_hashes
     runtime = tracked_runtime_hashes(ROOT)
-    rows=[r for r in data['cases'] if a.split=='all' or r['split']==a.split]
+    rows=[r for r in data['cases'] if (a.split=='all' or r['split']==a.split)
+          and (a.mode=='all' or r['mode']==a.mode)]
     if a.limit: rows=rows[:a.limit]
     output=[];started=time.monotonic()
     with ProcessPoolExecutor(max_workers=a.workers) as pool:

@@ -98,8 +98,10 @@ def test_supported_correction_owns_record_communication_and_safety():
     assert diagnosis in note['A']['evidence'] and 'TSH' in note['P']['tests']
     assert '400mg' not in json.dumps(note) and '응급실' not in note['P']['disposition']
     assert not e._urgent(d,f) and note['O']['tests']==''
-    assert all(len(s)<=30 for s in spoken) and len(spoken)==3
+    assert all(len(s)<=30 for s in spoken) and 6<=len(spoken)<=8
     assert '1~2주' in spoken[1] and '고열' in spoken[2]
+    assert any('호르몬' in s for s in spoken) and any('판단이 바뀔' in s for s in spoken)
+    assert {'understanding_check','patient_questions'} <= {t.category for t in e.turns}
 
 
 @pytest.mark.parametrize('history,exam',[
@@ -213,14 +215,14 @@ def test_all_three_complete_sdk_fixtures_preserve_calls_and_closing_consistency(
     from scripts.evaluate_official_fixture_efficiency import run
     r=run()
     assert r['mean_topic_coverage']==1
-    assert r['mean_turns']<15 and r['mean_doctor_physical_requests']<=3
+    assert r['mean_turns']<=40 and r['mean_doctor_physical_requests']<=4
     for case in r['cases']:
         assert case['primary']==case['expected']
         assert not case['unsafe_emergency_disposition']
         assert case['duplicate_questions_exact']==case['age_inappropriate_social_questions']==case['nfc_or_test_violations']==0
-        # v36 uses a third, policy-owned SAY to actually deliver timed follow-up
-        # and specific precautions; urgent cases still close in two turns.
-        assert len(case['communication']) == 3
+        assert 8<=len(case['communication'])<=10
+        assert case['understanding_check'] and case['question_opportunity']
+        assert not case['missing_required_topics']
         assert any('주' in s or '개월' in s for s in case['communication'])
         assert any('즉시' in s or '조기' in s for s in case['communication'])
 
@@ -260,5 +262,5 @@ def test_frozen_32_case_pipeline_proxy_and_no_fake_lab_results():
     assert r['metrics']['reference_compatible']==32
     assert r['metrics']['urgency_matches']==32
     assert r['metrics']['unperformed_test_results']==0
-    assert 2 <= r['metrics']['mean_closing_turns'] <= 3
+    assert 7 <= r['metrics']['mean_closing_turns'] <= 10
     assert r['metrics']['precautions_present'] == r['metrics']['cases']

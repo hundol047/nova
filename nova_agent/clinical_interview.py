@@ -1,6 +1,6 @@
 """General concise question selection for chronic presentations, not case lookup.
 
-Replaces low-value turns within the existing budget. Templates ask one thing and
+Uses the available interview budget. Templates ask one thing and
 require explicit answered content before skipping a topic. No diagnosis is chosen.
 """
 import re
@@ -28,6 +28,15 @@ def interview_family(state):
 
 
 TOPICS = {
+ 'course':('course','증상이 점점 심해지고 있나요?',r'worsen|progress|심해|악화|호전|나아'),
+ 'function':('associated_symptoms','일상생활에 어떤 지장이 있나요?',r'일상.*지장|활동.*제한|daily.*(?:life|activit)'),
+ 'prior_care':('past_medical_history','이 증상으로 진료받은 적이 있나요?',r'이 증상.*진료|previous.*(?:evaluat|consult)'),
+ 'medical_history':('past_medical_history','진단받거나 치료 중인 병이 있나요?',r'(?:과거력|기저질환|chronic disease|medical history).*(?:없|없음|none|no)|진단받.*병'),
+ 'family_illness':('family_history','가족 중 비슷한 질환이 있나요?',r'가족력.*(?:없|없음)|family history.*(?:none|negative)'),
+ 'sleep_pattern':('associated_symptoms','잠들기와 잠 유지 중 무엇이 어렵나요?',r'잠들기.*어렵|자주.*깨|sleep (?:onset|maintenance)'),
+ 'sleep_hours':('associated_symptoms','하루에 실제로 몇 시간 주무시나요?',r'(?:\d+|한|두|세|네|다섯|여섯)\s*시간.*(?:자|잠|수면)|sleep.*\d+.*hours?'),
+ 'snoring':('associated_symptoms','잘 때 코골이가 있나요?',r'snor|코골'),
+ 'caffeine':('social_history','커피나 카페인은 얼마나 드시나요?',r'caffeine|카페인|커피'),
  'symptom_onset':('onset','언제부터 이런 증상이 있었나요?',r'(?:\d+|한|두|세|석|몇)\s*(?:개월|달|주|일|시간)\s*(?:간|전부터|동안|째)|어제부터|오늘.*시작|since (?:yesterday|last|this)|(?:for|over) (?:the )?(?:past )?\d+\s*(?:day|week|month|year)'),
  'weight_change':('associated_symptoms','체중이 몇 kg 줄었나요?',r'\d+(?:\.\d+)?\s*(?:kg|킬로)[^;\n]{0,12}(?:감소|빠|줄)|(?:lost|loss of)\s*\d+(?:\.\d+)?\s*kg'),
  'medication_name':('medication','복용 중인 약 이름이 뭔가요?',r'zolpidem|benzodiazep|diazepam|lorazepam|졸피뎀|수면제|아무.*약.*없|약.*안.*먹'),
@@ -60,6 +69,15 @@ TOPICS = {
 def topic_for_question(text):
     # Question-language match is intentionally separate from answer evidence.
     for topic,pattern in (
+        ('birth',r'태어|출생'),
+        ('course',r'점점.*심|경과|worsen|progress'),
+        ('function',r'일상.*지장|daily.*activit'),
+        ('prior_care',r'이 증상.*진료|previous.*evaluat'),
+        ('medical_history',r'진단받.*병|치료 중인 병|기저.*질환|과거.*병|과거력|병력|앓.*병|medical history|chronic disease'),
+        ('family_illness',r'가족.*(?:질환|병)|family.*(?:history|illness)'),
+        ('sleep_pattern',r'잠들기|잠 유지|sleep.*pattern'),
+        ('sleep_hours',r'몇 시간.*(?:주무|자|수면)|hours.*sleep'),
+        ('snoring',r'코골|snor'),('caffeine',r'커피|카페인|caffeine'),
         ('symptom_onset',r'언제부터|when.*start'),('weight_change',r'체중.*(?:몇|얼마)|몇\s*kg.*(?:빠|줄)|weight.*(?:lost|loss)'),
         ('medication_dose',r'몇\s*mg|용량|몇\s*알|dose'),('medication_frequency',r'(?:약|수면제|복용|드시|먹|medicin|take).*(?:몇\s*번|몇\s*회|frequency)|(?:몇\s*번|몇\s*회).*(?:복용|드시|먹|take)'),
         ('medication_duration',r'얼마나.*(?:드|복용)|복용.*기간|how long.*tak'),
@@ -98,6 +116,7 @@ def next_clinical_action(state):
         from nova_agent.matching import feature_present_with_aliases
         exposure=feature_present_with_aliases('sedative use',state.all_findings_text(include_context=True,include_family=False),scrub_negated_spans=True)
         if not exposure:order=['medication_name','daytime_impairment','allergy']
+        order += ['symptom_onset','sleep_pattern','sleep_hours','snoring','caffeine']
     elif family=='growth':
         order=['growth_records','growth_velocity','parent_height','parent_puberty','birth','nutrition','chronic_gi']
         if state.demographics.age is not None and state.demographics.age>=8:order.append('puberty')
@@ -116,7 +135,7 @@ def next_clinical_action(state):
                 if not state.exam_done('thyroid_eye'):return ('EXAM','thyroid_eye','안구 돌출을 살펴보겠습니다','thyroid_eye')
                 # A characteristic exam does not answer the time course,
                 # quantitative change or medication/allergy safety history.
-                order=['symptom_onset','weight_change','medication_name','allergy']
+                if 'medication_name' not in order:order.append('medication_name')
     # Fewer, higher-value turns, then only relevant physical maneuvers.
     for topic in order:
         if not topic_known(state,topic) and not topic_attempted(state,topic):
@@ -131,3 +150,30 @@ def next_clinical_action(state):
     for key,text in exams:
         if not state.exam_done(key):return ('EXAM',key,text,key)
     return None
+
+
+def missing_foundation_topics(state):
+    """Unattempted essentials, not a minimum turn quota or a diagnosis gate.
+
+    A birth-weight question does not replace medical history; parental heights
+    do not replace family illness. Unknown replies remain unknown but are not
+    repeatedly requested. Already observed facts need no extra question.
+    """
+    from nova_agent.interview_evidence import topic_attempted
+    order = ['symptom_onset','course','medical_history','medication_name',
+             'allergy','family_illness','function','prior_care']
+    standard_keys={'symptom_onset':'onset','course':'course','medical_history':'past_medical_history',
+                   'medication_name':'medication','allergy':'allergy','family_illness':'family_history'}
+    def attempted(topic):
+        if topic_attempted(state,topic):return True
+        return any(a.action_type=='ASK' and a.key==standard_keys.get(topic)
+                   and topic_for_question(a.content) in (None,topic) for a in state.performed_actions)
+    return [t for t in order if not topic_known(state,t) and not attempted(t)]
+
+
+def next_foundation_action(state):
+    missing = missing_foundation_topics(state)
+    if not missing:return None
+    topic = missing[0]
+    category,text,_ = TOPICS[topic]
+    return ('SAY', category+':'+topic, text, category)

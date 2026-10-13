@@ -76,7 +76,7 @@ def topic_answered(state, topic, pattern):
         sleep_context = bool(re.search(r'불면|수면|sleep|insomnia', state.chief_complaint, re.I))
         if topic == 'medication_name':
             named = any(_SEDATIVE_NAME.search(p) for p in pieces)
-            denial = any(re.search(r'(?:no|not taking)\s+(?:any\s+)?(?:medic|drugs|sleeping pills)|약.*(?:없|안.*먹)|수면제.*(?:안.*먹|복용하지 않)', p, re.I) for p in pieces)
+            denial = any(re.search(r'(?:no|not taking)\s+(?:any\s+)?(?:medic(?:ation|ine)s?\b|drugs|sleeping pills)|(?:먹는|복용(?:하는|중인)?)\s*약.*없|(?:약은|약을|수면제).*(?:안.*먹|복용하지 않)', p, re.I) for p in pieces)
             if named or denial:
                 return True
             if sleep_context:

@@ -66,11 +66,13 @@ REASONING_EFFORT = os.environ.get("NOVA_REASONING_EFFORT", "medium") or "medium"
 GATHER_MARGIN = 240.0
 FINAL_CONSULT_MARGIN = 75.0
 SUBMIT_MARGIN = 15.0
-MAX_FOLLOWUP_QUESTIONS = 6
+MAX_FOLLOWUP_QUESTIONS = 8
 MAX_FOLLOWUP_EXAMS = 3
-TOTAL_TURN_TARGET = 40
-ENGINE_TURN_TARGET = 26
-MAX_FOLLOWUP_ROUNDS = 2
+TOTAL_TURN_TARGET = 48
+ENGINE_TURN_TARGET = 30
+MAX_FOLLOWUP_ROUNDS = 3
+CLOSING_TURN_RESERVE = 10
+COMMUNICATION_CATEGORIES = ('explanation', 'plan_explanation', 'understanding_check', 'patient_questions')
 RETRY_WAITS = (2.0, 5.0, 10.0)
 
 
@@ -233,7 +235,10 @@ class OfficialEncounter:
         return float("inf") if self.deadline is None else self.deadline - self.clock()
 
     def can_gather(self) -> bool:
-        return not self.over and self.turns_left > 0 and self.seconds_left() > GATHER_MARGIN
+        return not self.over and self.gathering_budget() > 0 and self.seconds_left() > GATHER_MARGIN
+
+    def gathering_budget(self) -> int:
+        return max(0, min(self.turns_left, TOTAL_TURN_TARGET-len(self.turns))-CLOSING_TURN_RESERVE)
 
     def _doctor_allowed(self, required: bool) -> bool:
         s = self.stats
@@ -503,6 +508,7 @@ class OfficialEncounter:
         try:
             with proxy_scope(pstate.proxy_relation):
                 self._engine_phase(wire, case_id)
+                self._foundation_phase()
             with proxy_scope(pstate.proxy_relation):
                 for round_index in range(MAX_FOLLOWUP_ROUNDS):
                     before = len(self.turns)
@@ -552,8 +558,9 @@ class OfficialEncounter:
                 {'>=':lambda a,b:a>=b,'>':lambda a,b:a>b,'<=':lambda a,b:a<=b,'<':lambda a,b:a<b}[r['op']](getattr(vitals,r['field']),r['value']))
                 for r in red_flag_rules_for_age(self.pstate.demographics.age)))
             if not unstable:
-                for _ in range(12):
+                for _ in range(24):
                     if not self.can_gather():break
+                    if self._urgent(self.pstate.current_differential, None):break
                     action=next_clinical_action(self.pstate)
                     if action is None:break
                     kind,key,text,category=action
@@ -609,6 +616,23 @@ class OfficialEncounter:
                               rank_changed=before_rank!=after_rank, before=before_rank, after=after_rank,
                               interpretation='Observed pre/post decision ordering; not clinical causal adjudication')
 
+    def _foundation_phase(self) -> None:
+        """An early engine stop cannot silently omit essential history."""
+        from nova_agent.clinical_interview import next_foundation_action
+        from nova_agent.matching import evaluation_scope
+        while self.can_gather():
+            with evaluation_scope():
+                differential = self.engine.agent.differential_engine.update(self.pstate)
+            if self._urgent(differential, None):return
+            action = next_foundation_action(self.pstate)
+            if action is None:break
+            _, key, text, _ = action
+            turn = self.say(text, category=key)
+            if turn.ok:self._absorb('ASK', key, text, turn.reply)
+            else:break
+        if self.can_gather() and not self._urgent(self.pstate.current_differential, None):
+            self.say('많이 불편하셨죠. 가장 걱정되는 점은요?', category='patient_concern')
+
     _PAIN_KEYS = ("location", "character", "severity")
     _PAIN_WORDS = re.compile(r"아프|아파|아픈|통증|쑤시|저리|따갑|따끔|쓰리|결리|pain|ache|hurt|sore", re.I)
 
@@ -654,8 +678,7 @@ class OfficialEncounter:
         merely because one static Doctor question list has been exhausted.
         Time-critical disposition bypasses extra routine interview rounds.
         """
-        if (not self.can_gather() or self.turns_left <= 4
-                or len(self.turns) >= TOTAL_TURN_TARGET - 4):
+        if not self.can_gather():
             return False
         from nova_agent.final_decision import decide_final
         from nova_agent.matching import evaluation_scope
@@ -664,7 +687,9 @@ class OfficialEncounter:
         final = decide_final(self.pstate, differential, 'supported')
         if self._urgent(differential, final):
             return False
-        return final.certainty != 'LEADING' or self.followup_plan.get('needs_reassessment') is True
+        from nova_agent.clinical_interview import missing_foundation_topics
+        return (bool(missing_foundation_topics(self.pstate)) or final.certainty != 'LEADING'
+                or self.followup_plan.get('needs_reassessment') is True)
 
     def transcript_text(self, include_rejected: bool = False) -> str:
         lines = [f"첫 진술: {self.opening}", f"활력징후: {self.vitals or '(없음)'}"]
@@ -686,19 +711,21 @@ class OfficialEncounter:
 
     def _followup_phase(self) -> None:
         from nova_agent.interview_evidence import topic_attempted, exam_attempted, exam_topic
-        if not self.can_gather():
+        if not self.can_gather() or self._urgent(self.pstate.current_differential, None):
             return
+        from nova_agent.clinical_interview import missing_foundation_topics
         reply = self.chat([
             {"role": "system", "content": _FOLLOWUP_SYSTEM},
             {"role": "user", "content": f"{self.transcript_text(include_rejected=True)}\n\n규칙 기반 엔진의 감별 후보:\n"
-                                        f"{self._engine_candidates_text()}\n\n남은 턴: {self.turns_left}"}],
+                                        f"{self._engine_candidates_text()}\n\n추가 문진 가능 턴: {self.gathering_budget()}"
+                                        f"\n미확인 기본 문진: {missing_foundation_topics(self.pstate)}"}],
             max_tokens=CONSULT_MAX_TOKENS, effort=REASONING_EFFORT, required=True, case_relevant=True, purpose="followup")
         plan = first_json(reply or "") or {}
         plan_call, start_actions = self._last_chat_number, len(self.turns)
         self.followup_plan = plan
         self.remember_advisory(plan, 'followup')
         asked = {_norm(t.text) for t in self.turns}
-        budget = max(0, min(self.turns_left - 4, TOTAL_TURN_TARGET - len(self.turns) - 3))
+        budget = self.gathering_budget()
         questions = []
         for q in _list(plan.get("questions")):
             text = nfc(q.get("text", "")) if isinstance(q, dict) and isinstance(q.get('text'), str) else nfc(q) if isinstance(q, str) else ""
@@ -722,8 +749,12 @@ class OfficialEncounter:
             budget -= 1
             if turn.ok:
                 self._absorb("ASK", category, q, turn.reply)
+                from nova_agent.matching import evaluation_scope
+                with evaluation_scope():
+                    d = self.engine.agent.differential_engine.update(self.pstate)
+                if self._urgent(d, None):break
         for e in [e for e in exams if _single_maneuver(e) and _norm(e) not in asked][:MAX_FOLLOWUP_EXAMS]:
-            if budget <= 0 or not self.can_gather():
+            if budget <= 0 or not self.can_gather() or self._urgent(self.pstate.current_differential, None):
                 break
             if _norm(e) in asked or exam_attempted(self.pstate, e):
                 continue
@@ -889,7 +920,7 @@ class OfficialEncounter:
     def _observed_corpus(self) -> str:
         lines = [self.opening, self.vitals]
         for t in self.turns:
-            if t.ok and t.category not in ("explanation", "plan_explanation"):
+            if t.ok and t.category not in (*COMMUNICATION_CATEGORIES, 'patient_concern'):
                 lines.append(f"{t.text} → {t.reply}" if t.kind == "SAY" else t.reply)
         return "\n".join(lines)
 
@@ -908,7 +939,7 @@ class OfficialEncounter:
     def _explain(self, differential, final) -> None:
         """Tell the patient the working diagnosis and the next step (communication only counts when said)."""
         from nova_agent.preliminary import explanation_text, plan_say_text, uncertain_explanation_text
-        if self.turns_left <= 0 or self.seconds_left() < SUBMIT_MARGIN + 10:
+        if not self._can_explain() or self.seconds_left() < SUBMIT_MARGIN + 10:
             return
         label = self._diagnosis_label(final)
         short = ''
@@ -940,13 +971,42 @@ class OfficialEncounter:
                 text=acknowledged if fits(acknowledged) and not self._urgent(differential,final) else factual
         if fits(text):
             self.say(text, category="explanation")
-        if self.turns_left > 0 and self.seconds_left() > SUBMIT_MARGIN + 5:
-            plan=self._engine_plan(differential,final)
-            closing=plan.get('spoken_next_step') or plan_say_text(self._urgent(differential,final),'ko')
-            self.say(closing if fits(closing) else plan_say_text(self._urgent(differential,final),'ko'),category='plan_explanation')
-            warning=plan.get('spoken_precautions','')
-            if fits(warning) and self.turns_left > 0 and self.seconds_left() > SUBMIT_MARGIN + 5:
-                self.say(warning,category='plan_explanation')
+        plan=self._engine_plan(differential,final)
+        urgent=self._urgent(differential,final)
+        closing=plan.get('spoken_next_step') or plan_say_text(urgent,'ko')
+        messages=[(closing if fits(closing) else plan_say_text(urgent,'ko'),'plan_explanation')]
+        if not urgent:
+            # Safety and timed next step precede optional elaboration if time is short.
+            messages += [(plan.get('spoken_precautions',''),'plan_explanation')]
+        if not urgent and self.seconds_left() > GATHER_MARGIN:
+            messages += [(plan.get('spoken_test_purpose',''),'plan_explanation'),
+                         (plan.get('spoken_treatment',''),'plan_explanation'),
+                         ('새 결과에 따라 판단이 바뀔 수 있어요','plan_explanation'),
+                         ('다음 진료 시점을 말씀해 주시겠어요?','understanding_check'),
+                         ('추가 설명이 필요한 부분이 있나요?','patient_questions')]
+        for message,category in messages:
+            if not self._can_explain():break
+            if not fits(message):continue
+            turn=self.say(message,category=category)
+            if turn.ok and category=='understanding_check':
+                # Record the actual answer; never claim comprehension from an
+                # acknowledgement or an unknown reply. Re-state the timed plan.
+                interval=plan.get('spoken_follow_up',closing)
+                expected=re.search(r'\d+(?:~\d+)?\s*(?:주|개월)',interval)
+                understood=bool(expected and expected[0].replace(' ','') in turn.reply.replace(' ',''))
+                if not understood and self._can_explain() and fits(interval):
+                    self.say(interval,category='plan_explanation')
+            elif turn.ok and category=='patient_questions':
+                from nova_agent.state import answer_kind
+                if answer_kind(turn.reply) != 'no' and self._can_explain():
+                    clarification = (plan.get('spoken_test_purpose') if re.search(r'검사|왜',turn.reply) else
+                                     plan.get('spoken_treatment') if re.search(r'약|치료',turn.reply) else
+                                     plan.get('spoken_follow_up',closing))
+                    if fits(clarification):self.say(clarification,category='plan_explanation')
+
+    def _can_explain(self):
+        return (not self.over and self.turns_left > 0 and len(self.turns) < TOTAL_TURN_TARGET
+                and self.seconds_left() > SUBMIT_MARGIN + 5)
 
     # --- the official record ----------------------------------------------------------------------------------------
     def official_record(self, differential, final):
@@ -956,7 +1016,7 @@ class OfficialEncounter:
         diagnosis = self._diagnosis_label(final)
         by_cat: Dict[str, List[Turn]] = {}
         for t in self.turns:
-            if t.ok and t.kind == "SAY" and t.category not in ("explanation", "plan_explanation"):
+            if t.ok and t.kind == "SAY" and t.category not in COMMUNICATION_CATEGORIES:
                 bucket = _category_bucket(t.category)
                 by_cat.setdefault(bucket, []).append(t)
         qa = lambda ts: "\n".join(f"- {t.text} → {t.reply}" for t in ts)
@@ -981,7 +1041,7 @@ class OfficialEncounter:
             grounded = [self.opening] if self.opening else []
             grounded += [f"{t.text} → {t.reply}" for t in exams[-3:]]
             grounded += [f"{t.text} → {t.reply}" for t in self.turns if t.ok and t.kind == 'SAY'
-                         and t.category not in ('explanation', 'plan_explanation')][-4:]
+                         and t.category not in (*COMMUNICATION_CATEGORIES, 'patient_concern')][-4:]
         record["A"]["evidence"] = f"#1. {diagnosis}\n" + "\n".join(f"- 근거 : {e}" for e in grounded)
         ddx_lines = []
         for d in _list(proposal.get("differential")):
@@ -1020,9 +1080,12 @@ class OfficialEncounter:
             if key in ('treatment','disposition') or fallback.get('policy_owned'):
                 value=fallback.get(key,'')
             record["P"][key] = nfc(value) or fallback.get(key, "")
-        said = [t.text for t in self.turns if t.ok and t.category in ("explanation", "plan_explanation")]
+        said = [t.text for t in self.turns if t.ok and t.category in COMMUNICATION_CATEGORIES]
         if said:
             record["P"]["education"] = ("진료 중 설명함: " + " / ".join(said) + "\n" + record["P"]["education"]).strip()
+        feedback=[f'{t.text} → {t.reply}' for t in self.turns if t.ok and t.category in ('understanding_check','patient_questions')]
+        if feedback:
+            record['P']['education'] += '\n이해 확인·추가 질문에 대한 실제 응답: ' + ' / '.join(feedback)
         if self._urgent(differential, final) and "응급" not in record["P"]["disposition"]:
             record["P"]["disposition"] = ("응급 평가 필요\n" + record["P"]["disposition"]).strip()
         for section in record.values():
@@ -1049,6 +1112,17 @@ class OfficialEncounter:
                 'thyroid':'고열·의식 변화·숨참 시 즉시 진료받으세요',
                 'growth':('두통·구토·시야 변화 시 조기 진료받으세요' if '시야' in plan['education'] else '키 증가 둔화·체중 감소 시 조기 재진하세요'),
                 'sedative':'경련·혼돈·호흡저하 시 즉시 진료받으세요'}[profile['category']]
+            purpose={
+                'thyroid':'갑상샘 호르몬 이상과 원인을 확인합니다',
+                'growth':'성장 기록으로 성장 양상을 확인해요',
+                'sedative':'복용량과 기간으로 약물 영향을 확인해요'}[profile['category']]
+            plan['tests'] += '\n평가 목적: '+purpose+'; 실제 검사는 아직 시행하지 않음'
+            plan['spoken_test_purpose']=purpose
+            plan['spoken_treatment']={
+                'thyroid':'검사로 원인을 확인한 뒤 치료를 정해요',
+                'growth':'성장 기록을 가져오시면 비교하겠습니다',
+                'sedative':'약은 처방의와 상의해 서서히 조절해요'}[profile['category']]
+            plan['spoken_follow_up']=plan['spoken_next_step']
             return plan
         try:
             from nova_agent.soap import build_soap
@@ -1061,13 +1135,17 @@ class OfficialEncounter:
         planned_tests = pick('추가 검사')
         first_test = planned_tests.split(',')[0].strip()
         next_step = f'{first_test} 후 결과를 확인하겠습니다'
-        return {"tests": planned_tests, "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        purpose='현재 의심하는 원인을 확인하고 감별하기 위한 계획; 검사 결과는 미확인'
+        return {"tests": planned_tests + ('\n검사 목적: '+purpose if planned_tests and planned_tests != '없음' else ''), "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
                 "disposition": "즉시 응급실 평가 및 모니터링" if urgent else "외래 평가; 악화 시 즉시 재평가",
                 "follow_up": ('응급 평가 후 즉시 재평가' if urgent else '1~2주 내 증상과 검사 결과 재평가; 악화·지속 시 조기 진료'),
                 "education": pick("환자 교육"),
                 "spoken_next_step": ('지금 응급실에서 평가받으세요' if urgent else
                                      next_step if first_test and first_test != '없음' and fits(next_step) else '추가 평가 후 원인과 치료를 정하겠습니다'),
-                "spoken_precautions": '' if urgent else '1~2주 내 재진, 악화 시 즉시 진료받으세요'}
+                "spoken_precautions": '' if urgent else '1~2주 내 재진, 악화 시 즉시 진료받으세요',
+                "spoken_test_purpose": '검사로 의심 원인을 구분해 보겠습니다',
+                "spoken_treatment": '원인을 확인한 뒤 치료를 정하겠습니다',
+                "spoken_follow_up": '1~2주 내 증상과 결과를 다시 확인해요'}
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -1109,7 +1187,7 @@ _FOLLOWUP_SYSTEM = (
     "JSON 객체 하나만 출력하세요: {\"differential\": [{\"name\": \"한국어 진단명\", \"why\": \"짧은 이유\"}], "
     "\"questions\": [{\"text\": \"환자에게 할 질문\", \"category\": \"medication|allergy|past_medical_history|family_history|social_history|associated_symptoms\"}], \"exams\": [\"신체진찰 동작 하나\"]}.\n"
     "규칙: differential은 가능성 순 최대 5개. 질문 우선순위는 놓치면 위험한 문제, 상위 감별을 가르는 소견, 치료 결정에 필요한 정보 순입니다. "
-    "questions는 최대 6개, 각각 30자 이내의 질문 하나(한 번에 한 가지만). 이미 답이 있는 내용과 답할 수 없다고 한 질문은 반복하지 않습니다. "
+    "questions는 최대 8개, 각각 30자 이내의 질문 하나(한 번에 한 가지만). 이미 답이 있는 내용과 답할 수 없다고 한 질문은 반복하지 않습니다. "
     "추측·가족 증상·과거 소견을 현재 환자의 확인된 사실로 쓰지 않습니다. 음성 소견과 미확인 소견을 구분합니다. "
     "시작 시점과 경과, 관련 과거력·복약·알레르기가 아직 없으면 이번 판단에 필요한 항목을 확인합니다. "
     "답변이나 진찰로 감별이 바뀔 수 있어 재평가가 필요하면 needs_reassessment를 true로 표시합니다. "
