@@ -905,9 +905,19 @@ class OfficialEncounter:
         # Neither the engine nor the validator settled on a diagnosis. The official Doctor's own working diagnosis
         # (from this transcript) is still a better clinical record than none; it is never preferred over a
         # validated or engine-supported label above.
-        doctor = diagnosis_text((getattr(self, "final_consult", None) or {}).get("primary_diagnosis"))
+        consult = getattr(self, "final_consult", None) or {}
+        doctor = diagnosis_text(consult.get("primary_diagnosis"))
         if doctor and not re.search(r"미정|불명|unknown|undetermined|uncertain", doctor, re.I):
-            return doctor
+            # Only for a diagnosis outside the knowledge base (the validator could not judge it), and only with at
+            # least two cited facts actually present in this transcript. A known diagnosis the validator rejected
+            # (family history only, a negated or historical mention, a normal examination) stays undetermined.
+            from nova_agent.diagnosis_normalizer import normalize_diagnosis
+            variants = [doctor, re.sub(r"\s*\(.*?\)", "", doctor).strip(), *re.findall(r"\(([^()]*)\)", doctor)]
+            known = any(normalize_diagnosis(v).mapped for v in variants if v)
+            corpus = self._observed_corpus()
+            cited = {_norm(e) for e in _list(consult.get("evidence")) if isinstance(e, str) and grounded_in(e, corpus)}
+            if not known and len(cited) >= 2:
+                return doctor
         return "진단 미정 (추가 평가 필요)"
 
     def _validated_primary(self, differential, final) -> str:

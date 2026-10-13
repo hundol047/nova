@@ -53,7 +53,7 @@ TOPICS = {
  'sleep_hours':('associated_symptoms','하루에 실제로 몇 시간 주무시나요?',r'(?:\d+|한|두|세|네|다섯|여섯)\s*시간.*(?:자|잠|수면)|sleep.*\d+.*hours?'),
  'snoring':('associated_symptoms','잘 때 코골이가 있나요?',r'snor|코골'),
  'caffeine':('social_history','커피나 카페인은 얼마나 드시나요?',r'caffeine|카페인|커피'),
- 'symptom_onset':('onset','언제부터 이런 증상이 있었나요?',r'(?:\d+|한|두|세|석|몇)\s*(?:개월|달|주|일|시간)\s*(?:간|전부터|동안|째)|어제부터|오늘.*시작|since (?:yesterday|last|this)|(?:for|over) (?:the )?(?:past )?\d+\s*(?:day|week|month|year)'),
+ 'symptom_onset':('onset','언제부터 이런 증상이 있었나요?',r'(?:\d+|한|두|세|석|몇|일)\s*(?:개월|달|주|일|시간|년)\s*(?:간|전부터|동안|째)|어제부터|오늘.*시작|since (?:yesterday|last|this)|(?:for|over) (?:the )?(?:past )?\d+\s*(?:day|week|month|year)'),
  'weight_change':('associated_symptoms','체중이 몇 kg 줄었나요?',r'\d+(?:\.\d+)?\s*(?:kg|킬로)[^;\n]{0,12}(?:감소|빠|줄)|(?:lost|loss of)\s*\d+(?:\.\d+)?\s*kg'),
  'medication_name':('medication','복용 중인 약 이름이 뭔가요?',r'zolpidem|benzodiazep|diazepam|lorazepam|졸피뎀|수면제|아무.*약.*없|약.*안.*먹'),
  'medication_dose':('medication','수면제 한 번 용량은 몇 mg인가요?',r'\d+(?:\.\d+)?\s*(?:mg|밀리그램|알|정)'),
@@ -250,10 +250,6 @@ def missing_foundation_topics(state):
     from nova_agent.interview_evidence import topic_attempted
     order = ['symptom_onset','course','medical_history','medication_name',
              'allergy','family_illness','function','prior_care']
-    if interview_family(state)=='growth':
-        # Slow growth has no "worsening" or "daily-life limitation" in the pain/symptom sense; the opening
-        # already dates it. The growth interview covers its course with measured records instead.
-        order=[t for t in order if t not in ('course','function','symptom_onset')]
     # Broad prior-care questions do not establish surgical history. Adult
     # substance exposure affects both the differential and safe treatment.
     order.append('surgery')
