@@ -1,14 +1,14 @@
 {
   "schema": "nova-archive-rights-v1",
-  "archive_sha256": "aa8e3a6c2154bfc0aca14e69a50db62899b98bdd18b2d389175522bd4b21560c",
+  "archive_sha256": "c1662a8dbbec316a9af30ed26a708f919fab7a3133d3e8b57dd27cc054a5ffeb",
   "members": [
     {
       "member": "MANIFEST.json",
       "source": "submission/MANIFEST.json",
-      "sha256": "72a0126d994cfd5af3b9d086d8ce098836b6a1f80d1e1448f60d926f9fbc00bb",
+      "sha256": "e3df66b18d3d7db545ae39ac8dfee4cb55397fd501f0bac893fae8769b2aaa2d",
       "rights_status": "GENERATED_PACKAGE_METADATA",
       "evidence": [
-        "artifacts/verification/local-release-62a0822-v37.json",
+        "artifacts/verification/local-release-ded5b23-v38.json",
         "scripts/build_nova_submission.py"
       ]
     },
@@ -45,7 +45,7 @@
     {
       "member": "competition/nova_sdk_adapter.py",
       "source": "competition/nova_sdk_adapter.py",
-      "sha256": "2179bbf6e02443bfd90f0551cb7e5bf23d1924e46dcf3993dde9f917024e8b1a",
+      "sha256": "1d6add72fbbd70ed58e1c05bd047a2cdeb42f31f6f35fa2ede6a5577a8e6a5c6",
       "rights_status": "EXTERNAL_RIGHTS_NOT_VERIFIED",
       "evidence": [
         "Organizer toolkit origin and byte identity were checked; explicit redistribution scope not yet evidenced."
@@ -246,7 +246,7 @@
     {
       "member": "nova_agent/clinical_interview.py",
       "source": "nova_agent/clinical_interview.py",
-      "sha256": "bbb17ce4566f06a9da70cc168ae49322ad1bed9e0992844dad9d7cdbc26f9e59",
+      "sha256": "479e14c3b45f47df155310186ad6892525123e5a511e854a580984ff0e239c1a",
       "rights_status": "UNRESOLVED",
       "evidence": [
         "nova_agent/knowledge/PROVENANCE.md",

@@ -1,0 +1,16 @@
+{
+  "initial_failures": {
+    "py311": [
+      "tests.test_mixed_safety_routing.test_safety_only_pe_stays_actionable_and_vitals_are_first",
+      "tests.test_reproductive_emergency_safety.test_ectopic_pregnancy_resolves_once_a_negative_workup_is_complete"
+    ],
+    "py312": [
+      "tests.test_round_g_mechanisms.test_bilingual_scoring_does_not_double_count",
+      "tests.test_licensed_references.test_references_reach_actual_case_prompt_only_when_rag_enabled[True]",
+      "tests.test_critical_resolution_requires_real_evidence.test_is_resolved_requires_contradictory_evidence_or_completed_minimum_workup",
+      "tests.test_critical_resolution_requires_real_evidence.test_is_resolved_via_completed_minimum_workup_only_when_actually_completed"
+    ]
+  },
+  "cause": "New test module did not import the existing autouse official_mode fixture; run() left competition environment settings in process. Imported official_mode to restore environment and config after each test. No production clinical rule was changed to satisfy these failures.",
+  "rerun": "Entire affected shard on each interpreter, merged with unaffected passing shards; same complete set of test identities."
+}

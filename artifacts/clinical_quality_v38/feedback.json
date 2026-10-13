@@ -1,0 +1,22 @@
+{
+  "source": "USER_PROVIDED_DOMAIN_SCORES_2026-10-13",
+  "submission_version": "v37 inferred from conversation; no evaluation trace supplied",
+  "before": {
+    "information": 8.28,
+    "reasoning": 7.08,
+    "tests_followup": 3.44,
+    "safety": 10,
+    "communication": 3.17,
+    "efficiency": 20
+  },
+  "after": {
+    "information": 11.88,
+    "reasoning": 7.64,
+    "tests_followup": 3.44,
+    "safety": 11.25,
+    "communication": 5.61,
+    "efficiency": 17.36
+  },
+  "rounded_component_total": 57.18,
+  "causal_limit": "Scores alone do not identify wasted turns, missing facts, model costs or grading reasons. No official trace or real Doctor run was accessed."
+}

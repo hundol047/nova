@@ -1,0 +1,20 @@
+{
+  "publication": "Runtime, archive and local evidence published to the authorized optimization branch. No official submission performed.",
+  "official_model": "Organizer SDK Doctor; docs on 2026-10-13 specify openai/gpt-6-luna and accept previous openai/gpt-oss-20b alias. No real call made.",
+  "runtime_execution_identity": {
+    "execution_checkout_sha": "2ba1a7bf209c7fc719e49098f22a6a9c0b28f917",
+    "publishable_runtime_sha": "ded5b23d87927d328a8d32c710af35b0d9182ccc",
+    "identical_full_git_tree": "060148f0b074d3c0c4486df784399b3d01a6fb56",
+    "reason": "Connected GitHub API preserves exact runtime commit tree. Test fixture isolation corrected afterward without runtime changes."
+  },
+  "NOVA_DEV_KEY_accessed": false,
+  "real_organizer_human_run_performed": false,
+  "real_model_tokens_latency_cost": null,
+  "official_performance_improvement_proven": false,
+  "sdk_regression_cases": 230,
+  "sdk_regression_scored": 222,
+  "round_m_evaluation_scope": "Exact 128-case/123-scored subset of captured SDK230; no legacy TEST-enabled comparison or additional run.",
+  "comparison": "artifacts/clinical_quality_v38/comparison.json",
+  "feedback": "artifacts/clinical_quality_v38/feedback.json",
+  "test_execution_note": "All test modules covered on each interpreter. A new test fixture leaked configuration; the affected complete shards were rerun after isolation fix, then merged with untouched passing shards. See validation/test-isolation-fix.json. Release and rights checks run after binding."
+}

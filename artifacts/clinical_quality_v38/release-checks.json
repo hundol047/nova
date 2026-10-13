@@ -1,0 +1,26 @@
+{
+  "runtime_commit": "ded5b23d87927d328a8d32c710af35b0d9182ccc",
+  "zip_sha256": "c1662a8dbbec316a9af30ed26a708f919fab7a3133d3e8b57dd27cc054a5ffeb",
+  "source_mirror_archive_member_binding": true,
+  "isolated_zip_execution": true,
+  "fake_http_sdk": true,
+  "official_sdk_exact_sha256": "fdd65302e82791ed862c22fe5a014ef443ab331d8986ec7c72b3923add6bc871",
+  "secret_scan": "PASS",
+  "leakage_scan": "Checked 807 blind case(s) across 16 module(s) against 178 agent-core file(s).\n\nNO OBVIOUS LEAKAGE DETECTED",
+  "tests": {
+    "py3.11": {
+      "passed": 2873,
+      "failed": 0,
+      "skipped": 1
+    },
+    "py3.12": {
+      "passed": 2873,
+      "failed": 0,
+      "skipped": 1
+    }
+  },
+  "real_model_executed": false,
+  "official_score_improvement_proven": false,
+  "docker_resource_limit_test": "NOT EXECUTED",
+  "clinical_review": "PENDING_EXTERNAL_CLINICIAN"
+}

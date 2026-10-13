@@ -4,7 +4,7 @@ import pytest
 from competition import nova_sdk_adapter as A
 from nova_agent.clinical_interview import missing_foundation_topics, topic_known
 from nova_agent.state import PatientState, Demographics
-from test_official_independent_audit import encounter, initialise
+from test_official_independent_audit import encounter, initialise, official_mode
 from test_official_sdk_adapter import FakeServer, run
 
 

@@ -1,0 +1,98 @@
+{
+  "label": "LOCAL SCRIPTED DEVELOPMENT REGRESSION; NOT OFFICIAL SCORE OR FRESH BLIND",
+  "sdk230": {
+    "before_artifact": "artifacts/clinical_quality_v37/after-sdk230.json",
+    "after_artifact": "artifacts/clinical_quality_v38/after-sdk230.json",
+    "before_sha256": "767d15139ba6bb37413a7b1f9ac6466a14db5d06bf7d3c24f8fe488671958384",
+    "after_sha256": "0e95e8b654b38061cb13c1bd71279c3a012adecec9717d97b1cdc140e8934ed4",
+    "same_protocol_evaluator_scorer": true,
+    "primary_predictions_unchanged": 230,
+    "before": {
+      "cases": 230,
+      "scored": 222,
+      "rubric_process_proxy": {
+        "information_gathering": 23.108342744212308,
+        "diagnostic_reasoning": 13.716216216216216,
+        "tests_followup": 10.0,
+        "safety": 14.864864864864865,
+        "communication": 12.065217391304348,
+        "efficiency": 20,
+        "total": 93.75464121659773
+      },
+      "top1": 0.9144144144144144,
+      "top3": 0.9774774774774775,
+      "top5": 0.9774774774774775,
+      "critical_recall": 0.9411764705882353,
+      "critical_misses": 5,
+      "undertriage_proxy": 2,
+      "overtriage_proxy": 52,
+      "mean_turns": 21.847826086956523,
+      "median_turns": 22.0,
+      "p90_turns": 28,
+      "mean_doctor_requests": 2.3347826086956522,
+      "mean_exams": 1.4434782608695653,
+      "duplicate_question_rate": 0.06470762837637281,
+      "known_fact_reask_rate": 0.0,
+      "dangerous_false_primary_rate": 0.013513513513513514,
+      "rule_errors": 0,
+      "real_tokens_latency_cost": null,
+      "fixture_wall_seconds": 982.8048846669772
+    },
+    "after": {
+      "cases": 230,
+      "scored": 222,
+      "rubric_process_proxy": {
+        "information_gathering": 23.108342744212308,
+        "diagnostic_reasoning": 13.716216216216216,
+        "tests_followup": 10.0,
+        "safety": 14.864864864864865,
+        "communication": 12.065217391304348,
+        "efficiency": 20,
+        "total": 93.75464121659773
+      },
+      "top1": 0.9144144144144144,
+      "top3": 0.9774774774774775,
+      "top5": 0.9774774774774775,
+      "critical_recall": 0.9411764705882353,
+      "critical_misses": 5,
+      "undertriage_proxy": 2,
+      "overtriage_proxy": 52,
+      "mean_turns": 21.508695652173913,
+      "median_turns": 22.0,
+      "p90_turns": 28,
+      "mean_doctor_requests": 2.234782608695652,
+      "mean_exams": 1.4434782608695653,
+      "duplicate_question_rate": 0.06260769672601953,
+      "known_fact_reask_rate": 0.0,
+      "dangerous_false_primary_rate": 0.013513513513513514,
+      "rule_errors": 0,
+      "real_tokens_latency_cost": null,
+      "fixture_wall_seconds": 834.9182934700148
+    }
+  },
+  "fixtures": {
+    "note": "Same expanded surgery/social-history checklist and response channels run against both versions. Three authored development fixtures, not official samples.",
+    "before": {
+      "label": "LOCAL RUBRIC PROXY — NOT OFFICIAL SCORE / FULL FAKE SDK / SCRIPTED DOCTOR",
+      "real_model_tokens_latency_cost": "NOT MEASURED; fixture usage constants are not real costs",
+      "mean_turns": 29.0,
+      "mean_doctor_physical_requests": 2.3333333333333335,
+      "mean_topic_coverage": 0.8741083477925583,
+      "mean_exam_count": 1.6666666666666667
+    },
+    "after": {
+      "label": "LOCAL RUBRIC PROXY — NOT OFFICIAL SCORE / FULL FAKE SDK / SCRIPTED DOCTOR",
+      "real_model_tokens_latency_cost": "NOT MEASURED; fixture usage constants are not real costs",
+      "mean_turns": 28.0,
+      "mean_doctor_physical_requests": 2.3333333333333335,
+      "mean_topic_coverage": 1.0,
+      "mean_exam_count": 1.6666666666666667
+    }
+  },
+  "limits": [
+    "No official dialogue logs supplied; score-cause attribution not established",
+    "Real Doctor token use, latency and cost not measured",
+    "230-case rubric proxies are unchanged; only behavior/resource counts changed",
+    "Existing critical misses retained; no expert validation or new blind evaluation"
+  ]
+}
