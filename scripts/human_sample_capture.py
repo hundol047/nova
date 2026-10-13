@@ -25,10 +25,10 @@ def capture_response(operation, response):
 
 def verify_runtime(root, candidate=None):
     if candidate is not None:
-        if candidate != 'v42':raise SystemExit('Unknown candidate')
+        if candidate not in {'v42', 'v43'}:raise SystemExit('Unknown candidate')
         import zipfile
-        record = json.loads((root/'artifacts/releases/nova-v42-publication.json').read_text(encoding='utf-8'))
-        archive = root/'artifacts/releases/nova-v42-submission.zip'
+        record = json.loads((root/f'artifacts/releases/nova-{candidate}-publication.json').read_text(encoding='utf-8'))
+        archive = root/f'artifacts/releases/nova-{candidate}-submission.zip'
         if hashlib.sha256(archive.read_bytes()).hexdigest() != record['sha256']:
             raise SystemExit('Candidate archive hash mismatch')
         with zipfile.ZipFile(archive) as z:

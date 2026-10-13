@@ -1,0 +1,23 @@
+{
+  "status": "TARGETED_FIX_CANDIDATE",
+  "base_release_commit": "248986af37cef47a0b0a1860f1ca357d336a705f",
+  "artifact": "artifacts/releases/nova-v43-submission.zip",
+  "bytes": 924089,
+  "sha256": "363685fcd6dd64ee1884a92261ba38c6fd47ec4aa45f670056ca315e46696218",
+  "changed_runtime": {
+    "competition/nova_sdk_adapter.py": "d797d5c50256435b1e298d61ba396c7634278aced186cce79f31814900bd9653"
+  },
+  "source_mirror_archive_match": true,
+  "scope": "Targeted turn allocation and clarification regressions, not a new full-suite or SDK230 run. CURRENT_RELEASE.json remains the historical v41 full-suite record.",
+  "official_score_improvement_proven": false,
+  "real_model_executed": false,
+  "official_submission_performed": false,
+  "tests": {
+    "focused": 175,
+    "integration": 114,
+    "capture": 46,
+    "py311": 106
+  },
+  "isolated_zip_execution": true,
+  "fake_http_sdk": true
+}

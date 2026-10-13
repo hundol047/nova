@@ -72,6 +72,7 @@ MAX_FOLLOWUP_EXAMS = 3
 TOTAL_TURN_TARGET = 48
 ENGINE_TURN_TARGET = 30
 MAX_FOLLOWUP_ROUNDS = 3
+DISCRIMINATOR_TURN_RESERVE = 4
 CLOSING_TURN_RESERVE = 10
 COMMUNICATION_CATEGORIES = ('explanation', 'plan_explanation', 'understanding_check', 'patient_questions')
 RETRY_WAITS = (2.0, 5.0, 10.0)
@@ -523,6 +524,7 @@ class OfficialEncounter:
                         break
                     self._observe('interview_reassessment', round=round_index + 1,
                                   reason='new_observations_with_unresolved_differential')
+                self._foundation_phase(reserve_followup=False)
                 self._clarify_history_phase()
         except EncounterOver as exc:
             self.log(f"[encounter] server ended gathering: {exc}")
@@ -622,7 +624,7 @@ class OfficialEncounter:
                               rank_changed=before_rank!=after_rank, before=before_rank, after=after_rank,
                               interpretation='Observed pre/post decision ordering; not clinical causal adjudication')
 
-    def _foundation_phase(self) -> None:
+    def _foundation_phase(self, reserve_followup=True) -> None:
         """An early engine stop cannot silently omit essential history."""
         from nova_agent.clinical_interview import next_foundation_action
         from nova_agent.matching import evaluation_scope
@@ -633,10 +635,18 @@ class OfficialEncounter:
             action = next_foundation_action(self.pstate)
             if action is None:break
             _, key, text, _ = action
+            # Preserve a chance to distinguish the current differential before
+            # spending the last gathering turns on general background. Core
+            # onset/course, medical history, medications and allergy stay first.
+            if (reserve_followup and self.gathering_budget() <= DISCRIMINATOR_TURN_RESERVE
+                    and key.partition(':')[2] in {'family_illness','function','prior_care','surgery','smoking','alcohol'}):
+                break
             turn = self.say(text, category=key)
             if turn.ok:self._absorb('ASK', key, text, turn.reply)
             else:break
-        if self.can_gather() and not self._urgent(self.pstate.current_differential, None):
+        if (self.can_gather() and not self._urgent(self.pstate.current_differential, None)
+                and not any(t.category=='patient_concern' for t in self.turns)
+                and (not reserve_followup or self.gathering_budget()>DISCRIMINATOR_TURN_RESERVE)):
             self.say('많이 불편하셨죠. 가장 걱정되는 점은요?', category='patient_concern')
 
     def _clarify_history_phase(self):
@@ -773,7 +783,10 @@ class OfficialEncounter:
             # A preceding answer can supply several facts. Check the LIVE state,
             # not only the snapshot used to draft the Doctor's question list.
             topic = topic_for_question(q)
-            if self._verified_followup_done(q) or (topic and (topic_known(self.pstate, topic) or topic_attempted(self.pstate, topic))):
+            from nova_agent.clinical_interview import next_history_clarification
+            clarification=next_history_clarification(self.pstate)
+            is_needed_detail=bool(clarification and q==clarification[2])
+            if self._verified_followup_done(q) or (topic and (topic_known(self.pstate, topic) or topic_attempted(self.pstate, topic)) and not is_needed_detail):
                 self._observe('action_skipped', reason='topic_answered_or_attempted', topic=topic)
                 continue
             category=followup_discriminator(q) or category
@@ -1030,6 +1043,7 @@ class OfficialEncounter:
             if response:messages.append((response,'plan_explanation'))
             reason=_spoken_observation_reason(self._resolved_decision(final))
             if reason:messages.append((reason,'explanation'))
+        messages=_compact_closing_messages(messages)
         delivered=set()
         closing_start=len(self.turns)
         for message,category in messages:
@@ -1282,6 +1296,22 @@ def _salient_history(turns, limit=5):
         if len(chosen)>=limit:break
         if t not in chosen:chosen.append(t)
     return [_history_line(t) for t in chosen]
+
+
+def _compact_closing_messages(messages):
+    """Combine only known generic explanations; preserve specific advice.
+
+    No model paraphrasing, extra calls, or deletion of interactive questions,
+    timed follow-up, precautions or a concrete treatment instruction.
+    """
+    purpose='검사로 의심 원인을 구분해 보겠습니다'
+    treatment='원인을 확인한 뒤 치료를 정하겠습니다'
+    texts=[text for text,_ in messages]
+    if purpose not in texts or treatment not in texts:return messages
+    merged='검사로 원인을 구분한 뒤 치료를 정해요'
+    if not fits(merged):return messages
+    return [(merged if text==purpose else text,category)
+            for text,category in messages if text!=treatment]
 
 
 def _plan_review_items(plan,state,decision):

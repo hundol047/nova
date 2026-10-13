@@ -1,0 +1,14 @@
+{
+  "source": "User report after v42 delivery; exact evaluated archive not hash-confirmed",
+  "scores": {
+    "information_gathering": 11.78,
+    "diagnostic_reasoning": 7.64,
+    "tests_followup": 4.67,
+    "safety": 15,
+    "communication": 6.44,
+    "efficiency": 17.81
+  },
+  "total": 63.34,
+  "previous_total": 62.23,
+  "scored_dialogue_available": false
+}

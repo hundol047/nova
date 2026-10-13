@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="0.693" timestamp="2026-10-13T18:00:19.310486+09:00" hostname="234f054973d9"><testcase classname="tests.test_targeted_turn_allocation" name="test_positive_screen_allows_one_needed_named_history_question" time="0.147"><failure message="AssertionError: assert [] == ['진단받은 병 이름이 무엇인가요?']&#10;  &#10;  Right contains one more item: '진단받은 병 이름이 무엇인가요?'&#10;  Use -v to get more diff">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f784bf80350&gt;
+
+    def test_positive_screen_allows_one_needed_named_history_question(monkeypatch):
+        e=setup(monkeypatch)
+        e._absorb('ASK','past_medical_history',C.TOPICS['medical_history'][1],'네')
+        q=C.DETAIL_QUESTIONS['medical_history']
+        monkeypatch.setattr(e,'chat',lambda *a,**kw:json.dumps({'questions':[q]}))
+        e._followup_phase();e._followup_phase()
+&gt;       assert [t.text for t in e.turns]==[q]
+E       AssertionError: assert [] == ['진단받은 병 이름이 무엇인가요?']
+E         
+E         Right contains one more item: '진단받은 병 이름이 무엇인가요?'
+E         Use -v to get more diff
+
+tests/test_targeted_turn_allocation.py:24: AssertionError</failure></testcase><testcase classname="tests.test_targeted_turn_allocation" name="test_optional_background_yields_last_four_turns_to_differential" time="0.196"><failure message="AssertionError: assert (not [Turn(kind='SAY', text='가족 중 질환이 있는 분이 있나요?', reply='아니요', category='family_history:family_illness', turn=None, reject...kind='SAY', text='가족 중 질환이 있는 분이 있나요?', reply='아니요', category='family_history:family_illness', turn=None, rejected='')])&#10; +  where [Turn(kind='SAY', text='가족 중 질환이 있는 분이 있나요?', reply='아니요', category='family_history:family_illness', turn=None, reject...kind='SAY', text='가족 중 질환이 있는 분이 있나요?', reply='아니요', category='family_history:family_illness', turn=None, rejected='')] = &lt;competition.nova_sdk_adapter.OfficialEncounter object at 0x7f784bc9b200&gt;.turns">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f784bc984d0&gt;
+
+    def test_optional_background_yields_last_four_turns_to_differential(monkeypatch):
+        e=setup(monkeypatch);e.turns_left=A.CLOSING_TURN_RESERVE+4
+        action=('SAY','family_history:family_illness',C.TOPICS['family_illness'][1],'family_history')
+        monkeypatch.setattr(C,'next_foundation_action',lambda s:action)
+&gt;       e._foundation_phase();assert not e.turns and e.gathering_budget()==4
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert (not [Turn(kind='SAY', text='가족 중 질환이 있는 분이 있나요?', reply='아니요', category='family_history:family_illness', turn=None, reject...kind='SAY', text='가족 중 질환이 있는 분이 있나요?', reply='아니요', category='family_history:family_illness', turn=None, rejected='')])
+E        +  where [Turn(kind='SAY', text='가족 중 질환이 있는 분이 있나요?', reply='아니요', category='family_history:family_illness', turn=None, reject...kind='SAY', text='가족 중 질환이 있는 분이 있나요?', reply='아니요', category='family_history:family_illness', turn=None, rejected='')] = &lt;competition.nova_sdk_adapter.OfficialEncounter object at 0x7f784bc9b200&gt;.turns
+
+tests/test_targeted_turn_allocation.py:39: AssertionError</failure></testcase></testsuite></testsuites>

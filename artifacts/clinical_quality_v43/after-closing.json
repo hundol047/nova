@@ -1,0 +1,36 @@
+{
+  "scope": "Same scripted 180-second scenario; not clinical score",
+  "status": "completed",
+  "turns": 7,
+  "primary": "진단 미정 (추가 평가 필요)",
+  "dialogue": [
+    {
+      "text": "아직 진단이 불확실해요.",
+      "category": "explanation"
+    },
+    {
+      "text": "전혈구검사(CBC) 후 결과를 확인하겠습니다",
+      "category": "plan_explanation"
+    },
+    {
+      "text": "1~2주 내 재진, 악화 시 즉시 진료받으세요",
+      "category": "plan_explanation"
+    },
+    {
+      "text": "검사로 원인을 구분한 뒤 치료를 정해요",
+      "category": "plan_explanation"
+    },
+    {
+      "text": "1~2주 내 증상과 결과를 다시 확인해요",
+      "category": "plan_explanation"
+    },
+    {
+      "text": "다음 진료 시점을 말씀해 주시겠어요?",
+      "category": "understanding_check"
+    },
+    {
+      "text": "계획에서 어려운 점이나 궁금한 점은요?",
+      "category": "patient_questions"
+    }
+  ]
+}
