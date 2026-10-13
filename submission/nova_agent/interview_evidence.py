@@ -54,7 +54,7 @@ def topic_answered(state, topic, pattern):
             from nova_agent.clinical_interview import DETAIL_QUESTIONS, needs_history_detail
             if topic in DETAIL_QUESTIONS and needs_history_detail(result):
                 continue
-            if topic not in _QUANTITATIVE and kind in {'yes', 'no'}:
+            if topic not in _QUANTITATIVE | {'symptom_onset'} and kind in {'yes', 'no'}:
                 return True
             # A named, direct history answer need not repeat the question's
             # vocabulary (e.g. '고혈압', '충수절제술', '아버지가 당뇨예요').

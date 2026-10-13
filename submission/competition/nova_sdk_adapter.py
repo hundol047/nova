@@ -1017,10 +1017,10 @@ class OfficialEncounter:
                 # Record the actual answer; never claim comprehension from an
                 # acknowledgement or an unknown reply. Re-state the timed plan.
                 interval=plan.get('spoken_follow_up',closing)
-                understood=_followup_understood(turn.reply, interval)
-                if not understood and self._can_explain() and fits(interval) and _norm(interval) not in delivered:
-                    self.say(interval,category='plan_explanation')
-                    delivered.add(_norm(interval))
+                correction=_teachback_correction(turn.reply,interval,_norm(interval) in delivered)
+                if self._can_explain() and fits(correction):
+                    self.say(correction,category='plan_explanation')
+                    delivered.add(_norm(correction))
             elif turn.ok and category=='patient_questions':
                 # "네", thanks and unknown filler do not request a replay.
                 # Explicit questions may warrant a short clarification even if
@@ -1045,7 +1045,9 @@ class OfficialEncounter:
                 bucket = _category_bucket(t.category)
                 by_cat.setdefault(bucket, []).append(t)
         qa = lambda ts: "\n".join(_history_line(t) for t in ts)
-        onset = next((t.reply for t in by_cat.get("hpi", []) if t.category.startswith("onset")), "")
+        from nova_agent.state import answer_kind
+        onset = next((t.reply for t in reversed(by_cat.get("hpi", []))
+                      if t.category.startswith("onset") and answer_kind(t.reply) is None), "")
         record["S"]["cc"] = f"C.C : {self.opening}" + (f"\nOnset : {onset}" if onset else "")
         record["S"]["hpi"] = "\n".join(x for x in (f"P.I : {self.opening}", qa(by_cat.get("hpi", []))) if x)
         record["S"]["pmh"] = qa(by_cat.get("pmh", []))
@@ -1289,6 +1291,21 @@ def _followup_understood(reply, instruction):
     if re.search(r'모르|아니|않|못|unknown|not\b',reply,re.I):return False
     return bool(expected and actual and actual[2]==expected[2]
                 and expected[0]<=actual[0]<=actual[1]<=expected[1])
+
+
+
+def _teachback_correction(reply,instruction,already_delivered):
+    """Correct explicit misunderstanding once, despite an earlier explanation.
+
+    Acknowledgement/unknown filler does not cause a loop. A practical barrier
+    gets a planning response, not a claim that the patient understood.
+    """
+    if _followup_understood(reply,instruction):return ''
+    if re.search(r'못\s*가|갈\s*수\s*없|가기\s*어려|비용|일정.*어려',reply):
+        return '가능한 진료 일정과 도움을 함께 상의해요'
+    stated_time=bool(re.search(r'\d+\s*(?:일|주|개월|달|년)|한\s*(?:주|달)|두\s*주|일주일|내일|오늘|다음\s*(?:주|달)',reply))
+    if stated_time or not already_delivered:return instruction
+    return ''
 
 
 def _requested_clarification(reply,plan,closing):

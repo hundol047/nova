@@ -76,6 +76,7 @@ DETAIL_QUESTIONS = {
     'allergy': '어떤 약에 어떤 알레르기 반응이 있었나요?',
     'medication_name': '복용 약 이름을 구체적으로 알려주세요',
     'medical_history': '진단받은 병 이름이 무엇인가요?',
+    'symptom_onset': '증상이 시작된 때를 구체적으로 알려주세요',
     'prior_care': '이 증상으로 진료받은 결과는 어땠나요?',
     'family_illness': '가족 중 누가 어떤 병을 앓고 있나요?',
     'surgery': '어떤 수술을 받으셨나요?',
@@ -118,6 +119,7 @@ def unresolved_history(state):
     return [f'{a.content} → {a.result} (미확인 또는 세부 정보 부족)'
             for topic, a in latest.items()
             if answer_kind(a.result) == 'unknown' or
+            (topic == 'symptom_onset' and answer_kind(a.result) == 'no') or
             (topic in DETAIL_QUESTIONS and needs_history_detail(a.result))]
 
 
