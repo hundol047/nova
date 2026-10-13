@@ -23,7 +23,29 @@ def capture_response(operation, response):
     return {k:response[k] for k in fields.get(operation,()) if k in response}
 
 
-def verify_runtime(root):
+def verify_runtime(root, candidate=None):
+    if candidate is not None:
+        if candidate != 'v42':raise SystemExit('Unknown candidate')
+        import zipfile
+        record = json.loads((root/'artifacts/releases/nova-v42-publication.json').read_text(encoding='utf-8'))
+        archive = root/'artifacts/releases/nova-v42-submission.zip'
+        if hashlib.sha256(archive.read_bytes()).hexdigest() != record['sha256']:
+            raise SystemExit('Candidate archive hash mismatch')
+        with zipfile.ZipFile(archive) as z:
+            names=z.namelist()
+            if len(names)!=len(set(names)) or any(n.startswith('/') or '\\' in n or '..' in n.split('/') for n in names):
+                raise SystemExit('Unsafe candidate archive')
+            actual={p.relative_to(root/'submission').as_posix() for p in (root/'submission').rglob('*')
+                    if p.is_file() and '__pycache__' not in p.parts and p.name!='submission.zip' and p.suffix!='.pyc'}
+            if actual != set(names):raise SystemExit('Candidate staging members differ; extract the published ZIP into submission.')
+            for name in names:
+                p=root/'submission'/name
+                if p.is_symlink() or p.read_bytes()!=z.read(name):raise SystemExit('Candidate staging mismatch: '+name)
+                if name.startswith(('competition/','nova_agent/')) and name.endswith('.py'):
+                    if (root/name).read_bytes()!=z.read(name):raise SystemExit('Candidate source mismatch: '+name)
+        return {'candidate':candidate,'candidate_zip_sha256':record['sha256'],
+                'validation_scope':record['scope'],
+                'sdk_sha256':hashlib.sha256((root/'submission/nova_sdk.py').read_bytes()).hexdigest()}
     ptr = json.loads((root/'artifacts/verification/CURRENT_RELEASE.json').read_text(encoding='utf-8'))
     record = json.loads((root/ptr['current_verification_artifact']).read_text(encoding='utf-8'))
     for name, expected in record['runtime_sha256'].items():

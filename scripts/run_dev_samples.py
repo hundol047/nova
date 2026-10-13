@@ -43,6 +43,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("cases", nargs="*")
     parser.add_argument('--list', action='store_true')
+    parser.add_argument('--candidate', choices=['v42'], help='Verify the exact published candidate ZIP instead of the historical full-suite release')
     parser.add_argument('--case-id', action='append', default=[])
     parser.add_argument("--human-run", action="store_true", help="Human execution on your own computer only")
     parser.add_argument("--output", default=str(Path.home() / "nova-sample-results"))
@@ -52,7 +53,7 @@ def main():
     sys.path.insert(0, str(ROOT / "submission"))
     from scripts.human_sample_capture import verify_runtime, ObservedClient, resolve_cases, capture_response
     from scripts.official_result_tools import LABEL, digest
-    identity = verify_runtime(ROOT)
+    identity = verify_runtime(ROOT, candidate=args.candidate)
     out = Path(args.output).resolve()
     if out.is_relative_to(ROOT):
         raise SystemExit('Raw sample results must be outside the repository.')
