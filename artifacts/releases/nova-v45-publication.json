@@ -1,0 +1,23 @@
+{
+  "status": "TARGETED_FIX_CANDIDATE",
+  "base_release_commit": "8e1edce977ad3469aae8c892ef58b81438e52029",
+  "artifact": "artifacts/releases/nova-v45-submission.zip",
+  "bytes": 930175,
+  "sha256": "b869cd0dab4b89fb3c80ee90e577e959032d10bc87925a23eeffb8e908e86015",
+  "source_mirror_archive_match": true,
+  "changed_runtime": {
+    "competition/nova_sdk_adapter.py": "0747ca01fc7e0dbe304723da2260798b8bdada9690664a7e3b3e3c12dc507c8d",
+    "nova_agent/clinical_concepts.py": "f89850ea38b1dff51859687a6963517178b9278ceef6ab0a8350123482a631d7",
+    "nova_agent/clinical_interview.py": "042b8f0cfa11a874e5fb955fb961001bfd96f5f9d98f606571b3cf49dc57f644",
+    "nova_agent/clinical_profiles.py": "ac7b03df91b87315c3b32955b90cd916b55c18880081d412a8180c8b5318b758",
+    "nova_agent/evidence_scope.py": "b9081c901251156a488a983f551ab27b84965b4e32fb3d6a91ce4ae87266f4d0",
+    "nova_agent/korean_numbers.py": "b9a966146bccaa72403bd677f80624702483309d2bf5fd978ad4ebd33f218c43"
+  },
+  "scope": "Targeted guardian-narrative, spoken-number, growth-interview, diagnosis and closing fixes, not a new full-suite or SDK230 run. CURRENT_RELEASE.json remains the historical v41 full-suite record.",
+  "official_score_improvement_proven": false,
+  "real_model_executed": false,
+  "official_submission_performed": false,
+  "reproduction": "v44 sample (opening identical to public C03) replayed on the organizer devkit simulator with deterministic stub models; v44 -> '진단 미정', v45 -> constitutional growth delay (engine and Doctor agree) with a C03-script stub patient.",
+  "isolated_zip_execution": true,
+  "fake_http_sdk": true
+}

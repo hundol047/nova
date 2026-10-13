@@ -3,13 +3,22 @@
 Generic language handling, not a case lookup: the opening below is a synthetic paraphrase with different names and
 numbers from any public sample.
 """
-import os
+import pytest
 
-os.environ.setdefault("NOVA_PRELIMINARY_RULES", "1")
-os.environ.setdefault("NOVA_COMPETITION_RETRIEVAL", "1")
-os.environ.setdefault("NOVA_LLM_PROVIDER", "mock")
+from nova_agent.korean_numbers import normalize_spoken_numbers, sino_number
 
-from nova_agent.korean_numbers import normalize_spoken_numbers, sino_number  # noqa: E402
+
+@pytest.fixture(autouse=True)
+def _preliminary_engine(monkeypatch):
+    # Scoped to this module's tests: module-level os.environ edits leak into every later test.
+    monkeypatch.setenv("NOVA_PRELIMINARY_RULES", "1")
+    monkeypatch.setenv("NOVA_COMPETITION_RETRIEVAL", "1")
+    monkeypatch.setenv("NOVA_LLM_PROVIDER", "mock")
+    from nova_agent.config import get_config
+    get_config(reload=True)
+    yield
+    monkeypatch.undo()
+    get_config(reload=True)
 
 OPENING = ("이름은 박서준이고, 일곱 살 남자아이이다. 아빠 박민수, 마흔 살이 보호자로 함께 왔다. 아빠는 서준이 키가 또래에 "
            "비해 작은 것 같아 걱정이 된다고 말했다. 반 친구들보다 서준이 키가 작아 보인다고 한다. 아빠가 집에서 재보니 "
