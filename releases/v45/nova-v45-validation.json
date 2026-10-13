@@ -1,0 +1,105 @@
+{
+  "date_kst": "2026-10-13",
+  "baseline_filename": "nova-v44-submission.zip",
+  "baseline_sha256": "1033a5bf64cea3db7727ee3c6a864d580d104bb2c176dd4ae22f5ff6a8dd4b73",
+  "baseline_score_owner_reported": {
+    "information_gathering": 10.67,
+    "diagnostic_reasoning": 8.19,
+    "tests_followup": 4.67,
+    "safety": 15,
+    "communication": 6.11,
+    "efficiency": 18.36,
+    "total": 63
+  },
+  "v45_official_score": "NOT_MEASURED",
+  "changed_runtime_files": [
+    "competition/nova_sdk_adapter.py",
+    "nova_agent/clinical_assertions.py",
+    "nova_agent/clinical_interview.py",
+    "nova_agent/clinical_profiles.py",
+    "nova_agent/interview_evidence.py",
+    "nova_agent/encounter_quality.py",
+    "nova_agent/korean_numbers.py"
+  ],
+  "preserved_runtime": [
+    "nova_sdk.py",
+    "run.py",
+    "requirements.txt",
+    "nova_agent/safety.py",
+    "nova_agent/safety_validator.py",
+    "nova_agent/disposition.py",
+    "nova_agent/final_decision.py"
+  ],
+  "preserved_files_verified": true,
+  "regression_tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "834",
+    "time": "95.033",
+    "timestamp": "2026-10-13T13:26:01.048348+00:00",
+    "hostname": "e690c399401d"
+  },
+  "new_regression_tests": 29,
+  "three_scripted_fixtures": {
+    "v44_mean_turns": 29.0,
+    "v45_mean_turns": 32.666666666666664,
+    "v44_mean_doctor_calls": 2.3333333333333335,
+    "v45_mean_doctor_calls": 2.3333333333333335,
+    "v45_topic_coverage": 1.0,
+    "real_model_cost_or_latency": "NOT_MEASURED"
+  },
+  "32_frozen_synthetic_cases": {
+    "cases": 32,
+    "reference_compatible": 32,
+    "urgency_matches": 32,
+    "test_plan_present": 32,
+    "plan_topic_compatible_proxy": 23,
+    "plan_topic_scored_cases": 23,
+    "followup_has_interval": 30,
+    "precautions_present": 32,
+    "explanation_present": 32,
+    "mean_closing_turns": 7.625,
+    "unperformed_test_results": 0
+  },
+  "packaged_http_smoke": {
+    "exit_code": 0,
+    "ready_before_case_access": true,
+    "doctor_calls": 4,
+    "turns": 30,
+    "test_actions": 0,
+    "max_action_chars": 23,
+    "record_fields_ok": true,
+    "diagnosis": "폐렴 (Community-Acquired Pneumonia)",
+    "errors": [],
+    "stderr_tail": [
+      "[encounter] {\"turns_used\": 30, \"exam_rejections\": 0, \"chat_calls\": 4, \"successful_chat_calls\": 4, \"case_relevant_successful_calls\": 4, \"diagnostic_reasoning_successful_calls\": 3, \"phrasing_successful_calls\": 1, \"empty_response_retries\": 0, \"prompt_tokens\": 800, \"completion_tokens\": 320, \"total_tokens\": 1120, \"total_chat_latency_seconds\": 0.0, \"mean_chat_latency_seconds\": 0.0, \"models_returned\": [\"openai/gpt-6-luna\"]}"
+    ],
+    "pass": true
+  },
+  "requirements_verified_against_current_rules": "https://nova.snubhai.org/rules/",
+  "current_model": "openai/gpt-6-luna since 2026-10-13; unchanged SDK old model ID is an organizer-supported alias",
+  "dashboard_private_area": "not accessible; public evaluation/rules/docs and supplied PPTX/sample files inspected",
+  "limitations": [
+    "No live organizer model call or new official evaluation.",
+    "All clinical quality metrics here are engineering fixtures, not clinician adjudication.",
+    "Docker resource limits were not revalidated: daemon socket unavailable. Packaged subprocess HTTP execution used a fresh directory with read-only file permissions.",
+    "Public sample answers and model records are not packaged as runtime decision rules."
+  ],
+  "artifacts": {
+    "nova-v45-submission.zip": {
+      "bytes": 933355,
+      "sha256": "5c6414d2a1ae4bb89a2fb82ce1b56d4d14b3c63f0543cfc77d20463826e4c54c"
+    },
+    "nova-v45-changes.patch": {
+      "bytes": 48127,
+      "sha256": "beaf513dd01cde50b3cc28ceebfd41c0e0a4ffd28707bd479922bb1a5bd5ecd9"
+    },
+    "nova-v45-source.zip": {
+      "bytes": 971692,
+      "sha256": "08f8ba27b6b7111e163f75a99cd15881b33de09e48afb1b6012299cbc23e6ab6"
+    }
+  },
+  "source_bundle_scope": "Exact runtime source, rebuild/audit/smoke scripts, 29 new regression tests plus their helpers, and the 834-test JUnit evidence; full repository tests remain in the source repository."
+}
