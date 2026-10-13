@@ -1,0 +1,16 @@
+{
+  "source": "User report after delivery of v41; submission version inferred from conversation, not independently hash-confirmed",
+  "reported_scores": {
+    "information_gathering": 11.1,
+    "diagnostic_reasoning": 8.19,
+    "tests_followup": 3.33,
+    "safety": 13.75,
+    "communication": 6.44,
+    "efficiency": 19.42
+  },
+  "total": 62.23,
+  "previous_v40_total": 57.45,
+  "delta": 4.78,
+  "official_v42_performance_verified": false,
+  "scored_conversation_logs_available": false
+}

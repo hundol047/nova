@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="8" time="0.949" timestamp="2026-10-13T17:32:06.709976+09:00" hostname="234f054973d9"><testcase classname="tests.test_closing_deadline_reserve" name="test_reserved_time_delivers_purpose_followup_and_checks[239]" time="0.223"><failure message="AssertionError: assert '검사로 원인을 구분해요' in ['아직 진단이 불확실해요.', '원인 평가를 받으세요', '악화하면 바로 진료받으세요']">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f86b7a82b70&gt;
+seconds = 239
+
+    @pytest.mark.parametrize('seconds',[239,120,60,30])
+    def test_reserved_time_delivers_purpose_followup_and_checks(monkeypatch,seconds):
+        e=setup(monkeypatch,seconds);assert not e.can_gather()
+        e._explain([],None)
+        spoken=[t.text for t in e.turns]
+&gt;       assert PLAN['spoken_test_purpose'] in spoken
+E       AssertionError: assert '검사로 원인을 구분해요' in ['아직 진단이 불확실해요.', '원인 평가를 받으세요', '악화하면 바로 진료받으세요']
+
+tests/test_closing_deadline_reserve.py:28: AssertionError</failure></testcase><testcase classname="tests.test_closing_deadline_reserve" name="test_reserved_time_delivers_purpose_followup_and_checks[120]" time="0.051"><failure message="AssertionError: assert '검사로 원인을 구분해요' in ['아직 진단이 불확실해요.', '원인 평가를 받으세요', '악화하면 바로 진료받으세요']">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f86b76bc170&gt;
+seconds = 120
+
+    @pytest.mark.parametrize('seconds',[239,120,60,30])
+    def test_reserved_time_delivers_purpose_followup_and_checks(monkeypatch,seconds):
+        e=setup(monkeypatch,seconds);assert not e.can_gather()
+        e._explain([],None)
+        spoken=[t.text for t in e.turns]
+&gt;       assert PLAN['spoken_test_purpose'] in spoken
+E       AssertionError: assert '검사로 원인을 구분해요' in ['아직 진단이 불확실해요.', '원인 평가를 받으세요', '악화하면 바로 진료받으세요']
+
+tests/test_closing_deadline_reserve.py:28: AssertionError</failure></testcase><testcase classname="tests.test_closing_deadline_reserve" name="test_reserved_time_delivers_purpose_followup_and_checks[60]" time="0.054"><failure message="AssertionError: assert '검사로 원인을 구분해요' in ['아직 진단이 불확실해요.', '원인 평가를 받으세요', '악화하면 바로 진료받으세요']">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f86b798cd10&gt;
+seconds = 60
+
+    @pytest.mark.parametrize('seconds',[239,120,60,30])
+    def test_reserved_time_delivers_purpose_followup_and_checks(monkeypatch,seconds):
+        e=setup(monkeypatch,seconds);assert not e.can_gather()
+        e._explain([],None)
+        spoken=[t.text for t in e.turns]
+&gt;       assert PLAN['spoken_test_purpose'] in spoken
+E       AssertionError: assert '검사로 원인을 구분해요' in ['아직 진단이 불확실해요.', '원인 평가를 받으세요', '악화하면 바로 진료받으세요']
+
+tests/test_closing_deadline_reserve.py:28: AssertionError</failure></testcase><testcase classname="tests.test_closing_deadline_reserve" name="test_reserved_time_delivers_purpose_followup_and_checks[30]" time="0.055"><failure message="AssertionError: assert '검사로 원인을 구분해요' in ['아직 진단이 불확실해요.', '원인 평가를 받으세요', '악화하면 바로 진료받으세요']">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f86b8710ce0&gt;
+seconds = 30
+
+    @pytest.mark.parametrize('seconds',[239,120,60,30])
+    def test_reserved_time_delivers_purpose_followup_and_checks(monkeypatch,seconds):
+        e=setup(monkeypatch,seconds);assert not e.can_gather()
+        e._explain([],None)
+        spoken=[t.text for t in e.turns]
+&gt;       assert PLAN['spoken_test_purpose'] in spoken
+E       AssertionError: assert '검사로 원인을 구분해요' in ['아직 진단이 불확실해요.', '원인 평가를 받으세요', '악화하면 바로 진료받으세요']
+
+tests/test_closing_deadline_reserve.py:28: AssertionError</failure></testcase><testcase classname="tests.test_closing_deadline_reserve" name="test_time_exhaustion_during_dialogue_stops_sends" time="0.069" /><testcase classname="tests.test_closing_deadline_reserve" name="test_urgent_path_does_not_add_routine_followup_dialogue" time="0.055" /><testcase classname="tests.test_closing_deadline_reserve" name="test_wrong_teachback_corrected_within_reserved_turns" time="0.055"><failure message="AssertionError: assert 0 == 2&#10; +  where 0 = &lt;built-in method count of list object at 0x7f86b73a8100&gt;('1~2주 내 증상과 결과를 다시 확인해요')&#10; +    where &lt;built-in method count of list object at 0x7f86b73a8100&gt; = ['아직 진단이 불확실해요.', '원인 평가를 받으세요', '악화하면 바로 진료받으세요'].count">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f86b8559bb0&gt;
+
+    def test_wrong_teachback_corrected_within_reserved_turns(monkeypatch):
+        e=setup(monkeypatch,60,reply='3개월 후요');e._explain([],None)
+&gt;       assert [t.text for t in e.turns].count(PLAN['spoken_follow_up'])==2
+E       AssertionError: assert 0 == 2
+E        +  where 0 = &lt;built-in method count of list object at 0x7f86b73a8100&gt;('1~2주 내 증상과 결과를 다시 확인해요')
+E        +    where &lt;built-in method count of list object at 0x7f86b73a8100&gt; = ['아직 진단이 불확실해요.', '원인 평가를 받으세요', '악화하면 바로 진료받으세요'].count
+
+tests/test_closing_deadline_reserve.py:51: AssertionError</failure></testcase><testcase classname="tests.test_closing_deadline_reserve" name="test_submission_margin_prevents_any_dialogue" time="0.054" /></testsuite></testsuites>

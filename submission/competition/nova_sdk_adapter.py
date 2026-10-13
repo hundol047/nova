@@ -1016,19 +1016,24 @@ class OfficialEncounter:
         if not urgent:
             # Safety and timed next step precede optional elaboration if time is short.
             messages += [(plan.get('spoken_precautions',''),'plan_explanation')]
-        if not urgent and self.seconds_left() > GATHER_MARGIN:
+        # Gathering deliberately stops at GATHER_MARGIN. Reusing that cutoff
+        # here suppresses the very closing dialogue that the reserve protects.
+        # Each actual send still checks the deadline and remaining turn budget.
+        if not urgent and self._can_explain():
+            messages += [(plan.get('spoken_test_purpose',''),'plan_explanation'),
+                         (plan.get('spoken_follow_up',''),'plan_explanation'),
+                         ('다음 진료 시점을 말씀해 주시겠어요?','understanding_check'),
+                         ('계획에서 어려운 점이나 궁금한 점은요?','patient_questions'),
+                         (plan.get('spoken_treatment',''),'plan_explanation')]
             concern=next((t.reply for t in reversed(self.turns) if t.ok and t.category=='patient_concern'),'')
             response=_concern_response(concern,plan)
             if response:messages.append((response,'plan_explanation'))
             reason=_spoken_observation_reason(self._resolved_decision(final))
             if reason:messages.append((reason,'explanation'))
-            messages += [(plan.get('spoken_test_purpose',''),'plan_explanation'),
-                         (plan.get('spoken_treatment',''),'plan_explanation'),
-                         ('다음 진료 시점을 말씀해 주시겠어요?','understanding_check'),
-                         ('계획에서 어려운 점이나 궁금한 점은요?','patient_questions')]
         delivered=set()
+        closing_start=len(self.turns)
         for message,category in messages:
-            if not self._can_explain():break
+            if not self._can_explain() or len(self.turns)-closing_start >= CLOSING_TURN_RESERVE-1:break
             if not fits(message) or _norm(message) in delivered:continue
             turn=self.say(message,category=category)
             if turn.ok:delivered.add(_norm(message))
@@ -1037,7 +1042,7 @@ class OfficialEncounter:
                 # acknowledgement or an unknown reply. Re-state the timed plan.
                 interval=plan.get('spoken_follow_up',closing)
                 correction=_teachback_correction(turn.reply,interval,_norm(interval) in delivered)
-                if self._can_explain() and fits(correction):
+                if self._can_explain() and len(self.turns)-closing_start < CLOSING_TURN_RESERVE-1 and fits(correction):
                     self.say(correction,category='plan_explanation')
                     delivered.add(_norm(correction))
             elif turn.ok and category=='patient_questions':
@@ -1045,7 +1050,7 @@ class OfficialEncounter:
                 # Explicit questions may warrant a short clarification even if
                 # it repeats a safety-critical part of the plan.
                 clarification=_requested_clarification(turn.reply,plan,closing)
-                if self._can_explain() and fits(clarification):
+                if self._can_explain() and len(self.turns)-closing_start < CLOSING_TURN_RESERVE-1 and fits(clarification):
                     self.say(clarification,category='plan_explanation')
 
     def _can_explain(self):

@@ -209,7 +209,10 @@ def test_encounter_stops_gathering_near_the_server_deadline_and_still_submits():
     server = FakeServer(minutes=3)  # 180 s left: below the gathering margin
     enc, result = run(server)
     assert result["status"] == "completed"
-    assert server.turns <= 3
+    assert server.turns <= A.CLOSING_TURN_RESERVE
+    assert all(t.category in A.COMMUNICATION_CATEGORIES for t in enc.turns)
+    assert any(t.category == 'understanding_check' for t in enc.turns)
+    assert not any(kind == 'EXAM' for kind, _, _ in server.events)
 
 
 def test_deadline_parsing():

@@ -1,0 +1,33 @@
+{
+  "status": "TARGETED_FIX_CANDIDATE",
+  "base_release_commit": "506a339e1e1258408783ba157c6f50535958df89",
+  "artifact": "artifacts/releases/nova-v42-submission.zip",
+  "bytes": 923594,
+  "sha256": "fcd88fefc9306cfbd2b927e6b8210de2848787bb8e6e2a6dc148d5d4de880831",
+  "changed_runtime": {
+    "competition/nova_sdk_adapter.py": "9fc4101ee2eb9acfb03eff9f9d0332f2217c5c6f24a1a5e1197a09151ffb1707"
+  },
+  "source_mirror_archive_match": true,
+  "tests": {
+    "before-deadline": {
+      "tests": 8,
+      "failed": 5
+    },
+    "focused": {
+      "tests": 189,
+      "failed": 0
+    },
+    "integration": {
+      "tests": 88,
+      "failed": 0
+    },
+    "py311": {
+      "tests": 94,
+      "failed": 0
+    }
+  },
+  "scope": "Targeted closing-deadline regressions and official-adapter integration, not a new full-suite or SDK230 run. CURRENT_RELEASE.json remains the historical full-suite v41 record.",
+  "official_score_improvement_proven": false,
+  "real_model_executed": false,
+  "official_submission_performed": false
+}
