@@ -118,6 +118,23 @@ def test_teachback_cannot_become_diagnostic_evidence():
     assert '항생제' in note['P']['education']
 
 
+@pytest.mark.parametrize('category', ['onset:symptom_onset','onset:symptom onset','course:course',
+                                    'duration:duration','severity:pain','timing:timing'])
+def test_detailed_hpi_question_stays_in_hpi(category):
+    assert A._category_bucket(category)=='hpi'
+    assert A._category_bucket('associated_symptoms:tremor')=='ros'
+
+
+def test_actual_onset_populates_chief_complaint_and_hpi():
+    e,_=encounter();initialise(e,'체중이 줄어요.')
+    e.turns.append(A.Turn('SAY','언제부터 이런 증상이 있었나요?',
+                          '3개월 전부터요.','onset:symptom_onset'))
+    note,_=e.official_record([],None)
+    assert 'Onset : 3개월 전부터요.' in note['S']['cc']
+    assert '3개월 전부터요.' in note['S']['hpi']
+    assert '3개월 전부터요.' not in note['S']['ros']
+
+
 def test_short_deadline_still_submits_with_short_closing():
     s=FakeServer(minutes=1);e,_=run(s)
     assert s.closed and s.turns<=3

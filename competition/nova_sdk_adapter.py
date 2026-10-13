@@ -1165,6 +1165,8 @@ def _category_bucket(category: str) -> str:
         return "fh"
     if base == "social_history":
         return "sh"
+    if base in _HPI and base != 'associated_symptoms':
+        return 'hpi'
     if detail:
         return "ros"
     return "hpi"
