@@ -13,6 +13,7 @@ import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]
 DEFERRED={'test_current_pre_guide_release.py','test_rights_and_review_evidence.py'}
+EXCLUSIVE={'test_safety_regression.py','test_submission_zip_clean_room.py'}
 
 
 def main():
@@ -29,8 +30,10 @@ def main():
             durations[key]=durations.get(key,0)+float(t.get('time','0'))
         estimates.update({k:v for k,v in durations.items() if k in estimates})
     groups=[[] for _ in range(a.workers)];totals=[0.0]*a.workers
-    for name in sorted(estimates,key=estimates.get,reverse=True):
+    exclusive=[n for n in estimates if Path(n).name in EXCLUSIVE]
+    for name in sorted((n for n in estimates if n not in exclusive),key=estimates.get,reverse=True):
         i=min(range(a.workers),key=totals.__getitem__);groups[i].append(name);totals[i]+=estimates[name]
+    if exclusive:groups.append(exclusive)
     assert sorted(n for g in groups for n in g)==sorted(estimates)
     (out/'modules.json').write_text(json.dumps({'deferred':sorted(DEFERRED),'groups':groups},indent=2)+'\n')
     def run(i):
@@ -38,8 +41,11 @@ def main():
             return subprocess.call([a.python,'-m','pytest','-q',*groups[i],
                                     '--junitxml='+str(out/f'part-{i}.xml')],cwd=ROOT,stdout=log,stderr=subprocess.STDOUT)
     with ThreadPoolExecutor(max_workers=a.workers) as pool:codes=list(pool.map(run,range(a.workers)))
+    # Run mutation tests after all read-only shards. Use separate checkouts
+    # when invoking two interpreters concurrently.
+    if exclusive:codes.append(run(a.workers))
     combined=ET.Element('testsuites');seen=set()
-    for i in range(a.workers):
+    for i in range(len(groups)):
         for suite in ET.parse(out/f'part-{i}.xml').getroot().iter('testsuite'):
             for case in suite.iter('testcase'):
                 identity=(case.get('classname'),case.get('name'))

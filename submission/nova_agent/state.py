@@ -165,10 +165,10 @@ _ANSWER_UNKNOWN = re.compile(
 _ANSWER_BARE_NO = re.compile(
     r"^(?:no|nope|nah|none|not really|never|no,? never|no,? not (?:really|at all)|"
     r"(?:no,? )?i (?:don'?t|do not)(?: have (?:that|any|it|them))?|"
-    r"아니요|아뇨|아니오|아니|없어요|없습니다|없어|아니요,? ?(?:그런 ?(?:건|것은?) ?)?없(?:어요|습니다))$", re.IGNORECASE)
+    r"아니요|아뇨|아니오|아니|아닙니다|없어요|없습니다|없어|아니요,? ?(?:그런 ?(?:건|것은?) ?)?없(?:어요|습니다))$", re.IGNORECASE)
 _ANSWER_BARE_YES = re.compile(
     r"^(?:yes|yeah|yep|yup|i do|i have|i did|yes,? i (?:do|have|did)(?: (?:that|it))?|"
-    r"네|예|있어요|있습니다|네,? ?있어요|맞아요)$", re.IGNORECASE)
+    r"네|예|있어요|있습니다|네,? ?있어요|맞아요|그렇습니다|네,? ?그렇습니다|네,? ?맞아요)$", re.IGNORECASE)
 
 
 def answer_kind(answer: str) -> Optional[str]:

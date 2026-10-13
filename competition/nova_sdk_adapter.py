@@ -40,7 +40,7 @@ from typing import Callable, Dict, List, Optional
 
 from nova_agent.config import (OFFICIAL_SAY_EXAM_MAX_CHARS, OFFICIAL_SESSION_DOCTOR_CALLS,
                                OFFICIAL_SESSION_INPUT_TOKENS, OFFICIAL_SESSION_OUTPUT_TOKENS)
-from competition.official_evidence import grounded_in, followup_category, diagnosis_text
+from competition.official_evidence import grounded_in, followup_category, diagnosis_text, followup_discriminator
 
 MAX_CHARS = OFFICIAL_SAY_EXAM_MAX_CHARS
 # Codes from nova_sdk / devkit / organizer material.
@@ -729,6 +729,16 @@ class OfficialEncounter:
             lines.append(f"- {localized_name(entry, d.diagnosis, 'ko')} ({d.diagnosis})")
         return "\n".join(lines) or "(없음)"
 
+    def _verified_followup_done(self,text):
+        key=followup_discriminator(text)
+        if not key:return False
+        if self.pstate.question_attempted(key):return True
+        from nova_agent.matching import feature_present_with_aliases, feature_denied
+        feature=key.partition(':')[2]
+        current=self.pstate.all_findings_text(include_context=False,include_family=False)
+        return (feature_present_with_aliases(feature,current,scrub_negated_spans=True)
+                or feature_denied(feature,self.pstate.pertinent_negatives))
+
     def _followup_phase(self) -> None:
         from nova_agent.interview_evidence import topic_attempted, exam_attempted, exam_topic
         if not self.can_gather() or self._urgent(self.pstate.current_differential, None):
@@ -753,7 +763,7 @@ class OfficialEncounter:
             proposed = q.get("category", "") if isinstance(q, dict) else ""
             from nova_agent.clinical_interview import relevant_substance_question, topic_for_question, topic_known
             topic=topic_for_question(text)
-            if fits(text) and _norm(text) not in asked and relevant_substance_question(self.pstate,text) and not (topic and topic_known(self.pstate,topic)):
+            if fits(text) and _norm(text) not in asked and relevant_substance_question(self.pstate,text) and not self._verified_followup_done(text) and not (topic and topic_known(self.pstate,topic)):
                 questions.append((text, followup_category(text, proposed)))
                 asked.add(_norm(text))
         exams = [nfc(e) for e in _list(plan.get("exams")) if isinstance(e, str)]
@@ -763,9 +773,10 @@ class OfficialEncounter:
             # A preceding answer can supply several facts. Check the LIVE state,
             # not only the snapshot used to draft the Doctor's question list.
             topic = topic_for_question(q)
-            if topic and (topic_known(self.pstate, topic) or topic_attempted(self.pstate, topic)):
+            if self._verified_followup_done(q) or (topic and (topic_known(self.pstate, topic) or topic_attempted(self.pstate, topic))):
                 self._observe('action_skipped', reason='topic_answered_or_attempted', topic=topic)
                 continue
+            category=followup_discriminator(q) or category
             turn = self.say(q, category=category)
             budget -= 1
             if turn.ok:
@@ -792,6 +803,12 @@ class OfficialEncounter:
     def _absorb(self, kind: str, key: str, text: str, reply: str) -> None:
         from nova_agent.action_selector import AgentAction
         if kind == "ASK":
+            verified_key=followup_discriminator(text)
+            if verified_key:
+                # The actual Korean question is verified as one feature; generic
+                # category routing used to discard a bare yes/no here.
+                self.pstate.record_ask(verified_key,text,reply,faithful=True)
+                return
             self.engine.agent.observe(self.pstate, AgentAction(action_type="ASK", key=key, content=text,
                                                               rationale="Doctor-planned follow-up"), reply)
         else:
@@ -1003,6 +1020,8 @@ class OfficialEncounter:
             concern=next((t.reply for t in reversed(self.turns) if t.ok and t.category=='patient_concern'),'')
             response=_concern_response(concern,plan)
             if response:messages.append((response,'plan_explanation'))
+            reason=_spoken_observation_reason(self._resolved_decision(final))
+            if reason:messages.append((reason,'explanation'))
             messages += [(plan.get('spoken_test_purpose',''),'plan_explanation'),
                          (plan.get('spoken_treatment',''),'plan_explanation'),
                          ('다음 진료 시점을 말씀해 주시겠어요?','understanding_check'),
@@ -1062,12 +1081,16 @@ class OfficialEncounter:
         proposal=getattr(self,'_accepted_proposal',None) or self.final_consult
         evidence = [nfc(e) for e in _list(proposal.get("evidence")) if isinstance(e, str)]
         grounded = [e for e in evidence if grounded_in(e, corpus)][:8]
-        if not grounded:
-            # Evidence survives a failed Doctor call, including actual objective
-            # findings and history filed under ROS/medication rather than HPI.
-            grounded = [self.opening] if self.opening else []
-            grounded += [f"{t.text} → {t.reply}" for t in exams[-3:]]
-            grounded += _salient_history(self.turns)
+        # A partially populated model list must not erase the objective exam
+        # or the question-bound short replies. Keep distinct observations even
+        # when the Doctor quoted only one true fact.
+        observed=([self.opening] if self.opening else [])
+        observed += [_history_line(t) for t in exams[-3:]]
+        observed += _salient_history(self.turns)
+        seen={_norm(e) for e in grounded}
+        for fact in observed:
+            if _norm(fact) not in seen:
+                grounded.append(fact);seen.add(_norm(fact))
         record["A"]["evidence"] = f"#1. {diagnosis}\n" + "\n".join(f"- 근거 : {e}" for e in grounded)
         decision=self._resolved_decision(final)
         if decision is not None and decision.item is not None:
@@ -1126,6 +1149,13 @@ class OfficialEncounter:
             if key in ('treatment','disposition') or fallback.get('policy_owned'):
                 value=fallback.get(key,'')
             record["P"][key] = nfc(value) or fallback.get(key, "")
+        # Keep actual review tasks even when an accepted Doctor plan supplied
+        # its own generic follow-up text. Append each observed task once.
+        review=_plan_review_items({'tests':'','follow_up':''},self.pstate,decision)
+        for key in ('tests','follow_up'):
+            for line in review[key].splitlines():
+                if line and line not in record['P'][key]:
+                    record['P'][key]=(record['P'][key]+'\n'+line).strip()
         said = [t.text for t in self.turns if t.ok and t.category in COMMUNICATION_CATEGORIES]
         if said:
             record["P"]["education"] = ("진료 중 설명함: " + " / ".join(said) + "\n" + record["P"]["education"]).strip()
@@ -1184,7 +1214,7 @@ class OfficialEncounter:
         first_test = planned_tests.split(',')[0].strip()
         next_step = f'{first_test} 후 결과를 확인하겠습니다'
         purpose='현재 의심하는 원인을 확인하고 감별하기 위한 계획; 검사 결과는 미확인'
-        return {"tests": planned_tests + ('\n검사 목적: '+purpose if planned_tests and planned_tests != '없음' else ''), "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
+        plan={"tests": planned_tests + ('\n검사 목적: '+purpose if planned_tests and planned_tests != '없음' else ''), "treatment": "원인 평가 후 치료 결정; 확인 전 구체적 처방 보류",
                 "disposition": "즉시 응급실 평가 및 모니터링" if urgent else "외래 평가; 악화 시 즉시 재평가",
                 "follow_up": ('응급 평가 후 즉시 재평가' if urgent else '1~2주 내 증상과 검사 결과 재평가; 악화·지속 시 조기 진료'),
                 "education": pick("환자 교육"),
@@ -1194,6 +1224,7 @@ class OfficialEncounter:
                 "spoken_test_purpose": '검사로 의심 원인을 구분해 보겠습니다',
                 "spoken_treatment": '원인을 확인한 뒤 치료를 정하겠습니다',
                 "spoken_follow_up": '1~2주 내 증상과 결과를 다시 확인해요'}
+        return _plan_review_items(plan,self.pstate,decision)
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -1205,6 +1236,24 @@ _HPI = ("onset", "location", "duration", "character", "severity", "aggravating",
         "followup", "timing", "context", "course")
 
 
+
+def _spoken_observation_reason(decision):
+    """A short explanation of two validated observations, no new diagnosis."""
+    if decision is None or decision.item is None:return ''
+    labels={'weight loss':'체중 감소','heat intolerance':'더위 민감',
+            'palpitations':'두근거림','tremor':'손 떨림','sweating':'땀 증가',
+            'fever':'발열','cough':'기침','productive cough':'가래 기침',
+            'shortness of breath':'숨참','nausea':'메스꺼움','vomiting':'구토',
+            'diarrhea':'설사','dysuria':'배뇨통','hematuria':'혈뇨',
+            'daytime sleepiness':'낮 졸림','sedative use':'수면제 복용',
+            'dose escalation':'복용량 증가','withdrawal symptoms':'금단 증상',
+            'short stature':'작은 키','preserved prepubertal growth velocity':'성장속도 유지',
+            'reduced linear growth velocity':'성장속도 저하','family delayed puberty':'가족의 늦은 사춘기'}
+    facts=list(dict.fromkeys(labels[f] for f in decision.item.supporting_evidence if f in labels))[:2]
+    message='·'.join(facts)+'을 함께 고려했어요'
+    return message if len(facts)==2 and fits(message) else ''
+
+
 def _salient_history(turns, limit=5):
     """Retain earlier diagnostic facts instead of the last social-history replies.
 
@@ -1214,7 +1263,8 @@ def _salient_history(turns, limit=5):
     from nova_agent.state import answer_kind
     candidates=[t for t in turns if t.ok and t.kind=='SAY'
                 and t.category not in (*COMMUNICATION_CATEGORIES,'patient_concern')
-                and answer_kind(t.reply) not in {'unknown','no','yes'}]
+                and (answer_kind(t.reply) is None or
+                     (answer_kind(t.reply) in {'yes','no'} and followup_discriminator(t.text)))]
     priorities={'onset':0,'medication':0,'associated_symptoms':1,'course':1,
                 'severity':1,'past_medical_history':2,'family_history':2}
     ordered=sorted(candidates,key=lambda t:priorities.get(t.category.partition(':')[0],3))

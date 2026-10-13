@@ -6,7 +6,7 @@ def load(path):return json.loads((ROOT/path).read_text())
 def current():
  p=load('artifacts/verification/CURRENT_RELEASE.json');d=load(p['current_verification_artifact'])
  assert p['current_verification_schema']==d['schema']
- assert d['schema'] in {'nova-verification-v12','nova-verification-v13','nova-verification-v14','nova-verification-v15','nova-verification-v16','nova-verification-v17','nova-verification-v18','nova-verification-v19','nova-verification-v20','nova-verification-v21','nova-verification-v22','nova-verification-v23','nova-verification-v24','nova-verification-v25','nova-verification-v26','nova-verification-v27','nova-verification-v28','nova-verification-v29','nova-verification-v30','nova-verification-v31','nova-verification-v32','nova-verification-v33','nova-verification-v34','nova-verification-v35','nova-verification-v36','nova-verification-v37','nova-verification-v38','nova-verification-v39','nova-verification-v40'}
+ assert d['schema'] in {'nova-verification-v12','nova-verification-v13','nova-verification-v14','nova-verification-v15','nova-verification-v16','nova-verification-v17','nova-verification-v18','nova-verification-v19','nova-verification-v20','nova-verification-v21','nova-verification-v22','nova-verification-v23','nova-verification-v24','nova-verification-v25','nova-verification-v26','nova-verification-v27','nova-verification-v28','nova-verification-v29','nova-verification-v30','nova-verification-v31','nova-verification-v32','nova-verification-v33','nova-verification-v34','nova-verification-v35','nova-verification-v36','nova-verification-v37','nova-verification-v38','nova-verification-v39','nova-verification-v40','nova-verification-v41'}
  assert p['verified_runtime_sha']==d['verified_runtime_sha']
  return d
 
