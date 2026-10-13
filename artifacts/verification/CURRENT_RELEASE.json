@@ -1,12 +1,14 @@
 {
-  "current_verification_artifact": "artifacts/verification/local-release-5d93d12-v40.json",
-  "current_verification_schema": "nova-verification-v40",
-  "verified_runtime_sha": "5d93d12ee52ab9d1db2b23000d79614f8898810c",
+  "current_verification_artifact": "artifacts/verification/local-release-9a58b37-v41.json",
+  "current_verification_schema": "nova-verification-v41",
+  "verified_runtime_sha": "9a58b3742778f1a105bdcf3ea692cb58c9193ec0",
   "current_blind_version": "v19",
   "current_blind_manifest": null,
   "current_blind_status": "REFERENCE-ONLY",
   "fresh_final_blind": "NOT YET AUTHORED",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-9a58b37-v41.json",
+    "artifacts/verification/local-release-5d93d12-v40.json",
     "artifacts/verification/local-release-b5f7cfb-v39.json",
     "artifacts/verification/local-release-ded5b23-v38.json",
     "artifacts/verification/local-release-62a0822-v37.json",
@@ -39,7 +41,7 @@
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
   "status": "NOT READY",
-  "reason": "v40 preserves unknown onset and corrects explicit follow-up misunderstanding within existing budgets.",
+  "reason": "v41 binds short patient replies to verified single-feature questions and retains observations across assessment, explanation and follow-up.",
   "latest_compliance_followup": "artifacts/clinical_review_pass/rule_matrix.json",
   "latest_rights_and_review_followup": "artifacts/rights_and_review/CURRENT_STATUS.json"
 }

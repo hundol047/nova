@@ -1,0 +1,43 @@
+{
+  "source": "User-reported official evaluation of attached nova-v40-submission.zip; SHA-256 matches published v40 exactly. No scored encounter logs supplied.",
+  "scores": {
+    "information_gathering": 10.47,
+    "diagnostic_reasoning": 6.94,
+    "tests_followup": 3.67,
+    "safety": 11.25,
+    "communication": 6.44,
+    "efficiency": 18.68
+  },
+  "total": 57.45,
+  "previous_total": 64.52,
+  "changes": [
+    "Bind exact verified single-feature questions to bare affirmative/negative/unknown replies before reasoning",
+    "Recognize narrow Korean yes/no variants; never interpret acknowledgements as findings",
+    "Skip already observed or attempted verified features, including paraphrases",
+    "Preserve objective and question-bound evidence even with a partial Doctor evidence list",
+    "Retain actual unresolved review tasks with accepted Doctor follow-up plans",
+    "Explain two validated observations in patient-facing speech when time and safety permit"
+  ],
+  "limitations": [
+    "No evaluated encounter traces supplied",
+    "No live Doctor or organizer run",
+    "Historical synthetic development cases are not an independent blind set"
+  ],
+  "official_score_gain_from_v41_proven": false,
+  "previous_scores": {
+    "information_gathering": 11.84,
+    "diagnostic_reasoning": 8.19,
+    "tests_followup": 4.67,
+    "safety": 13.75,
+    "communication": 6.44,
+    "efficiency": 19.63
+  },
+  "delta_total": -7.07,
+  "attachment": {
+    "filename": "nova-v40-submission.zip",
+    "bytes": 921526,
+    "sha256": "baeb0409b5771e94b910753a361198845a7bc742874afb7c19fba10443ac833c",
+    "matches_published_v40": true
+  },
+  "interpretation": "Actual v40 score regressed despite synthetic regression checks. v41 corrects reproduced software defects; neither the reason for official decline nor recovery is proven."
+}

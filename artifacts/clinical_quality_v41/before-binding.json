@@ -1,0 +1,240 @@
+{
+  "label": "SCRIPTED QUESTION/ANSWER TRANSFER REGRESSION; NOT DIAGNOSTIC ACCURACY OR OFFICIAL SCORE",
+  "binding_passed": 0,
+  "binding_cases": 18,
+  "ambiguity_guard_passed": 6,
+  "ambiguity_cases": 6,
+  "extra_model_calls": 0,
+  "cases": [
+    {
+      "question": "손 떨림이 있나요?",
+      "reply": "네",
+      "expected_feature": "tremor",
+      "expected_polarity": "positive",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "손 떨림이 있나요?",
+      "reply": "아닙니다",
+      "expected_feature": "tremor",
+      "expected_polarity": "negative",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "손 떨림이 있나요?",
+      "reply": "모르겠어요",
+      "expected_feature": "tremor",
+      "expected_polarity": "unknown",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "더위를 많이 타시나요?",
+      "reply": "네",
+      "expected_feature": "heat intolerance",
+      "expected_polarity": "positive",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "더위를 많이 타시나요?",
+      "reply": "아닙니다",
+      "expected_feature": "heat intolerance",
+      "expected_polarity": "negative",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "더위를 많이 타시나요?",
+      "reply": "모르겠어요",
+      "expected_feature": "heat intolerance",
+      "expected_polarity": "unknown",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "발열이 있나요?",
+      "reply": "네",
+      "expected_feature": "fever",
+      "expected_polarity": "positive",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "발열이 있나요?",
+      "reply": "아닙니다",
+      "expected_feature": "fever",
+      "expected_polarity": "negative",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "발열이 있나요?",
+      "reply": "모르겠어요",
+      "expected_feature": "fever",
+      "expected_polarity": "unknown",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "토하셨나요?",
+      "reply": "네",
+      "expected_feature": "vomiting",
+      "expected_polarity": "positive",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "토하셨나요?",
+      "reply": "아닙니다",
+      "expected_feature": "vomiting",
+      "expected_polarity": "negative",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "토하셨나요?",
+      "reply": "모르겠어요",
+      "expected_feature": "vomiting",
+      "expected_polarity": "unknown",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "소변볼 때 따가운가요?",
+      "reply": "네",
+      "expected_feature": "dysuria",
+      "expected_polarity": "positive",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "소변볼 때 따가운가요?",
+      "reply": "아닙니다",
+      "expected_feature": "dysuria",
+      "expected_polarity": "negative",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "소변볼 때 따가운가요?",
+      "reply": "모르겠어요",
+      "expected_feature": "dysuria",
+      "expected_polarity": "unknown",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "심장이 두근거리나요?",
+      "reply": "네",
+      "expected_feature": "palpitations",
+      "expected_polarity": "positive",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "심장이 두근거리나요?",
+      "reply": "아닙니다",
+      "expected_feature": "palpitations",
+      "expected_polarity": "negative",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    },
+    {
+      "question": "심장이 두근거리나요?",
+      "reply": "모르겠어요",
+      "expected_feature": "palpitations",
+      "expected_polarity": "unknown",
+      "passed": false,
+      "state_positive": false,
+      "state_negative": false,
+      "state_unknown": false,
+      "recorded_actions": 1
+    }
+  ],
+  "ambiguity_guards": [
+    {
+      "question": "어머니 손이 떨리나요?",
+      "passed": true,
+      "positives": []
+    },
+    {
+      "question": "손이 떨리거나 땀이 나나요?",
+      "passed": true,
+      "positives": []
+    },
+    {
+      "question": "손이 떨리지 않나요?",
+      "passed": true,
+      "positives": []
+    },
+    {
+      "question": "과거에 손이 떨렸나요?",
+      "passed": true,
+      "positives": []
+    },
+    {
+      "question": "체중이 몇 kg 줄었나요?",
+      "passed": true,
+      "positives": []
+    },
+    {
+      "question": "다른 증상이 있나요?",
+      "passed": true,
+      "positives": []
+    }
+  ]
+}

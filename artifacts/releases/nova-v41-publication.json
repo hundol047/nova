@@ -1,0 +1,9 @@
+{
+  "artifact": "artifacts/releases/nova-v41-submission.zip",
+  "bytes": 923433,
+  "sha256": "0eee6cfe4744bd0a464aad50af10793799ba63e7144d8bab86f5a55b3c4623d3",
+  "runtime_commit": "9a58b3742778f1a105bdcf3ea692cb58c9193ec0",
+  "verification_record": "artifacts/verification/local-release-9a58b37-v41.json",
+  "publication": "Published with verification record to the authorized optimization branch; official performance remains unverified.",
+  "official_submission_performed": false
+}

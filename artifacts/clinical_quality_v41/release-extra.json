@@ -1,0 +1,20 @@
+{
+  "publication": "Runtime, archive and local evidence prepared for the authorized optimization branch. No official submission performed.",
+  "official_model": "Organizer SDK Doctor; public docs on 2026-10-13 specify openai/gpt-6-luna and accept the previous alias. No real call made.",
+  "runtime_execution_identity": {
+    "execution_checkout_sha": "b398206d36eba403b90348be64070132a0eeb73f",
+    "publishable_runtime_sha": "9a58b3742778f1a105bdcf3ea692cb58c9193ec0",
+    "identical_full_git_tree": "d2f6cb1ecf258ce4d815ad594dad8c6d5dd6f5d1",
+    "py311_checkout": "Separate checkout at publishable_runtime_sha; py312 root at identical local runtime tree"
+  },
+  "NOVA_DEV_KEY_accessed": false,
+  "real_organizer_human_run_performed": false,
+  "real_model_tokens_latency_cost": null,
+  "official_performance_improvement_proven": false,
+  "sdk_regression_cases": 230,
+  "sdk_regression_scored": 222,
+  "round_m_evaluation_scope": "Exact 128-case/123-scored subset of captured SDK230; no extra run.",
+  "comparison": "artifacts/clinical_quality_v41/comparison.json",
+  "feedback": "artifacts/clinical_quality_v41/feedback.json",
+  "test_execution_note": "All modules on both interpreters. Packaging mutation tests run after read-only shards; py311 and py312 use separate identical-runtime checkouts to prevent shared submission-directory races. Release and rights checks run after binding. Python 3.11 initially had one provenance-inventory mismatch because the separate checkout lacked the refreshed evidence inventory. Copied the refreshed inventory and reran the entire 2-test provenance module successfully. core-initial.xml preserves the failure; core.xml incorporates that module rerun only. Deferred rights test initially expected the old unresolved-file list. Updated its exact expectation to include official_evidence.py and state.py changed in v41; no clearance was granted. Initial failure retained in deferred-initial.xml."
+}

@@ -5294,7 +5294,7 @@
     {
       "asset_id": "nova_agent/state.py",
       "path": "nova_agent/state.py",
-      "sha256": "dfca517806e7be22294a4ea15de0070def4a1bddd34b28831ca4e881d214834a",
+      "sha256": "5d9fe78dfa1d0692bc3d3fa89a5d1f6c6318f5007427740290d2a40067e63c95",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "Repository owner/team, as declared by the human repository owner; AI assistance recorded in Git history",
       "original_source": "UNRESOLVED",
@@ -5318,7 +5318,7 @@
       "manual_review": "Engineering tests do not establish original authorship or medical correctness",
       "clinician_review": "No documented clinician signoff",
       "submission_included": true,
-      "status": "TEAM_ORIGINAL_VERIFIED",
+      "status": "UNRESOLVED",
       "history_evidence": [
         "9b607b49c56e64b072645f1539d53d1ca4b92c74|2026-10-05T02:43:04+09:00|fix: harden pre-guide boundaries and correct evidence/diagnosis matching [skip ci]",
         "14e6644d5f0def1516ce165a7a5e1c7164cbc405|2026-10-03T18:46:12+09:00|fix: separate evidence uncertainty from protocol labels and fail closed without real competition calls",
@@ -5329,7 +5329,7 @@
       "history_caveat": "Commit author/time are not original clinical author/generation time",
       "authorship_status": "OWNER_DECLARED_NOT_INDEPENDENTLY_AUDITED",
       "medical_validation_status": "NOT independently clinically validated",
-      "rights_status": "OWNER_DECLARED_SCOPE_BOUND; clinical validity and historical generation remain separate",
+      "rights_status": "Bytes changed: obtain a renewed hash-bound owner declaration",
       "replacement_plan": {
         "decision": "E",
         "next_actions": [
