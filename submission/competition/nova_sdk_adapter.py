@@ -1023,6 +1023,7 @@ class OfficialEncounter:
         if fits(text):
             self.say(text, category="explanation")
         plan=self._engine_plan(differential,final)
+        plan['spoken_reason']=_spoken_observation_reason(self._resolved_decision(final))
         urgent=self._urgent(differential,final)
         closing=plan.get('spoken_next_step') or plan_say_text(urgent,'ko')
         messages=[(closing if fits(closing) else plan_say_text(urgent,'ko'),'plan_explanation')]
@@ -1041,7 +1042,7 @@ class OfficialEncounter:
             concern=next((t.reply for t in reversed(self.turns) if t.ok and t.category=='patient_concern'),'')
             response=_concern_response(concern,plan)
             if response:messages.append((response,'plan_explanation'))
-            reason=_spoken_observation_reason(self._resolved_decision(final))
+            reason=plan['spoken_reason']
             if reason:messages.append((reason,'explanation'))
         messages=_compact_closing_messages(messages)
         delivered=set()
@@ -1340,6 +1341,7 @@ def _concern_response(reply,plan):
     if re.search(r'약|중독|의존|끊|금단',reply):return plan.get('spoken_treatment','')
     if re.search(r'검사',reply):return plan.get('spoken_test_purpose','')
     if re.search(r'낫|치료|평생|회복',reply):return '치료 경과는 원인을 확인하며 설명드릴게요'
+    if re.search(r'걱정|불안|무서|두려',reply):return '걱정되시죠. 원인을 확인하며 설명드릴게요'
     return ''
 
 
@@ -1396,7 +1398,16 @@ def _teachback_correction(reply,instruction,already_delivered):
 def _requested_clarification(reply,plan,closing):
     from nova_agent.state import answer_kind
     if answer_kind(reply)=='no':return ''
+    # Respond using the already selected patient plan, never a new treatment
+    # or an invented prognosis. Specific return precautions take priority over
+    # generic "when" / "why" matches.
+    if re.search(r'응급|위험\s*신호|악화|바로.*(?:오|와|가|진료)|즉시.*(?:오|와|가|진료)',reply):
+        return plan.get('spoken_precautions') or closing
     if re.search(r'비용|어려|못 가|힘들|부담',reply):return '가능한 진료 일정과 도움을 함께 상의해요'
+    if re.search(r'완치|회복|낫(?:나요|을|는)|평생|예후',reply):return '회복 경과는 원인을 확인하며 설명드릴게요'
+    if re.search(r'걱정|불안|무서|두려',reply):return _concern_response(reply,plan)
+    if re.search(r'근거|왜.*(?:진단|생각|의심)|진단.*이유',reply):
+        return plan.get('spoken_reason') or '아직 확정은 아니며 추가 확인이 필요해요'
     if re.search(r'검사|왜',reply):return plan.get('spoken_test_purpose','')
     if re.search(r'약|치료|줄이|끊',reply):return plan.get('spoken_treatment','')
     if re.search(r'언제|재진|다시|예약|주|개월',reply):return plan.get('spoken_follow_up',closing)

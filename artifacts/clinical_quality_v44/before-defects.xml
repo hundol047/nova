@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="25" skipped="0" tests="75" time="3.251" timestamp="2026-10-13T18:13:24.295506+09:00" hostname="234f054973d9"><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[tremor]" time="0.144"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='t'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='t'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'tremor 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc9a6f90&gt;
+feature = 'tremor'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='t'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='t'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'tremor 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[heat intolerance]" time="0.037"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='h'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='h'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'heat intolerance 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc82d2e0&gt;
+feature = 'heat intolerance'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='h'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='h'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'heat intolerance 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[sweating]" time="0.037"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='s'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='s'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'sweating 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc4c0800&gt;
+feature = 'sweating'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='s'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='s'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'sweating 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[palpitations]" time="0.036"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='p'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='p'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'palpitations 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dd3417c0&gt;
+feature = 'palpitations'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='p'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='p'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'palpitations 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[fever]" time="0.064"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='f'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='f'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'fever 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc7f0e30&gt;
+feature = 'fever'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='f'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='f'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'fever 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[cough]" time="0.037"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='c'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='c'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'cough 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc7e9640&gt;
+feature = 'cough'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='c'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='c'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'cough 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[shortness of breath]" time="0.037"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='s'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='s'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'shortness of breath 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc9a7560&gt;
+feature = 'shortness of breath'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='s'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='s'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'shortness of breath 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[chest pain]" time="0.038"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='c'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='c'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'chest pain 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc9cc2f0&gt;
+feature = 'chest pain'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='c'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='c'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'chest pain 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[nausea]" time="0.038"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='n'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='n'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'nausea 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc587920&gt;
+feature = 'nausea'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='n'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='n'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'nausea 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[vomiting]" time="0.039" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[diarrhea]" time="0.038" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[dysuria]" time="0.035"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='d'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='d'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'dysuria 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc82c290&gt;
+feature = 'dysuria'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='d'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='d'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'dysuria 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[hematuria]" time="0.036"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='h'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='h'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'hematuria 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc865190&gt;
+feature = 'hematuria'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='h'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='h'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'hematuria 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[syncope]" time="0.037"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='s'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='s'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'syncope 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc7bf5c0&gt;
+feature = 'syncope'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='s'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='s'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'syncope 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[snoring]" time="0.038"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='s'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='s'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'snoring 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc7fc1a0&gt;
+feature = 'snoring'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='s'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='s'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'snoring 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_native_question_keeps_target_without_a_translation_call[weight loss]" time="0.038"><failure message="AssertionError: assert not &lt;re.Match object; span=(0, 1), match='w'&gt;&#10; +  where &lt;re.Match object; span=(0, 1), match='w'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'weight loss 있으세요?')&#10; +    where &lt;function search at 0x7f87de3f4360&gt; = re.search">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc587a70&gt;
+feature = 'weight loss'
+
+    @pytest.mark.parametrize('feature',list(_SINGLE_FEATURE_QUESTIONS))
+    def test_native_question_keeps_target_without_a_translation_call(monkeypatch,feature):
+        e,_=encounter();initialise(e,'불편해요')
+        key='associated_symptoms:'+feature
+        question=say_text(key,'ko')
+&gt;       assert not re.search('[A-Za-z]',question)
+E       AssertionError: assert not &lt;re.Match object; span=(0, 1), match='w'&gt;
+E        +  where &lt;re.Match object; span=(0, 1), match='w'&gt; = &lt;function search at 0x7f87de3f4360&gt;('[A-Za-z]', 'weight loss 있으세요?')
+E        +    where &lt;function search at 0x7f87de3f4360&gt; = re.search
+
+tests/test_native_questions_and_patient_answers.py:14: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-tremor]" time="0.036" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-heat intolerance]" time="0.062" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-sweating]" time="0.036" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-palpitations]" time="0.036" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-fever]" time="0.037" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-cough]" time="0.036" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-shortness of breath]" time="0.035" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-chest pain]" time="0.036" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-nausea]" time="0.042" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-vomiting]" time="0.040" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-diarrhea]" time="0.040" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-dysuria]" time="0.040" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-hematuria]" time="0.052" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-syncope]" time="0.037" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-snoring]" time="0.039" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ub124-weight loss]" time="0.070" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-tremor]" time="0.049" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-heat intolerance]" time="0.065" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-sweating]" time="0.037" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-palpitations]" time="0.038" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-fever]" time="0.038" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-cough]" time="0.038" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-shortness of breath]" time="0.037" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-chest pain]" time="0.036" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-nausea]" time="0.036" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-vomiting]" time="0.041" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-diarrhea]" time="0.040" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-dysuria]" time="0.044" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-hematuria]" time="0.040" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-syncope]" time="0.065" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-snoring]" time="0.039" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\uc544\ub2c8\uc694-weight loss]" time="0.040" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-tremor]" time="0.041" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-heat intolerance]" time="0.039" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-sweating]" time="0.039" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-palpitations]" time="0.045" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-fever]" time="0.039" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-cough]" time="0.041" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-shortness of breath]" time="0.042" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-chest pain]" time="0.040" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-nausea]" time="0.041" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-vomiting]" time="0.038" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-diarrhea]" time="0.039" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-dysuria]" time="0.041" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-hematuria]" time="0.068" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-syncope]" time="0.043" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-snoring]" time="0.039" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_engine_observation_preserves_native_question_polarity[\ubaa8\ub974\uaca0\uc5b4\uc694-weight loss]" time="0.043" /><testcase classname="tests.test_native_questions_and_patient_answers" name="test_patient_safety_question_gets_selected_precautions[\uc5b4\ub5a4 \uc99d\uc0c1\uc774 \uc0dd\uae30\uba74 \ubc14\ub85c \uc640\uc57c \ud558\ub098\uc694?]" time="0.002"><failure message="AssertionError: assert '' == '경련·혼돈·호흡저하 시 즉시 진료받으세요'&#10;  &#10;  - 경련·혼돈·호흡저하 시 즉시 진료받으세요">question = '어떤 증상이 생기면 바로 와야 하나요?'
+
+    @pytest.mark.parametrize('question',[
+        '어떤 증상이 생기면 바로 와야 하나요?', '응급실에는 언제 가나요?',
+        '어떤 위험 신호를 봐야 하나요?', '악화하면 어떻게 하나요?'])
+    def test_patient_safety_question_gets_selected_precautions(question):
+        plan={'spoken_precautions':'경련·혼돈·호흡저하 시 즉시 진료받으세요',
+              'spoken_follow_up':'1주 내 재진하세요'}
+&gt;       assert A._requested_clarification(question,plan,'다음 진료')==plan['spoken_precautions']
+E       AssertionError: assert '' == '경련·혼돈·호흡저하 시 즉시 진료받으세요'
+E         
+E         - 경련·혼돈·호흡저하 시 즉시 진료받으세요
+
+tests/test_native_questions_and_patient_answers.py:39: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_patient_safety_question_gets_selected_precautions[\uc751\uae09\uc2e4\uc5d0\ub294 \uc5b8\uc81c \uac00\ub098\uc694?]" time="0.001"><failure message="AssertionError: assert '1주 내 재진하세요' == '경련·혼돈·호흡저하 시 즉시 진료받으세요'&#10;  &#10;  - 경련·혼돈·호흡저하 시 즉시 진료받으세요&#10;  + 1주 내 재진하세요">question = '응급실에는 언제 가나요?'
+
+    @pytest.mark.parametrize('question',[
+        '어떤 증상이 생기면 바로 와야 하나요?', '응급실에는 언제 가나요?',
+        '어떤 위험 신호를 봐야 하나요?', '악화하면 어떻게 하나요?'])
+    def test_patient_safety_question_gets_selected_precautions(question):
+        plan={'spoken_precautions':'경련·혼돈·호흡저하 시 즉시 진료받으세요',
+              'spoken_follow_up':'1주 내 재진하세요'}
+&gt;       assert A._requested_clarification(question,plan,'다음 진료')==plan['spoken_precautions']
+E       AssertionError: assert '1주 내 재진하세요' == '경련·혼돈·호흡저하 시 즉시 진료받으세요'
+E         
+E         - 경련·혼돈·호흡저하 시 즉시 진료받으세요
+E         + 1주 내 재진하세요
+
+tests/test_native_questions_and_patient_answers.py:39: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_patient_safety_question_gets_selected_precautions[\uc5b4\ub5a4 \uc704\ud5d8 \uc2e0\ud638\ub97c \ubd10\uc57c \ud558\ub098\uc694?]" time="0.001"><failure message="AssertionError: assert '' == '경련·혼돈·호흡저하 시 즉시 진료받으세요'&#10;  &#10;  - 경련·혼돈·호흡저하 시 즉시 진료받으세요">question = '어떤 위험 신호를 봐야 하나요?'
+
+    @pytest.mark.parametrize('question',[
+        '어떤 증상이 생기면 바로 와야 하나요?', '응급실에는 언제 가나요?',
+        '어떤 위험 신호를 봐야 하나요?', '악화하면 어떻게 하나요?'])
+    def test_patient_safety_question_gets_selected_precautions(question):
+        plan={'spoken_precautions':'경련·혼돈·호흡저하 시 즉시 진료받으세요',
+              'spoken_follow_up':'1주 내 재진하세요'}
+&gt;       assert A._requested_clarification(question,plan,'다음 진료')==plan['spoken_precautions']
+E       AssertionError: assert '' == '경련·혼돈·호흡저하 시 즉시 진료받으세요'
+E         
+E         - 경련·혼돈·호흡저하 시 즉시 진료받으세요
+
+tests/test_native_questions_and_patient_answers.py:39: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_patient_safety_question_gets_selected_precautions[\uc545\ud654\ud558\uba74 \uc5b4\ub5bb\uac8c \ud558\ub098\uc694?]" time="0.001"><failure message="AssertionError: assert '' == '경련·혼돈·호흡저하 시 즉시 진료받으세요'&#10;  &#10;  - 경련·혼돈·호흡저하 시 즉시 진료받으세요">question = '악화하면 어떻게 하나요?'
+
+    @pytest.mark.parametrize('question',[
+        '어떤 증상이 생기면 바로 와야 하나요?', '응급실에는 언제 가나요?',
+        '어떤 위험 신호를 봐야 하나요?', '악화하면 어떻게 하나요?'])
+    def test_patient_safety_question_gets_selected_precautions(question):
+        plan={'spoken_precautions':'경련·혼돈·호흡저하 시 즉시 진료받으세요',
+              'spoken_follow_up':'1주 내 재진하세요'}
+&gt;       assert A._requested_clarification(question,plan,'다음 진료')==plan['spoken_precautions']
+E       AssertionError: assert '' == '경련·혼돈·호흡저하 시 즉시 진료받으세요'
+E         
+E         - 경련·혼돈·호흡저하 시 즉시 진료받으세요
+
+tests/test_native_questions_and_patient_answers.py:39: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_prognosis_question_gets_uncertainty_not_a_promise[\uc644\uce58\ub420\uae4c\uc694?]" time="0.001"><failure message="AssertionError: assert ('')">question = '완치될까요?'
+
+    @pytest.mark.parametrize('question',['완치될까요?','언제 회복되나요?','평생 이런가요?'])
+    def test_prognosis_question_gets_uncertainty_not_a_promise(question):
+        answer=A._requested_clarification(question,{},'')
+&gt;       assert answer and A.fits(answer) and '원인' in answer
+E       AssertionError: assert ('')
+
+tests/test_native_questions_and_patient_answers.py:44: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_prognosis_question_gets_uncertainty_not_a_promise[\uc5b8\uc81c \ud68c\ubcf5\ub418\ub098\uc694?]" time="0.001"><failure message="AssertionError: assert ('')">question = '언제 회복되나요?'
+
+    @pytest.mark.parametrize('question',['완치될까요?','언제 회복되나요?','평생 이런가요?'])
+    def test_prognosis_question_gets_uncertainty_not_a_promise(question):
+        answer=A._requested_clarification(question,{},'')
+&gt;       assert answer and A.fits(answer) and '원인' in answer
+E       AssertionError: assert ('')
+
+tests/test_native_questions_and_patient_answers.py:44: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_prognosis_question_gets_uncertainty_not_a_promise[\ud3c9\uc0dd \uc774\ub7f0\uac00\uc694?]" time="0.001"><failure message="AssertionError: assert ('')">question = '평생 이런가요?'
+
+    @pytest.mark.parametrize('question',['완치될까요?','언제 회복되나요?','평생 이런가요?'])
+    def test_prognosis_question_gets_uncertainty_not_a_promise(question):
+        answer=A._requested_clarification(question,{},'')
+&gt;       assert answer and A.fits(answer) and '원인' in answer
+E       AssertionError: assert ('')
+
+tests/test_native_questions_and_patient_answers.py:44: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_patient_question_actually_gets_answer_without_extra_model_call" time="0.041"><failure message="IndexError: list index out of range">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f87dc7af3b0&gt;
+
+    def test_patient_question_actually_gets_answer_without_extra_model_call(monkeypatch):
+        e,_=encounter();initialise(e,'불편해요');e.turns_left=10
+        plan={'spoken_next_step':'1주 내 재진하세요','spoken_follow_up':'1주 내 재진하세요',
+              'spoken_precautions':'증상이 악화하면 바로 진료받으세요',
+              'spoken_test_purpose':'평가로 원인을 확인해요'}
+        monkeypatch.setattr(e,'_urgent',lambda *a:False)
+        monkeypatch.setattr(e,'_engine_plan',lambda *a:plan)
+        def say(text,category):
+            reply='어떤 증상이 생기면 바로 와야 하나요?' if category=='patient_questions' else '1주 후요'
+            t=A.Turn('SAY',text,reply,category);e.turns.append(t);e.turns_left-=1;return t
+        monkeypatch.setattr(e,'say',say);e._explain([],None)
+        i=next(i for i,t in enumerate(e.turns) if t.category=='patient_questions')
+&gt;       assert e.turns[i+1].text==plan['spoken_precautions']
+               ^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+tests/test_native_questions_and_patient_answers.py:60: IndexError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_diagnosis_question_reuses_validated_reason[\uc65c \uadf8\ub807\uac8c \uc9c4\ub2e8\ud558\uc168\ub098\uc694?]" time="0.001"><failure message="AssertionError: assert '검사로 원인을 확인해요' == '체중 감소·손 떨림을 함께 고려했어요'&#10;  &#10;  - 체중 감소·손 떨림을 함께 고려했어요&#10;  + 검사로 원인을 확인해요">question = '왜 그렇게 진단하셨나요?'
+
+    @pytest.mark.parametrize('question',['왜 그렇게 진단하셨나요?','어떤 근거로 의심하나요?'])
+    def test_diagnosis_question_reuses_validated_reason(question):
+        plan={'spoken_reason':'체중 감소·손 떨림을 함께 고려했어요',
+              'spoken_test_purpose':'검사로 원인을 확인해요'}
+&gt;       assert A._requested_clarification(question,plan,'')==plan['spoken_reason']
+E       AssertionError: assert '검사로 원인을 확인해요' == '체중 감소·손 떨림을 함께 고려했어요'
+E         
+E         - 체중 감소·손 떨림을 함께 고려했어요
+E         + 검사로 원인을 확인해요
+
+tests/test_native_questions_and_patient_answers.py:67: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_diagnosis_question_reuses_validated_reason[\uc5b4\ub5a4 \uadfc\uac70\ub85c \uc758\uc2ec\ud558\ub098\uc694?]" time="0.001"><failure message="AssertionError: assert '' == '체중 감소·손 떨림을 함께 고려했어요'&#10;  &#10;  - 체중 감소·손 떨림을 함께 고려했어요">question = '어떤 근거로 의심하나요?'
+
+    @pytest.mark.parametrize('question',['왜 그렇게 진단하셨나요?','어떤 근거로 의심하나요?'])
+    def test_diagnosis_question_reuses_validated_reason(question):
+        plan={'spoken_reason':'체중 감소·손 떨림을 함께 고려했어요',
+              'spoken_test_purpose':'검사로 원인을 확인해요'}
+&gt;       assert A._requested_clarification(question,plan,'')==plan['spoken_reason']
+E       AssertionError: assert '' == '체중 감소·손 떨림을 함께 고려했어요'
+E         
+E         - 체중 감소·손 떨림을 함께 고려했어요
+
+tests/test_native_questions_and_patient_answers.py:67: AssertionError</failure></testcase><testcase classname="tests.test_native_questions_and_patient_answers" name="test_missing_reason_is_not_fabricated" time="0.001"><failure message="AssertionError: assert '추가 확인' in ''&#10; +  where '' = &lt;function _requested_clarification at 0x7f87dc98af20&gt;('진단 근거가 뭔가요?', {}, '')&#10; +    where &lt;function _requested_clarification at 0x7f87dc98af20&gt; = A._requested_clarification">def test_missing_reason_is_not_fabricated():
+&gt;       assert '추가 확인' in A._requested_clarification('진단 근거가 뭔가요?',{},'')
+E       AssertionError: assert '추가 확인' in ''
+E        +  where '' = &lt;function _requested_clarification at 0x7f87dc98af20&gt;('진단 근거가 뭔가요?', {}, '')
+E        +    where &lt;function _requested_clarification at 0x7f87dc98af20&gt; = A._requested_clarification
+
+tests/test_native_questions_and_patient_answers.py:71: AssertionError</failure></testcase></testsuite></testsuites>

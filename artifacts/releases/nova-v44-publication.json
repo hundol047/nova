@@ -1,0 +1,27 @@
+{
+  "status": "TARGETED_FIX_CANDIDATE",
+  "base_release_commit": "bc39ac794302ef690a63b94e97f0e241a819b6fe",
+  "artifact": "artifacts/releases/nova-v44-submission.zip",
+  "bytes": 924798,
+  "sha256": "1033a5bf64cea3db7727ee3c6a864d580d104bb2c176dd4ae22f5ff6a8dd4b73",
+  "source_mirror_archive_match": true,
+  "changed_runtime": {
+    "competition/nova_sdk_adapter.py": "074c4692b3054785650803be9d56c941db0729b7cf33f8b7dcd227c553257a65",
+    "competition/official_evidence.py": "65e2d5dd28e83bb6b7e9a138bdda8f267efd73770a530d729cec41e169fa48c0",
+    "nova_agent/preliminary.py": "c6284da7cb162fcde1c5abadec3aa61d9691914cbe4e951c4efcdcd844d2eadf",
+    "nova_agent/patient_questions.py": "7decff63b5c925c7dbb694b7d361a4f331f0dc326ff8640f5e5ffe88caef9574"
+  },
+  "scope": "Targeted native-question, communication and integration checks, not a new full-suite or SDK230 run. CURRENT_RELEASE.json remains the historical v41 full-suite record.",
+  "official_score_improvement_proven": false,
+  "real_model_executed": false,
+  "official_submission_performed": false,
+  "tests": {
+    "focused": 250,
+    "integration": 164,
+    "capture": 51,
+    "py311": 95
+  },
+  "isolated_zip_execution": true,
+  "fake_http_sdk": true,
+  "test_execution_note": "Initial integration had two packaging failures because the new shared runtime file was not staged. Staged the file without changing the packaging gate; reran the entire packaging module and provenance module. Initial failure and rerun XML preserved."
+}

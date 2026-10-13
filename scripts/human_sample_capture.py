@@ -25,7 +25,7 @@ def capture_response(operation, response):
 
 def verify_runtime(root, candidate=None):
     if candidate is not None:
-        if candidate not in {'v42', 'v43'}:raise SystemExit('Unknown candidate')
+        if candidate not in {'v42', 'v43', 'v44'}:raise SystemExit('Unknown candidate')
         import zipfile
         record = json.loads((root/f'artifacts/releases/nova-{candidate}-publication.json').read_text(encoding='utf-8'))
         archive = root/f'artifacts/releases/nova-{candidate}-submission.zip'

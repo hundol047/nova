@@ -233,6 +233,10 @@ def _compress_feature(feature: str) -> str:
 def _faithful_feature_question(feature: str, lang: str) -> Optional[str]:
     """A question about the WHOLE feature that fits the limit, or None. A question is never produced by
     cutting a feature off mid-phrase ("blood pressure falls on?" asks something else, or nothing)."""
+    if lang == 'ko':
+        from nova_agent.patient_questions import SINGLE_FEATURE_QUESTIONS
+        variants=SINGLE_FEATURE_QUESTIONS.get(feature.casefold())
+        if variants:return variants[0]
     frames = (_FEATURE_FRAME.get(lang, _FEATURE_FRAME["en"]), _FEATURE_FRAME_TIGHT.get(lang, _FEATURE_FRAME_TIGHT["en"]))
     for candidate in (feature, _compress_feature(feature)):
         for frame in frames:
