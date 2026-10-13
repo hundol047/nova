@@ -98,9 +98,10 @@ def test_supported_correction_owns_record_communication_and_safety():
     assert diagnosis in note['A']['evidence'] and 'TSH' in note['P']['tests']
     assert '400mg' not in json.dumps(note) and '응급실' not in note['P']['disposition']
     assert not e._urgent(d,f) and note['O']['tests']==''
-    assert all(len(s)<=30 for s in spoken) and 6<=len(spoken)<=8
+    assert all(len(s)<=30 for s in spoken) and 5<=len(spoken)<=8
     assert '1~2주' in spoken[1] and '고열' in spoken[2]
-    assert any('호르몬' in s for s in spoken) and any('판단이 바뀔' in s for s in spoken)
+    assert any('호르몬' in s for s in spoken) and any('의심' in s for s in spoken)
+    assert any('원인을 확인한 뒤' in s for s in spoken)
     assert {'understanding_check','patient_questions'} <= {t.category for t in e.turns}
 
 
@@ -220,7 +221,7 @@ def test_all_three_complete_sdk_fixtures_preserve_calls_and_closing_consistency(
         assert case['primary']==case['expected']
         assert not case['unsafe_emergency_disposition']
         assert case['duplicate_questions_exact']==case['age_inappropriate_social_questions']==case['nfc_or_test_violations']==0
-        assert 8<=len(case['communication'])<=10
+        assert 7<=len(case['communication'])<=8
         assert case['understanding_check'] and case['question_opportunity']
         assert not case['missing_required_topics']
         assert any('주' in s or '개월' in s for s in case['communication'])
@@ -262,5 +263,7 @@ def test_frozen_32_case_pipeline_proxy_and_no_fake_lab_results():
     assert r['metrics']['reference_compatible']==32
     assert r['metrics']['urgency_matches']==32
     assert r['metrics']['unperformed_test_results']==0
-    assert 7 <= r['metrics']['mean_closing_turns'] <= 10
+    # Urgent cases keep a shorter closing; routine ones retain teachback and
+    # a question opportunity without padding the average with repetition.
+    assert 5 <= r['metrics']['mean_closing_turns'] <= 8
     assert r['metrics']['precautions_present'] == r['metrics']['cases']

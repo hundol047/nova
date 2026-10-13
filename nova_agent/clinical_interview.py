@@ -28,8 +28,11 @@ def interview_family(state):
 
 
 TOPICS = {
+ 'surgery':('past_medical_history','수술받은 적이 있나요?',r'수술력|surgical history|previous surgery'),
+ 'smoking':('social_history','담배를 피우시나요?',r'smok|tobacco|흡연|담배'),
+ 'alcohol':('social_history','술은 얼마나 자주 드시나요?',r'alcohol|음주|술.*(?:마시|먹|잔|회)'),
  'course':('course','증상이 점점 심해지고 있나요?',r'worsen|progress|심해|악화|호전|나아'),
- 'function':('associated_symptoms','일상생활에 어떤 지장이 있나요?',r'일상.*지장|활동.*제한|daily.*(?:life|activit)'),
+ 'function':('associated_symptoms','일상생활에 어떤 지장이 있나요?',r'일상.*지장|(?:낮|일|활동).*(?:지장|제한)|daily.*(?:life|activit)|daytime impairment'),
  'prior_care':('past_medical_history','이 증상으로 진료받은 적이 있나요?',r'이 증상.*진료|previous.*(?:evaluat|consult)'),
  'medical_history':('past_medical_history','진단받거나 치료 중인 병이 있나요?',r'(?:과거력|기저질환|chronic disease|medical history).*(?:없|없음|none|no)|진단받.*병'),
  'family_illness':('family_history','가족 중 비슷한 질환이 있나요?',r'가족력.*(?:없|없음)|family history.*(?:none|negative)'),
@@ -70,6 +73,9 @@ def topic_for_question(text):
     # Question-language match is intentionally separate from answer evidence.
     for topic,pattern in (
         ('birth',r'태어|출생'),
+        ('surgery',r'수술|입원한|surg|hospitali'),
+        ('smoking',r'담배|흡연|smok|tobacco'),
+        ('alcohol',r'술은|음주|alcohol'),
         ('course',r'점점.*심|경과|worsen|progress'),
         ('function',r'일상.*지장|daily.*activit'),
         ('prior_care',r'이 증상.*진료|previous.*evaluat'),
@@ -162,6 +168,11 @@ def missing_foundation_topics(state):
     from nova_agent.interview_evidence import topic_attempted
     order = ['symptom_onset','course','medical_history','medication_name',
              'allergy','family_illness','function','prior_care']
+    # Broad prior-care questions do not establish surgical history. Adult
+    # substance exposure affects both the differential and safe treatment.
+    order.append('surgery')
+    if state.demographics.age is not None and state.demographics.age >= 18:
+        order += ['smoking','alcohol']
     standard_keys={'symptom_onset':'onset','course':'course','medical_history':'past_medical_history',
                    'medication_name':'medication','allergy':'allergy','family_illness':'family_history'}
     def attempted(topic):

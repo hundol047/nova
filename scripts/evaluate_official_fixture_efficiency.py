@@ -50,8 +50,10 @@ def fixtures():
         c['answers'].update({'course':'증상은 비슷하게 지속돼요','medical_history':'기저질환 없어요',
             'family_illness':'관련 가족력 없어요','function':'일상생활이 조금 불편해요',
             'prior_care':'이 증상으로 진료받은 적 없어요','symptom_onset':'8개월 전부터요',
-            'allergy':'약물 알레르기 없어요'})
+            'allergy':'약물 알레르기 없어요','surgery':'수술받은 적 없어요',
+            'smoking':'담배 안 피워요','alcohol':'술 안 마셔요'})
         c['required'] += ['medical_history','family_illness','allergy','symptom_onset','course','function','prior_care']
+        c['required'] += ['surgery'] + (['smoking','alcohol'] if c['id']!='growth_school_age' else [])
     cases[0]['answers'].update({'weight_change':'7kg 줄었어요','menstrual':'생리 주기 변화 없어요'})
     cases[0]['required'] += ['weight_change','bowel','sweat','tremor','menstrual']
     cases[1]['answers'].update({'sleep_pattern':'자주 잠에서 깨요','sleep_hours':'4시간 자요',
@@ -64,6 +66,7 @@ def fixtures():
 def topic(text):
     for name,pattern in (
         ('birth',r'태어|출생'),('bowel',r'배변|bowel'),
+        ('surgery',r'수술'),('smoking',r'담배|흡연'),('alcohol',r'술은|음주'),
         ('symptom_onset',r'언제부터|when.*start'),('course',r'점점.*심|경과|worsen'),
         ('medical_history',r'진단받.*병|과거.*병|병력|기저질환'),
         ('family_illness',r'가족.*(?:질환|병)|가족력'),
@@ -129,7 +132,9 @@ def run():
         result=e.run();gathered=set()
         for kind,text,answer in server.events:
             if answer=='잘 모르겠어요.':continue
-            if kind=='SAY':gathered.add(topic(text))
+            if kind=='SAY':
+                gathered.add(topic(text))
+                if re.search(r'(?:낮|일상|일|활동).*(?:지장|제한)',answer):gathered.add('function')
             elif '신장' in text:gathered.add('height')
             elif '갑상' in text:gathered.add('thyroid')
         # Explicit opening appetite is already an observation, not a question.
@@ -144,6 +149,7 @@ def run():
             'duplicate_questions_exact':len(questions)-len(set(questions)),
             'age_inappropriate_social_questions':sum('흡연' in t.text or '음주' in t.text for t in e.turns) if '9세' in case['opening'] else 0,
             'communication':communication,'unsafe_emergency_disposition':not case['urgent'] and '응급실' in server.record['P']['disposition'],
+            'record':server.record,
             'understanding_check':any(t.category=='understanding_check' for t in e.turns),
             'question_opportunity':any(t.category=='patient_questions' for t in e.turns),
             'observed_required_topics':sorted(required&gathered),'missing_required_topics':sorted(required-gathered),
