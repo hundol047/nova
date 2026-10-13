@@ -41,6 +41,11 @@ def _family_from_text(state,text,allow_condition_names):
 
 
 TOPICS = {
+ 'safety_chest':('associated_symptoms','가슴에 통증이 있나요?',r'chest pain|흉통|가슴.*(?:아프|통증)'),
+ 'safety_breathing':('associated_symptoms','숨이 차나요?',r'shortness of breath|dyspnea|숨.*차|호흡곤란'),
+ 'safety_syncope':('associated_symptoms','이번 증상 때 의식을 잃었나요?',r'syncope|loss of consciousness|실신|의식.*잃'),
+ 'safety_vomiting':('associated_symptoms','구토를 했나요?',r'vomit|구토|토했'),
+ 'safety_vision':('associated_symptoms','시야가 갑자기 달라졌나요?',r'visual change|시야.*변|시력.*저하'),
  'surgery':('past_medical_history','수술받은 적이 있나요?',r'수술력|surgical history|previous surgery'),
  'smoking':('social_history','담배를 피우시나요?',r'smok|tobacco|흡연|담배'),
  'alcohol':('social_history','술은 얼마나 자주 드시나요?',r'alcohol|음주|술.*(?:마시|먹|잔|회)'),
@@ -84,9 +89,23 @@ TOPICS = {
  'development':('past_medical_history','말하기·걷기 발달은 또래와 비슷한가요?',r'발달|develop|milestone'),
  'fatigue':('associated_symptoms','평소 쉽게 피곤해하나요?',r'피곤|피로|fatigue|tired'),
  'constipation':('associated_symptoms','변비가 있나요?',r'변비|constipat'),
- 'headache':('associated_symptoms','두통이나 구토가 자주 있나요?',r'두통|headache|구토|vomit'),
+ 'headache':('associated_symptoms','두통이 자주 있나요?',r'두통|headache|구토|vomit'),
  'sleep_child':('social_history','밤에 몇 시간 자나요?',r'(?:\d+|열|아홉|여덟)\s*시(?:간)?|잠|수면|sleep'),
  'daily_life':('social_history','어린이집 생활은 잘 지내나요?',r'어린이집|유치원|학교|school|daycare|스트레스'),
+ 'occupation':('social_history','평소 어떤 일을 하시나요?',r'직업|업무|occupation|work as'),
+ 'episode_duration':('duration','한 번 증상이 생기면 얼마나 지속되나요?',r'한 번.*(?:분|시간)|episode.*(?:minutes|hours)'),
+ 'episode_frequency':('timing','증상이 얼마나 자주 생기나요?',r'하루.*(?:번|회)|일주일.*(?:번|회)|frequency'),
+ 'trigger':('aggravating','어떤 때 증상이 더 심해지나요?',r'악화.*요인|worse.*(?:when|after)'),
+ 'relief':('relieving','어떻게 하면 증상이 덜해지나요?',r'완화.*요인|reliev|better.*(?:when|after)'),
+ 'previous_episodes':('past_medical_history','예전에도 같은 증상이 있었나요?',r'같은 증상.*(?:예전|이전)|previous.*episode'),
+ 'intentional_weight_loss':('associated_symptoms','체중을 줄이려고 식사량을 줄였나요?',r'다이어트|의도.*체중|dieting|intentional.*weight'),
+ 'growth_development':('past_medical_history','발달은 또래와 비슷했나요?',r'발달.*(?:정상|또래)|development.*normal'),
+ 'medication_control':('medication','약을 줄이려다 실패한 적이 있나요?',r'감량.*실패|줄이.*(?:실패|못)|failed.*(?:stop|reduce)'),
+ 'medication_prescribers':('medication','약 처방은 한 병원에서 받으시나요?',r'여러.*(?:병원|처방)|한.*병원|multiple.*prescrib'),
+ 'medication_extra':('medication','정해진 시간 외에도 약을 드시나요?',r'추가.*복용|낮에도.*(?:먹|복용)|extra.*dose'),
+ 'medication_tablets':('medication','잠들기 전 수면제를 몇 알 드시나요?',r'\d+\s*(?:알|정)|tablets?'),
+ 'medication_night_extra':('medication','밤중에 깨면 수면제를 몇 알 더 드시나요?',r'\d+\s*(?:알|정)|tablets?|없|none|no extra'),
+ 'allergy_reaction':('allergy','그 약을 먹고 어떤 반응이 생겼나요?',r'발진|두드러기|호흡.*(?:곤란|어려)|부종|rash|hives|anaphyla'),
 }
 
 
@@ -94,7 +113,7 @@ TOPICS = {
 # One clarification per topic and three per encounter; unknown/refused replies
 # are left unresolved rather than repeatedly solicited.
 DETAIL_QUESTIONS = {
-    'allergy': '어떤 약에 어떤 알레르기 반응이 있었나요?',
+    'allergy': '알레르기를 일으킨 약은 무엇인가요?',
     'medication_name': '복용 약 이름을 구체적으로 알려주세요',
     'medical_history': '진단받은 병 이름이 무엇인가요?',
     'symptom_onset': '증상이 시작된 때를 구체적으로 알려주세요',
@@ -120,6 +139,11 @@ def needs_history_detail(answer):
 def next_history_clarification(state):
     attempts = [a for a in state.performed_actions if a.action_type == 'ASK']
     if sum(a.content in DETAIL_QUESTIONS.values() for a in attempts) >= 3:return None
+    allergy=[a for a in attempts if topic_for_question(a.content)=='allergy']
+    from nova_agent.state import answer_kind
+    if allergy and answer_kind(allergy[-1].result) not in {'no','unknown','yes'} and not topic_known(state,'allergy_reaction'):
+        question=TOPICS['allergy_reaction'][1]
+        if not any(a.content==question for a in attempts):return ('SAY','allergy:allergy_reaction',question,'allergy')
     for topic, question in DETAIL_QUESTIONS.items():
         replies = [a for a in attempts if topic_for_question(a.content) == topic]
         if not replies or any(a.content == question for a in attempts):continue
@@ -151,6 +175,20 @@ def topic_for_question(text):
         if text == question:return topic
     # Question-language match is intentionally separate from answer evidence.
     for topic,pattern in (
+        ('allergy',r'알레르기|allerg'),
+        ('medication_control',r'줄이려다|감량.*실패'),
+        ('medication_prescribers',r'처방.*(?:한|여러).*병원|한 병원.*처방'),
+        ('medication_extra',r'정해진 시간 외|추가.*복용'),
+        ('medication_night_extra',r'밤중.*(?:몇 알|추가)'),
+        ('medication_tablets',r'잠들기 전.*몇 알'),
+        ('episode_duration',r'한 번.*(?:지속|얼마나)|each.*episode.*last'),
+        ('episode_frequency',r'얼마나 자주|how often'),
+        ('previous_episodes',r'예전에도.*같은|이전.*같은.*증상|previous.*episode'),
+        ('trigger',r'어떤 때.*심|악화.*요인|what.*worse'),
+        ('relief',r'어떻게.*덜|완화.*요인|what.*better'),
+        ('occupation',r'어떤.*일|직업|occupation'),
+        ('intentional_weight_loss',r'체중을 줄이려고|다이어트.*(?:했|하)'),
+        ('growth_development',r'발달.*(?:또래|비슷)'),
         ('birth',r'태어|출생'),
         ('surgery',r'수술|입원한|surg|hospitali'),
         ('smoking',r'담배|흡연|smok|tobacco'),
@@ -196,17 +234,30 @@ def next_clinical_action(state):
     from nova_agent.interview_evidence import topic_attempted
     family=interview_family(state)
     if not family:return None
+    exposure=False
+    def exam_tried(key):
+        return (state.exam_done(key) or key in state.rejected_exams or any(
+            a.action_type=='EXAM' and a.key==key for a in state.performed_actions))
     if family=='sleep':
-        order=['medication_name','medication_dose','medication_frequency','medication_duration','tolerance','withdrawal','daytime_impairment','combined_sedatives','allergy']
+        order=['safety_breathing','safety_syncope','medication_name','medication_dose','medication_frequency','medication_duration','tolerance','withdrawal','daytime_impairment','combined_sedatives','allergy']
         from nova_agent.matching import feature_present_with_aliases
         exposure=feature_present_with_aliases('sedative use',state.all_findings_text(include_context=True,include_family=False),scrub_negated_spans=True)
         if not exposure:order=['medication_name','daytime_impairment','allergy']
+        if exposure:
+            order += ['medication_control','medication_extra','medication_prescribers']
+            current=state.all_findings_text(include_context=True,include_family=False)
+            if feature_present_with_aliases('dose escalation',current,scrub_negated_spans=True):
+                # Tablet strength is not the actual number swallowed. Collect
+                # the bedtime and overnight quantities separately; never infer
+                # a daily dose from an mg-labelled box alone.
+                order.remove('medication_extra')
+                order += ['medication_tablets','medication_night_extra']
         order += ['symptom_onset','sleep_pattern','sleep_hours','snoring','caffeine']
     elif family=='growth':
-        order=['growth_records','growth_velocity','parent_height','parent_puberty','birth','birth_course','development',
-               'nutrition','chronic_gi','fatigue','constipation','headache','puberty','sleep_child','daily_life']
+        order=['headache','safety_vomiting','safety_vision','growth_records','growth_velocity','parent_height','parent_puberty','birth','birth_course','nutrition','chronic_gi','growth_development','fatigue','constipation','headache','sleep_child','daily_life']
+        if state.demographics.age is not None and state.demographics.age>=8:order.append('puberty')
     else:
-        order=['symptom_onset','weight_change','appetite','heat','palpitations','tremor','sweat','bowel','allergy']
+        order=['safety_chest','safety_breathing','safety_syncope','symptom_onset','weight_change','intentional_weight_loss','appetite','heat','palpitations','tremor','sweat','bowel','allergy']
         if state.demographics.sex=='female' and (state.demographics.age is None or 12<=state.demographics.age<=55):order.append('menstrual')
         # Once a characteristic symptom cluster is established, examination has
         # more candidate-separating value than finishing every possible ROS item.
@@ -215,9 +266,9 @@ def next_clinical_action(state):
         cluster=sum(feature_present_with_aliases(f,current,scrub_negated_spans=True)
                     for f in ('weight loss','increased appetite','heat intolerance','palpitations','tremor'))
         if cluster>=3:
-            if not state.exam_done('thyroid_exam'):return ('EXAM','thyroid_exam','갑상선을 촉진하겠습니다','thyroid_exam')
+            if not exam_tried('thyroid_exam'):return ('EXAM','thyroid_exam','갑상선을 촉진하겠습니다','thyroid_exam')
             if feature_present_with_aliases('diffuse goiter',state.objective_findings_text(),scrub_negated_spans=True):
-                if not state.exam_done('thyroid_eye'):return ('EXAM','thyroid_eye','안구 돌출을 살펴보겠습니다','thyroid_eye')
+                if not exam_tried('thyroid_eye'):return ('EXAM','thyroid_eye','안구 돌출을 살펴보겠습니다','thyroid_eye')
                 # A characteristic exam does not answer the time course,
                 # quantitative change or medication/allergy safety history.
                 if 'medication_name' not in order:order.append('medication_name')
@@ -229,14 +280,15 @@ def next_clinical_action(state):
                      'withdrawal':'withdrawal symptoms','tolerance':'dose escalation','daytime_impairment':'daytime sleepiness',
                      'chronic_gi':'chronic diarrhea'}.get(topic,topic.replace('_',' '))
             return ('SAY',category+':'+feature,text,category)
-    exams={'growth':[('growth_height','신장을 측정하겠습니다'),('growth_weight','체중을 측정하겠습니다'),
-                     ('growth_proportion','상하체 비율을 측정하겠습니다'),('growth_dysmorphism','얼굴 기형이 있는지 보겠습니다'),
-                     ('thyroid_exam','갑상선을 촉진하겠습니다'),('growth_tanner','사춘기 발달 단계를 보겠습니다'),
-                     ('growth_abdomen','간과 비장을 촉진하겠습니다')],
+    exams={'growth':[('growth_height','신장을 측정하겠습니다'),('growth_weight','체중을 측정하겠습니다')],
            'thyroid':[('thyroid_exam','갑상선을 촉진하겠습니다'),('thyroid_eye','안구 돌출을 살펴보겠습니다'),('thyroid_tremor','양손을 뻗어 떨림을 보겠습니다')],
-           'sleep':[]}[family]
+           'sleep':([('mental_status_exam','지남력을 확인하겠습니다')] if exposure else [])}[family]
+    if family=='growth':
+        exams.append(('growth_proportions','상하체 비율을 측정하겠습니다'))
+    if family=='thyroid' and feature_present_with_aliases('palpitations',current,scrub_negated_spans=True):
+        exams.append(('cardiac_auscultation','심장을 청진하겠습니다'))
     for key,text in exams:
-        if not state.exam_done(key):return ('EXAM',key,text,key)
+        if not exam_tried(key):return ('EXAM',key,text,key)
     return None
 
 

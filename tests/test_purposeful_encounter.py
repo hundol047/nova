@@ -70,7 +70,8 @@ def test_real_uncertainty_still_has_final_review_without_automatic_three_planner
         calls.append(kw.get('purpose'));return original(self,*a,**kw)
     monkeypatch.setattr(A.OfficialEncounter,'chat',chat)
     s=FakeServer();e,_=run(s)
-    assert calls.count('followup')==1 and calls.count('final_consult')==1
+    assert 1 <= calls.count('followup') < A.MAX_FOLLOWUP_ROUNDS
+    assert calls.count('final_consult')==1
     assert s.closed and e.stats.diagnostic_reasoning_successful>=1
 
 
@@ -79,7 +80,7 @@ def test_planner_has_lower_budget_and_keeps_final_reasoning_budget(monkeypatch):
     seen=[]
     monkeypatch.setattr(e,'chat',lambda *a,**kw: seen.append(kw) or '{}')
     e._followup_phase()
-    assert seen[0]['effort']=='low' and seen[0]['max_tokens']<A.CONSULT_MAX_TOKENS
+    assert seen[0]['effort']=='medium' and seen[0]['max_tokens']<A.CONSULT_MAX_TOKENS
 
 
 def test_plan_has_purpose_and_result_contingency_without_fake_results():

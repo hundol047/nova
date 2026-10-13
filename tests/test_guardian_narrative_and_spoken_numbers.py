@@ -66,7 +66,7 @@ def test_guardian_narrated_growth_complaint_routes_to_the_growth_interview_with_
     assert "preserved prepubertal growth velocity" in profile_observations(state)
     assert "short stature" in state.all_findings_text(include_context=False, include_family=False)
     kind, key, text, _ = next_clinical_action(state)
-    assert kind == "SAY" and "키" in text
+    assert kind == "SAY" and text == "두통이 자주 있나요?"  # risk screen before routine growth history
 
 
 def test_late_bloomer_parent_is_family_delayed_puberty_not_short_parental_stature():

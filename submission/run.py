@@ -4,7 +4,7 @@
 The organizer server runs `python run.py` once per case in a fresh, offline, read-only container:
     run_agent(prepare, consult): Client() -> prepare() -> client.ready() -> consult(client, state) -> client.diagnose()
 nova_sdk.py next to this file is the organizer SDK, vendored verbatim. The encounter logic lives in
-competition/nova_sdk_adapter.py (deterministic clinical engine + the official gpt-oss-20b Doctor via client.chat).
+competition/nova_sdk_adapter.py (deterministic clinical engine + the official designated Doctor via client.chat).
 """
 import os
 import sys

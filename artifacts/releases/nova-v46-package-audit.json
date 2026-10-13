@@ -1,0 +1,22 @@
+{
+  "zip": "artifacts/releases/nova-v46-submission.zip",
+  "checks": {
+    "zip_bytes": 939237,
+    "uncompressed_bytes": 3549519,
+    "files": 115,
+    "root:run.py": true,
+    "root:requirements.txt": true,
+    "root:nova_sdk.py": true,
+    "secret_hits": [],
+    "requirements": [
+      "pydantic==2.14.0",
+      "pydantic_core==2.50.0",
+      "annotated-types==0.8.0",
+      "typing-inspection==0.4.4",
+      "typing_extensions==4.16.0"
+    ],
+    "sha256": "d9ae7cae00a6c5522d78d6bc927e382b33fb3f4a08390fe2b4ecbf19a7f79bc2"
+  },
+  "problems": [],
+  "all_pass": true
+}

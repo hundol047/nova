@@ -1,0 +1,43 @@
+{
+  "zip": "artifacts/releases/nova-v46-submission.zip",
+  "bytes": 939237,
+  "sha256": "d9ae7cae00a6c5522d78d6bc927e382b33fb3f4a08390fe2b4ecbf19a7f79bc2",
+  "checks": {
+    "root_has_run_py_and_requirements": true,
+    "under_50MB": true,
+    "no_absolute_or_parent_paths": true,
+    "no_symlinks": true,
+    "all_members_utf8": true,
+    "no_forbidden_directories": true,
+    "no_forbidden_file_names_or_weights": true,
+    "no_forbidden_imports": true,
+    "requirements_only_declared_runtime_deps": true,
+    "offline_mock_encounter_runs": true,
+    "encounter_obeys_preliminary_actions": true,
+    "encounter_within_50_turns_and_30_char_say": true,
+    "encounter_ends_with_soap_and_one_diagnosis": true,
+    "run_py_requires_organizer_environment": true
+  },
+  "requirements": [
+    "pydantic",
+    "pydantic_core",
+    "annotated-types",
+    "typing-inspection",
+    "typing_extensions"
+  ],
+  "encounter": {
+    "kinds": [
+      "DIAGNOSE",
+      "EXAM",
+      "SAY"
+    ],
+    "turns": 14,
+    "final": "DIAGNOSE",
+    "say_max_chars": 30,
+    "has_soap": true,
+    "primary_diagnosis": "Acute Appendicitis"
+  },
+  "run_py_gate_message": "Traceback (most recent call last):\n  File \"/tmp/nova-cleanroom-5n4g_g9q/run.py\", line 28, in <module>\n    run_agent(prepare, consult)\n  File \"/tmp/nova-cleanroom-5n4g_g9q/nova_sdk.py\", line 161, in run_agent\n    client = Client()\n             ^^^^^^^^\n  File \"/tmp/nova-cleanroom-5n4g_g9q/nova_sdk.py",
+  "all_pass": true,
+  "scope": "Package well-formedness and offline self-containment only. NOT evidence of official-interface compatibility, real gpt-oss-20b behaviour, accuracy, or source/licence clearance."
+}

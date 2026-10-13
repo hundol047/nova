@@ -79,7 +79,7 @@ def test_model_followup_does_not_erase_actual_unresolved_medication_task():
     e._diagnosis_checked=True
     e._accepted_proposal=e.final_consult
     note,_=e.official_record([],None)
-    assert '다음 방문 때 확인' in note['P']['follow_up']
+    assert '1~2주' in note['P']['follow_up']  # vague model plan cannot erase timed follow-up
     assert '약봉투·처방전' in note['P']['follow_up']
     assert note['P']['follow_up'].count('약봉투·처방전')==1
 

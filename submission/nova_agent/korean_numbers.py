@@ -18,6 +18,8 @@ _UNITS = (
 _UNIT_RE = "|".join(sorted((re.escape(k) for k, _ in _UNITS), key=len, reverse=True))
 _UNIT = dict(_UNITS)
 _PHRASE = re.compile(rf"(?<![가-힣])({_NUMERAL})(?:\s*점\s*([영공일이삼사오육칠팔구]+))?\s*({_UNIT_RE})")
+_NATIVE={'한':1,'하나':1,'두':2,'둘':2,'세':3,'셋':3,'네':4,'넷':4,'다섯':5,'여섯':6,'일곱':7,'여덟':8,'아홉':9,'열':10}
+_TABLETS=re.compile(r'(?<![가-힣])('+'|'.join(_NATIVE)+r')\s+(알|정)(?![가-힣]|\s*(?:이상|이하))')
 
 
 def sino_number(word: str):
@@ -40,8 +42,10 @@ def sino_number(word: str):
 
 
 def normalize_spoken_numbers(text: str) -> str:
-    if not text or not _PHRASE.search(text):
+    if not text:
         return text or ""
+    # Exact single quantities only. Ranges such as 두세 알 are not guessed.
+    text=_TABLETS.sub(lambda m:f'{_NATIVE[m[1]]} {m[2]}',text)
 
     def convert(m):
         whole = sino_number(m.group(1))

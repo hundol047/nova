@@ -32,6 +32,8 @@ _LATE_BLOOMER=(r'delayed puberty|late puberty|late bloomer|사춘기(?:가|는|�
 
 def growth_velocity(text):
     """Explicit cm/year or two supplied, dated heights one year apart. No guessed dates."""
+    from nova_agent.korean_numbers import normalize_spoken_numbers
+    text=normalize_spoken_numbers(text)
     matches = re.findall(r'(\d+(?:\.\d+)?)\s*cm\s*(?:/\s*(?:year|yr)|per\s+year)',text,re.I)
     matches += re.findall(r'(?:1|일)\s*년(?:에|간|\s*동안)[^.;\n]{0,12}?(\d+(?:\.\d+)?)\s*(?:cm|센티)',text,re.I)
     if matches:

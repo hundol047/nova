@@ -9,7 +9,8 @@ _SIGNS = re.compile(r'([^,;\n:()]{1,100}?)\s*\(\s*([+\-−?](?:\s*/\s*[+\-−?])
 
 
 def normalize_exam_notation(text):
-    text = str(text or '')
+    from nova_agent.korean_numbers import normalize_spoken_numbers
+    text = normalize_spoken_numbers(str(text or ''))
     if '(' not in text or not re.search(r'\(\s*[+\-−?]',text):
         return text
     def project(match):

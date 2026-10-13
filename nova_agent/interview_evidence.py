@@ -16,7 +16,7 @@ _SEDATIVE = re.compile(_SEDATIVE_NAME.pattern + r'|sedative|sleeping (?:pill|med
 _UNCERTAIN = re.compile(_ANSWER_UNKNOWN.pattern + r'|unknown|uncertain|미확인|확인되지|알지 못|기억.*않', re.I)
 _FAMILY_TOPICS = {'parent_height', 'parent_puberty', 'family_illness'}
 _LONGITUDINAL_TOPICS = {'growth_records', 'growth_velocity', 'birth', 'medical_history', 'surgery', 'prior_care'}
-_QUANTITATIVE = {'medication_dose', 'medication_frequency', 'medication_duration', 'growth_records', 'growth_velocity', 'parent_height', 'birth'}
+_QUANTITATIVE = {'medication_dose', 'medication_frequency', 'medication_duration', 'medication_tablets', 'medication_night_extra', 'growth_records', 'growth_velocity', 'parent_height', 'birth'}
 
 
 def topic_attempted(state, topic):
@@ -61,6 +61,12 @@ def topic_answered(state, topic, pattern):
             # This is coverage only, never a diagnostic feature assertion.
             if topic in {'medical_history', 'surgery', 'family_illness', 'prior_care', 'function'} and kind is None:
                 return True
+            if topic == 'medication_name' and kind is None:
+                # A direct named medication reply need not be a sedative. Keep
+                # vague positive screens unresolved for one clarification.
+                vague = re.fullmatch(r'\s*(?:약|약을|약은|수면제|혈압약|당뇨약)(?:만)?(?:\s*(?:먹어요|먹고 있어요|복용해요|복용 중이에요))?[.!\s]*', result)
+                if not vague and not re.search(r'이름.*(?:모르|기억.*않)|name.*(?:unknown|remember)', result, re.I):
+                    return True
             if topic in _QUANTITATIVE - {'parent_height','growth_velocity','growth_records'} and re.search(pattern, ' '.join(usable), re.I):
                 return True
         pieces.extend(usable)
@@ -97,7 +103,8 @@ def topic_answered(state, topic, pattern):
 def weight_trajectory(text):
     """Explicit same-unit trajectory only; no guessed dates, units or weights."""
     from decimal import Decimal
-    current = patient_evidence_text(text, allow_historical=False)
+    from nova_agent.korean_numbers import normalize_spoken_numbers
+    current = patient_evidence_text(normalize_spoken_numbers(text), allow_historical=False)
     match = re.search(r'(\d+(?:\.\d+)?)\s*kg\s*(?:에서|to|→)\s*(\d+(?:\.\d+)?)\s*kg', current, re.I)
     if not match:
         return None
@@ -117,6 +124,9 @@ def exam_topic(text):
         ('thyroid_eye', r'안구|눈|eye', r'돌출|proptosis'),
         ('growth_height', r'신장|키|height', r'측정|measur'),
         ('growth_weight', r'체중|weight', r'측정|measur'),
+        ('growth_proportions', r'상하체|상절|하절|body proportion', r'측정|measur'),
+        ('mental_status_exam', r'지남력|orientation', r'확인|평가|assess'),
+        ('thyroid_tremor', r'양손|hands?', r'뻗|outstretch'),
         ('lung_auscultation', r'폐|호흡음|lung|chest', r'청진|auscult'),
         ('cardiac_auscultation', r'심장|심음|heart|cardiac', r'청진|auscult'),
     ):
@@ -127,5 +137,5 @@ def exam_topic(text):
 
 def exam_attempted(state, text):
     key = exam_topic(text)
-    return bool(key and (state.exam_done(key) or any(
+    return bool(key and (key in state.rejected_exams or state.exam_done(key) or any(
         exam_topic(t.content) == key for t in state.performed_actions if t.action_type == 'EXAM')))

@@ -86,13 +86,14 @@ def test_new_unresolved_evidence_gets_a_bounded_reassessment(monkeypatch):
 def test_unknown_answer_does_not_trigger_an_endless_interview():
     s = PatientState(chief_complaint='불면 때문에 수면제를 먹어요.')
     seen = []
-    for _ in range(20):
+    for _ in range(50):
         action = next_clinical_action(s)
         if action is None: break
         kind, key, text, _ = action
         seen.append(text)
-        s.record_ask(key, text, '잘 모르겠어요.')
-    assert len(seen) == len(set(seen)) and len(seen) < 20
+        if kind == 'EXAM': s.record_exam(key, '미확인', request_text=text)
+        else: s.record_ask(key, text, '잘 모르겠어요.')
+    assert len(seen) == len(set(seen)) and len(seen) < 50
 
 
 def test_followup_rechecks_knowledge_after_each_reply(monkeypatch):

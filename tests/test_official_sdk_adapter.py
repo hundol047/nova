@@ -14,8 +14,15 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "submission"))
-import nova_sdk  # noqa: E402  (vendored organizer SDK)
+# Load only the SDK from staging. Inserting all of submission/ into sys.path
+# could silently test stale staged packages instead of the edited root source.
+import importlib.util
+if "nova_sdk" not in sys.modules:
+    _spec = importlib.util.spec_from_file_location("nova_sdk", ROOT / "submission/nova_sdk.py")
+    _sdk_module = importlib.util.module_from_spec(_spec)
+    sys.modules["nova_sdk"] = _sdk_module
+    _spec.loader.exec_module(_sdk_module)
+import nova_sdk  # noqa: E402
 
 from competition import nova_sdk_adapter as A  # noqa: E402
 

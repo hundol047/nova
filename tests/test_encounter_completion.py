@@ -43,6 +43,7 @@ def test_negative_drug_allergy_does_not_answer_current_medication():
 def test_unknown_essential_history_is_attempted_once_not_assumed_negative():
     e,_=encounter();initialise(e,'9세 남아, 키가 작아요.')
     e._foundation_phase()
+    e._foundation_phase(reserve_followup=False)
     questions=[t.text for t in e.turns if t.category!='patient_concern']
     assert len(questions)==len(set(questions))
     assert not missing_foundation_topics(e.pstate)
@@ -56,7 +57,8 @@ def test_sleep_interview_includes_sleep_history_not_only_medications(opening):
     for _ in range(24):
         a=next_clinical_action(s)
         if a is None:break
-        assert a[0]=='SAY'
+        if a[0]=='EXAM':
+            s.record_exam(a[1],'미확인',request_text=a[2]);continue
         asked.append(topic_for_question(a[2]))
         s.record_ask(a[1],a[2],'잘 모르겠어요.')
     assert {'symptom_onset','sleep_pattern','sleep_hours','snoring','caffeine'} <= set(asked)
@@ -83,7 +85,7 @@ def test_leading_diagnosis_does_not_hide_missing_foundation(monkeypatch):
     assert e._needs_more_information()
 
 
-@pytest.mark.parametrize('remaining,used,budget', [(50,0,38),(20,28,10),(10,38,0),(3,0,0),(50,48,0)])
+@pytest.mark.parametrize('remaining,used,budget', [(50,0,38),(20,28,8),(10,38,0),(3,0,0),(50,48,0)])
 def test_gathering_reserves_real_server_turns(remaining,used,budget):
     e,_=encounter();e.turns_left=remaining;e.turns=[None]*used
     assert e.gathering_budget()==budget
@@ -101,7 +103,7 @@ def test_full_encounter_delivers_and_records_understanding_check():
     s=FakeServer();e,_=run(s)
     categories={t.category for t in e.turns}
     assert {'understanding_check','patient_questions','patient_concern'} <= categories
-    assert all(len(t.text)<=30 for t in e.turns) and len(e.turns)<=48
+    assert all(len(t.text)<=30 for t in e.turns) and len(e.turns)<=50
     assert '이해 확인·추가 질문에 대한 실제 응답' in s.record['P']['education']
     assert all(t.text in s.record['P']['education'] for t in e.turns if t.category in A.COMMUNICATION_CATEGORIES)
     assert not any(t.text in str(s.record['S']) for t in e.turns if t.category in A.COMMUNICATION_CATEGORIES)

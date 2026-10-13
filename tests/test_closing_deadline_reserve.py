@@ -20,7 +20,7 @@ def setup(monkeypatch, seconds, urgent=False, reply='1주 후요'):
     monkeypatch.setattr(e,'say',say)
     return e
 
-@pytest.mark.parametrize('seconds',[239,120,60,30])
+@pytest.mark.parametrize('seconds',[239,120,75])
 def test_reserved_time_delivers_purpose_followup_and_checks(monkeypatch,seconds):
     e=setup(monkeypatch,seconds);assert not e.can_gather()
     e._explain([],None)
@@ -47,10 +47,20 @@ def test_urgent_path_does_not_add_routine_followup_dialogue(monkeypatch):
 
 
 def test_wrong_teachback_corrected_within_reserved_turns(monkeypatch):
-    e=setup(monkeypatch,60,reply='3개월 후요');e._explain([],None)
-    assert [t.text for t in e.turns].count(PLAN['spoken_follow_up'])==2
+    e=setup(monkeypatch,120,reply='3개월 후요');e._explain([],None)
+    assert [t.text for t in e.turns].count(PLAN['spoken_next_step'])==2
     assert len(e.turns)<=A.CLOSING_TURN_RESERVE
 
 
 def test_submission_margin_prevents_any_dialogue(monkeypatch):
     e=setup(monkeypatch,20);e._explain([],None);assert not e.turns
+
+
+@pytest.mark.parametrize('seconds',[60,30])
+def test_short_deadline_preserves_disposition_and_precautions(monkeypatch,seconds):
+    e=setup(monkeypatch,seconds);e._explain([],None)
+    spoken=[t.text for t in e.turns]
+    assert PLAN['spoken_next_step'] in spoken
+    assert PLAN['spoken_precautions'] in spoken
+    assert len(spoken)==3
+    assert not any(t.category in ('understanding_check','patient_questions') for t in e.turns)

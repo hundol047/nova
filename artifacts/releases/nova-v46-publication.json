@@ -1,0 +1,50 @@
+{
+  "status": "UNSCORED_QUALITY_CANDIDATE",
+  "base_source_commit": "3b31dc082b62baa2957fae9d0094b97c4b5f60d6",
+  "artifact": "artifacts/releases/nova-v46-submission.zip",
+  "bytes": 939237,
+  "sha256": "d9ae7cae00a6c5522d78d6bc927e382b33fb3f4a08390fe2b4ecbf19a7f79bc2",
+  "uploaded_v45_sha256": "5c6414d2a1ae4bb89a2fb82ce1b56d4d14b3c63f0543cfc77d20463826e4c54c",
+  "source_mirror_archive_match": true,
+  "hashed_runtime_files": 114,
+  "reproducible_build": true,
+  "regression": {
+    "passed": 1077,
+    "failed": 0,
+    "seconds": 176.21,
+    "scope": "Selected clinical, SDK, safety and evidence suites; not every historical suite",
+    "command": "python -m pytest -q tests/test_official_sdk_adapter.py tests/test_official_independent_audit.py tests/test_official_transport_boundary.py tests/test_interview_quality.py tests/test_encounter_completion.py tests/test_purposeful_encounter.py tests/test_guardian_narrative_and_spoken_numbers.py tests/test_v46_care_quality.py tests/test_adaptive_history.py tests/test_closing_deadline_reserve.py tests/test_onset_and_teachback.py tests/test_question_bound_followup.py tests/test_question_coverage_invariants.py tests/test_targeted_turn_allocation.py tests/test_preliminary*.py tests/test_safety*.py tests/test_soap_regression.py tests/test_native_questions_and_patient_answers.py tests/test_clinical_presentation.py tests/test_multilingual_clinical_concepts.py tests/test_documented_diagnosis_assertion_scope.py tests/test_round_r_assertion_evidence.py tests/test_round_t_evidence_scope.py tests/test_round_q_expression_answers_final_decision.py tests/test_round_s_observation_safety.py tests/test_case_isolation.py tests/test_medication_risk_context.py tests/test_no_evaluation_time_learning.py tests/test_no_answer_leakage_in_retrieval_eval.py --tb=short"
+  },
+  "packaging_tests_passed": 3,
+  "cleanroom_pass": true,
+  "synthetic_http_pass": true,
+  "isolated_dependency_versions": {
+    "pydantic": "2.14.0",
+    "pydantic_core": "2.50.0",
+    "annotated-types": "0.8.0",
+    "typing-inspection": "0.4.4",
+    "typing_extensions": "4.16.0"
+  },
+  "synthetic_http": {
+    "turns": 30,
+    "doctor_calls": 4,
+    "max_action_chars": 23,
+    "test_actions": 0,
+    "record_fields_ok": true,
+    "errors": []
+  },
+  "owner_reported_previous_scores": {
+    "information": 10.44,
+    "reasoning": 7.36,
+    "tests_followup": 3.67,
+    "safety": 10,
+    "communication": 5.94,
+    "efficiency": 20,
+    "total": 57.41
+  },
+  "official_score_improvement_proven": false,
+  "real_model_executed": false,
+  "official_submission_performed": false,
+  "blind_v18_rerun": false,
+  "note": "Fake HTTP uses the historical mock model label; runtime leaves the official model choice to the server. Scores are previous owner reports, not v46 predictions."
+}
