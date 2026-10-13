@@ -1,0 +1,264 @@
+{
+  "label": "LOCAL RUBRIC PROXY — NOT OFFICIAL SCORE / FULL FAKE SDK / SCRIPTED DOCTOR",
+  "real_model_tokens_latency_cost": "NOT MEASURED; fixture usage constants are not real costs",
+  "mean_turns": 28.0,
+  "mean_doctor_physical_requests": 2.3333333333333335,
+  "mean_topic_coverage": 1.0,
+  "mean_exam_count": 1.6666666666666667,
+  "cases": [
+    {
+      "id": "thyroid_midlife",
+      "status": "completed",
+      "primary": "Graves disease",
+      "expected": "Graves disease",
+      "turns": 30,
+      "exam_count": 3,
+      "say_count": 27,
+      "fixture_wall_seconds": 5.529750571000477,
+      "doctor_physical_requests": 2,
+      "fixture_reported_prompt_tokens": 200,
+      "fixture_reported_completion_tokens": 100,
+      "unique_required_topics": 19,
+      "required_topics": 19,
+      "topic_coverage": 1.0,
+      "duplicate_questions_exact": 0,
+      "age_inappropriate_social_questions": 0,
+      "communication": [
+        "걱정되셨죠. 갑상샘 비대로 그레이브스병 의심돼요.",
+        "갑상샘 검사 후 1~2주 내 재진하세요",
+        "고열·의식 변화·숨참 시 즉시 진료받으세요",
+        "피검사로 갑상샘 호르몬이 많은지 확인해요",
+        "검사로 원인을 확인한 뒤 치료를 정해요",
+        "다음 진료 시점을 말씀해 주시겠어요?",
+        "계획에서 어려운 점이나 궁금한 점은요?"
+      ],
+      "unsafe_emergency_disposition": false,
+      "record": {
+        "S": {
+          "cc": "C.C : 44세 여자입니다. 식사량은 늘었는데 살이 빠져요.\nOnset : 8개월 전부터요",
+          "hpi": "P.I : 44세 여자입니다. 식사량은 늘었는데 살이 빠져요.\n- 언제부터 이런 증상이 있었나요? → 8개월 전부터요  (턴 1)\n- 증상이 점점 심해지고 있나요? → 증상은 비슷하게 지속돼요  (턴 15)\n- 일상생활에 어떤 지장이 있나요? → 일상생활이 조금 불편해요  (턴 18)\n- 이 증상으로 진료받은 적이 있나요? → 이 증상으로 진료받은 적 없어요  (턴 19)\n- 많이 불편하셨죠. 가장 걱정되는 점은요? → 잘 모르겠어요. (미확인) (턴 23)",
+          "pmh": "- 약물 알레르기가 있나요? → 약물 알레르기 없어요  (턴 11)\n- 복용 중인 약 이름이 뭔가요? → 먹는 약 없어요  (턴 13)\n- 진단받거나 치료 중인 병이 있나요? → 기저질환 없어요  (턴 16)\n- 수술받은 적이 있나요? → 수술받은 적 없어요  (턴 20)",
+          "fh": "- 가족 중 질환이 있는 분이 있나요? → 관련 가족력 없어요  (턴 17)",
+          "sh": "- 담배를 피우시나요? → 담배 안 피워요  (턴 21)\n- 술은 얼마나 자주 드시나요? → 술 안 마셔요  (턴 22)",
+          "ros": "- 체중이 몇 kg 줄었나요? → 7kg 줄었어요  (턴 2)\n- 식욕은 어떻게 변했나요? → 식욕이 늘었어요  (턴 3)\n- 더위를 견디기 어려우신가요? → 더위를 못 견뎌요  (턴 4)\n- 가슴이 두근거리나요? → 심장이 두근거려요  (턴 7)\n- 손이 떨리나요? → 손이 떨려요  (턴 8)\n- 땀이 평소보다 많아졌나요? → 땀이 많아요  (턴 9)\n- 배변 횟수가 늘었나요? → 묽은 변을 봐요  (턴 10)\n- 생리 주기가 달라졌나요? → 생리 주기 변화 없어요  (턴 12)"
+        },
+        "O": {
+          "exam": "V/S : BP 118/72, HR 88, RR 16, Temp 36.7, SpO2 98%\n- 갑상선을 촉진하겠습니다 → 양측 대칭성 미만성 비대(+), 결절(-), 압통(-) (턴 5)\n- 안구 돌출을 살펴보겠습니다 → 안구 돌출(+) (턴 6)\n- 양손을 뻗어 떨림을 보겠습니다 → 손 떨림(+) (턴 14)",
+          "tests": ""
+        },
+        "A": {
+          "evidence": "#1. Graves disease\n- 근거 : 식욕이 늘었어요\n- 근거 : 더위를 못 견뎌요\n- 근거 : 땀이 많아요\n- 근거 : 손이 떨려요\n- 근거 : 심장이 두근거려요\n- 근거 : 묽은 변을 봐요\n- 근거 : 약물 알레르기 없어요\n- 근거 : 먹는 약 없어요\n해석: weight loss / increased appetite / heat intolerance / sweating / tremor 소견이 이 후보를 지지함; 미확인 감별 항목: hyperreflexia (음성으로 간주하지 않음)\n확실성: 현재 수집 정보에 근거한 작업 진단; 미시행 검사는 확진 근거가 아님",
+          "differential": "r/o 갑상샘항진증 (Hyperthyroidism) : 해석: weight loss / increased appetite / heat intolerance / sweating / tremor 소견이 이 후보를 지지함; 미확인 감별 항목: hyperreflexia / suppressed TSH with raised free T4 / diffuse goiter on examination (음성으로 간주하지 않음)\nr/o 저혈당 (Hypoglycemia) : 해석: diaphoresis / tremor 소견이 이 후보를 지지함; 미확인 감별 항목: confusion / known diabetes on insulin / resolves with glucose (음성으로 간주하지 않음)\nr/o 중증 전해질이상 (Severe Electrolyte Disorder (e.g. Hyperkalemia/Hyponatremia)) : 해석: palpitations / vomiting or diarrhea 소견이 이 후보를 지지함; 미확인 감별 항목: muscle weakness / confusion / arrhythmia (음성으로 간주하지 않음)\nr/o 크론병 (Crohn Disease) : 해석: weight loss 소견이 이 후보를 지지함; 미확인 감별 항목: chronic diarrhea / right lower abdominal pain / mouth ulcers (음성으로 간주하지 않음)"
+        },
+        "P": {
+          "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG\n우선 TSH·free T4: 호르몬 과다 여부 확인. 항진 소견이면 원인 감별 계획을 조정하며 정상 또는 불일치하면 약물 영향 및 다른 체중 감소 원인을 재평가. T3는 필요 시 추가, TRAb는 자가면역 원인 감별 시 고려. 두근거림이 있으면 ECG로 부정맥 여부 평가.\n평가 목적: 피검사로 갑상샘 호르몬이 많은지 확인해요; 실제 검사는 아직 시행하지 않음\n아직 확인할 감별 항목: hyperreflexia (확인된 검사 결과 아님)",
+          "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+          "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+          "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료\n담당 진료에서 결과 확인 후 원인별 치료·의뢰 여부 결정; 악화하면 예약일까지 기다리지 않음\n증상·진찰 변화 비교 항목(현재 관찰): weight loss, increased appetite, heat intolerance, sweating",
+          "education": "진료 중 설명함: 걱정되셨죠. 갑상샘 비대로 그레이브스병 의심돼요. / 갑상샘 검사 후 1~2주 내 재진하세요 / 고열·의식 변화·숨참 시 즉시 진료받으세요 / 피검사로 갑상샘 호르몬이 많은지 확인해요 / 검사로 원인을 확인한 뒤 치료를 정해요 / 다음 진료 시점을 말씀해 주시겠어요? / 계획에서 어려운 점이나 궁금한 점은요?\n고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가\n이해 확인·추가 질문에 대한 실제 응답: 다음 진료 시점을 말씀해 주시겠어요? → 잘 모르겠어요. / 계획에서 어려운 점이나 궁금한 점은요? → 잘 모르겠어요."
+        }
+      },
+      "understanding_check": true,
+      "question_opportunity": true,
+      "observed_required_topics": [
+        "alcohol",
+        "allergy",
+        "appetite",
+        "bowel",
+        "course",
+        "family_illness",
+        "function",
+        "heat",
+        "medical_history",
+        "menstrual",
+        "palpitations",
+        "prior_care",
+        "smoking",
+        "surgery",
+        "sweat",
+        "symptom_onset",
+        "thyroid",
+        "tremor",
+        "weight_change"
+      ],
+      "missing_required_topics": [],
+      "nfc_or_test_violations": 0,
+      "clinical_plan": {
+        "tests": "TSH·free T4 측정; 항진 소견 확인 시 원인 감별을 위해 TRAb 고려; 두근거림 시 ECG\n우선 TSH·free T4: 호르몬 과다 여부 확인. 항진 소견이면 원인 감별 계획을 조정하며 정상 또는 불일치하면 약물 영향 및 다른 체중 감소 원인을 재평가. T3는 필요 시 추가, TRAb는 자가면역 원인 감별 시 고려. 두근거림이 있으면 ECG로 부정맥 여부 평가.\n평가 목적: 피검사로 갑상샘 호르몬이 많은지 확인해요; 실제 검사는 아직 시행하지 않음\n아직 확인할 감별 항목: hyperreflexia (확인된 검사 결과 아님)",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1~2주 내 갑상샘 검사 결과와 맥박·체중 재평가; 필요 시 내분비 진료\n담당 진료에서 결과 확인 후 원인별 치료·의뢰 여부 결정; 악화하면 예약일까지 기다리지 않음\n증상·진찰 변화 비교 항목(현재 관찰): weight loss, increased appetite, heat intolerance, sweating",
+        "education": "진료 중 설명함: 걱정되셨죠. 갑상샘 비대로 그레이브스병 의심돼요. / 갑상샘 검사 후 1~2주 내 재진하세요 / 고열·의식 변화·숨참 시 즉시 진료받으세요 / 피검사로 갑상샘 호르몬이 많은지 확인해요 / 검사로 원인을 확인한 뒤 치료를 정해요 / 다음 진료 시점을 말씀해 주시겠어요? / 계획에서 어려운 점이나 궁금한 점은요?\n고열, 심한 두근거림, 의식 변화, 흉통·호흡곤란 시 즉시 평가\n이해 확인·추가 질문에 대한 실제 응답: 다음 진료 시점을 말씀해 주시겠어요? → 잘 모르겠어요. / 계획에서 어려운 점이나 궁금한 점은요? → 잘 모르겠어요."
+      },
+      "diagnostic_successes_fixture": 2
+    },
+    {
+      "id": "sleep_sedative",
+      "status": "completed",
+      "primary": "Sedative-Hypnotic Use Disorder",
+      "expected": "Sedative-Hypnotic Use Disorder",
+      "turns": 29,
+      "exam_count": 0,
+      "say_count": 29,
+      "fixture_wall_seconds": 4.958091404001607,
+      "doctor_physical_requests": 2,
+      "fixture_reported_prompt_tokens": 200,
+      "fixture_reported_completion_tokens": 100,
+      "unique_required_topics": 21,
+      "required_topics": 21,
+      "topic_coverage": 1.0,
+      "duplicate_questions_exact": 0,
+      "age_inappropriate_social_questions": 0,
+      "communication": [
+        "걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요.",
+        "임의 중단·운전 피하고 1주 내 재진해요",
+        "경련·혼돈·호흡저하 시 즉시 진료받으세요",
+        "복약 검토와 수면일지로 원인을 살펴요",
+        "약은 처방의와 상의해 서서히 조절해요",
+        "다음 진료 시점을 말씀해 주시겠어요?",
+        "계획에서 어려운 점이나 궁금한 점은요?"
+      ],
+      "unsafe_emergency_disposition": false,
+      "record": {
+        "S": {
+          "cc": "C.C : 51세 여자입니다. 잠이 안 오고 낮에 졸려요.\nOnset : 8개월 전부터요",
+          "hpi": "P.I : 51세 여자입니다. 잠이 안 오고 낮에 졸려요.\n- 언제부터 이런 증상이 있었나요? → 8개월 전부터요  (턴 10)\n- 증상이 점점 심해지고 있나요? → 증상은 비슷하게 지속돼요  (턴 15)\n- 이 증상으로 진료받은 적이 있나요? → 이 증상으로 진료받은 적 없어요  (턴 18)\n- 많이 불편하셨죠. 가장 걱정되는 점은요? → 잘 모르겠어요. (미확인) (턴 22)",
+          "pmh": "- 복용 중인 약 이름이 뭔가요? → zopiclone을 복용해요  (턴 1)\n- 수면제 한 번 용량은 몇 mg인가요? → 7.5mg씩 먹어요  (턴 2)\n- 수면제를 하루 몇 번 드시나요? → 매일 밤 먹어요  (턴 3)\n- 수면제를 얼마나 오래 드셨나요? → 8개월 복용해요  (턴 4)\n- 같은 효과에 더 많은 약이 필요한가요? → 같은 효과를 위해 용량을 늘려요  (턴 5)\n- 수면제를 줄이면 어떤 증상이 생기나요? → 약을 끊으면 잠이 더 안 오고 손이 떨려요  (턴 6)\n- 다른 진정제를 함께 드시나요? → 다른 진정제는 안 먹어요  (턴 8)\n- 약물 알레르기가 있나요? → 약물 알레르기 없어요  (턴 9)\n- 진단받거나 치료 중인 병이 있나요? → 기저질환 없어요  (턴 16)\n- 수술받은 적이 있나요? → 수술받은 적 없어요  (턴 19)",
+          "fh": "- 가족 중 질환이 있는 분이 있나요? → 관련 가족력 없어요  (턴 17)",
+          "sh": "- 커피나 카페인은 얼마나 드시나요? → 커피는 하루 두 잔 마셔요  (턴 14)\n- 담배를 피우시나요? → 담배 안 피워요  (턴 20)\n- 술은 얼마나 자주 드시나요? → 술 안 마셔요  (턴 21)",
+          "ros": "- 낮 활동에 어떤 지장이 있나요? → 낮에 졸려서 일에 지장이 있어요  (턴 7)\n- 잠들기와 잠 유지 중 무엇이 어렵나요? → 자주 잠에서 깨요  (턴 11)\n- 하루에 실제로 몇 시간 주무시나요? → 4시간 자요  (턴 12)\n- 잘 때 코골이가 있나요? → 코골이 없어요  (턴 13)"
+        },
+        "O": {
+          "exam": "V/S : BP 118/72, HR 88, RR 16, Temp 36.7, SpO2 98%",
+          "tests": ""
+        },
+        "A": {
+          "evidence": "#1. Sedative-Hypnotic Use Disorder\n- 근거 : zopiclone을 복용해요\n- 근거 : 7.5mg씩 먹어요\n- 근거 : 매일 밤 먹어요\n- 근거 : 8개월 복용해요\n- 근거 : 같은 효과를 위해 용량을 늘려요\n- 근거 : 약을 끊으면 잠이 더 안 오고 손이 떨려요\n- 근거 : 낮에 졸려서 일에 지장이 있어요\n- 근거 : 다른 진정제는 안 먹어요\n해석: sedative use / insomnia / daytime sleepiness / dose escalation / withdrawal symptoms 소견이 이 후보를 지지함; 미확인 감별 항목: difficulty reducing sedative use (음성으로 간주하지 않음)\n확실성: 현재 수집 정보에 근거한 작업 진단; 미시행 검사는 확진 근거가 아님",
+          "differential": "r/o 반동 불면 (Rebound insomnia) : 해석: sedative use / insomnia / rebound insomnia after stopping 소견이 이 후보를 지지함"
+        },
+        "P": {
+          "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토\n약물·병용 물질 및 수면일지 검토로 약물 영향, 금단과 기저 수면 문제를 구분. 단순 불면만으로 일괄 혈액·영상 검사를 시행하지 않고, 동반 증상·진찰상 다른 원인이 의심될 때 표적 평가.\n평가 목적: 복약 검토와 수면일지로 원인을 살펴요; 실제 검사는 아직 시행하지 않음\n아직 확인할 감별 항목: difficulty reducing sedative use (확인된 검사 결과 아님)",
+          "treatment": "복약 검토 후 처방의와 감독하 감량 논의; 갑작스러운 중단·임의 증량 금지",
+          "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+          "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락\n처방의와 복약 목록·수면 변화·낮 기능·금단 증상을 검토하고 감량 속도 조정; 악화 시 조기 연락\n증상·진찰 변화 비교 항목(현재 관찰): sedative use, insomnia, daytime sleepiness, dose escalation",
+          "education": "진료 중 설명함: 걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요. / 임의 중단·운전 피하고 1주 내 재진해요 / 경련·혼돈·호흡저하 시 즉시 진료받으세요 / 복약 검토와 수면일지로 원인을 살펴요 / 약은 처방의와 상의해 서서히 조절해요 / 다음 진료 시점을 말씀해 주시겠어요? / 계획에서 어려운 점이나 궁금한 점은요?\n갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가\n이해 확인·추가 질문에 대한 실제 응답: 다음 진료 시점을 말씀해 주시겠어요? → 잘 모르겠어요. / 계획에서 어려운 점이나 궁금한 점은요? → 잘 모르겠어요."
+        }
+      },
+      "understanding_check": true,
+      "question_opportunity": true,
+      "observed_required_topics": [
+        "alcohol",
+        "allergy",
+        "caffeine",
+        "course",
+        "daytime",
+        "dose",
+        "duration",
+        "family_illness",
+        "frequency",
+        "function",
+        "med_name",
+        "medical_history",
+        "prior_care",
+        "sleep_hours",
+        "sleep_pattern",
+        "smoking",
+        "snoring",
+        "surgery",
+        "symptom_onset",
+        "tolerance",
+        "withdrawal"
+      ],
+      "missing_required_topics": [],
+      "nfc_or_test_violations": 0,
+      "clinical_plan": {
+        "tests": "약 이름·실제 용량·빈도·기간 확인; 병용 진정제·음주 및 낮 기능장애 검토\n약물·병용 물질 및 수면일지 검토로 약물 영향, 금단과 기저 수면 문제를 구분. 단순 불면만으로 일괄 혈액·영상 검사를 시행하지 않고, 동반 증상·진찰상 다른 원인이 의심될 때 표적 평가.\n평가 목적: 복약 검토와 수면일지로 원인을 살펴요; 실제 검사는 아직 시행하지 않음\n아직 확인할 감별 항목: difficulty reducing sedative use (확인된 검사 결과 아님)",
+        "treatment": "복약 검토 후 처방의와 감독하 감량 논의; 갑작스러운 중단·임의 증량 금지",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "1주 내 복약·금단·반동 불면 재평가; 악화 시 조기 연락\n처방의와 복약 목록·수면 변화·낮 기능·금단 증상을 검토하고 감량 속도 조정; 악화 시 조기 연락\n증상·진찰 변화 비교 항목(현재 관찰): sedative use, insomnia, daytime sleepiness, dose escalation",
+        "education": "진료 중 설명함: 걱정되셨죠. 복약 기록상 수면제 사용장애 의심돼요. / 임의 중단·운전 피하고 1주 내 재진해요 / 경련·혼돈·호흡저하 시 즉시 진료받으세요 / 복약 검토와 수면일지로 원인을 살펴요 / 약은 처방의와 상의해 서서히 조절해요 / 다음 진료 시점을 말씀해 주시겠어요? / 계획에서 어려운 점이나 궁금한 점은요?\n갑자기 중단하지 말고 처방의와 감독하 감량 논의; 운전·음주·진정제 병용 주의; 심한 혼돈·경련·호흡저하 시 즉시 평가\n이해 확인·추가 질문에 대한 실제 응답: 다음 진료 시점을 말씀해 주시겠어요? → 잘 모르겠어요. / 계획에서 어려운 점이나 궁금한 점은요? → 잘 모르겠어요."
+      },
+      "diagnostic_successes_fixture": 2
+    },
+    {
+      "id": "growth_school_age",
+      "status": "completed",
+      "primary": "Constitutional growth delay",
+      "expected": "Constitutional growth delay",
+      "turns": 25,
+      "exam_count": 2,
+      "say_count": 23,
+      "fixture_wall_seconds": 2.867748186999961,
+      "doctor_physical_requests": 3,
+      "fixture_reported_prompt_tokens": 100,
+      "fixture_reported_completion_tokens": 50,
+      "unique_required_topics": 13,
+      "required_topics": 13,
+      "topic_coverage": 1.0,
+      "duplicate_questions_exact": 0,
+      "age_inappropriate_social_questions": 0,
+      "communication": [
+        "걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요.",
+        "3~6개월 후 키와 성장속도를 확인해요",
+        "두통·구토·시야 변화 시 조기 진료받으세요",
+        "성장곡선·필요시 골연령으로 원인을 살펴요",
+        "성장 기록을 가져오시면 비교하겠습니다",
+        "다음 진료 시점을 말씀해 주시겠어요?",
+        "계획에서 어려운 점이나 궁금한 점은요?"
+      ],
+      "unsafe_emergency_disposition": false,
+      "record": {
+        "S": {
+          "cc": "C.C : 9세 남아입니다. 또래보다 키가 작아요. 1년 전 키 121cm, 현재 키 127cm입니다.\nOnset : 8개월 전부터요",
+          "hpi": "P.I : 9세 남아입니다. 또래보다 키가 작아요. 1년 전 키 121cm, 현재 키 127cm입니다.\n- 언제부터 이런 증상이 있었나요? → 8개월 전부터요  (턴 9)\n- 증상이 점점 심해지고 있나요? → 증상은 비슷하게 지속돼요  (턴 10)\n- 일상생활에 어떤 지장이 있나요? → 일상생활이 조금 불편해요  (턴 15)\n- 이 증상으로 진료받은 적이 있나요? → 이 증상으로 진료받은 적 없어요  (턴 16)\n- 많이 불편하셨죠. 가장 걱정되는 점은요? → 잘 모르겠어요. (미확인) (턴 18)",
+          "pmh": "- 태어날 때 체중은 얼마였나요? → 출생 체중은 3.2kg입니다  (턴 3)\n- 진단받거나 치료 중인 병이 있나요? → 기저질환 없어요  (턴 11)\n- 복용 중인 약 이름이 뭔가요? → 복용 약 없어요  (턴 12)\n- 약물 알레르기가 있나요? → 약물 알레르기 없어요  (턴 13)\n- 수술받은 적이 있나요? → 수술받은 적 없어요  (턴 17)",
+          "fh": "- 부모님 키는 각각 얼마인가요? → 아버지 키 176cm, 어머니 키 164cm입니다  (턴 1)\n- 부모님도 사춘기가 늦었나요? → 아버지는 사춘기가 늦었어요  (턴 2)\n- 가족 중 질환이 있는 분이 있나요? → 관련 가족력 없어요  (턴 14)",
+          "sh": "",
+          "ros": "- 식사는 규칙적으로 하나요? → 식사는 규칙적이고 영양이 충분해요  (턴 4)\n- 설사가 오래 지속되나요? → 만성 설사 없어요  (턴 5)\n- 사춘기 변화가 시작됐나요? → 아직 사춘기 변화는 없어요  (턴 6)"
+        },
+        "O": {
+          "exam": "V/S : BP 118/72, HR 88, RR 16, Temp 36.7, SpO2 98%\n- 신장을 측정하겠습니다 → 신장 127cm (턴 7)\n- 체중을 측정하겠습니다 → 체중 26kg (턴 8)",
+          "tests": ""
+        },
+        "A": {
+          "evidence": "#1. Constitutional growth delay\n- 근거 : 9세 남아입니다. 또래보다 키가 작아요. 1년 전 키 121cm, 현재 키 127cm입니다.\n- 근거 : 신장을 측정하겠습니다 → 신장 127cm\n- 근거 : 체중을 측정하겠습니다 → 체중 26kg\n- 근거 : - 언제부터 이런 증상이 있었나요? → 8개월 전부터요  (턴 9)\n- 근거 : - 복용 중인 약 이름이 뭔가요? → 복용 약 없어요  (턴 12)\n- 근거 : - 식사는 규칙적으로 하나요? → 식사는 규칙적이고 영양이 충분해요  (턴 4)\n- 근거 : - 증상이 점점 심해지고 있나요? → 증상은 비슷하게 지속돼요  (턴 10)\n- 근거 : - 부모님 키는 각각 얼마인가요? → 아버지 키 176cm, 어머니 키 164cm입니다  (턴 1)\n해석: short stature / preserved prepubertal growth velocity / family delayed puberty 소견이 이 후보를 지지함; 미확인 감별 항목: documented delayed bone age (음성으로 간주하지 않음)\n확실성: 현재 수집 정보에 근거한 작업 진단; 미시행 검사는 확진 근거가 아님",
+          "differential": "r/o 가족성 저신장 (Familial short stature) : 해석: short stature / preserved prepubertal growth velocity / short parental stature 소견이 이 후보를 지지함"
+        },
+        "P": {
+          "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가\n날짜별 신장·체중을 성장곡선에 표시해 성장속도와 경로를 비교. 골연령은 성장 양상·사춘기 성숙도를 구분할 필요가 있을 때 고려. 성장속도 저하 또는 전신 이상 소견이면 소아내분비 진료에서 원인별 표적 검사를 결정; 단일 신장이나 골연령만으로 확진하지 않음.\n평가 목적: 성장곡선·필요시 골연령으로 원인을 살펴요; 실제 검사는 아직 시행하지 않음\n아직 확인할 감별 항목: documented delayed bone age (확인된 검사 결과 아님)",
+          "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+          "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+          "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료\n이전 성장 기록을 지참; 성장 경로 이탈·새 증상이 있으면 추적 간격을 앞당겨 원인 재평가\n증상·진찰 변화 비교 항목(현재 관찰): short stature, preserved prepubertal growth velocity, family delayed puberty",
+          "education": "진료 중 설명함: 걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요. / 3~6개월 후 키와 성장속도를 확인해요 / 두통·구토·시야 변화 시 조기 진료받으세요 / 성장곡선·필요시 골연령으로 원인을 살펴요 / 성장 기록을 가져오시면 비교하겠습니다 / 다음 진료 시점을 말씀해 주시겠어요? / 계획에서 어려운 점이나 궁금한 점은요?\n성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가\n이해 확인·추가 질문에 대한 실제 응답: 다음 진료 시점을 말씀해 주시겠어요? → 잘 모르겠어요. / 계획에서 어려운 점이나 궁금한 점은요? → 잘 모르겠어요."
+        }
+      },
+      "understanding_check": true,
+      "question_opportunity": true,
+      "observed_required_topics": [
+        "allergy",
+        "birth",
+        "course",
+        "family_illness",
+        "function",
+        "height",
+        "medical_history",
+        "nutrition",
+        "parent_height",
+        "parent_puberty",
+        "prior_care",
+        "surgery",
+        "symptom_onset"
+      ],
+      "missing_required_topics": [],
+      "nfc_or_test_violations": 0,
+      "clinical_plan": {
+        "tests": "성장곡선과 날짜별 키·체중 검토; 임상 경과에 따라 골연령 계획; 성장속도 저하·이상 소견 시 표적 내분비 평가\n날짜별 신장·체중을 성장곡선에 표시해 성장속도와 경로를 비교. 골연령은 성장 양상·사춘기 성숙도를 구분할 필요가 있을 때 고려. 성장속도 저하 또는 전신 이상 소견이면 소아내분비 진료에서 원인별 표적 검사를 결정; 단일 신장이나 골연령만으로 확진하지 않음.\n평가 목적: 성장곡선·필요시 골연령으로 원인을 살펴요; 실제 검사는 아직 시행하지 않음\n아직 확인할 감별 항목: documented delayed bone age (확인된 검사 결과 아님)",
+        "treatment": "확인 전 약물 처방 보류; 검사·복약 검토 후 개별 치료 결정",
+        "disposition": "외래 평가; 경고 증상·악화 시 조기 재평가",
+        "follow_up": "3~6개월 후 키·성장속도와 성장곡선 재평가; 필요 시 소아내분비 진료\n이전 성장 기록을 지참; 성장 경로 이탈·새 증상이 있으면 추적 간격을 앞당겨 원인 재평가\n증상·진찰 변화 비교 항목(현재 관찰): short stature, preserved prepubertal growth velocity, family delayed puberty",
+        "education": "진료 중 설명함: 걱정되셨죠. 성장 기록상 체질성 성장지연 의심돼요. / 3~6개월 후 키와 성장속도를 확인해요 / 두통·구토·시야 변화 시 조기 진료받으세요 / 성장곡선·필요시 골연령으로 원인을 살펴요 / 성장 기록을 가져오시면 비교하겠습니다 / 다음 진료 시점을 말씀해 주시겠어요? / 계획에서 어려운 점이나 궁금한 점은요?\n성장속도 감소, 체중 감소, 만성 설사·두통·시야 변화 시 조기 재평가\n이해 확인·추가 질문에 대한 실제 응답: 다음 진료 시점을 말씀해 주시겠어요? → 잘 모르겠어요. / 계획에서 어려운 점이나 궁금한 점은요? → 잘 모르겠어요."
+      },
+      "diagnostic_successes_fixture": 1
+    }
+  ]
+}

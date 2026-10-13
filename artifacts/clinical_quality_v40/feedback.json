@@ -1,0 +1,25 @@
+{
+  "source": "User-reported NOVA scores; no scored encounter transcript supplied",
+  "scores": {
+    "information_gathering": 11.84,
+    "diagnostic_reasoning": 8.19,
+    "tests_followup": 4.67,
+    "safety": 13.75,
+    "communication": 6.44,
+    "efficiency": 19.63
+  },
+  "total": 64.52,
+  "previous_total": 57.18,
+  "changes": [
+    "An affirmative answer to an onset question gets one bounded clarification, within the existing three-turn clarification cap",
+    "A bare yes/no/unknown is not recorded as the onset value; the latest substantive onset reply is summarized",
+    "An explicit mismatched teach-back time is corrected once even when the plan was already spoken",
+    "Practical return-visit barriers receive a planning response; filler does not repeat an already delivered plan"
+  ],
+  "limitations": [
+    "No evaluated encounter traces supplied",
+    "No live Doctor or organizer run",
+    "Historical synthetic development cases are not an independent blind set"
+  ],
+  "official_score_gain_from_v40_proven": false
+}

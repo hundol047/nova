@@ -1,6 +1,6 @@
 {
   "schema": "nova-asset-evidence-v1",
-  "runtime_commit": "b5f7cfb78343bce3cdfb545d41b75b070dd3c04e",
+  "runtime_commit": "5d93d12ee52ab9d1db2b23000d79614f8898810c",
   "status_counts": {
     "TEAM_ORIGINAL_VERIFIED": 92,
     "UNRESOLVED": 3,
@@ -339,12 +339,13 @@
     },
     {
       "path": "nova_agent/clinical_interview.py",
-      "sha256": "c3bfcc1df2ff9a77029402cfbcc31166d8460f6f4ecf8149e3cc67bcf8a71199",
+      "sha256": "090e94e4008af0c06abc7a7e4ac3cdd50c205570b67678dc9694ad58c5cbf3b2",
       "status": "UNRESOLVED",
       "included": true,
       "kind": "code",
       "git_history": [
-        "61bb4649db924753b82634818c586b29e68b6973|2026-10-13T15:25:43+09:00|Codex|fix: clarify incomplete history and link evidence to follow-up (v39)",
+        "d9e86737573c7d7a96a547757b5ac7a1e5025285|2026-10-13T15:40:59+09:00|Codex|fix: preserve unknown onset and correct explicit follow-up misunderstanding (v40)",
+        "b5f7cfb78343bce3cdfb545d41b75b070dd3c04e|2026-10-13T15:26:40+09:00|hundol047|fix: clarify incomplete history and link evidence to follow-up (v39)",
         "ded5b23d87927d328a8d32c710af35b0d9182ccc|2026-10-13T14:43:34+09:00|hundol047|Improve encounter information yield, grounded reasoning and purposeful follow-up (v38)",
         "f6070934f4c29c33b5be82750dc56f75e0fc4184|2026-10-13T13:35:06+09:00|hundol047|Complete essential interviews and reserve patient communication turns (v37)",
         "955e55439f69c0b887a1aeaa19dc71d4795e699f|2026-10-13T11:37:34+09:00|hundol047|Improve evidence collection, diagnostic reassessment and patient communication",
@@ -910,12 +911,13 @@
     },
     {
       "path": "nova_agent/interview_evidence.py",
-      "sha256": "cf76a76512aac015265418b7eeba88bb650bf27115dac94363c44883ec78fcad",
+      "sha256": "4ff41376f9a0bbb164dc66ad91f41e5cf382d5e06e386d9bda86f916630555f2",
       "status": "UNRESOLVED",
       "included": true,
       "kind": "code",
       "git_history": [
-        "61bb4649db924753b82634818c586b29e68b6973|2026-10-13T15:25:43+09:00|Codex|fix: clarify incomplete history and link evidence to follow-up (v39)",
+        "d9e86737573c7d7a96a547757b5ac7a1e5025285|2026-10-13T15:40:59+09:00|Codex|fix: preserve unknown onset and correct explicit follow-up misunderstanding (v40)",
+        "b5f7cfb78343bce3cdfb545d41b75b070dd3c04e|2026-10-13T15:26:40+09:00|hundol047|fix: clarify incomplete history and link evidence to follow-up (v39)",
         "f6070934f4c29c33b5be82750dc56f75e0fc4184|2026-10-13T13:35:06+09:00|hundol047|Complete essential interviews and reserve patient communication turns (v37)",
         "955e55439f69c0b887a1aeaa19dc71d4795e699f|2026-10-13T11:37:34+09:00|hundol047|Improve evidence collection, diagnostic reassessment and patient communication"
       ],

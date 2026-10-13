@@ -1,0 +1,19 @@
+{
+  "publication": "Runtime, archive and local evidence prepared for the authorized optimization branch. No official submission performed.",
+  "official_model": "Organizer SDK Doctor; public docs on 2026-10-13 specify openai/gpt-6-luna and accept the previous alias. No real call made.",
+  "runtime_execution_identity": {
+    "execution_checkout_sha": "d9e86737573c7d7a96a547757b5ac7a1e5025285",
+    "publishable_runtime_sha": "5d93d12ee52ab9d1db2b23000d79614f8898810c",
+    "identical_full_git_tree": "3818086d79ce627c002e05d57578cc0a302a00e6"
+  },
+  "NOVA_DEV_KEY_accessed": false,
+  "real_organizer_human_run_performed": false,
+  "real_model_tokens_latency_cost": null,
+  "official_performance_improvement_proven": false,
+  "sdk_regression_cases": 230,
+  "sdk_regression_scored": 222,
+  "round_m_evaluation_scope": "Exact 128-case/123-scored subset of captured SDK230; no extra run.",
+  "comparison": "artifacts/clinical_quality_v40/comparison.json",
+  "feedback": "artifacts/clinical_quality_v40/feedback.json",
+  "test_execution_note": "All core modules executed on each interpreter. One py312 import raced concurrent submission-folder rebuilds; the full affected shard was rerun alone after other pytest builders finished, then merged. See validation/packaging-race.json. Release binding and rights checks followed artifact generation."
+}

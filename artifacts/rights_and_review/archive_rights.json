@@ -1,14 +1,14 @@
 {
   "schema": "nova-archive-rights-v1",
-  "archive_sha256": "9d279a0c6836cd54401326de37be003a793beb494b27e8f238c7b3ce0fca25d8",
+  "archive_sha256": "baeb0409b5771e94b910753a361198845a7bc742874afb7c19fba10443ac833c",
   "members": [
     {
       "member": "MANIFEST.json",
       "source": "submission/MANIFEST.json",
-      "sha256": "5d1675682ebfb60ca598ca545b09aefa48b5cbb85145e46a5c6e574c3c5fb789",
+      "sha256": "eb86d0205bd1bb3059cc1a3e80794747b9bff8aa3d3130d86b975e6a01eafa62",
       "rights_status": "GENERATED_PACKAGE_METADATA",
       "evidence": [
-        "artifacts/verification/local-release-b5f7cfb-v39.json",
+        "artifacts/verification/local-release-5d93d12-v40.json",
         "scripts/build_nova_submission.py"
       ]
     },
@@ -45,7 +45,7 @@
     {
       "member": "competition/nova_sdk_adapter.py",
       "source": "competition/nova_sdk_adapter.py",
-      "sha256": "6a7df566cfbfb4211e0dd342376d88b1ddf32109fff0bc8f55d9b728ac6713e6",
+      "sha256": "c3a1b4a7f267f0e98c0681fc9f101e28c209a41526980c504b2130ff672d47e6",
       "rights_status": "EXTERNAL_RIGHTS_NOT_VERIFIED",
       "evidence": [
         "Organizer toolkit origin and byte identity were checked; explicit redistribution scope not yet evidenced."
@@ -246,7 +246,7 @@
     {
       "member": "nova_agent/clinical_interview.py",
       "source": "nova_agent/clinical_interview.py",
-      "sha256": "c3bfcc1df2ff9a77029402cfbcc31166d8460f6f4ecf8149e3cc67bcf8a71199",
+      "sha256": "090e94e4008af0c06abc7a7e4ac3cdd50c205570b67678dc9694ad58c5cbf3b2",
       "rights_status": "UNRESOLVED",
       "evidence": [
         "nova_agent/knowledge/PROVENANCE.md",
@@ -462,7 +462,7 @@
     {
       "member": "nova_agent/interview_evidence.py",
       "source": "nova_agent/interview_evidence.py",
-      "sha256": "cf76a76512aac015265418b7eeba88bb650bf27115dac94363c44883ec78fcad",
+      "sha256": "4ff41376f9a0bbb164dc66ad91f41e5cf382d5e06e386d9bda86f916630555f2",
       "rights_status": "UNRESOLVED",
       "evidence": [
         "nova_agent/knowledge/PROVENANCE.md",
