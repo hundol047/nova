@@ -635,7 +635,7 @@
     {
       "asset_id": "nova_agent/clinical_interview.py",
       "path": "nova_agent/clinical_interview.py",
-      "sha256": "479e14c3b45f47df155310186ad6892525123e5a511e854a580984ff0e239c1a",
+      "sha256": "c3bfcc1df2ff9a77029402cfbcc31166d8460f6f4ecf8149e3cc67bcf8a71199",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "Repository owner/team, as declared by the human repository owner; AI assistance recorded in Git history",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",
@@ -1658,7 +1658,7 @@
     {
       "asset_id": "nova_agent/interview_evidence.py",
       "path": "nova_agent/interview_evidence.py",
-      "sha256": "03dbce96daaa9a7fd5841e91b12375dfbe9cc404f34ed44b0bd1ba932658a46a",
+      "sha256": "cf76a76512aac015265418b7eeba88bb650bf27115dac94363c44883ec78fcad",
       "runtime_use": "Supporting runtime code/metadata; conservatively inventoried",
       "original_author": "UNRESOLVED",
       "original_source": "Engineering-agent authored in this repository's history; not independently established",

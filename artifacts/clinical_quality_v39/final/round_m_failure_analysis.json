@@ -1,0 +1,65 @@
+{
+  "definition": "Final SDK diagnosis differs from the unchanged development label; no causal stage attribution.",
+  "failures": [
+    {
+      "case_id": "RoundM_064",
+      "truth": "cardiac_arrhythmia",
+      "prediction": "진단 미정 (추가 평가 필요)"
+    },
+    {
+      "case_id": "RoundM_108",
+      "truth": "Peptic Ulcer Disease",
+      "prediction": "Duodenal Ulcer"
+    },
+    {
+      "case_id": "RoundM_119",
+      "truth": "Spontaneous Pneumothorax (Non-tension)",
+      "prediction": "기흉 (Spontaneous Pneumothorax (Non-tension))"
+    },
+    {
+      "case_id": "RoundM_115",
+      "truth": "Giant Cell (Temporal) Arteritis",
+      "prediction": "측두동맥염 (Giant Cell (Temporal) Arteritis)"
+    },
+    {
+      "case_id": "RoundM_068",
+      "truth": "acute_coronary_syndrome",
+      "prediction": "진단 미정 (추가 평가 필요)"
+    },
+    {
+      "case_id": "RoundM_030",
+      "truth": "pyelonephritis",
+      "prediction": "진단 미정 (추가 평가 필요)"
+    },
+    {
+      "case_id": "RoundM_069",
+      "truth": "acute_pancreatitis",
+      "prediction": "진단 미정 (추가 평가 필요)"
+    },
+    {
+      "case_id": "RoundM_019",
+      "truth": "tension_pneumothorax",
+      "prediction": "긴장성 기흉 (Tension Pneumothorax)"
+    },
+    {
+      "case_id": "RoundM_104",
+      "truth": "Testicular Torsion",
+      "prediction": "급성췌장염 (Acute Pancreatitis)"
+    },
+    {
+      "case_id": "RoundM_007",
+      "truth": "musculoskeletal_chest_pain",
+      "prediction": "공황발작 (Panic Attack)"
+    },
+    {
+      "case_id": "RoundM_038",
+      "truth": "pyelonephritis",
+      "prediction": "상기도감염 (Viral Upper Respiratory Infection)"
+    },
+    {
+      "case_id": "RoundM_122",
+      "truth": "Septic Arthritis",
+      "prediction": "화농성 관절염 (Septic Arthritis)"
+    }
+  ]
+}

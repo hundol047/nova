@@ -1,0 +1,19 @@
+{
+  "publication": "Runtime, archive and local evidence prepared for the authorized optimization branch. No official submission performed.",
+  "official_model": "Organizer SDK Doctor; public docs on 2026-10-13 specify openai/gpt-6-luna and accept the previous alias. No real call made.",
+  "runtime_execution_identity": {
+    "execution_checkout_sha": "61bb4649db924753b82634818c586b29e68b6973",
+    "publishable_runtime_sha": "b5f7cfb78343bce3cdfb545d41b75b070dd3c04e",
+    "identical_full_git_tree": "ef4e1459ee1193050d6ed269f754631a36e0b387"
+  },
+  "NOVA_DEV_KEY_accessed": false,
+  "real_organizer_human_run_performed": false,
+  "real_model_tokens_latency_cost": null,
+  "official_performance_improvement_proven": false,
+  "sdk_regression_cases": 230,
+  "sdk_regression_scored": 222,
+  "round_m_evaluation_scope": "Exact 128-case/123-scored subset of captured SDK230; no extra run.",
+  "comparison": "artifacts/clinical_quality_v39/comparison.json",
+  "feedback": "artifacts/clinical_quality_v39/feedback.json",
+  "test_execution_note": "All core test modules on each interpreter, followed by release-binding and rights artifact tests after generating current evidence."
+}

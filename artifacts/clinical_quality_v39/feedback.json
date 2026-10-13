@@ -1,0 +1,26 @@
+{
+  "source": "User-reported NOVA scores; no scored encounter transcript supplied",
+  "scores": {
+    "information_gathering": 11.84,
+    "diagnostic_reasoning": 8.19,
+    "tests_followup": 4.67,
+    "safety": 13.75,
+    "communication": 6.44,
+    "efficiency": 19.63
+  },
+  "total": 64.52,
+  "previous_total": 57.18,
+  "official_score_gain_from_v39_proven": false,
+  "changes": [
+    "Bound positive-but-nonspecific history clarification to one per topic / three per encounter; stop on unknown or refused responses",
+    "Preserve direct named history coverage without requiring question vocabulary",
+    "Keep earlier diagnostic history with source turns rather than latest four replies",
+    "Distinguish unresolved history in assessment and next-visit tasks",
+    "Use plain-language test explanation and respond to patient concerns without repeating already delivered messages"
+  ],
+  "limitations": [
+    "No evaluated encounter traces supplied",
+    "No live Doctor or organizer run",
+    "Historical synthetic development cases are not an independent blind set"
+  ]
+}

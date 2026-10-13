@@ -1,12 +1,13 @@
 {
-  "current_verification_artifact": "artifacts/verification/local-release-ded5b23-v38.json",
-  "current_verification_schema": "nova-verification-v38",
-  "verified_runtime_sha": "ded5b23d87927d328a8d32c710af35b0d9182ccc",
+  "current_verification_artifact": "artifacts/verification/local-release-b5f7cfb-v39.json",
+  "current_verification_schema": "nova-verification-v39",
+  "verified_runtime_sha": "b5f7cfb78343bce3cdfb545d41b75b070dd3c04e",
   "current_blind_version": "v19",
   "current_blind_manifest": null,
   "current_blind_status": "REFERENCE-ONLY",
   "fresh_final_blind": "NOT YET AUTHORED",
   "previous_verification_artifacts": [
+    "artifacts/verification/local-release-ded5b23-v38.json",
     "artifacts/verification/local-release-62a0822-v37.json",
     "artifacts/verification/local-release-955e554-v36.json",
     "artifacts/verification/local-release-fb4b69b-v35.json",
@@ -37,7 +38,7 @@
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
   "status": "NOT READY",
-  "reason": "v38 increases information yield, reduces redundant closing and planning calls, and strengthens grounded reasoning and follow-up.",
+  "reason": "v39 clarifies incomplete history within bounded turns, preserves diagnostic facts, and connects actual gaps and patient concerns to follow-up.",
   "latest_compliance_followup": "artifacts/clinical_review_pass/rule_matrix.json",
   "latest_rights_and_review_followup": "artifacts/rights_and_review/CURRENT_STATUS.json"
 }
