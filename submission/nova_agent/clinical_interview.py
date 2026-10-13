@@ -21,9 +21,22 @@ def interview_family(state):
         'chest pain','shortness of breath','syncope','hemoptysis','focal weakness',
         'altered mental status','severe headache','fever')):
         return None
+    family=_family_from_text(state,text,allow_condition_names=True)
+    if family:return family
+    # Openings are often narrated by a guardian and describe the course over
+    # the past year ("엄마는 ... 일 년 전부터 ..."). The current-evidence filter
+    # keeps only the first sentence of such a narrative, which hid the actual
+    # complaint. Retry on the whole negation-stripped opening, but a bare
+    # disease name there (e.g. a past thyroid operation) is not a complaint.
+    full=_strip_negated_spans(normalize_exam_notation(state.chief_complaint or '')).casefold()
+    return _family_from_text(state,full,allow_condition_names=False)
+
+
+def _family_from_text(state,text,allow_condition_names):
     if re.search(r'sleep|insomnia|sedative|졸피뎀|수면제|잠이|불면|낮에.*졸',text):return 'sleep'
     if state.demographics.age is not None and state.demographics.age<18 and re.search(r'short stature|growth|height|키|성장',text):return 'growth'
-    if re.search(r'weight loss|lost weight|weight.*los|체중.*(?:감소|빠|줄)|살이.*(?:빠|줄)|먹는데.*빠|갑상|더위',text):return 'thyroid'
+    if re.search(r'weight loss|lost weight|weight.*los|체중.*(?:감소|빠|줄)|살이.*(?:빠|줄)|먹는데.*빠|더위',text):return 'thyroid'
+    if allow_condition_names and re.search(r'갑상',text):return 'thyroid'
     return None
 
 
@@ -66,6 +79,14 @@ TOPICS = {
  'bowel':('associated_symptoms','배변 횟수가 늘었나요?',r'bowel|diarr|loose stool|묽은 변|배변|설사'),
  'menstrual':('associated_symptoms','생리 주기가 달라졌나요?',r'menstru|period.*change|생리|월경'),
  'allergy':('allergy','약물 알레르기가 있나요?',r'allerg|알레르기'),
+ # Growth: a child's history is the developmental and perinatal record, not adult pain descriptors.
+ 'birth_course':('past_medical_history','임신·출산 때 문제는 없었나요?',r'(?:임신|출산|분만|만삭|조산|미숙아|prematur|term birth)'),
+ 'development':('past_medical_history','말하기·걷기 발달은 또래와 비슷한가요?',r'발달|develop|milestone'),
+ 'fatigue':('associated_symptoms','평소 쉽게 피곤해하나요?',r'피곤|피로|fatigue|tired'),
+ 'constipation':('associated_symptoms','변비가 있나요?',r'변비|constipat'),
+ 'headache':('associated_symptoms','두통이나 구토가 자주 있나요?',r'두통|headache|구토|vomit'),
+ 'sleep_child':('social_history','밤에 몇 시간 자나요?',r'(?:\d+|열|아홉|여덟)\s*시(?:간)?|잠|수면|sleep'),
+ 'daily_life':('social_history','어린이집 생활은 잘 지내나요?',r'어린이집|유치원|학교|school|daycare|스트레스'),
 }
 
 
@@ -182,8 +203,8 @@ def next_clinical_action(state):
         if not exposure:order=['medication_name','daytime_impairment','allergy']
         order += ['symptom_onset','sleep_pattern','sleep_hours','snoring','caffeine']
     elif family=='growth':
-        order=['growth_records','growth_velocity','parent_height','parent_puberty','birth','nutrition','chronic_gi']
-        if state.demographics.age is not None and state.demographics.age>=8:order.append('puberty')
+        order=['growth_records','growth_velocity','parent_height','parent_puberty','birth','birth_course','development',
+               'nutrition','chronic_gi','fatigue','constipation','headache','puberty','sleep_child','daily_life']
     else:
         order=['symptom_onset','weight_change','appetite','heat','palpitations','tremor','sweat','bowel','allergy']
         if state.demographics.sex=='female' and (state.demographics.age is None or 12<=state.demographics.age<=55):order.append('menstrual')
@@ -208,7 +229,10 @@ def next_clinical_action(state):
                      'withdrawal':'withdrawal symptoms','tolerance':'dose escalation','daytime_impairment':'daytime sleepiness',
                      'chronic_gi':'chronic diarrhea'}.get(topic,topic.replace('_',' '))
             return ('SAY',category+':'+feature,text,category)
-    exams={'growth':[('growth_height','신장을 측정하겠습니다'),('growth_weight','체중을 측정하겠습니다')],
+    exams={'growth':[('growth_height','신장을 측정하겠습니다'),('growth_weight','체중을 측정하겠습니다'),
+                     ('growth_proportion','상하체 비율을 측정하겠습니다'),('growth_dysmorphism','얼굴 기형이 있는지 보겠습니다'),
+                     ('thyroid_exam','갑상선을 촉진하겠습니다'),('growth_tanner','사춘기 발달 단계를 보겠습니다'),
+                     ('growth_abdomen','간과 비장을 촉진하겠습니다')],
            'thyroid':[('thyroid_exam','갑상선을 촉진하겠습니다'),('thyroid_eye','안구 돌출을 살펴보겠습니다'),('thyroid_tremor','양손을 뻗어 떨림을 보겠습니다')],
            'sleep':[]}[family]
     for key,text in exams:
@@ -226,6 +250,10 @@ def missing_foundation_topics(state):
     from nova_agent.interview_evidence import topic_attempted
     order = ['symptom_onset','course','medical_history','medication_name',
              'allergy','family_illness','function','prior_care']
+    if interview_family(state)=='growth':
+        # Slow growth has no "worsening" or "daily-life limitation" in the pain/symptom sense; the opening
+        # already dates it. The growth interview covers its course with measured records instead.
+        order=[t for t in order if t not in ('course','function','symptom_onset')]
     # Broad prior-care questions do not establish surgical history. Adult
     # substance exposure affects both the differential and safe treatment.
     order.append('surgery')

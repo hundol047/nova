@@ -110,9 +110,11 @@ def evidence_clauses(text: str, source: str = "narrative", default_subject: str 
     if not text:
         return ()
     proxy = _PROXY.get()
-    subjects = [(m.start(), m.end(), 'PATIENT' if proxy and m.group(0).lower() == proxy and _owned(text, m.start())
-                 else 'FAMILY') for m in FAMILY_CUE.finditer(text)]
-    subjects += [(m.start(), m.end(), 'OTHER') for m in OTHER_PERSON_CUE.finditer(text)]
+    reporters = _declared_reporters(text)
+    subjects = [(m.start(), m.end(), 'PATIENT' if (proxy and m.group(0).lower() == proxy and _owned(text, m.start()))
+                 or _reports_for_patient(text, m, reporters) else 'FAMILY') for m in FAMILY_CUE.finditer(text)]
+    subjects += [(m.start(), m.end(), 'OTHER') for m in OTHER_PERSON_CUE.finditer(text)
+                 if not _COMPARATOR.match(text, m.end())]
     persons = sorted(subjects)
     subjects += [(m.start(), m.end(), 'PATIENT') for m in _PATIENT.finditer(text)]
     for m in _POSSESSIVE.finditer(text):
@@ -159,6 +161,35 @@ def evidence_clauses(text: str, source: str = "narrative", default_subject: str 
     return tuple(out)
 
 
+# A third-person opening may declare the accompanying guardian ("엄마 김지영, 서른일곱 살이 보호자로 함께 왔다",
+# "accompanied by his mother"). The guardian then narrates the patient's history ("엄마는 도현이 키가 작아 걱정이라고
+# 말했다", "엄마가 키를 재보니 105cm였다"): a report about the patient, not the guardian's own health. The declaring
+# clause itself and explicit guardian-owned wording ("엄마의", "엄마도", "엄마 쪽", "mother's own") stay FAMILY.
+_GUARDIAN_DECLARATION = re.compile(
+    r"(어머니|아버지|엄마|아빠|할머니|할아버지|부모님)[^.!?\n]{0,30}보호자|"
+    r"보호자(?:는|인|로)?\s*(어머니|아버지|엄마|아빠|할머니|할아버지|부모님)|"
+    r"\baccompanied by (?:his|her|their) (mother|father|parents?|grandmother|grandfather)\b", re.I)
+_GUARDIAN_OWN = re.compile(r"\s*(?:의|도|쪽|본인|자신|'s\b|\s+(?:also|herself|himself|own)\b)", re.I)
+_COMPARATOR = re.compile(r"(?:들)?\s*(?:보다|에 비해|과 비교|와 비교)|s?\s+of (?:the )?same age\b", re.I)
+
+
+def _declared_reporters(text: str) -> tuple:
+    words = []
+    for m in _GUARDIAN_DECLARATION.finditer(text):
+        word = next((g for g in m.groups() if g), None)
+        if word:
+            words.append((word.lower(), m.start(), m.end()))
+    return tuple(words)
+
+
+def _reports_for_patient(text: str, m, reporters) -> bool:
+    word = m.group(0).lower()
+    for reporter, a, b in reporters:
+        if word == reporter and not (a <= m.start() < b) and not _GUARDIAN_OWN.match(text, m.end()):
+            return True
+    return False
+
+
 def _owned(text: str, start: int) -> bool:
     """The relation word is the speaker's own ("my son", "our son", "우리 아들"), not "his son"."""
     before = text[max(0, start - 30):start].lower()
@@ -194,7 +225,12 @@ def _patient_evidence_text(text: str, *, allow_historical: bool, source: str,
             or (not allow_historical and HISTORICAL_CUE.search(text))):
         return text
     chars = list(text)
+    # The guardian declaration carries no finding; keeping it lets a second
+    # scoping pass over this output still recognise the reporting guardian.
+    declared = [(a, b) for _, a, b in _declared_reporters(text)]
     for clause in evidence_clauses(text, source):
+        if any(a < clause.span[1] and clause.span[0] < b for a, b in declared):
+            continue
         if clause.experiencer != 'PATIENT' or (not allow_historical and clause.temporality == 'HISTORICAL'):
             a, b = clause.span
             chars[a:b] = ' ' * (b - a)

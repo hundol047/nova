@@ -173,6 +173,8 @@ def test_record_is_grounded_in_the_transcript():
     assert "환자가 말하지 않은 복통" not in record["A"]["evidence"]  # ungrounded assessment evidence is dropped
     for kind, text, reply in server.events:
         if kind == "SAY" and reply and text not in ("갑상샘항진증 가능성이 있어요.",):
+            from nova_agent.korean_numbers import normalize_spoken_numbers
+            reply = normalize_spoken_numbers(reply)  # spoken quantities are recorded as digits ("칠 킬로" -> "7 kg")
             assert reply in " ".join(record["S"].values()) or reply in record["P"]["education"] or "설명" in text
 
 

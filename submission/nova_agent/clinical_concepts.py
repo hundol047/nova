@@ -24,7 +24,7 @@ from nova_agent.matching import POSTURAL_LIGHTHEADEDNESS
 
 _HISTORY = re.compile(r"\b(?:history of|h/o|years? ago|used to|last year|previously|in the past|as a child|childhood)\b",
                       re.IGNORECASE)
-_CLAUSE = re.compile(r"[;\n]|(?<=[a-z])\.(?=\s|$)|\bbut\b|\bhowever\b", re.IGNORECASE)
+_CLAUSE = re.compile(r"[;\n]|(?<=[a-z가-힣])\.(?=\s|$)|\bbut\b|\bhowever\b", re.IGNORECASE)
 
 # (canonical KB phrase, pattern). Patterns are matched on lower-cased, negation-scrubbed clause text.
 _CONCEPTS: List[Tuple[str, re.Pattern]] = [(c, re.compile(p)) for c, p in (
@@ -176,7 +176,9 @@ _CHRONIC_FINDINGS = tuple((feature, re.compile(pattern, re.I)) for feature, patt
     ('difficulty reducing sedative use', r'약(?:을)?\s*줄이기\s*(?:어려|힘)|\bunable to reduce\b'),
     ('rebound insomnia after stopping', r'(?:끊|중단)[^;,.]{0,25}(?:잠이.*안|불면)|\brebound insomnia\b'),
     ('sleepiness after medication', r'(?:약|복용)[^;,.]{0,20}(?:졸림|졸려|졸음).*|daytime sleepiness began after taking'),
-    ('short stature', r'키(?:가|는)?\s*(?:또래보다\s*)?작|또래보다\s*키(?:가|는)?\s*작|\bshort stature\b'),
+    ('short stature', r'키(?:가|는)?\s*(?:또래보다\s*)?작|또래보다\s*키(?:가|는)?\s*작|'
+                      r'키(?:가|는)?[^;,.]{0,15}작(?:다|은|아|고|았|게)|또래(?:보다|에\s*비해)[^;,.]{0,8}작(?:다|은|아|고|았|게)|'
+                      r'\bshort stature\b'),
 ))
 
 

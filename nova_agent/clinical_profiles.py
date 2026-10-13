@@ -25,6 +25,11 @@ def profile_named(text):
     return found[0] if len(found)==1 else None
 
 
+_RELATION=r'father|mother|parent|\bmom\b|\bdad\b|아버지|어머니|부모|아빠|엄마|부친|모친'
+_LATE_BLOOMER=(r'delayed puberty|late puberty|late bloomer|사춘기(?:가|는|도)?\s*(?:좀\s*)?늦|늦게\s*(?:컸|자랐|크)|'
+               r'(?:고등학교|고교)[^.]{0,25}(?:갑자기|많이|훌쩍)[^.]{0,10}(?:컸|자랐)|수염(?:이|도)?\s*늦|변성기(?:가|도)?\s*늦')
+
+
 def growth_velocity(text):
     """Explicit cm/year or two supplied, dated heights one year apart. No guessed dates."""
     matches = re.findall(r'(\d+(?:\.\d+)?)\s*cm\s*(?:/\s*(?:year|yr)|per\s+year)',text,re.I)
@@ -64,12 +69,22 @@ def _profile_observations(state):
     if age is not None and 3<=age<12 and velocity is not None:
         if 4<=velocity<=7:findings.append('preserved prepubertal growth velocity')
         elif 0<=velocity<4:findings.append('reduced linear growth velocity')
-    for part in re.split(r'[;\n]',normalize_exam_notation(original)):
+    parts=re.split(r'[;\n]|(?<=[.!?])\s+',normalize_exam_notation(original))
+    # A reply to a question about the parents' puberty is about the parents even
+    # when it does not repeat the relation ("중학교 때까지 작았고 고등학교 때 컸대요").
+    parental_replies={(t.result or '').casefold() for t in state.performed_actions
+                      if t.action_type=='ASK' and re.search(_RELATION,t.content or '',re.I)
+                      and re.search(r'사춘기|puberty|성장|컸|자랐',t.content or '',re.I)}
+    for part in parts:
         lowered=part.casefold()
-        if re.search(r'father|mother|parent|아버지|어머니|부모',lowered):
-            if re.search(r'delayed puberty|late puberty|사춘기(?:가|는)?\s*늦',lowered) and not re.search(r'not|no\b|않|없',lowered):
+        negated=re.search(r'\bnot\b|\bno\b|않|없',lowered)
+        if re.search(_RELATION,lowered) or lowered in parental_replies or any(lowered and lowered in r for r in parental_replies):
+            if re.search(_LATE_BLOOMER,lowered) and not negated:
                 findings.append('family delayed puberty')
-            if re.search(r'(?:parents?|mother|father)[^.]{0,20}(?:are|is|were|was)?\s*short\b|부모[^.]{0,15}키[^.]{0,6}작|어머니[^.]{0,15}키[^.]{0,6}작|아버지[^.]{0,15}키[^.]{0,6}작',lowered) and not re.search(r'not|no\b|않|없',lowered):
+            # Short only as a child, then a late spurt, is the late-bloomer pattern, not a short adult parent.
+            childhood=re.search(r'어릴\s*때|어렸을\s*때|초등학교|중학교|as a child|in childhood|growing up',lowered)
+            if (re.search(r'(?:parents?|mother|father|mom|dad)[^.]{0,20}(?:are|is|were|was)?\s*short\b|(?:부모|어머니|아버지|엄마|아빠)[^.]{0,15}키[^.]{0,6}작',lowered)
+                    and not negated and not childhood):
                 findings.append('short parental stature')
         # A clearly supplied previous bone-age report is evidence of that report,
         # not a performed test in this encounter or a hormone confirmation.
