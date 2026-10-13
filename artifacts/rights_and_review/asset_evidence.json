@@ -1,6 +1,6 @@
 {
   "schema": "nova-asset-evidence-v1",
-  "runtime_commit": "955e55439f69c0b887a1aeaa19dc71d4795e699f",
+  "runtime_commit": "62a08223f429ac52966c8649809d9bb92a850c13",
   "status_counts": {
     "TEAM_ORIGINAL_VERIFIED": 92,
     "UNRESOLVED": 3,
@@ -339,13 +339,13 @@
     },
     {
       "path": "nova_agent/clinical_interview.py",
-      "sha256": "7b39a424d4e63a6a6651884070c4a23b856c5bb7246cf1daf20ac99aecd75105",
+      "sha256": "bbb17ce4566f06a9da70cc168ae49322ad1bed9e0992844dad9d7cdbc26f9e59",
       "status": "UNRESOLVED",
       "included": true,
       "kind": "code",
       "git_history": [
-        "f3c30e4f6fd2ba2b3dd1d66fcfb91ec47fe0bf75|2026-10-13T11:23:03+09:00|Codex|Resolve exact duplicate diagnosis identities without accepting ambiguous aliases",
-        "a46b6b6682b3c4a72cb2237549f50535a446a663|2026-10-13T11:07:06+09:00|Codex|Improve scoped interview evidence, adaptive reassessment and patient closing",
+        "a47784da67ac8e9af466b3351f1d9b4f24b98be5|2026-10-13T13:33:49+09:00|Codex|Complete essential interviews and reserve patient communication turns (v37)",
+        "955e55439f69c0b887a1aeaa19dc71d4795e699f|2026-10-13T11:37:34+09:00|hundol047|Improve evidence collection, diagnostic reassessment and patient communication",
         "fb4b69b72639c5fb5a90df54bad3dfc07443442d|2026-10-12T13:30:04Z|hundol hundol|Fix preliminary clinical evidence, decision-owned plans and bounded Doctor fallback"
       ],
       "history_limit": "Commit attribution is not legal ownership, exact model receipt or clinician review.",
@@ -530,7 +530,7 @@
       "included": true,
       "kind": "code",
       "git_history": [
-        "f3c30e4f6fd2ba2b3dd1d66fcfb91ec47fe0bf75|2026-10-13T11:23:03+09:00|Codex|Resolve exact duplicate diagnosis identities without accepting ambiguous aliases",
+        "955e55439f69c0b887a1aeaa19dc71d4795e699f|2026-10-13T11:37:34+09:00|hundol047|Improve evidence collection, diagnostic reassessment and patient communication",
         "fb4b69b72639c5fb5a90df54bad3dfc07443442d|2026-10-12T13:30:04Z|hundol hundol|Fix preliminary clinical evidence, decision-owned plans and bounded Doctor fallback",
         "9b607b49c56e64b072645f1539d53d1ca4b92c74|2026-10-05T02:43:04+09:00|hundol047|fix: harden pre-guide boundaries and correct evidence/diagnosis matching [skip ci]",
         "0f6d1d7c638fb60ea83937f528c5c4b47cf9cfe8|2026-10-03T16:22:53+09:00|hundol047|fix: publish validated NOVA code and evaluation tooling",
@@ -908,13 +908,13 @@
     },
     {
       "path": "nova_agent/interview_evidence.py",
-      "sha256": "4aa31df9831bc7a908dc6ec1b65099b5c0b07d83b0883077b1d32d5141286eb8",
+      "sha256": "03dbce96daaa9a7fd5841e91b12375dfbe9cc404f34ed44b0bd1ba932658a46a",
       "status": "UNRESOLVED",
       "included": true,
       "kind": "code",
       "git_history": [
-        "f3c30e4f6fd2ba2b3dd1d66fcfb91ec47fe0bf75|2026-10-13T11:23:03+09:00|Codex|Resolve exact duplicate diagnosis identities without accepting ambiguous aliases",
-        "a46b6b6682b3c4a72cb2237549f50535a446a663|2026-10-13T11:07:06+09:00|Codex|Improve scoped interview evidence, adaptive reassessment and patient closing"
+        "a47784da67ac8e9af466b3351f1d9b4f24b98be5|2026-10-13T13:33:49+09:00|Codex|Complete essential interviews and reserve patient communication turns (v37)",
+        "955e55439f69c0b887a1aeaa19dc71d4795e699f|2026-10-13T11:37:34+09:00|hundol047|Improve evidence collection, diagnostic reassessment and patient communication"
       ],
       "history_limit": "Commit attribution is not legal ownership, exact model receipt or clinician review.",
       "owner_evidence": null,

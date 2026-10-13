@@ -1,0 +1,60 @@
+{
+  "label": "LOCAL REGRESSION ONLY; not official scoring or real Doctor validation",
+  "runtime_before": "46313f387806d6241b7679b6c420f8a6dae4bb2b",
+  "runtime_after": "62a08223f429ac52966c8649809d9bb92a850c13",
+  "same_scorer_sha256": true,
+  "same_case_ids": true,
+  "sdk230": {
+    "before": {
+      "cases": 230,
+      "scored": 222,
+      "top1": 0.9144144144144144,
+      "top3": 0.9774774774774775,
+      "top5": 0.9774774774774775,
+      "critical_recall": 0.9411764705882353,
+      "critical_misses": 5,
+      "undertriage_proxy": 2,
+      "overtriage_proxy": 52,
+      "mean_turns": 16.943478260869565,
+      "median_turns": 16.0,
+      "p90_turns": 23,
+      "mean_doctor_requests": 2.3347826086956522,
+      "rule_errors": 0
+    },
+    "after": {
+      "cases": 230,
+      "scored": 222,
+      "top1": 0.9144144144144144,
+      "top3": 0.9774774774774775,
+      "top5": 0.9774774774774775,
+      "critical_recall": 0.9411764705882353,
+      "critical_misses": 5,
+      "undertriage_proxy": 2,
+      "overtriage_proxy": 52,
+      "mean_turns": 21.847826086956523,
+      "median_turns": 22.0,
+      "p90_turns": 28,
+      "mean_doctor_requests": 2.3347826086956522,
+      "rule_errors": 0
+    }
+  },
+  "expanded_synthetic_fixture3": {
+    "before": {
+      "mean_turns": 12.0,
+      "mean_topic_coverage": 0.4328703703703704,
+      "mean_doctor_physical_requests": 2.6666666666666665
+    },
+    "after": {
+      "mean_turns": 29.0,
+      "mean_topic_coverage": 1.0,
+      "mean_doctor_physical_requests": 2.3333333333333335
+    }
+  },
+  "diagnostic_disagreements": [],
+  "limitations": [
+    "230 historical development cases, not fresh blind validation",
+    "Three expanded synthetic fixtures are development regressions, not proof of general clinical completeness",
+    "Official score improvement unmeasured",
+    "Stage traces from the legacy TEST-enabled Round M path were not completed or used; all 128 Round M cases are included in the actual 230-case SDK run"
+  ]
+}

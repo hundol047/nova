@@ -1,7 +1,7 @@
 {
-  "current_verification_artifact": "artifacts/verification/local-release-955e554-v36.json",
-  "current_verification_schema": "nova-verification-v36",
-  "verified_runtime_sha": "955e55439f69c0b887a1aeaa19dc71d4795e699f",
+  "current_verification_artifact": "artifacts/verification/local-release-62a0822-v37.json",
+  "current_verification_schema": "nova-verification-v37",
+  "verified_runtime_sha": "62a08223f429ac52966c8649809d9bb92a850c13",
   "current_blind_version": "v19",
   "current_blind_manifest": null,
   "current_blind_status": "REFERENCE-ONLY",
@@ -36,7 +36,7 @@
     "artifacts/verification/local-release-b3fdccd37519-v3.json"
   ],
   "status": "NOT READY",
-  "reason": "Scoped interview evidence, diagnostic reassessment and actual patient closing; paired offline evaluation; official performance unverified.",
+  "reason": "v37 completes essential history, reserves communication, preserves HPI, and validates the actual SDK path.",
   "latest_compliance_followup": "artifacts/clinical_review_pass/rule_matrix.json",
   "latest_rights_and_review_followup": "artifacts/rights_and_review/CURRENT_STATUS.json"
 }

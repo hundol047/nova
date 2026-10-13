@@ -1,0 +1,14 @@
+{
+  "source": "User supplied screenshot; no server grading call by agent",
+  "reported_total": 51.977,
+  "domains": {
+    "information_gathering": 8.28,
+    "diagnostic_reasoning": 7.08,
+    "tests_followup": 3.44,
+    "safety": 10.0,
+    "communication": 3.17,
+    "efficiency": 20.0
+  },
+  "component_sum": 51.97,
+  "causality": "Score alone does not establish turn count as the cause."
+}
