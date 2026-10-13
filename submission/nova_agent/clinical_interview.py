@@ -28,6 +28,8 @@ def interview_family(state):
 
 
 TOPICS = {
+ 'symptom_onset':('onset','언제부터 이런 증상이 있었나요?',r'(?:\d+|한|두|세|석|몇)\s*(?:개월|달|주|일|시간)\s*(?:간|전부터|동안|째)|어제부터|오늘.*시작|since (?:yesterday|last|this)|(?:for|over) (?:the )?(?:past )?\d+\s*(?:day|week|month|year)'),
+ 'weight_change':('associated_symptoms','체중이 몇 kg 줄었나요?',r'\d+(?:\.\d+)?\s*(?:kg|킬로)[^;\n]{0,12}(?:감소|빠|줄)|(?:lost|loss of)\s*\d+(?:\.\d+)?\s*kg'),
  'medication_name':('medication','복용 중인 약 이름이 뭔가요?',r'zolpidem|benzodiazep|diazepam|lorazepam|졸피뎀|수면제|아무.*약.*없|약.*안.*먹'),
  'medication_dose':('medication','수면제 한 번 용량은 몇 mg인가요?',r'\d+(?:\.\d+)?\s*(?:mg|밀리그램|알|정)'),
  'medication_frequency':('medication','수면제를 하루 몇 번 드시나요?',r'every night|daily|nightly|times.*day|매일|하루.*(?:회|번)|매일.*밤'),
@@ -58,10 +60,11 @@ TOPICS = {
 def topic_for_question(text):
     # Question-language match is intentionally separate from answer evidence.
     for topic,pattern in (
-        ('medication_dose',r'몇\s*mg|용량|몇\s*알|dose'),('medication_frequency',r'몇\s*번|몇\s*회|frequency'),
+        ('symptom_onset',r'언제부터|when.*start'),('weight_change',r'체중.*(?:몇|얼마)|몇\s*kg.*(?:빠|줄)|weight.*(?:lost|loss)'),
+        ('medication_dose',r'몇\s*mg|용량|몇\s*알|dose'),('medication_frequency',r'(?:약|수면제|복용|드시|먹|medicin|take).*(?:몇\s*번|몇\s*회|frequency)|(?:몇\s*번|몇\s*회).*(?:복용|드시|먹|take)'),
         ('medication_duration',r'얼마나.*(?:드|복용)|복용.*기간|how long.*tak'),
         ('tolerance',r'같은 효과|내성|증량|toleran'),('withdrawal',r'줄이면|끊으면|금단|withdraw'),
-        ('medication_name',r'약.*이름|무슨.*약|복용 중인 약|medicin'),
+        ('medication_name',r'약.*이름|무슨.*약|복용.*약|먹는.*약|medicin'),
         ('growth_records',r'이전.*키|키.*날짜'),('growth_velocity',r'1년.*키|성장.*속도|growth velocity'),
         ('parent_height',r'부모.*키'),('parent_puberty',r'부모.*사춘기'),('birth',r'태어|출생'),
         ('nutrition',r'식사|영양'),('chronic_gi',r'설사.*오래|만성.*설사'),('puberty',r'사춘기'),
@@ -82,27 +85,24 @@ def relevant_substance_question(state, text):
 
 
 def topic_known(state, topic):
-    if any(t.action_type=='ASK' and topic_for_question(t.content)==topic for t in state.performed_actions):return True
-    raw='; '.join([state.chief_complaint,*[t.result or '' for t in state.performed_actions]])
-    # Explicit uncertainty does not make the answer known, but attempted topics
-    # remain bounded so an unhelpful reply cannot cause endless questioning.
-    if topic=='growth_velocity':return growth_velocity(raw) is not None
-    if topic=='parent_height':return bool(re.search(r'(?:parent|father|mother|부모|아버지|어머니)[^;\n]{0,30}\d+\s*(?:cm|센티)',raw,re.I))
-    return bool(re.search(TOPICS[topic][2],raw,re.I))
+    from nova_agent.interview_evidence import topic_answered
+    return topic_answered(state, topic, TOPICS[topic][2])
 
 
 def next_clinical_action(state):
+    from nova_agent.interview_evidence import topic_attempted
     family=interview_family(state)
     if not family:return None
     if family=='sleep':
         order=['medication_name','medication_dose','medication_frequency','medication_duration','tolerance','withdrawal','daytime_impairment','combined_sedatives','allergy']
-        exposure=bool(re.search(r'zolpidem|zopiclone|eszopiclone|benzodiazep|diazepam|lorazepam|alprazolam|clonazepam|졸피뎀|수면제', '; '.join(state.all_findings_text(include_context=True,include_family=False)),re.I))
+        from nova_agent.matching import feature_present_with_aliases
+        exposure=feature_present_with_aliases('sedative use',state.all_findings_text(include_context=True,include_family=False),scrub_negated_spans=True)
         if not exposure:order=['medication_name','daytime_impairment','allergy']
     elif family=='growth':
         order=['growth_records','growth_velocity','parent_height','parent_puberty','birth','nutrition','chronic_gi']
         if state.demographics.age is not None and state.demographics.age>=8:order.append('puberty')
     else:
-        order=['appetite','heat','palpitations','tremor','sweat','bowel','allergy']
+        order=['symptom_onset','weight_change','appetite','heat','palpitations','tremor','sweat','bowel','allergy']
         if state.demographics.sex=='female' and (state.demographics.age is None or 12<=state.demographics.age<=55):order.append('menstrual')
         # Once a characteristic symptom cluster is established, examination has
         # more candidate-separating value than finishing every possible ROS item.
@@ -114,11 +114,12 @@ def next_clinical_action(state):
             if not state.exam_done('thyroid_exam'):return ('EXAM','thyroid_exam','갑상선을 촉진하겠습니다','thyroid_exam')
             if feature_present_with_aliases('diffuse goiter',state.objective_findings_text(),scrub_negated_spans=True):
                 if not state.exam_done('thyroid_eye'):return ('EXAM','thyroid_eye','안구 돌출을 살펴보겠습니다','thyroid_eye')
-                if topic_known(state,'allergy'):return None
-                order=['allergy']
+                # A characteristic exam does not answer the time course,
+                # quantitative change or medication/allergy safety history.
+                order=['symptom_onset','weight_change','medication_name','allergy']
     # Fewer, higher-value turns, then only relevant physical maneuvers.
     for topic in order:
-        if not topic_known(state,topic):
+        if not topic_known(state,topic) and not topic_attempted(state,topic):
             category,text,_=TOPICS[topic]
             feature={'heat':'heat intolerance','sweat':'sweating','tremor':'tremor','palpitations':'palpitations',
                      'withdrawal':'withdrawal symptoms','tolerance':'dose escalation','daytime_impairment':'daytime sleepiness',

@@ -65,6 +65,23 @@ class NormalizedDiagnosis:
     codes: list
 
 
+def _identity_representative(concepts):
+    """Collapse exact duplicate names, never a shared alias or parent/child.
+
+    A deep core profile and a shallow catalog row can describe the SAME full
+    canonical name. Their coexistence is not diagnostic ambiguity. Prefer the
+    single core identity, preserving its stricter support/workup validation.
+    """
+    from nova_agent.ontology.normalizer import normalize
+    rows=list(concepts)
+    if not rows or len({normalize(c.canonical_name) for c in rows}) != 1:
+        return None
+    core={c.kb_id for c in rows if c.kb_id}
+    if len(core)>1:
+        return None
+    return next((c for c in rows if c.kb_id), min(rows,key=lambda c:c.concept_id))
+
+
 def normalize_diagnosis(text: str) -> NormalizedDiagnosis:
     if not text or not text.strip():
         return NormalizedDiagnosis(raw_text=text, canonical_id=None, canonical_name=None, mapped=False, codes=[])
@@ -77,8 +94,10 @@ def normalize_diagnosis(text: str) -> NormalizedDiagnosis:
     cat = get_default_catalog()
     direct = cat.get_condition(text.strip()) or cat.get_condition("core:" + text.strip())
     if direct is not None:
-        return NormalizedDiagnosis(text, direct.kb_id or direct.concept_id,
-                                   direct.canonical_name, True, [])
+        equivalent=[c for c in cat.all_concepts() if normalize(c.canonical_name)==normalize(direct.canonical_name)]
+        representative=_identity_representative(equivalent) or direct
+        return NormalizedDiagnosis(text, representative.kb_id or representative.concept_id,
+                                   representative.canonical_name, True, [])
     target = normalize(text)
     matches = {c.concept_id: c for c in cat.all_concepts()
                if any(normalize(t) == target for t in [c.canonical_name, *c.aliases])}
@@ -88,9 +107,9 @@ def normalize_diagnosis(text: str) -> NormalizedDiagnosis:
         for c in cat.all_concepts():
             if c.kb_id == core_id:
                 matches[c.concept_id] = c
-    if len(matches) != 1:
+    c=_identity_representative(matches.values())
+    if c is None:
         return NormalizedDiagnosis(text, None, None, False, [])
-    c = next(iter(matches.values()))
     return NormalizedDiagnosis(text, c.kb_id or c.concept_id, c.canonical_name, True,
                                [code.as_dict() for code in c.external_codes])
 

@@ -98,7 +98,8 @@ def test_supported_correction_owns_record_communication_and_safety():
     assert diagnosis in note['A']['evidence'] and 'TSH' in note['P']['tests']
     assert '400mg' not in json.dumps(note) and '응급실' not in note['P']['disposition']
     assert not e._urgent(d,f) and note['O']['tests']==''
-    assert all(len(s)<=30 for s in spoken) and len(spoken)<=2
+    assert all(len(s)<=30 for s in spoken) and len(spoken)==3
+    assert '1~2주' in spoken[1] and '고열' in spoken[2]
 
 
 @pytest.mark.parametrize('history,exam',[
@@ -217,7 +218,11 @@ def test_all_three_complete_sdk_fixtures_preserve_calls_and_closing_consistency(
         assert case['primary']==case['expected']
         assert not case['unsafe_emergency_disposition']
         assert case['duplicate_questions_exact']==case['age_inappropriate_social_questions']==case['nfc_or_test_violations']==0
-        assert len(case['communication'])==2
+        # v36 uses a third, policy-owned SAY to actually deliver timed follow-up
+        # and specific precautions; urgent cases still close in two turns.
+        assert len(case['communication']) == 3
+        assert any('주' in s or '개월' in s for s in case['communication'])
+        assert any('즉시' in s or '조기' in s for s in case['communication'])
 
 
 def test_thyroid_examination_precedes_more_low_value_history():
@@ -255,4 +260,5 @@ def test_frozen_32_case_pipeline_proxy_and_no_fake_lab_results():
     assert r['metrics']['reference_compatible']==32
     assert r['metrics']['urgency_matches']==32
     assert r['metrics']['unperformed_test_results']==0
-    assert r['metrics']['mean_closing_turns']==2
+    assert 2 <= r['metrics']['mean_closing_turns'] <= 3
+    assert r['metrics']['precautions_present'] == r['metrics']['cases']
