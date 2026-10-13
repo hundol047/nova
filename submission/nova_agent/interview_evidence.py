@@ -14,8 +14,8 @@ _CLAUSES = re.compile(r'[;\n]|(?<!\d)\.(?!\d)|\bbut\b|하지만|그러나', re.I
 _SEDATIVE_NAME = re.compile(r'zolpidem|zopiclone|eszopiclone|diazepam|lorazepam|alprazolam|clonazepam|temazepam|triazolam|졸피뎀|조피클론|로라제팜|알프라졸람|클로나제팜|디아제팜', re.I)
 _SEDATIVE = re.compile(_SEDATIVE_NAME.pattern + r'|sedative|sleeping (?:pill|medication)|수면제|진정제|benzodiazep', re.I)
 _UNCERTAIN = re.compile(_ANSWER_UNKNOWN.pattern + r'|unknown|uncertain|미확인|확인되지|알지 못|기억.*않', re.I)
-_FAMILY_TOPICS = {'parent_height', 'parent_puberty'}
-_LONGITUDINAL_TOPICS = {'growth_records', 'growth_velocity', 'birth'}
+_FAMILY_TOPICS = {'parent_height', 'parent_puberty', 'family_illness'}
+_LONGITUDINAL_TOPICS = {'growth_records', 'growth_velocity', 'birth', 'medical_history', 'surgery', 'prior_care'}
 _QUANTITATIVE = {'medication_dose', 'medication_frequency', 'medication_duration', 'growth_records', 'growth_velocity', 'parent_height', 'birth'}
 
 
@@ -51,7 +51,15 @@ def topic_answered(state, topic, pattern):
             # Short answers inherit the question's topic, never its suggested
             # finding. Quantities still require actual quantitative content.
             kind = answer_kind(result)
+            from nova_agent.clinical_interview import DETAIL_QUESTIONS, needs_history_detail
+            if topic in DETAIL_QUESTIONS and needs_history_detail(result):
+                continue
             if topic not in _QUANTITATIVE and kind in {'yes', 'no'}:
+                return True
+            # A named, direct history answer need not repeat the question's
+            # vocabulary (e.g. '고혈압', '충수절제술', '아버지가 당뇨예요').
+            # This is coverage only, never a diagnostic feature assertion.
+            if topic in {'medical_history', 'surgery', 'family_illness', 'prior_care', 'function'} and kind is None:
                 return True
             if topic in _QUANTITATIVE - {'parent_height','growth_velocity','growth_records'} and re.search(pattern, ' '.join(usable), re.I):
                 return True

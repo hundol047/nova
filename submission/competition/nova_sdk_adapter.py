@@ -523,6 +523,7 @@ class OfficialEncounter:
                         break
                     self._observe('interview_reassessment', round=round_index + 1,
                                   reason='new_observations_with_unresolved_differential')
+                self._clarify_history_phase()
         except EncounterOver as exc:
             self.log(f"[encounter] server ended gathering: {exc}")
         with proxy_scope(pstate.proxy_relation):
@@ -638,6 +639,20 @@ class OfficialEncounter:
         if self.can_gather() and not self._urgent(self.pstate.current_differential, None):
             self.say('많이 불편하셨죠. 가장 걱정되는 점은요?', category='patient_concern')
 
+    def _clarify_history_phase(self):
+        from nova_agent.clinical_interview import next_history_clarification
+        from nova_agent.matching import evaluation_scope
+        while self.can_gather():
+            with evaluation_scope():
+                differential=self.engine.agent.differential_engine.update(self.pstate)
+            if self._urgent(differential,None):break
+            action=next_history_clarification(self.pstate)
+            if action is None:break
+            _,key,text,_=action
+            turn=self.say(text,category=key)
+            if not turn.ok:break
+            self._absorb('ASK',key,text,turn.reply)
+
     _PAIN_KEYS = ("location", "character", "severity")
     _PAIN_WORDS = re.compile(r"아프|아파|아픈|통증|쑤시|저리|따갑|따끔|쓰리|결리|pain|ache|hurt|sore", re.I)
 
@@ -718,12 +733,13 @@ class OfficialEncounter:
         from nova_agent.interview_evidence import topic_attempted, exam_attempted, exam_topic
         if not self.can_gather() or self._urgent(self.pstate.current_differential, None):
             return
-        from nova_agent.clinical_interview import missing_foundation_topics
+        from nova_agent.clinical_interview import missing_foundation_topics, unresolved_history
         reply = self.chat([
             {"role": "system", "content": _FOLLOWUP_SYSTEM},
             {"role": "user", "content": f"{self.transcript_text(include_rejected=True)}\n\n규칙 기반 엔진의 감별 후보:\n"
                                         f"{self._engine_candidates_text()}\n\n추가 문진 가능 턴: {self.gathering_budget()}"
-                                        f"\n미확인 기본 문진: {missing_foundation_topics(self.pstate)}"}],
+                                        f"\n미확인 기본 문진: {missing_foundation_topics(self.pstate)}"
+                                        f"\n응답 후에도 남은 정보 공백: {unresolved_history(self.pstate)}"}],
             max_tokens=FOLLOWUP_MAX_TOKENS, effort="low", required=True, case_relevant=True, purpose="followup")
         plan = first_json(reply or "") or {}
         plan_call, start_actions = self._last_chat_number, len(self.turns)
@@ -984,6 +1000,9 @@ class OfficialEncounter:
             # Safety and timed next step precede optional elaboration if time is short.
             messages += [(plan.get('spoken_precautions',''),'plan_explanation')]
         if not urgent and self.seconds_left() > GATHER_MARGIN:
+            concern=next((t.reply for t in reversed(self.turns) if t.ok and t.category=='patient_concern'),'')
+            response=_concern_response(concern,plan)
+            if response:messages.append((response,'plan_explanation'))
             messages += [(plan.get('spoken_test_purpose',''),'plan_explanation'),
                          (plan.get('spoken_treatment',''),'plan_explanation'),
                          ('다음 진료 시점을 말씀해 주시겠어요?','understanding_check'),
@@ -1046,12 +1065,14 @@ class OfficialEncounter:
             # findings and history filed under ROS/medication rather than HPI.
             grounded = [self.opening] if self.opening else []
             grounded += [f"{t.text} → {t.reply}" for t in exams[-3:]]
-            grounded += [f"{t.text} → {t.reply}" for t in self.turns if t.ok and t.kind == 'SAY'
-                         and t.category not in (*COMMUNICATION_CATEGORIES, 'patient_concern')][-4:]
+            grounded += _salient_history(self.turns)
         record["A"]["evidence"] = f"#1. {diagnosis}\n" + "\n".join(f"- 근거 : {e}" for e in grounded)
         decision=self._resolved_decision(final)
         if decision is not None and decision.item is not None:
             record['A']['evidence'] += '\n' + _candidate_reason(decision.item)
+        from nova_agent.clinical_interview import unresolved_history
+        gaps=unresolved_history(self.pstate)
+        if gaps:record['A']['evidence'] += '\n문진 한계: ' + ' / '.join(gaps[:5])
         record['A']['evidence'] += '\n확실성: 현재 수집 정보에 근거한 작업 진단; 미시행 검사는 확진 근거가 아님'
         ddx_lines = []
         for d in _list(proposal.get("differential")):
@@ -1137,7 +1158,7 @@ class OfficialEncounter:
                 'growth':('두통·구토·시야 변화 시 조기 진료받으세요' if '시야' in plan['education'] else '키 증가 둔화·체중 감소 시 조기 재진하세요'),
                 'sedative':'경련·혼돈·호흡저하 시 즉시 진료받으세요'}[profile['category']]
             purpose={
-                'thyroid':'TSH·유리T4로 호르몬 과다를 확인해요',
+                'thyroid':'피검사로 갑상샘 호르몬이 많은지 확인해요',
                 'growth':'성장곡선·필요시 골연령으로 원인을 살펴요',
                 'sedative':'복약 검토와 수면일지로 원인을 살펴요'}[profile['category']]
             plan['tests'] += '\n평가 목적: '+purpose+'; 실제 검사는 아직 시행하지 않음'
@@ -1147,6 +1168,7 @@ class OfficialEncounter:
                 'growth':'성장 기록을 가져오시면 비교하겠습니다',
                 'sedative':'약은 처방의와 상의해 서서히 조절해요'}[profile['category']]
             plan['spoken_follow_up']=plan['spoken_next_step']
+            plan=_plan_review_items(plan,self.pstate,decision)
             return plan
         try:
             from nova_agent.soap import build_soap
@@ -1179,6 +1201,59 @@ class OfficialEncounter:
 _PMH = ("past_medical_history", "medication", "allergy")
 _HPI = ("onset", "location", "duration", "character", "severity", "aggravating", "relieving", "associated_symptoms",
         "followup", "timing", "context", "course")
+
+
+def _salient_history(turns, limit=5):
+    """Retain earlier diagnostic facts instead of the last social-history replies.
+
+    Stable priority and category diversity, always with the original Q/A and
+    source turn. Negative answers remain available in the full S record.
+    """
+    from nova_agent.state import answer_kind
+    candidates=[t for t in turns if t.ok and t.kind=='SAY'
+                and t.category not in (*COMMUNICATION_CATEGORIES,'patient_concern')
+                and answer_kind(t.reply) not in {'unknown','no','yes'}]
+    priorities={'onset':0,'medication':0,'associated_symptoms':1,'course':1,
+                'severity':1,'past_medical_history':2,'family_history':2}
+    ordered=sorted(candidates,key=lambda t:priorities.get(t.category.partition(':')[0],3))
+    chosen=[];used=set()
+    for t in ordered:
+        base=t.category.partition(':')[0]
+        if base not in used:chosen.append(t);used.add(base)
+        if len(chosen)>=limit:break
+    for t in ordered:
+        if len(chosen)>=limit:break
+        if t not in chosen:chosen.append(t)
+    return [_history_line(t) for t in chosen]
+
+
+def _plan_review_items(plan,state,decision):
+    from nova_agent.clinical_interview import unresolved_history, topic_for_question
+    gaps=unresolved_history(state)
+    if gaps:
+        plan['follow_up'] += '\n다음 진료에서 확인할 미해결 문진: ' + ' / '.join(gaps[:3])
+    unknown_drugs=any(topic_for_question(g.partition(' → ')[0])=='medication_name' for g in gaps)
+    if unknown_drugs:
+        plan['follow_up'] += '\n복용약 이름은 약봉투·처방전으로 확인'
+    if decision is not None and decision.item is not None:
+        facts=list(dict.fromkeys(decision.item.supporting_evidence))[:4]
+        if facts:plan['follow_up'] += '\n증상·진찰 변화 비교 항목(현재 관찰): ' + ', '.join(facts)
+        missing=list(dict.fromkeys(decision.item.missing_discriminative_evidence))[:3]
+        if missing:plan['tests'] += '\n아직 확인할 감별 항목: ' + ', '.join(missing) + ' (확인된 검사 결과 아님)'
+    return plan
+
+
+def _concern_response(reply,plan):
+    from nova_agent.state import answer_kind
+    if answer_kind(reply) in {'yes','no','unknown'}:return ''
+    if re.search(r'비용|일정|직장|시간.*없|못 가|부담',reply):
+        return '검사·진료 일정의 부담을 함께 조정해요'
+    if re.search(r'암|큰 병|심각|위험|죽|치명',reply):
+        return '걱정되시죠. 지금은 원인 확인이 필요해요'
+    if re.search(r'약|중독|의존|끊|금단',reply):return plan.get('spoken_treatment','')
+    if re.search(r'검사',reply):return plan.get('spoken_test_purpose','')
+    if re.search(r'낫|치료|평생|회복',reply):return '치료 경과는 원인을 확인하며 설명드릴게요'
+    return ''
 
 
 def _history_line(turn):

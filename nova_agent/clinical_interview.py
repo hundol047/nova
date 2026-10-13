@@ -35,7 +35,7 @@ TOPICS = {
  'function':('associated_symptoms','일상생활에 어떤 지장이 있나요?',r'일상.*지장|(?:낮|일|활동).*(?:지장|제한)|daily.*(?:life|activit)|daytime impairment'),
  'prior_care':('past_medical_history','이 증상으로 진료받은 적이 있나요?',r'이 증상.*진료|previous.*(?:evaluat|consult)'),
  'medical_history':('past_medical_history','진단받거나 치료 중인 병이 있나요?',r'(?:과거력|기저질환|chronic disease|medical history).*(?:없|없음|none|no)|진단받.*병'),
- 'family_illness':('family_history','가족 중 비슷한 질환이 있나요?',r'가족력.*(?:없|없음)|family history.*(?:none|negative)'),
+ 'family_illness':('family_history','가족 중 질환이 있는 분이 있나요?',r'가족력.*(?:없|없음)|family history.*(?:none|negative)'),
  'sleep_pattern':('associated_symptoms','잠들기와 잠 유지 중 무엇이 어렵나요?',r'잠들기.*어렵|자주.*깨|sleep (?:onset|maintenance)'),
  'sleep_hours':('associated_symptoms','하루에 실제로 몇 시간 주무시나요?',r'(?:\d+|한|두|세|네|다섯|여섯)\s*시간.*(?:자|잠|수면)|sleep.*\d+.*hours?'),
  'snoring':('associated_symptoms','잘 때 코골이가 있나요?',r'snor|코골'),
@@ -69,7 +69,63 @@ TOPICS = {
 }
 
 
+# A positive screening reply does not identify the disease, drug or reaction.
+# One clarification per topic and three per encounter; unknown/refused replies
+# are left unresolved rather than repeatedly solicited.
+DETAIL_QUESTIONS = {
+    'allergy': '어떤 약에 어떤 알레르기 반응이 있었나요?',
+    'medication_name': '복용 약 이름을 구체적으로 알려주세요',
+    'medical_history': '진단받은 병 이름이 무엇인가요?',
+    'prior_care': '이 증상으로 진료받은 결과는 어땠나요?',
+    'family_illness': '가족 중 누가 어떤 병을 앓고 있나요?',
+    'surgery': '어떤 수술을 받으셨나요?',
+    'function': '일상에서 가장 어려운 활동은 무엇인가요?',
+}
+
+
+def needs_history_detail(answer):
+    from nova_agent.state import answer_kind
+    kind = answer_kind(answer)
+    if kind in {'no', 'unknown'}:return False
+    if kind == 'yes':return True
+    # Only nonspecific affirmative screens, not arbitrary short named answers.
+    return bool(re.fullmatch(
+        r'\s*(?:네[, ]*)?(?:약(?:을|은)? (?:먹고|복용하고) 있어요|'
+        r'병이 있어요|알레르기가 있어요|수술(?:을)? (?:했어요|받았어요)|'
+        r'진료(?:를)? 받았어요|검사(?:를)? 받았어요|불편해요)[.!\s]*', answer or ''))
+
+
+def next_history_clarification(state):
+    attempts = [a for a in state.performed_actions if a.action_type == 'ASK']
+    if sum(a.content in DETAIL_QUESTIONS.values() for a in attempts) >= 3:return None
+    for topic, question in DETAIL_QUESTIONS.items():
+        replies = [a for a in attempts if topic_for_question(a.content) == topic]
+        if not replies or any(a.content == question for a in attempts):continue
+        if needs_history_detail(replies[-1].result):
+            category = TOPICS[topic][0]
+            return ('SAY', category+':'+topic, question, category)
+    return None
+
+
+def unresolved_history(state):
+    """Observed gaps only; no conversion of unasked items to negative facts."""
+    from nova_agent.state import answer_kind
+    latest = {}
+    for a in state.performed_actions:
+        if a.action_type != 'ASK':continue
+        topic = topic_for_question(a.content)
+        if topic:latest[topic] = a
+    return [f'{a.content} → {a.result} (미확인 또는 세부 정보 부족)'
+            for topic, a in latest.items()
+            if answer_kind(a.result) == 'unknown' or
+            (topic in DETAIL_QUESTIONS and needs_history_detail(a.result))]
+
+
 def topic_for_question(text):
+    for topic, question in DETAIL_QUESTIONS.items():
+        if text == question:return topic
+    for topic, (_, question, _) in TOPICS.items():
+        if text == question:return topic
     # Question-language match is intentionally separate from answer evidence.
     for topic,pattern in (
         ('birth',r'태어|출생'),
@@ -183,6 +239,8 @@ def missing_foundation_topics(state):
 
 
 def next_foundation_action(state):
+    clarification = next_history_clarification(state)
+    if clarification:return clarification
     missing = missing_foundation_topics(state)
     if not missing:return None
     topic = missing[0]
