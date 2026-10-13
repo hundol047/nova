@@ -1,0 +1,10 @@
+{
+  "artifact": "artifacts/releases/nova-v36-submission.zip",
+  "bytes": 913778,
+  "sha256": "7da4f049459a273fea45c3b88b50cf22b73d5d188623ec85d4b765d5348dc202",
+  "runtime_commit": "955e55439f69c0b887a1aeaa19dc71d4795e699f",
+  "verification_commit": "f207f3ad174ed2192655f571d6502a65d73d8c96",
+  "verification_record": "artifacts/verification/local-release-955e554-v36.json",
+  "publication": "Published to the target branch at the user's explicit request after verification. Supersedes LOCAL_ONLY publication wording in the immutable v36 verification record; readiness and performance claims are unchanged.",
+  "official_submission_performed": false
+}
