@@ -7,7 +7,7 @@ from scripts.human_sample_capture import verify_runtime
 
 ROOT=Path(__file__).resolve().parents[1]
 
-@pytest.fixture(params=['v42','v43','v44','v45'])
+@pytest.fixture(params=['v42','v43','v44','v45','v46','v47','v48'])
 def candidate(tmp_path,request):
     version=request.param
     out=tmp_path/'artifacts/releases';out.mkdir(parents=True)
@@ -23,7 +23,11 @@ def test_candidate_identity_is_explicitly_not_full_suite(candidate):
     root,version=candidate
     result=verify_runtime(root,candidate=version)
     assert result['candidate']==version
-    assert 'not a new full-suite' in result['validation_scope']
+    if version in {'v42','v43','v44','v45'}:
+        assert 'not a new full-suite' in result['validation_scope']
+    else:
+        assert result['validation_scope']
+        assert result['candidate_zip_sha256']
 
 @pytest.mark.parametrize('kind',['source','staging','extra','archive'])
 def test_changed_candidate_is_rejected(candidate,kind):

@@ -193,9 +193,14 @@ def prepare() -> dict:
 # consult()
 # ---------------------------------------------------------------------------------------------------------------
 
-def consult(client, state: Optional[dict] = None):
+def make_encounter(client, state: Optional[dict] = None, **kwargs):
+    """One runtime factory for production and the human-operated sample runner."""
     from competition.adaptive_encounter import AdaptiveEncounter
-    return AdaptiveEncounter(client, state or {}).run()
+    return AdaptiveEncounter(client, state or {}, **kwargs)
+
+
+def consult(client, state: Optional[dict] = None):
+    return make_encounter(client, state).run()
 
 
 class OfficialEncounter:

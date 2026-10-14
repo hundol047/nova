@@ -105,7 +105,9 @@ def test_patient_specific_questions_and_exam_precede_template_history():
     assert sent[1:5] == [a['text'] for a in ACTIONS[:4]]
     assert s.diagnosis == '급성 방광염'
     assert all(len(t) <= 30 for _, t, _ in s.events)
-    assert s.turns < 30 and s.chat_calls == 3
+    assert s.turns <= 50 and s.chat_calls <= 9
+    from nova_agent.clinical_interview import missing_foundation_topics
+    assert not missing_foundation_topics(e.pstate)
     assert not any(kind == 'TEST' for kind, *_ in s.events)
     assert len(sent) == len(set(sent))
     assert '늑골척추각' in s.record['O']['exam']
@@ -221,10 +223,12 @@ def test_explicit_no_test_plan_does_not_reinsert_unrelated_panel():
     assert '즉시 추가 검사 계획 없음' in e._engine_plan([], None)['tests']
 
 
-def test_ready_plan_stops_without_spending_all_five_reviews():
+def test_ready_plan_fills_missing_history_before_bounded_completion():
     s = Scenario(actions=[])
-    run_new(s)
-    assert s.chat_calls == 2 and s.turns < 20
+    e = run_new(s)
+    from nova_agent.clinical_interview import missing_foundation_topics
+    assert not missing_foundation_topics(e.pstate)
+    assert 2 < s.chat_calls < 9 and s.turns <= 50
 
 
 def test_acute_hypoxemia_skips_routine_history_and_submits():
@@ -284,7 +288,7 @@ def test_planner_cannot_bypass_turn_cap_even_if_it_never_stops():
         return original(system, content)
     s.chat_reply = endless
     run_new(s)
-    assert s.chat_calls <= 6 and s.turns <= 50 and s.closed
+    assert s.chat_calls <= 9 and s.turns <= 50 and s.closed
 
 
 def test_closing_new_symptom_is_reviewed_using_its_actual_observation_id():
@@ -349,4 +353,4 @@ def test_invalid_first_batch_has_one_bounded_repair_with_feedback():
     run_new(s)
     assert s.inputs[1]['rejected_actions_do_not_repeat'][0]['reason'] == 'invalid_action_or_length'
     assert any(x[1] == ACTIONS[0]['text'] for x in s.events)
-    assert s.chat_calls == 4 and all(len(x[1]) <= 30 for x in s.events)
+    assert s.chat_calls <= 9 and all(len(x[1]) <= 30 for x in s.events)

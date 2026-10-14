@@ -13,9 +13,9 @@ from competition.encounter_contract import (INTERVIEW_SYSTEM, FINAL_SYSTEM,
 from competition.official_evidence import diagnosis_text, followup_category
 from nova_agent.state import answer_kind
 
-MAX_PLANNING_ROUNDS = 5
+MAX_PLANNING_ROUNDS = 8
 BATCH_ACTIONS = 6
-CLOSING_RESERVE = 12
+CLOSING_RESERVE = 14
 MAX_CLINICAL_ACTIONS = base.TOTAL_TURN_TARGET - CLOSING_RESERVE
 
 
@@ -31,6 +31,7 @@ class AdaptiveEncounter(base.OfficialEncounter):
         self._scored_cache = None
         self._scored_at = -1
         self._late_clinical = []
+        self._exam_review_requested = False
 
     def gathering_budget(self):
         gathered = sum(t.category not in base.COMMUNICATION_CATEGORIES for t in self.turns)
@@ -84,7 +85,7 @@ class AdaptiveEncounter(base.OfficialEncounter):
 
     def _review_input(self, *, final=False):
         from nova_agent.organizer_guidelines import retrieve
-        from nova_agent.clinical_interview import missing_foundation_topics
+        from nova_agent.clinical_interview import missing_foundation_topics, unresolved_history
         hints = self._engine_candidates_text(3)
         references = retrieve(self.prepared.get('guidelines'), self.opening + ' ' + hints,
                               k=2, max_chars=700 if final else 400)
@@ -93,6 +94,11 @@ class AdaptiveEncounter(base.OfficialEncounter):
             'ENGINE_HINTS_NOT_DIAGNOSES': hints,
             'GUIDELINE_REFERENCE_NOT_PATIENT_FACTS': references,
             'unasked_general_domains_not_a_mandatory_quota': missing_foundation_topics(self.pstate),
+            'unresolved_history_never_assume_negative': unresolved_history(self.pstate),
+            'physical_exam_actions_attempted': sum(t.kind == 'EXAM' for t in self.turns),
+            'completion_review': '정보수집을 충분히 하세요. 아직 필요한 주호소 세부 문진·감별 질문·진찰을 고르세요. '
+                                 '진찰이 없다면 관련 진찰을 선택하거나 불필요한 이유를 exam_rationale에 쓰세요. '
+                                 '빈 actions만으로 종료하지 않으며, 누락 문진 후 다시 검토합니다.',
             'already_attempted_topics': sorted(self._attempted_topics),
             'rejected_actions_do_not_repeat': self._action_rejections[-8:],
             'remaining_clinical_actions': self.gathering_budget(),
@@ -112,7 +118,7 @@ class AdaptiveEncounter(base.OfficialEncounter):
                     reply = self.chat([
                         {'role': 'system', 'content': INTERVIEW_SYSTEM},
                         {'role': 'user', 'content': json.dumps(self._review_input(), ensure_ascii=False)}],
-                        max_tokens=2000, effort='low', required=round_no == 0,
+                        max_tokens=4000, effort='medium', required=round_no == 0,
                         case_relevant=True, purpose='adaptive_interview')
                     plan = base.first_json(reply or '') or {}
                     if not plan:
@@ -148,13 +154,16 @@ class AdaptiveEncounter(base.OfficialEncounter):
                             # because a first batch exceeded the wire limit.
                             format_repair_used = True
                             continue
-                        # Do not buy another identical planning call. Core
-                        # medication/allergy gaps can be closed without it.
-                        self._core_history_fill(max_actions=4)
+                        # Fill missing history, then review the new observations.
+                        added = self._completion_phase(max_actions=6)
+                        if added:
+                            continue
+                        if (not self._exam_review_requested and not any(t.kind == 'EXAM' for t in self.turns)
+                                and not clean(plan.get('exam_rationale'))):
+                            self._exam_review_requested = True
+                            continue
                         break
-                    if plan.get('ready') is True and not actions:
-                        break
-                self._core_history_fill(max_actions=4)
+                self._completion_phase(max_actions=6)
         except base.EncounterOver as exc:
             self.log(f'[encounter] gathering ended: {exc}')
 
@@ -164,24 +173,38 @@ class AdaptiveEncounter(base.OfficialEncounter):
         # engine and history safeguards, but never replay an entire interview.
         if len(self.turns) <= 1:
             self._engine_phase(wire, case_id)
-        self._core_history_fill(max_actions=4)
+        self._completion_phase(max_actions=8)
 
-    def _core_history_fill(self, max_actions):
-        from nova_agent.clinical_interview import TOPICS, topic_known, next_history_clarification
-        from nova_agent.interview_evidence import topic_attempted
-        used = 0
-        for topic in ('symptom_onset', 'medical_history', 'medication_name', 'allergy'):
-            if used >= max_actions or not self.can_gather() or self._urgent(self.pstate.current_differential, None):
+    def _completion_phase(self, max_actions):
+        """Fill observed gaps before accepting an empty/ready plan.
+
+        This is completeness, not a minimum number of turns. Unknown/refused
+        topics remain unresolved, urgent disposition skips this phase, and the
+        same official 50-turn deadline/closing reserve applies.
+        """
+        from nova_agent.clinical_interview import (TOPICS, next_history_clarification,
+            missing_foundation_topics, next_clinical_action)
+        before = len(self.turns)
+        for _ in range(max_actions):
+            if not self.can_gather() or self._urgent(self.pstate.current_differential, None):
                 break
-            if topic_known(self.pstate, topic) or topic_attempted(self.pstate, topic):
-                continue
-            category, text, _ = TOPICS[topic]
-            turn = self._send_planned({'kind': 'SAY', 'text': text, 'topic': topic, 'category': category})
-            used += int(turn is not None)
-        detail = next_history_clarification(self.pstate)
-        if detail and used < max_actions and self.can_gather() and not self._urgent(self.pstate.current_differential, None):
-            _, key, text, category = detail
-            self._send_planned({'kind': 'SAY', 'text': text, 'topic': key, 'category': category})
+            action = next_history_clarification(self.pstate, max_details=8)
+            if action is None:
+                missing = missing_foundation_topics(self.pstate)
+                if missing:
+                    topic = missing[0]
+                    category, text, _ = TOPICS[topic]
+                    action = ('SAY', category + ':' + topic, text, category)
+                else:
+                    # Existing symptom-family questions are a bounded fallback
+                    # only after the patient-specific Doctor has no new action.
+                    action = next_clinical_action(self.pstate)
+            if action is None:
+                break
+            kind, key, text, category = action
+            if self._send_planned({'kind': kind, 'text': text, 'topic': key, 'category': category}) is None:
+                break
+        return len(self.turns) - before
 
     def _planned_actions(self, plan):
         actions = plan.get('actions')
@@ -202,6 +225,15 @@ class AdaptiveEncounter(base.OfficialEncounter):
         text = clean(action.get('text'), 1000)
         kind = action.get('kind')
         topic = clean(action.get('topic'), 80) or base._norm(text)
+        known = topic_for_question(text) if kind == 'SAY' else exam_topic(text)
+        detail = next_history_clarification(self.pstate, max_details=8) if kind == 'SAY' else None
+        is_detail = bool(detail and detail[2] == text)
+        if is_detail:
+            topic = 'detail:' + base._norm(text)
+        elif known:
+            topic = known
+        elif topic.casefold() in {'history', 'hpi', 'ros', 'pmh', 'medication', 'allergy', 'exam', 'symptoms'}:
+            topic = base._norm(text)
         rejection = ''
         if not base.fits(text) or kind not in ('SAY', 'EXAM'):
             rejection = 'invalid_action_or_length'
@@ -213,8 +245,6 @@ class AdaptiveEncounter(base.OfficialEncounter):
             rejection = 'not_single_new_physical_maneuver'
         elif kind == 'SAY':
             known_topic = topic_for_question(text)
-            detail = next_history_clarification(self.pstate)
-            is_detail = bool(detail and detail[2] == text)
             if not single_question(text) or not relevant_substance_question(self.pstate, text):
                 rejection = 'not_single_relevant_question'
             elif self._verified_followup_done(text) or (known_topic and not is_detail and
@@ -274,6 +304,8 @@ class AdaptiveEncounter(base.OfficialEncounter):
             self._accepted_decision = FinalDecision(normalized.canonical_id or 'doctor_working_diagnosis',
                 item, 'SUPPORTED', 'supported', ('observed_references_not_clinical_certification',))
             return primary
+        self._model_primary = ''
+        self._plan_cache = None
         return super()._validated_primary(differential, final)
 
     def _engine_plan(self, differential, final):
@@ -319,6 +351,7 @@ class AdaptiveEncounter(base.OfficialEncounter):
             if value:
                 result[key] = value
                 result['say_' + key] = next(iter(speech_units(value)), '')
+                result['say_' + key + '_all'] = speech_units(value)[:2]
         disposition = supplied.get('disposition')
         if isinstance(disposition, dict) and cited_facts(disposition.get('evidence'), rows, patient_support=True):
             level = {'emergency': '즉시 응급 평가', 'same_day': '당일 진료', 'outpatient': '외래 평가'}.get(disposition.get('level'))
@@ -339,6 +372,7 @@ class AdaptiveEncounter(base.OfficialEncounter):
             result['follow_up'] += '\n예정일 전에 진료할 상황: ' + precautions
             result['education'] += '\n' + precautions
             result['say_precautions'] = next(iter(speech_units(precautions)), '')
+            result['say_precautions_all'] = speech_units(precautions)[:2]
         # Measured and substantively supported emergency concerns take priority
         # over a conflicting model outpatient plan.
         urgent = self._urgent(differential, final)
@@ -383,7 +417,7 @@ class AdaptiveEncounter(base.OfficialEncounter):
         else:
             if plan.get('same_day') and base.fits(plan.get('say_disposition', '')):
                 messages.append((plan['say_disposition'], 'plan_explanation'))
-            for key in ('follow_up', 'precautions', 'reason', 'tests', 'treatment', 'concern'):
+            for key in ('follow_up', 'precautions', 'tests', 'treatment', 'review', 'concern', 'reason', 'education'):
                 value = plan.get('say_' + key)
                 if not value:
                     fallback = {'tests': 'spoken_test_purpose', 'treatment': 'spoken_treatment',
@@ -395,6 +429,12 @@ class AdaptiveEncounter(base.OfficialEncounter):
                     value = plan.get('say_disposition') or '진료 후 재평가 시점을 확인해 주세요'
                 if base.fits(value):
                     messages.append((value, 'explanation' if key in ('reason', 'concern') else 'plan_explanation'))
+                for extra in plan.get('say_' + key + '_all', [])[1:]:
+                    if base.fits(extra):
+                        messages.append((extra, 'plan_explanation'))
+            # Keep actual teach-back and a question opportunity even when the
+            # plan has multiple treatment/warning sentences.
+            messages = messages[:CLOSING_RESERVE - 4]
             messages += [('언제 다시 진료받으실지 말씀해 주시겠어요?', 'understanding_check'),
                          ('궁금하거나 걱정되는 점이 더 있나요?', 'patient_questions')]
         delivered = set()

@@ -136,14 +136,14 @@ def needs_history_detail(answer):
         r'진료(?:를)? 받았어요|검사(?:를)? 받았어요|불편해요)[.!\s]*', answer or ''))
 
 
-def next_history_clarification(state):
+def next_history_clarification(state, *, max_details=3):
     attempts = [a for a in state.performed_actions if a.action_type == 'ASK']
-    if sum(a.content in DETAIL_QUESTIONS.values() for a in attempts) >= 3:return None
     allergy=[a for a in attempts if topic_for_question(a.content)=='allergy']
     from nova_agent.state import answer_kind
     if allergy and answer_kind(allergy[-1].result) not in {'no','unknown','yes'} and not topic_known(state,'allergy_reaction'):
         question=TOPICS['allergy_reaction'][1]
         if not any(a.content==question for a in attempts):return ('SAY','allergy:allergy_reaction',question,'allergy')
+    if sum(a.content in DETAIL_QUESTIONS.values() for a in attempts) >= max_details:return None
     for topic, question in DETAIL_QUESTIONS.items():
         replies = [a for a in attempts if topic_for_question(a.content) == topic]
         if not replies or any(a.content == question for a in attempts):continue

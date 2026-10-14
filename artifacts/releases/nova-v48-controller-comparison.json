@@ -1,0 +1,71 @@
+{
+  "scope": "Scripted v47/v48 control comparison, NOT a score or clinical accuracy test.\n\nThe baseline controller is loaded from the fixed public v47 source commit.\nTransport and clinical helpers are shared; this isolates controller behavior.\nUnknown answers count as attempted domains, never as resolved findings.\n",
+  "baseline_source": "476e2e8c3597b7175bf20f403364e565de731a84",
+  "real_model_executed": false,
+  "official_score_measured": false,
+  "results": [
+    {
+      "version": "v47",
+      "turns": 18,
+      "scripted_doctor_calls": 3,
+      "unattempted_foundation_domains": [
+        "course",
+        "family_illness",
+        "function",
+        "prior_care",
+        "surgery",
+        "smoking",
+        "alcohol"
+      ],
+      "unknown_or_insufficient_history": [
+        "언제부터 이런 증상이 있었나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)"
+      ],
+      "spoken_messages": [
+        "방광염이 의심됩니다",
+        "2일 내 외래에서 재진하세요",
+        "고열이나 옆구리 통증 시 바로 진료받으세요",
+        "배뇨통과 빈뇨가 있어 의심해요",
+        "소변 검사로 염증 여부 확인",
+        "물을 적절히 마시고 소변을 참지 마세요",
+        "불편하셨겠어요. 경과를 함께 확인해요",
+        "언제 다시 진료받으실지 말씀해 주시겠어요?",
+        "궁금하거나 걱정되는 점이 더 있나요?"
+      ],
+      "exam_attempts": 1,
+      "submitted_primary": "급성 방광염",
+      "completed": true
+    },
+    {
+      "version": "v48",
+      "turns": 27,
+      "scripted_doctor_calls": 5,
+      "unattempted_foundation_domains": [],
+      "unknown_or_insufficient_history": [
+        "언제부터 이런 증상이 있었나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+        "증상이 점점 심해지고 있나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+        "가족 중 질환이 있는 분이 있나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+        "일상생활에 어떤 지장이 있나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+        "이 증상으로 진료받은 적이 있나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+        "수술받은 적이 있나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+        "담배를 피우시나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+        "술은 얼마나 자주 드시나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)"
+      ],
+      "spoken_messages": [
+        "방광염이 의심됩니다",
+        "2일 내 외래에서 재진하세요",
+        "고열이나 옆구리 통증 시 바로 진료받으세요",
+        "소변 검사로 염증 여부 확인",
+        "물을 적절히 마시고 소변을 참지 마세요",
+        "증상과 검사 결과를 확인해요",
+        "불편하셨겠어요. 경과를 함께 확인해요",
+        "배뇨통과 빈뇨가 있어 의심해요",
+        "검사 결과에 따라 치료를 정하겠습니다",
+        "언제 다시 진료받으실지 말씀해 주시겠어요?",
+        "궁금하거나 걱정되는 점이 더 있나요?"
+      ],
+      "exam_attempts": 1,
+      "submitted_primary": "급성 방광염",
+      "completed": true
+    }
+  ]
+}

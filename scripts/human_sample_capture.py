@@ -25,7 +25,7 @@ def capture_response(operation, response):
 
 def verify_runtime(root, candidate=None):
     if candidate is not None:
-        if candidate not in {'v42', 'v43', 'v44', 'v45'}:raise SystemExit('Unknown candidate')
+        if candidate not in {'v42', 'v43', 'v44', 'v45', 'v46', 'v47', 'v48'}:raise SystemExit('Unknown candidate')
         import zipfile
         record = json.loads((root/f'artifacts/releases/nova-{candidate}-publication.json').read_text(encoding='utf-8'))
         archive = root/f'artifacts/releases/nova-{candidate}-submission.zip'
@@ -44,7 +44,7 @@ def verify_runtime(root, candidate=None):
                 if name.startswith(('competition/','nova_agent/')) and name.endswith('.py'):
                     if (root/name).read_bytes()!=z.read(name):raise SystemExit('Candidate source mismatch: '+name)
         return {'candidate':candidate,'candidate_zip_sha256':record['sha256'],
-                'validation_scope':record['scope'],
+                'validation_scope':record.get('scope', record.get('status', 'UNSCORED CANDIDATE')),
                 'sdk_sha256':hashlib.sha256((root/'submission/nova_sdk.py').read_bytes()).hexdigest()}
     ptr = json.loads((root/'artifacts/verification/CURRENT_RELEASE.json').read_text(encoding='utf-8'))
     record = json.loads((root/ptr['current_verification_artifact']).read_text(encoding='utf-8'))

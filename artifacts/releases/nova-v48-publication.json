@@ -1,0 +1,143 @@
+{
+  "status": "UNSCORED_QUALITY_CANDIDATE",
+  "scope": "Local functional regression and packaging verification; NOT official scoring.",
+  "base_source_commit": "476e2e8c3597b7175bf20f403364e565de731a84",
+  "artifact": "artifacts/releases/nova-v48-submission.zip",
+  "bytes": 953586,
+  "sha256": "a8e8c5a44a3be842f57ba9f9147067379c9c0b7a2d4e03b078aaba3de54970da",
+  "source_archive_match": true,
+  "hashed_runtime_files": 116,
+  "owner_reported_latest_scores": {
+    "information": 7.08,
+    "reasoning": 10.56,
+    "tests_followup": 4.97,
+    "safety": 12.5,
+    "communication": 4.94,
+    "efficiency": 20,
+    "total": 60.05
+  },
+  "owner_reported_v46": {
+    "sample_approximate": 70,
+    "leaderboard_approximate": 49,
+    "same_cases_and_conditions_verified": false
+  },
+  "policy": {
+    "planning_round_limit": 8,
+    "planning_max_tokens": 4000,
+    "planning_effort": "medium",
+    "closing_turn_reserve": 14,
+    "total_turn_cap": 50,
+    "clinical_turn_budget_maximum": 36,
+    "low_turn_count_is_not_a_goal": true
+  },
+  "cleanroom_pass": true,
+  "synthetic_http": {
+    "exit_code": 0,
+    "ready_before_case_access": true,
+    "doctor_calls": 5,
+    "turns": 26,
+    "test_actions": 0,
+    "max_action_chars": 23,
+    "record_fields_ok": true,
+    "diagnosis": "지역사회획득 폐렴",
+    "errors": [],
+    "stderr_tail": [
+      "[encounter] {\"turns_used\": 26, \"exam_rejections\": 0, \"chat_calls\": 5, \"successful_chat_calls\": 5, \"case_relevant_successful_calls\": 5, \"diagnostic_reasoning_successful_calls\": 2, \"phrasing_successful_calls\": 0, \"empty_response_retries\": 0, \"prompt_tokens\": 1000, \"completion_tokens\": 400, \"total_tokens\": 1400, \"total_chat_latency_seconds\": 0.01, \"mean_chat_latency_seconds\": 0.0, \"models_returned\": [\"scripted-doctor-not-live\"]}"
+    ],
+    "pass": true
+  },
+  "scripted_comparison": {
+    "scope": "Scripted v47/v48 control comparison, NOT a score or clinical accuracy test.\n\nThe baseline controller is loaded from the fixed public v47 source commit.\nTransport and clinical helpers are shared; this isolates controller behavior.\nUnknown answers count as attempted domains, never as resolved findings.\n",
+    "baseline_source": "476e2e8c3597b7175bf20f403364e565de731a84",
+    "real_model_executed": false,
+    "official_score_measured": false,
+    "results": [
+      {
+        "version": "v47",
+        "turns": 18,
+        "scripted_doctor_calls": 3,
+        "unattempted_foundation_domains": [
+          "course",
+          "family_illness",
+          "function",
+          "prior_care",
+          "surgery",
+          "smoking",
+          "alcohol"
+        ],
+        "unknown_or_insufficient_history": [
+          "언제부터 이런 증상이 있었나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)"
+        ],
+        "spoken_messages": [
+          "방광염이 의심됩니다",
+          "2일 내 외래에서 재진하세요",
+          "고열이나 옆구리 통증 시 바로 진료받으세요",
+          "배뇨통과 빈뇨가 있어 의심해요",
+          "소변 검사로 염증 여부 확인",
+          "물을 적절히 마시고 소변을 참지 마세요",
+          "불편하셨겠어요. 경과를 함께 확인해요",
+          "언제 다시 진료받으실지 말씀해 주시겠어요?",
+          "궁금하거나 걱정되는 점이 더 있나요?"
+        ],
+        "exam_attempts": 1,
+        "submitted_primary": "급성 방광염",
+        "completed": true
+      },
+      {
+        "version": "v48",
+        "turns": 27,
+        "scripted_doctor_calls": 5,
+        "unattempted_foundation_domains": [],
+        "unknown_or_insufficient_history": [
+          "언제부터 이런 증상이 있었나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+          "증상이 점점 심해지고 있나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+          "가족 중 질환이 있는 분이 있나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+          "일상생활에 어떤 지장이 있나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+          "이 증상으로 진료받은 적이 있나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+          "수술받은 적이 있나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+          "담배를 피우시나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)",
+          "술은 얼마나 자주 드시나요? → 잘 모르겠어요. (미확인 또는 세부 정보 부족)"
+        ],
+        "spoken_messages": [
+          "방광염이 의심됩니다",
+          "2일 내 외래에서 재진하세요",
+          "고열이나 옆구리 통증 시 바로 진료받으세요",
+          "소변 검사로 염증 여부 확인",
+          "물을 적절히 마시고 소변을 참지 마세요",
+          "증상과 검사 결과를 확인해요",
+          "불편하셨겠어요. 경과를 함께 확인해요",
+          "배뇨통과 빈뇨가 있어 의심해요",
+          "검사 결과에 따라 치료를 정하겠습니다",
+          "언제 다시 진료받으실지 말씀해 주시겠어요?",
+          "궁금하거나 걱정되는 점이 더 있나요?"
+        ],
+        "exam_attempts": 1,
+        "submitted_primary": "급성 방광염",
+        "completed": true
+      }
+    ]
+  },
+  "official_score_improvement_proven": false,
+  "real_model_executed": false,
+  "official_submission_performed": false,
+  "blind_v18_rerun": false,
+  "limitations": "Questions and explanation are observed only in scripted tests. Unknown answers stay unresolved. Aggregate scores do not prove individual failure causes. Official score and actual model cost are unmeasured.",
+  "source_mirror_archive_match": true,
+  "reproducible_build": true,
+  "human_sample_runtime_identity": {
+    "candidate": "v48",
+    "candidate_zip_sha256": "a8e8c5a44a3be842f57ba9f9147067379c9c0b7a2d4e03b078aaba3de54970da",
+    "validation_scope": "Local functional regression and packaging verification; NOT official scoring.",
+    "sdk_sha256": "fdd65302e82791ed862c22fe5a014ef443ab331d8986ec7c72b3923add6bc871"
+  },
+  "regression": {
+    "command": "/workspace/scratch/d8339ffc1fc4/nova-v46-venv/bin/python -m pytest -q tests/test_official_sdk_adapter.py tests/test_official_independent_audit.py tests/test_official_transport_boundary.py tests/test_interview_quality.py tests/test_encounter_completion.py tests/test_purposeful_encounter.py tests/test_guardian_narrative_and_spoken_numbers.py tests/test_v46_care_quality.py tests/test_adaptive_history.py tests/test_closing_deadline_reserve.py tests/test_onset_and_teachback.py tests/test_question_bound_followup.py tests/test_question_coverage_invariants.py tests/test_targeted_turn_allocation.py tests/test_preliminary*.py tests/test_safety*.py tests/test_soap_regression.py tests/test_native_questions_and_patient_answers.py tests/test_clinical_presentation.py tests/test_multilingual_clinical_concepts.py tests/test_documented_diagnosis_assertion_scope.py tests/test_round_r_assertion_evidence.py tests/test_round_t_evidence_scope.py tests/test_round_q_expression_answers_final_decision.py tests/test_round_s_observation_safety.py tests/test_case_isolation.py tests/test_medication_risk_context.py tests/test_no_evaluation_time_learning.py tests/test_no_answer_leakage_in_retrieval_eval.py tests/test_adaptive_encounter.py tests/test_v48_completeness.py tests/test_human_release_preparation.py tests/test_candidate_capture.py --tb=short",
+    "initial_result": "1172 passed, 1 failed in 284.02s",
+    "failure": "Historical prompt-shape assertion omitted the pre-existing WORKUP_NAMES field. Updated the test expected keys; no runtime change.",
+    "recheck": "1 passed in 0.55s",
+    "recheck_command": "python -m pytest -q tests/test_human_release_preparation.py::test_guideline_prompt_delimits_injection_as_data --tb=short",
+    "unresolved_failures": 0,
+    "final_controller_capture_package_review": "78 passed in 29.14s",
+    "final_command": "python -m pytest -q tests/test_adaptive_encounter.py tests/test_v48_completeness.py tests/test_candidate_capture.py tests/test_submission_zip_clean_room.py --tb=short"
+  }
+}

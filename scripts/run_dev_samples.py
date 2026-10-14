@@ -43,7 +43,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("cases", nargs="*")
     parser.add_argument('--list', action='store_true')
-    parser.add_argument('--candidate', choices=['v42', 'v43', 'v44', 'v45'], help='Verify the exact published candidate ZIP instead of the historical full-suite release')
+    parser.add_argument('--candidate', choices=['v42', 'v43', 'v44', 'v45', 'v46', 'v47', 'v48'], help='Verify the exact published candidate ZIP instead of the historical full-suite release')
     parser.add_argument('--case-id', action='append', default=[])
     parser.add_argument("--human-run", action="store_true", help="Human execution on your own computer only")
     parser.add_argument("--output", default=str(Path.home() / "nova-sample-results"))
@@ -72,7 +72,7 @@ def main():
     if not key or not base:
         raise SystemExit("Set NOVA_API_BASE and NOVA_DEV_KEY in the environment (the key is never passed as an argument).")
     import nova_sdk
-    from competition.nova_sdk_adapter import OfficialEncounter, prepare
+    from competition.nova_sdk_adapter import prepare
     import competition.nova_sdk_adapter as adapter
     if not Path(adapter.__file__).resolve().is_relative_to(ROOT/'submission'):
         raise SystemExit('Exact submission runtime required; cached source import refused.')
@@ -104,7 +104,16 @@ def main():
             if isinstance(event.get('text'), str):
                 event['nfc_length'] = len(unicodedata.normalize('NFC', event['text']))
             events.append(redact(event, key))
-        encounter = OfficialEncounter(client, prepared, observer=observe, log=lambda _: None)
+        # Historical archives predate the shared factory. Their own consult
+        # used OfficialEncounter; newer archives use their packaged factory.
+        factory = getattr(adapter, 'make_encounter', None)
+        if factory is None:
+            if hasattr(adapter, 'consult') and 'AdaptiveEncounter' in adapter.consult.__code__.co_names:
+                from competition.adaptive_encounter import AdaptiveEncounter
+                factory = AdaptiveEncounter
+            else:
+                factory = adapter.OfficialEncounter
+        encounter = factory(client, prepared, observer=observe, log=lambda _: None)
         row = {'label': LABEL, 'mode': 'HUMAN_RUN', "case": case, "sdk_version": nova_sdk.__version__,
                'runtime': identity, 'session_id': '[REDACTED]', 'created': redact(capture_response('session',created), key)}
         try:

@@ -39,6 +39,7 @@ def main():
         'files': {name: hashlib.sha256(data).hexdigest() for name, data in sorted(payload.items())},
     }
     payload['MANIFEST.json'] = (json.dumps(manifest, ensure_ascii=False, indent=2) + '\n').encode()
+    (ROOT / 'submission/MANIFEST.json').write_bytes(payload['MANIFEST.json'])
     output = ROOT / f'artifacts/releases/nova-{args.version}-submission.zip'
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
