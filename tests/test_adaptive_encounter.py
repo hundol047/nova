@@ -105,7 +105,7 @@ def test_patient_specific_questions_and_exam_precede_template_history():
     assert sent[1:5] == [a['text'] for a in ACTIONS[:4]]
     assert s.diagnosis == '급성 방광염'
     assert all(len(t) <= 30 for _, t, _ in s.events)
-    assert s.turns <= 50 and s.chat_calls <= 9
+    assert s.turns <= 50 and s.chat_calls <= 14
     from nova_agent.clinical_interview import missing_foundation_topics
     assert not missing_foundation_topics(e.pstate)
     assert not any(kind == 'TEST' for kind, *_ in s.events)
@@ -168,7 +168,7 @@ def test_rejected_exam_is_attempted_once_and_never_becomes_normal_observation():
     action = {'kind': 'EXAM', 'text': '늑골척추각을 타진하겠습니다', 'topic': 'cva'}
     s = Scenario(actions=[action, action], reject_exam=lambda _: 'EXAM_NOT_RECOGNIZED')
     e = run_new(s)
-    assert len([x for x in s.events if x[0] == 'EXAM']) == 1
+    assert len([x for x in s.events if x[0] == 'EXAM' and x[1] == action['text']]) == 1
     assert '특이 소견(-)' not in s.record['O']['exam']
     assert not any(x['kind'] == 'EXAM' for x in ledger(e))
 
@@ -228,7 +228,7 @@ def test_ready_plan_fills_missing_history_before_bounded_completion():
     e = run_new(s)
     from nova_agent.clinical_interview import missing_foundation_topics
     assert not missing_foundation_topics(e.pstate)
-    assert 2 < s.chat_calls < 9 and s.turns <= 50
+    assert 2 < s.chat_calls <= 14 and s.turns <= 50
 
 
 def test_acute_hypoxemia_skips_routine_history_and_submits():
@@ -274,7 +274,7 @@ def test_production_consult_uses_adaptive_controller(monkeypatch):
 def test_positive_result_interrupts_stale_batch_before_next_action():
     s = Scenario(actions=[dict(ACTIONS[0], reassess_on_positive=True), ACTIONS[1]])
     run_new(s)
-    assert not any(x[1] == ACTIONS[1]['text'] for x in s.events)
+    assert not any(x.get('question') == ACTIONS[1]['text'] for x in s.inputs[1]['PATIENT_EVIDENCE'])
     assert any(x.get('answer') == '네, 자주 봐요.' for x in s.inputs[1]['PATIENT_EVIDENCE'])
 
 
@@ -288,7 +288,7 @@ def test_planner_cannot_bypass_turn_cap_even_if_it_never_stops():
         return original(system, content)
     s.chat_reply = endless
     run_new(s)
-    assert s.chat_calls <= 9 and s.turns <= 50 and s.closed
+    assert s.chat_calls <= 14 and s.turns <= 50 and s.closed
 
 
 def test_closing_new_symptom_is_reviewed_using_its_actual_observation_id():
@@ -340,11 +340,12 @@ def test_new_controller_retains_request_replay_and_one_submission(phase, code):
     assert s.closed and s.turns == len(e.turns) and s.turns <= 50
 
 
-def test_ready_but_no_historical_exam_response_cannot_make_exam_normal():
-    s = Scenario(actions=[])
+def test_ready_but_rejected_exam_response_cannot_make_exam_normal():
+    s = Scenario(actions=[], reject_exam=lambda _: 'EXAM_NOT_RECOGNIZED')
     run_new(s)
-    assert not any(x[0] == 'EXAM' for x in s.events)
+    assert any(x[0] == 'EXAM' for x in s.events)
     assert '늑골척추각' not in s.record['O']['exam']
+    assert '특이 소견(-)' not in s.record['O']['exam']
 
 
 def test_invalid_first_batch_has_one_bounded_repair_with_feedback():
@@ -353,4 +354,4 @@ def test_invalid_first_batch_has_one_bounded_repair_with_feedback():
     run_new(s)
     assert s.inputs[1]['rejected_actions_do_not_repeat'][0]['reason'] == 'invalid_action_or_length'
     assert any(x[1] == ACTIONS[0]['text'] for x in s.events)
-    assert s.chat_calls <= 9 and all(len(x[1]) <= 30 for x in s.events)
+    assert s.chat_calls <= 14 and all(len(x[1]) <= 30 for x in s.events)

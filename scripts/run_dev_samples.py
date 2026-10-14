@@ -43,7 +43,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("cases", nargs="*")
     parser.add_argument('--list', action='store_true')
-    parser.add_argument('--candidate', choices=['v42', 'v43', 'v44', 'v45', 'v46', 'v47', 'v48'], help='Verify the exact published candidate ZIP instead of the historical full-suite release')
+    parser.add_argument('--candidate', choices=['v42', 'v43', 'v44', 'v45', 'v46', 'v47', 'v48', 'v49'], help='Verify the exact published candidate ZIP instead of the historical full-suite release')
     parser.add_argument('--case-id', action='append', default=[])
     parser.add_argument("--human-run", action="store_true", help="Human execution on your own computer only")
     parser.add_argument("--output", default=str(Path.home() / "nova-sample-results"))

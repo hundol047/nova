@@ -219,7 +219,7 @@ def topic_for_question(text):
 
 def relevant_substance_question(state, text):
     if state.demographics.age is None or state.demographics.age>=12:return True
-    if not re.search(r'smok|alcohol|흡연|음주|담배|술',text,re.I):return True
+    if not re.search(r'smok|alcohol|흡연|음주|담배|알코올|(?<![가-힣])술',text,re.I):return True
     if re.search(r'second.hand|passive smok|간접흡연|담배\s*연기|흡연.*노출',text,re.I):return True
     raw=' '.join([state.chief_complaint,*state.medication_text,*state.social_history])
     return bool(re.search(r'poison|ingest|expos|중독|노출|마셨|삼켰',raw,re.I))

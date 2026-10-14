@@ -55,6 +55,8 @@ def cited_facts(references, rows, *, patient_support=False):
             continue
         if 'answer' in row and answer_kind(row['answer']) == 'unknown':
             continue
+        if 'answer' in row and re.search(r'한 번에 하나|질문.*다시|무슨.*뜻|이해.*못', row['answer']):
+            continue
         if patient_support:
             if row.get('category', '').startswith('family_history'):
                 continue
@@ -125,7 +127,7 @@ JSON 하나만 출력:
 "reassess_on_positive":false}],
 "ready":false,"remaining":"더 필요한 핵심 정보 또는 충분한 이유","exam_rationale":"선택한 진찰의 이유 또는 진찰이 불필요한 이유",
 "urgent":false,"urgency_evidence":["실제 관찰 ID"],"urgency_reason":"즉시 이송이 필요한 근거"}
-actions는 우선순위대로 최대 6개. SAY는 질문 하나, EXAM은 신체진찰 동작 하나만 허용합니다.
+actions는 우선순위대로 최대 4개. SAY는 질문 하나, EXAM은 신체진찰 동작 하나만 허용합니다.
 혈액·영상 검사(TEST)는 실행 불가이며 마지막 계획에만 적습니다. questions/exams는 구형 형식이며 새 출력은 actions를 사용합니다.
 첫 검토부터 주호소의 시간 경과·양상·정도·동반 증상·악화/완화·기능 영향을 필요한 만큼 확인하세요.
 관련 병력·복약·알레르기와 환자 걱정을 확인하고, 과거력/가족력/사회력은 진료에 관련된 질문을 고르세요.
@@ -140,6 +142,13 @@ actions는 우선순위대로 최대 6개. SAY는 질문 하나, EXAM은 신체�
 복약이나 알레르기 질문에 '네'만 들은 것은 충분하지 않습니다. 약 이름과 반응 등 필요한 세부 내용을 확인하세요.
 불필요한 질문은 생략하되 비용이나 적은 턴 수를 위해 필요한 문진·진찰을 생략하지 마세요.
 모름·거부를 정상으로 취급하지 마세요. 충분하면 ready=true, actions=[]로 끝내세요.
+안정 환자는 전체 35~49턴을 목표로 문진·진찰과 설명을 충분히 진행합니다.
+turn_policy.ready_allowed=false이면 조기 종료하지 말고 question_level_coverage와 감별의 미확인 항목을 보세요.
+위치, 양상, 정도, 한 번 지속 시간, 빈도, 악화·완화, 이전 같은 증상은 서로 다른 정보입니다.
+약 이름·용량·횟수·기간, 알레르기 원인 약·반응을 한 질문에 묶지 마세요.
+관련 감별 2~3개 각각을 구별하는 질문을 고르고, 필요한 진찰을 문진 중간에 실제로 시행하세요.
+환자 자료가 이미 답한 정보는 근거 ID로 확인하고 넘어갑니다. 미확인 항목을 추정해서 채우지 마세요.
+급박한 위험·시간 마감·환자 거부에서는 턴 수를 채우려 진료를 지연하지 않습니다.
 내부 사고 과정을 쓰지 말고 임상 판단 이유만 간결히 제시하세요.'''
 
 

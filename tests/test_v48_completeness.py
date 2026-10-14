@@ -94,7 +94,7 @@ def test_completion_review_can_add_exam_after_early_ready():
             return super().respond(system, content)
     s = Reviewed(actions=[])
     run_new(s)
-    assert sum(kind == 'EXAM' for kind, *_ in s.events) == 1
+    assert sum(kind == 'EXAM' and '늑골척추각' in text for kind, text, _ in s.events) == 1
     assert '늑골척추각' in s.record['O']['exam']
 
 

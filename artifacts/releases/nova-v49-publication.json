@@ -1,0 +1,77 @@
+{
+  "status": "UNSCORED_QUALITY_CANDIDATE",
+  "scope": "Local functional and packaging verification; no official score claim.",
+  "artifact": "artifacts/releases/nova-v49-submission.zip",
+  "sha256": "fe1a9e6a5b7dd993d0851d149bf18c7eeb4c1f7b1c63861260d2a1c8f2181b85",
+  "bytes": 959916,
+  "base_source_commit": "735d185c1510a7b7f76938a65788e22800195176",
+  "hashed_runtime_files": 117,
+  "owner_reported_scores": {
+    "information": 6.86,
+    "reasoning": 8.33,
+    "tests_followup": 5.69,
+    "safety": 12.5,
+    "communication": 5.67,
+    "efficiency": 18.86,
+    "total": 57.91
+  },
+  "turn_policy": {
+    "stable_target_min": 35,
+    "maximum_actions": 49,
+    "maximum_gathering_actions": 35,
+    "closing_reserve": 14,
+    "exceptions": [
+      "urgent disposition",
+      "deadline",
+      "server termination",
+      "patient refusal",
+      "clinically useful questions exhausted"
+    ]
+  },
+  "official_score_improvement_proven": false,
+  "official_submission_performed": false,
+  "real_model_executed": false,
+  "blind_v18_rerun": false,
+  "limitations": "Turn and question coverage tests do not measure clinical accuracy or rubric scores. No v48 or v49 official conversation trace was available. Prior supplied files contained only initial session information and completion metadata.",
+  "source_mirror_archive_match": true,
+  "reproducible_build": true,
+  "human_sample_runtime_identity": {
+    "candidate": "v49",
+    "candidate_zip_sha256": "fe1a9e6a5b7dd993d0851d149bf18c7eeb4c1f7b1c63861260d2a1c8f2181b85",
+    "validation_scope": "Local functional and packaging verification; no official score claim.",
+    "sdk_sha256": "fdd65302e82791ed862c22fe5a014ef443ab331d8986ec7c72b3923add6bc871"
+  },
+  "cleanroom_pass": true,
+  "package_audit_pass": true,
+  "synthetic_http": {
+    "exit_code": 0,
+    "ready_before_case_access": true,
+    "doctor_calls": 9,
+    "turns": 46,
+    "test_actions": 0,
+    "max_action_chars": 23,
+    "record_fields_ok": true,
+    "diagnosis": "지역사회획득 폐렴",
+    "errors": [],
+    "stderr_tail": [
+      "[encounter] {\"turns_used\": 46, \"exam_rejections\": 0, \"chat_calls\": 9, \"successful_chat_calls\": 9, \"case_relevant_successful_calls\": 9, \"diagnostic_reasoning_successful_calls\": 3, \"phrasing_successful_calls\": 0, \"empty_response_retries\": 0, \"prompt_tokens\": 1800, \"completion_tokens\": 720, \"total_tokens\": 2520, \"total_chat_latency_seconds\": 0.02, \"mean_chat_latency_seconds\": 0.0, \"models_returned\": [\"scripted-doctor-not-live\"]}"
+    ],
+    "pass": true
+  },
+  "scripted_comparison": {
+    "cases": 8,
+    "min_turns": 39,
+    "max_turns": 47,
+    "all_within_requested_range": true,
+    "report": "nova-v49-controller-comparison.json",
+    "scope": "Only the baseline controller comes from v48; both versions share current clinical helpers, including the child surgery filter fix. This is not a full archived-v48 comparison. Empty scripted planners and invented replies test control flow, not medical accuracy. The same fixed final plan is deliberately used across complaints and is not a clinical recommendation. Template counts are not rubric scores."
+  },
+  "regression": {
+    "broad_result": "1175 passed in 390.02s",
+    "broad_command": "/workspace/scratch/d8339ffc1fc4/nova-v46-venv/bin/python -m pytest -q tests/test_official_sdk_adapter.py tests/test_official_independent_audit.py tests/test_official_transport_boundary.py tests/test_interview_quality.py tests/test_encounter_completion.py tests/test_purposeful_encounter.py tests/test_guardian_narrative_and_spoken_numbers.py tests/test_v46_care_quality.py tests/test_adaptive_history.py tests/test_closing_deadline_reserve.py tests/test_onset_and_teachback.py tests/test_question_bound_followup.py tests/test_question_coverage_invariants.py tests/test_targeted_turn_allocation.py tests/test_preliminary*.py tests/test_safety*.py tests/test_soap_regression.py tests/test_native_questions_and_patient_answers.py tests/test_clinical_presentation.py tests/test_multilingual_clinical_concepts.py tests/test_documented_diagnosis_assertion_scope.py tests/test_round_r_assertion_evidence.py tests/test_round_t_evidence_scope.py tests/test_round_q_expression_answers_final_decision.py tests/test_round_s_observation_safety.py tests/test_case_isolation.py tests/test_medication_risk_context.py tests/test_no_evaluation_time_learning.py tests/test_no_answer_leakage_in_retrieval_eval.py tests/test_adaptive_encounter.py tests/test_v48_completeness.py tests/test_human_release_preparation.py tests/test_v49_question_review.py --tb=short",
+    "final_review_exit_code": 0,
+    "final_review_tests": 110,
+    "final_review_command": "python -m pytest -q tests/test_adaptive_encounter.py tests/test_v48_completeness.py tests/test_v49_question_review.py tests/test_candidate_capture.py tests/test_submission_zip_clean_room.py --tb=short",
+    "note": "The final 110-test review ran after the last symptom wording, question priority and child surgery filter changes. No unresolved failures. Functional tests do not establish a rubric score."
+  }
+}
