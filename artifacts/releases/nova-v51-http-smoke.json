@@ -1,0 +1,15 @@
+{
+  "exit_code": 0,
+  "ready_before_case_access": true,
+  "doctor_calls": 8,
+  "turns": 35,
+  "test_actions": 0,
+  "max_action_chars": 23,
+  "record_fields_ok": true,
+  "diagnosis": "지역사회획득 폐렴",
+  "errors": [],
+  "stderr_tail": [
+    "[encounter] {\"turns_used\": 35, \"exam_rejections\": 0, \"chat_calls\": 8, \"successful_chat_calls\": 8, \"case_relevant_successful_calls\": 8, \"diagnostic_reasoning_successful_calls\": 4, \"phrasing_successful_calls\": 0, \"empty_response_retries\": 0, \"prompt_tokens\": 1600, \"completion_tokens\": 640, \"total_tokens\": 2240, \"total_chat_latency_seconds\": 0.02, \"mean_chat_latency_seconds\": 0.0, \"models_returned\": [\"scripted-doctor-not-live\"]}"
+  ],
+  "pass": true
+}

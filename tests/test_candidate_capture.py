@@ -7,7 +7,7 @@ from scripts.human_sample_capture import verify_runtime
 
 ROOT=Path(__file__).resolve().parents[1]
 
-@pytest.fixture(params=['v42','v43','v44','v45','v46','v47','v48','v49','v50'])
+@pytest.fixture(params=['v42','v43','v44','v45','v46','v47','v48','v49','v50','v51'])
 def candidate(tmp_path,request):
     version=request.param
     out=tmp_path/'artifacts/releases';out.mkdir(parents=True)

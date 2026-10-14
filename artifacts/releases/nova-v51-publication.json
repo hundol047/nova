@@ -1,0 +1,115 @@
+{
+  "status": "UNSCORED_QUALITY_CANDIDATE",
+  "scope": "Local functional and packaging verification; no official score claim.",
+  "artifact": "artifacts/releases/nova-v51-submission.zip",
+  "sha256": "9c5e5f334875d64823eb615a3a820a9d381342d450965a0ba435d97ce56e9abb",
+  "bytes": 965657,
+  "base_source_commit": "598f295ed8f7040348a67f01eceb0f93a428a4d4",
+  "hashed_runtime_files": 117,
+  "owner_reported_scores": {
+    "information": 5.86,
+    "reasoning": 13.33,
+    "tests_followup": 5.39,
+    "safety": 12.5,
+    "communication": 6.39,
+    "efficiency": 18.92,
+    "total": 62.39
+  },
+  "official_score_improvement_proven": false,
+  "official_submission_performed": false,
+  "real_model_executed": false,
+  "blind_v18_rerun": false,
+  "verification_status": "COMPLETED_LOCAL_FUNCTIONAL_VERIFICATION",
+  "turn_policy": {
+    "stable_collection_target": [
+      20,
+      25
+    ],
+    "maximum_actions": 49,
+    "closing_reserve": 18,
+    "maximum_closing_actions_if_available": 24,
+    "max_interview_planning_calls": 5,
+    "exceptions": [
+      "urgent disposition",
+      "deadline",
+      "server termination",
+      "patient refusal",
+      "clinically useful questions exhausted"
+    ]
+  },
+  "limitations": "Invented responses verify actual acquisition, recording and speech paths, not clinical accuracy or official score. No official encounter trace available. Full marks and improvement unproven.",
+  "source_mirror_archive_match": true,
+  "reproducible_build": true,
+  "human_sample_runtime_identity": {
+    "candidate": "v51",
+    "candidate_zip_sha256": "9c5e5f334875d64823eb615a3a820a9d381342d450965a0ba435d97ce56e9abb",
+    "validation_scope": "Local functional and packaging verification; no official score claim.",
+    "sdk_sha256": "fdd65302e82791ed862c22fe5a014ef443ab331d8986ec7c72b3923add6bc871"
+  },
+  "package_audit_pass": true,
+  "cleanroom_pass": true,
+  "synthetic_http": {
+    "exit_code": 0,
+    "ready_before_case_access": true,
+    "doctor_calls": 8,
+    "turns": 35,
+    "test_actions": 0,
+    "max_action_chars": 23,
+    "record_fields_ok": true,
+    "diagnosis": "지역사회획득 폐렴",
+    "errors": [],
+    "stderr_tail": [
+      "[encounter] {\"turns_used\": 35, \"exam_rejections\": 0, \"chat_calls\": 8, \"successful_chat_calls\": 8, \"case_relevant_successful_calls\": 8, \"diagnostic_reasoning_successful_calls\": 4, \"phrasing_successful_calls\": 0, \"empty_response_retries\": 0, \"prompt_tokens\": 1600, \"completion_tokens\": 640, \"total_tokens\": 2240, \"total_chat_latency_seconds\": 0.02, \"mean_chat_latency_seconds\": 0.0, \"models_returned\": [\"scripted-doctor-not-live\"]}"
+    ],
+    "pass": true
+  },
+  "regression": {
+    "final_functional": {
+      "tests": 407,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 147.644
+    },
+    "candidate_package": {
+      "tests": 53,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 11.954
+    },
+    "verified_final_tests": 460,
+    "new_observation_tests": 13,
+    "source": "JUnit XML from final runs; all tests passed after final changes",
+    "functional_files": [
+      "test_v51_observed_collection.py",
+      "test_adaptive_encounter.py",
+      "test_v48_completeness.py",
+      "test_v49_question_review.py",
+      "test_v50_phased_encounter.py",
+      "test_interview_quality.py",
+      "test_encounter_completion.py",
+      "test_purposeful_encounter.py",
+      "test_onset_and_teachback.py",
+      "test_question_bound_followup.py",
+      "test_question_coverage_invariants.py",
+      "test_native_questions_and_patient_answers.py",
+      "test_adaptive_history.py",
+      "test_closing_deadline_reserve.py",
+      "test_official_sdk_adapter.py",
+      "test_official_transport_boundary.py"
+    ],
+    "package_files": [
+      "test_candidate_capture.py",
+      "test_submission_zip_clean_room.py"
+    ]
+  },
+  "synthetic_observation_check": {
+    "facts_actually_acquired_and_recorded": 18,
+    "history_answers": 16,
+    "physical_exams": 2,
+    "diagnosis_input_contains_actual_observations": true,
+    "recorded_unperformed_tests_as_results": false,
+    "purpose": "Control flow, observation provenance and communication; not diagnostic accuracy or expected rubric score."
+  }
+}

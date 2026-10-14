@@ -53,10 +53,9 @@ def cited_facts(references, rows, *, patient_support=False):
             continue
         if row.get('category') in ('explanation', 'plan_explanation', 'understanding_check', 'patient_questions'):
             continue
-        if 'answer' in row and answer_kind(row['answer']) == 'unknown':
-            continue
-        if 'answer' in row and re.search(r'한 번에 하나|질문.*다시|무슨.*뜻|이해.*못', row['answer']):
-            continue
+        if 'answer' in row:
+            from competition.interview_coverage import reply_status
+            if reply_status(row['answer']) != 'observed_reply':continue
         if patient_support:
             if row.get('category', '').startswith('family_history'):
                 continue
@@ -120,7 +119,10 @@ def plan_issues(proposal, rows):
             if not fits(clean(test.get('when')) + ' 검사를 받으세요'):
                 issues.append(f'tests[{i}]_timing_too_long')
     for key in ('treatment','precautions','education'):
-        if not speech_units(plan.get(key)):issues.append(key + '_missing_unsafe_or_too_long')
+        value = care_text(plan.get(key))
+        pieces = [x.strip() for x in re.split(r'\n|(?<!\d)[.!](?!\d)\s*', value) if x.strip()]
+        if not pieces or not all(fits(x) for x in pieces):
+            issues.append(key + '_missing_unsafe_or_too_long')
     follow = plan.get('follow_up')
     if not isinstance(follow, dict):follow = {}
     for key in ('when','where','review'):
@@ -170,7 +172,8 @@ INTERVIEW_SYSTEM = '''실제 초진 문진·진찰의 다음 행동을 고르세
 {"primary_diagnosis":"잠정 가설 또는 미정","reason":"현재 필요한 정보의 이유",
 "evidence":["I0","T1"],"differential":[{"name":"대안","reason":"구별할 특징"}],
 "actions":[{"kind":"SAY 또는 EXAM","text":"한국어 30자 이내",
-"topic":"한 정보의 고유 주제","reason":"진단·처치에 필요한 이유","reassess_on_positive":false}],
+"topic":"대상과 속성의 고유 주제","category":"onset/course/location/character/severity/duration/timing/aggravating/relieving/associated_symptoms/past_medical_history/medication/allergy/family_history/social_history 중 하나",
+"reason":"진단·처치에 필요한 이유","reassess_on_positive":false}],
 "ready":false,"remaining":"남은 핵심 정보","exam_rationale":"진찰 선택/생략 이유",
 "urgent":false,"urgency_evidence":["실제 관찰 ID"],"urgency_reason":"즉시 처치 근거"}
 안정 환자의 정보수집·신체진찰은 총 20~25턴이며 첫 걱정 질문도 포함합니다. 전체 한도는 49턴입니다.
@@ -184,6 +187,11 @@ INTERVIEW_SYSTEM = '''실제 초진 문진·진찰의 다음 행동을 고르세
 가족력·생활력·수술력은 이 환자의 감별/치료에 영향을 주는 구체적 질문을 선택하세요.
 흡연·음주·모든 장기를 빈칸 채우기로 묻지 말고 소아·보호자에게 나이에 맞는 표현을 쓰세요.
 한 답변에서 이미 확보한 정보는 다시 묻지 않습니다. 모름/거절은 미확인으로 남기며 같은 뜻의 질문을 반복하지 않습니다.
+actual_collection_status의 observed_reply만 실제 답변입니다. needs_rephrase는 질문 이해 실패입니다.
+이해 실패에는 쉬운 말로 같은 속성 하나를 한 번만 다시 물으세요. 질문을 했다는 사실만으로 확인했다고 하지 마세요.
+다른 증상의 발병 시점, 다른 약의 용량은 별개입니다. 양성이면 관련 정도·시점·기능 영향을 구체화하세요.
+환자가 여러 정보를 자발적으로 말했으면 모두 활용하되, 질문 자체를 증거로 쓰지 마세요.
+후반 검토에서는 핵심 현병력·관련 가족력/생활력·진찰의 실제 답변을 확인하여 남은 5턴을 배분하세요.
 단순히 '네'인 답은 관련 세부 내용 한 가지를 이어 묻습니다. 위험/핵심 양성 후 재검토가 필요하면 reassess_on_positive=true입니다.
 검사실·영상 TEST는 실행 불가입니다. 신체진찰로 위장하지 말고 이후 계획에만 제안하세요.
 rule 후보는 보조입니다. 체중 감소/불면 등 한 증상에서 특정 진단을 미리 확정하지 않습니다.
@@ -213,7 +221,7 @@ JSON 하나만 반환:
 {"plan":{"tests":[{"name":"필요한 검사","purpose":"이 환자에서 확인할 내용","evidence":["실제 관찰 ID"],
 "when":"시행 시점","if_abnormal":"이상 결과 시 다음 조치","if_normal":"정상이지만 증상 지속 시 조치"}],
 "no_test_reason":"tests가 빈 목록인 경우 현재 검사 불필요 근거",
-"treatment":"지금 할 조치와 치료 방향",
+"treatment":"첫 문장: 주진단의 치료 방향. 둘째 문장: 적용 조건/주의. 셋째 문장: 필요한 자가관리.",
 "disposition":{"level":"emergency 또는 same_day 또는 outpatient","where":"진료처",
 "reason":"처치 수준을 정한 이유","evidence":["실제 관찰 ID"]},
 "follow_up":{"when":"구체적 시점","where":"진료처","review":"재평가할 증상/검사 결과"},
@@ -222,6 +230,11 @@ JSON 하나만 반환:
 검사는 필요한 것만 최대 4개입니다. TEST 실행은 불가하며 모두 계획·미시행입니다.
 각 검사마다 목적·근거·시점·결과별 조치를 모두 씁니다. 일괄 패널 검사를 권하지 마세요.
 치료를 전부 검사 뒤로 미루지 말고 지금 필요한 조치·의뢰를 구체화하세요. 새로운 약물 용량·임의 중단/증량은 금지입니다.
+물을 마시거나 쉬라는 말만으로 치료를 끝내지 마세요. 이 진단의 치료/관찰/의뢰 중 선택한 방침을 첫 문장에 쓰세요.
+약물 치료가 필요한 경우 적응증에 맞는 약물 종류/치료 방향과 처방 전 확인할 위험을 쓰세요.
+약물 치료가 불필요하면 그 이유와 시행할 비약물 치료를 쓰세요. 관련 확인이 안 되면 조건부 계획으로 명시하세요.
+검사 이상 시 의뢰/치료 변화와 정상이어도 지속되는 증상의 재평가를 구체화하세요. '추적 예정'만 쓰지 마세요.
+최우선 검사 if_abnormal/if_normal도 각각 30자 이내 완결 문장으로, 결과 조건을 문장에 포함하세요.
 실제 복약·알레르기·임신 가능성·동반질환 중 관련 위험을 고려하세요. 모르는 것은 미확인으로 남깁니다.
 추적은 언제 어디서 무엇을 재평가할지 포함합니다. 위험 신호에는 구체적 행동을 붙입니다.
 불안정/즉시 처치 필요 관찰이면 이송을 지연하지 말고 안전한 이동을 안내합니다.

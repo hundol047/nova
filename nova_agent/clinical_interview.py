@@ -118,7 +118,7 @@ DETAIL_QUESTIONS = {
     'medical_history': '진단받은 병 이름이 무엇인가요?',
     'symptom_onset': '증상이 시작된 때를 구체적으로 알려주세요',
     'prior_care': '이 증상으로 진료받은 결과는 어땠나요?',
-    'family_illness': '가족 중 누가 어떤 병을 앓고 있나요?',
+    'family_illness': '가족이 앓는 병 이름은 무엇인가요?',
     'surgery': '어떤 수술을 받으셨나요?',
     'function': '일상에서 가장 어려운 활동은 무엇인가요?',
 }
@@ -129,6 +129,9 @@ def needs_history_detail(answer):
     kind = answer_kind(answer)
     if kind in {'no', 'unknown'}:return False
     if kind == 'yes':return True
+    if re.fullmatch(r'\s*(?:네[, ]*)?(?:혈압약|당뇨약|수면제|진정제|진통제|약)(?:을|은|를|만)?'
+                    r'(?:\s*(?:먹어요|먹고 있어요|복용해요|복용 중이에요|이요|예요))?[.!\s]*', answer or ''):
+        return True
     # Only nonspecific affirmative screens, not arbitrary short named answers.
     return bool(re.fullmatch(
         r'\s*(?:네[, ]*)?(?:약(?:을|은)? (?:먹고|복용하고) 있어요|'
@@ -147,7 +150,10 @@ def next_history_clarification(state, *, max_details=3):
     for topic, question in DETAIL_QUESTIONS.items():
         replies = [a for a in attempts if topic_for_question(a.content) == topic]
         if not replies or any(a.content == question for a in attempts):continue
-        if needs_history_detail(replies[-1].result):
+        vague_medication = (topic == 'medication_name'
+            and answer_kind(replies[-1].result) not in {'no', 'unknown'}
+            and not topic_known(state, 'medication_name'))
+        if needs_history_detail(replies[-1].result) or vague_medication:
             category = TOPICS[topic][0]
             return ('SAY', category+':'+topic, question, category)
     return None

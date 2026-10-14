@@ -161,7 +161,8 @@ _ANSWER_UNKNOWN = re.compile(
     r"don'?t remember|do not remember|can'?t say|cannot say|cannot recall|"
     r"(?:cannot|can'?t|unable to) tell (?:you|that|whether)|"
     r"(?:prefer|would rather) not (?:to )?(?:answer|say)|decline to answer)\b|"
-    r"모르겠|몰라|기억(?:이)? ?안|잘 모르|알 수 없|답(?:변)?(?:을|은)?\s*(?:못|할 수 없|하기 싫)", re.IGNORECASE)
+    r"모르겠|몰라|기억(?:이)? ?안|잘 모르|알 수 없|답(?:변)?(?:을|은)?\s*(?:못|할 수 없|하기 싫)|"
+    r"(?:말|답변|대답)하고\s*싶지\s*않|답변을\s*거부", re.IGNORECASE)
 _ANSWER_BARE_NO = re.compile(
     r"^(?:no|nope|nah|none|not really|never|no,? never|no,? not (?:really|at all)|"
     r"(?:no,? )?i (?:don'?t|do not)(?: have (?:that|any|it|them))?|"

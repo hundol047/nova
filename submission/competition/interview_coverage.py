@@ -50,6 +50,8 @@ EXTRA = [
     ('med_adherence', '약은 처방대로 복용하고 계신가요?', 'medication'),
     ('exposure', '최근 생활환경이 바뀌었나요?', 'social_history'),
     ('support', '집에서 도움을 줄 사람이 있나요?', 'social_history'),
+    ('growth_record_date', '이전에 키를 잰 때는 언제인가요?', 'duration'),
+    ('growth_record_height', '그때 측정한 키는 몇 cm였나요?', 'associated_symptoms'),
 ]
 _EXACT = {text: key for key, text, _ in EXTRA}
 
@@ -57,6 +59,9 @@ _EXACT = {text: key for key, text, _ in EXTRA}
 def question_key(text):
     if text in _EXACT:
         return _EXACT[text]
+    # Attributes precede symptom presence: fever onset is not a fever screen.
+    if re.search(r'언제부터|시작.*(?:언제|때)|when.*start', text, re.I):
+        return 'symptom_onset'
     # Specific details take precedence over the broad allergy/family screens.
     if re.search(r'알레르기|allerg', text, re.I):
         if re.search(r'반응|증상|어떻게|reaction', text, re.I):return 'allergy_reaction_detail'
@@ -88,6 +93,78 @@ def question_key(text):
     ]:
         if re.search(pattern, text, re.I):return key
     return topic_for_question(text)
+
+
+_SCOPED = {'symptom_onset', 'course', 'episode_duration', 'episode_frequency',
+           'severity', 'character', 'location', 'radiation', 'trigger', 'relief',
+           'previous_episodes', 'daily_timing', 'sudden_onset',
+           'medication_dose', 'medication_frequency', 'medication_duration'}
+_SUBJECTS = [
+    ('cough', r'기침|cough'), ('fever', r'발열|열이|열은|열을|fever'),
+    ('headache', r'두통|머리.*(?:통증|아프)|headache'),
+    ('chest_pain', r'흉통|가슴.*(?:통증|아프)|chest pain'),
+    ('abdominal_pain', r'복통|배가.*아프|배.*통증|abdominal pain'),
+    ('dyspnea', r'숨.*차|호흡곤란|dyspnea'), ('vomiting', r'구토|vomit'),
+    ('diarrhea', r'설사|diarrhea'), ('urinary', r'소변|배뇨|urina'),
+    ('weight', r'체중|살.*빠|weight'), ('sleep', r'불면|잠|수면|sleep'),
+]
+
+
+def question_identity(text, state):
+    """Deduplicate an attribute of ONE symptom/drug, not all onset/dose questions.
+
+    Model-provided topic names never authorize a duplicate or a new fact.
+    Unknown subjects retain the question text rather than collapsing distinct
+    questions to a broad legacy topic.
+    """
+    key = question_key(text)
+    if key not in _SCOPED:return key or re.sub(r'\s+', '', text)
+    if key.startswith('medication_'):
+        match = re.search(r'([가-힣A-Za-z][가-힣A-Za-z0-9-]*?)(?:을|를|은|는|의)?\s*(?:한 번|하루|용량|몇\s*mg|몇\s*알|얼마나)', text)
+        subject = match.group(1) if match else re.sub(r'\s+', '', text)
+        return key + '@' + subject
+    subjects = [name for name, pattern in _SUBJECTS if re.search(pattern, text, re.I)]
+    if not subjects and re.search(r'증상|언제부터 이런|어떤 때|어떻게 하면', text):
+        subjects = [name for name, pattern in _SUBJECTS if re.search(pattern, state.chief_complaint, re.I)][:1]
+    return key + '@' + ('+'.join(subjects) if subjects else re.sub(r'\s+', '', text))
+
+
+def reply_status(reply, ok=True):
+    if not ok:return 'rejected'
+    if re.search(r'한\s*번에\s*하나|질문.*다시|무슨.*뜻|이해.*못|쉽게.*(?:말|설명)|뭘.*묻', reply or ''):
+        return 'needs_rephrase'
+    if not reply or answer_kind(reply) == 'unknown':return 'unresolved'
+    return 'observed_reply'
+
+
+def repairable(encounter, text):
+    identity = question_identity(text, encounter.pstate)
+    prior = [t for t in encounter.turns if t.kind == 'SAY'
+             and question_identity(t.text, encounter.pstate) == identity]
+    # One simpler wording after a comprehension failure. Unknown/refusal is
+    # not a comprehension failure and must never trigger repeated pressure.
+    return len(prior) == 1 and reply_status(prior[0].reply, prior[0].ok) == 'needs_rephrase'
+
+
+def question_category(text, proposed=''):
+    from competition.official_evidence import followup_category
+    if re.search(r'가족|아버지|어머니|부모|family|father|mother', text, re.I):return 'family_history'
+    if re.search(r'알레르기|allerg', text, re.I):return 'allergy'
+    key = question_key(text)
+    extra = {k:category for k, _, category in EXTRA}
+    if key in extra:return extra[key]
+    if key in TOPICS:return TOPICS[key][0]
+    if proposed in {category for category, _, _ in TOPICS.values()}:return proposed
+    return followup_category(text, proposed)
+
+
+def actual_coverage(encounter):
+    """The completed action ledger, including unusable replies and refusals."""
+    return [{'id':f'T{i}', 'kind':t.kind,
+             'domain':question_identity(t.text, encounter.pstate) if t.kind == 'SAY' else t.category,
+             'status':reply_status(t.reply, t.ok)}
+            for i,t in enumerate(encounter.turns, 1)
+            if t.category not in ('explanation','plan_explanation','understanding_check','patient_questions')]
 
 
 def complaint_groups(state):
@@ -127,7 +204,7 @@ def options(state):
         'headache': ['head_sudden_peak', 'focal_weakness', 'safety_vision', 'fever', 'vomiting', 'photophobia', 'injury'],
         'sleep': ['sleep_pattern', 'sleep_hours', 'snoring', 'caffeine', 'daytime_impairment'],
         'weight': ['safety_chest', 'safety_breathing', 'safety_syncope', 'weight_change', 'intentional_weight_loss', 'appetite', 'nutrition', 'thirst', 'polyuria', 'chronic_gi', 'heat', 'palpitations', 'tremor'],
-        'growth': ['headache', 'safety_vomiting', 'safety_vision', 'growth_records', 'growth_velocity', 'father_height', 'mother_height', 'parent_puberty', 'birth', 'birth_course', 'nutrition', 'chronic_gi', 'growth_development', 'fatigue', 'constipation'],
+        'growth': ['headache', 'safety_vomiting', 'safety_vision', 'growth_record_date', 'growth_record_height', 'growth_velocity', 'father_height', 'mother_height', 'parent_puberty', 'birth', 'birth_course', 'nutrition', 'chronic_gi', 'growth_development', 'fatigue', 'constipation'],
     }
     if 'sleep' in groups:
         from nova_agent.matching import feature_present_with_aliases
@@ -176,11 +253,11 @@ def exam_options(state):
 def attempted(encounter, action):
     from nova_agent.interview_evidence import exam_topic, exam_attempted
     text, kind = action['text'], action['kind']
-    key = question_key(text) if kind == 'SAY' else exam_topic(text)
+    key = question_identity(text, encounter.pstate) if kind == 'SAY' else exam_topic(text)
     for turn in encounter.turns:
         if turn.kind != kind:continue
         if turn.text == text:return True
-        other = question_key(turn.text) if kind == 'SAY' else exam_topic(turn.text)
+        other = question_identity(turn.text, encounter.pstate) if kind == 'SAY' else exam_topic(turn.text)
         if key and key == other:return True
     if kind == 'EXAM':return exam_attempted(encounter.pstate, text)
     return bool(key in TOPICS and topic_known(encounter.pstate, key))
@@ -190,15 +267,15 @@ def coverage(encounter):
     """Only actual attempts and their replies, not model claims of coverage."""
     result = []
     for action in options(encounter.pstate):
-        key = question_key(action['text'])
+        key = question_identity(action['text'], encounter.pstate)
         turns = [(i, t) for i, t in enumerate(encounter.turns, 1)
-                 if t.kind == 'SAY' and question_key(t.text) == key]
+                 if t.kind == 'SAY' and question_identity(t.text, encounter.pstate) == key]
         status = 'unasked'
         if turns:
             t = turns[-1][1]
-            status = 'unresolved' if not t.ok or answer_kind(t.reply) == 'unknown' else 'observed_reply'
+            status = reply_status(t.reply, t.ok)
         elif key in TOPICS and topic_known(encounter.pstate, key):status = 'observed_elsewhere'
-        result.append({'domain':key, 'status':status, 'observation_ids':['T'+str(i) for i, _ in turns],
+        result.append({'domain':question_key(action['text']), 'identity':key, 'status':status, 'observation_ids':['T'+str(i) for i, _ in turns],
                        'suggested_question':action['text']})
     return result
 
