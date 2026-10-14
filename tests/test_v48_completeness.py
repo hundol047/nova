@@ -10,10 +10,11 @@ from nova_agent.clinical_interview import TOPICS, DETAIL_QUESTIONS, missing_foun
 def test_empty_planner_asks_missing_history_and_reviews_actual_replies():
     s = Scenario(actions=[])
     e = run_new(s)
-    assert not missing_foundation_topics(e.pstate)
+    from competition.interview_coverage import CORE_HISTORY
+    assert not set(CORE_HISTORY).intersection(missing_foundation_topics(e.pstate))
     final_rows = s.inputs[-1]['PATIENT_EVIDENCE']
-    for topic in ('medical_history', 'medication_name', 'allergy', 'family_illness',
-                  'function', 'prior_care', 'surgery', 'smoking', 'alcohol'):
+    for topic in ('medical_history', 'medication_name', 'allergy',
+                  'function', 'prior_care'):
         question = TOPICS[topic][1]
         assert sum(t.text == question for t in e.turns) == 1
         assert any(r.get('question') == question for r in final_rows)

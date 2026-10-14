@@ -16,11 +16,12 @@ from competition.encounter_contract import cited_facts, ledger
     '일곱 살 남자아이입니다. 키가 또래보다 작아요.',
     '서른 살 남자입니다. 며칠간 귀가 먹먹해요.',
 ])
-def test_stable_empty_planner_finishes_between_35_and_49_with_actual_history(opening):
+def test_stable_empty_planner_collects_20_to_25_actions_then_explains(opening):
     p = proposal(); p.update(primary_diagnosis='원인 미상의 증상', short_name='원인 미상', evidence=['I0'])
     s = Scenario(actions=[], opening=opening, final=p)
     e = run_new(s)
-    assert 35 <= s.turns <= 49, (opening, s.turns)
+    assert 20 <= e._gather_end <= 25, (opening, e._gather_end)
+    assert e._gather_end < s.turns <= 49
     assert len({(t.kind, t.text) for t in e.turns}) == len(e.turns)
     assert all(len(t.text) <= 30 for t in e.turns)
     assert sum(t.category == 'understanding_check' for t in e.turns) == 1

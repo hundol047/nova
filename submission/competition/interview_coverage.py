@@ -201,3 +201,65 @@ def coverage(encounter):
         result.append({'domain':key, 'status':status, 'observation_ids':['T'+str(i) for i, _ in turns],
                        'suggested_question':action['text']})
     return result
+
+
+CORE_HISTORY = ('symptom_onset', 'course', 'medical_history',
+                'medication_name', 'allergy', 'function')
+
+
+def required_options(encounter):
+    """Small closure check, using actual attempts rather than asserted coverage.
+
+    This does not claim that six domains make a complete clinical history.
+    The Doctor chooses patient-specific discriminators; these prevent losing
+    basic treatment safety and the focused exam at the collection boundary.
+    """
+    from nova_agent.clinical_interview import next_history_clarification
+    detail = next_history_clarification(encounter.pstate, max_details=8)
+    if detail:
+        kind, key, text, category = detail
+        if not any(t.text == text for t in encounter.turns):
+            yield {'kind':kind, 'topic':key, 'text':text, 'category':category}
+    for key in CORE_HISTORY:
+        category, text, _ = TOPICS[key]
+        action = {'kind':'SAY', 'topic':key, 'text':text, 'category':category}
+        if not attempted(encounter, action):yield action
+    for action in exam_options(encounter.pstate):
+        if not attempted(encounter, action):yield action
+
+
+def priority_options(encounter):
+    """Spend scarce turns on the complaint, positive details and examination.
+
+    General history remains available but cannot crowd out the chief complaint.
+    No diagnosis, expected answer or evaluation identifier enters this ranking.
+    """
+    from nova_agent.clinical_interview import missing_foundation_topics
+    required = list(required_options(encounter))
+    candidates = required + list(options(encounter.pstate))
+    for key in missing_foundation_topics(encounter.pstate):
+        category, text, _ = TOPICS[key]
+        candidates.append({'kind':'SAY', 'topic':key, 'text':text, 'category':category})
+    required_text = {a['text'] for a in required}
+    early_risks = {'safety_breathing','safety_chest','safety_syncope','pregnancy',
+                  'head_sudden_peak','focal_weakness','safety_vision','flank_pain','fever'}
+    count = len(encounter.turns)
+    def priority(a):
+        key = a.get('topic')
+        if a['text'] in required_text and key not in CORE_HISTORY and a['kind'] == 'SAY':return 0
+        if count >= 14 and a['text'] in required_text:return 2
+        if a['kind'] == 'EXAM':return 4 if count >= 10 else 40
+        if key == 'symptom_onset':return 10
+        if key == 'course':return 12
+        if key in early_risks:return 20
+        if key in {'location','character','severity'}:return 25
+        if key in {'medication_name','allergy'}:return 5 if count >= 7 else 30
+        if key in {'medical_history','function','prior_care'}:return 35
+        if key in {'family_illness','surgery','smoking','alcohol'}:return 60
+        if key in {'self_care','new_drug','supplements','occupation','exposure','support'}:return 65
+        return 45
+    seen = set()
+    for action in sorted(candidates, key=priority):
+        if action['text'] in seen:continue
+        seen.add(action['text'])
+        if action['text'] in required_text or not attempted(encounter, action):yield action

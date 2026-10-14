@@ -1,0 +1,96 @@
+{
+  "status": "UNSCORED_QUALITY_CANDIDATE",
+  "scope": "Local functional and packaging verification; no official score claim.",
+  "artifact": "artifacts/releases/nova-v50-submission.zip",
+  "sha256": "360d70f148ce3536ccc5b9b6155ba33ce53dabb2164c034c4b97f2429c55d1f2",
+  "bytes": 963033,
+  "base_source_commit": "618aecd68df1f6c94b04d10977347e49e00e37ad",
+  "hashed_runtime_files": 117,
+  "owner_reported_scores": {
+    "information": 8.84,
+    "reasoning": 8.89,
+    "tests_followup": 4.67,
+    "safety": 13.75,
+    "communication": 5.61,
+    "efficiency": 16.44,
+    "total": 58.2
+  },
+  "official_score_improvement_proven": false,
+  "official_submission_performed": false,
+  "real_model_executed": false,
+  "blind_v18_rerun": false,
+  "verification_status": "COMPLETED_LOCAL_FUNCTIONAL_VERIFICATION",
+  "turn_policy": {
+    "stable_collection_target": [
+      20,
+      25
+    ],
+    "maximum_actions": 49,
+    "closing_reserve": 18,
+    "max_interview_planning_calls": 5,
+    "normal_total_doctor_calls_bound": 7,
+    "with_one_plan_repair_bound": 8,
+    "exceptions": [
+      "urgent disposition",
+      "deadline",
+      "server termination",
+      "patient refusal",
+      "clinically useful questions exhausted"
+    ],
+    "call_bound_exclusions": [
+      "transport retries",
+      "late current symptom reassessment",
+      "last chance after all diagnostic responses fail"
+    ]
+  },
+  "source_mirror_archive_match": true,
+  "reproducible_build": true,
+  "human_sample_runtime_identity": {
+    "candidate": "v50",
+    "candidate_zip_sha256": "360d70f148ce3536ccc5b9b6155ba33ce53dabb2164c034c4b97f2429c55d1f2",
+    "validation_scope": "Local functional and packaging verification; no official score claim.",
+    "sdk_sha256": "fdd65302e82791ed862c22fe5a014ef443ab331d8986ec7c72b3923add6bc871"
+  },
+  "cleanroom_pass": true,
+  "package_audit_pass": true,
+  "synthetic_http": {
+    "exit_code": 0,
+    "ready_before_case_access": true,
+    "doctor_calls": 8,
+    "turns": 33,
+    "test_actions": 0,
+    "max_action_chars": 23,
+    "record_fields_ok": true,
+    "diagnosis": "지역사회획득 폐렴",
+    "errors": [],
+    "stderr_tail": [
+      "[encounter] {\"turns_used\": 33, \"exam_rejections\": 0, \"chat_calls\": 8, \"successful_chat_calls\": 8, \"case_relevant_successful_calls\": 8, \"diagnostic_reasoning_successful_calls\": 4, \"phrasing_successful_calls\": 0, \"empty_response_retries\": 0, \"prompt_tokens\": 1600, \"completion_tokens\": 640, \"total_tokens\": 2240, \"total_chat_latency_seconds\": 0.01, \"mean_chat_latency_seconds\": 0.0, \"models_returned\": [\"scripted-doctor-not-live\"]}"
+    ],
+    "pass": true
+  },
+  "scripted_comparison": {
+    "cases": 8,
+    "collection_actions": [
+      25
+    ],
+    "total_actions": [
+      37
+    ],
+    "doctor_calls": [
+      6
+    ],
+    "report": "nova-v50-controller-comparison.json",
+    "limitations": "The baseline controller and its prompts come from v49; both versions share current clinical helpers. This is not a full archived-v49 comparison. Request characters are not tokens or actual model cost. Empty scripted planners and invented replies test control flow, not medical accuracy. The same fixed final plan is deliberately used across complaints and is not a clinical recommendation. Template counts are not rubric scores."
+  },
+  "regression": {
+    "final_review": "80 passed in 84.79s",
+    "package_review": "48 passed in 9.47s",
+    "verified_final_tests": 128,
+    "final_review_command": "python -m pytest -q tests/test_adaptive_encounter.py tests/test_v48_completeness.py tests/test_v49_question_review.py tests/test_v50_phased_encounter.py --tb=short",
+    "package_review_command": "python -m pytest -q tests/test_candidate_capture.py tests/test_submission_zip_clean_room.py --tb=short",
+    "broad_command": "/workspace/scratch/d8339ffc1fc4/nova-v46-venv/bin/python -m pytest -q tests/test_official_sdk_adapter.py tests/test_official_independent_audit.py tests/test_official_transport_boundary.py tests/test_interview_quality.py tests/test_encounter_completion.py tests/test_purposeful_encounter.py tests/test_guardian_narrative_and_spoken_numbers.py tests/test_v46_care_quality.py tests/test_adaptive_history.py tests/test_closing_deadline_reserve.py tests/test_onset_and_teachback.py tests/test_question_bound_followup.py tests/test_question_coverage_invariants.py tests/test_targeted_turn_allocation.py tests/test_preliminary*.py tests/test_safety*.py tests/test_soap_regression.py tests/test_native_questions_and_patient_answers.py tests/test_clinical_presentation.py tests/test_multilingual_clinical_concepts.py tests/test_documented_diagnosis_assertion_scope.py tests/test_round_r_assertion_evidence.py tests/test_round_t_evidence_scope.py tests/test_round_q_expression_answers_final_decision.py tests/test_round_s_observation_safety.py tests/test_case_isolation.py tests/test_medication_risk_context.py tests/test_no_evaluation_time_learning.py tests/test_no_answer_leakage_in_retrieval_eval.py tests/test_adaptive_encounter.py tests/test_v48_completeness.py tests/test_human_release_preparation.py tests/test_v49_question_review.py tests/test_v50_phased_encounter.py --tb=short",
+    "broad_exit_code": 0,
+    "broad_note": "The additional broad process returned exit 0, but its retained console log lacks the final summary. No full broad-suite pass count is asserted or included in the verified final count. The 128 final tests ran after the last implementation fixes."
+  },
+  "limitations": "No real Doctor execution, official score or clinical accuracy measurement. No official encounter trace was available. Full marks and score improvement are unproven. Synthetic replies test control flow only."
+}

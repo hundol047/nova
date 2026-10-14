@@ -107,7 +107,8 @@ def test_patient_specific_questions_and_exam_precede_template_history():
     assert all(len(t) <= 30 for _, t, _ in s.events)
     assert s.turns <= 50 and s.chat_calls <= 14
     from nova_agent.clinical_interview import missing_foundation_topics
-    assert not missing_foundation_topics(e.pstate)
+    from competition.interview_coverage import CORE_HISTORY
+    assert not set(CORE_HISTORY).intersection(missing_foundation_topics(e.pstate))
     assert not any(kind == 'TEST' for kind, *_ in s.events)
     assert len(sent) == len(set(sent))
     assert '늑골척추각' in s.record['O']['exam']
@@ -227,7 +228,8 @@ def test_ready_plan_fills_missing_history_before_bounded_completion():
     s = Scenario(actions=[])
     e = run_new(s)
     from nova_agent.clinical_interview import missing_foundation_topics
-    assert not missing_foundation_topics(e.pstate)
+    from competition.interview_coverage import CORE_HISTORY
+    assert not set(CORE_HISTORY).intersection(missing_foundation_topics(e.pstate))
     assert 2 < s.chat_calls <= 14 and s.turns <= 50
 
 
